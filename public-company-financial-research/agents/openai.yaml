@@ -1,0 +1,4 @@
+interface:
+  display_name: "Public Company Financial Research"
+  short_description: "Analyze listed-company filings and financial trends"
+  default_prompt: "Use $public-company-financial-research to analyze latest and historical filings for a listed company and produce an investment-focused report with sources."
