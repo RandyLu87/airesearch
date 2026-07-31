@@ -16,19 +16,41 @@
 
 ```text
 .
-├── public-company-financial-research/  # 上市公司研究 skill
-│   ├── SKILL.md                        # 核心工作流与输出要求
-│   ├── agents/openai.yaml              # Codex skill 展示配置
-│   └── references/                     # 模型、指标、来源和模板
-├── hk-<代码>-<公司>/                   # 港股研究记录
-├── us-<代码>-<公司>/                   # 美股研究记录
-└── *-investment-report-*               # 专题报告及导出文件
+├── AGENTS.md                            # Codex 仓库级长期规则
+├── .codex/
+│   ├── hooks.json                       # 任务结束前自动校验研究文件名
+│   └── hooks/validate_research_paths.py # 确定性命名校验器
+├── .agents/skills/
+│   └── public-company-financial-research/
+│       ├── SKILL.md                    # 核心工作流与输出要求
+│       ├── agents/openai.yaml          # skill 展示配置
+│       └── references/                 # 模型、指标、来源和模板
+├── research/
+│   ├── companies/                      # 按市场、代码和公司保存研究记录
+│   └── reports/                        # 专题报告与最终导出文件
+└── .gitignore                          # 临时文件和生成产物忽略规则
 ```
+
+Codex 没有完全等同于 `.claude/` 的单一目录。官方约定是：使用根目录 `AGENTS.md` 保存持久项目规则，使用 `.agents/skills/` 保存仓库级 skill；命令审批 rules 与生命周期 hooks 才放在 `.codex/` 配置层。本仓库使用 `.codex/hooks.json` 在 Codex 准备结束任务时自动检查公司研究路径。
 
 研究记录采用以下命名规则：
 
 ```text
-<市场>-<代码>-<公司英文简称>/YYYY-MM-DD-HHMM-analysis.md
+research/companies/<市场>-<代码>-<公司英文简称>/YYYY-MM-DD-HHMM-analysis.md
+```
+
+严格格式如下：
+
+- 港股目录：`hk-<4至5位代码>-<英文slug>`
+- 美股目录：`us-<小写ticker>-<英文slug>`
+- A 股目录：`sh|sz|bj-<6位代码>-<英文slug>`
+- 研究文件：`YYYY-MM-DD-HHMM-analysis.md`
+- 同一公司同一天只保留一个研究文件，后续更新追加到已有文件。
+
+手动校验：
+
+```bash
+python3 .codex/hooks/validate_research_paths.py
 ```
 
 ## 使用方法
@@ -45,12 +67,12 @@ skill 会优先读取同一公司已有的研究记录，在保留历史观点�
 
 ## Skill 参考资料
 
-- [核心工作流](public-company-financial-research/SKILL.md)
-- [商业模式与核心驱动指标](public-company-financial-research/references/business-model-playbook.md)
-- [指标与估算方法](public-company-financial-research/references/metric-playbook.md)
-- [来源优先级与最新信息核验](public-company-financial-research/references/sources-and-priority.md)
-- [风险诊断清单](public-company-financial-research/references/red-flags.md)
-- [研究记录模板](public-company-financial-research/references/analysis-template.md)
+- [核心工作流](.agents/skills/public-company-financial-research/SKILL.md)
+- [商业模式与核心驱动指标](.agents/skills/public-company-financial-research/references/business-model-playbook.md)
+- [指标与估算方法](.agents/skills/public-company-financial-research/references/metric-playbook.md)
+- [来源优先级与最新信息核验](.agents/skills/public-company-financial-research/references/sources-and-priority.md)
+- [风险诊断清单](.agents/skills/public-company-financial-research/references/red-flags.md)
+- [研究记录模板](.agents/skills/public-company-financial-research/references/analysis-template.md)
 
 ## 证据原则
 

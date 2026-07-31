@@ -1,0 +1,17 @@
+{
+  "description": "Validate public-company research paths before Codex finishes a task.",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/validate_research_paths.py\" --hook",
+            "timeout": 10,
+            "statusMessage": "Validating research file names"
+          }
+        ]
+      }
+    ]
+  }
+}

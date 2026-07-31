@@ -1,0 +1,18 @@
+# macOS metadata
+.DS_Store
+**/.DS_Store
+
+# Temporary work and generated review artifacts
+tmp/
+**/tmp/
+_smoke.*
+**/review/
+**/review-*/
+**/swift-module-cache/
+.codex-log/
+
+# Editor and generic temporary files
+*.swp
+*.swo
+*.tmp
+*~
