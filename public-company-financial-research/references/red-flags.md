@@ -1,44 +1,63 @@
-# Financial Red Flags
+# 风险诊断清单
 
-## Earnings Quality
+不要机械计分。先判断单期、周期性还是结构性，再将风险映射到估值折价和反证条件。
 
-- Net income up while operating cash flow is flat/down for multiple periods
-- Rising adjustments between GAAP and non-GAAP without clear one-off explanation
-- Material increase in capitalized costs that inflates current earnings
+## 利润与现金流
 
-## Revenue Quality
+- 净利润增长但经营现金流下降，现金转换率持续低于 70%。
+- 应收、存货或预付款明显快于收入增长，且管理层解释无法由明细构成验证。
+- 自由现金流依赖削减必要资本开支，或资本化开发费用持续上升。
+- 调整后利润与法定利润差距扩大，“一次性”项目反复出现。
+- 派息或回购长期超过自由现金流，并以新增借款维持。
 
-- Growth spike with simultaneous jump in receivables days
-- Heavy dependence on channel inventory build or pull-forward behavior
-- Large late-quarter deals recurring every period
+## 收入与商业质量
 
-## Margin and Cost Structure
+- 最大客户、前五客户、单一区域、渠道或平台贡献过高且继续上升。
+- 增长由低毛利项目、收购、渠道压货或提前确认推动。
+- 订阅、续费、合同负债或使用量未支持“经常性收入”叙事。
+- 毛利率改善来自短期成本、补贴或重分类，而不是定价、组合或效率。
+- 热门概念有产品叙事但没有客户、收入、订单或现金流证据。
 
-- Margin expansion unsupported by mix, scale, or commodity inputs
-- SG&A reduction that is mainly reclassification rather than real efficiency
-- Repeated “temporary” cost items that never normalize
+## 商业模式与核心驱动
 
-## Balance Sheet and Liquidity
+- 用户、决策者和付费者发生变化，但公司仍沿用原有获客、定价或留存指标解释业务。
+- 活跃量、GMV、订单或装机增长，而复购、单位贡献、现金回收或售后成本持续恶化。
+- 提价、take rate 或广告负载提高拉动收入，却伴随留存、供给质量或用户参与度下降。
+- 增长越来越依赖补贴、付费流量、独家合同、单一平台或不可持续的低价资本。
+- 公司停止披露关键 KPI、改变定义/样本/合并范围，且不提供可比历史或桥接表。
+- 规模扩大没有改善单位成本、匹配效率、良率或资本周转，反而提高复杂度和资本强度。
+- “第二增长曲线”持续消耗研发和资本，却没有客户采用、单位经济或里程碑证据。
+- 竞争、监管、技术替代或重大交易改变价值归属，公司仍按旧模式给出长期指引。
 
-- Debt increases faster than operating cash generation
-- Short-term maturities concentrated within 12-24 months
-- Covenant headroom narrowing despite reported profit growth
+## 人员与研发
 
-## Shareholder Dilution
+- 员工或研发费用增长明显快于收入，但产品、订阅和毛利没有改善。
+- 研发费用下降源于资本化、补贴冲减或分类变化，而非真实效率。
+- 极小团队覆盖过多关键技术和地区，关键岗位缺乏冗余。
+- 年轻或海外员工流失率高；分拆、并购后关键研发人员归属不明。
+- 股权激励增长快于收入、缺少 ROIC/FCF 等绩效门槛或造成持续摊薄。
 
-- Share count trend consistently rising above peer median
-- Stock-based compensation grows faster than revenue for several years
+## 资产负债表与资本配置
 
-## Governance and Disclosure
+- 债务增长快于现金创造，未来 12–24 个月存在集中到期。
+- 净现金被高派息、低回报并购或关联交易快速消耗。
+- 回购发生在明显高估区，或回购不足以抵消股权激励。
+- 管理层以“提高股东回报”为名弱化必要研发和维护投入。
 
-- Frequent KPI definition changes that reduce comparability
-- Delayed filings or repeated amendments with material corrections
-- Weak segment disclosure despite strategic narrative centered on segments
+## 治理与重大交易
 
-## Risk Scoring (Simple)
+- 创始人或双重股权控制强，外部股东难以约束资本配置。
+- 关联租赁、供应商、客户或资产交易缺少可比定价。
+- 分拆或重组未披露区域利润、IP、现金、债务、人员、管理层和股份分派。
+- 核心增长资产或高管被转移，原上市公司留下低增长业务或重复成本。
+- KPI 定义频繁改变、延迟披露或修订影响可比性。
 
-- Low risk: 0-2 medium flags and no severe flags
-- Medium risk: 3-5 medium flags or 1 severe flag
-- High risk: 6+ medium flags or 2+ severe flags
+## 风险分级
 
-Define severe flags as indicators tied to liquidity, accounting reliability, or financing continuity.
+- **绿色**：解释与明细一致，对估值影响有限，下一期容易验证。
+- **黄色**：单期已有不利信号但尚可逆；降低确信度并设置明确阈值。
+- **红色**：连续两期恶化，或涉及流动性、会计可靠性、控制权和不公平价值转移；提高安全边际或回避。
+
+每个黄色或红色信号必须写出：当前证据、可能的良性解释、下一期验证指标、若未改善对估值/仓位的影响。
+
+对商业模式红旗另写清：它影响驱动树哪一环，属于参数、机制还是结构性变化；是否需要更换核心指标、下调长期增长/利润率/ROIC，或提高安全边际。单条未经确认的新闻不直接定为红色，但足以触发补充取证。

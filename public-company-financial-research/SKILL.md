@@ -1,77 +1,118 @@
 ---
 name: public-company-financial-research
-description: Research latest and historical financial reports of publicly listed companies for investment analysis. Use when the task involves SEC/annual/quarterly filings, earnings releases, investor presentations, restatements, multi-year trend analysis, valuation inputs, or risk assessment based on official financial statements and disclosures.
+description: 对上市公司进行可持续更新的价值投资深度调研，以核心商业模式及其驱动指标为主线，结合最新财报、公告、经营数据和重要消息判断商业模式是否变化，再分析护城河、单位经济、财务及现金流质量、人员研发、治理、资本配置、估值安全边际和长期投资价值。Use when Codex needs to首次研究或更新港股、美股、A股公司研究记录，拆解收入与利润引擎，选择并追踪公司特定 KPI，解读最新年报/中报/季报，判断商业模式或投资逻辑是否发生变化，或形成长期投资建议与观察清单。
 ---
 
-# Public Company Financial Research
+# 上市公司价值调研
 
-## Overview
+以长期股东视角研究公司。先回答“公司如何持续创造、交付和获取价值，关键飞轮是否仍在运转”，再回答利润是否真实、管理层是否可信、价格是否有安全边际。把商业模式作为全篇主线，不把业绩摘要、通用指标罗列或管理层叙事冒充投资分析。
 
-Produce evidence-based analysis of listed companies using official filings first, then supplement with trusted secondary data. Always separate facts, calculations, and inferences.
+## 开始前
 
-## Workflow
+1. 明确公司、代码、交易所、报告币种、数据与消息截止时间、参考股价时间和预期持有期。
+2. 在工程中搜索该公司目录及历史研究记录。若已有记录，先读最近一份，再检查其引用的前序笔记。
+3. 若当天已有研究文件，把新增研究追加到同一文件并更新时间；否则创建 `<市场>-<代码>-<slug>/YYYY-MM-DD-HHMM-analysis.md`。
+4. 每次评估都必须联网核验截至执行时点的最新财报、交易所/监管公告、公司经营更新、管理层或组织变化、重大产品与定价变化、竞争/监管事件和股价；不能因用户没有写“最新”而省略。按 `references/sources-and-priority.md` 执行最新信息扫描。
+5. 区分事件发生日、信息发布日期和市场价格时间。财报或重大公告刚发布时优先原始文件，并说明参考价格是否已反映信息。
 
-1. Define scope before collecting data.
-- Identify ticker, exchange, reporting standard (US GAAP or IFRS), period range, and currency.
-- Confirm whether the user needs latest quarter, trailing twelve months, annual history, or all.
+## 证据规则
 
-2. Collect sources with strict priority.
-- First priority: regulator filings and company investor-relations pages.
-- Second priority: exchange disclosures and audited annual reports.
-- Third priority: reputable market data vendors for cross-checking only.
-- For source details and ordering rules, read `references/sources-and-priority.md`.
+- 按 `references/sources-and-priority.md` 取证；监管机构、交易所和公司正式文件优先，权威行业资料与主要竞争对手官方披露用于外部验证。
+- 将结论区分为：**披露事实**、**可复核计算**、**分析推断**。不要逐句机械贴标签，但估算值必须明确标注，给出区间、证据链、分类边界和置信度。
+- 不用第三方摘要覆盖官方数据；口径冲突时并列说明并采用更权威口径。
+- 所有财务数字核对单位、币种、期间、合并范围、基本/摊薄口径及是否重列。
+- 直接引用保持克制；报告中保留可点击的原始来源链接和绝对日期。
+- 没有新披露也是结论：写明已查范围、最新可得数据所属期间和信息空窗，不把旧数据描述成当前事实。
 
-3. Build a normalized financial table.
-- Capture revenue, gross profit, operating income, net income, EPS, operating cash flow, capex, free cash flow, debt, cash, shares outstanding, and segment mix.
-- Normalize units (thousand/million/billion), currency, and fiscal calendar differences.
-- Mark restated values explicitly; never mix original and restated numbers silently.
-- Produce a required annual core-metrics comparison table (minimum 3 fiscal years; prefer 5 years when available) before writing narrative analysis.
+## 调研工作流
 
-4. Analyze latest results and historical trend.
-- Latest: compare reported results with prior year period and prior quarter if relevant.
-- History: analyze at least 5 years (or all available) of growth, margins, cash conversion, leverage, dilution, and cyclicality.
-- Use the output structure in `references/analysis-template.md`.
+### 1. 建立商业模式基准
 
-5. Test quality and risk signals.
-- Run red-flag checks for earnings quality, one-off adjustments, working-capital stress, refinancing pressure, and guidance credibility.
-- Use `references/red-flags.md` to score risks.
+先读 `references/business-model-playbook.md`，用一句可验证的话描述：谁是用户、谁付费、公司交付什么价值、如何收费、依赖什么资源或网络、利润和现金如何产生。若存在两个以上实质不同的模式，按收入、毛利、资本占用和战略重要性分开分析，不用一个标签覆盖全公司。
 
-6. Produce decision-oriented output.
-- Provide a concise investment view: bull/base/bear cases, key assumptions, catalysts, and invalidation conditions.
-- Include a source table with date, document name, and link.
-- Clearly label each statement as: Fact, Calculation, or Inference.
-- Keep "Latest Period Snapshot" and "Historical Trend" in tables, not prose.
-- Add a dedicated "Annual Core Metrics Comparison" table with year-over-year deltas.
+画出因果链：`关键投入/供给 → 获客或分发 → 使用/交易/销量 → 变现 → 毛利/贡献利润 → 现金回收 → 再投资`。找出一旦失效就会阻断飞轮的约束，不把所有披露指标视为同等重要。
 
-## Rules
+### 2. 拆分核心维度与指标
 
-- Verify “latest” data with live browsing before answering. Do not rely on stale memory.
-- If filing dates conflict across sources, prefer regulator or exchange documents and explain discrepancy.
-- Use absolute dates (YYYY-MM-DD) for filing date, period end date, and earnings release date.
-- Distinguish non-GAAP from GAAP/IFRS and reconcile when possible.
-- Avoid investment advice language that implies certainty; state assumptions and uncertainty.
-- Annual core-data comparison must be a markdown table; prose-only annual comparison is not acceptable.
-- Annual core-data comparison table must include: Fiscal Year, Revenue, YoY Revenue Growth, Gross Margin, Operating Income, Operating Margin, Net Income, Diluted EPS, Operating Cash Flow, Free Cash Flow, Net Debt (or Net Cash), Diluted Shares.
-- If a required field is unavailable for a year, fill with `N/A` and explain in notes.
-- For multi-currency disclosures, present reporting currency in the table and show converted values only in separate optional columns.
+根据公司实际模式选择 5–8 个核心维度；通常覆盖需求与留存、获客与渠道、供给或交付、定价与变现、单位经济、规模效应/护城河、再投资与资本强度、主要脆弱点。不要为凑数保留不相关维度。
 
-## Output Contract
+每个维度只保留 1–3 个最能解释因果关系的指标，并写明：
 
-Return sections in this exact order:
+- 它为何是商业模式良好运转的必要条件；
+- 指标定义、口径、领先/滞后属性、披露频率和数据来源；
+- 历史基准、上次值、最新值、同比/环比/多期趋势；
+- 改善、稳定或恶化的证据，以及阈值或反证条件。
 
-1. Company and Coverage Scope
-2. Source Log (official first)
-3. Latest Period Snapshot
-4. Annual Core Metrics Comparison (multi-year table, required)
-5. Quality and Risk Checks
-6. Scenario View (bull/base/bear)
-7. Key Monitoring Items (next earnings, debt maturities, guidance, regulatory events)
+优先使用公司特定经营 KPI；若公司停止披露、修改定义或只给替代指标，将其本身视为变化信号。指标应共同解释收入、毛利、现金和资本回报，避免指标堆砌或只追踪收入增速。
 
-Use compact tables where possible.
-Section 4 is mandatory and must be a table (minimum 3 fiscal years).
+### 3. 每次检查商业模式变化
+
+将最新财报、公告和重要消息逐项映射到因果链与核心维度，先写“较上次变化”，再写静态分析。把变化分为：
+
+- **未变**：关键机制和经济关系仍成立，短期波动未突破阈值；
+- **参数变化**：价格、增速、成本、留存或利用率变化，但赚钱方式未变；
+- **机制变化**：获客、供给、收费、交付或再投资方式改变，需要重设指标与估值假设；
+- **结构性变化**：主要客户/平台依赖、监管、技术替代、并购分拆或资本约束改变价值创造与获取方式。
+
+不因单季噪声轻易宣布模式改变，也不因总收入增长掩盖核心飞轮恶化。若结论变化，指出是哪条因果关系、哪个指标或事件触发，并保留旧结论。
+
+### 4. 建立财务基准并检验利润
+
+整理最新期间及至少三年年度核心数据；能取得五年时优先五年。使用 `references/analysis-template.md` 的表格结构，不因缺失少量字段而停止研究，用 `N/A` 并解释。
+
+按 `references/metric-playbook.md` 计算收入增长、毛利率、经营利润率、净利率、现金转换率、近似自由现金流、净现金、摊薄股数、派息、回购、ROIC 和增量 ROIC（数据允许时）。跨年口径变化必须显式备注。
+
+以现金流和资产负债表交叉验证利润表。特别检查净利润与经营现金流背离、应收和存货、预付款、资本化支出、股权激励、债务、高派息及回购。
+
+读取 `references/red-flags.md` 判断红旗。单期营运资金波动先解释构成，不直接定性为造假或恶化，但必须设置下一期验证条件。把财务结果回接到驱动树：增长来自销量/用户、频次、价格/费率、组合、收购还是会计口径；毛利变化来自定价权、供给成本、产品组合、规模、补贴还是重分类。
+
+### 5. 研究人员、研发与组织
+
+人员研究是必选项，而不是附录。整理员工总数、增速、员工成本、地域/年龄/流失率、股权激励、关键高管与组织变化，并计算人均收入、人均利润和员工成本率。
+
+当公司未披露研发、销售或市场人数时，按 `references/metric-playbook.md` 进行三角估算：员工费用分部、历史职能表、招聘与组织模式、研发/销售费用变化。输出区间和中枢，绝不伪造精确人数。
+
+区分严格会计研发费用、包含顾问/测试/技术支持的研发相关费用，以及补贴冲减前的资源投入。说明每个口径占收入、营业费用和总经营成本的比例，并判断组织能力是否支撑商业模式的核心约束与再投资方向。
+
+### 6. 评价管理层、治理与资本配置
+
+研究创始人和高管履历、持股和投票权、薪酬、关联交易、独董制衡、股权激励门槛、派息、回购、并购及融资纪律。执行能力与少数股东友好度必须分开评价。
+
+遇到分拆、私有化、双重股权、VIE 或重大重组时，拆解经济权益和控制权：利润、现金、债务、IP、品牌、客户、员工、管理层、共享服务、税务、股份分派和托管可行性。在条款未披露前，不提前计入潜在估值重估。
+
+### 7. 从商业模式推导长期投资建议
+
+先分别评价商业模式的持续性、可预测性、单位经济、护城河证据、再投资空间与增量回报、资本强度、周期/监管/集中风险，以及管理层获取和分配价值的方式。明确长期价值来自“存量现金收割”“高回报再投资”“周期均值回归”还是“尚待验证的可选项”；未验证可选项不进入基准价值。
+
+把核心驱动指标直接绑定收入增速、稳态利润率、再投资率、资本回报和风险折价。选择与商业模式匹配的两种以上方法交叉验证，例如规范化所有者收益/FCF、PE、EV/EBIT、分部估值、股利折现或 DCF。不要用当期异常利润机械年化。
+
+输出牛市、基准、熊市假设，并给出：长期投资结论、确信度、适合/不适合的持有前提、合理价值区间与中枢、当前价格隐含预期、所需安全边际、分档行动区间。价格区间必须绑定商业模式和核心指标条件，不写成脱离事实的交易指令。
+
+### 8. 更新而非重写观点
+
+如果已有研究，必须先写“较上次变化”：商业模式未变/参数变化/机制变化/结构性变化；投资逻辑增强、减弱或不变；哪些新证据改变了核心维度、财务、治理或估值假设。保留原判断和旧指标基线的可追溯性，不用事后信息悄悄覆盖旧结论。
+
+## 输出要求
+
+按 `references/analysis-template.md` 组织研究记录。面向用户的答复先给结论，再给关键证据、风险、估值与行动；研究文件可以更完整。
+
+必须包含：
+
+- 当前立场与确信度，而不只是“看多/看空”；
+- 一句话商业模式、因果链和 5–8 个公司特定核心维度/指标；
+- 基于最新数据与消息的商业模式变化结论和“较上次变化”；
+- 最新业绩表和年度核心指标表；
+- 业务质量、现金流质量、人员与研发、管理层治理；
+- 风险、反证条件和下一期可量化跟踪点；
+- 从商业模式推导的长期投资建议、估值假设、合理价值与分档行动区间；
+- 官方来源链接、数据截止时间及非投资建议声明。
+
+避免：套用行业标签替代因果分析、每家公司使用同一套 KPI、用单季波动断言模式变化、只复述管理层口径、伪精确估算、把净现金与企业价值重复计算、用高派息掩盖现金流不足、因热门叙事给予未经验证的溢价。
 
 ## References
 
-- Source selection and verification: `references/sources-and-priority.md`
-- Reusable analysis structure: `references/analysis-template.md`
-- Risk diagnostics checklist: `references/red-flags.md`
+- 来源选择与时点核验：`references/sources-and-priority.md`
+- 商业模式拆解、驱动树与分行业 KPI：`references/business-model-playbook.md`
+- 指标计算与人员研发估算：`references/metric-playbook.md`
+- 风险诊断：`references/red-flags.md`
+- 研究记录模板：`references/analysis-template.md`

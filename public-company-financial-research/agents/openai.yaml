@@ -1,4 +1,4 @@
 interface:
-  display_name: "Public Company Financial Research"
-  short_description: "Analyze listed-company filings and financial trends"
-  default_prompt: "Use $public-company-financial-research to analyze latest and historical filings for a listed company and produce an investment-focused report with sources."
+  display_name: "上市公司商业模式与价值调研"
+  short_description: "聚焦核心商业模式、最新驱动指标、长期价值与安全边际"
+  default_prompt: "使用 $public-company-financial-research，结合截至当前的最新数据和消息，拆解这家上市公司的核心商业模式与驱动指标，并给出长期投资结论。"
