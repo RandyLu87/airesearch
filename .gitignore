@@ -16,3 +16,9 @@ _smoke.*
 *.swo
 *.tmp
 *~
+
+# Node / Next build state (final research/site output remains tracked)
+node_modules/
+**/.next/
+apps/web/out/
+*.tsbuildinfo

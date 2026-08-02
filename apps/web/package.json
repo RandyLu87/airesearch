@@ -1,0 +1,24 @@
+{
+  "name": "@airesearch/web",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "next build",
+    "publish": "next build && node scripts/copy-output.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@airesearch/research-schema": "0.1.0",
+    "@airesearch/research-ui": "0.1.0",
+    "next": "16.2.12",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@next/swc-darwin-arm64": "^16.2.12",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.9.0"
+  }
+}

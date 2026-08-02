@@ -1,5 +1,7 @@
 # 来源优先级与核验
 
+每次先按 `data-source-registry.md` 构建数据包并读取 `manifest.json`。本文件决定证据权重和补充核验；API 结果不因结构化而自动升级为一手证据。
+
 ## 优先级
 
 1. 监管机构与交易所原始文件：SEC、HKEX、上交所、深交所等。
@@ -45,6 +47,8 @@
 | fields_extracted | 使用了哪些数字或事实 |
 | driver_mapping | 映射到哪个商业模式环节或核心指标 |
 | caveat | 口径、重列、时点、确认状态或可靠性限制 |
+| fetched_at | API 抓取或网页核验时间，含时区 |
+| raw_artifact | 数据包内原始响应或下载文件路径；没有时写 N/A |
 
 ## 特殊取证
 

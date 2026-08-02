@@ -1,0 +1,447 @@
+{
+  "schemaVersion": "1.0.0",
+  "company": {
+    "id": "hk-9899-netease-cloud-music",
+    "name": "网易云音乐",
+    "legalName": "Cloud Music Inc.",
+    "ticker": "9899.HK",
+    "market": "Hong Kong",
+    "reportingCurrency": "CNY",
+    "accountingStandard": "IFRS"
+  },
+  "snapshot": {
+    "id": "2026-03-26-2203-analysis",
+    "createdAt": "2026-03-26T22:03:00+08:00",
+    "dataCutoff": "2026-03-26T22:03:00+08:00",
+    "sourceNote": "2026-03-26-2203-analysis.md"
+  },
+  "summary": {
+    "stance": "Watchlist",
+    "confidence": "中",
+    "headline": "盈利和现金状况显著改善，但收入恢复与资本配置仍不足以支持激进买入。",
+    "businessModel": "以在线音乐会员订阅为核心、社交娱乐持续收缩的中国音乐社区平台。",
+    "businessModelChange": "参数变化",
+    "referencePrice": {
+      "value": "126.6",
+      "currency": "HKD",
+      "asOf": "2026-03-26T16:00:00+08:00"
+    },
+    "fairValue": {
+      "low": "115.0",
+      "high": "136.0",
+      "center": "125.5",
+      "currency": "HKD"
+    },
+    "marginOfSafety": "当前价格接近合理区间中部，安全边际较薄。",
+    "strongestEvidence": "在线音乐服务收入增长 12.0%，订阅收入达到人民币 50.5 亿元。",
+    "largestRisk": "核心收入增长尚未完全抵消社交娱乐收缩，且报表利润受到递延税项抬高。",
+    "nextValidation": "等待 2025 年报现金流量表并观察核心音乐业务是否继续双位数增长。"
+  },
+  "standardMetrics": [
+    {
+      "metricId": "revenue",
+      "label": "收入",
+      "definitionVersion": "1",
+      "status": "reported",
+      "value": "77.6",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "hundred-million",
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "precision": 1,
+      "evidenceIds": ["annual-results-2025"]
+    },
+    {
+      "metricId": "revenue-growth",
+      "label": "收入增速",
+      "definitionVersion": "1",
+      "status": "reported",
+      "value": "-2.4",
+      "unit": "percent",
+      "scale": "one",
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "precision": 1,
+      "evidenceIds": ["annual-results-2025"]
+    },
+    {
+      "metricId": "gross-margin",
+      "label": "毛利率",
+      "definitionVersion": "1",
+      "status": "reported",
+      "value": "35.7",
+      "unit": "percent",
+      "scale": "one",
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "precision": 1,
+      "evidenceIds": ["annual-results-2025"]
+    },
+    {
+      "metricId": "operating-profit",
+      "label": "经营利润",
+      "definitionVersion": "1",
+      "status": "reported",
+      "value": "16.2",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "hundred-million",
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "precision": 1,
+      "evidenceIds": ["annual-results-2025"]
+    },
+    {
+      "metricId": "operating-margin",
+      "label": "经营利润率",
+      "definitionVersion": "1",
+      "status": "calculated",
+      "value": "20.9",
+      "unit": "percent",
+      "scale": "one",
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "precision": 1,
+      "evidenceIds": ["annual-results-2025"]
+    },
+    {
+      "metricId": "net-profit",
+      "label": "净利润",
+      "definitionVersion": "1",
+      "status": "reported",
+      "value": "27.48",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "hundred-million",
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "precision": 2,
+      "evidenceIds": ["annual-results-2025"]
+    },
+    {
+      "metricId": "operating-cash-flow",
+      "label": "经营现金流",
+      "definitionVersion": "1",
+      "status": "unavailable",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "hundred-million",
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "precision": 2,
+      "reason": "当时年度业绩公告尚未提供完整经审计现金流量表",
+      "evidenceIds": ["annual-results-2025"]
+    },
+    {
+      "metricId": "free-cash-flow",
+      "label": "近似自由现金流",
+      "definitionVersion": "1",
+      "status": "unavailable",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "hundred-million",
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "precision": 2,
+      "reason": "经营现金流和完整资本开支在该研究截止时点尚未确认",
+      "evidenceIds": ["annual-results-2025"]
+    },
+    {
+      "metricId": "net-cash",
+      "label": "净现金",
+      "definitionVersion": "1",
+      "status": "calculated",
+      "value": "135.8",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "hundred-million",
+      "period": "FY2025",
+      "periodType": "instant",
+      "accountingBasis": "IFRS",
+      "precision": 1,
+      "evidenceIds": ["annual-results-2025"]
+    },
+    {
+      "metricId": "roic",
+      "label": "ROIC",
+      "definitionVersion": "1",
+      "status": "unavailable",
+      "unit": "percent",
+      "scale": "one",
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "precision": 1,
+      "reason": "单一分部且大额闲置现金使可复核投入资本口径不足",
+      "evidenceIds": ["annual-results-2025"]
+    },
+    {
+      "metricId": "incremental-roic",
+      "label": "增量 ROIC",
+      "definitionVersion": "1",
+      "status": "unavailable",
+      "unit": "percent",
+      "scale": "one",
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "precision": 1,
+      "reason": "无法从现有披露稳定重建增量投入资本",
+      "evidenceIds": ["annual-results-2025"]
+    },
+    {
+      "metricId": "diluted-shares",
+      "label": "摊薄股数",
+      "definitionVersion": "1",
+      "status": "unavailable",
+      "unit": "shares",
+      "scale": "million",
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "precision": 2,
+      "reason": "年度业绩公告未提供可复核的完整摊薄加权平均股数",
+      "evidenceIds": ["annual-results-2025"]
+    }
+  ],
+  "driverMetrics": [
+    {
+      "id": "online-music-growth",
+      "label": "在线音乐服务收入增速",
+      "definition": "在线音乐服务收入同比变化",
+      "causalRole": "验证订阅核心能否抵消社交娱乐收缩",
+      "property": "增长",
+      "status": "reported",
+      "value": "12.0",
+      "displayValue": "+12.0%",
+      "period": "FY2025",
+      "trend": "改善",
+      "confidence": "高",
+      "threshold": "连续两期维持高个位数以上",
+      "evidenceIds": ["annual-results-2025"]
+    },
+    {
+      "id": "gross-margin",
+      "label": "毛利率",
+      "definition": "毛利除以收入",
+      "causalRole": "检验内容成本与产品效率的经营杠杆",
+      "property": "盈利",
+      "status": "reported",
+      "value": "35.7",
+      "displayValue": "35.7%",
+      "period": "FY2025",
+      "trend": "改善",
+      "confidence": "高",
+      "threshold": "增长恢复时不明显回吐",
+      "evidenceIds": ["annual-results-2025"]
+    },
+    {
+      "id": "normalized-pe",
+      "label": "正常化市盈率",
+      "definition": "剔除一次性递延税项后的市值/盈利",
+      "causalRole": "把表观便宜与真实盈利质量分开",
+      "property": "现金",
+      "status": "calculated",
+      "value": "12.0",
+      "displayValue": "约 12x",
+      "period": "2026-03-26",
+      "trend": "稳定",
+      "confidence": "中",
+      "threshold": "低于 10x 或盈利持续上修",
+      "evidenceIds": ["annual-results-2025", "market-price-2026-03-26", "normalized-pe-calculation"]
+    },
+    {
+      "id": "shareholder-return",
+      "label": "股东回报力度",
+      "definition": "分红与回购相对现金创造和总股本的力度",
+      "causalRole": "检验大额闲置现金能否转化为每股价值",
+      "property": "治理",
+      "status": "reported",
+      "value": "0.1708",
+      "displayValue": "回购约总股本 0.17%，无分红",
+      "period": "截至 2026-02-20",
+      "trend": "待验证",
+      "confidence": "高",
+      "threshold": "形成持续且有实质规模的回购或分红政策",
+      "evidenceIds": ["buyback-2026-02-20"]
+    }
+  ],
+  "thesisChange": {
+    "investmentLogic": "较上一份研究略偏谨慎：利润率修复成立，但总收入尚未恢复。",
+    "financialQuality": "资产负债表增强；2025 年现金流仍需经审计年报确认。",
+    "governance": "VIE、集团控制和无分红仍需要折价。",
+    "valuation": "HK$126.6 位于合理价值区间中部，缺少安全边际。",
+    "newEvidence": [
+      "2025 年在线音乐收入增长 12.0%",
+      "递延所得税确认显著抬高报表利润",
+      "公司已启动小规模回购"
+    ],
+    "supersededAssumptions": ["公司仍主要依赖社交娱乐收入"]
+  },
+  "financialHistory": [
+    {
+      "period": "FY2024",
+      "revenue": "79.50",
+      "revenueGrowth": "+1.1%",
+      "grossMargin": "33.7%",
+      "operatingMargin": "14.7%",
+      "netProfit": "15.62",
+      "operatingCashFlow": "17.75",
+      "freeCashFlow": "17.71"
+    },
+    {
+      "period": "FY2025",
+      "revenue": "77.60",
+      "revenueGrowth": "-2.4%",
+      "grossMargin": "35.7%",
+      "operatingMargin": "20.9%",
+      "netProfit": "27.48"
+    }
+  ],
+  "sections": [
+    {
+      "id": "business-model",
+      "title": "商业模式与核心驱动",
+      "summary": "订阅正在成为经济核心，社交娱乐的收入拖累仍未完全结束。",
+      "bullets": [
+        "2025 年在线音乐服务收入 59.9 亿元，同比增长 12.0%。",
+        "会员订阅收入增至 50.5 亿元，是最关键的经常性收入来源。",
+        "社区氛围和独立音乐人生态形成差异化，但版权与规模仍弱于龙头。"
+      ],
+      "evidenceIds": ["annual-results-2025"]
+    },
+    {
+      "id": "financial-quality",
+      "title": "财务质量与资本配置",
+      "summary": "利润率和净现金明显改善，报表净利润却受一次性税项影响。",
+      "bullets": [
+        "毛利率从 33.7% 升至 35.7%，经营利润同比增长 38.5%。",
+        "剔除递延税项后，正常化盈利约 21.1 亿元。",
+        "IPO 资金仍有约 25.84 亿元未使用，分红缺位且回购较小。"
+      ],
+      "evidenceIds": ["annual-results-2025", "buyback-2026-02-20"]
+    },
+    {
+      "id": "governance",
+      "title": "竞争、治理与护城河",
+      "summary": "产品差异化真实存在，但集团控制、VIE 与竞争格局要求长期折价。",
+      "bullets": [
+        "用户品牌与社区调性是资产，切换成本和版权壁垒则仅属中等。",
+        "一个外部客户贡献约 13.7% 收入，需要持续跟踪集中度。",
+        "NetEase 集团控制和协议控制安排限制少数股东影响力。"
+      ],
+      "evidenceIds": ["annual-results-2025"]
+    }
+  ],
+  "valuation": {
+    "scenarios": [
+      {
+        "name": "熊市",
+        "assumptions": "核心增长放缓且成本纪律松动",
+        "earnings": "正常化盈利约 21.1 亿元",
+        "method": "9x-10x 正常化 PE",
+        "valueRange": "约 HK$95-105",
+        "trigger": "在线音乐增速降至低个位数"
+      },
+      {
+        "name": "基准",
+        "assumptions": "订阅维持中高个位数以上增长、毛利率稳定",
+        "earnings": "正常化盈利约 21.1 亿元",
+        "method": "11x-13x 正常化 PE",
+        "valueRange": "HK$115-136",
+        "trigger": "收入温和恢复且利润率不回吐"
+      },
+      {
+        "name": "牛市",
+        "assumptions": "在线音乐持续双位数增长且资本配置改善",
+        "earnings": "正常化盈利约 21.1 亿元",
+        "method": "约 14x 正常化 PE",
+        "valueRange": "约 HK$147",
+        "trigger": "收入再加速并实施实质股东回报"
+      }
+    ],
+    "actionZones": [
+      { "label": "积极研究区", "range": "HK$110 以下", "action": "在基本面未恶化时评估建仓" },
+      { "label": "观察区", "range": "HK$110-136", "action": "等待增长与现金流验证" },
+      { "label": "兑现区", "range": "HK$136 以上", "action": "需要更强增长证据支撑" }
+    ],
+    "currentExpectation": "当前价格隐含业务维持温和增长和利润率稳定，但没有为治理风险留下宽裕安全边际。"
+  },
+  "risks": [
+    "在线音乐订阅增长放缓，无法抵消社交娱乐继续收缩。",
+    "内容许可和分成成本反弹，逆转利润率改善。",
+    "闲置现金长期不能转化为每股价值。",
+    "VIE 与控股股东安排持续限制少数股东权利。"
+  ],
+  "viewChanges": {
+    "upgrade": [
+      "连续两期总收入恢复高个位数增长且毛利率不回吐。",
+      "建立有实质规模的回购或分红政策。"
+    ],
+    "downgrade": [
+      "在线音乐收入增速显著降温。",
+      "大额现金被用于低回报扩张或关联支持。"
+    ]
+  },
+  "checkpoints": [
+    "发布 2025 年报后核实经营现金流和现金部署计划。",
+    "验证在线音乐收入能否维持双位数增长。",
+    "跟踪内容成本、回购规模与分红政策。"
+  ],
+  "evidence": [
+    {
+      "id": "annual-results-2025",
+      "kind": "fact",
+      "title": "2025 年度业绩公告",
+      "publisher": "Cloud Music Inc. / HKEX",
+      "periodOrEventDate": "FY2025",
+      "publishedAt": "2026-02-11",
+      "retrievedAt": "2026-03-26T21:30:00+08:00",
+      "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0211/2026021100616.pdf",
+      "caveat": "公告未包含完整经审计现金流量表。"
+    },
+    {
+      "id": "buyback-2026-02-20",
+      "kind": "fact",
+      "title": "股份购回翌日披露报表",
+      "publisher": "Cloud Music Inc. / HKEX",
+      "periodOrEventDate": "2026-02-20",
+      "publishedAt": "2026-02-20",
+      "retrievedAt": "2026-03-26T21:40:00+08:00",
+      "url": "https://www.hkexnews.hk/",
+      "caveat": "链接指向 HKEX 入口；以原研究记录留存的披露日期定位。"
+    },
+    {
+      "id": "market-price-2026-03-26",
+      "kind": "fact",
+      "title": "9899.HK 市场价格",
+      "publisher": "Stock Analysis",
+      "periodOrEventDate": "2026-03-26",
+      "publishedAt": "2026-03-26",
+      "retrievedAt": "2026-03-26T22:00:00+08:00",
+      "url": "https://stockanalysis.com/quote/hkg/9899/",
+      "caveat": "市场数据仅作为参考价格，不属于公司披露。"
+    },
+    {
+      "id": "normalized-pe-calculation",
+      "kind": "calculation",
+      "title": "剔除递延税项后的正常化市盈率计算",
+      "publisher": "AI Research",
+      "periodOrEventDate": "2026-03-26",
+      "publishedAt": "2026-03-26",
+      "retrievedAt": "2026-03-26T22:03:00+08:00",
+      "url": "https://github.com/RandyLu87/airesearch/blob/main/research/companies/hk-9899-netease-cloud-music/2026-03-26-2203-analysis.md",
+      "caveat": "使用市场市值与剔除 7.467 亿元递延税项后的正常化盈利复算。"
+    }
+  ],
+  "disclaimer": "本报告仅作研究与教育用途，不构成个性化投资建议。"
+}

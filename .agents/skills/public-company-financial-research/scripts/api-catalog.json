@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "sec": {
+    "provider": "SEC EDGAR",
+    "ticker_exchange_url": "https://www.sec.gov/files/company_tickers_exchange.json",
+    "submissions_url_template": "https://data.sec.gov/submissions/CIK{cik}.json",
+    "companyfacts_url_template": "https://data.sec.gov/api/xbrl/companyfacts/CIK{cik}.json",
+    "archive_url_template": "https://www.sec.gov/Archives/edgar/data/{cik}/{accession}/{document}",
+    "default_forms": [
+      "10-K",
+      "10-Q",
+      "8-K",
+      "20-F",
+      "40-F",
+      "6-K",
+      "DEF 14A"
+    ],
+    "request_interval_seconds": 0.12
+  },
+  "tushare": {
+    "provider": "Tushare Pro",
+    "endpoint": "https://api.tushare.pro",
+    "request_interval_seconds": 0.12,
+    "profiles": {
+      "a": [
+        {"api": "daily", "dated": true},
+        {"api": "daily_basic", "dated": true},
+        {"api": "income"},
+        {"api": "balancesheet"},
+        {"api": "cashflow"},
+        {"api": "fina_indicator"},
+        {"api": "fina_mainbz"},
+        {"api": "dividend"}
+      ],
+      "hk": [
+        {"api": "hk_daily_adj", "dated": true},
+        {"api": "hk_income"},
+        {"api": "hk_balancesheet"},
+        {"api": "hk_cashflow"},
+        {"api": "hk_fina_indicator"}
+      ],
+      "us": [
+        {"api": "us_daily", "dated": true},
+        {"api": "us_income"},
+        {"api": "us_balancesheet"},
+        {"api": "us_cashflow"},
+        {"api": "us_fina_indicator"}
+      ]
+    }
+  }
+}

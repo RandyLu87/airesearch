@@ -1,4 +1,4 @@
 interface:
   display_name: "上市公司商业模式与价值调研"
-  short_description: "聚焦核心商业模式、最新驱动指标、长期价值与安全边际"
-  default_prompt: "使用 $public-company-financial-research，结合截至当前的最新数据和消息，拆解这家上市公司的核心商业模式与驱动指标，并给出长期投资结论。"
+  short_description: "构建可审计数据包，评估商业模式、核心驱动与长期价值"
+  default_prompt: "使用 $public-company-financial-research，先构建截至当前的可审计数据包，再拆解公司的商业模式与核心驱动、判断最新变化，并给出长期投资结论。"
