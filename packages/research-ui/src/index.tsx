@@ -1,5 +1,8 @@
 import type { ReactNode } from "react";
-import type { ResearchSnapshot } from "@airesearch/research-schema";
+import {
+  compareResearchSnapshots,
+  type ResearchSnapshot,
+} from "@airesearch/research-schema";
 
 export function formatPrice(value: string, currency: string) {
   return `${currency === "HKD" ? "HK$" : `${currency} `}${value}`;
@@ -51,11 +54,20 @@ function linePoints(values: Array<number | null>, min: number, max: number) {
     .join(" ");
 }
 
+function financialNumber(value: FinancialValue) {
+  const multiplier = value.scale === "hundred-million"
+    ? 100_000_000
+    : value.scale === "million"
+      ? 1_000_000
+      : 1;
+  return Number(value.value) * multiplier;
+}
+
 function FinancialTrendChart({ snapshot }: { snapshot: ResearchSnapshot }) {
   const series = [
-    { label: "收入", values: snapshot.financialHistory.map((item) => Number(item.revenue)), className: "chart-line--ink" },
-    { label: "净利润", values: snapshot.financialHistory.map((item) => Number(item.netProfit)), className: "chart-line--signal" },
-    { label: "FCF", values: snapshot.financialHistory.map((item) => item.freeCashFlow ? Number(item.freeCashFlow) : null), className: "chart-line--muted" },
+    { label: "收入", values: snapshot.financialHistory.map((item) => financialNumber(item.revenue)), className: "chart-line--ink" },
+    { label: "净利润", values: snapshot.financialHistory.map((item) => financialNumber(item.netProfit)), className: "chart-line--signal" },
+    { label: "FCF", values: snapshot.financialHistory.map((item) => item.freeCashFlow ? financialNumber(item.freeCashFlow) : null), className: "chart-line--muted" },
   ];
   const values = series.flatMap((item) => item.values).filter((value): value is number => value !== null);
   const min = Math.min(...values, 0);
@@ -76,21 +88,48 @@ function FinancialTrendChart({ snapshot }: { snapshot: ResearchSnapshot }) {
   );
 }
 
-function DriverTrendChart({ snapshot }: { snapshot: ResearchSnapshot }) {
-  const drivers = snapshot.driverMetrics.slice(0, 5);
+function DriverTrendChart({
+  snapshot,
+  priorSnapshot,
+}: {
+  snapshot: ResearchSnapshot;
+  priorSnapshot?: ResearchSnapshot;
+}) {
+  const comparison = priorSnapshot
+    ? compareResearchSnapshots(priorSnapshot, snapshot)
+    : null;
+  const drivers = snapshot.driverMetrics.slice(0, 5).map((driver) => ({
+    driver,
+    comparison: comparison?.driverMetrics.find((item) => item.driverId === driver.id),
+  }));
+  const accessibleTitle = priorSnapshot
+    ? "两份研究快照中的核心经营驱动实际值对比"
+    : "首份研究快照中的核心经营驱动实际值";
   return (
-    <svg role="img" aria-label="核心经营驱动及其改善或恶化方向" viewBox="0 0 340 165">
-      <title>核心经营驱动及其改善或恶化方向</title>
-      {drivers.map((driver, index) => {
-        const score = driver.trend === "改善" ? 82 : driver.trend === "恶化" ? 28 : driver.trend === "稳定" ? 58 : 45;
-        return <g key={driver.id}><text x="8" y={24 + index * 29} className="chart-driver-label">{driver.label.slice(0, 10)}</text><rect x="148" y={11 + index * 29} width="170" height="14" className="chart-track" /><rect x="148" y={11 + index * 29} width={score * 1.7} height="14" className={driver.trend === "改善" ? "chart-value--signal" : "chart-value--ink"} /><text x="324" y={23 + index * 29} textAnchor="end" className="chart-trend">{driver.trend}</text></g>;
+    <svg role="img" aria-label={accessibleTitle} viewBox="0 0 520 190">
+      <title>{accessibleTitle}</title>
+      <text x="190" y="18" className="chart-legend">前次快照</text>
+      <text x="340" y="18" className="chart-legend">本次快照</text>
+      {drivers.map(({ driver, comparison: item }, index) => {
+        const y = 48 + index * 29;
+        const priorValue = item?.prior?.displayValue ?? (priorSnapshot ? "无同名驱动" : "无前期基线");
+        const compatible = item?.status === "comparable";
+        return (
+          <g key={driver.id}>
+            <text x="8" y={y} className="chart-driver-label">{driver.label.slice(0, 11)}</text>
+            <text x="190" y={y} className="chart-trend">{priorValue.slice(0, 16)}</text>
+            <text x="315" y={y} className="chart-trend">{compatible ? "→" : "≠"}</text>
+            <text x="340" y={y} className="chart-trend">{driver.displayValue.slice(0, 16)}</text>
+            <text x="510" y={y} textAnchor="end" className="chart-legend">{compatible ? driver.trend : "不可比较"}</text>
+          </g>
+        );
       })}
     </svg>
   );
 }
 
 function MarginCapitalChart({ snapshot }: { snapshot: ResearchSnapshot }) {
-  const margins = snapshot.financialHistory.map((item) => item.grossMargin ? Number(item.grossMargin) : null);
+  const margins = snapshot.financialHistory.map((item) => item.grossMargin ? Number(item.grossMargin.value) : null);
   const available = margins.filter((value): value is number => value !== null);
   const min = Math.min(...available, 0);
   const max = Math.max(...available, 1);
@@ -153,7 +192,31 @@ function ReportHeader({ snapshot }: { snapshot: ResearchSnapshot }) {
   );
 }
 
-export function ReportView({ snapshot }: { snapshot: ResearchSnapshot }) {
+type FinancialValue = ResearchSnapshot["financialHistory"][number]["revenue"];
+
+function formatFinancialValue(value?: FinancialValue) {
+  if (!value) return "未披露";
+  if (value.unit === "percent") return `${value.value}%`;
+  if (value.unit === "percentage-point") return `${value.value} 个百分点`;
+  if (value.unit === "currency") {
+    const currency = value.currency === "CNY" ? "人民币" : value.currency;
+    const scale = value.scale === "hundred-million"
+      ? "亿元"
+      : value.scale === "million"
+        ? "百万元"
+        : "元";
+    return `${value.value} ${currency}${scale}`;
+  }
+  return value.value;
+}
+
+export function ReportView({
+  snapshot,
+  priorSnapshot,
+}: {
+  snapshot: ResearchSnapshot;
+  priorSnapshot?: ResearchSnapshot;
+}) {
   const evidenceNumbers = new Map(
     snapshot.evidence.map((item, index) => [item.id, index + 1]),
   );
@@ -170,6 +233,7 @@ export function ReportView({ snapshot }: { snapshot: ResearchSnapshot }) {
         <a href="#metrics">核心指标</a>
         <a href="#financials">财务</a>
         <a href="#valuation">估值</a>
+        <a href="#view-changes">观点变化条件</a>
         <a href="#evidence">资料</a>
       </nav>
 
@@ -233,7 +297,7 @@ export function ReportView({ snapshot }: { snapshot: ResearchSnapshot }) {
           </div>
           <div className="chart-grid" aria-label="关键决策图表">
             <DecisionFigure title="财务趋势" caption="收入、净利润与近似自由现金流使用同一年度序列；缺失年份不补零。" references={sourceIds(financialEvidenceIds, evidenceNumbers)}><FinancialTrendChart snapshot={snapshot} /></DecisionFigure>
-            <DecisionFigure title="核心驱动趋势" caption="方向来自各驱动的最新趋势判断，具体值、定义与阈值见上方指标卡。" references={sourceIds(snapshot.driverMetrics.flatMap((metric) => metric.evidenceIds), evidenceNumbers)}><DriverTrendChart snapshot={snapshot} /></DecisionFigure>
+            <DecisionFigure title="核心驱动趋势" caption={priorSnapshot ? "展示两份研究快照中的实际值；只有定义版本、单位、期间类型与会计口径兼容时才连接并判断变化。" : "这是首份结构化快照，图中只展示本次实际值，并明确标注没有可比较的前期基线。"} references={sourceIds(snapshot.driverMetrics.flatMap((metric) => metric.evidenceIds), evidenceNumbers)}><DriverTrendChart snapshot={snapshot} priorSnapshot={priorSnapshot} /></DecisionFigure>
             <DecisionFigure title="利润率与资本回报" caption="毛利率呈现多期变化；ROIC 因投入资本口径不足而明确标为不可用。" references={sourceIds(financialEvidenceIds, evidenceNumbers)}><MarginCapitalChart snapshot={snapshot} /></DecisionFigure>
             <DecisionFigure title="估值情景" caption="熊市、基准与牛市区间相对当前参考价格的位置。" references={sourceIds(snapshot.valuation.evidenceIds, evidenceNumbers)}><ValuationScenarioChart snapshot={snapshot} /></DecisionFigure>
           </div>
@@ -247,10 +311,10 @@ export function ReportView({ snapshot }: { snapshot: ResearchSnapshot }) {
           <h2>年度财务轨迹</h2>
           <div className="table-wrap">
             <table>
-              <thead><tr><th>期间</th><th>收入<br />亿元</th><th>收入增速</th><th>毛利率</th><th>经营利润率</th><th>净利润<br />亿元</th><th>经营现金流<br />亿元</th></tr></thead>
+              <thead><tr><th>期间</th><th>收入</th><th>收入增速</th><th>毛利率</th><th>经营利润率</th><th>净利润</th><th>经营现金流</th></tr></thead>
               <tbody>
                 {snapshot.financialHistory.map((item) => (
-                  <tr key={item.period}><th>{item.period}{sourceIds(item.evidenceIds, evidenceNumbers)}</th><td>{item.revenue}</td><td>{item.revenueGrowth === undefined ? "未披露" : `${Number(item.revenueGrowth) > 0 ? "+" : ""}${item.revenueGrowth}%`}</td><td>{item.grossMargin === undefined ? "未披露" : `${item.grossMargin}%`}</td><td>{item.operatingMargin === undefined ? "未披露" : `${item.operatingMargin}%`}</td><td>{item.netProfit}</td><td>{item.operatingCashFlow ?? "未披露"}</td></tr>
+                  <tr key={item.period}><th>{item.period}{sourceIds(item.evidenceIds, evidenceNumbers)}</th><td>{formatFinancialValue(item.revenue)}</td><td>{formatFinancialValue(item.revenueGrowth)}</td><td>{formatFinancialValue(item.grossMargin)}</td><td>{formatFinancialValue(item.operatingMargin)}</td><td>{formatFinancialValue(item.netProfit)}</td><td>{formatFinancialValue(item.operatingCashFlow)}</td></tr>
                 ))}
               </tbody>
             </table>
@@ -278,8 +342,16 @@ export function ReportView({ snapshot }: { snapshot: ResearchSnapshot }) {
         </div>
       </section>
 
-      <section className="report-section">
+      <section className="report-section" id="view-changes">
         <div className="section-number">{String(snapshot.sections.length + 5).padStart(2, "0")}</div>
+        <div className="section-content split-section">
+          <article><p className="section-kicker">UPGRADE CONDITIONS</p><h2>什么会提高当前判断</h2><ol className="editorial-list">{snapshot.viewChanges.upgrade.map((item) => <li key={item}>{item}</li>)}</ol></article>
+          <article><p className="section-kicker">DOWNGRADE CONDITIONS</p><h2>什么会降低当前判断</h2><ol className="editorial-list">{snapshot.viewChanges.downgrade.map((item) => <li key={item}>{item}</li>)}</ol></article>
+        </div>
+      </section>
+
+      <section className="report-section">
+        <div className="section-number">{String(snapshot.sections.length + 6).padStart(2, "0")}</div>
         <div className="section-content split-section">
           <article><p className="section-kicker">DOWNSIDE</p><h2>核心风险</h2><ol className="editorial-list">{snapshot.risks.map((risk) => <li key={risk}>{risk}</li>)}</ol></article>
           <article><p className="section-kicker">VALIDATION</p><h2>后续跟踪点</h2><ol className="editorial-list">{snapshot.checkpoints.map((item) => <li key={item}>{item}</li>)}</ol></article>
@@ -287,7 +359,7 @@ export function ReportView({ snapshot }: { snapshot: ResearchSnapshot }) {
       </section>
 
       <section className="report-section evidence-section" id="evidence">
-        <div className="section-number">{String(snapshot.sections.length + 6).padStart(2, "0")}</div>
+        <div className="section-number">{String(snapshot.sections.length + 7).padStart(2, "0")}</div>
         <div className="section-content">
           <p className="section-kicker">AUDIT TRAIL</p>
           <h2>已查阅资料</h2>

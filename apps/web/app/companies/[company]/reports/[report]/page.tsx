@@ -41,13 +41,21 @@ export async function generateMetadata({
 
 export default async function ReportPage({ params }: ReportPageProps) {
   const route = await params;
-  const loaded = loadResearchSnapshot(repoRoot(), route.company, route.report);
+  const snapshots = listResearchSnapshots(repoRoot(), route.company);
+  const currentIndex = snapshots.findIndex(
+    ({ data }) => data.snapshot.id === route.report,
+  );
+  if (currentIndex < 0) {
+    throw new Error(`Unknown research snapshot: ${route.company}/${route.report}`);
+  }
+  const loaded = snapshots[currentIndex];
+  const prior = currentIndex > 0 ? snapshots[currentIndex - 1] : undefined;
 
   return (
     <>
       <link rel="stylesheet" href="../../../assets/research.css" />
       <script defer src="../../../assets/research.js" />
-      <ReportView snapshot={loaded.data} />
+      <ReportView snapshot={loaded.data} priorSnapshot={prior?.data} />
     </>
   );
 }

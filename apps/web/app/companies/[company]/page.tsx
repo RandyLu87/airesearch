@@ -37,8 +37,22 @@ function formatMetric(metric?: MetricObservation) {
   if (!metric || metric.status === "unavailable" || metric.value === undefined) {
     return "未披露";
   }
-  const suffix = metric.unit === "percent" ? "%" : metric.currency === "CNY" ? " 亿元" : "";
-  return `${metric.value}${suffix}`;
+  if (metric.unit === "percent") return `${metric.value}%`;
+  if (metric.unit === "percentage-point") return `${metric.value} 个百分点`;
+  if (metric.unit === "currency") {
+    const currency = metric.currency === "CNY" ? "人民币" : metric.currency;
+    const scale = metric.scale === "hundred-million"
+      ? "亿元"
+      : metric.scale === "million"
+        ? "百万元"
+        : "元";
+    return `${metric.value} ${currency}${scale}`;
+  }
+  return metric.value;
+}
+
+function formatRange(low: string, high: string, currency: string) {
+  return `${formatPrice(low, currency)}–${high}`;
 }
 
 export default async function CompanyPage({ params }: CompanyPageProps) {
@@ -47,10 +61,12 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
   const current = snapshots.at(-1);
   const previous = snapshots.at(-2);
 
-  if (!current || !previous) {
-    throw new Error(`Two research snapshots are required for ${route.company}`);
+  if (!current) {
+    throw new Error(`No research snapshot found for ${route.company}`);
   }
-  const comparison = compareResearchSnapshots(previous.data, current.data);
+  const comparison = previous
+    ? compareResearchSnapshots(previous.data, current.data)
+    : null;
 
   return (
     <>
@@ -66,9 +82,11 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
           <div><span>当前研究</span><strong>{current.data.snapshot.dataCutoff.slice(0, 10)}</strong></div>
           <div><span>投资立场</span><strong>{current.data.summary.stance}</strong></div>
           <div><span>参考价格</span><strong>{formatPrice(current.data.summary.referencePrice.value, current.data.summary.referencePrice.currency)}</strong></div>
-          <div><span>合理价值</span><strong>HK${current.data.summary.fairValue.low}–{current.data.summary.fairValue.high}</strong></div>
+          <div><span>合理价值</span><strong>{formatRange(current.data.summary.fairValue.low, current.data.summary.fairValue.high, current.data.summary.fairValue.currency)}</strong></div>
         </div>
 
+        {comparison ? (
+        <>
         <section className="company-section" aria-labelledby="snapshot-comparison">
           <p className="section-kicker">WHAT CHANGED</p>
           <h2 id="snapshot-comparison">研究快照对比</h2>
@@ -78,14 +96,14 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
               <h3>{comparison.prior.stance}</h3>
               <strong>{formatPrice(comparison.prior.referencePrice.value, comparison.prior.referencePrice.currency)} · 置信度 {comparison.prior.confidence}</strong>
               <p>{comparison.prior.businessModel}</p>
-              <dl><dt>商业模式变化</dt><dd>{comparison.prior.businessModelChange}</dd><dt>合理价值</dt><dd>HK${comparison.prior.fairValue.low}–{comparison.prior.fairValue.high}</dd><dt>最紧约束</dt><dd>{comparison.prior.constraints.map((item) => item.label).join("；")}</dd></dl>
+              <dl><dt>商业模式变化</dt><dd>{comparison.prior.businessModelChange}</dd><dt>合理价值</dt><dd>{formatRange(comparison.prior.fairValue.low, comparison.prior.fairValue.high, comparison.prior.fairValue.currency)}</dd><dt>最紧约束</dt><dd>{comparison.prior.constraints.map((item) => item.label).join("；")}</dd></dl>
             </article>
             <article className="snapshot-card">
               <time>{comparison.current.date}</time>
               <h3>{comparison.current.stance}</h3>
               <strong>{formatPrice(comparison.current.referencePrice.value, comparison.current.referencePrice.currency)} · 置信度 {comparison.current.confidence}</strong>
               <p>{comparison.current.businessModel}</p>
-              <dl><dt>商业模式变化</dt><dd>{comparison.current.businessModelChange}</dd><dt>合理价值</dt><dd>HK${comparison.current.fairValue.low}–{comparison.current.fairValue.high}</dd><dt>最紧约束</dt><dd>{comparison.current.constraints.map((item) => item.label).join("；")}</dd></dl>
+              <dl><dt>商业模式变化</dt><dd>{comparison.current.businessModelChange}</dd><dt>合理价值</dt><dd>{formatRange(comparison.current.fairValue.low, comparison.current.fairValue.high, comparison.current.fairValue.currency)}</dd><dt>最紧约束</dt><dd>{comparison.current.constraints.map((item) => item.label).join("；")}</dd></dl>
             </article>
           </div>
           <h3 className="comparison-heading">标准指标</h3>
@@ -110,10 +128,10 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
         <section className="company-section">
           <p className="section-kicker">BUSINESS MODEL DRIVERS</p>
           <h2>公司特定驱动对比</h2>
-          <p className="company-current">只在标识和定义都一致时比较；新出现、缺失或定义变化的驱动明确标为不可比较。</p>
+          <p className="company-current">只在标识、定义版本、单位、期间类型和会计口径都兼容时比较；其他情况明确标为不可比较。</p>
           <div className="table-wrap">
             <table>
-              <thead><tr><th>驱动指标</th><th>定义</th><th>{comparison.prior.date}</th><th>{comparison.current.date}</th><th>可比性</th><th>下一阈值</th></tr></thead>
+              <thead><tr><th>驱动指标</th><th>定义</th><th>{comparison.prior.date}</th><th>{comparison.current.date}</th><th>可比性/原因</th><th>下一阈值</th></tr></thead>
               <tbody>
                 {comparison.driverMetrics.map((metric) => (
                   <tr key={metric.driverId}>
@@ -121,7 +139,7 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
                     <td>{metric.definition}</td>
                     <td>{metric.prior?.displayValue ?? "未纳入"}</td>
                     <td>{metric.current?.displayValue ?? "未纳入"}</td>
-                    <td><span className={`comparison-status ${metric.status === "comparable" ? "" : "comparison-status--no"}`}>{metric.status === "comparable" ? "可比较" : "不可比较"}</span></td>
+                    <td><span className={`comparison-status ${metric.status === "comparable" ? "" : "comparison-status--no"}`}>{metric.status === "comparable" ? "可比较" : "不可比较"}</span>{metric.reason ? <small>{metric.reason}</small> : null}</td>
                     <td>{metric.threshold}</td>
                   </tr>
                 ))}
@@ -136,7 +154,7 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
           <div className="snapshot-pair comparison-detail-grid">
             <article className="comparison-detail">
               <span>合理价值变化</span>
-              <strong>HK${comparison.prior.fairValue.low}–{comparison.prior.fairValue.high} → HK${comparison.current.fairValue.low}–{comparison.current.fairValue.high}</strong>
+              <strong>{formatRange(comparison.prior.fairValue.low, comparison.prior.fairValue.high, comparison.prior.fairValue.currency)} → {formatRange(comparison.current.fairValue.low, comparison.current.fairValue.high, comparison.current.fairValue.currency)}</strong>
               <p>{current.data.thesisChange.valuation}</p>
             </article>
             <article className="comparison-detail">
@@ -153,6 +171,20 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
             </article>
           </div>
         </section>
+        </>
+        ) : (
+          <section className="company-section" aria-labelledby="snapshot-comparison">
+            <p className="section-kicker">FIRST SNAPSHOT</p>
+            <h2 id="snapshot-comparison">研究快照对比</h2>
+            <p className="company-current">暂无前期基线；这是该公司的首份结构化研究快照。后续研究将按同一契约展示口径兼容的变化。</p>
+            <article className="snapshot-card">
+              <time>{current.data.snapshot.dataCutoff.slice(0, 10)}</time>
+              <h3>{current.data.summary.stance}</h3>
+              <strong>{formatPrice(current.data.summary.referencePrice.value, current.data.summary.referencePrice.currency)} · 置信度 {current.data.summary.confidence}</strong>
+              <p>{current.data.summary.businessModel}</p>
+            </article>
+          </section>
+        )}
 
         <section className="company-section">
           <p className="section-kicker">RESEARCH ARCHIVE</p>

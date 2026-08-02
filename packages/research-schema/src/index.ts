@@ -49,6 +49,7 @@ const driverMetricSchema = z.object({
   id: z.string().min(1),
   label: z.string().min(1),
   definition: z.string().min(1),
+  definitionVersion: z.string().min(1),
   causalRole: z.string().min(1),
   dimension: z.enum(["增长", "盈利", "现金", "护城河", "治理"]),
   signalType: z.enum(["领先", "同步", "滞后"]),
@@ -60,6 +61,8 @@ const driverMetricSchema = z.object({
   scale: metricScaleSchema,
   precision: z.number().int().min(0).max(6),
   period: z.string().min(1),
+  periodType: z.enum(["instant", "quarter", "half-year", "fiscal-year"]),
+  accountingBasis: z.string().min(1),
   baseline: z.string().min(1),
   trend: z.enum(["改善", "稳定", "恶化", "待验证"]),
   confidence: z.enum(["高", "中", "低"]),
@@ -98,16 +101,43 @@ const narrativeSectionSchema = z.object({
   evidenceIds: z.array(z.string()).min(1),
 });
 
+const financialValueSchema = z.object({
+  value: decimalString,
+  unit: metricUnitSchema,
+  currency: z.string().optional(),
+  scale: metricScaleSchema,
+  precision: z.number().int().min(0).max(6),
+}).superRefine((metric, context) => {
+  if (metric.unit === "currency" && !metric.currency) {
+    context.addIssue({ code: "custom", message: "货币财务值必须填写 currency" });
+  }
+});
+
 const financialPeriodSchema = z.object({
   period: z.string().min(1),
-  revenue: decimalString,
-  revenueGrowth: decimalString.optional(),
-  grossMargin: decimalString.optional(),
-  operatingMargin: decimalString.optional(),
-  netProfit: decimalString,
-  operatingCashFlow: decimalString.optional(),
-  freeCashFlow: decimalString.optional(),
+  periodType: z.enum(["quarter", "half-year", "fiscal-year"]),
+  accountingBasis: z.string().min(1),
+  revenue: financialValueSchema,
+  revenueGrowth: financialValueSchema.optional(),
+  grossMargin: financialValueSchema.optional(),
+  operatingMargin: financialValueSchema.optional(),
+  netProfit: financialValueSchema,
+  operatingCashFlow: financialValueSchema.optional(),
+  freeCashFlow: financialValueSchema.optional(),
   evidenceIds: z.array(z.string()).min(1),
+}).superRefine((period, context) => {
+  for (const key of ["revenue", "netProfit", "operatingCashFlow", "freeCashFlow"] as const) {
+    const value = period[key];
+    if (value && value.unit !== "currency") {
+      context.addIssue({ code: "custom", message: `${key} 必须使用 currency 单位` });
+    }
+  }
+  for (const key of ["revenueGrowth", "grossMargin", "operatingMargin"] as const) {
+    const value = period[key];
+    if (value && value.unit !== "percent") {
+      context.addIssue({ code: "custom", message: `${key} 必须使用 percent 单位` });
+    }
+  }
 });
 
 const valuationScenarioSchema = z.object({
@@ -389,17 +419,38 @@ export function compareResearchSnapshots(
   const driverMetrics = driverIds.map((driverId) => {
     const previous = priorDrivers.get(driverId);
     const latest = currentDrivers.get(driverId);
-    const compatible =
-      previous !== undefined &&
-      latest !== undefined &&
-      previous.definition === latest.definition;
+    const compatibilityKeys: Array<keyof DriverMetric> = [
+      "definition",
+      "definitionVersion",
+      "unit",
+      "currency",
+      "scale",
+      "periodType",
+      "accountingBasis",
+    ];
+    const mismatch = previous && latest
+      ? compatibilityKeys.find((key) => previous[key] !== latest[key])
+      : undefined;
+    const unavailable = previous && latest
+      ? previous.status === "unavailable" ||
+        latest.status === "unavailable" ||
+        previous.value === undefined ||
+        latest.value === undefined
+      : false;
+    const compatible = previous !== undefined && latest !== undefined && !mismatch && !unavailable;
     return {
       driverId,
       label: latest?.label ?? previous?.label ?? driverId,
       definition: latest?.definition ?? previous?.definition ?? "",
       threshold: latest?.threshold ?? previous?.threshold ?? "",
       status: compatible ? ("comparable" as const) : ("not-comparable" as const),
-      reason: compatible ? undefined : "其中一个快照缺少该驱动，或指标定义已经变化",
+      reason: compatible
+        ? undefined
+        : unavailable
+          ? previous?.reason ?? latest?.reason ?? "其中一个驱动观测值不可用"
+          : mismatch
+            ? `口径不兼容：${mismatch}`
+            : "其中一个快照缺少该驱动",
       prior: previous,
       current: latest,
     };

@@ -1,15 +1,4 @@
-import {
-  listResearchCompanyIds,
-  listResearchSnapshots,
-} from "@airesearch/research-schema";
-import path from "node:path";
-
 export default function HomePage() {
-  const repoRoot = path.resolve(process.cwd(), "../..");
-  const companies = listResearchCompanyIds(repoRoot).map((companyId) => ({
-    companyId,
-    current: listResearchSnapshots(repoRoot, companyId).at(-1),
-  }));
   return (
     <>
       <link rel="stylesheet" href="./assets/research.css" />
@@ -20,15 +9,12 @@ export default function HomePage() {
           <p className="company-current">以商业模式、核心驱动、最新变化和安全边际为主线的长期价值研究。</p>
         </header>
         <section className="company-section">
-          <p className="section-kicker">COMPANIES</p>
-          <h2>公司索引</h2>
-          <div className="report-index">
-            {companies.map(({ companyId, current }) => current ? (
-              <a className="report-link" href={`./companies/${companyId}.html`} key={companyId}>
-                <time>{current.data.company.ticker}</time><strong>{current.data.company.name}</strong><span>查看公司研究主页 →</span>
-              </a>
-            ) : null)}
-          </div>
+          <p className="section-kicker">PILOT</p>
+          <h2>网易云音乐研究试点</h2>
+          <p className="company-current">当前版本聚焦单公司、双快照报告呈现；跨公司汇总与筛选将在后续阶段单独设计。</p>
+          <a className="report-link" href="./companies/hk-9899-netease-cloud-music.html">
+            <time>09899.HK</time><strong>网易云音乐</strong><span>查看公司研究主页 →</span>
+          </a>
         </section>
       </main>
     </>

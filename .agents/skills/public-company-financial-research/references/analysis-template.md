@@ -68,10 +68,12 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
 
 选择 5–8 个真正促使商业模式运转的公司特定指标，而不是通用 KPI 清单。每项必须包含：
 
-- 定义和因果作用；
+- 稳定 ID、定义、`definitionVersion` 和因果作用；
 - 维度：增长、盈利、现金、护城河或治理；信号属性：领先、同步或滞后；
-- 最新期间、独立数值与展示值、单位、币种、scale、precision、历史基线、趋势、置信度和证据；
+- 最新期间、`periodType`、`accountingBasis`、独立数值与展示值、单位、币种、scale、precision、历史基线、趋势、置信度和证据；
 - 下一报告期的可证伪阈值。
+
+跨快照驱动只有在定义、定义版本、单位、币种、scale、期间类型和会计基础全部兼容时才可连接或判断变化；否则必须标为“不可比较”，不能把年度值与季度值直接相减。
 
 ### `constraints`
 
@@ -83,7 +85,7 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
 
 ### `financialHistory`、`sections` 与 `valuation`
 
-- `financialHistory` 至少两个年度，尽可能覆盖五年；收入和净利润使用亿元十进制字符串，缺失现金流字段直接省略。
+- `financialHistory` 至少两个年度，尽可能覆盖五年。每个期间记录 `periodType` 与 `accountingBasis`；每个财务值使用对象保存十进制字符串 `value`、`unit`、`currency`（货币值必填）、`scale` 和 `precision`，缺失字段直接省略，禁止由渲染层假设“亿元”或默认币种。
 - `sections` 负责完整的商业模式、竞争、财务质量、组织研发、治理等论证。每节包含结论性摘要、证据要点和 evidence IDs。
 - `valuation.scenarios` 必须恰好包含熊市、基准和牛市，各自写明商业模式假设、盈利/FCF、估值方法、价值区间和触发条件。
 - `actionZones` 是条件化操作区间，不能只给目标价而没有触发行为。
