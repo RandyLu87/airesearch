@@ -102,6 +102,21 @@ test("publishes the Cloud Music company page and both dated research reports", (
     ),
     "utf8",
   );
+  const latestSnapshotSource = readFileSync(
+    path.join(
+      repoRoot,
+      "research",
+      "companies",
+      "hk-9899-netease-cloud-music",
+      "snapshots",
+      "2026-07-31-1927-analysis.json",
+    ),
+  );
+  const latestSnapshotHash = createHash("sha256")
+    .update(latestSnapshotSource)
+    .digest("hex");
+  assert.match(companyHtml, new RegExp(`name=["']research-snapshot-sha256["'][^>]+content=["']${latestSnapshotHash}["']`));
+  assert.match(companyHtml, /name=["']research-publication-version["'][^>]+content=["']0\.1\.0["']/);
   assert.match(companyHtml, /当前研究/);
   assert.match(companyHtml, /2026-07-31/);
   assert.match(companyHtml, /reports\/2026-03-26-2203-analysis\.html/);
@@ -138,6 +153,10 @@ test("publishes the Cloud Music company page and both dated research reports", (
   assert.match(latestReportHtml, /calculation/);
   assert.match(latestReportHtml, /inference/);
   assert.match(latestReportHtml, /<svg[^>]+role=["']img["']/);
+  assert.match(latestReportHtml, /财务趋势/);
+  assert.match(latestReportHtml, /核心驱动趋势/);
+  assert.match(latestReportHtml, /利润率与资本回报/);
+  assert.match(latestReportHtml, /估值情景/);
   assert.match(latestReportHtml, /\.\.\/\.\.\/\.\.\/assets\/research\.css/);
   assert.doesNotMatch(latestReportHtml, /(?:src|href)=["']\//);
   assert.doesNotMatch(latestReportHtml, /__next_f|\/_next\//);

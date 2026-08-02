@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "scripts": {
     "build": "next build",
+    "dev": "next dev",
     "publish": "next build && node scripts/copy-output.mjs",
     "typecheck": "tsc --noEmit"
   },

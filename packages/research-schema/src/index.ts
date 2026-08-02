@@ -5,6 +5,15 @@ import Decimal from "decimal.js";
 import { z } from "zod";
 
 const decimalString = z.string().regex(/^-?\d+(?:\.\d+)?$/);
+const metricUnitSchema = z.enum([
+  "currency",
+  "percent",
+  "percentage-point",
+  "shares",
+  "multiple",
+  "count",
+]);
+const metricScaleSchema = z.enum(["one", "million", "hundred-million"]);
 
 const observationSchema = z.object({
   metricId: z.string().min(1),
@@ -12,22 +21,28 @@ const observationSchema = z.object({
   definitionVersion: z.string().min(1),
   status: z.enum(["reported", "calculated", "unavailable"]),
   value: decimalString.optional(),
-  unit: z.enum([
-    "currency",
-    "percent",
-    "percentage-point",
-    "shares",
-    "multiple",
-    "count",
-  ]),
+  unit: metricUnitSchema,
   currency: z.string().optional(),
-  scale: z.enum(["one", "million", "hundred-million"]),
+  scale: metricScaleSchema,
   period: z.string().min(1),
   periodType: z.enum(["instant", "quarter", "half-year", "fiscal-year"]),
   accountingBasis: z.string().min(1),
   precision: z.number().int().min(0).max(6),
   reason: z.string().min(1).optional(),
   evidenceIds: z.array(z.string()),
+}).superRefine((metric, context) => {
+  if (metric.status === "unavailable" && (!metric.reason || metric.value !== undefined)) {
+    context.addIssue({
+      code: "custom",
+      message: "unavailable 指标必须省略 value 并填写 reason",
+    });
+  }
+  if (metric.status !== "unavailable" && metric.value === undefined) {
+    context.addIssue({ code: "custom", message: "可用指标必须填写 value" });
+  }
+  if (metric.unit === "currency" && !metric.currency) {
+    context.addIssue({ code: "custom", message: "货币指标必须填写 currency" });
+  }
 });
 
 const driverMetricSchema = z.object({
@@ -35,16 +50,32 @@ const driverMetricSchema = z.object({
   label: z.string().min(1),
   definition: z.string().min(1),
   causalRole: z.string().min(1),
-  property: z.enum(["增长", "盈利", "现金", "护城河", "治理"]),
+  dimension: z.enum(["增长", "盈利", "现金", "护城河", "治理"]),
+  signalType: z.enum(["领先", "同步", "滞后"]),
   status: z.enum(["reported", "calculated", "unavailable"]),
   value: decimalString.optional(),
   displayValue: z.string().min(1),
+  unit: metricUnitSchema,
+  currency: z.string().optional(),
+  scale: metricScaleSchema,
+  precision: z.number().int().min(0).max(6),
   period: z.string().min(1),
+  baseline: z.string().min(1),
   trend: z.enum(["改善", "稳定", "恶化", "待验证"]),
   confidence: z.enum(["高", "中", "低"]),
   threshold: z.string().min(1),
   reason: z.string().min(1).optional(),
   evidenceIds: z.array(z.string()).min(1),
+}).superRefine((metric, context) => {
+  if (metric.status === "unavailable" && !metric.reason) {
+    context.addIssue({ code: "custom", message: "unavailable 驱动必须填写 reason" });
+  }
+  if (metric.status !== "unavailable" && metric.value === undefined) {
+    context.addIssue({ code: "custom", message: "可用驱动必须填写 value" });
+  }
+  if (metric.unit === "currency" && !metric.currency) {
+    context.addIssue({ code: "custom", message: "货币驱动必须填写 currency" });
+  }
 });
 
 const evidenceSchema = z.object({
@@ -70,12 +101,13 @@ const narrativeSectionSchema = z.object({
 const financialPeriodSchema = z.object({
   period: z.string().min(1),
   revenue: decimalString,
-  revenueGrowth: z.string().min(1),
-  grossMargin: z.string().min(1),
-  operatingMargin: z.string().min(1),
+  revenueGrowth: decimalString.optional(),
+  grossMargin: decimalString.optional(),
+  operatingMargin: decimalString.optional(),
   netProfit: decimalString,
   operatingCashFlow: decimalString.optional(),
   freeCashFlow: decimalString.optional(),
+  evidenceIds: z.array(z.string()).min(1),
 });
 
 const valuationScenarioSchema = z.object({
@@ -108,8 +140,9 @@ export const researchSnapshotSchema = z.object({
     id: z.string().min(1),
     createdAt: z.iso.datetime({ offset: true }),
     dataCutoff: z.iso.datetime({ offset: true }),
-    sourceNote: z.string().min(1),
+    sourceNote: z.string().min(1).optional(),
   }),
+  investmentHorizon: z.string().min(1),
   summary: z.object({
     stance: z.string().min(1),
     confidence: z.enum(["高", "中", "低"]),
@@ -134,6 +167,13 @@ export const researchSnapshotSchema = z.object({
   }),
   standardMetrics: z.array(observationSchema),
   driverMetrics: z.array(driverMetricSchema).min(4),
+  constraints: z.array(z.object({
+    id: z.string().min(1),
+    label: z.string().min(1),
+    status: z.enum(["改善", "稳定", "恶化", "待验证"]),
+    explanation: z.string().min(1),
+    evidenceIds: z.array(z.string()).min(1),
+  })).min(1).max(3),
   thesisChange: z.object({
     investmentLogic: z.string().min(1),
     financialQuality: z.string().min(1),
@@ -148,6 +188,7 @@ export const researchSnapshotSchema = z.object({
     scenarios: z.array(valuationScenarioSchema).length(3),
     actionZones: z.array(actionZoneSchema).min(3),
     currentExpectation: z.string().min(1),
+    evidenceIds: z.array(z.string()).min(1),
   }),
   risks: z.array(z.string().min(1)).min(3),
   viewChanges: z.object({
@@ -157,6 +198,33 @@ export const researchSnapshotSchema = z.object({
   checkpoints: z.array(z.string().min(1)).min(3),
   evidence: z.array(evidenceSchema).min(2),
   disclaimer: z.string().min(1),
+}).superRefine((snapshot, context) => {
+  const evidenceIds = new Set<string>();
+  for (const evidence of snapshot.evidence) {
+    if (evidenceIds.has(evidence.id)) {
+      context.addIssue({ code: "custom", message: `重复 evidence id：${evidence.id}` });
+    }
+    evidenceIds.add(evidence.id);
+  }
+  const references = [
+    ...snapshot.standardMetrics.flatMap((metric) => metric.evidenceIds),
+    ...snapshot.driverMetrics.flatMap((metric) => metric.evidenceIds),
+    ...snapshot.constraints.flatMap((constraint) => constraint.evidenceIds),
+    ...snapshot.financialHistory.flatMap((period) => period.evidenceIds),
+    ...snapshot.sections.flatMap((section) => section.evidenceIds),
+    ...snapshot.valuation.evidenceIds,
+  ];
+  for (const evidenceId of references) {
+    if (!evidenceIds.has(evidenceId)) {
+      context.addIssue({ code: "custom", message: `引用了不存在的 evidence id：${evidenceId}` });
+    }
+  }
+  const low = new Decimal(snapshot.summary.fairValue.low);
+  const center = new Decimal(snapshot.summary.fairValue.center);
+  const high = new Decimal(snapshot.summary.fairValue.high);
+  if (low.greaterThan(center) || center.greaterThan(high)) {
+    context.addIssue({ code: "custom", message: "合理价值必须满足 low <= center <= high" });
+  }
 });
 
 export type ResearchSnapshot = z.infer<typeof researchSnapshotSchema>;
@@ -206,6 +274,26 @@ export function listResearchSnapshots(repoRoot: string, companyId: string) {
     .sort((left, right) =>
       left.data.snapshot.createdAt.localeCompare(right.data.snapshot.createdAt),
     );
+}
+
+export function listResearchCompanyIds(repoRoot: string) {
+  const companiesDirectory = path.join(repoRoot, "research", "companies");
+  return readdirSync(companiesDirectory, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .filter((companyId) => {
+      const snapshotsDirectory = path.join(
+        companiesDirectory,
+        companyId,
+        "snapshots",
+      );
+      try {
+        return readdirSync(snapshotsDirectory).some((name) => name.endsWith(".json"));
+      } catch {
+        return false;
+      }
+    })
+    .sort();
 }
 
 function observationCompatibility(
@@ -329,6 +417,7 @@ export function compareResearchSnapshots(
       confidence: prior.summary.confidence,
       businessModel: prior.summary.businessModel,
       businessModelChange: prior.summary.businessModelChange,
+      constraints: prior.constraints,
       referencePrice: prior.summary.referencePrice,
       fairValue: prior.summary.fairValue,
     },
@@ -338,6 +427,7 @@ export function compareResearchSnapshots(
       confidence: current.summary.confidence,
       businessModel: current.summary.businessModel,
       businessModelChange: current.summary.businessModelChange,
+      constraints: current.constraints,
       referencePrice: current.summary.referencePrice,
       fairValue: current.summary.fairValue,
     },

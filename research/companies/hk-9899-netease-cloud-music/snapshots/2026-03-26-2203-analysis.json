@@ -15,6 +15,7 @@
     "dataCutoff": "2026-03-26T22:03:00+08:00",
     "sourceNote": "2026-03-26-2203-analysis.md"
   },
+  "investmentHorizon": "3-5 年",
   "summary": {
     "stance": "Watchlist",
     "confidence": "中",
@@ -219,11 +220,16 @@
       "label": "在线音乐服务收入增速",
       "definition": "在线音乐服务收入同比变化",
       "causalRole": "验证订阅核心能否抵消社交娱乐收缩",
-      "property": "增长",
+      "dimension": "增长",
+      "signalType": "滞后",
       "status": "reported",
       "value": "12.0",
       "displayValue": "+12.0%",
+      "unit": "percent",
+      "scale": "one",
+      "precision": 1,
       "period": "FY2025",
+      "baseline": "FY2024 在线音乐服务收入约 53.5 亿元",
       "trend": "改善",
       "confidence": "高",
       "threshold": "连续两期维持高个位数以上",
@@ -234,11 +240,16 @@
       "label": "毛利率",
       "definition": "毛利除以收入",
       "causalRole": "检验内容成本与产品效率的经营杠杆",
-      "property": "盈利",
+      "dimension": "盈利",
+      "signalType": "同步",
       "status": "reported",
       "value": "35.7",
       "displayValue": "35.7%",
+      "unit": "percent",
+      "scale": "one",
+      "precision": 1,
       "period": "FY2025",
+      "baseline": "FY2024 毛利率 33.7%",
       "trend": "改善",
       "confidence": "高",
       "threshold": "增长恢复时不明显回吐",
@@ -249,11 +260,16 @@
       "label": "正常化市盈率",
       "definition": "剔除一次性递延税项后的市值/盈利",
       "causalRole": "把表观便宜与真实盈利质量分开",
-      "property": "现金",
+      "dimension": "现金",
+      "signalType": "滞后",
       "status": "calculated",
       "value": "12.0",
       "displayValue": "约 12x",
+      "unit": "multiple",
+      "scale": "one",
+      "precision": 1,
       "period": "2026-03-26",
+      "baseline": "报表口径市盈率约 9.05x",
       "trend": "稳定",
       "confidence": "中",
       "threshold": "低于 10x 或盈利持续上修",
@@ -264,14 +280,42 @@
       "label": "股东回报力度",
       "definition": "分红与回购相对现金创造和总股本的力度",
       "causalRole": "检验大额闲置现金能否转化为每股价值",
-      "property": "治理",
+      "dimension": "治理",
+      "signalType": "滞后",
       "status": "reported",
       "value": "0.1708",
       "displayValue": "回购约总股本 0.17%，无分红",
+      "unit": "percent",
+      "scale": "one",
+      "precision": 4,
       "period": "截至 2026-02-20",
+      "baseline": "此前没有持续回购或分红政策",
       "trend": "待验证",
       "confidence": "高",
       "threshold": "形成持续且有实质规模的回购或分红政策",
+      "evidenceIds": ["buyback-2026-02-20"]
+    }
+  ],
+  "constraints": [
+    {
+      "id": "consolidated-growth",
+      "label": "核心增长尚未完全抵消社交娱乐收缩",
+      "status": "待验证",
+      "explanation": "2025 年总收入仍同比下降 2.4%，需要总收入连续恢复高个位数增长。",
+      "evidenceIds": ["annual-results-2025"]
+    },
+    {
+      "id": "cash-flow-visibility",
+      "label": "2025 年现金流尚未完整披露",
+      "status": "待验证",
+      "explanation": "年度业绩公告缺少完整现金流量表，经营现金流和 FCF 需等待年报。",
+      "evidenceIds": ["annual-results-2025"]
+    },
+    {
+      "id": "capital-allocation",
+      "label": "闲置现金尚未形成稳定股东回报",
+      "status": "稳定",
+      "explanation": "公司无分红且回购规模约占总股本 0.17%。",
       "evidenceIds": ["buyback-2026-02-20"]
     }
   ],
@@ -291,20 +335,22 @@
     {
       "period": "FY2024",
       "revenue": "79.50",
-      "revenueGrowth": "+1.1%",
-      "grossMargin": "33.7%",
-      "operatingMargin": "14.7%",
+      "revenueGrowth": "1.1",
+      "grossMargin": "33.7",
+      "operatingMargin": "14.7",
       "netProfit": "15.62",
       "operatingCashFlow": "17.75",
-      "freeCashFlow": "17.71"
+      "freeCashFlow": "17.71",
+      "evidenceIds": ["annual-results-2025"]
     },
     {
       "period": "FY2025",
       "revenue": "77.60",
-      "revenueGrowth": "-2.4%",
-      "grossMargin": "35.7%",
-      "operatingMargin": "20.9%",
-      "netProfit": "27.48"
+      "revenueGrowth": "-2.4",
+      "grossMargin": "35.7",
+      "operatingMargin": "20.9",
+      "netProfit": "27.48",
+      "evidenceIds": ["annual-results-2025"]
     }
   ],
   "sections": [
@@ -374,7 +420,8 @@
       { "label": "观察区", "range": "HK$110-136", "action": "等待增长与现金流验证" },
       { "label": "兑现区", "range": "HK$136 以上", "action": "需要更强增长证据支撑" }
     ],
-    "currentExpectation": "当前价格隐含业务维持温和增长和利润率稳定，但没有为治理风险留下宽裕安全边际。"
+    "currentExpectation": "当前价格隐含业务维持温和增长和利润率稳定，但没有为治理风险留下宽裕安全边际。",
+    "evidenceIds": ["annual-results-2025", "market-price-2026-03-26", "normalized-pe-calculation"]
   },
   "risks": [
     "在线音乐订阅增长放缓，无法抵消社交娱乐继续收缩。",
@@ -439,7 +486,7 @@
       "periodOrEventDate": "2026-03-26",
       "publishedAt": "2026-03-26",
       "retrievedAt": "2026-03-26T22:03:00+08:00",
-      "url": "https://github.com/RandyLu87/airesearch/blob/main/research/companies/hk-9899-netease-cloud-music/2026-03-26-2203-analysis.md",
+      "url": "https://stockanalysis.com/quote/hkg/9899/",
       "caveat": "使用市场市值与剔除 7.467 亿元递延税项后的正常化盈利复算。"
     }
   ],

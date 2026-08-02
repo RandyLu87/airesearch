@@ -21,9 +21,11 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
   "schemaVersion": "1.0.0",
   "company": {},
   "snapshot": {},
+  "investmentHorizon": "3-5 年",
   "summary": {},
   "standardMetrics": [],
   "driverMetrics": [],
+  "constraints": [],
   "thesisChange": {},
   "financialHistory": [],
   "sections": [],
@@ -42,7 +44,7 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
 
 - `company`：规范 ID、公司名、法定名、ticker、市场、报告币种、会计准则。
 - `snapshot.createdAt`：研究快照创建时间；`dataCutoff`：本次消息与数据截止时间。均使用带时区 ISO 8601。
-- `snapshot.sourceNote`：从历史 Markdown 迁移时指向公司目录内的原文件；没有历史文件时可写本次研究过程保留的输入记录文件名。
+- `snapshot.sourceNote`：从历史 Markdown 迁移时指向公司目录内的原文件；没有历史迁移输入时省略。
 
 ### `summary`
 
@@ -67,9 +69,13 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
 选择 5–8 个真正促使商业模式运转的公司特定指标，而不是通用 KPI 清单。每项必须包含：
 
 - 定义和因果作用；
-- 属性：增长、盈利、现金、护城河或治理；
-- 最新期间、展示值、趋势、置信度和证据；
+- 维度：增长、盈利、现金、护城河或治理；信号属性：领先、同步或滞后；
+- 最新期间、独立数值与展示值、单位、币种、scale、precision、历史基线、趋势、置信度和证据；
 - 下一报告期的可证伪阈值。
+
+### `constraints`
+
+保存当前阻断商业模式飞轮的 1–3 个最紧约束。每项包含稳定 ID、标签、改善/稳定/恶化/待验证状态、解释和 evidence IDs，供公司主页跨快照比较。
 
 ### `thesisChange`
 

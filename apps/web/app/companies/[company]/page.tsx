@@ -1,27 +1,36 @@
 import {
   compareResearchSnapshots,
+  listResearchCompanyIds,
   listResearchSnapshots,
   type MetricObservation,
 } from "@airesearch/research-schema";
+import { formatPrice } from "@airesearch/research-ui";
 import type { Metadata } from "next";
 import path from "node:path";
 
-const company = "hk-9899-netease-cloud-music";
-
-export function generateStaticParams() {
-  return [{ company }];
+function repoRoot() {
+  return path.resolve(process.cwd(), "../..");
 }
 
-export const metadata: Metadata = {
-  title: "网易云音乐公司研究主页",
-};
+export function generateStaticParams() {
+  return listResearchCompanyIds(repoRoot()).map((company) => ({ company }));
+}
 
 type CompanyPageProps = {
   params: Promise<{ company: string }>;
 };
 
-function formatReferencePrice(price: { value: string; currency: string }) {
-  return `${price.currency === "HKD" ? "HK$" : `${price.currency} `}${price.value}`;
+export async function generateMetadata({ params }: CompanyPageProps): Promise<Metadata> {
+  const route = await params;
+  const current = listResearchSnapshots(repoRoot(), route.company).at(-1);
+  if (!current) return {};
+  return {
+    title: `${current.data.company.name}公司研究主页`,
+    other: {
+      "research-snapshot-sha256": current.sha256,
+      "research-publication-version": "0.1.0",
+    },
+  };
 }
 
 function formatMetric(metric?: MetricObservation) {
@@ -34,8 +43,7 @@ function formatMetric(metric?: MetricObservation) {
 
 export default async function CompanyPage({ params }: CompanyPageProps) {
   const route = await params;
-  const repoRoot = path.resolve(process.cwd(), "../..");
-  const snapshots = listResearchSnapshots(repoRoot, route.company);
+  const snapshots = listResearchSnapshots(repoRoot(), route.company);
   const current = snapshots.at(-1);
   const previous = snapshots.at(-2);
 
@@ -57,7 +65,7 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
         <div className="company-summary">
           <div><span>当前研究</span><strong>{current.data.snapshot.dataCutoff.slice(0, 10)}</strong></div>
           <div><span>投资立场</span><strong>{current.data.summary.stance}</strong></div>
-          <div><span>参考价格</span><strong>{formatReferencePrice(current.data.summary.referencePrice)}</strong></div>
+          <div><span>参考价格</span><strong>{formatPrice(current.data.summary.referencePrice.value, current.data.summary.referencePrice.currency)}</strong></div>
           <div><span>合理价值</span><strong>HK${current.data.summary.fairValue.low}–{current.data.summary.fairValue.high}</strong></div>
         </div>
 
@@ -68,16 +76,16 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
             <article className="snapshot-card">
               <time>{comparison.prior.date}</time>
               <h3>{comparison.prior.stance}</h3>
-              <strong>{formatReferencePrice(comparison.prior.referencePrice)} · 置信度 {comparison.prior.confidence}</strong>
+              <strong>{formatPrice(comparison.prior.referencePrice.value, comparison.prior.referencePrice.currency)} · 置信度 {comparison.prior.confidence}</strong>
               <p>{comparison.prior.businessModel}</p>
-              <dl><dt>商业模式变化</dt><dd>{comparison.prior.businessModelChange}</dd><dt>合理价值</dt><dd>HK${comparison.prior.fairValue.low}–{comparison.prior.fairValue.high}</dd></dl>
+              <dl><dt>商业模式变化</dt><dd>{comparison.prior.businessModelChange}</dd><dt>合理价值</dt><dd>HK${comparison.prior.fairValue.low}–{comparison.prior.fairValue.high}</dd><dt>最紧约束</dt><dd>{comparison.prior.constraints.map((item) => item.label).join("；")}</dd></dl>
             </article>
             <article className="snapshot-card">
               <time>{comparison.current.date}</time>
               <h3>{comparison.current.stance}</h3>
-              <strong>{formatReferencePrice(comparison.current.referencePrice)} · 置信度 {comparison.current.confidence}</strong>
+              <strong>{formatPrice(comparison.current.referencePrice.value, comparison.current.referencePrice.currency)} · 置信度 {comparison.current.confidence}</strong>
               <p>{comparison.current.businessModel}</p>
-              <dl><dt>商业模式变化</dt><dd>{comparison.current.businessModelChange}</dd><dt>合理价值</dt><dd>HK${comparison.current.fairValue.low}–{comparison.current.fairValue.high}</dd></dl>
+              <dl><dt>商业模式变化</dt><dd>{comparison.current.businessModelChange}</dd><dt>合理价值</dt><dd>HK${comparison.current.fairValue.low}–{comparison.current.fairValue.high}</dd><dt>最紧约束</dt><dd>{comparison.current.constraints.map((item) => item.label).join("；")}</dd></dl>
             </article>
           </div>
           <h3 className="comparison-heading">标准指标</h3>

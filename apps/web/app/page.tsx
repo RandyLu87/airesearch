@@ -1,4 +1,15 @@
+import {
+  listResearchCompanyIds,
+  listResearchSnapshots,
+} from "@airesearch/research-schema";
+import path from "node:path";
+
 export default function HomePage() {
+  const repoRoot = path.resolve(process.cwd(), "../..");
+  const companies = listResearchCompanyIds(repoRoot).map((companyId) => ({
+    companyId,
+    current: listResearchSnapshots(repoRoot, companyId).at(-1),
+  }));
   return (
     <>
       <link rel="stylesheet" href="./assets/research.css" />
@@ -12,9 +23,11 @@ export default function HomePage() {
           <p className="section-kicker">COMPANIES</p>
           <h2>公司索引</h2>
           <div className="report-index">
-            <a className="report-link" href="./companies/hk-9899-netease-cloud-music.html">
-              <time>9899.HK</time><strong>网易云音乐</strong><span>查看公司研究主页 →</span>
-            </a>
+            {companies.map(({ companyId, current }) => current ? (
+              <a className="report-link" href={`./companies/${companyId}.html`} key={companyId}>
+                <time>{current.data.company.ticker}</time><strong>{current.data.company.name}</strong><span>查看公司研究主页 →</span>
+              </a>
+            ) : null)}
           </div>
         </section>
       </main>

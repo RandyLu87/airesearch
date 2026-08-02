@@ -210,7 +210,8 @@ h1 {
 
 .chart-grid { margin-top: 64px; gap: 28px; border-top: 0; }
 .decision-chart { margin: 0; padding: 18px 0 22px; border-top: 1px solid var(--line-dark); }
-.decision-chart svg { display: block; width: 100%; height: 112px; }
+.chart-title { margin-bottom: 8px; font-size: 13px; font-weight: 650; letter-spacing: .04em; }
+.decision-chart svg { display: block; width: 100%; height: 180px; }
 .decision-chart figcaption { max-width: 430px; color: var(--muted); font-size: 13px; line-height: 1.5; }
 .chart-axis { stroke: var(--line-dark); stroke-width: 1; }
 .chart-track { fill: var(--soft); }
@@ -218,6 +219,12 @@ h1 {
 .chart-value--signal { fill: var(--signal); }
 .chart-marker { stroke: var(--ink); stroke-width: 1; }
 .chart-label { fill: var(--ink); font-family: "Inter Local", sans-serif; font-size: 11px; font-weight: 650; letter-spacing: .05em; }
+.chart-line { fill: none; stroke-width: 3; vector-effect: non-scaling-stroke; }
+.chart-line--ink { stroke: var(--ink); }
+.chart-line--signal { stroke: var(--signal); }
+.chart-line--muted { stroke: var(--line-dark); stroke-dasharray: 5 4; }
+.chart-legend, .chart-driver-label, .chart-trend { fill: var(--muted); font-family: "Inter Local", "PingFang SC", sans-serif; font-size: 10px; }
+.chart-trend { fill: var(--ink); font-size: 9px; }
 
 .table-wrap { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }

@@ -1,16 +1,19 @@
 import type { Metadata } from "next";
-import { loadResearchSnapshot } from "@airesearch/research-schema";
+import {
+  listResearchCompanyIds,
+  listResearchSnapshots,
+  loadResearchSnapshot,
+} from "@airesearch/research-schema";
 import { ReportView } from "@airesearch/research-ui";
 import path from "node:path";
 
-const company = "hk-9899-netease-cloud-music";
-const reports = [
-  "2026-03-26-2203-analysis",
-  "2026-07-31-1927-analysis",
-];
-
 export function generateStaticParams() {
-  return reports.map((report) => ({ company, report }));
+  return listResearchCompanyIds(repoRoot()).flatMap((company) =>
+    listResearchSnapshots(repoRoot(), company).map(({ data }) => ({
+      company,
+      report: data.snapshot.id,
+    })),
+  );
 }
 
 type ReportPageProps = {
