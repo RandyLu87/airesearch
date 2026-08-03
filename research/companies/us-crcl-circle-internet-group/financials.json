@@ -1,0 +1,294 @@
+{
+  "ledgerVersion": "1.0.0",
+  "companyId": "us-crcl-circle-internet-group",
+  "reportingCurrency": "USD",
+  "minimumYears": 2,
+  "periods": [
+    {
+      "period": "FY2023",
+      "periodType": "fiscal-year",
+      "accountingBasis": "US GAAP",
+      "status": "reported",
+      "revenue": {
+        "value": "1450.466",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 3
+      },
+      "operatingMargin": {
+        "value": "18.58",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "netProfit": {
+        "value": "267.562",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 3
+      },
+      "operatingCashFlow": {
+        "value": "139.568",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 3
+      },
+      "freeCashFlow": {
+        "value": "106.052",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 3
+      },
+      "segments": [
+        {
+          "segmentId": "reserve-income",
+          "status": "reported",
+          "revenue": {
+            "value": "1430.606",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 3
+          },
+          "evidenceIds": ["sec-10k-2025"]
+        },
+        {
+          "segmentId": "other-revenue",
+          "status": "reported",
+          "revenue": {
+            "value": "19.860",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 3
+          },
+          "evidenceIds": ["sec-10k-2025"]
+        }
+      ],
+      "evidenceIds": ["sec-10k-2025"]
+    },
+    {
+      "period": "FY2024",
+      "periodType": "fiscal-year",
+      "accountingBasis": "US GAAP",
+      "status": "reported",
+      "revenue": {
+        "value": "1676.253",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 3
+      },
+      "revenueGrowth": {
+        "value": "15.57",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "operatingMargin": {
+        "value": "9.97",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "netProfit": {
+        "value": "155.667",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 3
+      },
+      "operatingCashFlow": {
+        "value": "344.576",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 3
+      },
+      "freeCashFlow": {
+        "value": "287.350",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 3
+      },
+      "segments": [
+        {
+          "segmentId": "reserve-income",
+          "status": "reported",
+          "revenue": {
+            "value": "1661.084",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 3
+          },
+          "evidenceIds": ["sec-10k-2025"]
+        },
+        {
+          "segmentId": "other-revenue",
+          "status": "reported",
+          "revenue": {
+            "value": "15.169",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 3
+          },
+          "evidenceIds": ["sec-10k-2025"]
+        }
+      ],
+      "evidenceIds": ["sec-10k-2025"]
+    },
+    {
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "US GAAP",
+      "status": "reported",
+      "revenue": {
+        "value": "2746.642",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 3
+      },
+      "revenueGrowth": {
+        "value": "63.86",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "operatingMargin": {
+        "value": "-3.51",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "netProfit": {
+        "value": "-69.508",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 3
+      },
+      "operatingCashFlow": {
+        "value": "542.129",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 3
+      },
+      "freeCashFlow": {
+        "value": "473.497",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 3
+      },
+      "segments": [
+        {
+          "segmentId": "reserve-income",
+          "status": "reported",
+          "revenue": {
+            "value": "2636.822",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 3
+          },
+          "evidenceIds": ["sec-10k-2025"]
+        },
+        {
+          "segmentId": "other-revenue",
+          "status": "reported",
+          "revenue": {
+            "value": "109.820",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 3
+          },
+          "evidenceIds": ["sec-10k-2025"]
+        }
+      ],
+      "evidenceIds": ["sec-10k-2025"]
+    },
+    {
+      "period": "Q1 2026",
+      "periodType": "quarter",
+      "accountingBasis": "US GAAP",
+      "status": "reported",
+      "revenue": {
+        "value": "694.133",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 3
+      },
+      "revenueGrowth": {
+        "value": "20.0",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 1
+      },
+      "operatingMargin": {
+        "value": "6.48",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "netProfit": {
+        "value": "55.253",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 3
+      },
+      "operatingCashFlow": {
+        "value": "21.076",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 3
+      },
+      "freeCashFlow": {
+        "value": "-3.883",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 3
+      },
+      "segments": [
+        {
+          "segmentId": "reserve-income",
+          "status": "reported",
+          "revenue": {
+            "value": "652.508",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 3
+          },
+          "evidenceIds": ["sec-q1-2026"]
+        },
+        {
+          "segmentId": "other-revenue",
+          "status": "reported",
+          "revenue": {
+            "value": "41.625",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 3
+          },
+          "evidenceIds": ["sec-q1-2026"]
+        }
+      ],
+      "evidenceIds": ["sec-q1-2026"]
+    }
+  ]
+}
