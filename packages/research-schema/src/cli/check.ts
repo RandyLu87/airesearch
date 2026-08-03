@@ -1,0 +1,238 @@
+import path from "node:path";
+import {
+  DRIVER_COMPATIBILITY_KEYS,
+  RECALIBRATION_GRADES,
+  researchSnapshotSchema,
+  type DriverMetric,
+} from "../index.ts";
+import { SENTINEL, findPriorSnapshot, readSnapshotDirectory } from "./shared.ts";
+
+type Json = Record<string, unknown>;
+
+/**
+ * Snapshots that already existed when the driver continuity contract landed,
+ * keyed as `<company.id>/<snapshot.id>`.
+ *
+ * These were authored when every research run was free to reselect its drivers.
+ * Holding them to continuity would permanently block the repository on history
+ * we deliberately chose not to rewrite, so their comparability layer is skipped;
+ * sentinel and schema checks still apply.
+ *
+ * Deliberately an explicit list and not a cutoff date: a date test keyed on the
+ * snapshot's own timestamp would let any new snapshot exempt itself just by
+ * being backdated. Nothing can join this list by accident — only by editing it,
+ * which is a reviewable act. Every snapshot authored from now on is governed.
+ */
+export const CONTINUITY_EXEMPT_SNAPSHOTS: ReadonlySet<string> = new Set([
+  "hk-9899-netease-cloud-music/2026-07-31-1927-analysis",
+]);
+
+export type CheckResult = {
+  errors: string[];
+  warnings: string[];
+};
+
+/** Every JSON path whose string value still carries the skeleton placeholder. */
+function findSentinels(value: unknown, trail: string[] = [], found: string[] = []): string[] {
+  if (typeof value === "string") {
+    if (value.includes(SENTINEL)) found.push(trail.join("."));
+    return found;
+  }
+  if (Array.isArray(value)) {
+    value.forEach((item, index) => findSentinels(item, [...trail, String(index)], found));
+    return found;
+  }
+  if (value !== null && typeof value === "object") {
+    for (const [key, nested] of Object.entries(value)) {
+      findSentinels(nested, [...trail, key], found);
+    }
+  }
+  return found;
+}
+
+/** Index a list of `{ id }` entities by id, skipping anything without one. */
+function indexById(entities: unknown): Map<string, Json> {
+  const list = Array.isArray(entities) ? (entities as Json[]) : [];
+  return new Map(
+    list
+      .filter((entity) => typeof entity?.id === "string")
+      .map((entity) => [entity.id as string, entity]),
+  );
+}
+
+function driverChangeIndex(snapshot: Json): Map<string, string> {
+  const thesisChange = snapshot.thesisChange as Json | undefined;
+  const changes = (thesisChange?.driverChanges as Json[] | undefined) ?? [];
+  const index = new Map<string, string>();
+  for (const change of changes) {
+    if (typeof change?.driverId === "string" && typeof change?.change === "string") {
+      index.set(change.driverId, change.change);
+    }
+  }
+  return index;
+}
+
+/**
+ * Enforce the continuity contract: a driver may be added, dropped or recalibrated,
+ * but never silently. Redefinition additionally has to be reflected in the
+ * business-model change grade, so a calibration shift cannot masquerade as noise.
+ */
+function checkComparability(current: Json, prior: Json): CheckResult {
+  const errors: string[] = [];
+  const warnings: string[] = [];
+
+  const priorDrivers = indexById(prior.driverMetrics);
+  const currentDrivers = indexById(current.driverMetrics);
+  const declared = driverChangeIndex(current);
+  const summary = current.summary as Json | undefined;
+  const modelChange = summary?.businessModelChange;
+  const escalated = RECALIBRATION_GRADES.some((grade) => grade === modelChange);
+
+  for (const driverId of priorDrivers.keys()) {
+    if (currentDrivers.has(driverId)) continue;
+    if (declared.get(driverId) !== "removed") {
+      errors.push(
+        `comparability: 驱动指标 ${driverId} 相对上一份研究快照被移除，` +
+          `但 thesisChange.driverChanges 没有对应的 removed 记录。` +
+          `补一条 {"driverId":"${driverId}","change":"removed","reason":"..."}，或恢复该驱动。`,
+      );
+    }
+  }
+
+  for (const driverId of currentDrivers.keys()) {
+    if (priorDrivers.has(driverId)) continue;
+    if (declared.get(driverId) !== "added") {
+      errors.push(
+        `comparability: 驱动指标 ${driverId} 是本次新增，` +
+          `但 thesisChange.driverChanges 没有对应的 added 记录。` +
+          `补一条 {"driverId":"${driverId}","change":"added","reason":"..."}。`,
+      );
+    }
+  }
+
+  for (const [driverId, currentDriver] of currentDrivers) {
+    const priorDriver = priorDrivers.get(driverId);
+    if (!priorDriver) continue;
+    const mismatch = DRIVER_COMPATIBILITY_KEYS.find(
+      (key) => priorDriver[key] !== (currentDriver as Partial<DriverMetric>)[key],
+    );
+    if (!mismatch) continue;
+
+    if (declared.get(driverId) !== "redefined") {
+      errors.push(
+        `comparability: 驱动指标 ${driverId} 的口径字段 ${mismatch} 发生变化` +
+          `（${String(priorDriver[mismatch])} → ${String(currentDriver[mismatch])}），` +
+          `但 thesisChange.driverChanges 没有对应的 redefined 记录。`,
+      );
+    }
+    if (!escalated) {
+      errors.push(
+        `comparability: 驱动指标 ${driverId} 的口径字段 ${mismatch} 发生变化，` +
+          `summary.businessModelChange 必须升级为「机制变化」或「结构性变化」，当前为「${String(modelChange)}」。`,
+      );
+    }
+  }
+
+  const priorConstraints = indexById(prior.constraints);
+  const currentConstraints = indexById(current.constraints);
+  const droppedConstraints = [...priorConstraints.keys()].filter((id) => !currentConstraints.has(id));
+  const addedConstraints = [...currentConstraints.keys()].filter((id) => !priorConstraints.has(id));
+  if (droppedConstraints.length > 0) {
+    warnings.push(`最紧约束不再出现：${droppedConstraints.join("、")}。确认它们确实已解除。`);
+  }
+  if (addedConstraints.length > 0) {
+    warnings.push(`最紧约束新增：${addedConstraints.join("、")}。确认它们确实是当前的瓶颈。`);
+  }
+
+  return { errors, warnings };
+}
+
+function valueAtPath(root: unknown, jsonPath: PropertyKey[]): unknown {
+  let cursor: unknown = root;
+  for (const key of jsonPath) {
+    if (cursor === null || typeof cursor !== "object") return undefined;
+    cursor = (cursor as Record<PropertyKey, unknown>)[key];
+  }
+  return cursor;
+}
+
+/**
+ * True when a schema complaint is merely the downstream echo of an unreplaced
+ * sentinel. Reporting those alongside the sentinel itself would bury the real
+ * schema errors on the parts already filled in.
+ */
+function causedBySentinel(jsonPath: PropertyKey[], sentinels: Set<string>): boolean {
+  const joined = jsonPath.join(".");
+  // Root-level refinements (dangling evidence ids, fair-value ordering) cannot
+  // be attributed to a field, and a skeleton always trips them.
+  if (joined === "") return sentinels.size > 0;
+  for (const sentinel of sentinels) {
+    if (joined === sentinel || joined.startsWith(`${sentinel}.`) || sentinel.startsWith(`${joined}.`)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export function checkSnapshotData(input: {
+  data: Json;
+  directory: string;
+  stem: string;
+}): CheckResult {
+  const { data, directory, stem } = input;
+  const errors: string[] = [];
+  const warnings: string[] = [];
+
+  // Layer 1 — unreplaced skeleton placeholders.
+  const sentinels = findSentinels(data);
+  const sentinelSet = new Set(sentinels);
+  for (const jsonPath of sentinels) {
+    errors.push(`sentinel: ${jsonPath}: 仍是待办哨兵 ${SENTINEL}，必须替换为取证后的值；该字段可选时直接删除整个键。`);
+  }
+
+  // Layer 2 — schema, minus the complaints the sentinels themselves cause, so
+  // the parts already filled in still get real feedback.
+  const parsed = researchSnapshotSchema.safeParse(data);
+  if (!parsed.success) {
+    for (const issue of parsed.error.issues) {
+      if (causedBySentinel(issue.path, sentinelSet)) continue;
+      const actual = valueAtPath(data, issue.path);
+      const rendered = actual === undefined ? "缺失" : JSON.stringify(actual);
+      errors.push(
+        `schema: ${issue.path.join(".") || "<root>"}: ${issue.message}；实际值 ${rendered}`,
+      );
+    }
+  }
+  if (sentinels.length > 0) {
+    warnings.push(`仍有 ${sentinels.length} 处待办哨兵；可比性校验待哨兵清空后才会运行。`);
+  }
+
+  // Layer 3 — continuity against the previous snapshot. Needs a fully valid
+  // snapshot, since it reads driver calibration and the model change grade.
+  if (!parsed.success || sentinels.length > 0) return { errors, warnings };
+
+  const exemptionKey = `${parsed.data.company.id}/${parsed.data.snapshot.id}`;
+  if (CONTINUITY_EXEMPT_SNAPSHOTS.has(exemptionKey)) return { errors, warnings };
+
+  const prior = findPriorSnapshot(directory, {
+    stem,
+    createdAt: parsed.data.snapshot.createdAt,
+  });
+  if (!prior) return { errors, warnings };
+
+  const comparability = checkComparability(parsed.data as unknown as Json, prior.data);
+  return {
+    errors: [...errors, ...comparability.errors],
+    warnings: [...warnings, ...comparability.warnings],
+  };
+}
+
+export function checkSnapshotFile(filePath: string): CheckResult {
+  const directory = path.dirname(filePath);
+  const stem = path.basename(filePath, ".json");
+  const snapshot = readSnapshotDirectory(directory).find((entry) => entry.stem === stem);
+  if (!snapshot) {
+    return { errors: [`无法读取研究快照或它不是有效 JSON：${filePath}`], warnings: [] };
+  }
+  return checkSnapshotData({ data: snapshot.data, directory, stem });
+}

@@ -9,9 +9,11 @@
   "scripts": {
     "build": "npm run build --workspace @airesearch/web",
     "publish": "npm run publish --workspace @airesearch/web",
-    "test": "node --test tests/publication.test.mjs",
+    "snapshot:new": "node --experimental-strip-types --no-warnings packages/research-schema/src/cli/new-snapshot.ts",
+    "snapshot:check": "node --experimental-strip-types --no-warnings packages/research-schema/src/cli/check-snapshot.ts",
+    "test": "node --test tests/publication.test.mjs tests/snapshot-authoring.test.mjs",
     "typecheck": "npm run typecheck --workspaces --if-present",
-    "verify": "npm run typecheck && npm test && python3 .codex/hooks/validate_research_paths.py"
+    "verify": "npm run typecheck && npm test && python3 scripts/research/validate_research_paths.py"
   },
   "engines": {
     "node": ">=22"

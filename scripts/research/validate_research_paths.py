@@ -6,6 +6,8 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import subprocess
+import sys
 from datetime import datetime
 from pathlib import Path
 
@@ -143,36 +145,117 @@ def validate(root: Path) -> list[str]:
     return errors
 
 
+def find_repo_root() -> Path:
+    """Walk up from this file to the workspace root.
+
+    Deliberately not a fixed number of `parents[...]` hops: this script has
+    already moved once, and a level count would fail silently the next time.
+    """
+    for candidate in Path(__file__).resolve().parents:
+        manifest = candidate / "package.json"
+        if not manifest.is_file():
+            continue
+        try:
+            if isinstance(json.loads(manifest.read_text(encoding="utf-8")).get("workspaces"), list):
+                return candidate
+        except (OSError, json.JSONDecodeError):
+            continue
+    raise SystemExit("无法定位仓库根目录（未找到带 workspaces 的 package.json）。")
+
+
+def validate_snapshot_contents(repo_root: Path, data_root: Path) -> tuple[list[str], list[str]]:
+    """Delegate schema and cross-snapshot comparability to the shared checker.
+
+    Naming rules live here; the meaning of the data lives in the Zod schema.
+    Shelling out keeps exactly one definition of each.
+    """
+    checker = repo_root / "packages" / "research-schema" / "src" / "cli" / "check-snapshot.ts"
+    if not checker.is_file():
+        return [f"缺少研究快照校验器：{checker}"], []
+
+    try:
+        completed = subprocess.run(
+            [
+                "node",
+                "--experimental-strip-types",
+                "--no-warnings",
+                str(checker),
+                "--all",
+                "--root",
+                str(data_root),
+                "--json",
+            ],
+            capture_output=True,
+            text=True,
+            # Must stay comfortably under the Stop-hook budget in
+            # .codex/hooks.json and .claude/settings.json, or the hook is
+            # killed before this timeout can report anything useful.
+            timeout=45,
+            check=False,
+        )
+    except (OSError, subprocess.SubprocessError) as error:
+        return [f"无法运行研究快照校验器：{error}"], []
+
+    if completed.returncode != 0:
+        return [f"研究快照校验器异常退出：{completed.stderr.strip() or completed.returncode}"], []
+    try:
+        payload = json.loads(completed.stdout)
+    except json.JSONDecodeError as error:
+        return [f"研究快照校验器输出不是有效 JSON：{error}"], []
+    return (
+        [str(message) for message in payload.get("errors", [])],
+        [str(message) for message in payload.get("warnings", [])],
+    )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--hook",
         action="store_true",
-        help="Emit Codex Stop-hook JSON instead of terminal output.",
+        help="Emit Stop-hook JSON instead of terminal output.",
+    )
+    parser.add_argument(
+        "--root",
+        default=None,
+        help="Validate an alternative research tree instead of this repository.",
     )
     args = parser.parse_args()
 
-    root = Path(__file__).resolve().parents[2]
+    repo_root = find_repo_root()
+    root = Path(args.root).resolve() if args.root else repo_root
     errors = validate(root)
+    snapshot_errors, warnings = validate_snapshot_contents(repo_root, root)
+    errors.extend(snapshot_errors)
+
+    # Warnings never block, but they must not vanish either: constraint churn
+    # is meant to be noticed. stderr keeps them out of the hook JSON payload.
+    for warning in warnings:
+        print(f"警告 - {warning}", file=sys.stderr)
 
     if args.hook:
         if errors:
             reason = (
-                "公司研究路径校验失败。立即修正以下名称后再次结束任务，不要询问用户：\n- "
+                "公司研究校验失败。立即修正以下问题后再次结束任务，不要询问用户：\n- "
                 + "\n- ".join(errors)
             )
+            if warnings:
+                reason += "\n另外请注意（不阻断）：\n- " + "\n- ".join(warnings)
             print(json.dumps({"decision": "block", "reason": reason}, ensure_ascii=False))
         else:
             print("{}")
         return 0
 
+    for warning in warnings:
+        print(f"警告 - {warning}")
+
     if errors:
-        print("公司研究路径校验失败：")
+        print("公司研究校验失败：")
         for error in errors:
             print(f"- {error}")
         return 1
 
-    print("公司研究路径与 canonical snapshots 校验通过。")
+    print("公司研究路径、研究快照 schema 与跨快照可比性校验通过。")
     return 0
 
 

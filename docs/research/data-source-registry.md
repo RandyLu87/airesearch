@@ -1,6 +1,6 @@
 # 数据源注册表
 
-本文件规定数据获取策略和降级路径；`../scripts/api-catalog.json` 是端点、表单类型和 API 清单的机器唯一事实源。研究时执行已登记接口，不重新搜索“用什么 API”。API 用于构建可重复的数据包；监管、交易所和公司原始文件仍是投资结论的最终证据。
+本文件规定数据获取策略和降级路径；`scripts/research/api-catalog.json` 是端点、表单类型和 API 清单的机器唯一事实源。研究时执行已登记接口，不重新搜索“用什么 API”。API 用于构建可重复的数据包；监管、交易所和公司原始文件仍是投资结论的最终证据。
 
 ## 目录
 
@@ -19,19 +19,19 @@
 
 ```bash
 # 美股：SEC 官方 submissions、最新文件列表和 companyfacts
-python3 .agents/skills/public-company-financial-research/scripts/fetch_financial_data.py \
+python3 scripts/research/fetch_financial_data.py \
   sec --ticker CRCL
 
 # A 股：Tushare 行情、估值、三表、财务指标、主营构成与分红
-python3 .agents/skills/public-company-financial-research/scripts/fetch_financial_data.py \
+python3 scripts/research/fetch_financial_data.py \
   tushare --market a --symbol 600519.SH --start-date 20210101
 
 # 港股：Tushare 行情、三表与财务指标
-python3 .agents/skills/public-company-financial-research/scripts/fetch_financial_data.py \
+python3 scripts/research/fetch_financial_data.py \
   tushare --market hk --symbol 03690.HK --start-date 20210101
 
 # 美股行情与标准化财务数据；SEC 数据仍应同时获取
-python3 .agents/skills/public-company-financial-research/scripts/fetch_financial_data.py \
+python3 scripts/research/fetch_financial_data.py \
   tushare --market us --symbol CRCL --start-date 20210101
 ```
 
@@ -97,7 +97,7 @@ HKEX 官方入口：
 
 Tushare 使用 `POST https://api.tushare.pro`，请求体固定为 `api_name`、`token`、`params`、`fields`。它覆盖三地市场但不是监管原始来源；权限、积分、覆盖公司和字段可能不同。
 
-实际接口名和是否传日期只在 `../scripts/api-catalog.json` 维护：A 股 profile 覆盖日线、估值、三表、财务指标、主营构成与分红；港股 profile 覆盖复权日线、三表与财务指标；美股 profile 覆盖日线、三表与财务指标。修改目录后必须运行脚本 `self-test`，不要在本文件复制清单。
+实际接口名和是否传日期只在 `scripts/research/api-catalog.json` 维护：A 股 profile 覆盖日线、估值、三表、财务指标、主营构成与分红；港股 profile 覆盖复权日线、三表与财务指标；美股 profile 覆盖日线、三表与财务指标。修改目录后必须运行脚本 `self-test`，不要在本文件复制清单。
 
 官方文档：
 

@@ -81,6 +81,12 @@ const driverMetricSchema = z.object({
   }
 });
 
+const driverChangeSchema = z.object({
+  driverId: z.string().min(1),
+  change: z.enum(["added", "removed", "redefined"]),
+  reason: z.string().min(1),
+});
+
 const evidenceSchema = z.object({
   id: z.string().min(1),
   kind: z.enum(["fact", "calculation", "inference"]),
@@ -211,6 +217,7 @@ export const researchSnapshotSchema = z.object({
     valuation: z.string().min(1),
     newEvidence: z.array(z.string().min(1)).min(1),
     supersededAssumptions: z.array(z.string().min(1)),
+    driverChanges: z.array(driverChangeSchema).optional(),
   }),
   financialHistory: z.array(financialPeriodSchema).min(2),
   sections: z.array(narrativeSectionSchema).min(3),
@@ -261,6 +268,38 @@ export type ResearchSnapshot = z.infer<typeof researchSnapshotSchema>;
 export type MetricObservation = z.infer<typeof observationSchema>;
 export type DriverMetric = z.infer<typeof driverMetricSchema>;
 export type EvidenceReference = z.infer<typeof evidenceSchema>;
+export type DriverChange = z.infer<typeof driverChangeSchema>;
+
+/**
+ * The fields that must agree before two observations of the same metric may be
+ * compared. Shared with the snapshot checker so authoring-time enforcement and
+ * publication-time comparison can never disagree about what "compatible" means.
+ */
+export const OBSERVATION_COMPATIBILITY_KEYS = [
+  "metricId",
+  "definitionVersion",
+  "unit",
+  "currency",
+  "scale",
+  "periodType",
+  "accountingBasis",
+] as const satisfies ReadonlyArray<keyof MetricObservation>;
+
+/**
+ * The business-model change grades that admit a driver recalibration. Shared so
+ * the checker cannot drift from the enum above.
+ */
+export const RECALIBRATION_GRADES = ["机制变化", "结构性变化"] as const;
+
+export const DRIVER_COMPATIBILITY_KEYS = [
+  "definition",
+  "definitionVersion",
+  "unit",
+  "currency",
+  "scale",
+  "periodType",
+  "accountingBasis",
+] as const satisfies ReadonlyArray<keyof DriverMetric>;
 
 export function snapshotPath(repoRoot: string, companyId: string, stem: string) {
   return path.join(
@@ -330,16 +369,7 @@ function observationCompatibility(
   prior: MetricObservation,
   current: MetricObservation,
 ) {
-  const keys: Array<keyof MetricObservation> = [
-    "metricId",
-    "definitionVersion",
-    "unit",
-    "currency",
-    "scale",
-    "periodType",
-    "accountingBasis",
-  ];
-  const mismatch = keys.find((key) => prior[key] !== current[key]);
+  const mismatch = OBSERVATION_COMPATIBILITY_KEYS.find((key) => prior[key] !== current[key]);
   return mismatch ? `口径不兼容：${mismatch}` : null;
 }
 
@@ -419,17 +449,8 @@ export function compareResearchSnapshots(
   const driverMetrics = driverIds.map((driverId) => {
     const previous = priorDrivers.get(driverId);
     const latest = currentDrivers.get(driverId);
-    const compatibilityKeys: Array<keyof DriverMetric> = [
-      "definition",
-      "definitionVersion",
-      "unit",
-      "currency",
-      "scale",
-      "periodType",
-      "accountingBasis",
-    ];
     const mismatch = previous && latest
-      ? compatibilityKeys.find((key) => previous[key] !== latest[key])
+      ? DRIVER_COMPATIBILITY_KEYS.find((key) => previous[key] !== latest[key])
       : undefined;
     const unavailable = previous && latest
       ? previous.status === "unavailable" ||

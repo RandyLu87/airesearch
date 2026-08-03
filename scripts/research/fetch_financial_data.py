@@ -59,7 +59,7 @@ def catalog_metadata() -> Dict[str, Any]:
     encoded = CATALOG_PATH.read_bytes()
     return {
         "schema_version": API_CATALOG["schema_version"],
-        "path": ".agents/skills/public-company-financial-research/scripts/api-catalog.json",
+        "path": "scripts/research/api-catalog.json",
         "sha256": hashlib.sha256(encoded).hexdigest(),
     }
 

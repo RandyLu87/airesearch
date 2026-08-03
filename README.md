@@ -17,12 +17,16 @@
 .
 ├── AGENTS.md                                  # Codex 仓库级规则
 ├── CONTEXT.md                                 # 领域语言与当前架构
+├── CLAUDE.md                                  # Claude Code 指针，指向 AGENTS.md
 ├── docs/adr/                                  # 已确认的架构决策
-├── .codex/hooks/validate_research_paths.py    # 路径和快照一致性校验
+├── docs/research/                             # 研究流程、方法论与快照契约（两端共用）
+├── scripts/research/                          # 抓数脚本、接口目录与校验器
 ├── .agents/skills/public-company-financial-research/
-│   ├── SKILL.md                               # 研究工作流
-│   ├── references/                            # 数据源、指标与快照契约
-│   └── scripts/                               # 固化的数据抓取入口
+│   ├── SKILL.md                               # 薄壳，指向 docs/research/WORKFLOW.md
+│   └── agents/openai.yaml                     # Codex 侧调用描述
+├── .claude/
+│   ├── skills/public-company-financial-research/SKILL.md   # 同一份薄壳
+│   └── settings.json                          # Stop hook，与 .codex/hooks.json 同脚本
 ├── packages/
 │   ├── research-schema/                       # Zod 快照模型与对比逻辑
 │   └── research-ui/                           # React 报告组件与 SVG 图表
@@ -33,10 +37,13 @@
 │   │   └── *.md                               # 只读历史研究记录
 │   ├── reports/                               # 专题研究和最终导出
 │   └── site/                                  # 可直接打开/托管的最终 HTML
-└── tests/publication.test.mjs                 # 顶层发布契约
+└── tests/
+    ├── publication.test.mjs                   # 顶层发布契约
+    ├── snapshot-authoring.test.mjs            # 快照创作与校验契约
+    └── fixtures/base-snapshot.json            # 合成快照样本，不进入研究树
 ```
 
-Codex 没有完全等同于 `.claude/` 的单一配置目录。本仓库用根目录 `AGENTS.md` 保存持久规则，`.agents/skills/` 保存仓库级 skill，`.codex/` 保存生命周期 hooks。
+研究方法论、抓数脚本与校验器都是仓库共享资产，Codex 与 Claude Code 读同一份；两侧的 skill 只是指向 `docs/research/WORKFLOW.md` 的薄壳。持久规则的唯一正文在根目录 `AGENTS.md`，`CLAUDE.md` 只是指向它的指针。生命周期 hook 分别配置在 `.codex/hooks.json` 与 `.claude/settings.json`，但调用的是同一个校验脚本。详见 [ADR-0012](docs/adr/0012-share-research-contract-across-agents.md)。
 
 ## 文件命名
 
@@ -75,12 +82,13 @@ npm run verify      # 类型检查、端到端发布契约、研究路径校验
 ## Skill 参考资料
 
 - [核心工作流](.agents/skills/public-company-financial-research/SKILL.md)
-- [研究快照契约](.agents/skills/public-company-financial-research/references/analysis-template.md)
-- [数据 API 与降级路径](.agents/skills/public-company-financial-research/references/data-source-registry.md)
-- [商业模式与核心驱动指标](.agents/skills/public-company-financial-research/references/business-model-playbook.md)
-- [指标与估算方法](.agents/skills/public-company-financial-research/references/metric-playbook.md)
-- [来源优先级与最新信息核验](.agents/skills/public-company-financial-research/references/sources-and-priority.md)
-- [风险诊断清单](.agents/skills/public-company-financial-research/references/red-flags.md)
+- [研究流程](docs/research/WORKFLOW.md)
+- [研究快照契约](docs/research/analysis-template.md)
+- [数据 API 与降级路径](docs/research/data-source-registry.md)
+- [商业模式与核心驱动指标](docs/research/business-model-playbook.md)
+- [指标与估算方法](docs/research/metric-playbook.md)
+- [来源优先级与最新信息核验](docs/research/sources-and-priority.md)
+- [风险诊断清单](docs/research/red-flags.md)
 
 ## 证据原则
 

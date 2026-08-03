@@ -6,7 +6,8 @@ Maintain evidence-based, long-term research on public companies. Treat the core 
 
 ## Repository layout
 
-- Use `.agents/skills/public-company-financial-research/` for the repo-scoped Codex research skill.
+- Follow `docs/research/WORKFLOW.md` for company research; the skills under `.agents/skills/` and `.claude/skills/` are thin pointers to it.
+- Keep shared research assets in `docs/research/` (methodology, snapshot contract) and `scripts/research/` (data fetching, validation).
 - Store canonical JSON snapshots in `research/companies/<market>-<ticker>-<slug>/snapshots/`.
 - Publish generated company pages and dated HTML reports to `research/site/`; commit this final static output.
 - Store polished thematic reports and final exports in `research/reports/<topic>/`.
@@ -30,15 +31,18 @@ Maintain evidence-based, long-term research on public companies. Treat the core 
 - Name every canonical snapshot exactly `YYYY-MM-DD-HHMM-analysis.json`, using Asia/Shanghai creation time in 24-hour format.
 - Keep only one canonical snapshot per company per calendar day. Update the same JSON snapshot for later same-day work instead of creating another timestamped version.
 - Treat root-level `YYYY-MM-DD-HHMM-analysis.md` files inside an existing company directory as read-only legacy notes. New research must not use Markdown as its canonical output.
+- Generate a new snapshot with `npm run snapshot:new -- <company-id>`; it inherits calibration from the previous snapshot so the two stay comparable.
+- Never drop, add, or recalibrate a driver metric without recording it in `thesisChange.driverChanges`.
 - Generate HTML only through `npm run publish`; never hand-edit `research/site/`.
-- Never invent a different filename. Before finishing any research task, run `python3 .codex/hooks/validate_research_paths.py` and fix every reported violation without asking the user.
+- Never invent a different filename. Before finishing any research task, run `python3 scripts/research/validate_research_paths.py` and fix every reported violation without asking the user.
 - Keep only the current final report source and useful final export; remove superseded exports and intermediate text conversions.
 - Do not commit `.DS_Store`, caches, smoke-test files, rendered review images, or other disposable artifacts.
 
 ## Validation
 
-- After changing the research skill, run the skill creator's `quick_validate.py` against `.agents/skills/public-company-financial-research/`.
-- Run `python3 .codex/hooks/validate_research_paths.py` after creating, renaming, or moving company research.
+- Change research methodology in `docs/research/`, never in a skill shell; both agents read the same files.
+- Run `npm run snapshot:check -- <snapshot-path>` while authoring, and `npm run snapshot:check -- --all` before finishing.
+- Run `python3 scripts/research/validate_research_paths.py` after creating, renaming, or moving company research.
 - Run `npm run verify` after changing snapshots, schemas, report components, styles, or publishing logic.
 - Before handing off structural changes, run `git diff --check` and verify that all README links resolve.
 

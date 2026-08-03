@@ -1,0 +1,460 @@
+{
+  "schemaVersion": "1.0.0",
+  "company": {
+    "id": "hk-0001-fixture-co",
+    "name": "示例公司",
+    "legalName": "Fixture Company Limited",
+    "ticker": "0001.HK",
+    "market": "HKEX",
+    "reportingCurrency": "CNY",
+    "accountingStandard": "IFRS"
+  },
+  "snapshot": {
+    "id": "2026-08-04-1000-analysis",
+    "createdAt": "2026-08-04T10:00:00+08:00",
+    "dataCutoff": "2026-08-04T09:00:00+08:00"
+  },
+  "investmentHorizon": "3-5 年",
+  "summary": {
+    "stance": "观察",
+    "confidence": "中",
+    "headline": "订阅结构改善但现金转换尚未验证。",
+    "businessModel": "以订阅会员为主要收费方式，靠内容供给驱动付费转化。",
+    "businessModelChange": "参数变化",
+    "referencePrice": {
+      "value": "100.00",
+      "currency": "HKD",
+      "asOf": "2026-08-04T08:00:00+08:00"
+    },
+    "fairValue": {
+      "low": "90.00",
+      "center": "110.00",
+      "high": "130.00",
+      "currency": "HKD"
+    },
+    "marginOfSafety": "当前价格对应基准情景约 9% 折价。",
+    "strongestEvidence": "订阅收入连续四个季度双位数增长。",
+    "largestRisk": "内容成本重新上行会压缩单位贡献。",
+    "nextValidation": "下一期订阅 ARPU 是否维持在 7.0 元以上。"
+  },
+  "standardMetrics": [
+    {
+      "metricId": "revenue",
+      "label": "营业收入",
+      "definitionVersion": "1.0.0",
+      "status": "reported",
+      "value": "8000000000",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "one",
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "precision": 0,
+      "evidenceIds": [
+        "ev-annual-report"
+      ]
+    },
+    {
+      "metricId": "gross-margin",
+      "label": "毛利率",
+      "definitionVersion": "1.0.0",
+      "status": "calculated",
+      "value": "33.50",
+      "unit": "percent",
+      "scale": "one",
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "precision": 2,
+      "evidenceIds": [
+        "ev-annual-report"
+      ]
+    },
+    {
+      "metricId": "operating-cash-flow",
+      "label": "经营现金流",
+      "definitionVersion": "1.0.0",
+      "status": "unavailable",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "one",
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "precision": 0,
+      "reason": "年报尚未披露分部现金流。",
+      "evidenceIds": [
+        "ev-annual-report"
+      ]
+    }
+  ],
+  "driverMetrics": [
+    {
+      "id": "subscription-mix",
+      "label": "订阅收入占比",
+      "definition": "订阅收入除以总收入。",
+      "definitionVersion": "1.0.0",
+      "causalRole": "决定收入的可预测性与毛利结构。",
+      "dimension": "增长",
+      "signalType": "同步",
+      "status": "calculated",
+      "value": "72.00",
+      "displayValue": "72.0%",
+      "unit": "percent",
+      "scale": "one",
+      "precision": 2,
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "baseline": "FY2024 为 68.0%",
+      "trend": "改善",
+      "confidence": "高",
+      "threshold": "下一年度低于 70% 视为结构走弱。",
+      "evidenceIds": [
+        "ev-annual-report"
+      ]
+    },
+    {
+      "id": "gross-margin",
+      "label": "毛利率",
+      "definition": "毛利除以收入。",
+      "definitionVersion": "1.0.0",
+      "causalRole": "反映内容成本与规模效应的净结果。",
+      "dimension": "盈利",
+      "signalType": "滞后",
+      "status": "calculated",
+      "value": "33.50",
+      "displayValue": "33.5%",
+      "unit": "percent",
+      "scale": "one",
+      "precision": 2,
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "baseline": "FY2024 为 30.2%",
+      "trend": "改善",
+      "confidence": "高",
+      "threshold": "下一年度低于 32% 视为成本重新失控。",
+      "evidenceIds": [
+        "ev-annual-report"
+      ]
+    },
+    {
+      "id": "cash-conversion",
+      "label": "现金转换率",
+      "definition": "经营现金流除以净利润。",
+      "definitionVersion": "1.0.0",
+      "causalRole": "检验利润是否转化为可分配现金。",
+      "dimension": "现金",
+      "signalType": "滞后",
+      "status": "unavailable",
+      "displayValue": "不可得",
+      "unit": "percent",
+      "scale": "one",
+      "precision": 2,
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "baseline": "FY2024 为 118%",
+      "trend": "待验证",
+      "confidence": "低",
+      "threshold": "下一期低于 90% 需要重估利润质量。",
+      "reason": "年报尚未披露分部现金流。",
+      "evidenceIds": [
+        "ev-annual-report"
+      ]
+    },
+    {
+      "id": "content-cost-ratio",
+      "label": "内容成本占收入比",
+      "definition": "内容成本除以总收入。",
+      "definitionVersion": "1.0.0",
+      "causalRole": "内容供给是获客与留存的关键投入。",
+      "dimension": "护城河",
+      "signalType": "领先",
+      "status": "calculated",
+      "value": "58.00",
+      "displayValue": "58.0%",
+      "unit": "percent",
+      "scale": "one",
+      "precision": 2,
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "baseline": "FY2024 为 61.5%",
+      "trend": "改善",
+      "confidence": "中",
+      "threshold": "下一年度高于 60% 视为议价能力下降。",
+      "evidenceIds": [
+        "ev-annual-report",
+        "ev-exchange-filing"
+      ]
+    },
+    {
+      "id": "paying-ratio",
+      "label": "付费率",
+      "definition": "月均付费用户数除以月活用户数。",
+      "definitionVersion": "1.0.0",
+      "causalRole": "决定用户规模能否转化为订阅收入。",
+      "dimension": "增长",
+      "signalType": "领先",
+      "status": "reported",
+      "value": "21.40",
+      "displayValue": "21.4%",
+      "unit": "percent",
+      "scale": "one",
+      "precision": 2,
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "baseline": "FY2024 为 19.8%",
+      "trend": "改善",
+      "confidence": "高",
+      "threshold": "下一年度低于 21% 视为转化见顶。",
+      "evidenceIds": [
+        "ev-annual-report"
+      ]
+    },
+    {
+      "id": "subscription-arpu",
+      "label": "订阅 ARPU",
+      "definition": "订阅收入除以月均付费用户数。",
+      "definitionVersion": "1.0.0",
+      "causalRole": "决定每个付费用户贡献的绝对金额。",
+      "dimension": "盈利",
+      "signalType": "同步",
+      "status": "calculated",
+      "value": "7.20",
+      "displayValue": "7.2 元",
+      "unit": "currency",
+      "scale": "one",
+      "precision": 2,
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "baseline": "FY2024 为 6.9 元",
+      "trend": "改善",
+      "confidence": "高",
+      "threshold": "下一年度低于 7.0 元视为提价能力见顶。",
+      "evidenceIds": [
+        "ev-annual-report"
+      ],
+      "currency": "CNY"
+    }
+  ],
+  "constraints": [
+    {
+      "id": "content-licensing",
+      "label": "内容授权成本",
+      "status": "改善",
+      "explanation": "主要唱片公司续约条款优于上一轮。",
+      "evidenceIds": [
+        "ev-annual-report"
+      ]
+    },
+    {
+      "id": "cash-visibility",
+      "label": "现金流可见度",
+      "status": "待验证",
+      "explanation": "分部现金流尚未披露，利润质量无法独立核对。",
+      "evidenceIds": [
+        "ev-annual-report"
+      ]
+    }
+  ],
+  "thesisChange": {
+    "investmentLogic": "未变：订阅驱动的收入结构改善仍在延续。",
+    "financialQuality": "未变：毛利率改善但现金转换待验证。",
+    "governance": "未变：控制权与激励安排无调整。",
+    "valuation": "未变：合理价值区间维持 90–130 港元。",
+    "newEvidence": [
+      "FY2025 年报披露订阅收入占比升至 72%。"
+    ],
+    "supersededAssumptions": []
+  },
+  "financialHistory": [
+    {
+      "period": "FY2024",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "revenue": {
+        "value": "7200000000",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "one",
+        "precision": 0
+      },
+      "grossMargin": {
+        "value": "30.20",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "netProfit": {
+        "value": "600000000",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "one",
+        "precision": 0
+      },
+      "evidenceIds": [
+        "ev-annual-report"
+      ]
+    },
+    {
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "revenue": {
+        "value": "8000000000",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "one",
+        "precision": 0
+      },
+      "grossMargin": {
+        "value": "33.50",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "netProfit": {
+        "value": "820000000",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "one",
+        "precision": 0
+      },
+      "evidenceIds": [
+        "ev-annual-report"
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "id": "business-model",
+      "title": "商业模式与核心驱动",
+      "summary": "订阅是唯一具备复利属性的收入引擎。",
+      "bullets": [
+        "订阅收入占比升至 72%，广告与社交娱乐占比同步下降。",
+        "内容成本占收入比降至 58%，主要来自续约条款改善。"
+      ],
+      "evidenceIds": [
+        "ev-annual-report"
+      ]
+    },
+    {
+      "id": "financial-quality",
+      "title": "财务质量与现金转换",
+      "summary": "利润改善尚未被现金流独立验证。",
+      "bullets": [
+        "分部现金流未披露，现金转换率本期标记为不可得。"
+      ],
+      "evidenceIds": [
+        "ev-annual-report"
+      ]
+    },
+    {
+      "id": "governance",
+      "title": "治理与资本配置",
+      "summary": "资本配置保守，无重大关联交易。",
+      "bullets": [
+        "报告期内未发生股权激励扩容或重大收购。"
+      ],
+      "evidenceIds": [
+        "ev-exchange-filing"
+      ]
+    }
+  ],
+  "valuation": {
+    "scenarios": [
+      {
+        "name": "熊市",
+        "assumptions": "内容成本重新上行，订阅占比停滞在 70%。",
+        "earnings": "FY2027 净利润约 7.0 亿元。",
+        "method": "市盈率倍数法",
+        "valueRange": "HK$78–92",
+        "trigger": "毛利率跌破 32%。"
+      },
+      {
+        "name": "基准",
+        "assumptions": "订阅占比缓慢提升，毛利率维持 33–35%。",
+        "earnings": "FY2027 净利润约 9.5 亿元。",
+        "method": "市盈率倍数法与现金流折现交叉验证",
+        "valueRange": "HK$100–120",
+        "trigger": "订阅 ARPU 维持在 7.0 元以上。"
+      },
+      {
+        "name": "牛市",
+        "assumptions": "订阅占比突破 78% 且现金转换恢复至 110%。",
+        "earnings": "FY2027 净利润约 12.0 亿元。",
+        "method": "现金流折现",
+        "valueRange": "HK$128–150",
+        "trigger": "分部现金流披露且现金转换率高于 100%。"
+      }
+    ],
+    "actionZones": [
+      {
+        "label": "买入",
+        "range": "低于 HK$90",
+        "action": "分批建立底仓。"
+      },
+      {
+        "label": "持有",
+        "range": "HK$90–130",
+        "action": "维持现有仓位，跟踪季度阈值。"
+      },
+      {
+        "label": "减持",
+        "range": "高于 HK$130",
+        "action": "在牛市情景未兑现前逐步减仓。"
+      }
+    ],
+    "currentExpectation": "当前价格隐含订阅占比停留在 72% 且毛利率不再改善。",
+    "evidenceIds": [
+      "ev-annual-report"
+    ]
+  },
+  "risks": [
+    "内容授权成本重新上行压缩单位贡献。",
+    "分部现金流长期不披露，利润质量无法独立核对。",
+    "短视频平台分流用户时长，拉高获客成本。"
+  ],
+  "viewChanges": {
+    "upgrade": [
+      "分部现金流披露且现金转换率高于 100%。"
+    ],
+    "downgrade": [
+      "毛利率连续两期跌破 32%。"
+    ]
+  },
+  "checkpoints": [
+    "下一期订阅 ARPU 是否维持在 7.0 元以上。",
+    "内容成本占收入比是否继续低于 60%。",
+    "是否开始披露分部现金流。"
+  ],
+  "evidence": [
+    {
+      "id": "ev-annual-report",
+      "kind": "fact",
+      "title": "Fixture Company Annual Report 2025",
+      "publisher": "Fixture Company Limited",
+      "periodOrEventDate": "FY2025",
+      "publishedAt": "2026-03-20",
+      "retrievedAt": "2026-08-04T09:00:00+08:00",
+      "url": "https://example.com/fixture/annual-report-2025.pdf"
+    },
+    {
+      "id": "ev-exchange-filing",
+      "kind": "fact",
+      "title": "Fixture Company 董事会公告",
+      "publisher": "HKEXnews",
+      "periodOrEventDate": "2025-12-18",
+      "publishedAt": "2025-12-18",
+      "retrievedAt": "2026-08-04T09:00:00+08:00",
+      "url": "https://example.com/fixture/board-announcement.pdf"
+    }
+  ],
+  "disclaimer": "本报告仅作研究与教育用途，不构成个性化投资建议。"
+}

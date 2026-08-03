@@ -1,5 +1,4 @@
 {
-  "description": "Validate public-company research paths before Codex finishes a task.",
   "hooks": {
     "Stop": [
       {

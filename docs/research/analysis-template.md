@@ -75,6 +75,8 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
 
 跨快照驱动只有在定义、定义版本、单位、币种、scale、期间类型和会计基础全部兼容时才可连接或判断变化；否则必须标为“不可比较”，不能把年度值与季度值直接相减。
 
+**驱动指标延续优先。** 驱动指标集不是每次研究自由重选的。新快照默认继承上一份快照的驱动 ID、定义与全部口径字段，只更新数值、期间、趋势、阈值和证据。`npm run snapshot:new` 生成的骨架已经替你继承好这些字段。增删改必须按下一节在 `thesisChange.driverChanges` 中交代，校验器会强制。
+
 ### `constraints`
 
 保存当前阻断商业模式飞轮的 1–3 个最紧约束。每项包含稳定 ID、标签、改善/稳定/恶化/待验证状态、解释和 evidence IDs，供公司主页跨快照比较。
@@ -82,6 +84,25 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
 ### `thesisChange`
 
 分别说明投资逻辑、财务质量、治理和估值相对上一快照如何变化，并列出本次新增证据和已被替换的旧假设。没有变化也必须明确写“未变”及理由。
+
+可选字段 `driverChanges` 记录驱动指标集相对上一快照的变动，每项包含 `driverId`、`change`（`added` / `removed` / `redefined`）和 `reason`：
+
+```json
+"driverChanges": [
+  { "driverId": "content-cost-ratio", "change": "removed", "reason": "已并入毛利率驱动，单独跟踪产生重复计数。" }
+]
+```
+
+强制规则（由 `npm run snapshot:check` 执行）：
+
+- 上一快照有、本次没有的驱动，必须有 `removed` 记录；
+- 本次新增的驱动，必须有 `added` 记录；
+- 两边都有但七个口径字段任一不同的驱动，必须有 `redefined` 记录，**并且** `summary.businessModelChange` 必须是「机制变化」或「结构性变化」——口径漂移不能伪装成参数波动；
+- `reason` 不得为空。
+
+字段可选是为了向后兼容：契约启用前的快照不含该字段，仍然合法。契约落地时已存在的快照由校验器中一份显式豁免清单跳过可比性层（目前只有网易云音乐 2026-07-31 一条），历史断裂如实保留、不回补。回填 `--at` 不能换来豁免。
+
+最紧约束的增删只产生警告，不阻断——约束被解除是研究进展的正常结果，且它没有口径字段可比。
 
 ### `financialHistory`、`sections` 与 `valuation`
 
@@ -105,7 +126,8 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
 完成 JSON 后依次运行：
 
 ```bash
-python3 .codex/hooks/validate_research_paths.py
+npm run snapshot:check -- <snapshot-path>
+python3 scripts/research/validate_research_paths.py
 npm run publish
 npm run verify
 ```
