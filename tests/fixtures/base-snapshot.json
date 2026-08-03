@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "1.1.0",
   "company": {
     "id": "hk-0001-fixture-co",
     "name": "示例公司",
@@ -7,7 +7,11 @@
     "ticker": "0001.HK",
     "market": "HKEX",
     "reportingCurrency": "CNY",
-    "accountingStandard": "IFRS"
+    "accountingStandard": "IFRS",
+    "industryTags": [
+      "软件",
+      "订阅"
+    ]
   },
   "snapshot": {
     "id": "2026-08-04-1000-analysis",
@@ -27,9 +31,9 @@
       "asOf": "2026-08-04T08:00:00+08:00"
     },
     "fairValue": {
-      "low": "90.00",
-      "center": "110.00",
-      "high": "130.00",
+      "low": "99.4",
+      "center": "104.9",
+      "high": "110.5",
       "currency": "HKD"
     },
     "marginOfSafety": "当前价格对应基准情景约 9% 折价。",
@@ -300,6 +304,36 @@
       },
       "evidenceIds": [
         "ev-annual-report"
+      ],
+      "segments": [
+        {
+          "segmentId": "core-subscription",
+          "status": "reported",
+          "revenue": {
+            "value": "4320000000",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "one",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "ev-annual-report"
+          ]
+        },
+        {
+          "segmentId": "professional-services",
+          "status": "reported",
+          "revenue": {
+            "value": "2880000000",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "one",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "ev-annual-report"
+          ]
+        }
       ]
     },
     {
@@ -328,6 +362,36 @@
       },
       "evidenceIds": [
         "ev-annual-report"
+      ],
+      "segments": [
+        {
+          "segmentId": "core-subscription",
+          "status": "reported",
+          "revenue": {
+            "value": "5000000000",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "one",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "ev-annual-report"
+          ]
+        },
+        {
+          "segmentId": "professional-services",
+          "status": "reported",
+          "revenue": {
+            "value": "3000000000",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "one",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "ev-annual-report"
+          ]
+        }
       ]
     }
   ],
@@ -368,50 +432,220 @@
     }
   ],
   "valuation": {
+    "currency": "CNY",
+    "valueScale": "one",
+    "tradingCurrency": "HKD",
+    "shares": {
+      "value": "100000000",
+      "scale": "one",
+      "evidenceIds": [
+        "ev-annual-report"
+      ]
+    },
+    "fx": {
+      "pair": "HKD/CNY",
+      "value": "0.8600",
+      "asOf": "2026-08-04T08:00:00+08:00",
+      "evidenceIds": [
+        "ev-annual-report",
+        "ev-exchange-filing"
+      ]
+    },
+    "healthCheck": [
+      {
+        "ruleId": "short-profit-history",
+        "observed": "连续盈利年数 2，少于 3 年",
+        "response": "rejected",
+        "note": "示例公司刚转正两年，但盈利结构简单且无一次性项目，仍沿用正常化 P/E，并在盈利区间下沿留出缓冲。"
+      }
+    ],
+    "methodSelection": {
+      "ideal": "multiple-pe",
+      "idealRationale": "单一订阅业务、资本结构简单，正常化 P/E 已经够用。",
+      "adoptedPrimary": "multiple-pe",
+      "adoptedRationale": "与理想方法一致。",
+      "blockedBy": [],
+      "crossChecks": [
+        {
+          "methodId": "dcf-fcff",
+          "valueLow": "95.0",
+          "valueHigh": "118.0",
+          "keyAssumptions": "WACC 11%，永续增长 2.5%。",
+          "note": "与倍数法结果基本一致。",
+          "evidenceIds": [
+            "ev-annual-report"
+          ]
+        }
+      ]
+    },
     "scenarios": [
       {
         "name": "熊市",
-        "assumptions": "内容成本重新上行，订阅占比停滞在 70%。",
-        "earnings": "FY2027 净利润约 7.0 亿元。",
-        "method": "市盈率倍数法",
-        "valueRange": "HK$78–92",
-        "trigger": "毛利率跌破 32%。"
+        "assumptions": "续费率下滑，扩座停滞。",
+        "trigger": "NRR 跌破 100%。",
+        "components": [
+          {
+            "id": "consolidated-earnings",
+            "label": "合并经营价值",
+            "kind": "multiple",
+            "sign": "add",
+            "metricLabel": "正常化归母净利润",
+            "metricLow": "700000000",
+            "metricHigh": "750000000",
+            "multipleLow": "8.5",
+            "multipleHigh": "9",
+            "note": "按正常化归母净利润乘以可比倍数。",
+            "evidenceIds": [
+              "ev-annual-report"
+            ]
+          }
+        ],
+        "computed": {
+          "low": "69.2",
+          "high": "78.5",
+          "center": "73.8",
+          "totalLow": "5950000000.00",
+          "totalHigh": "6750000000.00",
+          "bridge": [
+            {
+              "id": "consolidated-earnings",
+              "label": "合并经营价值",
+              "kind": "multiple",
+              "amountLow": "5950000000.00",
+              "amountHigh": "6750000000.00",
+              "perShareLow": "69.2",
+              "perShareHigh": "78.5"
+            }
+          ]
+        }
       },
       {
         "name": "基准",
-        "assumptions": "订阅占比缓慢提升，毛利率维持 33–35%。",
-        "earnings": "FY2027 净利润约 9.5 亿元。",
-        "method": "市盈率倍数法与现金流折现交叉验证",
-        "valueRange": "HK$100–120",
-        "trigger": "订阅 ARPU 维持在 7.0 元以上。"
+        "assumptions": "续费稳定，扩座温和。",
+        "trigger": "订阅收入维持双位数增长。",
+        "components": [
+          {
+            "id": "consolidated-earnings",
+            "label": "合并经营价值",
+            "kind": "multiple",
+            "sign": "add",
+            "metricLabel": "正常化归母净利润",
+            "metricLow": "900000000",
+            "metricHigh": "950000000",
+            "multipleLow": "9.5",
+            "multipleHigh": "10",
+            "note": "按正常化归母净利润乘以可比倍数。",
+            "evidenceIds": [
+              "ev-annual-report"
+            ]
+          }
+        ],
+        "computed": {
+          "low": "99.4",
+          "high": "110.5",
+          "center": "104.9",
+          "totalLow": "8550000000.00",
+          "totalHigh": "9500000000.00",
+          "bridge": [
+            {
+              "id": "consolidated-earnings",
+              "label": "合并经营价值",
+              "kind": "multiple",
+              "amountLow": "8550000000.00",
+              "amountHigh": "9500000000.00",
+              "perShareLow": "99.4",
+              "perShareHigh": "110.5"
+            }
+          ]
+        }
       },
       {
         "name": "牛市",
-        "assumptions": "订阅占比突破 78% 且现金转换恢复至 110%。",
-        "earnings": "FY2027 净利润约 12.0 亿元。",
-        "method": "现金流折现",
-        "valueRange": "HK$128–150",
-        "trigger": "分部现金流披露且现金转换率高于 100%。"
+        "assumptions": "扩座加速且毛利率抬升。",
+        "trigger": "NRR 回到 120% 以上。",
+        "components": [
+          {
+            "id": "consolidated-earnings",
+            "label": "合并经营价值",
+            "kind": "multiple",
+            "sign": "add",
+            "metricLabel": "正常化归母净利润",
+            "metricLow": "1100000000",
+            "metricHigh": "1200000000",
+            "multipleLow": "11",
+            "multipleHigh": "12",
+            "note": "按正常化归母净利润乘以可比倍数。",
+            "evidenceIds": [
+              "ev-annual-report"
+            ]
+          }
+        ],
+        "computed": {
+          "low": "140.7",
+          "high": "167.4",
+          "center": "154.1",
+          "totalLow": "12100000000.00",
+          "totalHigh": "14400000000.00",
+          "bridge": [
+            {
+              "id": "consolidated-earnings",
+              "label": "合并经营价值",
+              "kind": "multiple",
+              "amountLow": "12100000000.00",
+              "amountHigh": "14400000000.00",
+              "perShareLow": "140.7",
+              "perShareHigh": "167.4"
+            }
+          ]
+        }
       }
     ],
     "actionZones": [
       {
-        "label": "买入",
-        "range": "低于 HK$90",
+        "label": "深度价值区",
+        "rangeLow": null,
+        "rangeHigh": "69.2",
+        "range": "HK$69.2 以下",
         "action": "分批建立底仓。"
       },
       {
-        "label": "持有",
-        "range": "HK$90–130",
-        "action": "维持现有仓位，跟踪季度阈值。"
+        "label": "基础仓位区",
+        "rangeLow": "69.2",
+        "rangeHigh": "78.5",
+        "range": "HK$69.2–78.5",
+        "action": "建立基础仓位。"
       },
       {
-        "label": "减持",
-        "range": "高于 HK$130",
-        "action": "在牛市情景未兑现前逐步减仓。"
+        "label": "小仓观察区",
+        "rangeLow": "78.5",
+        "rangeHigh": "99.4",
+        "range": "HK$78.5–99.4",
+        "action": "小仓等待续费数据。"
+      },
+      {
+        "label": "合理价值区",
+        "rangeLow": "99.4",
+        "rangeHigh": "110.5",
+        "range": "HK$99.4–110.5",
+        "action": "持有观察。"
+      },
+      {
+        "label": "兑现要求区",
+        "rangeLow": "110.5",
+        "rangeHigh": null,
+        "range": "HK$110.5 以上",
+        "action": "等待牛市情景兑现。"
       }
     ],
-    "currentExpectation": "当前价格隐含订阅占比停留在 72% 且毛利率不再改善。",
+    "impliedExpectation": {
+      "marketCap": "8600000000.00",
+      "operatingValue": "8600000000.00",
+      "nonOperatingPerShare": "0.0",
+      "multipleLow": "9.05",
+      "multipleHigh": "9.56",
+      "metricLabel": "正常化归母净利润"
+    },
+    "currentExpectation": "当前价格对应正常化盈利的中枢倍数。",
     "evidenceIds": [
       "ev-annual-report"
     ]
@@ -456,5 +690,102 @@
       "url": "https://example.com/fixture/board-announcement.pdf"
     }
   ],
-  "disclaimer": "本报告仅作研究与教育用途，不构成个性化投资建议。"
+  "disclaimer": "本报告仅作研究与教育用途，不构成个性化投资建议。",
+  "businessModel": {
+    "segments": [
+      {
+        "id": "core-subscription",
+        "name": "核心订阅",
+        "role": "经济核心",
+        "payer": "企业客户按席位付费。",
+        "chargingMode": "年度订阅合同。",
+        "evidenceIds": [
+          "ev-annual-report"
+        ]
+      },
+      {
+        "id": "professional-services",
+        "name": "专业服务",
+        "role": "辅助",
+        "payer": "同一批企业客户按项目付费。",
+        "chargingMode": "一次性实施与咨询费。",
+        "evidenceIds": [
+          "ev-annual-report"
+        ]
+      }
+    ],
+    "causalChain": "销售投入 → 新签席位 → 续费与扩座 → 订阅收入 → 毛利 → 现金 → 再投入研发。",
+    "deliveryDependency": "自有云基础设施与实施团队。",
+    "cashEngine": "现金几乎全部来自核心订阅的预收年费。",
+    "evidenceIds": [
+      "ev-annual-report"
+    ]
+  },
+  "marketPosition": {
+    "measures": [
+      {
+        "basis": "商业化",
+        "label": "细分市场收入份额",
+        "marketDefinition": "境内同类订阅软件收入。",
+        "denominatorIncludes": [
+          "示例公司",
+          "竞争对手 A"
+        ],
+        "denominatorExcludes": [
+          {
+            "name": "未上市厂商",
+            "reason": "不披露收入。"
+          }
+        ],
+        "status": "calculated",
+        "value": "12.0",
+        "displayValue": "约 12%",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 1,
+        "rank": "第 2 名",
+        "trend": "稳定",
+        "asOf": "FY2025",
+        "evidenceIds": [
+          "ev-annual-report"
+        ]
+      },
+      {
+        "basis": "规模",
+        "label": "付费企业客户数份额",
+        "marketDefinition": "境内同类订阅软件付费企业客户数。",
+        "denominatorIncludes": [
+          "示例公司",
+          "竞争对手 A"
+        ],
+        "denominatorExcludes": [],
+        "status": "reported",
+        "value": "15.0",
+        "displayValue": "约 15%",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 1,
+        "rank": "第 2 名",
+        "trend": "改善",
+        "asOf": "FY2025",
+        "evidenceIds": [
+          "ev-exchange-filing"
+        ]
+      }
+    ],
+    "competitors": [
+      {
+        "name": "竞争对手 A",
+        "share": "收入份额约 88%",
+        "note": "份额领先的老牌厂商。",
+        "evidenceIds": [
+          "ev-annual-report"
+        ]
+      }
+    ],
+    "concentrationTrend": "双寡头格局稳定。",
+    "evidenceIds": [
+      "ev-annual-report"
+    ]
+  }
 }

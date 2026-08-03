@@ -51,8 +51,13 @@ def validate_snapshot(snapshot: Path, company_id: str, root: Path) -> list[str]:
         return [f"研究快照不是有效 JSON：{snapshot.relative_to(root)}；{exc}"]
 
     expected_id = snapshot.stem
-    if data.get("schemaVersion") != "1.0.0":
-        errors.append(f"研究快照 schemaVersion 必须为 1.0.0：{snapshot.relative_to(root)}")
+    # 1.0.0 是结构化商业模式、行业地位与计算式估值之前的契约，仅供已发布的
+    # 历史快照原样保留；新研究一律 1.1.0。见 ADR-0017。
+    if data.get("schemaVersion") not in {"1.0.0", "1.1.0"}:
+        errors.append(
+            f"研究快照 schemaVersion 必须为 1.1.0（历史快照可保留 1.0.0）："
+            f"{snapshot.relative_to(root)}"
+        )
     if data.get("company", {}).get("id") != company_id:
         errors.append(f"研究快照 company.id 与目录不一致：{snapshot.relative_to(root)}")
     if data.get("snapshot", {}).get("id") != expected_id:
@@ -85,6 +90,7 @@ def validate(root: Path) -> list[str]:
 
         legacy_dates: dict[str, Path] = {}
         snapshots_dir: Path | None = None
+        ledger: Path | None = None
         for item in sorted(entry.iterdir()):
             if item.name == ".DS_Store":
                 continue
@@ -95,10 +101,15 @@ def validate(root: Path) -> list[str]:
                     errors.append(f"公司目录内不允许此子目录：{item.relative_to(root)}")
                 continue
 
+            if item.name == "financials.json":
+                ledger = item
+                continue
+
             match = ANALYSIS_PATTERN.fullmatch(item.name)
             if not match or match.group("extension") != "md":
                 errors.append(
-                    f"公司目录根部仅允许历史 Markdown 研究记录：{item.relative_to(root)}；"
+                    f"公司目录根部仅允许历史 Markdown 研究记录与 financials.json："
+                    f"{item.relative_to(root)}；"
                     "新研究应写入 snapshots/YYYY-MM-DD-HHMM-analysis.json。"
                 )
                 continue
@@ -121,6 +132,15 @@ def validate(root: Path) -> list[str]:
                     f"公司目录既没有历史研究也没有 canonical snapshots：{entry.relative_to(root)}"
                 )
             continue
+
+        # 有快照就必须有账本：报告期取数昂贵（港股只能人工从 PDF 抠），
+        # 丢一次就得重抠一次。硬约束放在这里而不是每份合成快照上。
+        if ledger is None:
+            errors.append(
+                f"公司目录有 canonical snapshots 但缺少财报期间账本："
+                f"{(entry / 'financials.json').relative_to(root)}；"
+                "见 docs/adr/0014-commit-a-financial-period-ledger.md。"
+            )
 
         snapshot_dates: dict[str, Path] = {}
         for snapshot in sorted(snapshots_dir.iterdir()):

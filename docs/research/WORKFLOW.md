@@ -11,6 +11,8 @@ npm run snapshot:new -- <company-id>            # 落盘到规范路径
 npm run snapshot:new -- <company-id> --stdout   # 只预览，不落盘
 ```
 
+新公司先建财报期间账本 `research/companies/<company-id>/financials.json`，再生成骨架——骨架会从账本物化 `financialHistory`，已收官的报告期不必重新取数。账本最低覆盖最近两个完整年度（上市不足两年则自上市起全部）。详见 ADR-0014。
+
 骨架从该公司最近一份研究快照继承**口径**：公司标识、驱动指标的 ID/定义/定义版本/单位/币种/scale/精度/期间类型/会计基础、标准指标的同类字段、最紧约束的 ID 与标签。所有数值、期间、趋势、结论与证据引用一律写成待办哨兵 `__TODO__`，必须重新取证后替换。
 
 继承口径是为了让跨快照可比成为默认结果；不继承数值是为了让「假更新」无法成为省力路径。
@@ -36,6 +38,10 @@ npm run snapshot:new -- <company-id> --stdout   # 只预览，不落盘
 ## 3. 建立商业模式与核心驱动
 
 读 `docs/research/business-model-playbook.md`。用一句可证伪的话说明用户、付费者、价值、收费方式、交付依赖、利润和现金来源；存在多种实质模式时分别建模。
+
+把结论写进 `businessModel`：分部名录（ID、名称、战略角色、付费者、收费方式）、因果链、交付依赖、现金引擎。**这一块不存任何百分比**——收入占比由 `financialHistory[].segments` 的分部数据算出，避免两处打架。
+
+同时填 `marketPosition`，强制给出**商业化份额与规模份额两个口径**，每个口径写明市场定义、分母包含谁、排除谁及原因。取不到就写 `status: "unavailable"` 与 reason，不允许整个口径缺席。两个口径信号相反时必须解释背离。
 
 建立因果链：`关键投入/供给 → 获客/分发 → 使用/交易/销量 → 定价/变现 → 单位贡献 → 现金回收 → 再投资`。选择 5–8 个核心维度，每个维度保留 1–3 个能解释因果关系的公司特定指标，并建立定义、基线、最新值、趋势、阈值、证据和置信度。
 
@@ -66,7 +72,15 @@ npm run snapshot:new -- <company-id> --stdout   # 只预览，不落盘
 
 先判断长期价值来自高回报再投资、稳定现金收割、周期均值回归、事件兑现，还是未验证可选项。把核心驱动直接绑定收入增速、稳态利润率、再投资率、资本回报和风险折价；基准价值只纳入已验证业务。
 
-使用至少两种适合该模式的方法交叉验证，给出熊市、基准和牛市情景、当前价格隐含预期、合理价值区间、安全边际与条件化行动区间。
+**先读 `docs/research/valuation-playbook.md` 选方法。** 在 `methodSelection` 中同时记录理想方法与实际采用的主方法；两者不同时，`blockedBy` 必须列出缺哪些数据、为什么需要、去哪里取——这份清单会直接印在页面上。
+
+情景由 `components` 声明（倍数项或面值项），价值区间、操作区间与隐含预期全部由引擎计算，**不要手写**：
+
+```bash
+npm run snapshot:sync -- research/companies/<company>/snapshots/<snapshot-id>.json
+```
+
+汇率与股数必填，汇率按 ADR-0013 的双源交叉规则取证并建立至少两条 evidence。体检规则触发后必须逐条回应；DCF 只能作为交叉验证，不作主方法。
 
 完成标准：每个估值情景都能追溯到核心指标与商业模式假设；净现金只计一次；异常利润不机械年化；价格区间附带可验证触发条件。
 
@@ -106,6 +120,7 @@ npm run snapshot:check -- research/companies/<company>/snapshots/<snapshot-id>.j
 ## 按需读取
 
 - 数据 API、认证、缓存与市场降级：`docs/research/data-source-registry.md`
+- 估值方法选择、体检规则与组件模型：`docs/research/valuation-playbook.md`
 - 来源优先级与最新信息核验：`docs/research/sources-and-priority.md`
 - 商业模式、驱动树与分行业 KPI：`docs/research/business-model-playbook.md`
 - 指标计算与人员研发估算：`docs/research/metric-playbook.md`

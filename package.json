@@ -11,6 +11,7 @@
     "publish": "npm run publish --workspace @airesearch/web",
     "snapshot:new": "node --experimental-strip-types --no-warnings packages/research-schema/src/cli/new-snapshot.ts",
     "snapshot:check": "node --experimental-strip-types --no-warnings packages/research-schema/src/cli/check-snapshot.ts",
+    "snapshot:sync": "node --experimental-strip-types --no-warnings packages/research-schema/src/cli/sync-snapshot.ts",
     "test": "node --test tests/publication.test.mjs tests/snapshot-authoring.test.mjs",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "verify": "npm run typecheck && npm test && python3 scripts/research/validate_research_paths.py"

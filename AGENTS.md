@@ -9,6 +9,7 @@ Maintain evidence-based, long-term research on public companies. Treat the core 
 - Follow `docs/research/WORKFLOW.md` for company research; the skills under `.agents/skills/` and `.claude/skills/` are thin pointers to it.
 - Keep shared research assets in `docs/research/` (methodology, snapshot contract) and `scripts/research/` (data fetching, validation).
 - Store canonical JSON snapshots in `research/companies/<market>-<ticker>-<slug>/snapshots/`.
+- Store each company's financial period ledger at `research/companies/<company-dir>/financials.json`; fetch reported periods once and reuse them.
 - Publish generated company pages and dated HTML reports to `research/site/`; commit this final static output.
 - Store polished thematic reports and final exports in `research/reports/<topic>/`.
 - Keep disposable generation, rendering, review screenshots, caches, and smoke-test files under `tmp/`; do not commit them.
@@ -31,7 +32,10 @@ Maintain evidence-based, long-term research on public companies. Treat the core 
 - Name every canonical snapshot exactly `YYYY-MM-DD-HHMM-analysis.json`, using Asia/Shanghai creation time in 24-hour format.
 - Keep only one canonical snapshot per company per calendar day. Update the same JSON snapshot for later same-day work instead of creating another timestamped version.
 - Treat root-level `YYYY-MM-DD-HHMM-analysis.md` files inside an existing company directory as read-only legacy notes. New research must not use Markdown as its canonical output.
-- Generate a new snapshot with `npm run snapshot:new -- <company-id>`; it inherits calibration from the previous snapshot so the two stay comparable.
+- Generate a new snapshot with `npm run snapshot:new -- <company-id>`; it inherits calibration from the previous snapshot and materialises `financialHistory` from the ledger so the two stay comparable.
+- Never hand-write `financialHistory` or any engine-computed valuation field. Run `npm run snapshot:sync -- <snapshot-path>` instead; the checker rejects hand edits.
+- Every company directory that holds snapshots must also hold `financials.json` covering at least the last two fiscal years.
+- Author new snapshots against `schemaVersion` 1.1.0. Snapshots already published as 1.0.0 stay untouched.
 - Never drop, add, or recalibrate a driver metric without recording it in `thesisChange.driverChanges`.
 - Generate HTML only through `npm run publish`; never hand-edit `research/site/`.
 - Never invent a different filename. Before finishing any research task, run `python3 scripts/research/validate_research_paths.py` and fix every reported violation without asking the user.
@@ -41,7 +45,7 @@ Maintain evidence-based, long-term research on public companies. Treat the core 
 ## Validation
 
 - Change research methodology in `docs/research/`, never in a skill shell; both agents read the same files.
-- Run `npm run snapshot:check -- <snapshot-path>` while authoring, and `npm run snapshot:check -- --all` before finishing.
+- Run `npm run snapshot:sync -- <snapshot-path>` after editing the ledger or any valuation component, then `npm run snapshot:check -- <snapshot-path>` while authoring, and `npm run snapshot:check -- --all` before finishing.
 - Run `python3 scripts/research/validate_research_paths.py` after creating, renaming, or moving company research.
 - Run `npm run verify` after changing snapshots, schemas, report components, styles, or publishing logic.
 - Before handing off structural changes, run `git diff --check` and verify that all README links resolve.

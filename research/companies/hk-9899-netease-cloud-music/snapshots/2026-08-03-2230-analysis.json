@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "1.1.0",
   "company": {
     "id": "hk-9899-netease-cloud-music",
     "name": "网易云音乐",
@@ -7,7 +7,12 @@
     "ticker": "9899.HK",
     "market": "Hong Kong",
     "reportingCurrency": "CNY",
-    "accountingStandard": "IFRS"
+    "accountingStandard": "IFRS",
+    "industryTags": [
+      "在线音乐",
+      "订阅服务",
+      "互联网平台"
+    ]
   },
   "snapshot": {
     "id": "2026-08-03-2230-analysis",
@@ -27,9 +32,9 @@
       "asOf": "2026-08-03T10:32:56+08:00"
     },
     "fairValue": {
-      "low": "120.0",
-      "high": "138.0",
-      "center": "129.0",
+      "low": "121.6",
+      "high": "139.3",
+      "center": "130.5",
       "currency": "HKD"
     },
     "marginOfSafety": "当前价格接近基准价值中枢，便宜但不够便宜。",
@@ -152,7 +157,8 @@
       "precision": 2,
       "evidenceIds": [
         "annual-report-2025"
-      ]
+      ],
+      "definitionNote": "OCF/报表净利润仅 58.9%，主要来自 7.467 亿元递延税项抬高了利润分母；剔除后约 80.8%。"
     },
     {
       "metricId": "free-cash-flow",
@@ -169,7 +175,8 @@
       "precision": 2,
       "evidenceIds": [
         "annual-report-2025"
-      ]
+      ],
+      "definitionNote": "云音乐没有资本化开发成本，因此此处等于经营现金流减 PPE 现金购置。"
     },
     {
       "metricId": "net-cash",
@@ -186,7 +193,8 @@
       "precision": 2,
       "evidenceIds": [
         "annual-report-2025"
-      ]
+      ],
+      "definitionNote": "银行存款与现金合计约 135.75 亿元，未见有息债务，因此净现金等于现金类资产总额。"
     },
     {
       "metricId": "roic",
@@ -234,6 +242,39 @@
       "precision": 2,
       "evidenceIds": [
         "market-price-2026-07-31"
+      ]
+    },
+    {
+      "metricId": "customer-concentration",
+      "label": "最大客户收入占比",
+      "definitionVersion": "1",
+      "status": "reported",
+      "value": "13.7",
+      "unit": "percent",
+      "scale": "one",
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "precision": 1,
+      "evidenceIds": [
+        "annual-report-2025"
+      ]
+    },
+    {
+      "metricId": "shareholder-return-coverage",
+      "label": "股东回报覆盖率",
+      "definitionNote": "2025 财年内既无分红也无回购，因此覆盖率为 0；年报后实施的约 2.52 亿元回购发生在资产负债表日之后，计入 FY2026。",
+      "definitionVersion": "1",
+      "status": "calculated",
+      "value": "0.0",
+      "unit": "percent",
+      "scale": "one",
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "precision": 1,
+      "evidenceIds": [
+        "annual-report-2025"
       ]
     }
   ],
@@ -453,14 +494,18 @@
     "investmentLogic": "参数变化：订阅变现引擎本身未变，2026Q1 在线音乐仍在增长；但用户侧竞争强度实质上升，漏斗顶端被短视频原生对手挤压。尚未升级为机制变化，因为公司的获客、供给、收费与交付方式都没有改变——改变的是它所处的分发环境。",
     "financialQuality": "未变：最新可得期间仍是 2026Q1，2026H1 业绩尚未公布，毛利率与现金转换判断维持。",
     "governance": "未变：报告期内无治理事项或资本配置政策变化。",
-    "valuation": "未变：合理价值区间维持，参考价格由 HK$127.4 回落至 HK$125.900（−1.2%）。用户侧压力尚未反映到收入，暂不调整情景假设。",
+    "valuation": "口径修正，非观点变化。合理价值区间由手写的 HK$120–138 改为引擎按情景组件计算的结果，并首次记录了此前完全缺失的汇率假设（HKD/CNY 0.8612，双源交叉）。原快照的 currentExpectation 称当前价对应 11.6x–12.3x，按其自身盈利口径实为 11.0x–11.5x，本次一并更正。三个情景的盈利与倍数假设全部沿用上一份研究，未做任何观点调整；参考价格由 HK$127.4 回落至 HK$125.900（−1.2%）。",
     "newEvidence": [
       "QuestMobile：2026 年 3 月汽水音乐月活 1.5605 亿首次反超网易云音乐 1.4682 亿，网易云退居行业第四。",
       "汽水音乐 2026 年 3 月月活同比增长 78%，82.1% 流量来自抖音生态。",
-      "2026-08-03 参考价格 HK$125.900，较 07-31 的 HK$127.4 回落 1.2%。"
+      "2026-08-03 参考价格 HK$125.900，较 07-31 的 HK$127.4 回落 1.2%。",
+      "首次为估值记录带时点的双源汇率（Xe.com 与英为财情，HKD/CNY 0.8612）。",
+      "补入 FY2023/FY2024 分部收入，使在线音乐与社交娱乐的反向走势第一次可量化。"
     ],
     "supersededAssumptions": [
-      "此前把竞争格局简化为「与腾讯音乐的两家上市平台之争」，忽略了非上市的短视频原生竞争者。"
+      "此前把竞争格局简化为「与腾讯音乐的两家上市平台之争」，忽略了非上市的短视频原生竞争者。",
+      "「当前价格对应 11.6x–12.3x 正常化盈利」——该读数隐含约 0.915 的汇率，与实际 0.8612 相差 6%。",
+      "手写的合理价值区间 HK$120–138 —— 现由估值引擎从情景组件计算得出。"
     ],
     "driverChanges": [
       {
@@ -475,6 +520,7 @@
       "period": "FY2021",
       "periodType": "fiscal-year",
       "accountingBasis": "IFRS",
+      "status": "reported",
       "revenue": {
         "value": "69.98",
         "unit": "currency",
@@ -495,6 +541,24 @@
         "scale": "hundred-million",
         "precision": 2
       },
+      "segments": [
+        {
+          "segmentId": "online-music",
+          "status": "unavailable",
+          "reason": "2021-2022 年度分部收入未在本次研究中取证，需回到对应年报补齐。",
+          "evidenceIds": [
+            "annual-report-2025"
+          ]
+        },
+        {
+          "segmentId": "social-entertainment",
+          "status": "unavailable",
+          "reason": "2021-2022 年度分部收入未在本次研究中取证，需回到对应年报补齐。",
+          "evidenceIds": [
+            "annual-report-2025"
+          ]
+        }
+      ],
       "evidenceIds": [
         "annual-report-2025"
       ]
@@ -503,6 +567,7 @@
       "period": "FY2022",
       "periodType": "fiscal-year",
       "accountingBasis": "IFRS",
+      "status": "reported",
       "revenue": {
         "value": "89.92",
         "unit": "currency",
@@ -529,6 +594,24 @@
         "scale": "hundred-million",
         "precision": 2
       },
+      "segments": [
+        {
+          "segmentId": "online-music",
+          "status": "unavailable",
+          "reason": "2021-2022 年度分部收入未在本次研究中取证，需回到对应年报补齐。",
+          "evidenceIds": [
+            "annual-report-2025"
+          ]
+        },
+        {
+          "segmentId": "social-entertainment",
+          "status": "unavailable",
+          "reason": "2021-2022 年度分部收入未在本次研究中取证，需回到对应年报补齐。",
+          "evidenceIds": [
+            "annual-report-2025"
+          ]
+        }
+      ],
       "evidenceIds": [
         "annual-report-2025"
       ]
@@ -537,6 +620,7 @@
       "period": "FY2023",
       "periodType": "fiscal-year",
       "accountingBasis": "IFRS",
+      "status": "reported",
       "revenue": {
         "value": "78.67",
         "unit": "currency",
@@ -563,6 +647,36 @@
         "scale": "hundred-million",
         "precision": 2
       },
+      "segments": [
+        {
+          "segmentId": "online-music",
+          "status": "reported",
+          "revenue": {
+            "value": "43.50",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "hundred-million",
+            "precision": 2
+          },
+          "evidenceIds": [
+            "annual-results-2024-media"
+          ]
+        },
+        {
+          "segmentId": "social-entertainment",
+          "status": "reported",
+          "revenue": {
+            "value": "35.16",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "hundred-million",
+            "precision": 2
+          },
+          "evidenceIds": [
+            "annual-results-2024-media"
+          ]
+        }
+      ],
       "evidenceIds": [
         "annual-report-2025"
       ]
@@ -571,6 +685,7 @@
       "period": "FY2024",
       "periodType": "fiscal-year",
       "accountingBasis": "IFRS",
+      "status": "reported",
       "revenue": {
         "value": "79.50",
         "unit": "currency",
@@ -617,6 +732,36 @@
         "scale": "hundred-million",
         "precision": 2
       },
+      "segments": [
+        {
+          "segmentId": "online-music",
+          "status": "reported",
+          "revenue": {
+            "value": "53.50",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "hundred-million",
+            "precision": 2
+          },
+          "evidenceIds": [
+            "annual-results-2024-media"
+          ]
+        },
+        {
+          "segmentId": "social-entertainment",
+          "status": "reported",
+          "revenue": {
+            "value": "25.96",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "hundred-million",
+            "precision": 2
+          },
+          "evidenceIds": [
+            "annual-results-2024-media"
+          ]
+        }
+      ],
       "evidenceIds": [
         "annual-report-2025"
       ]
@@ -625,6 +770,7 @@
       "period": "FY2025",
       "periodType": "fiscal-year",
       "accountingBasis": "IFRS",
+      "status": "reported",
       "revenue": {
         "value": "77.59",
         "unit": "currency",
@@ -671,6 +817,36 @@
         "scale": "hundred-million",
         "precision": 2
       },
+      "segments": [
+        {
+          "segmentId": "online-music",
+          "status": "reported",
+          "revenue": {
+            "value": "59.94",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "hundred-million",
+            "precision": 2
+          },
+          "evidenceIds": [
+            "annual-report-2025"
+          ]
+        },
+        {
+          "segmentId": "social-entertainment",
+          "status": "calculated",
+          "revenue": {
+            "value": "17.65",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "hundred-million",
+            "precision": 2
+          },
+          "evidenceIds": [
+            "annual-report-2025"
+          ]
+        }
+      ],
       "evidenceIds": [
         "annual-report-2025"
       ]
@@ -752,63 +928,261 @@
     }
   ],
   "valuation": {
+    "currency": "CNY",
+    "valueScale": "hundred-million",
+    "tradingCurrency": "HKD",
+    "shares": {
+      "value": "2.10",
+      "scale": "hundred-million",
+      "evidenceIds": [
+        "market-price-2026-07-31"
+      ]
+    },
+    "fx": {
+      "pair": "HKD/CNY",
+      "value": "0.8612",
+      "asOf": "2026-08-03T04:58:00+00:00",
+      "evidenceIds": [
+        "fx-xe-2026-08-03",
+        "fx-investing-2026-08-03"
+      ]
+    },
+    "healthCheck": [
+      {
+        "ruleId": "large-net-cash",
+        "observed": "净现金占市值 59.6%，超过 30% 阈值",
+        "response": "blocked",
+        "note": "确认成立且是本次估值最大的方法论缺陷。理想解是把现金按面值单列（SOTP），但剔除利息收入所需的实际利息数据未取证，本次只能沿用合并口径并在结论中明示这一点。"
+      },
+      {
+        "ruleId": "segment-divergence",
+        "observed": "2 个分部中同时存在增长与萎缩",
+        "response": "blocked",
+        "note": "在线音乐 53.50 → 59.94 亿元，社交娱乐 25.96 → 17.65 亿元，方向相反。分部经营利润未披露取证，无法给两段分别定倍数，本次仍用合并盈利。"
+      },
+      {
+        "ruleId": "weak-shareholder-return",
+        "observed": "股东回报覆盖率 0.0%，同时净现金占市值 59.6%",
+        "response": "acknowledged",
+        "note": "已在治理章节与最紧约束中反映，并作为不给净现金面值估值的理由之一。折价幅度需要管理层现金用途承诺才能定量，因此本次不写入组件。"
+      },
+      {
+        "ruleId": "customer-concentration",
+        "observed": "单一客户贡献收入 13.7%，超过 10%",
+        "response": "acknowledged",
+        "note": "已列入风险与跟踪点；该客户属非订阅收入，对订阅现金引擎影响有限，因此未单独给折价。"
+      }
+    ],
+    "methodSelection": {
+      "ideal": "sotp",
+      "idealRationale": "净现金占市值 59.6%，且在线音乐与社交娱乐走势相反——合并倍数法同时错估了这笔钱和这两条方向相反的曲线。分部加总可以把现金按面值单列并给治理折价，再对两个分部各自定倍数，是唯一能同时处理这两件事的方法。",
+      "adoptedPrimary": "multiple-pe",
+      "adoptedRationale": "本次沿用合并正常化 P/E，因为拆分 SOTP 所需的分部经营利润与实际利息收入都未取证。沿用的前提是口径自洽：正常化盈利里仍含现金利息收入，所以不再另加净现金。",
+      "blockedBy": [
+        {
+          "dataItem": "分部经营利润（在线音乐 / 社交娱乐及其他）",
+          "whyNeeded": "SOTP 要给每个分部单独的盈利基数才能分别定倍数；目前只有分部收入，支撑不了拆分估值。",
+          "whereToGet": "2025 年报分部资料附注（HKEXnews 原文）"
+        },
+        {
+          "dataItem": "现金及定期存款的实际利息收入与平均收益率",
+          "whyNeeded": "把 135.75 亿元净现金按面值单列之前，必须先把它产生的利息收入从正常化盈利中剔除，否则同一笔钱被计两次。",
+          "whereToGet": "2025 年报利润表其他收益附注与财务费用附注"
+        },
+        {
+          "dataItem": "管理层对净现金用途的明确承诺（分红政策、回购计划或投资方向）",
+          "whyNeeded": "决定这笔现金按面值计入还是打治理折价，以及折价给到多少。",
+          "whereToGet": "业绩发布会纪要、董事会决议公告、股息政策公告"
+        }
+      ],
+      "crossChecks": [
+        {
+          "methodId": "multiple-ev-sales",
+          "valueLow": "139.4",
+          "valueHigh": "160.8",
+          "keyAssumptions": "经营业务按 FY2025 收入 77.59 亿元的 1.5–2.0x EV/Sales 估值（订阅占比 65.1%、毛利率 35.7%、中个位数增长对应的区间），净现金 135.75 亿元按面值加回，不给治理折价。",
+          "note": "结果比主方法高约 15%，差异几乎全部来自净现金的处理：主方法把这笔钱按利息收入计价，交叉法按面值计价。这个 15% 的口子本身就是把 SOTP 列为理想方法的量化理由。",
+          "evidenceIds": [
+            "annual-report-2025",
+            "valuation-cross-check-ev-sales"
+          ]
+        }
+      ]
+    },
     "scenarios": [
       {
         "name": "熊市",
-        "assumptions": "在线音乐增速回落到中低个位数，社交娱乐继续下滑，治理折价维持",
-        "earnings": "正常化净利润 18-19 亿元",
-        "method": "10x 正常化 PE",
-        "valueRange": "HK$105-115",
-        "trigger": "订阅增长放缓且内容成本回升"
+        "assumptions": "在线音乐增速回落到中低个位数，社交娱乐继续下滑，治理折价维持，市场不给现金任何溢价。",
+        "trigger": "订阅增长放缓且内容成本回升。",
+        "components": [
+          {
+            "id": "consolidated-earnings",
+            "label": "合并经营价值",
+            "kind": "multiple",
+            "sign": "add",
+            "metricLabel": "正常化归母净利润（剔除递延税项）",
+            "metricLow": "18.0",
+            "metricHigh": "19.0",
+            "multipleLow": "10",
+            "multipleHigh": "10",
+            "note": "熊市假设正常化盈利回落到 18–19 亿元，倍数压到 10x。正常化归母净利润 = 报表净利润 27.48 亿元剔除 7.467 亿元非现金递延税项后约 20.0 亿元，区间按经营波动上下取整。注意这个口径仍含 135.75 亿元现金产生的利息收入，因此本方法不再另加净现金，否则同一笔钱被计两次。",
+            "evidenceIds": [
+              "annual-report-2025",
+              "valuation-inference"
+            ]
+          }
+        ],
+        "computed": {
+          "low": "99.5",
+          "high": "105.1",
+          "center": "102.3",
+          "totalLow": "180.00",
+          "totalHigh": "190.00",
+          "bridge": [
+            {
+              "id": "consolidated-earnings",
+              "label": "合并经营价值",
+              "kind": "multiple",
+              "amountLow": "180.00",
+              "amountHigh": "190.00",
+              "perShareLow": "99.5",
+              "perShareHigh": "105.1"
+            }
+          ]
+        }
       },
       {
         "name": "基准",
-        "assumptions": "在线音乐维持中高个位数增长，毛利率稳定，现金继续累积",
-        "earnings": "正常化净利润 20-21 亿元",
-        "method": "11x-12x 正常化 PE",
-        "valueRange": "HK$120-138",
-        "trigger": "订阅与广告、演出温和增长"
+        "assumptions": "在线音乐维持中高个位数增长，毛利率稳定在 35% 以上，现金继续累积但不派发。",
+        "trigger": "订阅与广告、演出温和增长。",
+        "components": [
+          {
+            "id": "consolidated-earnings",
+            "label": "合并经营价值",
+            "kind": "multiple",
+            "sign": "add",
+            "metricLabel": "正常化归母净利润（剔除递延税项）",
+            "metricLow": "20.0",
+            "metricHigh": "21.0",
+            "multipleLow": "11",
+            "multipleHigh": "12",
+            "note": "基准沿用 FY2025 实际正常化盈利水平 20–21 亿元，倍数 11–12x。正常化归母净利润 = 报表净利润 27.48 亿元剔除 7.467 亿元非现金递延税项后约 20.0 亿元，区间按经营波动上下取整。注意这个口径仍含 135.75 亿元现金产生的利息收入，因此本方法不再另加净现金，否则同一笔钱被计两次。",
+            "evidenceIds": [
+              "annual-report-2025",
+              "valuation-inference"
+            ]
+          }
+        ],
+        "computed": {
+          "low": "121.6",
+          "high": "139.3",
+          "center": "130.5",
+          "totalLow": "220.00",
+          "totalHigh": "252.00",
+          "bridge": [
+            {
+              "id": "consolidated-earnings",
+              "label": "合并经营价值",
+              "kind": "multiple",
+              "amountLow": "220.00",
+              "amountHigh": "252.00",
+              "perShareLow": "121.6",
+              "perShareHigh": "139.3"
+            }
+          ]
+        }
       },
       {
         "name": "牛市",
-        "assumptions": "订阅、广告、演出共同加速，资本配置转向股东回报",
-        "earnings": "正常化净利润 22-23 亿元",
-        "method": "13x-14x 正常化 PE",
-        "valueRange": "HK$145-160",
-        "trigger": "连续两期收入加速且强化回购或分红"
+        "assumptions": "订阅、广告、演出共同加速，资本配置转向股东回报，现金开始被市场按面值定价。",
+        "trigger": "连续两期收入加速且建立稳定回购或分红政策。",
+        "components": [
+          {
+            "id": "consolidated-earnings",
+            "label": "合并经营价值",
+            "kind": "multiple",
+            "sign": "add",
+            "metricLabel": "正常化归母净利润（剔除递延税项）",
+            "metricLow": "22.0",
+            "metricHigh": "23.0",
+            "multipleLow": "13",
+            "multipleHigh": "14",
+            "note": "牛市假设盈利抬升到 22–23 亿元并获得 13–14x 的成长溢价。正常化归母净利润 = 报表净利润 27.48 亿元剔除 7.467 亿元非现金递延税项后约 20.0 亿元，区间按经营波动上下取整。注意这个口径仍含 135.75 亿元现金产生的利息收入，因此本方法不再另加净现金，否则同一笔钱被计两次。",
+            "evidenceIds": [
+              "annual-report-2025",
+              "valuation-inference"
+            ]
+          }
+        ],
+        "computed": {
+          "low": "158.1",
+          "high": "178.0",
+          "center": "168.1",
+          "totalLow": "286.00",
+          "totalHigh": "322.00",
+          "bridge": [
+            {
+              "id": "consolidated-earnings",
+              "label": "合并经营价值",
+              "kind": "multiple",
+              "amountLow": "286.00",
+              "amountHigh": "322.00",
+              "perShareLow": "158.1",
+              "perShareHigh": "178.0"
+            }
+          ]
+        }
       }
     ],
     "actionZones": [
       {
         "label": "深度价值区",
-        "range": "HK$105 以下",
-        "action": "基本面未恶化时优先研究建仓"
+        "rangeLow": null,
+        "rangeHigh": "99.5",
+        "range": "HK$99.5 以下",
+        "action": "基本面未恶化时优先研究建仓。"
       },
       {
         "label": "基础仓位区",
-        "range": "HK$105-115",
-        "action": "分批建立基础仓位"
+        "rangeLow": "99.5",
+        "rangeHigh": "105.1",
+        "range": "HK$99.5–105.1",
+        "action": "分批建立基础仓位。"
       },
       {
         "label": "小仓观察区",
-        "range": "HK$115-125",
-        "action": "仅适合小仓等待验证"
+        "rangeLow": "105.1",
+        "rangeHigh": "121.6",
+        "range": "HK$105.1–121.6",
+        "action": "仅适合小仓等待验证，重点看月活与分部收入。"
       },
       {
         "label": "合理价值区",
-        "range": "HK$120-138",
-        "action": "持有观察，新增资金要求更高确信度"
+        "rangeLow": "121.6",
+        "rangeHigh": "139.3",
+        "range": "HK$121.6–139.3",
+        "action": "持有观察，新增资金要求更高确信度或更好的现金用途承诺。"
       },
       {
         "label": "兑现要求区",
-        "range": "HK$145 以上",
-        "action": "需要增长与资本配置同步兑现"
+        "rangeLow": "139.3",
+        "rangeHigh": null,
+        "range": "HK$139.3 以上",
+        "action": "需要增长与资本配置同步兑现才成立。"
       }
     ],
-    "currentExpectation": "HK$127.4 对应约 11.6x-12.3x 正常化盈利，市场已计入效率改善，但尚未支付高增长溢价。",
+    "impliedExpectation": {
+      "marketCap": "227.69",
+      "operatingValue": "227.69",
+      "nonOperatingPerShare": "0.0",
+      "multipleLow": "10.84",
+      "multipleHigh": "11.38",
+      "metricLabel": "正常化归母净利润（剔除递延税项）"
+    },
+    "currentExpectation": "HK$125.9 对应合并正常化盈利约 10.8x–11.4x，市场已经计入效率改善，但没有支付增长溢价。更值得注意的是结构：净现金 135.75 亿元折合 HK$75.1/股，占当前股价 59.6%，也就是说市场只用约 HK$50.8/股为整个经营业务定价。把这个数字换算成经营业务的真实倍数需要实际利息收入，而该数据尚未取证——这正是上方「补齐后可升级为 SOTP」列出的第二项。",
     "evidenceIds": [
       "annual-report-2025",
-      "market-price-2026-07-31",
+      "market-price-2026-08-03",
       "valuation-inference"
     ]
   },
@@ -938,7 +1312,168 @@
       "retrievedAt": "2026-08-03T10:32:56+08:00",
       "url": "https://qt.gtimg.cn/q=hk09899",
       "caveat": "行情仅用于参考价格与估值时点；交叉源 stockanalysis.com 报 HK$127.00 @10:09，偏离 0.87%，属盘中时差。"
+    },
+    {
+      "id": "annual-results-2024-media",
+      "kind": "fact",
+      "title": "网易云音乐 2024 年度业绩：在线音乐服务收入 53.5 亿元、社交娱乐及其他 25.96 亿元",
+      "publisher": "新浪科技（转述 2024 年度业绩公告）",
+      "periodOrEventDate": "FY2024",
+      "publishedAt": "2025-02-21",
+      "retrievedAt": "2026-08-03T23:10:00+08:00",
+      "url": "https://finance.sina.com.cn/tech/roll/2025-02-21/doc-inemezhi2997277.shtml",
+      "caveat": "经媒体转述，未逐项核对 HKEXnews 原文。FY2024 两个分部合计 79.46 亿元与总收入 79.50 亿元相差 0.04 亿元，属披露精度差异。下次研究应以年报原文替换本条。"
+    },
+    {
+      "id": "fx-xe-2026-08-03",
+      "kind": "fact",
+      "title": "HKD/CNY 中间市场汇率 0.86120028",
+      "publisher": "Xe.com",
+      "periodOrEventDate": "2026-08-03",
+      "publishedAt": "2026-08-03",
+      "retrievedAt": "2026-08-03T23:05:00+08:00",
+      "url": "https://www.xe.com/en-us/currencyconverter/convert/?Amount=1&From=HKD&To=CNY",
+      "caveat": "页面标注时点为 2026-08-03 04:58 UTC；汇率仅用于把报告币种盈利换算为交易币种每股价值。"
+    },
+    {
+      "id": "fx-investing-2026-08-03",
+      "kind": "fact",
+      "title": "HKD/CNY 2026-08-03 收盘 0.8612",
+      "publisher": "英为财情 Investing.com",
+      "periodOrEventDate": "2026-08-03",
+      "publishedAt": "2026-08-03",
+      "retrievedAt": "2026-08-03T23:06:00+08:00",
+      "url": "https://cn.investing.com/currencies/hkd-cny-historical-data",
+      "caveat": "作为汇率的第二独立来源；与 Xe.com 偏离小于 0.01%，满足双源交叉要求。"
+    },
+    {
+      "id": "valuation-cross-check-ev-sales",
+      "kind": "inference",
+      "title": "EV/Sales 交叉验证：经营业务 1.5–2.0x 收入 + 净现金面值",
+      "publisher": "AI Research",
+      "periodOrEventDate": "2026-08-03",
+      "publishedAt": "2026-08-03",
+      "retrievedAt": "2026-08-03T23:20:00+08:00",
+      "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501036.pdf",
+      "caveat": "1.5–2.0x EV/Sales 是分析判断而非可比公司实测值；该交叉验证只用于量化净现金处理方式带来的估值差异。"
     }
   ],
-  "disclaimer": "本报告仅作研究与教育用途，不构成个性化投资建议。"
+  "disclaimer": "本报告仅作研究与教育用途，不构成个性化投资建议。",
+  "businessModel": {
+    "segments": [
+      {
+        "id": "online-music",
+        "name": "在线音乐服务",
+        "role": "经济核心",
+        "payer": "C 端用户支付会员订阅费；广告主与数字专辑购买者贡献少量非订阅收入。",
+        "chargingMode": "按月或按年的会员订阅费为主，辅以广告、数字专辑与演出等单次付费。",
+        "evidenceIds": [
+          "annual-report-2025"
+        ]
+      },
+      {
+        "id": "social-entertainment",
+        "name": "社交娱乐服务及其他",
+        "role": "收缩中",
+        "payer": "C 端用户在直播与社交场景内为虚拟礼物付费。",
+        "chargingMode": "虚拟道具充值后与主播及公会分成。",
+        "evidenceIds": [
+          "annual-report-2025"
+        ]
+      }
+    ],
+    "causalChain": "版权与独立音乐人内容供给 → 社区氛围与推荐质量 → 用户留存与付费转化 → 订阅用户规模 × ARPPU → 内容成本被规模摊薄 → 毛利与经营杠杆释放 → 现金累积 → 再投入内容与产品。",
+    "deliveryDependency": "上游唱片公司与独立音乐人的版权授权、自研推荐系统（Climber）、应用商店与支付渠道；社交娱乐额外依赖主播与公会供给。向 NetEase Group 采购技术及其他服务 2.65 亿元，构成对母公司的运营依赖。",
+    "cashEngine": "利润与现金几乎全部来自在线音乐订阅：会员订阅收入 50.53 亿元占总收入 65.1%，同比增长 13.3%，且增量订阅的边际内容成本远低于增量收入；社交娱乐处于主动收缩，已不再是现金来源。",
+    "evidenceIds": [
+      "annual-report-2025"
+    ]
+  },
+  "marketPosition": {
+    "measures": [
+      {
+        "basis": "商业化",
+        "label": "在线音乐服务收入代理份额",
+        "marketDefinition": "中国在线音乐服务收入，口径仅覆盖已披露音乐业务收入的上市平台。",
+        "denominatorIncludes": [
+          "网易云音乐",
+          "腾讯音乐娱乐集团"
+        ],
+        "denominatorExcludes": [
+          {
+            "name": "汽水音乐（字节跳动）",
+            "reason": "不披露音乐业务收入，无法进入任何收入口径的分母，因此该份额结构上看不见它的扩张。"
+          },
+          {
+            "name": "咪咕音乐等运营商系平台",
+            "reason": "未单独披露音乐业务收入。"
+          }
+        ],
+        "status": "calculated",
+        "value": "18.3",
+        "displayValue": "约 18.3%",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 1,
+        "rank": "两家上市平台中的第 2 名",
+        "trend": "稳定",
+        "asOf": "FY2025",
+        "evidenceIds": [
+          "proxy-share-calculation",
+          "tme-fy2025",
+          "annual-report-2025"
+        ]
+      },
+      {
+        "basis": "规模",
+        "label": "月活跃用户规模（QuestMobile 第三方口径）",
+        "marketDefinition": "中国在线音乐 App 月活跃用户数，QuestMobile 口径，覆盖不披露收入的竞争者。",
+        "denominatorIncludes": [
+          "网易云音乐",
+          "QQ 音乐",
+          "酷狗音乐",
+          "汽水音乐"
+        ],
+        "denominatorExcludes": [],
+        "status": "reported",
+        "value": "146.82",
+        "displayValue": "1.4682 亿（2026 年 3 月）",
+        "unit": "count",
+        "scale": "million",
+        "precision": 2,
+        "rank": "第 4 名",
+        "trend": "恶化",
+        "asOf": "2026-03",
+        "evidenceIds": [
+          "questmobile-2026-03"
+        ]
+      }
+    ],
+    "divergence": "收入口径稳定在 18.3%，用户口径却已被汽水音乐反超退居第四——钱暂时守住了，人正在流失。原因是结构性的：收入份额的分母只有两家上市平台，非上市竞争者无论增长多快都不会让这个读数下降，所以它对来自短视频生态的冲击天然迟钝。判断竞争地位时必须以用户口径为领先信号，收入口径只作滞后确认。",
+    "competitors": [
+      {
+        "name": "腾讯音乐娱乐集团",
+        "share": "同口径在线音乐收入约 81.7%",
+        "note": "收入口径的绝对龙头，订阅规模与版权议价能力均领先，是网易云音乐内容成本的价格参照。",
+        "evidenceIds": [
+          "tme-fy2025",
+          "proxy-share-calculation"
+        ]
+      },
+      {
+        "name": "汽水音乐（字节跳动）",
+        "share": "月活 1.5605 亿（2026 年 3 月），收入未披露",
+        "note": "同比增长 78%，82.1% 流量来自抖音生态，2026 年 3 月月活首次反超网易云音乐。因不披露收入而完全不在收入口径分母内。",
+        "evidenceIds": [
+          "questmobile-2026-03"
+        ]
+      }
+    ],
+    "concentrationTrend": "收入侧仍是腾讯音乐主导的双寡头格局，集中度稳定；用户侧集中度正被短视频生态的原生音乐入口打破，两条曲线在 2026 年首次分叉。",
+    "evidenceIds": [
+      "proxy-share-calculation",
+      "questmobile-2026-03",
+      "tme-fy2025"
+    ]
+  }
 }

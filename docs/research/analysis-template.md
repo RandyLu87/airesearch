@@ -2,6 +2,8 @@
 
 新研究的规范产出是 JSON `Research Snapshot`，不是 Markdown 或手写 HTML。最终可执行定义以仓库 `packages/research-schema/src/index.ts` 的 Zod schema 为准；修改字段时先改 schema 和测试，再改本文件。
 
+`schemaVersion` 目前有两个合法取值。**新研究一律写 `1.1.0`。** `1.0.0` 是结构化商业模式、行业地位与计算式估值出现之前的契约，仅供已发布的历史快照原样保留（见 ADR-0017）；回填历史快照等于给几个月前的判断编造当时并未记录的汇率与份额分母，不允许。
+
 ## 路径与生命周期
 
 ```text
@@ -18,11 +20,13 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
 
 ```json
 {
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "1.1.0",
   "company": {},
   "snapshot": {},
   "investmentHorizon": "3-5 年",
   "summary": {},
+  "businessModel": {},
+  "marketPosition": {},
   "standardMetrics": [],
   "driverMetrics": [],
   "constraints": [],
@@ -42,7 +46,7 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
 
 ### `company` 与 `snapshot`
 
-- `company`：规范 ID、公司名、法定名、ticker、市场、报告币种、会计准则。
+- `company`：规范 ID、公司名、法定名、ticker、市场、报告币种、会计准则、`industryTags`（驱动行业相关的估值体检规则，例如 `银行`、`保险`、`资源`、`周期`）。
 - `snapshot.createdAt`：研究快照创建时间；`dataCutoff`：本次消息与数据截止时间。均使用带时区 ISO 8601。
 - `snapshot.sourceNote`：从历史 Markdown 迁移时指向公司目录内的原文件；没有历史迁移输入时省略。
 
@@ -52,11 +56,31 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
 
 `businessModelChange` 只能是：`未变`、`参数变化`、`机制变化`、`结构性变化`。
 
+### `businessModel`
+
+商业模式画像，**不含任何百分比**。收入占比一律由 `financialHistory[].segments` 算出，因此两处不可能互相矛盾。
+
+- `segments`：分部名录，每项包含稳定 ID、名称、战略角色（`经济核心` / `增长引擎` / `辅助` / `收缩中` / `孵化`）、付费者、收费方式与 evidence IDs。ID 必须与 `financialHistory[].segments[].segmentId` 对应。
+- `causalChain`：从投入到再投资的一条因果链。
+- `deliveryDependency`：获客、供给、履约依赖的渠道、资产、牌照或合作方。
+- `cashEngine`：利润与现金究竟来自哪一段。
+
+声明了两个及以上分部时，最新期间必须给出分部数据；取不到就逐个写 `status: "unavailable"` 与 reason。
+
+### `marketPosition`
+
+行业地位，**强制商业化与规模两个口径并列**。缺任何一个口径都不合法——取不到数据时仍要给出该口径并写 `status: "unavailable"` 与 reason。
+
+每个 measure 必须写清 `marketDefinition`、`denominatorIncludes` 与 `denominatorExcludes`（排除谁、为什么）。没有分母定义的百分比不是事实。
+
+两个口径给出方向相反的信号时（一个改善或稳定、一个恶化），必须填 `divergence` 解释背离含义。这类背离通常是竞争格局变化最早的可观察证据。
+
 ### `standardMetrics`
 
 用于跨公司或跨快照的严格比较。每个 observation 必须记录：
 
-- 稳定 `metricId`、`definitionVersion`、期间、期间类型、会计基础；
+- `metricId` 必须是 `packages/research-schema/src/metric-dictionary.ts` 中已登记的键；定义、算式与陷阱由词典提供，快照只能通过可选的 `definitionNote` **追加**公司特定说明，不能覆盖（见 ADR-0015）；
+- `definitionVersion`、期间、期间类型、会计基础；
 - `reported`、`calculated` 或 `unavailable` 状态；
 - 数值使用十进制字符串，禁止二进制浮点写回；
 - 币种、单位、scale、precision 与 evidence IDs；
@@ -106,10 +130,12 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
 
 ### `financialHistory`、`sections` 与 `valuation`
 
-- `financialHistory` 至少两个年度，尽可能覆盖五年。每个期间记录 `periodType` 与 `accountingBasis`；每个财务值使用对象保存十进制字符串 `value`、`unit`、`currency`（货币值必填）、`scale` 和 `precision`，缺失字段直接省略，禁止由渲染层假设“亿元”或默认币种。
+- `financialHistory` **由 `research/companies/<company-id>/financials.json` 物化，不手写**。运行 `npm run snapshot:sync` 生成，校验器逐字段比对；一致性只约束该公司的当前快照，历史快照按发布时的数字冻结（见 ADR-0014）。每个期间记录 `periodType`、`accountingBasis` 与 `status`（`reported` 或由其他披露值 `calculated`）；每个财务值使用对象保存十进制字符串 `value`、`unit`、`currency`（货币值必填）、`scale` 和 `precision`，缺失字段直接省略，禁止由渲染层假设“亿元”或默认币种。分部数据放在期间的 `segments` 里。
 - `sections` 负责完整的商业模式、竞争、财务质量、组织研发、治理等论证。每节包含结论性摘要、证据要点和 evidence IDs。
-- `valuation.scenarios` 必须恰好包含熊市、基准和牛市，各自写明商业模式假设、盈利/FCF、估值方法、价值区间和触发条件。
-- `actionZones` 是条件化操作区间，不能只给目标价而没有触发行为。
+- `valuation` 先读 `docs/research/valuation-playbook.md`。必填 `currency`、`valueScale`、`tradingCurrency`、`shares`（scale 必须等于 `valueScale`）与 `fx`（至少两条 evidence，按 ADR-0013 双源交叉）。
+- `valuation.scenarios` 恰好三个（熊市/基准/牛市），各自写明假设、触发条件与 `components`。组件是倍数项（指标区间 × 倍数区间）或面值项（金额，可带 `discountPct` 与 `discountReason`）。
+- **`computed`、`actionZones` 的边界、`impliedExpectation` 与 `summary.fairValue` 全部由引擎计算，作者不得手写。** 运行 `npm run snapshot:sync`；校验器会重算并在不符时阻断。`actionZones` 只有 `action` 文案可以手写。
+- `valuation.healthCheck` 必须回应每一条被触发的体检规则；`methodSelection` 必须同时给出理想方法与实际采用的主方法，两者不同时 `blockedBy` 不能为空。
 
 ### `evidence`
 
@@ -126,6 +152,7 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
 完成 JSON 后依次运行：
 
 ```bash
+npm run snapshot:sync  -- <snapshot-path>
 npm run snapshot:check -- <snapshot-path>
 python3 scripts/research/validate_research_paths.py
 npm run publish

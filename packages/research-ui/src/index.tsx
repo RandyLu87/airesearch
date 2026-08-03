@@ -1,12 +1,25 @@
 import type { ReactNode } from "react";
 import {
   compareResearchSnapshots,
+  isCurrentSnapshot,
   type ResearchSnapshot,
 } from "@airesearch/research-schema";
+import {
+  BusinessModelSection,
+  LatestComparison,
+  MarketPositionSection,
+  MetricGlossary,
+  PeriodHistoryTable,
+  StandardMetricNote,
+  ValuationMethodPanel,
+  ValueBridge,
+  formatFinancialValue,
+  formatPrice,
+} from "./components.tsx";
 
-export function formatPrice(value: string, currency: string) {
-  return `${currency === "HKD" ? "HK$" : `${currency} `}${value}`;
-}
+export * from "./components.tsx";
+
+type CurrentSnapshot = Extract<ResearchSnapshot, { schemaVersion: "1.1.0" }>;
 
 function sourceIds(ids: string[], evidenceNumbers: Map<string, number>) {
   const uniqueIds = [...new Set(ids)];
@@ -146,10 +159,19 @@ function MarginCapitalChart({ snapshot }: { snapshot: ResearchSnapshot }) {
 }
 
 function ValuationScenarioChart({ snapshot }: { snapshot: ResearchSnapshot }) {
-  const scenarios = snapshot.valuation.scenarios.map((scenario) => {
-    const values = scenario.valueRange.match(/\d+(?:\.\d+)?/g)?.map(Number) ?? [];
-    return { ...scenario, low: values[0] ?? 0, high: values[1] ?? values[0] ?? 0 };
-  });
+  // 1.1.0 carries engine-computed bounds. Legacy snapshots only ever had prose,
+  // so their bars are still scraped out of it — which is exactly why the field
+  // stopped being prose.
+  const scenarios = isCurrentSnapshot(snapshot)
+    ? snapshot.valuation.scenarios.map((scenario) => ({
+        ...scenario,
+        low: Number(scenario.computed.low),
+        high: Number(scenario.computed.high),
+      }))
+    : snapshot.valuation.scenarios.map((scenario) => {
+        const values = scenario.valueRange.match(/\d+(?:\.\d+)?/g)?.map(Number) ?? [];
+        return { ...scenario, low: values[0] ?? 0, high: values[1] ?? values[0] ?? 0 };
+      });
   const current = Number(snapshot.summary.referencePrice.value);
   const max = Math.max(current, ...scenarios.map((scenario) => scenario.high), 1);
   const x = (value: number) => 90 + (value / max) * 225;
@@ -194,22 +216,6 @@ function ReportHeader({ snapshot }: { snapshot: ResearchSnapshot }) {
 
 type FinancialValue = ResearchSnapshot["financialHistory"][number]["revenue"];
 
-function formatFinancialValue(value?: FinancialValue) {
-  if (!value) return "未披露";
-  if (value.unit === "percent") return `${value.value}%`;
-  if (value.unit === "percentage-point") return `${value.value} 个百分点`;
-  if (value.unit === "currency") {
-    const currency = value.currency === "CNY" ? "人民币" : value.currency;
-    const scale = value.scale === "hundred-million"
-      ? "亿元"
-      : value.scale === "million"
-        ? "百万元"
-        : "元";
-    return `${value.value} ${currency}${scale}`;
-  }
-  return value.value;
-}
-
 export function ReportView({
   snapshot,
   priorSnapshot,
@@ -223,13 +229,28 @@ export function ReportView({
   const financialEvidenceIds = [
     ...new Set(snapshot.financialHistory.flatMap((item) => item.evidenceIds)),
   ];
+  const current: CurrentSnapshot | null = isCurrentSnapshot(snapshot) ? snapshot : null;
+  const legacy = isCurrentSnapshot(snapshot) ? null : snapshot;
+  // Two structured sections only exist under the 1.1.0 contract; everything
+  // after them renumbers so a legacy report keeps the numbering it published with.
+  const extra = current ? 2 : 0;
+  const refs = (ids: string[]) => sourceIds(ids, evidenceNumbers);
 
   return (
     <main className="research-report">
       <ReportHeader snapshot={snapshot} />
       <nav className="section-nav" aria-label="报告目录">
         <a href="#summary">摘要</a>
-        <a href="#business-model">商业模式</a>
+        {/* 1.1.0 has guaranteed anchors for both blocks. Legacy reports keep
+            the link they published with, which pointed at a narrative section. */}
+        {current ? (
+          <>
+            <a href="#model-structure">商业模式</a>
+            <a href="#market-position">行业地位</a>
+          </>
+        ) : (
+          <a href="#business-model">商业模式</a>
+        )}
         <a href="#metrics">核心指标</a>
         <a href="#financials">财务</a>
         <a href="#valuation">估值</a>
@@ -261,9 +282,30 @@ export function ReportView({
         </div>
       </section>
 
+      {current ? (
+        <>
+          <section className="report-section" id="model-structure">
+            <div className="section-number">02</div>
+            <div className="section-content">
+              <p className="section-kicker">HOW THE MONEY IS MADE</p>
+              <h2>商业模式</h2>
+              <BusinessModelSection snapshot={current} sourceIds={refs} />
+            </div>
+          </section>
+          <section className="report-section" id="market-position">
+            <div className="section-number">03</div>
+            <div className="section-content">
+              <p className="section-kicker">WHERE IT STANDS</p>
+              <h2>行业地位</h2>
+              <MarketPositionSection snapshot={current} sourceIds={refs} />
+            </div>
+          </section>
+        </>
+      ) : null}
+
       {snapshot.sections.map((section, index) => (
         <section className="report-section" id={section.id} key={section.id}>
-          <div className="section-number">{String(index + 2).padStart(2, "0")}</div>
+          <div className="section-number">{String(index + 2 + extra).padStart(2, "0")}</div>
           <div className="section-content">
             <p className="section-kicker">OPERATING LOGIC</p>
             <h2>{section.title}</h2>
@@ -277,7 +319,7 @@ export function ReportView({
       ))}
 
       <section className="report-section" id="metrics">
-        <div className="section-number">{String(snapshot.sections.length + 2).padStart(2, "0")}</div>
+        <div className="section-number">{String(snapshot.sections.length + 2 + extra).padStart(2, "0")}</div>
         <div className="section-content">
           <p className="section-kicker">CAUSE BEFORE KPI</p>
           <h2>核心驱动与验证指标</h2>
@@ -305,37 +347,82 @@ export function ReportView({
       </section>
 
       <section className="report-section" id="financials">
-        <div className="section-number">{String(snapshot.sections.length + 3).padStart(2, "0")}</div>
+        <div className="section-number">{String(snapshot.sections.length + 3 + extra).padStart(2, "0")}</div>
         <div className="section-content">
           <p className="section-kicker">REPORTED SERIES</p>
-          <h2>年度财务轨迹</h2>
-          <div className="table-wrap">
-            <table>
-              <thead><tr><th>期间</th><th>收入</th><th>收入增速</th><th>毛利率</th><th>经营利润率</th><th>净利润</th><th>经营现金流</th></tr></thead>
-              <tbody>
-                {snapshot.financialHistory.map((item) => (
-                  <tr key={item.period}><th>{item.period}{sourceIds(item.evidenceIds, evidenceNumbers)}</th><td>{formatFinancialValue(item.revenue)}</td><td>{formatFinancialValue(item.revenueGrowth)}</td><td>{formatFinancialValue(item.grossMargin)}</td><td>{formatFinancialValue(item.operatingMargin)}</td><td>{formatFinancialValue(item.netProfit)}</td><td>{formatFinancialValue(item.operatingCashFlow)}</td></tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          {/* 1.1.0 shows several reporting cadences; a legacy report only ever
+              had the annual series, and keeps the heading it published with. */}
+          <h2>{current ? "财务轨迹" : "年度财务轨迹"}</h2>
+          {current ? (
+            <>
+              <p className="lead">最近两年、按报告口径分档；每个科目名旁的 ⓘ 给出定义、算式与陷阱。</p>
+              <PeriodHistoryTable snapshot={current} sourceIds={refs} />
+            </>
+          ) : (
+            <div className="table-wrap">
+              <table>
+                <thead><tr><th>期间</th><th>收入</th><th>收入增速</th><th>毛利率</th><th>经营利润率</th><th>净利润</th><th>经营现金流</th></tr></thead>
+                <tbody>
+                  {snapshot.financialHistory.map((item) => (
+                    <tr key={item.period}><th>{item.period}{sourceIds(item.evidenceIds, evidenceNumbers)}</th><td>{formatFinancialValue(item.revenue)}</td><td>{formatFinancialValue(item.revenueGrowth)}</td><td>{formatFinancialValue(item.grossMargin)}</td><td>{formatFinancialValue(item.operatingMargin)}</td><td>{formatFinancialValue(item.netProfit)}</td><td>{formatFinancialValue(item.operatingCashFlow)}</td></tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </section>
 
       <section className="report-section" id="valuation">
-        <div className="section-number">{String(snapshot.sections.length + 4).padStart(2, "0")}</div>
+        <div className="section-number">{String(snapshot.sections.length + 4 + extra).padStart(2, "0")}</div>
         <div className="section-content">
           <p className="section-kicker">PRICE VS. VALUE</p>
           <h2>估值情景与操作区间</h2>
-          <p className="lead">{snapshot.valuation.currentExpectation}</p>
-          {sourceIds(snapshot.valuation.evidenceIds, evidenceNumbers)}
-          <div className="scenario-grid">
-            {snapshot.valuation.scenarios.map((scenario) => (
-              <article key={scenario.name}>
-                <span>{scenario.name}</span><h3>{scenario.valueRange}</h3><p>{scenario.assumptions}</p><dl><dt>盈利</dt><dd>{scenario.earnings}</dd><dt>方法</dt><dd>{scenario.method}</dd><dt>触发</dt><dd>{scenario.trigger}</dd></dl>
-              </article>
-            ))}
-          </div>
+          {current ? (
+            <>
+              <ValueBridge snapshot={current} />
+              <ValuationMethodPanel snapshot={current} />
+              {refs(current.valuation.evidenceIds)}
+              <h3 className="block-heading">三情景与组件</h3>
+              <div className="scenario-grid">
+                {current.valuation.scenarios.map((scenario) => (
+                  <article key={scenario.name}>
+                    <span>{scenario.name}</span>
+                    <h3>
+                      {formatPrice(scenario.computed.low, current.valuation.tradingCurrency)}–
+                      {scenario.computed.high}
+                    </h3>
+                    <p>{scenario.assumptions}</p>
+                    <dl>
+                      {scenario.components.map((component) => (
+                        <div key={component.id}>
+                          <dt>{component.kind === "multiple" ? "倍数" : "面值"}</dt>
+                          <dd>
+                            {component.kind === "multiple"
+                              ? `${component.metricLabel} ${component.metricLow}–${component.metricHigh} × ${component.multipleLow}–${component.multipleHigh}x`
+                              : `${component.amount}${component.discountPct ? `（折价 ${component.discountPct}%）` : ""}`}
+                          </dd>
+                        </div>
+                      ))}
+                      <div><dt>触发</dt><dd>{scenario.trigger}</dd></div>
+                    </dl>
+                  </article>
+                ))}
+              </div>
+            </>
+          ) : legacy ? (
+            <>
+              <p className="lead">{legacy.valuation.currentExpectation}</p>
+              {sourceIds(legacy.valuation.evidenceIds, evidenceNumbers)}
+              <div className="scenario-grid">
+                {legacy.valuation.scenarios.map((scenario) => (
+                  <article key={scenario.name}>
+                    <span>{scenario.name}</span><h3>{scenario.valueRange}</h3><p>{scenario.assumptions}</p><dl><dt>盈利</dt><dd>{scenario.earnings}</dd><dt>方法</dt><dd>{scenario.method}</dd><dt>触发</dt><dd>{scenario.trigger}</dd></dl>
+                  </article>
+                ))}
+              </div>
+            </>
+          ) : null}
           <div className="action-zones">
             {snapshot.valuation.actionZones.map((zone) => <div key={zone.label}><strong>{zone.range}</strong><span>{zone.label}</span><p>{zone.action}</p></div>)}
           </div>
@@ -343,7 +430,7 @@ export function ReportView({
       </section>
 
       <section className="report-section" id="view-changes">
-        <div className="section-number">{String(snapshot.sections.length + 5).padStart(2, "0")}</div>
+        <div className="section-number">{String(snapshot.sections.length + 5 + extra).padStart(2, "0")}</div>
         <div className="section-content split-section">
           <article><p className="section-kicker">UPGRADE CONDITIONS</p><h2>什么会提高当前判断</h2><ol className="editorial-list">{snapshot.viewChanges.upgrade.map((item) => <li key={item}>{item}</li>)}</ol></article>
           <article><p className="section-kicker">DOWNGRADE CONDITIONS</p><h2>什么会降低当前判断</h2><ol className="editorial-list">{snapshot.viewChanges.downgrade.map((item) => <li key={item}>{item}</li>)}</ol></article>
@@ -351,7 +438,7 @@ export function ReportView({
       </section>
 
       <section className="report-section">
-        <div className="section-number">{String(snapshot.sections.length + 6).padStart(2, "0")}</div>
+        <div className="section-number">{String(snapshot.sections.length + 6 + extra).padStart(2, "0")}</div>
         <div className="section-content split-section">
           <article><p className="section-kicker">DOWNSIDE</p><h2>核心风险</h2><ol className="editorial-list">{snapshot.risks.map((risk) => <li key={risk}>{risk}</li>)}</ol></article>
           <article><p className="section-kicker">VALIDATION</p><h2>后续跟踪点</h2><ol className="editorial-list">{snapshot.checkpoints.map((item) => <li key={item}>{item}</li>)}</ol></article>
@@ -359,7 +446,7 @@ export function ReportView({
       </section>
 
       <section className="report-section evidence-section" id="evidence">
-        <div className="section-number">{String(snapshot.sections.length + 7).padStart(2, "0")}</div>
+        <div className="section-number">{String(snapshot.sections.length + 7 + extra).padStart(2, "0")}</div>
         <div className="section-content">
           <p className="section-kicker">AUDIT TRAIL</p>
           <h2>已查阅资料</h2>
@@ -385,6 +472,7 @@ export function ReportView({
           <p className="disclaimer">{snapshot.disclaimer}</p>
         </div>
       </section>
+      <MetricGlossary snapshot={snapshot} />
       <a className="back-to-top" href="#top" aria-label="返回顶部">↑</a>
     </main>
   );

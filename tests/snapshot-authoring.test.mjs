@@ -17,18 +17,36 @@ function clone(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
+/** A ledger that mirrors a snapshot's own history, so the two agree by construction. */
+function ledgerFor(snapshot, companyId) {
+  return {
+    ledgerVersion: "1.0.0",
+    companyId,
+    reportingCurrency: snapshot.company.reportingCurrency,
+    minimumYears: 2,
+    periods: clone(snapshot.financialHistory),
+  };
+}
+
 /** Build an isolated research tree so tests never touch research/companies. */
-function makeTree(snapshots, companyId = fixtureCompany) {
+function makeTree(snapshots, companyId = fixtureCompany, { withLedger = true } = {}) {
   const root = mkdtempSync(path.join(tmpdir(), "snapshot-authoring-"));
-  const snapshotsDirectory = path.join(root, "research", "companies", companyId, "snapshots");
+  const companyDirectory = path.join(root, "research", "companies", companyId);
+  const snapshotsDirectory = path.join(companyDirectory, "snapshots");
   mkdirSync(snapshotsDirectory, { recursive: true });
+  if (withLedger && snapshots.length > 0) {
+    writeFileSync(
+      path.join(companyDirectory, "financials.json"),
+      `${JSON.stringify(ledgerFor(snapshots.at(-1), companyId), null, 2)}\n`,
+    );
+  }
   for (const snapshot of snapshots) {
     writeFileSync(
       path.join(snapshotsDirectory, `${snapshot.snapshot.id}.json`),
       `${JSON.stringify(snapshot, null, 2)}\n`,
     );
   }
-  return { root, snapshotsDirectory };
+  return { root, snapshotsDirectory, companyDirectory };
 }
 
 function snapshotFile(snapshotsDirectory, snapshot) {
@@ -76,7 +94,7 @@ test("snapshot:new prints a fully sentinelled skeleton without touching disk", (
   const skeleton = JSON.parse(result.stdout);
   assert.equal(skeleton.company.id, "hk-0002-greenfield-co");
   assert.equal(skeleton.snapshot.id, "2026-05-04-0930-analysis");
-  assert.equal(skeleton.schemaVersion, "1.0.0");
+  assert.equal(skeleton.schemaVersion, "1.1.0");
   assert.equal(skeleton.company.name, SENTINEL);
   assert.equal(skeleton.summary.stance, SENTINEL);
   assert.ok(skeleton.driverMetrics.length >= 4, "skeleton must satisfy the driver minimum");

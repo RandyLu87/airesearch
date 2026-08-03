@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import path from "node:path";
 import {
   DRIVER_COMPATIBILITY_KEYS,
@@ -5,7 +6,18 @@ import {
   researchSnapshotSchema,
   type DriverMetric,
 } from "../index.ts";
-import { SENTINEL, findPriorSnapshot, readSnapshotDirectory } from "./shared.ts";
+import {
+  compareLedgerToHistory,
+  coverageShortfall,
+  ledgerPathForCompanyDir,
+  loadLedgerAt,
+} from "../ledger.ts";
+import {
+  SENTINEL,
+  findLatestSnapshot,
+  findPriorSnapshot,
+  readSnapshotDirectory,
+} from "./shared.ts";
 
 type Json = Record<string, unknown>;
 
@@ -147,6 +159,54 @@ function checkComparability(current: Json, prior: Json): CheckResult {
   return { errors, warnings };
 }
 
+/**
+ * Hold the snapshot's embedded `financialHistory` against the company ledger.
+ *
+ * Only the company's *current* snapshot is governed. Earlier snapshots are
+ * frozen records under ADR-0002, so when an issuer restates a prior year the
+ * ledger moves forward and the published history legitimately keeps the figure
+ * it was written against. Enforcing consistency on all of them would turn every
+ * restatement into a repository-wide failure with no correct fix.
+ */
+function checkLedger(input: {
+  data: { company: { id: string }; financialHistory: unknown };
+  directory: string;
+  stem: string;
+}): CheckResult {
+  const { data, directory, stem } = input;
+  const latest = findLatestSnapshot(directory);
+  if (latest && latest.stem !== stem) return { errors: [], warnings: [] };
+
+  const companyDirectory = path.dirname(directory);
+  const filePath = ledgerPathForCompanyDir(companyDirectory);
+  if (!existsSync(filePath)) {
+    return {
+      errors: [],
+      warnings: [
+        `该公司还没有财报账本 ${path.relative(companyDirectory, filePath)}；` +
+          `financialHistory 目前只存在于快照里，下次研究会重复取数。`,
+      ],
+    };
+  }
+
+  try {
+    const ledger = loadLedgerAt(filePath, data.company.id);
+    const shortfall = coverageShortfall(ledger);
+    return {
+      errors: compareLedgerToHistory(
+        ledger,
+        (data.financialHistory as never[]) ?? [],
+      ),
+      warnings: shortfall ? [shortfall] : [],
+    };
+  } catch (error) {
+    return {
+      errors: [error instanceof Error ? error.message : String(error)],
+      warnings: [],
+    };
+  }
+}
+
 function valueAtPath(root: unknown, jsonPath: PropertyKey[]): unknown {
   let cursor: unknown = root;
   for (const key of jsonPath) {
@@ -196,10 +256,17 @@ export function checkSnapshotData(input: {
   if (!parsed.success) {
     for (const issue of parsed.error.issues) {
       if (causedBySentinel(issue.path, sentinelSet)) continue;
+      // A root-level refinement has no offending field, so echoing "the actual
+      // value" would print the entire snapshot. The message already names what
+      // is wrong; cross-field rules carry their own numbers.
+      if (issue.path.length === 0) {
+        errors.push(`schema: <root>: ${issue.message}`);
+        continue;
+      }
       const actual = valueAtPath(data, issue.path);
       const rendered = actual === undefined ? "缺失" : JSON.stringify(actual);
       errors.push(
-        `schema: ${issue.path.join(".") || "<root>"}: ${issue.message}；实际值 ${rendered}`,
+        `schema: ${issue.path.join(".")}: ${issue.message}；实际值 ${rendered}`,
       );
     }
   }
@@ -210,6 +277,10 @@ export function checkSnapshotData(input: {
   // Layer 3 — continuity against the previous snapshot. Needs a fully valid
   // snapshot, since it reads driver calibration and the model change grade.
   if (!parsed.success || sentinels.length > 0) return { errors, warnings };
+
+  const ledger = checkLedger({ data: parsed.data, directory, stem });
+  errors.push(...ledger.errors);
+  warnings.push(...ledger.warnings);
 
   const exemptionKey = `${parsed.data.company.id}/${parsed.data.snapshot.id}`;
   if (CONTINUITY_EXEMPT_SNAPSHOTS.has(exemptionKey)) return { errors, warnings };

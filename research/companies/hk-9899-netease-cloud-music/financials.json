@@ -1,0 +1,343 @@
+{
+  "ledgerVersion": "1.0.0",
+  "companyId": "hk-9899-netease-cloud-music",
+  "reportingCurrency": "CNY",
+  "minimumYears": 2,
+  "periods": [
+    {
+      "period": "FY2021",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "status": "reported",
+      "revenue": {
+        "value": "69.98",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "grossMargin": {
+        "value": "2.0",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 1
+      },
+      "netProfit": {
+        "value": "-20.56",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "segments": [
+        {
+          "segmentId": "online-music",
+          "status": "unavailable",
+          "reason": "2021-2022 年度分部收入未在本次研究中取证，需回到对应年报补齐。",
+          "evidenceIds": [
+            "annual-report-2025"
+          ]
+        },
+        {
+          "segmentId": "social-entertainment",
+          "status": "unavailable",
+          "reason": "2021-2022 年度分部收入未在本次研究中取证，需回到对应年报补齐。",
+          "evidenceIds": [
+            "annual-report-2025"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "annual-report-2025"
+      ]
+    },
+    {
+      "period": "FY2022",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "status": "reported",
+      "revenue": {
+        "value": "89.92",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "revenueGrowth": {
+        "value": "28.5",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 1
+      },
+      "grossMargin": {
+        "value": "14.4",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 1
+      },
+      "netProfit": {
+        "value": "-2.21",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "segments": [
+        {
+          "segmentId": "online-music",
+          "status": "unavailable",
+          "reason": "2021-2022 年度分部收入未在本次研究中取证，需回到对应年报补齐。",
+          "evidenceIds": [
+            "annual-report-2025"
+          ]
+        },
+        {
+          "segmentId": "social-entertainment",
+          "status": "unavailable",
+          "reason": "2021-2022 年度分部收入未在本次研究中取证，需回到对应年报补齐。",
+          "evidenceIds": [
+            "annual-report-2025"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "annual-report-2025"
+      ]
+    },
+    {
+      "period": "FY2023",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "status": "reported",
+      "revenue": {
+        "value": "78.67",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "revenueGrowth": {
+        "value": "-12.5",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 1
+      },
+      "grossMargin": {
+        "value": "26.7",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 1
+      },
+      "netProfit": {
+        "value": "7.34",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "segments": [
+        {
+          "segmentId": "online-music",
+          "status": "reported",
+          "revenue": {
+            "value": "43.50",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "hundred-million",
+            "precision": 2
+          },
+          "evidenceIds": [
+            "annual-results-2024-media"
+          ]
+        },
+        {
+          "segmentId": "social-entertainment",
+          "status": "reported",
+          "revenue": {
+            "value": "35.16",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "hundred-million",
+            "precision": 2
+          },
+          "evidenceIds": [
+            "annual-results-2024-media"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "annual-report-2025"
+      ]
+    },
+    {
+      "period": "FY2024",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "status": "reported",
+      "revenue": {
+        "value": "79.50",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "revenueGrowth": {
+        "value": "1.1",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 1
+      },
+      "grossMargin": {
+        "value": "33.7",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 1
+      },
+      "operatingMargin": {
+        "value": "14.7",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 1
+      },
+      "netProfit": {
+        "value": "15.62",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "operatingCashFlow": {
+        "value": "17.75",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "freeCashFlow": {
+        "value": "17.71",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "segments": [
+        {
+          "segmentId": "online-music",
+          "status": "reported",
+          "revenue": {
+            "value": "53.50",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "hundred-million",
+            "precision": 2
+          },
+          "evidenceIds": [
+            "annual-results-2024-media"
+          ]
+        },
+        {
+          "segmentId": "social-entertainment",
+          "status": "reported",
+          "revenue": {
+            "value": "25.96",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "hundred-million",
+            "precision": 2
+          },
+          "evidenceIds": [
+            "annual-results-2024-media"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "annual-report-2025"
+      ]
+    },
+    {
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "IFRS",
+      "status": "reported",
+      "revenue": {
+        "value": "77.59",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "revenueGrowth": {
+        "value": "-2.4",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 1
+      },
+      "grossMargin": {
+        "value": "35.7",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 1
+      },
+      "operatingMargin": {
+        "value": "20.9",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 1
+      },
+      "netProfit": {
+        "value": "27.48",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "operatingCashFlow": {
+        "value": "16.18",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "freeCashFlow": {
+        "value": "16.07",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "segments": [
+        {
+          "segmentId": "online-music",
+          "status": "reported",
+          "revenue": {
+            "value": "59.94",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "hundred-million",
+            "precision": 2
+          },
+          "evidenceIds": [
+            "annual-report-2025"
+          ]
+        },
+        {
+          "segmentId": "social-entertainment",
+          "status": "calculated",
+          "revenue": {
+            "value": "17.65",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "hundred-million",
+            "precision": 2
+          },
+          "evidenceIds": [
+            "annual-report-2025"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "annual-report-2025"
+      ]
+    }
+  ]
+}

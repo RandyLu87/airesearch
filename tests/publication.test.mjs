@@ -36,6 +36,11 @@ function escapeRegExp(value) {
 function assertLocalReferencesResolve(html, pagePath, label) {
   const references = [...html.matchAll(/(?:href|src)=["']([^"']+)["']/g)]
     .map((match) => match[1])
+    // A fragment addresses a position inside the target, not a different file.
+    .map((reference) => reference.split("#")[0])
+    .filter(
+      (reference) => reference !== "",
+    )
     .filter(
       (reference) =>
         !reference.startsWith("#") &&
@@ -51,6 +56,21 @@ function assertLocalReferencesResolve(html, pagePath, label) {
     );
   }
 }
+
+test("valuation scenario detail pairs stay on the definition-list grid", () => {
+  const css = readFileSync(
+    path.join(repoRoot, "apps", "web", "public", "assets", "research.css"),
+    "utf8",
+  );
+
+  // Current snapshots wrap each dt/dd pair so React can key the component.
+  // The wrapper must not become a grid item itself: that would place the whole
+  // first component in the fixed 52px label column and wrap CJK text vertically.
+  assert.match(
+    css,
+    /\.scenario-grid dl > div\s*\{\s*display:\s*contents;?\s*\}/,
+  );
+});
 
 test("publishes every structured company snapshot as auditable static HTML", () => {
   const result = spawnSync("npm", ["run", "publish"], {
@@ -82,7 +102,7 @@ test("publishes every structured company snapshot as auditable static HTML", () 
     assertLocalReferencesResolve(companyHtml, companyPath, `${companyId} company page`);
 
     for (const snapshot of snapshots) {
-      assert.equal(snapshot.data.schemaVersion, "1.0.0");
+      assert.ok(["1.0.0", "1.1.0"].includes(snapshot.data.schemaVersion));
       assert.ok(snapshot.data.driverMetrics.every((driver) =>
         driver.definitionVersion && driver.periodType && driver.accountingBasis,
       ));
@@ -146,14 +166,53 @@ test("publishes every structured company snapshot as auditable static HTML", () 
     path.join(siteRoot, "companies", `${pilotCompany}.html`),
     "utf8",
   );
+  // The company page leads with how the money is made and where the company
+  // stands, then the same-basis financials — see ADR-0016.
   assert.match(companyHtml, /当前研究/);
-  assert.match(companyHtml, /置信度/);
+  assert.match(companyHtml, /商业模式/);
+  assert.match(companyHtml, /行业地位/);
+  assert.match(companyHtml, /最新财报对比/);
+  assert.match(companyHtml, /核心驱动与最紧约束/);
+  assert.match(companyHtml, /相对上次研究/);
   assert.match(companyHtml, /商业模式变化/);
-  assert.match(companyHtml, /研究快照对比/);
-  assert.match(companyHtml, /公司特定驱动对比/);
-  assert.match(companyHtml, /估值与证据变化/);
   assert.match(companyHtml, /新增证据/);
   assert.match(companyHtml, /被替换的旧假设/);
+
+  const latestData = pilotSnapshots.at(-1).data;
+  if (latestData.schemaVersion === "1.1.0") {
+    // Both share denominators are mandatory, and the divergence between them is
+    // the finding the block exists to surface.
+    for (const measure of latestData.marketPosition.measures) {
+      assert.match(companyHtml, new RegExp(escapeRegExp(measure.label)));
+      assert.match(companyHtml, new RegExp(escapeRegExp(measure.marketDefinition)));
+    }
+    for (const segment of latestData.businessModel.segments) {
+      assert.match(companyHtml, new RegExp(escapeRegExp(segment.name)));
+      assert.match(companyHtml, new RegExp(escapeRegExp(segment.payer)));
+    }
+    // Metric definitions are reachable without any client runtime.
+    assert.match(companyHtml, /popover=/);
+    assert.doesNotMatch(companyHtml, /onclick=/);
+    // The valuation the page shows must be the one the engine computed.
+    const base = latestData.valuation.scenarios.find((item) => item.name === "基准");
+    assert.equal(latestData.summary.fairValue.low, base.computed.low);
+    assert.equal(latestData.summary.fairValue.high, base.computed.high);
+    assert.match(companyHtml, new RegExp(escapeRegExp(base.computed.center)));
+    // Action zones tile the price line without overlapping or leaving a gap.
+    const zones = latestData.valuation.actionZones;
+    for (let index = 1; index < zones.length; index += 1) {
+      assert.equal(zones[index].rangeLow, zones[index - 1].rangeHigh);
+    }
+    assert.equal(zones.at(0).rangeLow, null);
+    assert.equal(zones.at(-1).rangeHigh, null);
+    // A blocked ideal method must tell the reader what would unblock it.
+    if (latestData.valuation.methodSelection.blockedBy.length > 0) {
+      assert.match(companyHtml, /可以把估值升级为/);
+      for (const item of latestData.valuation.methodSelection.blockedBy) {
+        assert.match(companyHtml, new RegExp(escapeRegExp(item.dataItem)));
+      }
+    }
+  }
 
   // Derived from the data, not pinned to a particular pair of snapshots: the
   // company page always compares the two most recent ones, so publishing a new
@@ -202,8 +261,11 @@ test("publishes every structured company snapshot as auditable static HTML", () 
   assert.match(latestReportHtml, /核心驱动趋势/);
   assert.match(latestReportHtml, /利润率与资本回报/);
   assert.match(latestReportHtml, /估值情景/);
-  assert.match(latestReportHtml, /69\.98 人民币亿元/);
-  assert.match(latestReportHtml, /HK\$120\.0–138\.0/);
+  assert.match(latestReportHtml, /指标释义/);
+  assert.match(
+    latestReportHtml,
+    new RegExp(escapeRegExp(pilotSnapshots.at(-1).data.summary.fairValue.low)),
+  );
   assert.match(latestReportHtml, /\.\.\/\.\.\/\.\.\/assets\/research\.css/);
   assert.doesNotMatch(latestReportHtml, /(?:src|href)=["']\//);
   assert.doesNotMatch(latestReportHtml, /__next_f|\/_next\//);
