@@ -29,6 +29,10 @@ function listCompanySnapshots(companyId) {
     );
 }
 
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 function assertLocalReferencesResolve(html, pagePath, label) {
   const references = [...html.matchAll(/(?:href|src)=["']([^"']+)["']/g)]
     .map((match) => match[1])
@@ -143,23 +147,40 @@ test("publishes every structured company snapshot as auditable static HTML", () 
     "utf8",
   );
   assert.match(companyHtml, /当前研究/);
-  assert.match(companyHtml, /2026-07-31/);
-  assert.match(companyHtml, /Watchlist/);
-  assert.match(companyHtml, /观察/);
-  assert.match(companyHtml, /HK\$126\.6/);
-  assert.match(companyHtml, /HK\$127\.4/);
   assert.match(companyHtml, /置信度/);
   assert.match(companyHtml, /商业模式变化/);
-  assert.match(companyHtml, /参数变化/);
   assert.match(companyHtml, /研究快照对比/);
   assert.match(companyHtml, /公司特定驱动对比/);
   assert.match(companyHtml, /估值与证据变化/);
   assert.match(companyHtml, /新增证据/);
-  assert.match(companyHtml, /Annual Report 2025/);
   assert.match(companyHtml, /被替换的旧假设/);
-  assert.match(companyHtml, /2025 年经营现金流尚不可得/);
-  assert.match(companyHtml, /不可比较/);
-  assert.match(companyHtml, /口径不兼容：periodType/);
+
+  // Derived from the data, not pinned to a particular pair of snapshots: the
+  // company page always compares the two most recent ones, so publishing a new
+  // snapshot legitimately changes which values appear here.
+  const [priorSnapshot, currentSnapshot] = pilotSnapshots.slice(-2);
+  for (const snapshot of [priorSnapshot, currentSnapshot]) {
+    const { referencePrice, stance, businessModelChange } = snapshot.data.summary;
+    assert.match(companyHtml, new RegExp(escapeRegExp(`HK$${referencePrice.value}`)));
+    assert.match(companyHtml, new RegExp(escapeRegExp(stance)));
+    assert.match(companyHtml, new RegExp(escapeRegExp(businessModelChange)));
+    assert.match(companyHtml, new RegExp(escapeRegExp(snapshot.data.snapshot.dataCutoff.slice(0, 10))));
+  }
+
+  // A driver that exists in only one of the compared snapshots must be rendered
+  // as not-comparable rather than silently omitted or shown as a delta.
+  const priorDriverIds = new Set(priorSnapshot.data.driverMetrics.map((driver) => driver.id));
+  const currentDriverIds = new Set(currentSnapshot.data.driverMetrics.map((driver) => driver.id));
+  const onlyInOne = [...new Set([...priorDriverIds, ...currentDriverIds])].filter(
+    (id) => !priorDriverIds.has(id) || !currentDriverIds.has(id),
+  );
+  if (onlyInOne.length > 0) {
+    assert.match(companyHtml, /不可比较/);
+  }
+  for (const driver of currentSnapshot.data.driverMetrics) {
+    assert.match(companyHtml, new RegExp(escapeRegExp(driver.label)));
+  }
+
   for (const { stem } of pilotSnapshots) {
     assert.match(companyHtml, new RegExp(`reports/${stem}\\.html`));
   }
