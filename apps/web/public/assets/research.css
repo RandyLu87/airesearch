@@ -268,14 +268,25 @@ tbody th { font-weight: 650; }
 .disclaimer { margin: 48px 0 0; padding-top: 16px; border-top: 1px solid var(--ink); color: var(--muted); font-size: 12px; }
 .back-to-top { position: fixed; right: 24px; bottom: 24px; display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid var(--ink); border-radius: 50%; background: var(--paper); text-decoration: none; }
 
-.company-header { padding: 28px 0 68px; border-bottom: 1px solid var(--ink); }
-.company-header h1 { margin: 16vh 0 34px; }
-.company-current { max-width: 840px; font-size: clamp(22px, 3vw, 40px); line-height: 1.14; }
+/* The header is sized against the fold, not against the viewport: the first
+   card (269px) plus a peek of the next one has to fit under it at 375×667, so
+   the whole header block stays inside ~350px. A vh-based margin here spent
+   122px of a 763px-tall laptop viewport on empty space. */
+.company-header { padding: 24px 0 24px; border-bottom: 1px solid var(--ink); }
+.company-header h1 { margin: 24px 0 20px; }
+/* Only the desktop ceiling comes down — 40px cost two lines and 137px of the
+   fold. The 22px floor stays: narrow screens have budget to spare, and this is
+   also the company page's lead thesis. */
+.company-current { max-width: 840px; font-size: clamp(22px, 1.8vw, 26px); line-height: 1.3; }
 .company-summary { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--ink); }
 .company-summary > div { padding: 22px 18px 24px 0; }
 .company-summary span { display: block; color: var(--muted); font-size: 11px; text-transform: uppercase; }
 .company-summary strong { display: block; margin-top: 10px; font-size: 24px; font-weight: 520; }
 .company-section { padding: 72px 0; border-bottom: 1px solid var(--ink); }
+/* The coverage list shares the fold with the header above it, so it hugs it.
+   Company pages keep the full 72px rhythm: their summary bar already clears the
+   fold, and tightening one of eight sections would only break the cadence. */
+.coverage-section { padding-top: 28px; }
 .company-section h2 { margin-bottom: 32px; font-size: clamp(36px, 5vw, 72px); font-weight: 490; letter-spacing: -.055em; }
 .snapshot-pair { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
 .snapshot-card { padding: 22px 0; border-top: 1px solid var(--ink); }
@@ -308,12 +319,18 @@ tbody th { font-weight: 650; }
 .company-card-facts dt { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
 .company-card-facts dd { margin: 6px 0 0; font-size: 17px; }
 .company-card-facts small { display: block; font-size: 11px; }
+/* Sits under the cards, not above them: it is a caveat about how to read the
+   figures, and below the fold it doubles as the peek that invites scrolling. */
+.coverage-note { max-width: 640px; margin: 24px 0 0; color: var(--muted); font-size: 14px; }
 
 @media (max-width: 800px) {
   .research-report, .company-page { padding: 0 18px 48px; }
   .report-hero { min-height: 90svh; }
   .hero-grid { grid-template-columns: 1fr; gap: 38px; margin: 12vh 0 7vh; }
   h1 { font-size: clamp(56px, 20vw, 96px); }
+  /* One line for 上市公司研究 at 375px: a wrapped page title costs another 60px
+     of the fold. The report cover keeps the full size. */
+  .company-header h1 { font-size: clamp(36px, 11vw, 46px); }
   .stance-block { width: 65%; }
   .hero-facts, .company-summary { grid-template-columns: repeat(2, 1fr); }
   .report-section { grid-template-columns: 1fr; gap: 14px; padding: 52px 0 62px; }

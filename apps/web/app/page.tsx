@@ -50,15 +50,16 @@ export default function HomePage() {
           <h1>上市公司研究</h1>
           <p className="company-current">以商业模式、核心驱动、最新变化和安全边际为主线的长期价值研究。</p>
         </header>
-        <section className="company-section">
+        {/* Nothing stands between the header and the cards but the label: the
+            first card has to be readable without scrolling. */}
+        <section className="company-section coverage-section">
           <p className="section-kicker">COVERAGE</p>
-          <h2>研究覆盖</h2>
-          <p className="company-current">每家公司一张卡，取该公司最新一份研究快照。价格按各自报告市场的原币种显示，不做汇率换算。</p>
           <div className="report-index">
             {coverage.map(({ companyId, snapshot }) => (
               <CompanyCoverageCard companyId={companyId} snapshot={snapshot} key={companyId} />
             ))}
           </div>
+          <p className="coverage-note">每家公司一张卡，取该公司最新一份研究快照。价格按各自报告市场的原币种显示，不做汇率换算。</p>
         </section>
       </main>
     </>

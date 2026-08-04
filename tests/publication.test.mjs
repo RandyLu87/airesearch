@@ -92,6 +92,98 @@ function assertLocalReferencesResolve(html, pagePath, label) {
   }
 }
 
+/** The bottom of a `padding` shorthand, whichever of the 1–4 value forms is used. */
+function paddingBottom(shorthand) {
+  const values = shorthand.trim().split(/\s+/);
+  return values.length >= 3 ? values[2] : values[0];
+}
+
+/** A length in px, or NaN for any other unit so callers can reject it. */
+function pixels(value) {
+  const match = /^(\d+(?:\.\d+)?)px$/.exec(value.trim());
+  return match ? Number.parseFloat(match[1]) : Number.NaN;
+}
+
+/**
+ * The first company card has to be fully visible without scrolling. Measured
+ * budget for everything above it: ≤350px at 375×667 (iPhone SE, the tightest
+ * real viewport) so the 269px card plus a ≥45px peek of the next one fit, and
+ * ≤449px at 1512×763 so both cards of the desktop row fit.
+ *
+ * These assertions pin the four values that blew the budget once. They cannot
+ * prove the budget holds — a newly added element would pass them and still push
+ * the card under the fold. Re-measure with a real browser after touching the
+ * header: publish, then load research/site/index.html in headless Chrome with a
+ * script appended that writes the numbers into the DOM, and read them back with
+ * --dump-dom (--dump-dom prints the DOM, so the geometry has to be put there):
+ *
+ *   document.body.innerHTML = [...document.querySelectorAll('.report-link')]
+ *     .map((card) => JSON.stringify(card.getBoundingClientRect())).join('|')
+ *     + ' viewport ' + innerHeight
+ *
+ * Mind that --window-size includes the browser chrome: pass 375,754 to get a
+ * 667px-tall viewport. Widths under 500px need an iframe of the target width,
+ * because Chrome clamps its own window narrower than that.
+ */
+test("the site index header stays inside its above-the-fold budget", () => {
+  const css = readFileSync(
+    path.join(repoRoot, "apps", "web", "public", "assets", "research.css"),
+    "utf8",
+  );
+
+  const headingMargin = css.match(/\.company-header h1\s*\{[^}]*margin:\s*([^;}]+)/);
+  assert.ok(headingMargin, "missing the .company-header h1 rule");
+  // 16vh was 122px of nothing above the title at 763px tall. A ceiling in px,
+  // not merely a ban on vh: 400px of margin is just as fatal.
+  const headingTop = pixels(headingMargin[1].trim().split(/\s+/)[0]);
+  assert.ok(
+    headingTop <= 40,
+    `.company-header h1 top margin must be ≤40px and unit-px, found ${headingMargin[1]}`,
+  );
+
+  const headerPadding = css.match(/\.company-header\s*\{[^}]*padding:\s*([^;}]+)/);
+  assert.ok(headerPadding, "missing the .company-header rule");
+  const headerBottom = pixels(paddingBottom(headerPadding[1]));
+  assert.ok(
+    headerBottom <= 32,
+    `.company-header bottom padding must stay ≤32px, found ${headerPadding[1]}`,
+  );
+
+  const coverageSection = css.match(/\.coverage-section\s*\{[^}]*padding-top:\s*([^;}]+)/);
+  assert.ok(coverageSection, "the coverage list must tighten its top padding");
+  assert.ok(
+    pixels(coverageSection[1]) <= 32,
+    `.coverage-section top padding must stay ≤32px, found ${coverageSection[1]}`,
+  );
+
+  // The lead sentence: 40px wrapped to two lines and cost 137px of the fold.
+  const lead = css.match(/\.company-current\s*\{[^}]*font-size:\s*clamp\(([^)]+)\)/);
+  assert.ok(lead, "missing the .company-current font-size clamp");
+  const leadCeiling = pixels(lead[1].split(",").at(-1));
+  assert.ok(
+    leadCeiling <= 28,
+    `.company-current must stay ≤28px at its ceiling, found ${lead[1]}`,
+  );
+
+  // Narrow screens override the page title so 上市公司研究 stays on one line.
+  const narrowTitle = css.match(
+    /@media \(max-width: 800px\)[\s\S]*?\.company-header h1\s*\{[^}]*font-size:\s*clamp\(([^)]+)\)/,
+  );
+  assert.ok(narrowTitle, "missing the narrow-screen .company-header h1 override");
+  assert.ok(
+    pixels(narrowTitle[1].split(",").at(-1)) <= 48,
+    `narrow .company-header h1 must stay ≤48px, found ${narrowTitle[1]}`,
+  );
+
+  // The published copy is what GitHub Pages serves — the workflow uploads
+  // research/site as-is, without building.
+  assert.equal(
+    css,
+    readFileSync(path.join(siteRoot, "assets", "research.css"), "utf8"),
+    "published CSS drifted from the source; run npm run publish",
+  );
+});
+
 test("valuation scenario detail pairs stay on the definition-list grid", () => {
   const css = readFileSync(
     path.join(repoRoot, "apps", "web", "public", "assets", "research.css"),
@@ -178,6 +270,18 @@ test("the site index covers exactly the companies that have a research snapshot"
   // copy: a company's stance may legitimately mention a 试点 of its own.
   assert.doesNotMatch(indexHtml, /网易云音乐研究试点/);
   assert.doesNotMatch(indexHtml, /跨公司汇总与筛选将在后续阶段单独设计/);
+
+  // Nothing but the COVERAGE label sits between the page header and the cards:
+  // a section heading here costs 132px of the fold on a laptop.
+  assert.match(indexHtml, /section-kicker[^>]*>COVERAGE</);
+  assert.doesNotMatch(indexHtml, /<h2[^>]*>研究覆盖<\/h2>/);
+  // The currency caveat still ships, below the cards — outside the grid, not
+  // tucked into a card — where it doubles as the peek that invites scrolling.
+  assert.match(
+    indexHtml,
+    /<\/a><\/div><p class="coverage-note">[^<]*不做汇率换算/,
+    "the currency caveat must directly follow the closed card grid",
+  );
 });
 
 test("publishes every structured company snapshot as auditable static HTML", () => {
