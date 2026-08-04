@@ -15,6 +15,7 @@ import {
   ValueBridge,
   formatFinancialValue,
   formatPrice,
+  formatRange,
 } from "./components.tsx";
 
 export * from "./components.tsx";
@@ -206,7 +207,7 @@ function ReportHeader({ snapshot }: { snapshot: ResearchSnapshot }) {
       </div>
       <div className="hero-facts">
         <div><span>参考价格</span><strong>{formatPrice(snapshot.summary.referencePrice.value, snapshot.summary.referencePrice.currency)}</strong></div>
-        <div><span>合理价值</span><strong>{formatPrice(snapshot.summary.fairValue.low, snapshot.summary.fairValue.currency)}–{snapshot.summary.fairValue.high}</strong></div>
+        <div><span>合理价值</span><strong>{formatRange(snapshot.summary.fairValue.low, snapshot.summary.fairValue.high, snapshot.summary.fairValue.currency)}</strong></div>
         <div><span>商业模式变化</span><strong>{snapshot.summary.businessModelChange}</strong></div>
         <div><span>研究周期</span><strong>{snapshot.investmentHorizon}</strong></div>
       </div>

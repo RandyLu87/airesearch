@@ -15,6 +15,56 @@ export function formatPrice(value: string, currency: string) {
   return `${currency === "HKD" ? "HK$" : `${currency} `}${value}`;
 }
 
+/** The currency belongs to the range, not to each of its ends. */
+export function formatRange(low: string, high: string, currency: string) {
+  return `${formatPrice(low, currency)}–${high}`;
+}
+
+/**
+ * One company on the site index. It reads only the fields both snapshot
+ * contracts share, so a company whose latest research is still 1.0.0 is carded
+ * the same way as a current one.
+ */
+export function CompanyCoverageCard({
+  companyId,
+  snapshot,
+}: {
+  companyId: string;
+  snapshot: ResearchSnapshot;
+}) {
+  const { company, summary } = snapshot;
+  const { referencePrice, fairValue } = summary;
+
+  return (
+    <a className="report-link" href={`./companies/${companyId}.html`}>
+      <div className="company-card-meta">
+        <span>{company.ticker}</span>
+        <span>数据截止 <time>{snapshot.snapshot.dataCutoff.slice(0, 10)}</time></span>
+      </div>
+      <strong>{company.name}</strong>
+      <p className="company-card-stance">
+        {summary.stance}（确信度 {summary.confidence}）
+      </p>
+      <dl className="company-card-facts">
+        <div>
+          <dt>参考价格</dt>
+          <dd>
+            {formatPrice(referencePrice.value, referencePrice.currency)}
+            {/* The price carries its own timestamp because it can predate the
+                research cutoff above; an unlabelled date would read as same-day. */}
+            <small>截至 <time>{referencePrice.asOf.slice(0, 10)}</time></small>
+          </dd>
+        </div>
+        <div>
+          <dt>合理价值</dt>
+          <dd>{formatRange(fairValue.low, fairValue.high, fairValue.currency)}</dd>
+        </div>
+      </dl>
+      <span>查看公司研究主页 →</span>
+    </a>
+  );
+}
+
 export function formatFinancialValue(value?: FinancialValue) {
   if (!value) return "未披露";
   if (value.unit === "percent") return `${value.value}%`;

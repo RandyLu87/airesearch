@@ -15,6 +15,7 @@ import {
   ValuationMethodPanel,
   ValueBridge,
   formatPrice,
+  formatRange,
 } from "@airesearch/research-ui";
 import type { Metadata } from "next";
 import path from "node:path";
@@ -44,10 +45,6 @@ export async function generateMetadata({ params }: CompanyPageProps): Promise<Me
       "research-publication-version": "0.1.0",
     },
   };
-}
-
-function formatRange(low: string, high: string, currency: string) {
-  return `${formatPrice(low, currency)}–${high}`;
 }
 
 /**

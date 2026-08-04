@@ -29,8 +29,43 @@ function listCompanySnapshots(companyId) {
     );
 }
 
+function listSnapshotCompanies() {
+  return readdirSync(researchRoot, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .filter((companyId) => listCompanySnapshots(companyId).length > 0)
+    .sort();
+}
+
+/**
+ * Publishing is the expensive part of these tests and every assertion reads the
+ * same output, so the build runs once per file rather than once per test.
+ */
+let publication;
+function publishSite() {
+  publication ??= spawnSync("npm", ["run", "publish"], {
+    cwd: repoRoot,
+    encoding: "utf8",
+  });
+  assert.equal(
+    publication.status,
+    0,
+    `publication failed\nstdout:\n${publication.stdout}\nstderr:\n${publication.stderr}`,
+  );
+  return publication;
+}
+
 function escapeRegExp(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/**
+ * Mirrors formatPrice in @airesearch/research-ui. These tests are plain .mjs and
+ * the package is .tsx, so it cannot be imported here; the existing assertions
+ * spell the same rule out inline. Keep the two in step.
+ */
+function formatPrice(value, currency) {
+  return `${currency === "HKD" ? "HK$" : `${currency} `}${value}`;
 }
 
 function assertLocalReferencesResolve(html, pagePath, label) {
@@ -72,22 +107,83 @@ test("valuation scenario detail pairs stay on the definition-list grid", () => {
   );
 });
 
-test("publishes every structured company snapshot as auditable static HTML", () => {
-  const result = spawnSync("npm", ["run", "publish"], {
-    cwd: repoRoot,
-    encoding: "utf8",
-  });
-  assert.equal(
-    result.status,
-    0,
-    `publication failed\nstdout:\n${result.stdout}\nstderr:\n${result.stderr}`,
-  );
+test("the site index covers exactly the companies that have a research snapshot", () => {
+  publishSite();
 
-  const companies = readdirSync(researchRoot, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name)
-    .filter((companyId) => listCompanySnapshots(companyId).length > 0)
-    .sort();
+  const companies = listSnapshotCompanies();
+  const indexPath = path.join(siteRoot, "index.html");
+  const indexHtml = readFileSync(indexPath, "utf8");
+
+  const linked = [...indexHtml.matchAll(/href=["']\.\/companies\/([^"'/]+)\.html["']/g)]
+    .map((match) => match[1]);
+  // Both directions: no researched company missing from the index, and no card
+  // pointing at a company that no longer has a snapshot.
+  assert.deepEqual(
+    [...linked].sort(),
+    companies,
+    "index company cards drifted from the companies that have snapshots",
+  );
+  assert.equal(new Set(linked).size, linked.length, "a company is carded twice");
+  assertLocalReferencesResolve(indexHtml, indexPath, "site index");
+
+  // Ordering is asserted as an invariant over the dates the cards actually
+  // print, not by re-running the page's comparator: newest first, and companies
+  // sharing a date always in the same order so the build stays reproducible.
+  const cards = [...indexHtml.matchAll(
+    /href=["']\.\/companies\/([^"'/]+)\.html["'][\s\S]*?<time>(\d{4}-\d{2}-\d{2})<\/time>/g,
+  )].map(([, companyId, shownDate]) => ({ companyId, shownDate }));
+  assert.equal(cards.length, companies.length, "a card is missing its research date");
+  for (const { companyId, shownDate } of cards) {
+    assert.equal(
+      shownDate,
+      listCompanySnapshots(companyId).at(-1).data.snapshot.dataCutoff.slice(0, 10),
+      `${companyId} card shows a date other than its latest data cutoff`,
+    );
+  }
+  for (let index = 1; index < cards.length; index += 1) {
+    const previous = cards[index - 1];
+    const current = cards[index];
+    assert.ok(
+      previous.shownDate > current.shownDate ||
+        (previous.shownDate === current.shownDate &&
+          previous.companyId < current.companyId),
+      `index cards are out of order at ${previous.companyId} → ${current.companyId}`,
+    );
+  }
+
+  for (const companyId of companies) {
+    const latest = listCompanySnapshots(companyId).at(-1).data;
+    const { company, summary, snapshot } = latest;
+    for (const fragment of [
+      company.name,
+      company.ticker,
+      summary.stance,
+      // The research cutoff and the price timestamp are different facts; the
+      // card must not let the reader read the older price as same-day.
+      snapshot.dataCutoff.slice(0, 10),
+      summary.referencePrice.asOf.slice(0, 10),
+      formatPrice(summary.referencePrice.value, summary.referencePrice.currency),
+      formatPrice(summary.fairValue.low, summary.fairValue.currency),
+      summary.fairValue.high,
+    ]) {
+      assert.match(
+        indexHtml,
+        new RegExp(escapeRegExp(fragment)),
+        `index card for ${companyId} is missing ${fragment}`,
+      );
+    }
+  }
+
+  // The single-company pilot framing is no longer true. Scoped to the retired
+  // copy: a company's stance may legitimately mention a 试点 of its own.
+  assert.doesNotMatch(indexHtml, /网易云音乐研究试点/);
+  assert.doesNotMatch(indexHtml, /跨公司汇总与筛选将在后续阶段单独设计/);
+});
+
+test("publishes every structured company snapshot as auditable static HTML", () => {
+  publishSite();
+
+  const companies = listSnapshotCompanies();
   assert.ok(companies.includes(pilotCompany), "missing the Cloud Music pilot");
 
   for (const companyId of companies) {

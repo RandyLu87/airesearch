@@ -44,6 +44,7 @@ p, li { line-height: 1.62; }
 
 .eyebrow-row,
 .metric-meta,
+.company-card-meta,
 .company-eyebrow {
   display: flex;
   justify-content: space-between;
@@ -299,6 +300,14 @@ tbody th { font-weight: 650; }
 .report-link:hover { color: var(--paper); background: var(--ink); }
 .report-link time { font-size: 12px; }
 .report-link strong { font-size: 28px; font-weight: 520; }
+/* Index card text sets no colour of its own so the card inverts cleanly on
+   hover; the hairline stays --line, which reads on both grounds. A stance can
+   run to a full sentence, so it wraps instead of being clipped. */
+.company-card-stance { margin: 14px 0 0; font-size: 15px; }
+.company-card-facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 18px 0 20px; padding-top: 14px; border-top: 1px solid var(--line); }
+.company-card-facts dt { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.company-card-facts dd { margin: 6px 0 0; font-size: 17px; }
+.company-card-facts small { display: block; font-size: 11px; }
 
 @media (max-width: 800px) {
   .research-report, .company-page { padding: 0 18px 48px; }
