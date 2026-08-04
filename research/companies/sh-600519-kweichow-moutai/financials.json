@@ -1,0 +1,479 @@
+{
+  "ledgerVersion": "1.0.0",
+  "companyId": "sh-600519-kweichow-moutai",
+  "reportingCurrency": "CNY",
+  "minimumYears": 2,
+  "periods": [
+    {
+      "period": "FY2023",
+      "periodType": "fiscal-year",
+      "accountingBasis": "中国企业会计准则",
+      "status": "reported",
+      "revenue": {
+        "value": "1476.94",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "revenueGrowth": {
+        "value": "19.01",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "grossMargin": {
+        "value": "91.96",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "operatingMargin": {
+        "value": "70.22",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "netProfit": {
+        "value": "747.34",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "operatingCashFlow": {
+        "value": "665.93",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "freeCashFlow": {
+        "value": "639.73",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "segments": [
+        {
+          "segmentId": "maotai-liquor",
+          "status": "reported",
+          "revenue": {
+            "value": "1265.89",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "hundred-million",
+            "precision": 2
+          },
+          "grossMargin": {
+            "value": "94.12",
+            "unit": "percent",
+            "scale": "one",
+            "precision": 2
+          },
+          "evidenceIds": [
+            "annual-report-2024",
+            "akshare-cross-check-2026-08-04"
+          ]
+        },
+        {
+          "segmentId": "series-liquor",
+          "status": "reported",
+          "revenue": {
+            "value": "206.30",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "hundred-million",
+            "precision": 2
+          },
+          "grossMargin": {
+            "value": "79.76",
+            "unit": "percent",
+            "scale": "one",
+            "precision": 2
+          },
+          "evidenceIds": [
+            "annual-report-2024",
+            "akshare-cross-check-2026-08-04"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "annual-report-2025",
+        "annual-report-2024",
+        "akshare-cross-check-2026-08-04"
+      ]
+    },
+    {
+      "period": "FY2024",
+      "periodType": "fiscal-year",
+      "accountingBasis": "中国企业会计准则",
+      "status": "reported",
+      "revenue": {
+        "value": "1708.99",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "revenueGrowth": {
+        "value": "15.71",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "grossMargin": {
+        "value": "91.93",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "operatingMargin": {
+        "value": "70.03",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "netProfit": {
+        "value": "862.28",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "operatingCashFlow": {
+        "value": "924.64",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "freeCashFlow": {
+        "value": "877.85",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "segments": [
+        {
+          "segmentId": "maotai-liquor",
+          "status": "reported",
+          "revenue": {
+            "value": "1459.28",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "hundred-million",
+            "precision": 2
+          },
+          "grossMargin": {
+            "value": "94.06",
+            "unit": "percent",
+            "scale": "one",
+            "precision": 2
+          },
+          "evidenceIds": [
+            "annual-report-2024",
+            "annual-report-2025"
+          ]
+        },
+        {
+          "segmentId": "series-liquor",
+          "status": "reported",
+          "revenue": {
+            "value": "246.84",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "hundred-million",
+            "precision": 2
+          },
+          "grossMargin": {
+            "value": "79.87",
+            "unit": "percent",
+            "scale": "one",
+            "precision": 2
+          },
+          "evidenceIds": [
+            "annual-report-2024",
+            "annual-report-2025"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "annual-report-2024",
+        "annual-report-2025"
+      ]
+    },
+    {
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "中国企业会计准则",
+      "status": "reported",
+      "revenue": {
+        "value": "1688.38",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "revenueGrowth": {
+        "value": "-1.21",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "grossMargin": {
+        "value": "91.18",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "operatingMargin": {
+        "value": "68.00",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "netProfit": {
+        "value": "823.20",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "operatingCashFlow": {
+        "value": "615.22",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "freeCashFlow": {
+        "value": "583.95",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "segments": [
+        {
+          "segmentId": "maotai-liquor",
+          "status": "reported",
+          "revenue": {
+            "value": "1465.00",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "hundred-million",
+            "precision": 2
+          },
+          "grossMargin": {
+            "value": "93.53",
+            "unit": "percent",
+            "scale": "one",
+            "precision": 2
+          },
+          "evidenceIds": [
+            "annual-report-2025"
+          ]
+        },
+        {
+          "segmentId": "series-liquor",
+          "status": "reported",
+          "revenue": {
+            "value": "222.75",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "hundred-million",
+            "precision": 2
+          },
+          "grossMargin": {
+            "value": "76.11",
+            "unit": "percent",
+            "scale": "one",
+            "precision": 2
+          },
+          "evidenceIds": [
+            "annual-report-2025"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "annual-report-2025"
+      ]
+    },
+    {
+      "period": "Q1 2025",
+      "periodType": "quarter",
+      "accountingBasis": "中国企业会计准则",
+      "status": "reported",
+      "revenue": {
+        "value": "506.01",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "revenueGrowth": {
+        "value": "10.54",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "grossMargin": {
+        "value": "91.97",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "operatingMargin": {
+        "value": "73.19",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "netProfit": {
+        "value": "268.47",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "operatingCashFlow": {
+        "value": "88.09",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "freeCashFlow": {
+        "value": "79.08",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "segments": [
+        {
+          "segmentId": "maotai-liquor",
+          "status": "reported",
+          "revenue": {
+            "value": "435.57",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "hundred-million",
+            "precision": 2
+          },
+          "evidenceIds": [
+            "q1-report-2025"
+          ]
+        },
+        {
+          "segmentId": "series-liquor",
+          "status": "reported",
+          "revenue": {
+            "value": "70.22",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "hundred-million",
+            "precision": 2
+          },
+          "evidenceIds": [
+            "q1-report-2025"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "q1-report-2025"
+      ]
+    },
+    {
+      "period": "Q1 2026",
+      "periodType": "quarter",
+      "accountingBasis": "中国企业会计准则",
+      "status": "reported",
+      "revenue": {
+        "value": "539.09",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "revenueGrowth": {
+        "value": "6.54",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "grossMargin": {
+        "value": "89.76",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "operatingMargin": {
+        "value": "69.63",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "netProfit": {
+        "value": "272.43",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "operatingCashFlow": {
+        "value": "269.10",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "freeCashFlow": {
+        "value": "263.05",
+        "unit": "currency",
+        "currency": "CNY",
+        "scale": "hundred-million",
+        "precision": 2
+      },
+      "segments": [
+        {
+          "segmentId": "maotai-liquor",
+          "status": "reported",
+          "revenue": {
+            "value": "460.05",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "hundred-million",
+            "precision": 2
+          },
+          "evidenceIds": [
+            "q1-report-2026",
+            "q1-oper-data-2026"
+          ]
+        },
+        {
+          "segmentId": "series-liquor",
+          "status": "reported",
+          "revenue": {
+            "value": "78.81",
+            "unit": "currency",
+            "currency": "CNY",
+            "scale": "hundred-million",
+            "precision": 2
+          },
+          "evidenceIds": [
+            "q1-report-2026",
+            "q1-oper-data-2026"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "q1-report-2026",
+        "q1-oper-data-2026"
+      ]
+    }
+  ]
+}
