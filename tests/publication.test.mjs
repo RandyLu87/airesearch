@@ -92,9 +92,28 @@ function assertLocalReferencesResolve(html, pagePath, label) {
   }
 }
 
+/** Splits a shorthand on the spaces between values, not the ones inside clamp(). */
+function splitShorthand(value) {
+  const parts = [];
+  let depth = 0;
+  let current = "";
+  for (const character of value.trim()) {
+    if (character === "(") depth += 1;
+    if (character === ")") depth -= 1;
+    if (/\s/.test(character) && depth === 0) {
+      if (current) parts.push(current);
+      current = "";
+      continue;
+    }
+    current += character;
+  }
+  if (current) parts.push(current);
+  return parts;
+}
+
 /** The bottom of a `padding` shorthand, whichever of the 1–4 value forms is used. */
 function paddingBottom(shorthand) {
-  const values = shorthand.trim().split(/\s+/);
+  const values = splitShorthand(shorthand);
   return values.length >= 3 ? values[2] : values[0];
 }
 
@@ -102,6 +121,28 @@ function paddingBottom(shorthand) {
 function pixels(value) {
   const match = /^(\d+(?:\.\d+)?)px$/.exec(value.trim());
   return match ? Number.parseFloat(match[1]) : Number.NaN;
+}
+
+/**
+ * The largest this length can ever compute to, in px: a clamp() can never
+ * exceed its ceiling, and a bare length is its own maximum. NaN for anything
+ * unbounded — `16vh` has no ceiling, which is how the fold got eaten once.
+ */
+function maxLength(value) {
+  const clamp = /^clamp\((.+)\)$/.exec(value.trim());
+  if (!clamp) return pixels(value);
+  let depth = 0;
+  const args = [""];
+  for (const character of clamp[1]) {
+    if (character === "(") depth += 1;
+    if (character === ")") depth -= 1;
+    if (character === "," && depth === 0) {
+      args.push("");
+      continue;
+    }
+    args[args.length - 1] += character;
+  }
+  return pixels(args.at(-1));
 }
 
 /**
@@ -133,12 +174,17 @@ test("the site index header stays inside its above-the-fold budget", () => {
 
   const headingMargin = css.match(/\.company-header h1\s*\{[^}]*margin:\s*([^;}]+)/);
   assert.ok(headingMargin, "missing the .company-header h1 rule");
-  // 16vh was 122px of nothing above the title at 763px tall. A ceiling in px,
-  // not merely a ban on vh: 400px of margin is just as fatal.
-  const headingTop = pixels(headingMargin[1].trim().split(/\s+/)[0]);
+  // The air above a 150px title has to grow with the screen without ever
+  // reaching 16vh's 122px. Two clauses: bounded, and anything beyond a flat
+  // 40px has to be viewport-relative so short laptops get the smaller gap.
+  const headingTop = splitShorthand(headingMargin[1])[0];
   assert.ok(
-    headingTop <= 40,
-    `.company-header h1 top margin must be ≤40px and unit-px, found ${headingMargin[1]}`,
+    maxLength(headingTop) <= 80,
+    `.company-header h1 top margin must be bounded and ≤80px, found ${headingTop}`,
+  );
+  assert.ok(
+    maxLength(headingTop) <= 40 || headingTop.includes("vh"),
+    `a top margin above 40px must scale with viewport height, found ${headingTop}`,
   );
 
   const headerPadding = css.match(/\.company-header\s*\{[^}]*padding:\s*([^;}]+)/);

@@ -273,7 +273,12 @@ tbody th { font-weight: 650; }
    the whole header block stays inside ~350px. A vh-based margin here spent
    122px of a 763px-tall laptop viewport on empty space. */
 .company-header { padding: 24px 0 24px; border-bottom: 1px solid var(--ink); }
-.company-header h1 { margin: 24px 0 20px; }
+/* The air above the title scales with the viewport, because the title itself
+   does: a flat 24px reads right under a 128px heading on a short laptop and
+   cramped under a 150px one on a 27" display. Bounded at 72px so it can never
+   repeat 16vh's 122px, and the tight bottom margin keeps the tagline bound to
+   the title rather than floating between the two. */
+.company-header h1 { margin: clamp(24px, 6vh, 72px) 0 20px; }
 /* Only the desktop ceiling comes down — 40px cost two lines and 137px of the
    fold. The 22px floor stays: narrow screens have budget to spare, and this is
    also the company page's lead thesis. */
@@ -329,8 +334,9 @@ tbody th { font-weight: 650; }
   .hero-grid { grid-template-columns: 1fr; gap: 38px; margin: 12vh 0 7vh; }
   h1 { font-size: clamp(56px, 20vw, 96px); }
   /* One line for 上市公司研究 at 375px: a wrapped page title costs another 60px
-     of the fold. The report cover keeps the full size. */
-  .company-header h1 { font-size: clamp(36px, 11vw, 46px); }
+     of the fold. The report cover keeps the full size. A 46px title needs far
+     less air above it than a 150px one, and 375×667 has no budget to give. */
+  .company-header h1 { margin: 24px 0 16px; font-size: clamp(36px, 11vw, 46px); }
   .stance-block { width: 65%; }
   .hero-facts, .company-summary { grid-template-columns: repeat(2, 1fr); }
   .report-section { grid-template-columns: 1fr; gap: 14px; padding: 52px 0 62px; }
