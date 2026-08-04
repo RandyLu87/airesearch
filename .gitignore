@@ -22,3 +22,15 @@ node_modules/
 **/.next/
 apps/web/out/
 *.tsbuildinfo
+
+# Secrets. Tokens belong in the shell environment, never in the repo —
+# see docs/research/data-source-registry.md section 2. These entries are a
+# backstop against a slip, not an alternative storage location.
+.env
+.env.*
+!.env.example
+.claude/settings.local.json
+
+# Python virtualenvs used for ad-hoc data probes
+.venv/
+**/.venv/
