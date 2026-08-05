@@ -1,0 +1,32 @@
+{
+  "_spec": {
+    "purpose": "研究流程第 5 步（渲染网站）的输入契约。由 docs/research/tools/build_final.py 从三份校验通过的落盘文件自动合并生成，不手写。步骤正文见 docs/research/workflow/05-render-site.md。",
+    "generation": "python3 docs/research/tools/build_final.py --collection <采集文件> --analysis <分析文件> --summary <总结文件> --out research/companies/<company-id>/financials-final.json",
+    "gate": "合并脚本内部复用 data_validator.py 重新校验三份输入，任一低于阈值（默认 7 分）拒绝生成——渲染层只信任这份文件，不再自行校验。",
+    "embedding": "collection / analysis / summary 三个子树分别原样嵌入第 1/2/3 步产出，结构以各自模板为准：financials—model-template.json、financials—analysis-template.json、financials—summary-template.json。本模板不重复其字段定义。"
+  },
+  "finalVersion": "1.0.0",
+  "meta": {
+    "companyId": "__TODO__（脚本校验三份文件一致后写入）",
+    "companyName": "__TODO__",
+    "generatedAt": "__TODO__（脚本写入，ISO 8601）",
+    "dataCutoff": "__TODO__（取自采集文件 meta.dataCutoff）",
+    "validation": {
+      "threshold": 7,
+      "scores": {
+        "collection": "__TODO__（0-10）",
+        "analysis": "__TODO__（0-10）",
+        "summary": "__TODO__（0-10）"
+      },
+      "validatedAt": "__TODO__（脚本写入）"
+    },
+    "sources": {
+      "collection": "__TODO__（第 1 步文件的仓库相对路径）",
+      "analysis": "__TODO__（第 2 步文件的仓库相对路径）",
+      "summary": "__TODO__（第 3 步文件的仓库相对路径）"
+    }
+  },
+  "collection": { "_embed": "第 1 步采集产出全文，financials—model-template.json 结构" },
+  "analysis": { "_embed": "第 2 步分析产出全文，financials—analysis-template.json 结构" },
+  "summary": { "_embed": "第 3 步总结产出全文，financials—summary-template.json 结构" }
+}

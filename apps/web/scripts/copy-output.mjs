@@ -54,3 +54,7 @@ async function cleanDirectory(directory) {
 await cleanDirectory(target);
 await rm(path.join(target, "404.html"), { force: true });
 await rm(path.join(target, "_not-found.html"), { force: true });
+// 公司分析路由在没有任何 financials-final.json 时用哨兵参数占位（output: export
+// 不接受空静态参数表），哨兵页不属于站点内容，拷贝后删除。
+await rm(path.join(target, "companies", "__no-analysis__.html"), { force: true });
+await rm(path.join(target, "companies", "__no-analysis__"), { recursive: true, force: true });

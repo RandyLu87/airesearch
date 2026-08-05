@@ -1,0 +1,318 @@
+{
+  "_spec": {
+    "purpose": "研究流程第 2 步（多维度分析）的产出模板。六个维度共用统一信封：{ conclusion, analysis, inquiry, dataGaps }。步骤正文见 docs/research/workflow/02-multi-dimension-analysis.md。",
+    "todoSentinel": "所有待填值写 \"__TODO__\"；取不到的字段不删除，改写 { \"status\": \"unavailable\", \"reason\": \"缺失原因 + 已查范围\" } 并在该维度 dataGaps 中登记。",
+    "sourcedEvidence": "所有数据点统一带出处：{ metric, value, asOf, source: { name, url } }。无出处的论断不接受；估计值 value 前置 \"[估计]\"。",
+    "inquiry": "每个维度的 inquiry.answer 必须回答，回避视为该维度未完成；只有关键数据确实缺失时才允许答「数据不足」，且必须写明缺哪个数据。",
+    "calculation": "涉及计算的数字（估值倍数、三情景推算、增速、对比差值）必须用 docs/research/tools/financial_rigor.py 验算，禁止心算；工具输出记入 crossValidationLog。"
+  },
+  "meta": {
+    "companyId": "__TODO__",
+    "companyName": "__TODO__",
+    "analyzedAt": "__TODO__",
+    "dataCutoff": "__TODO__（Asia/Shanghai，与第 1 步一致）",
+    "basedOnCollection": "__TODO__（第 1 步采集文件的仓库相对路径）"
+  },
+  "dimensions": {
+    "businessEssence": {
+      "title": "生意本质",
+      "conclusion": "__TODO__（一句话定义这门生意的本质，必须能被下方数据支撑）",
+      "analysis": {
+        "revenueBreakdown": {
+          "period": "__TODO__（最近财年）",
+          "items": [
+            {
+              "segment": "__TODO__",
+              "revenue": "__TODO__",
+              "sharePct": "__TODO__",
+              "source": { "name": "__TODO__", "url": "__TODO__" }
+            }
+          ]
+        },
+        "profitabilityTrend5y": {
+          "series": [
+            {
+              "fiscalYear": "__TODO__（近5年逐年一条）",
+              "grossMarginPct": "__TODO__",
+              "operatingMarginPct": "__TODO__",
+              "netMarginPct": "__TODO__",
+              "source": { "name": "__TODO__", "url": "__TODO__" }
+            }
+          ]
+        },
+        "businessModelCanvas": {
+          "salesModel": "一次性销售 | 订阅/复购 | 混合",
+          "productForm": "硬件 | 软件 | 平台 | 服务 | 混合",
+          "note": "__TODO__（判定依据）"
+        },
+        "stickiness": {
+          "level": "强 | 中 | 弱",
+          "mechanism": "__TODO__（粘性/锁定靠什么：习惯、数据、生态、合约）",
+          "evidence": [
+            { "metric": "__TODO__（留存率/复购率/流失率等）", "value": "__TODO__", "asOf": "__TODO__", "source": { "name": "__TODO__", "url": "__TODO__" } }
+          ]
+        },
+        "grossMarginVsPeers": {
+          "companyPct": "__TODO__",
+          "peers": [
+            { "name": "__TODO__", "grossMarginPct": "__TODO__", "source": { "name": "__TODO__", "url": "__TODO__" } }
+          ],
+          "whyHigherOrLower": "__TODO__（解释为什么高/低）"
+        },
+        "operatingLeverage": {
+          "observation": "__TODO__（收入增速 vs 费用/利润增速的历史关系，经营杠杆方向）",
+          "evidence": [
+            { "metric": "__TODO__", "value": "__TODO__", "asOf": "__TODO__", "source": { "name": "__TODO__", "url": "__TODO__" } }
+          ]
+        }
+      },
+      "inquiry": {
+        "question": "这门生意好在哪？如果只能用一句话描述，是什么？",
+        "answer": "__TODO__（必答）"
+      },
+      "dataGaps": []
+    },
+    "moat": {
+      "title": "护城河评估",
+      "conclusion": "__TODO__",
+      "analysis": {
+        "types": [
+          {
+            "type": "品牌/定价权",
+            "test": "是否能在不损失销量的情况下提价？",
+            "verdict": "存在 | 不存在 | 待验证",
+            "evidence": [
+              { "metric": "__TODO__", "value": "__TODO__", "asOf": "__TODO__", "source": { "name": "__TODO__", "url": "__TODO__" } }
+            ]
+          },
+          {
+            "type": "转换成本",
+            "test": "客户迁移到竞品的成本有多高？",
+            "verdict": "存在 | 不存在 | 待验证",
+            "evidence": []
+          },
+          {
+            "type": "网络效应",
+            "test": "用户越多产品越好吗？",
+            "verdict": "存在 | 不存在 | 待验证",
+            "evidence": []
+          },
+          {
+            "type": "规模效应",
+            "test": "规模带来的成本优势有多大？",
+            "verdict": "存在 | 不存在 | 待验证",
+            "evidence": []
+          },
+          {
+            "type": "技术/专利壁垒",
+            "test": "技术领先几年？能否被复制？",
+            "verdict": "存在 | 不存在 | 待验证",
+            "evidence": []
+          }
+        ],
+        "trendPast5y": {
+          "direction": "变宽 | 稳定 | 变窄",
+          "basis": "__TODO__（依据什么数据判断）"
+        },
+        "trendNext5y": {
+          "direction": "变宽 | 稳定 | 变窄",
+          "basis": "__TODO__（预判逻辑与前提）"
+        }
+      },
+      "inquiry": {
+        "question": "10年后这条护城河还在吗？什么能摧毁它？",
+        "answer": "__TODO__（必答）"
+      },
+      "dataGaps": []
+    },
+    "inversion": {
+      "title": "逆向思考与风险清单",
+      "conclusion": "__TODO__",
+      "analysis": {
+        "failurePaths": [
+          {
+            "path": "__TODO__（可能失败的路径，逐条列全）",
+            "probability": "高 | 中 | 低",
+            "impact": "高 | 中 | 低",
+            "evidence": [
+              { "metric": "__TODO__", "value": "__TODO__", "asOf": "__TODO__", "source": { "name": "__TODO__", "url": "__TODO__" } }
+            ]
+          }
+        ],
+        "historicalAnalogies": [
+          {
+            "company": "__TODO__（历史上处于相似位置的公司）",
+            "similarity": "__TODO__（相似在哪）",
+            "outcome": "__TODO__（结局如何）",
+            "source": { "name": "__TODO__", "url": "__TODO__" }
+          }
+        ],
+        "crossDisciplinaryChecks": [
+          {
+            "model": "网络效应理论 | 技术采纳曲线 | 竞争博弈 | 其他",
+            "finding": "__TODO__（该模型交叉验证出什么）"
+          }
+        ],
+        "biasSelfCheck": [
+          { "bias": "叙事偏差", "check": "__TODO__" },
+          { "bias": "锚定效应", "check": "__TODO__" },
+          { "bias": "幸存者偏差", "check": "__TODO__" }
+        ],
+        "bearCase": [
+          {
+            "point": "__TODO__（空方核心论点）",
+            "holder": "__TODO__（谁在持这个观点：做空报告/卖方/媒体）",
+            "evidence": [
+              { "metric": "__TODO__", "value": "__TODO__", "asOf": "__TODO__", "source": { "name": "__TODO__", "url": "__TODO__" } }
+            ]
+          }
+        ]
+      },
+      "inquiry": {
+        "question": "我最可能在哪里犯错？聪明人为什么会不买/做空这家公司？",
+        "answer": "__TODO__（必答）"
+      },
+      "dataGaps": []
+    },
+    "management": {
+      "title": "管理层评估",
+      "conclusion": "__TODO__",
+      "analysis": {
+        "keyDecisions": [
+          {
+            "date": "__TODO__",
+            "decision": "__TODO__",
+            "outcome": "__TODO__",
+            "rating": "__TODO__（★1-5，不含半星）",
+            "source": { "name": "__TODO__", "url": "__TODO__" }
+          }
+        ],
+        "capitalAllocation": {
+          "rdReturn": "__TODO__（研发回报率）",
+          "maTrackRecord": "__TODO__（并购成功率，逐笔为佳）",
+          "buybackTiming": "__TODO__（回购时机与当时估值）",
+          "evidence": [
+            { "metric": "__TODO__", "value": "__TODO__", "asOf": "__TODO__", "source": { "name": "__TODO__", "url": "__TODO__" } }
+          ]
+        },
+        "alignment": {
+          "ownership": "__TODO__（管理层持股，区分经济权益与投票权）",
+          "compensation": "__TODO__（薪酬结构与考核挂钩什么）",
+          "insiderSelling": "__TODO__（减持记录）",
+          "evidence": [
+            { "metric": "__TODO__", "value": "__TODO__", "asOf": "__TODO__", "source": { "name": "__TODO__", "url": "__TODO__" } }
+          ]
+        },
+        "organization": {
+          "teamStability": "__TODO__（核心团队任期与流动）",
+          "keyPersonRisk": "__TODO__"
+        },
+        "culture": "__TODO__（企业文化特征，附可观察证据）"
+      },
+      "inquiry": {
+        "question": "如果CEO退休，这家公司还能保持竞争力吗？",
+        "answer": "__TODO__（必答）"
+      },
+      "dataGaps": []
+    },
+    "industryTrend": {
+      "title": "行业与长期趋势",
+      "conclusion": "__TODO__",
+      "analysis": {
+        "paradigmShift": {
+          "verdict": "是 | 否 | 部分",
+          "reasoning": "__TODO__（所在行业是否处于文明级范式转移，判断依据）"
+        },
+        "historicalAnalogy": "__TODO__（蒸汽机/电力/互联网/AI 等历史技术革命类比，及本公司对应位置）",
+        "tam": {
+          "current": {
+            "value": "__TODO__",
+            "currency": "__TODO__",
+            "asOf": "__TODO__",
+            "source": { "name": "__TODO__", "url": "__TODO__" }
+          },
+          "ceiling": "__TODO__（天花板在哪，怎么算出来的）",
+          "growthCurve": "__TODO__（增长曲线所处阶段：导入/成长/成熟/衰退）"
+        },
+        "valueChainPosition": "__TODO__（公司在产业价值链中的位置与议价权）",
+        "techRouteRisk": "__TODO__（技术路线被替代的风险）",
+        "concentration": {
+          "customers": "__TODO__（客户集中度）",
+          "suppliers": "__TODO__（供应商集中度）",
+          "evidence": [
+            { "metric": "__TODO__", "value": "__TODO__", "asOf": "__TODO__", "source": { "name": "__TODO__", "url": "__TODO__" } }
+          ]
+        }
+      },
+      "inquiry": {
+        "question": "站在20年后回看，这家公司是「这个时代的标准石油」还是「昙花一现的3Com」？",
+        "answer": "__TODO__（必答）"
+      },
+      "dataGaps": []
+    },
+    "valuation": {
+      "title": "估值分析",
+      "conclusion": "__TODO__",
+      "analysis": {
+        "currentMultiples": {
+          "_hint": "全部经 docs/research/tools/financial_rigor.py 验算，与第 1 步采集值对账",
+          "marketCap": { "value": "__TODO__", "currency": "__TODO__", "asOf": "__TODO__", "source": { "name": "__TODO__", "url": "__TODO__" } },
+          "pe": { "value": "__TODO__（注明 TTM/静态）", "asOf": "__TODO__", "source": { "name": "__TODO__", "url": "__TODO__" } },
+          "ps": { "value": "__TODO__", "asOf": "__TODO__", "source": { "name": "__TODO__", "url": "__TODO__" } },
+          "peg": { "value": "__TODO__", "asOf": "__TODO__", "source": { "name": "__TODO__", "url": "__TODO__" } },
+          "evToRevenue": { "value": "__TODO__", "asOf": "__TODO__", "source": { "name": "__TODO__", "url": "__TODO__" } }
+        },
+        "reverseDcf": {
+          "impliedGrowth": "__TODO__（当前股价隐含的增长预期）",
+          "assumptions": "__TODO__（贴现率、年限、终值假设）"
+        },
+        "threeScenario": {
+          "_hint": "必须用 docs/research/tools/financial_rigor.py three-scenario 精确计算，禁止心算",
+          "inputs": {
+            "price": "__TODO__",
+            "eps": "__TODO__",
+            "sharesHundredMillion": "__TODO__（总股本，亿）",
+            "growth": ["__TODO__（乐观）", "__TODO__（中性）", "__TODO__（悲观）"],
+            "pe": ["__TODO__（乐观）", "__TODO__（中性）", "__TODO__（悲观）"],
+            "years": 3,
+            "currency": "__TODO__"
+          },
+          "optimistic": { "targetPrice": "__TODO__", "impliedReturnPct": "__TODO__" },
+          "neutral": { "targetPrice": "__TODO__", "impliedReturnPct": "__TODO__" },
+          "pessimistic": { "targetPrice": "__TODO__", "impliedReturnPct": "__TODO__" },
+          "assumptionBasis": "__TODO__（三组增速与PE的取值依据及来源）",
+          "toolOutput": "__TODO__（工具原始输出摘录）"
+        },
+        "vsOwnHistory": {
+          "metric": "__TODO__（用哪个倍数对比）",
+          "currentValue": "__TODO__",
+          "historicalRange": "__TODO__（区间与当前分位；历史序列须为前复权口径）",
+          "source": { "name": "__TODO__", "url": "__TODO__" }
+        },
+        "vsPeers": [
+          {
+            "name": "__TODO__",
+            "pe": "__TODO__",
+            "ps": "__TODO__",
+            "source": { "name": "__TODO__", "url": "__TODO__" }
+          }
+        ]
+      },
+      "inquiry": {
+        "question": "如果股市明天关闭5年，你愿意以这个价格持有吗？",
+        "answer": "__TODO__（必答）"
+      },
+      "dataGaps": []
+    }
+  },
+  "crossValidationLog": [
+    {
+      "field": "__TODO__（本步骤所有经工具验算的数字逐条记录）",
+      "source1": { "name": "__TODO__", "value": "__TODO__" },
+      "source2": { "name": "__TODO__", "value": "__TODO__" },
+      "deviationPct": "__TODO__",
+      "flag": "ok | minor-diff | major-diff",
+      "resolution": "__TODO__（有差异时的原因与采用依据；major-diff 必须回原始财报）"
+    }
+  ]
+}
