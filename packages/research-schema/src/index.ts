@@ -509,6 +509,53 @@ const densityResponseSchema = z.object({
   }
 });
 
+/**
+ * The governance summary materialised from `commitments.json` (ADR-0019).
+ *
+ * Defined here rather than in `commitments.ts` so the dependency runs one way:
+ * that module needs `financialValueSchema` from this one, exactly as `ledger.ts`
+ * does, and a snapshot field cannot be validated by a schema this file imports
+ * back from it.
+ *
+ * Counts and lists only, never a delivery *grade*. A rate mapped onto
+ * ">80% 优秀 / <40% 不可信赖" reads like a rating while its denominator depends
+ * on which promises were written down — improvable by recording fewer soft ones.
+ */
+export const commitmentSummarySchema = z.object({
+  coverageFrom: z.string().min(1),
+  counts: z.object({
+    兑现: z.number().int().min(0),
+    部分兑现: z.number().int().min(0),
+    未兑现: z.number().int().min(0),
+    待到期: z.number().int().min(0),
+    已撤回: z.number().int().min(0),
+  }),
+  outstanding: z.array(z.object({
+    id: z.string().min(1),
+    commitment: z.string().min(1),
+    dueBy: z.string().min(1),
+    status: z.string().min(1),
+  })),
+  latestResolution: z.object({
+    id: z.string().min(1),
+    commitment: z.string().min(1),
+    status: z.string().min(1),
+    resolvedAt: z.string().min(1),
+  }).nullable(),
+  capitalAllocation: z.array(z.object({
+    id: z.string().min(1),
+    kind: z.string().min(1),
+    statedAt: z.string().min(1),
+    commitment: z.string().min(1),
+    status: z.string().min(1),
+    amount: financialValueSchema.optional(),
+    valuationAtTime: z.string().min(1).optional(),
+    returnAssessment: z.string().min(1).optional(),
+  })),
+});
+
+export type CommitmentSummary = z.infer<typeof commitmentSummarySchema>;
+
 const methodSelectionSchema = z.object({
   ideal: z.enum(VALUATION_METHOD_IDS as [string, ...string[]]),
   idealRationale: z.string().min(1),
@@ -731,6 +778,15 @@ const snapshotShape = z.object({
     downgrade: z.array(z.string().min(1)).min(1),
   }),
   checkpoints: z.array(z.string().min(1)).min(3),
+  /**
+   * Materialised from `commitments.json`, never hand-written: `snapshot:sync`
+   * writes it and `snapshot:check` compares it against the ledger, exactly as
+   * with `financialHistory`. Optional because a newly listed company may
+   * genuinely have nothing to record — but an empty ledger still has to exist
+   * and state its coverage start, so "no commitments" and "nobody looked" stay
+   * distinguishable.
+   */
+  commitmentSummary: commitmentSummarySchema.optional(),
   evidence: z.array(evidenceSchema).min(2),
   /**
    * How much of this snapshot rests on missing values and inference.

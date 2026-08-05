@@ -105,11 +105,17 @@ def validate(root: Path) -> list[str]:
                 ledger = item
                 continue
 
+            # 承诺台账与财报账本同级：管理层说过的话跨期结算，一次录入长期
+            # 复用。缺它不报错——刚上市的公司可能确实没有可录入的承诺——
+            # 但存在时必须合法，由 node 校验器逐字段比对。见 ADR-0019。
+            if item.name == "commitments.json":
+                continue
+
             match = ANALYSIS_PATTERN.fullmatch(item.name)
             if not match or match.group("extension") != "md":
                 errors.append(
-                    f"公司目录根部仅允许历史 Markdown 研究记录与 financials.json："
-                    f"{item.relative_to(root)}；"
+                    f"公司目录根部仅允许历史 Markdown 研究记录、financials.json "
+                    f"与 commitments.json：{item.relative_to(root)}；"
                     "新研究应写入 snapshots/YYYY-MM-DD-HHMM-analysis.json。"
                 )
                 continue

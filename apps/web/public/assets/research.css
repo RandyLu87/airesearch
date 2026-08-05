@@ -664,6 +664,19 @@ tbody th { font-weight: 650; }
 /* 重合不是错误，但也不是好消息：虚线边框把它和一条真实分歧区分开。 */
 .disagreement--converged { border-style: dashed; }
 
+/* ── 管理层承诺与资本配置 ─────────────────────────────── */
+.commitment-counts { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0 20px; margin: 0 0 26px; border-top: 1px solid var(--ink); }
+.commitment-counts article { padding: 16px 0 18px; }
+.commitment-counts span { display: block; color: var(--muted); font-size: 11px; letter-spacing: .06em; }
+.commitment-counts strong { display: block; margin-top: 8px; font-size: clamp(24px, 2.6vw, 34px); font-weight: 480; letter-spacing: -.04em; }
+.commitment-outstanding { margin: 0 0 24px; padding: 0; list-style: none; border-top: 1px solid var(--line-dark); }
+.commitment-outstanding li { display: grid; grid-template-columns: 90px 1fr 200px; gap: 16px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.commitment-outstanding em { color: var(--muted); font-size: 12px; font-style: normal; text-align: right; }
+.commitment-status { display: inline-block; padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; font-weight: 650; white-space: nowrap; }
+.commitment-status--未兑现 { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.commitment-status--部分兑现 { border-style: dashed; }
+.commitment-latest { margin: 0 0 24px; color: var(--muted); font-size: 14px; }
+
 /* ── 证据密度 ─────────────────────────────────────────── */
 .density-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 24px; margin: 0 0 24px; border-top: 1px solid var(--ink); }
 .density-grid article { padding: 18px 0 20px; }
@@ -696,6 +709,9 @@ tbody th { font-weight: 650; }
   .moat-trend-list li { grid-template-columns: 1fr; gap: 8px; }
   .disagreement dl { grid-template-columns: 1fr; }
   .density-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .commitment-counts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .commitment-outstanding li { grid-template-columns: 1fr; gap: 8px; }
+  .commitment-outstanding em { text-align: left; }
   .bridge-rows li { grid-template-columns: minmax(96px, 1fr) 64px; }
   .bridge-track { display: none; }
   .segment-head { flex-wrap: wrap; }

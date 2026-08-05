@@ -6,6 +6,7 @@ import {
 } from "@airesearch/research-schema";
 import {
   BusinessModelSection,
+  CommitmentPanel,
   EvidenceDensityPanel,
   LatestComparison,
   MarketPositionSection,
@@ -237,6 +238,9 @@ export function ReportView({
   // Two structured sections only exist under the 1.1.0 contract; everything
   // after them renumbers so a legacy report keeps the numbering it published with.
   const extra = current ? 2 : 0;
+  // The governance section only exists once a company has a commitment ledger,
+  // so everything after it renumbers rather than leaving a gap.
+  const governanceExtra = current?.commitmentSummary ? 1 : 0;
   const refs = (ids: string[]) => sourceIds(ids, evidenceNumbers);
 
   return (
@@ -432,8 +436,21 @@ export function ReportView({
         </div>
       </section>
 
+      {/* Governance is the one dimension that can only be observed lengthwise,
+          so it gets its own section rather than a line in the narrative. */}
+      {current?.commitmentSummary ? (
+        <section className="report-section" id="commitments">
+          <div className="section-number">{String(snapshot.sections.length + 5 + extra).padStart(2, "0")}</div>
+          <div className="section-content">
+            <p className="section-kicker">SAID VS. DONE</p>
+            <h2>管理层承诺与资本配置</h2>
+            <CommitmentPanel snapshot={current} />
+          </div>
+        </section>
+      ) : null}
+
       <section className="report-section" id="view-changes">
-        <div className="section-number">{String(snapshot.sections.length + 5 + extra).padStart(2, "0")}</div>
+        <div className="section-number">{String(snapshot.sections.length + 5 + extra + governanceExtra).padStart(2, "0")}</div>
         <div className="section-content split-section">
           <article><p className="section-kicker">UPGRADE CONDITIONS</p><h2>什么会提高当前判断</h2><ol className="editorial-list">{snapshot.viewChanges.upgrade.map((item) => <li key={item}>{item}</li>)}</ol></article>
           <article><p className="section-kicker">DOWNGRADE CONDITIONS</p><h2>什么会降低当前判断</h2><ol className="editorial-list">{snapshot.viewChanges.downgrade.map((item) => <li key={item}>{item}</li>)}</ol></article>
@@ -441,7 +458,7 @@ export function ReportView({
       </section>
 
       <section className="report-section">
-        <div className="section-number">{String(snapshot.sections.length + 6 + extra).padStart(2, "0")}</div>
+        <div className="section-number">{String(snapshot.sections.length + 6 + extra + governanceExtra).padStart(2, "0")}</div>
         <div className="section-content split-section">
           <article><p className="section-kicker">DOWNSIDE</p><h2>核心风险</h2><ol className="editorial-list">{snapshot.risks.map((risk) => <li key={risk}><ProseBlock text={risk} /></li>)}</ol></article>
           <article><p className="section-kicker">VALIDATION</p><h2>后续跟踪点</h2><ol className="editorial-list">{snapshot.checkpoints.map((item) => <li key={item}>{item}</li>)}</ol></article>
@@ -449,7 +466,7 @@ export function ReportView({
       </section>
 
       <section className="report-section evidence-section" id="evidence">
-        <div className="section-number">{String(snapshot.sections.length + 7 + extra).padStart(2, "0")}</div>
+        <div className="section-number">{String(snapshot.sections.length + 7 + extra + governanceExtra).padStart(2, "0")}</div>
         <div className="section-content">
           <p className="section-kicker">AUDIT TRAIL</p>
           <h2>已查阅资料</h2>

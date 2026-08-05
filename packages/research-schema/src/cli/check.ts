@@ -15,6 +15,11 @@ import {
   loadLedgerAt,
 } from "../ledger.ts";
 import {
+  commitmentLedgerPathForCompanyDir,
+  compareCommitmentLedgerToSummary,
+  loadCommitmentLedgerAt,
+} from "../commitments.ts";
+import {
   SENTINEL,
   findLatestSnapshot,
   findPriorSnapshot,
@@ -237,6 +242,75 @@ function checkLedger(input: {
   }
 }
 
+/**
+ * Hold the snapshot's `commitmentSummary` against the commitment ledger.
+ *
+ * Only the company's current snapshot is governed, same reasoning as the
+ * financial ledger: earlier snapshots are frozen records, and a promise that
+ * settles later legitimately leaves them showing the state they were written at.
+ *
+ * A missing ledger is a warning, not an error — a newly listed company may have
+ * nothing to record. A snapshot that carries a summary with no ledger behind it
+ * *is* an error, because that summary then came from nowhere.
+ */
+function checkCommitments(input: {
+  data: { company: { id: string }; commitmentSummary?: unknown };
+  directory: string;
+  stem: string;
+}): CheckResult {
+  const { data, directory, stem } = input;
+  const latest = findLatestSnapshot(directory);
+  if (latest && latest.stem !== stem) return { errors: [], warnings: [] };
+
+  const companyDirectory = path.dirname(directory);
+  const filePath = commitmentLedgerPathForCompanyDir(companyDirectory);
+  const relative = path.relative(companyDirectory, filePath);
+
+  if (!existsSync(filePath)) {
+    if (data.commitmentSummary !== undefined) {
+      return {
+        errors: [
+          `快照有 commitmentSummary 但公司目录没有 ${relative}；` +
+            `该块必须由 npm run snapshot:sync 从台账物化，不能手写。`,
+        ],
+        warnings: [],
+      };
+    }
+    return {
+      errors: [],
+      warnings: [
+        `该公司还没有承诺台账 ${relative}；管理层说过的话无处累积，` +
+          `治理评价只能停留在横截面。见 docs/adr/0019-commit-a-management-commitment-ledger.md。`,
+      ],
+    };
+  }
+
+  try {
+    const ledger = loadCommitmentLedgerAt(filePath, data.company.id);
+    if (data.commitmentSummary === undefined) {
+      return {
+        errors: [
+          `公司目录有 ${relative} 但快照没有 commitmentSummary；` +
+            `运行 npm run snapshot:sync 物化它。`,
+        ],
+        warnings: [],
+      };
+    }
+    const warnings = ledger.entries.length === 0
+      ? [`承诺台账为空（覆盖自 ${ledger.coverageFrom}）；确认这段时间确实没有可判定的承诺。`]
+      : [];
+    return {
+      errors: compareCommitmentLedgerToSummary(ledger, data.commitmentSummary),
+      warnings,
+    };
+  } catch (error) {
+    return {
+      errors: [error instanceof Error ? error.message : String(error)],
+      warnings: [],
+    };
+  }
+}
+
 function valueAtPath(root: unknown, jsonPath: PropertyKey[]): unknown {
   let cursor: unknown = root;
   for (const key of jsonPath) {
@@ -326,6 +400,10 @@ export function checkSnapshotData(input: {
   const ledger = checkLedger({ data: parsed.data, directory, stem });
   errors.push(...ledger.errors);
   warnings.push(...ledger.warnings);
+
+  const commitments = checkCommitments({ data: parsed.data, directory, stem });
+  errors.push(...commitments.errors);
+  warnings.push(...commitments.warnings);
 
   const exemptionKey = `${parsed.data.company.id}/${parsed.data.snapshot.id}`;
   if (CONTINUITY_EXEMPT_SNAPSHOTS.has(exemptionKey)) return { errors, warnings };

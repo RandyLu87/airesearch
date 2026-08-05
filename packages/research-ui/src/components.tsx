@@ -1179,6 +1179,91 @@ export function ValueBridge({ snapshot }: { snapshot: CurrentSnapshot }) {
 }
 
 /**
+ * What management said and what it did with the money, across dates.
+ *
+ * Counts and the outstanding list, never a delivery grade: the denominator
+ * depends on which promises were recorded, so a grade would be improvable by
+ * writing down fewer soft ones. Buyback rows carry the valuation they were
+ * executed at, which is what turns "bought back while expensive" from an
+ * impression into something a reader can check against today's value range.
+ */
+export function CommitmentPanel({ snapshot }: { snapshot: CurrentSnapshot }) {
+  const summary = snapshot.commitmentSummary;
+  if (!summary) return null;
+  const { counts, outstanding, latestResolution, capitalAllocation } = summary;
+  const total = Object.values(counts).reduce((sum, value) => sum + value, 0);
+
+  return (
+    <div className="commitment-panel">
+      <p className="company-note">
+        覆盖自 {summary.coverageFrom}，共 {total} 条记录。只呈现计数与未结清清单，不给兑现率档位——
+        分母取决于录入了哪些承诺，档位会让一个可被挑选操纵的数字看起来像评级。
+      </p>
+      <div className="commitment-counts">
+        {(Object.entries(counts) as Array<[string, number]>).map(([status, count]) => (
+          <article key={status}>
+            <span>{status}</span>
+            <strong>{count}</strong>
+          </article>
+        ))}
+      </div>
+      {total === 0 ? (
+        <p className="density-clear">台账为空：这段时间没有可判定的承诺，而不是没有查。</p>
+      ) : null}
+
+      {outstanding.length > 0 ? (
+        <>
+          <h4 className="block-heading">未结清</h4>
+          <ul className="commitment-outstanding">
+            {outstanding.map((entry) => (
+              <li key={entry.id}>
+                <span className={`commitment-status commitment-status--${entry.status}`}>{entry.status}</span>
+                <strong>{entry.commitment}</strong>
+                <em>到期：{entry.dueBy}</em>
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : total > 0 ? (
+        <p className="density-clear">没有未兑现或部分兑现的承诺。</p>
+      ) : null}
+
+      {latestResolution ? (
+        <p className="commitment-latest">
+          最近一次结算：{latestResolution.resolvedAt} · {latestResolution.status} ·{" "}
+          {latestResolution.commitment}
+        </p>
+      ) : null}
+
+      {capitalAllocation.length > 0 ? (
+        <>
+          <h4 className="block-heading">资本配置逐笔</h4>
+          <div className="table-wrap">
+            <table>
+              <thead>
+                <tr><th>时间</th><th>类型</th><th>内容</th><th>金额</th><th>当时估值</th><th>事后评估</th></tr>
+              </thead>
+              <tbody>
+                {capitalAllocation.map((entry) => (
+                  <tr key={entry.id}>
+                    <th>{entry.statedAt}</th>
+                    <td>{entry.kind}</td>
+                    <td className="cell-prose">{entry.commitment}</td>
+                    <td>{entry.amount ? formatFinancialValue(entry.amount) : "—"}</td>
+                    <td className="cell-prose">{entry.valuationAtTime ?? "—"}</td>
+                    <td className="cell-prose">{entry.returnAssessment ?? "—"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      ) : null}
+    </div>
+  );
+}
+
+/**
  * How much of this research rests on missing values and inference.
  *
  * Rendered even when nothing fires: "0 条规则被触发" is the useful reading, and a

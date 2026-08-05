@@ -2,7 +2,7 @@
 
 治理评价最容易退化成两句话：管理层持股高、创始人在位。这两条都是横截面事实，而管理层质量只能纵向观察——**说过的话有没有做到，赚到的钱配置得怎么样**。
 
-本文件是承诺台账 `research/companies/<company-id>/commitments.json` 的录入方法。台账的契约与物化规则见 ADR-0019 与 `docs/research/analysis-template.md`；这里只讲怎么判断什么该录、状态怎么定。
+本文件是承诺台账 `research/companies/<company-id>/commitments.json` 的录入方法。台账的契约与物化规则见 ADR-0019 与 `docs/research/analysis-template.md`；这里只讲怎么判断什么该录、状态怎么定。录完运行 `npm run snapshot:sync` 把摘要物化进快照——摘要不手写，校验器会逐字段比对。
 
 ## 目录
 

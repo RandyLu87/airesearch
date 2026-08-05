@@ -156,6 +156,17 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
 
 同时保存标题、发布者、报告期/事件日、发布日期、抓取时间、直接 URL 和必要的口径限制。驱动指标和章节必须通过 `evidenceIds` 引用这些记录。
 
+### `commitmentSummary`
+
+治理的纵向证据，从 `research/companies/<company-id>/commitments.json` 物化（见 ADR-0019），**不手写**。
+
+- 台账每条记录含稳定 ID、`kind`（`承诺` / `并购` / `回购` / `分红` / `新业务投入`）、`statedAt`、`venue`、`quote`（原文摘录，不转述）、`commitment`（可判定的内容）、`dueBy`（日期或 `未给时限`）、`status`（`兑现` / `部分兑现` / `未兑现` / `待到期` / `已撤回`）、`resolvedAt`、`outcome` 与至少一条 evidence。
+- 已结算的条目必须写 `resolvedAt` 与 `outcome`：`status` 的判定本身是判断，只写一个状态字不合格。
+- `并购` 与 `回购` 额外必填 `amount` 与 `valuationAtTime`——留下当时的估值坐标，才能把「回购发生在明显高估区」从印象变成可复算的记录。
+- 快照里的摘要含覆盖起始时点、五种状态的计数、未结清清单、最近一次结算与资本配置逐笔。`npm run snapshot:sync` 物化，`npm run snapshot:check` 逐字段比对；一致性只约束该公司的当前快照，历史快照按发布时冻结（同 ADR-0014）。
+- **只呈现计数与清单，不给兑现率档位，也不做加权综合评分。** 计数是事实，档位是判断，而这个判断的分母取决于录入了哪些承诺——写成档位会让一个可靠「少录几条软承诺」改善的数字看起来像评级。
+- 台账缺失只产生警告（刚上市的公司可能确实没有可录条目），但**空台账也必须显式存在并写明 `coverageFrom`**：「没有承诺」和「没查」必须能区分。快照有摘要而目录没有台账则是错误——那份摘要来自无处。
+
 ### `evidenceDensity`
 
 本次结论有多少建立在缺失值与推断之上，由引擎从快照自身统计（见 ADR-0020）。

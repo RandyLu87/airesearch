@@ -351,6 +351,199 @@ test("snapshot:check accepts a redefined driver when the model change is escalat
   assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
 });
 
+/** A promise settled in the company's favour, and a buyback with its valuation. */
+function commitmentLedger(companyId = fixtureCompany, entries = undefined) {
+  return {
+    ledgerVersion: "1.0.0",
+    companyId,
+    coverageFrom: "2023-01-01",
+    entries: entries ?? [
+      {
+        id: "2024-q4-subscription-breakeven",
+        kind: "承诺",
+        statedAt: "2025-03-18",
+        venue: "业绩发布会",
+        quote: "我们预计在 2026 年内让社交娱乐业务的单季经营利润转正。",
+        commitment: "2026 年内社交娱乐业务单季经营利润转正",
+        dueBy: "2026-12-31",
+        status: "待到期",
+        evidence: [
+          {
+            title: "2024 年度业绩发布会记录",
+            publisher: "公司投资者关系",
+            url: "https://example.com/ir/2024-results",
+            retrievedAt: "2026-08-03T20:00:00+08:00",
+          },
+        ],
+      },
+      {
+        id: "2025-buyback-tranche-1",
+        kind: "回购",
+        statedAt: "2025-09-10",
+        venue: "公告",
+        quote: "董事会批准不超过 10 亿港元的股份回购计划。",
+        commitment: "首期回购 6.2 亿港元，均价 HK$118",
+        dueBy: "2026-03-31",
+        status: "兑现",
+        resolvedAt: "2026-03-20",
+        outcome: "累计回购 6.2 亿港元、注销 525 万股，与公告口径一致。",
+        amount: { value: "6.20", unit: "currency", currency: "HKD", scale: "hundred-million", precision: 2 },
+        valuationAtTime: "均价 HK$118，对应当时 11.2x 正常化 P/E，处于自身五年区间下沿",
+        returnAssessment: "回购价低于本次基准价值中枢，时点判断成立。",
+        evidence: [
+          {
+            title: "回购完成公告",
+            publisher: "香港交易所",
+            url: "https://example.com/hkex/buyback-complete",
+            retrievedAt: "2026-08-03T20:10:00+08:00",
+          },
+        ],
+      },
+    ],
+  };
+}
+
+/** The summary the ledger above materialises into, written out by hand. */
+const LEDGER_SUMMARY = {
+  coverageFrom: "2023-01-01",
+  counts: { 兑现: 1, 部分兑现: 0, 未兑现: 0, 待到期: 1, 已撤回: 0 },
+  outstanding: [],
+  latestResolution: {
+    id: "2025-buyback-tranche-1",
+    commitment: "首期回购 6.2 亿港元，均价 HK$118",
+    status: "兑现",
+    resolvedAt: "2026-03-20",
+  },
+  capitalAllocation: [
+    {
+      id: "2025-buyback-tranche-1",
+      kind: "回购",
+      statedAt: "2025-09-10",
+      commitment: "首期回购 6.2 亿港元，均价 HK$118",
+      status: "兑现",
+      amount: { value: "6.20", unit: "currency", currency: "HKD", scale: "hundred-million", precision: 2 },
+      valuationAtTime: "均价 HK$118，对应当时 11.2x 正常化 P/E，处于自身五年区间下沿",
+      returnAssessment: "回购价低于本次基准价值中枢，时点判断成立。",
+    },
+  ],
+};
+
+function writeCommitments(companyDirectory, ledger) {
+  writeFileSync(
+    path.join(companyDirectory, "commitments.json"),
+    `${JSON.stringify(ledger, null, 2)}\n`,
+  );
+}
+
+test("a snapshot whose commitment summary matches the ledger is accepted", () => {
+  const draft = clone(baseSnapshot);
+  draft.commitmentSummary = clone(LEDGER_SUMMARY);
+  const { snapshotsDirectory, companyDirectory } = makeTree([]);
+  writeCommitments(companyDirectory, commitmentLedger());
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
+});
+
+test("a hand-edited commitment summary is caught against the ledger", () => {
+  const draft = clone(baseSnapshot);
+  draft.commitmentSummary = clone(LEDGER_SUMMARY);
+  draft.commitmentSummary.counts.兑现 = 2;
+  const { snapshotsDirectory, companyDirectory } = makeTree([]);
+  writeCommitments(companyDirectory, commitmentLedger());
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  const output = `${result.stdout}${result.stderr}`;
+  assert.match(output, /commitmentSummary/);
+  assert.match(output, /snapshot:sync/);
+});
+
+test("a commitment summary with no ledger behind it is rejected", () => {
+  const draft = clone(baseSnapshot);
+  draft.commitmentSummary = clone(LEDGER_SUMMARY);
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  assert.match(`${result.stdout}${result.stderr}`, /commitments\.json/);
+});
+
+test("a missing commitment ledger warns without blocking", () => {
+  const { snapshotsDirectory } = makeTree([baseSnapshot]);
+  const result = checkSnapshot([
+    path.join(snapshotsDirectory, `${baseSnapshot.snapshot.id}.json`),
+  ]);
+
+  assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
+  assert.match(`${result.stdout}${result.stderr}`, /承诺台账/);
+});
+
+test("an empty commitment ledger is legal but says so, keeping it distinct from unchecked", () => {
+  const ledger = commitmentLedger(fixtureCompany, []);
+  const draft = clone(baseSnapshot);
+  draft.commitmentSummary = {
+    coverageFrom: "2023-01-01",
+    counts: { 兑现: 0, 部分兑现: 0, 未兑现: 0, 待到期: 0, 已撤回: 0 },
+    outstanding: [],
+    latestResolution: null,
+    capitalAllocation: [],
+  };
+  const { snapshotsDirectory, companyDirectory } = makeTree([]);
+  writeCommitments(companyDirectory, ledger);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
+  assert.match(`${result.stdout}${result.stderr}`, /台账为空/);
+});
+
+test("a settled commitment without a settlement basis is rejected", () => {
+  const ledger = commitmentLedger();
+  ledger.entries[0].status = "未兑现";
+  ledger.entries[0].resolvedAt = "2026-06-30";
+  const draft = clone(baseSnapshot);
+  draft.commitmentSummary = clone(LEDGER_SUMMARY);
+  const { snapshotsDirectory, companyDirectory } = makeTree([]);
+  writeCommitments(companyDirectory, ledger);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  assert.match(`${result.stdout}${result.stderr}`, /outcome/);
+});
+
+test("a buyback recorded without the valuation it was executed at is rejected", () => {
+  const ledger = commitmentLedger();
+  delete ledger.entries[1].valuationAtTime;
+  const draft = clone(baseSnapshot);
+  draft.commitmentSummary = clone(LEDGER_SUMMARY);
+  const { snapshotsDirectory, companyDirectory } = makeTree([]);
+  writeCommitments(companyDirectory, ledger);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  assert.match(`${result.stdout}${result.stderr}`, /valuationAtTime|当时的估值口径/);
+});
+
+test("the path validator accepts a commitment ledger beside the financial one", () => {
+  const withSummary = clone(baseSnapshot);
+  withSummary.commitmentSummary = clone(LEDGER_SUMMARY);
+  const { companyDirectory } = makeTree([withSummary]);
+  writeCommitments(companyDirectory, commitmentLedger());
+
+  const result = spawnSync(
+    "python3",
+    [path.join(repoRoot, "scripts", "research", "validate_research_paths.py"), "--root", path.resolve(companyDirectory, "../../..")],
+    { cwd: repoRoot, encoding: "utf8" },
+  );
+  assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
+});
+
 /**
  * The density of the untouched fixture, computed by hand rather than by calling
  * the implementation: 11 status-bearing entries with 2 unavailable, 2 evidence

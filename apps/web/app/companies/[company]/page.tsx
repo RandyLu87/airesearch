@@ -8,6 +8,7 @@ import {
 } from "@airesearch/research-schema";
 import {
   BusinessModelSection,
+  CommitmentPanel,
   EvidenceDensityPanel,
   LatestComparison,
   MarketPositionSection,
@@ -302,7 +303,16 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
           )}
         </section>
 
-        {/* ⑧ 证据密度 */}
+        {/* ⑧ 管理层承诺与资本配置 */}
+        {current?.commitmentSummary ? (
+          <section className="company-section" aria-labelledby="commitments">
+            <p className="section-kicker">SAID VS. DONE</p>
+            <h2 id="commitments">管理层承诺与资本配置</h2>
+            <CommitmentPanel snapshot={current} />
+          </section>
+        ) : null}
+
+        {/* ⑨ 证据密度 */}
         {current ? (
           <section className="company-section" aria-labelledby="evidence-density">
             <p className="section-kicker">HOW MUCH IS EVIDENCE</p>
@@ -311,7 +321,7 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
           </section>
         ) : null}
 
-        {/* ⑨ 历史研究报告 */}
+        {/* ⑩ 历史研究报告 */}
         <section className="company-section" aria-labelledby="archive">
           <p className="section-kicker">RESEARCH ARCHIVE</p>
           <h2 id="archive">历史研究报告</h2>
