@@ -1,0 +1,1105 @@
+{
+  "ledgerVersion": "1.0.0",
+  "companyId": "us-amd-advanced-micro-devices",
+  "reportingCurrency": "USD",
+  "minimumYears": 2,
+  "periods": [
+    {
+      "period": "FY2023",
+      "periodType": "fiscal-year",
+      "accountingBasis": "US GAAP",
+      "status": "reported",
+      "revenue": {
+        "value": "22680",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "revenueGrowth": {
+        "value": "-3.90",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "grossMargin": {
+        "value": "46.12",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "operatingMargin": {
+        "value": "1.77",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "netProfit": {
+        "value": "854",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "operatingCashFlow": {
+        "value": "1667",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "freeCashFlow": {
+        "value": "1121",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "segments": [
+        {
+          "segmentId": "data-center",
+          "status": "reported",
+          "revenue": {
+            "value": "6496",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "1267",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "sec-10k-2025"
+          ]
+        },
+        {
+          "segmentId": "client-gaming",
+          "status": "reported",
+          "revenue": {
+            "value": "10863",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "925",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "sec-10k-2025"
+          ]
+        },
+        {
+          "segmentId": "embedded",
+          "status": "reported",
+          "revenue": {
+            "value": "5321",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "2628",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "sec-10k-2025"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "sec-10k-2025",
+        "calc-amd-periods",
+        "fmp-amd-pack-2026-08-04"
+      ]
+    },
+    {
+      "period": "FY2024",
+      "periodType": "fiscal-year",
+      "accountingBasis": "US GAAP",
+      "status": "reported",
+      "revenue": {
+        "value": "25785",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "revenueGrowth": {
+        "value": "13.69",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "grossMargin": {
+        "value": "49.35",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "operatingMargin": {
+        "value": "7.37",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "netProfit": {
+        "value": "1641",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "operatingCashFlow": {
+        "value": "3041",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "freeCashFlow": {
+        "value": "2405",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "segments": [
+        {
+          "segmentId": "data-center",
+          "status": "reported",
+          "revenue": {
+            "value": "12579",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "3482",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "sec-10k-2025"
+          ]
+        },
+        {
+          "segmentId": "client-gaming",
+          "status": "reported",
+          "revenue": {
+            "value": "9649",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "1187",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "sec-10k-2025"
+          ]
+        },
+        {
+          "segmentId": "embedded",
+          "status": "reported",
+          "revenue": {
+            "value": "3557",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "1421",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "sec-10k-2025"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "sec-10k-2025",
+        "calc-amd-periods"
+      ]
+    },
+    {
+      "period": "FY2025",
+      "periodType": "fiscal-year",
+      "accountingBasis": "US GAAP",
+      "status": "reported",
+      "revenue": {
+        "value": "34639",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "revenueGrowth": {
+        "value": "34.34",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "grossMargin": {
+        "value": "49.52",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "operatingMargin": {
+        "value": "10.66",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "netProfit": {
+        "value": "4335",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "operatingCashFlow": {
+        "value": "6493",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "freeCashFlow": {
+        "value": "5519",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "segments": [
+        {
+          "segmentId": "data-center",
+          "status": "reported",
+          "revenue": {
+            "value": "16635",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "3603",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "sec-10k-2025"
+          ]
+        },
+        {
+          "segmentId": "client-gaming",
+          "status": "reported",
+          "revenue": {
+            "value": "14550",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "2855",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "sec-10k-2025"
+          ]
+        },
+        {
+          "segmentId": "embedded",
+          "status": "reported",
+          "revenue": {
+            "value": "3454",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "1243",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "sec-10k-2025"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "sec-10k-2025",
+        "calc-amd-periods"
+      ]
+    },
+    {
+      "period": "2025 Q1",
+      "periodType": "quarter",
+      "accountingBasis": "US GAAP",
+      "status": "reported",
+      "revenue": {
+        "value": "7438",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "revenueGrowth": {
+        "value": "35.90",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "grossMargin": {
+        "value": "50.23",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "operatingMargin": {
+        "value": "10.84",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "netProfit": {
+        "value": "709",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "operatingCashFlow": {
+        "value": "939",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "freeCashFlow": {
+        "value": "727",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "segments": [
+        {
+          "segmentId": "data-center",
+          "status": "reported",
+          "revenue": {
+            "value": "3674",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "932",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "sec-10q-2026q1"
+          ]
+        },
+        {
+          "segmentId": "client-gaming",
+          "status": "reported",
+          "revenue": {
+            "value": "2941",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "496",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "sec-10q-2026q1"
+          ]
+        },
+        {
+          "segmentId": "embedded",
+          "status": "reported",
+          "revenue": {
+            "value": "823",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "328",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "sec-10q-2026q1"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "sec-10q-2026q1",
+        "sec-10q-2025q2",
+        "calc-amd-periods"
+      ]
+    },
+    {
+      "period": "2025 Q2",
+      "periodType": "quarter",
+      "accountingBasis": "US GAAP",
+      "status": "reported",
+      "revenue": {
+        "value": "7685",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "revenueGrowth": {
+        "value": "31.71",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "grossMargin": {
+        "value": "39.80",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "operatingMargin": {
+        "value": "-1.74",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "netProfit": {
+        "value": "872",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "operatingCashFlow": {
+        "value": "1462",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "freeCashFlow": {
+        "value": "1180",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "segments": [
+        {
+          "segmentId": "data-center",
+          "status": "reported",
+          "revenue": {
+            "value": "3240",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "-155",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "sec-10q-2025q2"
+          ]
+        },
+        {
+          "segmentId": "client-gaming",
+          "status": "reported",
+          "revenue": {
+            "value": "3621",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "767",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "sec-10q-2025q2"
+          ]
+        },
+        {
+          "segmentId": "embedded",
+          "status": "reported",
+          "revenue": {
+            "value": "824",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "275",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "sec-10q-2025q2"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "sec-10q-2025q2",
+        "calc-amd-periods"
+      ]
+    },
+    {
+      "period": "2025 Q3",
+      "periodType": "quarter",
+      "accountingBasis": "US GAAP",
+      "status": "reported",
+      "revenue": {
+        "value": "9246",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "revenueGrowth": {
+        "value": "35.59",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "grossMargin": {
+        "value": "51.70",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "operatingMargin": {
+        "value": "13.74",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "netProfit": {
+        "value": "1243",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "operatingCashFlow": {
+        "value": "1788",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "freeCashFlow": {
+        "value": "1530",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "segments": [
+        {
+          "segmentId": "data-center",
+          "status": "reported",
+          "revenue": {
+            "value": "4341",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "1074",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "sec-10q-2025q3"
+          ]
+        },
+        {
+          "segmentId": "client-gaming",
+          "status": "reported",
+          "revenue": {
+            "value": "4048",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "867",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "sec-10q-2025q3"
+          ]
+        },
+        {
+          "segmentId": "embedded",
+          "status": "reported",
+          "revenue": {
+            "value": "857",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "283",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "sec-10q-2025q3"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "sec-10q-2025q3",
+        "calc-amd-periods"
+      ]
+    },
+    {
+      "period": "2025 Q4",
+      "periodType": "quarter",
+      "accountingBasis": "US GAAP",
+      "status": "reported",
+      "revenue": {
+        "value": "10270",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "revenueGrowth": {
+        "value": "34.11",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "grossMargin": {
+        "value": "54.30",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "operatingMargin": {
+        "value": "17.06",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "netProfit": {
+        "value": "1511",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "operatingCashFlow": {
+        "value": "2304",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "freeCashFlow": {
+        "value": "2082",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "segments": [
+        {
+          "segmentId": "data-center",
+          "status": "calculated",
+          "revenue": {
+            "value": "5380",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "1752",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "ir-q4-2025-release",
+            "sec-10k-2025",
+            "calc-amd-periods"
+          ]
+        },
+        {
+          "segmentId": "client-gaming",
+          "status": "calculated",
+          "revenue": {
+            "value": "3940",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "725",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "ir-q4-2025-release",
+            "sec-10k-2025",
+            "calc-amd-periods"
+          ]
+        },
+        {
+          "segmentId": "embedded",
+          "status": "calculated",
+          "revenue": {
+            "value": "950",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "357",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "ir-q4-2025-release",
+            "sec-10k-2025",
+            "calc-amd-periods"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "ir-q4-2025-release",
+        "sec-10k-2025",
+        "calc-amd-periods"
+      ]
+    },
+    {
+      "period": "2026 Q1",
+      "periodType": "quarter",
+      "accountingBasis": "US GAAP",
+      "status": "reported",
+      "revenue": {
+        "value": "10253",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "revenueGrowth": {
+        "value": "37.85",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "grossMargin": {
+        "value": "52.82",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "operatingMargin": {
+        "value": "14.40",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "netProfit": {
+        "value": "1383",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "operatingCashFlow": {
+        "value": "2955",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "freeCashFlow": {
+        "value": "2566",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "segments": [
+        {
+          "segmentId": "data-center",
+          "status": "reported",
+          "revenue": {
+            "value": "5775",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "1599",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "sec-10q-2026q1"
+          ]
+        },
+        {
+          "segmentId": "client-gaming",
+          "status": "reported",
+          "revenue": {
+            "value": "3605",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "575",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "sec-10q-2026q1"
+          ]
+        },
+        {
+          "segmentId": "embedded",
+          "status": "reported",
+          "revenue": {
+            "value": "873",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "338",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "sec-10q-2026q1"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "sec-10q-2026q1",
+        "calc-amd-periods"
+      ]
+    },
+    {
+      "period": "2026 Q2",
+      "periodType": "quarter",
+      "accountingBasis": "US GAAP",
+      "status": "reported",
+      "revenue": {
+        "value": "11536",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "revenueGrowth": {
+        "value": "50.11",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "grossMargin": {
+        "value": "53.77",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "operatingMargin": {
+        "value": "17.25",
+        "unit": "percent",
+        "scale": "one",
+        "precision": 2
+      },
+      "netProfit": {
+        "value": "2297",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "operatingCashFlow": {
+        "value": "2366",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "freeCashFlow": {
+        "value": "1558",
+        "unit": "currency",
+        "currency": "USD",
+        "scale": "million",
+        "precision": 0
+      },
+      "segments": [
+        {
+          "segmentId": "data-center",
+          "status": "reported",
+          "revenue": {
+            "value": "6718",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "2103",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "ir-q2-2026-release"
+          ]
+        },
+        {
+          "segmentId": "client-gaming",
+          "status": "reported",
+          "revenue": {
+            "value": "3841",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "582",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "ir-q2-2026-release"
+          ]
+        },
+        {
+          "segmentId": "embedded",
+          "status": "reported",
+          "revenue": {
+            "value": "977",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "operatingProfit": {
+            "value": "386",
+            "unit": "currency",
+            "currency": "USD",
+            "scale": "million",
+            "precision": 0
+          },
+          "evidenceIds": [
+            "ir-q2-2026-release"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "ir-q2-2026-release"
+      ]
+    }
+  ]
+}

@@ -130,6 +130,7 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
 
 ### `financialHistory`、`sections` 与 `valuation`
 
+- **`period` 字符串必须能按字典序排出时间顺序。** `sortPeriods` 先按期间类型再按 `period.localeCompare` 排序，`financialHistory` 的最后一项就是「最新期间」——健康体检的分部走势、最新期对比表和 `at(-1)` 全部依赖它。写成 `Q1 2026` 的公司一旦攒够跨年的季度就会静默错序（`Q1 2026` < `Q1 2027` < `Q2 2026`，最新期变成 Q2 2026）。季度一律写成 `2026 Q1`、半年度写成 `2026 H1`，年度写成 `FY2026`。
 - `financialHistory` **由 `research/companies/<company-id>/financials.json` 物化，不手写**。运行 `npm run snapshot:sync` 生成，校验器逐字段比对；一致性只约束该公司的当前快照，历史快照按发布时的数字冻结（见 ADR-0014）。每个期间记录 `periodType`、`accountingBasis` 与 `status`（`reported` 或由其他披露值 `calculated`）；每个财务值使用对象保存十进制字符串 `value`、`unit`、`currency`（货币值必填）、`scale` 和 `precision`，缺失字段直接省略，禁止由渲染层假设“亿元”或默认币种。分部数据放在期间的 `segments` 里。
 - `sections` 负责完整的商业模式、竞争、财务质量、组织研发、治理等论证。每节包含结论性摘要、证据要点和 evidence IDs。
 - `valuation` 先读 `docs/research/valuation-playbook.md`。必填 `currency`、`valueScale`、`tradingCurrency`、`shares`（scale 必须等于 `valueScale`）与 `fx`（至少两条 evidence，按 ADR-0013 双源交叉）。
