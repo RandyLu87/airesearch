@@ -31,7 +31,7 @@
 
 ## 2. 从哪里提取
 
-按可引用性排序，与 `docs/research/sources-and-priority.md` 的原则一致：
+各市场的具体取证入口登记在 `docs/research/data-source-registry.md` 第 10 节。按可引用性排序，与 `docs/research/sources-and-priority.md` 的原则一致：
 
 1. **年报与中报的管理层讨论、董事长/CEO 致股东信** —— 书面、经审核流程、最不容易赖账；
 2. **业绩发布会与电话会记录** —— 承诺密度最高的地方，也是提取成本最高的地方；
