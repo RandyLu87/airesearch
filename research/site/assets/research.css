@@ -111,14 +111,17 @@ h1 {
 .stance-block strong { font-size: 42px; font-weight: 520; letter-spacing: -.05em; }
 .stance-block > span:last-child { color: var(--muted); font-size: 13px; }
 
+/* Auto-fit for the same reason as `.company-summary`: the cell count follows the
+   contract, and 1.2.0 trades a fair value for a market capitalisation. */
 .hero-facts {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   border-top: 1px solid var(--line-dark);
 }
 .hero-facts > div { padding: 18px 18px 0 0; }
 .hero-facts span, .hero-facts strong { display: block; }
 .hero-facts strong { margin-top: 8px; font-size: 18px; font-weight: 560; }
+.hero-facts small { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; }
 
 .section-nav {
   position: sticky;
@@ -251,6 +254,39 @@ tbody th { font-weight: 650; }
 .action-zones span { font-weight: 650; }
 .action-zones p { margin: 0; color: var(--muted); }
 
+/* Where today's price ranks in its own multiple history. A fact about the
+   market, so it is typeset as one: no colour, no arrow, no verdict word. */
+.multiple-percentile { margin: 18px 0 0; color: var(--muted); font-size: 14px; }
+.multiple-percentile strong { color: var(--ink); font-weight: 650; }
+.multiple-percentile small { display: block; margin-top: 6px; font-size: 11px; }
+.multiple-percentile--unavailable { font-style: italic; }
+
+/* Attributed assumption sets. Every seat is styled identically — an emphasised
+   seat would be the "基准" this contract removed, reintroduced as CSS. */
+.assumption-sets { border-top: 1px solid var(--ink); }
+.assumption-sets-note { margin: 18px 0 28px; max-width: 74ch; color: var(--muted); font-size: 13px; }
+.assumption-set { padding: 26px 0; border-bottom: 1px solid var(--line); }
+.assumption-set-head { display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; }
+.assumption-set-kind { padding: 4px 9px; border: 1px solid var(--ink); border-radius: 999px; font-size: 10px; letter-spacing: .08em; }
+.assumption-set-head strong { font-size: 17px; font-weight: 600; }
+/* The bias sits above the numbers, never in a footnote: a short report and an
+   issuer's guidance render identically otherwise, and that similarity is the lie. */
+.assumption-set-bias { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 14px; margin: 14px 0 0; padding: 12px 14px; border-inline-start: 2px solid var(--signal); background: color-mix(in srgb, var(--signal) 5%, transparent); font-size: 13px; }
+.assumption-set-bias > span { color: var(--muted); font-size: 11px; letter-spacing: .06em; }
+.assumption-set-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin: 20px 0 0; }
+.assumption-set-facts dt { color: var(--muted); font-size: 11px; text-transform: uppercase; }
+.assumption-set-facts dd { margin: 8px 0 0; font-size: 22px; font-weight: 520; }
+.assumption-set-facts dd small { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; font-weight: 400; }
+.assumption-set-assumptions { margin: 18px 0 0; max-width: 78ch; color: var(--muted); }
+.assumption-set-components { margin: 14px 0 0; padding: 0; list-style: none; font-size: 12px; }
+.assumption-set-components li { display: grid; grid-template-columns: 68px minmax(0, 1fr); gap: 14px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.assumption-set-components li > span { color: var(--muted); }
+.assumption-set-missing { margin: 16px 0 0; color: var(--muted); font-style: italic; }
+
+.disagreement-anchor { display: flex; flex-wrap: wrap; gap: 16px; margin: 0 0 18px; color: var(--muted); font-size: 13px; }
+.disagreement-anchor strong { color: var(--ink); }
+.disagreement-converged { margin: 16px 0 0; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+
 .split-section { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px; }
 .split-section h2 { font-size: clamp(36px, 4vw, 62px); }
 .evidence-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--ink); }
@@ -283,10 +319,14 @@ tbody th { font-weight: 650; }
    fold. The 22px floor stays: narrow screens have budget to spare, and this is
    also the company page's lead thesis. */
 .company-current { max-width: 840px; font-size: clamp(22px, 1.8vw, 26px); line-height: 1.3; }
-.company-summary { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--ink); }
+/* Auto-fit rather than a fixed four: how many cells there are depends on which
+   contract the latest snapshot was written under (1.2.0 has no stance and no fair
+   value), and a fixed track would leave a hole where the verdict used to be. */
+.company-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); border-bottom: 1px solid var(--ink); }
 .company-summary > div { padding: 22px 18px 24px 0; }
 .company-summary span { display: block; color: var(--muted); font-size: 11px; text-transform: uppercase; }
 .company-summary strong { display: block; margin-top: 10px; font-size: 24px; font-weight: 520; }
+.company-summary small { display: block; margin-top: 8px; color: var(--muted); font-size: 11px; }
 .company-section { padding: 72px 0; border-bottom: 1px solid var(--ink); }
 /* The coverage list shares the fold with the header above it, so it hugs it.
    Company pages keep the full 72px rhythm: their summary bar already clears the
@@ -740,3 +780,71 @@ tbody th { font-weight: 650; }
   .health-check[open] summary ~ * { display: block; }
 }
 .cadence-missing { margin: 0 0 14px; color: var(--muted); font-size: 12px; }
+
+/* ———— 分析页（financials-final 渲染）————
+   原则：结论一眼可读，溯源（打分依据 / 依据字段路径 / 证据 / 缺口）默认折叠。 */
+
+/* 折叠溯源块：摘要行小号大写，与 block-heading 同族 */
+.fold { margin-top: 16px; border-top: 1px solid var(--line); }
+.fold summary { padding: 10px 0 4px; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; list-style: none; user-select: none; }
+.fold summary::-webkit-details-marker { display: none; }
+.fold summary::after { content: "＋"; margin-left: 8px; }
+.fold[open] summary::after { content: "－"; }
+.fold summary:hover { color: var(--ink); }
+.fold p { max-width: 900px; margin: 8px 0 12px; color: var(--muted); font-size: 13px; line-height: 1.65; }
+.fold ul { max-width: 900px; margin: 8px 0 12px; padding-left: 18px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+.fold li { margin-bottom: 8px; }
+td .fold { margin-top: 4px; border-top: 0; }
+td .fold summary { padding: 0; }
+td .fold p, td .fold ul { font-size: 12px; }
+
+/* 每节开头的一句话结论：正文级可读，不再用 muted 小字 */
+.section-lead { max-width: 900px; margin: 0 0 34px; font-size: clamp(17px, 1.4vw, 20px); line-height: 1.6; }
+
+/* 维度总结卡里的结论段 */
+.driver-card .dim-conclusion { margin: 14px 0 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+/* 策略建议：两列卡片（空仓者/持仓者） */
+.strategy-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 56px; border-top: 1px solid var(--ink); }
+.strategy-grid > article { padding: 26px 0 30px; border-bottom: 1px solid var(--line); }
+.strategy-grid h3 { margin: 0 0 14px; font-size: 22px; font-weight: 560; letter-spacing: -.02em; }
+.strategy-grid .advice { margin: 0 0 18px; font-size: 15px; line-height: 1.65; }
+.trigger-lines { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line-dark); }
+.trigger-lines > li { padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14px; line-height: 1.55; }
+.trigger-lines strong { font-weight: 650; }
+.trigger-lines .then { color: var(--muted); }
+
+/* 卖出/加仓信号：全宽行，信号名一行、观察方式一段 */
+.signal-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line-dark); }
+.signal-list > li { padding: 20px 0 16px; border-bottom: 1px solid var(--line); }
+.signal-list .signal-name { display: block; margin: 0 0 6px; font-size: 17px; font-weight: 620; letter-spacing: -.01em; }
+.signal-list .signal-desc { max-width: 900px; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.6; }
+
+/* 追问：左边框引用卡，问题加粗、回答正文 */
+.inquiry-block { max-width: 940px; margin: 44px 0 6px; padding: 20px 26px 22px; border-left: 3px solid var(--ink); background: color-mix(in srgb, var(--ink) 4%, var(--paper)); }
+.inquiry-block .q { margin: 0 0 10px; font-size: 16px; font-weight: 700; }
+.inquiry-block .a { margin: 0; font-size: 15px; line-height: 1.7; }
+
+/* 键值行：代替 delta-line 承载长文本（四列窄栏放长段会变成高塔） */
+.kv-list { margin: 0 0 8px; border-top: 1px solid var(--line-dark); }
+.kv-list > div { display: grid; grid-template-columns: 170px 1fr; gap: 24px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.kv-list dt { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding-top: 3px; }
+.kv-list dd { max-width: 900px; margin: 0; font-size: 15px; line-height: 1.6; }
+
+/* 含长文本的表格：左对齐、顶对齐 */
+.analysis-table th, .analysis-table td { text-align: left; vertical-align: top; }
+.analysis-table td { font-size: 13px; line-height: 1.55; color: var(--muted); }
+.analysis-table td:first-child { color: var(--ink); font-weight: 600; font-size: 14px; }
+table td { vertical-align: top; }
+
+@media (max-width: 900px) {
+  .strategy-grid { grid-template-columns: 1fr; gap: 0; }
+  .kv-list > div { grid-template-columns: 1fr; gap: 6px; }
+}
+/* 表格与折叠块内的来源标注不需要 22px 顶距（那是给正文段落用的） */
+td .source-ids, .fold .source-ids { margin-top: 0; }
+/* 首页卡片文案兜底：最多三行截断，防止长结论把卡片撑成一屏 */
+.company-card-stance { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+/* 来源胶囊：不显示名称，只留一枚可点击的高亮标记；名称与时点在 title 提示里 */
+.source-pill { display: inline-block; margin-left: 6px; padding: 1px 8px 2px; border: 1px solid var(--line-dark); border-radius: 999px; color: var(--ink); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-decoration: none; vertical-align: middle; white-space: nowrap; }
+.source-pill:hover { color: var(--paper); background: var(--ink); border-color: var(--ink); }

@@ -1,94 +1,90 @@
 # AI Research
 
-面向港股、美股和 A 股上市公司的长期价值研究仓库。研究以核心商业模式和因果驱动为主线，每次更新都重新核验最新财报、公告、公司/行业消息和参考价格，再判断商业模式、关键指标、估值与长期投资结论是否变化。
+面向港股、美股和 A 股上市公司的长期价值研究仓库。研究以核心商业模式和因果驱动为主线，每次运行同一套六步流程：数据采集 → 多维度分析 → 分析总结 → 数据校验 → 渲染网站 → 更新首页。
 
 ## 产出方式
 
-项目把“研究事实”和“呈现形式”分开：
+项目把「研究事实」和「呈现形式」分开：
 
-- `Research Snapshot` 是唯一规范数据源，采用经过 Zod 校验的 JSON，保存事实、计算、推断、驱动指标、估值情景和证据链。
-- `Research Report` 是由快照确定性生成的 HTML，不手工编辑；每份报告嵌入源 JSON 的 SHA-256。
-- `Company Research Page` 汇总同一公司的最新判断、两份快照对比和历史报告入口。
-- 生成站点使用受 Runway 启发的编辑型视觉语言：纸白底、黑色排版、细分隔线、本地 Inter 字体、内联 SVG 决策图表，无 CDN 和运行时后端依赖。
+- 每家公司的规范数据是四份固定文件名的 JSON：`financials-collection.json`（双源采集）、`financials-analysis.json`（六维分析，含追问与回答）、`financials-summary.json`（结论、0–10 信心度评分与四类策略建议）、`financials-final.json`（校验通过后由脚本合并的渲染输入，不手写）。
+- 完整性有两道闸门：`data_validator.py` 按模板逐字段打分（满分 10，低于 7 走关键信息补全流程）；`build_final.py` 合并时复用同一校验，低于阈值拒绝生成。
+- 公司分析页与首页由 `npm run publish` 从 `financials-final.json` 确定性生成，不手工编辑；缺失字段显示原因，不用 0 或空白代替。
+- 生成站点使用受 Runway 启发的编辑型视觉语言：纸白底、黑色排版、细分隔线、本地 Inter 字体，无 CDN 和运行时后端依赖。
 
 ## 目录结构
 
 ```text
 .
-├── AGENTS.md                                  # Codex 仓库级规则
+├── AGENTS.md                                  # 仓库级规则（Codex 与 Claude Code 共用）
 ├── CONTEXT.md                                 # 领域语言与当前架构
 ├── CLAUDE.md                                  # Claude Code 指针，指向 AGENTS.md
 ├── docs/adr/                                  # 已确认的架构决策
-├── docs/research/                             # 研究流程、方法论与快照契约（两端共用）
-├── scripts/research/                          # 抓数脚本、接口目录与校验器
+├── docs/research/
+│   ├── public-company-financial-research.md   # 研究流程总纲（1–6 步）
+│   ├── workflow/<NN>-*.md                     # 每一步的唯一正文
+│   └── tools/                                 # data_validator / build_final / financial_rigor / twstock_data
+├── docs/model/                                # 数据源规范、采集清单与四份产出模板
+├── scripts/research/                          # 研究路径校验器
 ├── .agents/skills/public-company-financial-research/
-│   ├── SKILL.md                               # 薄壳，指向 docs/research/WORKFLOW.md
+│   ├── SKILL.md                               # 薄壳，指向 docs/research/public-company-financial-research.md
 │   └── agents/openai.yaml                     # Codex 侧调用描述
 ├── .claude/
 │   ├── skills/public-company-financial-research/SKILL.md   # 同一份薄壳
 │   └── settings.json                          # Stop hook，与 .codex/hooks.json 同脚本
-├── packages/
-│   ├── research-schema/                       # Zod 快照模型与对比逻辑
-│   └── research-ui/                           # React 报告组件与 SVG 图表
 ├── apps/web/                                  # Next.js 静态站点生成器
 ├── research/
 │   ├── companies/<company>/
-│   │   ├── snapshots/*.json                   # canonical snapshots
+│   │   ├── financials-*.json                  # 新流程四份规范产出
+│   │   ├── snapshots/*.json                   # 旧流程只读存档（不再渲染）
 │   │   └── *.md                               # 只读历史研究记录
 │   ├── reports/                               # 专题研究和最终导出
 │   └── site/                                  # 可直接打开/托管的最终 HTML
 └── tests/
-    ├── publication.test.mjs                   # 顶层发布契约
-    ├── snapshot-authoring.test.mjs            # 快照创作与校验契约
-    └── fixtures/base-snapshot.json            # 合成快照样本，不进入研究树
+    └── publication.test.mjs                   # 顶层发布契约
 ```
 
-研究方法论、抓数脚本与校验器都是仓库共享资产，Codex 与 Claude Code 读同一份；两侧的 skill 只是指向 `docs/research/WORKFLOW.md` 的薄壳。持久规则的唯一正文在根目录 `AGENTS.md`，`CLAUDE.md` 只是指向它的指针。生命周期 hook 分别配置在 `.codex/hooks.json` 与 `.claude/settings.json`，但调用的是同一个校验脚本。详见 [ADR-0012](docs/adr/0012-share-research-contract-across-agents.md)。
+研究方法论与校验器都是仓库共享资产，Codex 与 Claude Code 读同一份；两侧的 skill 只是指向 `docs/research/public-company-financial-research.md` 的薄壳。持久规则的唯一正文在根目录 `AGENTS.md`，`CLAUDE.md` 只是指向它的指针。生命周期 hook 分别配置在 `.codex/hooks.json` 与 `.claude/settings.json`，但调用的是同一个校验脚本。详见 [ADR-0012](docs/adr/0012-share-research-contract-across-agents.md)。
 
 ## 文件命名
-
-规范快照只能位于：
-
-```text
-research/companies/<company-dir>/snapshots/YYYY-MM-DD-HHMM-analysis.json
-```
 
 - 港股：`hk-<4至5位代码>-<英文slug>`
 - 美股：`us-<小写ticker>-<英文slug>`
 - A 股：`sh|sz|bj-<6位代码>-<英文slug>`
 - `<slug>` 只能使用小写 ASCII kebab-case。
-- 时间采用 Asia/Shanghai 24 小时制；同一公司同一天只有一份规范快照。
-- 公司目录根部既有的同名 `.md` 是历史输入；后续研究不再以 Markdown 为规范产出。
+- 研究产出固定四份文件名（`financials-collection/analysis/summary/final.json`），渲染层按名发现，不接受变体。
+- 公司目录里的 `snapshots/`、`financials.json`、`commitments.json` 与历史 `.md` 是旧流程的只读存档，不再新增。
 
 ## 使用方法
 
-在 Codex 中调用 `$public-company-financial-research`，提供公司、证券代码和研究问题。skill 会读取最新快照、构建数据包、更新 JSON，然后调用同一套生成器发布公司主页和报告。
+调用 `$public-company-financial-research`，提供公司、证券代码和研究问题。skill 会执行六步流程：后台 Agent 双源采集与六维分析、评估 Agent 打分与策略、完整性校验与补全，最后发布公司分析页并更新首页。
 
 ```text
-使用 $public-company-financial-research 更新网易云音乐研究。
-重点判断订阅主导的商业模式、核心驱动和长期投资结论是否变化。
+使用 $public-company-financial-research 研究网易云音乐。
+重点判断订阅主导的商业模式、护城河与当前估值隐含的预期。
 ```
 
 本地命令：
 
 ```bash
 npm install
+python3 docs/research/tools/data_validator.py check \
+  --collection research/companies/<id>/financials-collection.json \
+  --analysis   research/companies/<id>/financials-analysis.json \
+  --summary    research/companies/<id>/financials-summary.json   # 完整性打分
+python3 docs/research/tools/build_final.py --collection … --analysis … --summary … \
+  --out research/companies/<id>/financials-final.json             # 合并（内置闸门）
 npm run publish     # 生成 research/site
-npm run verify      # 类型检查、端到端发布契约、研究路径校验
+npm run verify      # 类型检查、发布契约测试、研究路径校验
 ```
 
-打开 [研究站点](research/site/index.html)，或直接查看 [网易云音乐公司研究主页](research/site/companies/hk-9899-netease-cloud-music.html)。HTML 使用相对资源路径，可以离线打开，也可以原样部署到任意静态托管服务。
+打开 [研究站点](research/site/index.html)。HTML 使用相对资源路径，可以离线打开，也可以原样部署到任意静态托管服务。
 
 ## Skill 参考资料
 
 - [核心工作流](.agents/skills/public-company-financial-research/SKILL.md)
-- [研究流程](docs/research/WORKFLOW.md)
-- [研究快照契约](docs/research/analysis-template.md)
-- [数据 API 与降级路径](docs/research/data-source-registry.md)
-- [商业模式与核心驱动指标](docs/research/business-model-playbook.md)
-- [指标与估算方法](docs/research/metric-playbook.md)
-- [来源优先级与最新信息核验](docs/research/sources-and-priority.md)
-- [风险诊断清单](docs/research/red-flags.md)
+- [研究流程总纲](docs/research/public-company-financial-research.md)
+- [数据源与交叉验证规范](docs/model/financial-data.md)
+- [数据采集清单](docs/model/financial-model.md)
 
 ## 证据原则
 

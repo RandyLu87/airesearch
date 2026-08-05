@@ -1,0 +1,1777 @@
+{
+  "meta": {
+    "companyId": "us-amd-advanced-micro-devices",
+    "companyName": "AMD (Advanced Micro Devices)",
+    "ticker": "AMD",
+    "exchange": "NASDAQ",
+    "market": "us",
+    "reportingCurrency": "USD",
+    "accountingBasis": "US GAAP",
+    "fiscalYearEnd": "每年12月最后一个周六(52/53周制);FY2025 止 2025-12-27",
+    "dataCutoff": "2026-08-05 21:30(Asia/Shanghai)",
+    "collectedAt": "2026-08-05T22:05+08:00",
+    "sources": {
+      "primary": {
+        "name": "stockanalysis.com",
+        "url": "https://stockanalysis.com/stocks/amd/"
+      },
+      "secondary": {
+        "name": "SEC EDGAR XBRL(替代被 Cloudflare 拦截的 macrotrends,原始监管数据)",
+        "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/"
+      },
+      "originalFilings": [
+        {
+          "type": "10-K",
+          "period": "FY2025(止2025-12-27)",
+          "url": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-26-000021/amd-20251227.htm"
+        },
+        {
+          "type": "季报新闻稿",
+          "period": "2026Q2(止2026-06-27)",
+          "url": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results"
+        },
+        {
+          "type": "DEF 14A",
+          "period": "2026(2026-03-27 提交)",
+          "url": "https://www.sec.gov/Archives/edgar/data/2488/000119312526129057/d85856ddef14a.htm"
+        }
+      ]
+    },
+    "fiscalNote": "AMD 财年为 52/53 周制,于每年12月最后一个周六结束: FY2021 止 2021-12-25, FY2022 止 2022-12-31, FY2023 止 2023-12-30, FY2024 止 2024-12-28, FY2025 止 2025-12-27。FY2025 年报已披露: 业绩新闻稿 2026-02-03 发布, FY2025 10-K 已提交 SEC (accession 0000002488-26-000018)。故年度序列采用 FY2021-FY2025。分部口径注意: 自 2025Q1 起 AMD 可报告分部由四个改为三个 (Data Center / Client and Gaming / Embedded),新闻稿内仍单独披露 Client 与 Gaming 子项收入,本 JSON 按新闻稿披露同时给出合并段与子项。主来源 macrotrends 被 Cloudflare 人机验证拦截无法访问(见 gaps),第二来源以 SEC EDGAR XBRL(10-K 原始数据)替代。"
+  },
+  "revenueStructure": {
+    "latestFiscalYear": {
+      "period": "FY2025 (2024-12-29 至 2025-12-27)",
+      "totalRevenue": {
+        "value": 34639,
+        "unit": "百万USD",
+        "source1": {
+          "name": "SEC EDGAR FY2025 10-K XBRL (RevenueFromContractWithCustomerExcludingAssessedTax)",
+          "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json",
+          "value": 34639
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "url": "https://stockanalysis.com/stocks/amd/financials/",
+          "value": 34639
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "currency": "USD"
+      },
+      "grossMarginPct": {
+        "value": 49.52,
+        "note": "GAAP。新闻稿四舍五入表述为50%",
+        "source1": {
+          "name": "SEC EDGAR FY2025 10-K XBRL (GrossProfit 17,152 / Revenue 34,639)",
+          "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/GrossProfit.json",
+          "value": 49.52
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "url": "https://stockanalysis.com/stocks/amd/financials/",
+          "value": 49.52
+        },
+        "deviationPct": 0.0,
+        "flag": "ok"
+      },
+      "segments": [
+        {
+          "name": "Data Center",
+          "revenue": {
+            "value": 16635,
+            "unit": "百万USD",
+            "source1": {
+              "name": "AMD Q4/FY2025 业绩新闻稿 (ir.amd.com)",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1276/amd-reports-fourth-quarter-and-full-year-2025-financial-results",
+              "value": 16635
+            },
+            "note": "分部数据仅公司披露一个来源(stockanalysis/macrotrends 不提供分部明细)"
+          },
+          "revenueSharePct": 48.0,
+          "yoyGrowthPct": 32,
+          "grossMarginPct": {
+            "status": "unavailable",
+            "reason": "AMD 分部只披露经营利润(operating income),不披露分部毛利率;公司整体毛利率见 financialMetrics"
+          }
+        },
+        {
+          "name": "Client and Gaming (合并可报告分部)",
+          "revenue": {
+            "value": 14550,
+            "unit": "百万USD",
+            "source1": {
+              "name": "AMD Q4/FY2025 业绩新闻稿 (ir.amd.com)",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1276/amd-reports-fourth-quarter-and-full-year-2025-financial-results",
+              "value": 14550
+            },
+            "note": "单源;2025Q1 起 Client 与 Gaming 合并为一个可报告分部"
+          },
+          "revenueSharePct": 42.0,
+          "yoyGrowthPct": 51,
+          "grossMarginPct": {
+            "status": "unavailable",
+            "reason": "AMD 分部只披露经营利润(operating income),不披露分部毛利率;公司整体毛利率见 financialMetrics"
+          }
+        },
+        {
+          "name": "Client (子项)",
+          "revenue": {
+            "value": 10640,
+            "unit": "百万USD",
+            "source1": {
+              "name": "AMD Q4/FY2025 业绩新闻稿 (ir.amd.com)",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1276/amd-reports-fourth-quarter-and-full-year-2025-financial-results",
+              "value": 10640
+            },
+            "note": "单源;为 Client and Gaming 分部内子项披露"
+          },
+          "revenueSharePct": 30.7,
+          "yoyGrowthPct": 51,
+          "grossMarginPct": {
+            "status": "unavailable",
+            "reason": "AMD 分部只披露经营利润(operating income),不披露分部毛利率;公司整体毛利率见 financialMetrics"
+          }
+        },
+        {
+          "name": "Gaming (子项)",
+          "revenue": {
+            "value": 3910,
+            "unit": "百万USD",
+            "source1": {
+              "name": "AMD Q4/FY2025 业绩新闻稿 (ir.amd.com)",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1276/amd-reports-fourth-quarter-and-full-year-2025-financial-results",
+              "value": 3910
+            },
+            "note": "单源;为 Client and Gaming 分部内子项披露"
+          },
+          "revenueSharePct": 11.3,
+          "yoyGrowthPct": 51,
+          "grossMarginPct": {
+            "status": "unavailable",
+            "reason": "AMD 分部只披露经营利润(operating income),不披露分部毛利率;公司整体毛利率见 financialMetrics"
+          }
+        },
+        {
+          "name": "Embedded",
+          "revenue": {
+            "value": 3454,
+            "unit": "百万USD",
+            "source1": {
+              "name": "AMD Q4/FY2025 业绩新闻稿 (ir.amd.com)",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1276/amd-reports-fourth-quarter-and-full-year-2025-financial-results",
+              "value": 3454
+            },
+            "note": "单源"
+          },
+          "revenueSharePct": 10.0,
+          "yoyGrowthPct": -3,
+          "grossMarginPct": {
+            "status": "unavailable",
+            "reason": "AMD 分部只披露经营利润(operating income),不披露分部毛利率;公司整体毛利率见 financialMetrics"
+          }
+        }
+      ]
+    },
+    "recentQuarters": [
+      {
+        "period": "2025Q3 (截至2025-09-27)",
+        "totalRevenue": {
+          "value": 9246,
+          "unit": "百万USD",
+          "source1": {
+            "name": "AMD Q3 2025 业绩新闻稿",
+            "url": "https://ir.amd.com/news-events/press-releases/detail/1265/amd-reports-third-quarter-2025-financial-results",
+            "value": 9246
+          },
+          "source2": {
+            "name": "stockanalysis.com quarterly",
+            "url": "https://stockanalysis.com/stocks/amd/financials/?p=quarterly",
+            "value": 9246
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "yoyGrowthPct": 36,
+        "segments": [
+          {
+            "name": "Data Center",
+            "revenue": 4341,
+            "yoyGrowthPct": 22,
+            "source": {
+              "name": "AMD Q3 2025 业绩新闻稿",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1265/amd-reports-third-quarter-2025-financial-results"
+            }
+          },
+          {
+            "name": "Client and Gaming",
+            "revenue": 4048,
+            "yoyGrowthPct": 73,
+            "source": {
+              "name": "AMD Q3 2025 业绩新闻稿",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1265/amd-reports-third-quarter-2025-financial-results"
+            }
+          },
+          {
+            "name": "Client (子项)",
+            "revenue": 2750,
+            "yoyGrowthPct": 46,
+            "source": {
+              "name": "AMD Q3 2025 业绩新闻稿",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1265/amd-reports-third-quarter-2025-financial-results"
+            }
+          },
+          {
+            "name": "Gaming (子项)",
+            "revenue": 1298,
+            "yoyGrowthPct": 181,
+            "source": {
+              "name": "AMD Q3 2025 业绩新闻稿",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1265/amd-reports-third-quarter-2025-financial-results"
+            }
+          },
+          {
+            "name": "Embedded",
+            "revenue": 857,
+            "yoyGrowthPct": -8,
+            "source": {
+              "name": "AMD Q3 2025 业绩新闻稿",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1265/amd-reports-third-quarter-2025-financial-results"
+            }
+          }
+        ]
+      },
+      {
+        "period": "2025Q4 (截至2025-12-27)",
+        "totalRevenue": {
+          "value": 10270,
+          "unit": "百万USD",
+          "source1": {
+            "name": "AMD Q4/FY2025 业绩新闻稿",
+            "url": "https://ir.amd.com/news-events/press-releases/detail/1276/amd-reports-fourth-quarter-and-full-year-2025-financial-results",
+            "value": 10270
+          },
+          "source2": {
+            "name": "stockanalysis.com quarterly",
+            "url": "https://stockanalysis.com/stocks/amd/financials/?p=quarterly",
+            "value": 10270
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "yoyGrowthPct": 34,
+        "segments": [
+          {
+            "name": "Data Center",
+            "revenue": 5380,
+            "yoyGrowthPct": 39,
+            "source": {
+              "name": "AMD Q4/FY2025 业绩新闻稿",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1276/amd-reports-fourth-quarter-and-full-year-2025-financial-results"
+            }
+          },
+          {
+            "name": "Client and Gaming",
+            "revenue": 3940,
+            "yoyGrowthPct": 37,
+            "source": {
+              "name": "AMD Q4/FY2025 业绩新闻稿",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1276/amd-reports-fourth-quarter-and-full-year-2025-financial-results"
+            }
+          },
+          {
+            "name": "Client (子项)",
+            "revenue": 3097,
+            "yoyGrowthPct": 34,
+            "source": {
+              "name": "AMD Q4/FY2025 业绩新闻稿",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1276/amd-reports-fourth-quarter-and-full-year-2025-financial-results"
+            }
+          },
+          {
+            "name": "Gaming (子项)",
+            "revenue": 843,
+            "yoyGrowthPct": 50,
+            "source": {
+              "name": "AMD Q4/FY2025 业绩新闻稿",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1276/amd-reports-fourth-quarter-and-full-year-2025-financial-results"
+            }
+          },
+          {
+            "name": "Embedded",
+            "revenue": 950,
+            "yoyGrowthPct": 3,
+            "source": {
+              "name": "AMD Q4/FY2025 业绩新闻稿",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1276/amd-reports-fourth-quarter-and-full-year-2025-financial-results"
+            }
+          }
+        ]
+      },
+      {
+        "period": "2026Q1 (截至2026-03-28)",
+        "totalRevenue": {
+          "value": 10253,
+          "unit": "百万USD",
+          "source1": {
+            "name": "AMD Q1 2026 业绩新闻稿",
+            "url": "https://ir.amd.com/news-events/press-releases/detail/1284/amd-reports-first-quarter-2026-financial-results",
+            "value": 10253
+          },
+          "source2": {
+            "name": "stockanalysis.com quarterly",
+            "url": "https://stockanalysis.com/stocks/amd/financials/?p=quarterly",
+            "value": 10253
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "yoyGrowthPct": 38,
+        "segments": [
+          {
+            "name": "Data Center",
+            "revenue": 5775,
+            "yoyGrowthPct": 57,
+            "source": {
+              "name": "AMD Q1 2026 业绩新闻稿",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1284/amd-reports-first-quarter-2026-financial-results"
+            }
+          },
+          {
+            "name": "Client and Gaming",
+            "revenue": 3605,
+            "yoyGrowthPct": 23,
+            "source": {
+              "name": "AMD Q1 2026 业绩新闻稿",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1284/amd-reports-first-quarter-2026-financial-results"
+            }
+          },
+          {
+            "name": "Client (子项)",
+            "revenue": 2885,
+            "yoyGrowthPct": 26,
+            "source": {
+              "name": "AMD Q1 2026 业绩新闻稿",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1284/amd-reports-first-quarter-2026-financial-results"
+            }
+          },
+          {
+            "name": "Gaming (子项)",
+            "revenue": 720,
+            "yoyGrowthPct": 11,
+            "source": {
+              "name": "AMD Q1 2026 业绩新闻稿",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1284/amd-reports-first-quarter-2026-financial-results"
+            }
+          },
+          {
+            "name": "Embedded",
+            "revenue": 873,
+            "yoyGrowthPct": 6,
+            "source": {
+              "name": "AMD Q1 2026 业绩新闻稿",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1284/amd-reports-first-quarter-2026-financial-results"
+            }
+          }
+        ]
+      },
+      {
+        "period": "2026Q2 (截至2026-06-27, 2026-08-04 披露)",
+        "totalRevenue": {
+          "value": 11536,
+          "unit": "百万USD",
+          "source1": {
+            "name": "AMD Q2 2026 业绩新闻稿",
+            "url": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results",
+            "value": 11536
+          },
+          "source2": {
+            "name": "stockanalysis.com quarterly",
+            "url": "https://stockanalysis.com/stocks/amd/financials/?p=quarterly",
+            "value": 11536
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "yoyGrowthPct": 50,
+        "segments": [
+          {
+            "name": "Data Center",
+            "revenue": 6718,
+            "yoyGrowthPct": 107,
+            "source": {
+              "name": "AMD Q2 2026 业绩新闻稿",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results"
+            }
+          },
+          {
+            "name": "Client and Gaming",
+            "revenue": 3841,
+            "yoyGrowthPct": 6,
+            "source": {
+              "name": "AMD Q2 2026 业绩新闻稿",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results"
+            }
+          },
+          {
+            "name": "Client (子项)",
+            "revenue": 3062,
+            "yoyGrowthPct": 23,
+            "source": {
+              "name": "AMD Q2 2026 业绩新闻稿",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results"
+            }
+          },
+          {
+            "name": "Gaming (子项)",
+            "revenue": 779,
+            "yoyGrowthPct": -31,
+            "source": {
+              "name": "AMD Q2 2026 业绩新闻稿",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results"
+            }
+          },
+          {
+            "name": "Embedded",
+            "revenue": 977,
+            "yoyGrowthPct": 19,
+            "source": {
+              "name": "AMD Q2 2026 业绩新闻稿",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "financialMetrics": {
+    "annual": [
+      {
+        "fiscalYear": "FY2021 (止2021-12-25)",
+        "revenue": {
+          "value": 16434,
+          "unit": "百万USD",
+          "source1": {
+            "name": "SEC EDGAR 10-K XBRL",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json",
+            "value": 16434
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/amd/financials/",
+            "value": 16434
+          },
+          "flag": "ok",
+          "deviationPct": 0.0
+        },
+        "netProfit": {
+          "value": 3162,
+          "unit": "百万USD",
+          "note": "GAAP",
+          "source1": {
+            "name": "SEC EDGAR 10-K XBRL (NetIncomeLoss)",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/NetIncomeLoss.json",
+            "value": 3162
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/amd/financials/",
+            "value": 3162
+          },
+          "flag": "ok",
+          "deviationPct": 0.0
+        },
+        "grossMarginPct": {
+          "value": 48.25,
+          "source1": {
+            "name": "SEC EDGAR 10-K XBRL (GrossProfit 7,929/16,434)",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/GrossProfit.json",
+            "value": 48.25
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/amd/financials/",
+            "value": 48.25
+          }
+        },
+        "operatingMarginPct": {
+          "value": 22.2,
+          "source1": {
+            "name": "SEC EDGAR 10-K XBRL (OperatingIncomeLoss 3,648/16,434)",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/OperatingIncomeLoss.json",
+            "value": 22.2
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/amd/financials/",
+            "value": 22.2
+          }
+        },
+        "freeCashFlow": {
+          "value": 3220,
+          "unit": "百万USD",
+          "note": "口径=经营现金流3,521-购置物业设备capex 301",
+          "source1": {
+            "name": "SEC EDGAR 10-K XBRL (经营现金流-capex推算)",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/NetCashProvidedByUsedInOperatingActivities.json",
+            "value": 3220
+          },
+          "source2": {
+            "name": "stockanalysis.com cash flow",
+            "url": "https://stockanalysis.com/stocks/amd/financials/cash-flow-statement/",
+            "value": 3220
+          }
+        },
+        "cashReserves": {
+          "value": 3608,
+          "unit": "百万USD",
+          "note": "现金及等价物2,535+短期投资1,073",
+          "source1": {
+            "name": "SEC EDGAR 10-K XBRL (Cash+ShortTermInvestments)",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/ShortTermInvestments.json",
+            "value": 3608
+          },
+          "source2": {
+            "name": "stockanalysis.com balance sheet",
+            "url": "https://stockanalysis.com/stocks/amd/financials/balance-sheet/",
+            "value": 3608
+          }
+        }
+      },
+      {
+        "fiscalYear": "FY2022 (止2022-12-31)",
+        "revenue": {
+          "value": 23601,
+          "unit": "百万USD",
+          "source1": {
+            "name": "SEC EDGAR 10-K XBRL",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json",
+            "value": 23601
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/amd/financials/",
+            "value": 23601
+          },
+          "flag": "ok",
+          "deviationPct": 0.0
+        },
+        "netProfit": {
+          "value": 1320,
+          "unit": "百万USD",
+          "note": "GAAP",
+          "source1": {
+            "name": "SEC EDGAR 10-K XBRL (NetIncomeLoss)",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/NetIncomeLoss.json",
+            "value": 1320
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/amd/financials/",
+            "value": 1320
+          },
+          "flag": "ok",
+          "deviationPct": 0.0
+        },
+        "grossMarginPct": {
+          "value": 44.93,
+          "source1": {
+            "name": "SEC EDGAR 10-K XBRL (GrossProfit 10,603/23,601)",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/GrossProfit.json",
+            "value": 44.93
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/amd/financials/",
+            "value": 44.93
+          }
+        },
+        "operatingMarginPct": {
+          "value": 5.36,
+          "source1": {
+            "name": "SEC EDGAR 10-K XBRL (OperatingIncomeLoss 1,264/23,601)",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/OperatingIncomeLoss.json",
+            "value": 5.36
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/amd/financials/",
+            "value": 5.36
+          }
+        },
+        "freeCashFlow": {
+          "value": 3115,
+          "unit": "百万USD",
+          "note": "口径=经营现金流3,565-capex 450",
+          "source1": {
+            "name": "SEC EDGAR 10-K XBRL (经营现金流-capex推算)",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/NetCashProvidedByUsedInOperatingActivities.json",
+            "value": 3115
+          },
+          "source2": {
+            "name": "stockanalysis.com cash flow",
+            "url": "https://stockanalysis.com/stocks/amd/financials/cash-flow-statement/",
+            "value": 3115
+          }
+        },
+        "cashReserves": {
+          "value": 5855,
+          "unit": "百万USD",
+          "note": "现金及等价物4,835+短期投资1,020",
+          "source1": {
+            "name": "SEC EDGAR 10-K XBRL (Cash+ShortTermInvestments)",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/ShortTermInvestments.json",
+            "value": 5855
+          },
+          "source2": {
+            "name": "stockanalysis.com balance sheet",
+            "url": "https://stockanalysis.com/stocks/amd/financials/balance-sheet/",
+            "value": 5855
+          }
+        }
+      },
+      {
+        "fiscalYear": "FY2023 (止2023-12-30)",
+        "revenue": {
+          "value": 22680,
+          "unit": "百万USD",
+          "source1": {
+            "name": "SEC EDGAR 10-K XBRL",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json",
+            "value": 22680
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/amd/financials/",
+            "value": 22680
+          },
+          "flag": "ok",
+          "deviationPct": 0.0
+        },
+        "netProfit": {
+          "value": 854,
+          "unit": "百万USD",
+          "note": "GAAP",
+          "source1": {
+            "name": "SEC EDGAR 10-K XBRL (NetIncomeLoss)",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/NetIncomeLoss.json",
+            "value": 854
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/amd/financials/",
+            "value": 854
+          },
+          "flag": "ok",
+          "deviationPct": 0.0
+        },
+        "grossMarginPct": {
+          "value": 46.12,
+          "source1": {
+            "name": "SEC EDGAR 10-K XBRL (GrossProfit 10,460/22,680)",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/GrossProfit.json",
+            "value": 46.12
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/amd/financials/",
+            "value": 46.12
+          }
+        },
+        "operatingMarginPct": {
+          "value": 1.77,
+          "source1": {
+            "name": "SEC EDGAR 10-K XBRL (OperatingIncomeLoss 401/22,680)",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/OperatingIncomeLoss.json",
+            "value": 1.77
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/amd/financials/",
+            "value": 1.77
+          }
+        },
+        "freeCashFlow": {
+          "value": 1121,
+          "unit": "百万USD",
+          "note": "口径=经营现金流1,667-capex 546",
+          "source1": {
+            "name": "SEC EDGAR 10-K XBRL (经营现金流-capex推算)",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/NetCashProvidedByUsedInOperatingActivities.json",
+            "value": 1121
+          },
+          "source2": {
+            "name": "stockanalysis.com cash flow",
+            "url": "https://stockanalysis.com/stocks/amd/financials/cash-flow-statement/",
+            "value": 1121
+          }
+        },
+        "cashReserves": {
+          "value": 5773,
+          "unit": "百万USD",
+          "note": "现金及等价物3,933+短期投资1,840",
+          "source1": {
+            "name": "SEC EDGAR 10-K XBRL (Cash+ShortTermInvestments)",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/ShortTermInvestments.json",
+            "value": 5773
+          },
+          "source2": {
+            "name": "stockanalysis.com balance sheet",
+            "url": "https://stockanalysis.com/stocks/amd/financials/balance-sheet/",
+            "value": 5773
+          }
+        }
+      },
+      {
+        "fiscalYear": "FY2024 (止2024-12-28)",
+        "revenue": {
+          "value": 25785,
+          "unit": "百万USD",
+          "source1": {
+            "name": "SEC EDGAR 10-K XBRL",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json",
+            "value": 25785
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/amd/financials/",
+            "value": 25785
+          },
+          "flag": "ok",
+          "deviationPct": 0.0
+        },
+        "netProfit": {
+          "value": 1641,
+          "unit": "百万USD",
+          "note": "GAAP",
+          "source1": {
+            "name": "SEC EDGAR 10-K XBRL (NetIncomeLoss)",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/NetIncomeLoss.json",
+            "value": 1641
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/amd/financials/",
+            "value": 1641
+          },
+          "flag": "ok",
+          "deviationPct": 0.0
+        },
+        "grossMarginPct": {
+          "value": 49.35,
+          "source1": {
+            "name": "SEC EDGAR 10-K XBRL (GrossProfit 12,725/25,785)",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/GrossProfit.json",
+            "value": 49.35
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/amd/financials/",
+            "value": 49.35
+          }
+        },
+        "operatingMarginPct": {
+          "value": 7.37,
+          "source1": {
+            "name": "SEC EDGAR 10-K XBRL (OperatingIncomeLoss 1,900/25,785)",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/OperatingIncomeLoss.json",
+            "value": 7.37
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/amd/financials/",
+            "value": 7.37
+          }
+        },
+        "freeCashFlow": {
+          "value": 2405,
+          "unit": "百万USD",
+          "note": "口径=经营现金流3,041-capex 636",
+          "source1": {
+            "name": "SEC EDGAR 10-K XBRL (经营现金流-capex推算)",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/NetCashProvidedByUsedInOperatingActivities.json",
+            "value": 2405
+          },
+          "source2": {
+            "name": "stockanalysis.com cash flow",
+            "url": "https://stockanalysis.com/stocks/amd/financials/cash-flow-statement/",
+            "value": 2405
+          }
+        },
+        "cashReserves": {
+          "value": 5132,
+          "unit": "百万USD",
+          "note": "现金及等价物3,787+短期投资1,345",
+          "source1": {
+            "name": "SEC EDGAR 10-K XBRL (Cash+ShortTermInvestments)",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/ShortTermInvestments.json",
+            "value": 5132
+          },
+          "source2": {
+            "name": "stockanalysis.com balance sheet",
+            "url": "https://stockanalysis.com/stocks/amd/financials/balance-sheet/",
+            "value": 5132
+          }
+        }
+      },
+      {
+        "fiscalYear": "FY2025 (止2025-12-27)",
+        "revenue": {
+          "value": 34639,
+          "unit": "百万USD",
+          "source1": {
+            "name": "SEC EDGAR FY2025 10-K XBRL",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json",
+            "value": 34639
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/amd/financials/",
+            "value": 34639
+          },
+          "flag": "ok",
+          "deviationPct": 0.0
+        },
+        "netProfit": {
+          "value": 4335,
+          "unit": "百万USD",
+          "note": "GAAP",
+          "source1": {
+            "name": "SEC EDGAR FY2025 10-K XBRL (NetIncomeLoss)",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/NetIncomeLoss.json",
+            "value": 4335
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/amd/financials/",
+            "value": 4335
+          },
+          "flag": "ok",
+          "deviationPct": 0.0
+        },
+        "grossMarginPct": {
+          "value": 49.52,
+          "source1": {
+            "name": "SEC EDGAR FY2025 10-K XBRL (GrossProfit 17,152/34,639)",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/GrossProfit.json",
+            "value": 49.52
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/amd/financials/",
+            "value": 49.52
+          }
+        },
+        "operatingMarginPct": {
+          "value": 10.66,
+          "source1": {
+            "name": "SEC EDGAR FY2025 10-K XBRL (OperatingIncomeLoss 3,694/34,639)",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/OperatingIncomeLoss.json",
+            "value": 10.66
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/amd/financials/",
+            "value": 10.66
+          }
+        },
+        "freeCashFlow": {
+          "value": 6735,
+          "unit": "百万USD",
+          "note": "口径差异需注意: source1=10-K总经营现金流7,709-购置物业设备974=6,735; source2 stockanalysis=6,697(capex口径1,012含其他资本性支出); AMD Q4/FY25新闻稿口径(持续经营经营现金流6,493-974)为5,519,差额主要为持续/终止经营口径。引用时建议注明口径",
+          "source1": {
+            "name": "SEC EDGAR FY2025 10-K XBRL (经营现金流7,709-capex 974推算)",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/NetCashProvidedByUsedInOperatingActivities.json",
+            "value": 6735
+          },
+          "source2": {
+            "name": "stockanalysis.com cash flow",
+            "url": "https://stockanalysis.com/stocks/amd/financials/cash-flow-statement/",
+            "value": 6697
+          }
+        },
+        "cashReserves": {
+          "value": 10552,
+          "unit": "百万USD",
+          "note": "现金及等价物5,539+短期投资5,013;与AMD Q4/FY25新闻稿披露的10,552一致",
+          "source1": {
+            "name": "SEC EDGAR FY2025 10-K XBRL (Cash+ShortTermInvestments)",
+            "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000002488/us-gaap/ShortTermInvestments.json",
+            "value": 10552
+          },
+          "source2": {
+            "name": "stockanalysis.com balance sheet",
+            "url": "https://stockanalysis.com/stocks/amd/financials/balance-sheet/",
+            "value": 10552
+          }
+        }
+      }
+    ]
+  },
+  "competitiveLandscape": {
+    "marketShare": {
+      "valuePct": 46.2,
+      "marketDefinition": "x86 服务器 CPU 收入份额(Mercury Research 口径);同期出货量份额 33.2%——收入与出货差异反映 EPYC 高核数高 ASP。其余市场份额见 marketShareByMarket",
+      "asOf": "2026Q1",
+      "source": {
+        "name": "Tom's Hardware(引 Mercury Research)",
+        "url": "https://www.tomshardware.com/pc-components/cpus/amd-reaches-46-percent-of-server-x86-cpu-revenue-intel-still-controls-70-percent-of-the-consumer-pc-market-share",
+        "publishedAt": "2026-06"
+      }
+    },
+    "marketShareByMarket": [
+      {
+        "market": "服务器CPU(x86)",
+        "valuePct": 46.2,
+        "definition": "按收入份额(x86 服务器 CPU 收入,Mercury Research 口径)",
+        "asOf": "2026Q1",
+        "source": {
+          "name": "Tom's Hardware(引 Mercury Research)",
+          "url": "https://www.tomshardware.com/pc-components/cpus/amd-reaches-46-percent-of-server-x86-cpu-revenue-intel-still-controls-70-percent-of-the-consumer-pc-market-share",
+          "publishedAt": "2026-06"
+        }
+      },
+      {
+        "market": "服务器CPU(x86)",
+        "valuePct": 33.2,
+        "definition": "按出货量份额(x86 服务器 CPU 单位出货,Mercury Research 口径;同期收入份额与出货份额差异反映 EPYC 高核数高 ASP)",
+        "asOf": "2026Q1",
+        "source": {
+          "name": "The Register(引 Mercury Research)",
+          "url": "https://www.theregister.com/systems/2026/06/04/amd-takes-a-third-of-server-cpu-market-as-shipments-grow/5251283",
+          "publishedAt": "2026-06-04"
+        }
+      },
+      {
+        "market": "客户端CPU(整体,桌面+移动)",
+        "valuePct": 29.6,
+        "definition": "按出货量份额(x86 客户端 CPU,Mercury Research;环比 2025Q4 的 29.2% 上升,同比 24.1%)",
+        "asOf": "2026Q1",
+        "source": {
+          "name": "HotHardware(引 Mercury Research)",
+          "url": "https://hothardware.com/news/amd-hits-record-x86-cpu-market-share-intel-supply-stalls",
+          "publishedAt": "2026-06"
+        }
+      },
+      {
+        "market": "桌面CPU",
+        "valuePct": 33.2,
+        "definition": "按出货量份额(2026Q1,低于 2025Q4 峰值 36.4%,高于上年同期 28%)",
+        "asOf": "2026Q1",
+        "source": {
+          "name": "Tom's Hardware(引 Mercury Research)",
+          "url": "https://www.tomshardware.com/pc-components/cpus/amd-reaches-46-percent-of-server-x86-cpu-revenue-intel-still-controls-70-percent-of-the-consumer-pc-market-share",
+          "publishedAt": "2026-06"
+        }
+      },
+      {
+        "market": "移动(笔记本)CPU",
+        "valuePct": 28.3,
+        "definition": "按出货量份额(Intel 71.7% vs AMD 28.3%;上年同期 AMD 22.5%)",
+        "asOf": "2026Q1",
+        "source": {
+          "name": "Tom's Hardware(引 Mercury Research)",
+          "url": "https://www.tomshardware.com/pc-components/cpus/amd-reaches-46-percent-of-server-x86-cpu-revenue-intel-still-controls-70-percent-of-the-consumer-pc-market-share",
+          "publishedAt": "2026-06"
+        }
+      },
+      {
+        "market": "x86 CPU 总体",
+        "valuePct": 32.6,
+        "definition": "按出货量份额(含客户端+服务器等,Mercury Research;Intel 67.4%,上年同期 AMD 27.1%左右)",
+        "asOf": "2026Q1",
+        "source": {
+          "name": "TweakTown(引 Mercury Research)",
+          "url": "https://www.tweaktown.com/news/112050/amd-hits-an-all-time-high-x86-cpu-market-share-record-now-holding-a-third-of-the-server-market/index.html",
+          "publishedAt": "2026-06"
+        }
+      },
+      {
+        "market": "数据中心 GPU / AI 加速器",
+        "valuePct": "[估计] 5-7",
+        "definition": "按收入份额(2026 年 AI 加速器收入,第三方聚合估计;NVIDIA 约 70-86%,区间取决于是否把超大规模厂商自研 ASIC 计入分母。无 Mercury/IDC 级别的权威免费口径,谨慎使用)",
+        "asOf": "2026H1",
+        "source": {
+          "name": "CommandLinux statistics / Silicon Analysts(第三方聚合)",
+          "url": "https://commandlinux.com/statistics/ai-gpu-market-share-nvidia-vs-amd-vs-intel/",
+          "publishedAt": "2026"
+        }
+      }
+    ],
+    "competitors": [
+      {
+        "name": "AMD(基准)",
+        "ticker": "AMD",
+        "marketSharePct": "x86服务器CPU收入份额46.2%/出货33.2%,客户端出货29.6%(2026Q1,Mercury);AI加速器收入份额[估计]5-7%",
+        "revenue": "2026Q2(截至2026-06)营收 $11.536B(+50% YoY),其中数据中心分部 $6.718B(+107% YoY),客户端分部 $3.062B;Q3 指引约 $13B(±$0.3B)",
+        "grossMarginPct": "GAAP 54 / non-GAAP 56",
+        "note": "2026-08-04 盘后发布,数据中心占总营收 58%;Instinct GPU 收入未单独拆分",
+        "source": {
+          "name": "AMD IR 新闻稿",
+          "url": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results",
+          "publishedAt": "2026-08-04"
+        }
+      },
+      {
+        "name": "NVIDIA",
+        "ticker": "NVDA",
+        "marketSharePct": "AI加速器收入份额[估计]70-86%(2026,第三方聚合,分母口径影响大)",
+        "revenue": "FY2027Q1(截至2026-04)营收 $81.6B(+85% YoY),其中数据中心 $75.2B(+92% YoY);FY27Q2 指引 $91B",
+        "grossMarginPct": "GAAP 74.9 / non-GAAP 75.0",
+        "note": "单季数据中心收入约为 AMD 数据中心分部的 11 倍;毛利率比 AMD 高约 19 个百分点",
+        "source": {
+          "name": "NVIDIA 8-K (SEC) / CNBC",
+          "url": "https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000051/q1fy27pr.htm",
+          "publishedAt": "2026-05-20"
+        }
+      },
+      {
+        "name": "Intel",
+        "ticker": "INTC",
+        "marketSharePct": "x86服务器CPU收入份额53.8%、客户端PC出货约70%(2026Q1,Mercury,为AMD份额的补集)",
+        "revenue": "2026Q2 营收 $16.1B(+25% YoY,15 年来最快增速),DCAI 分部 $6.3B(+59%),客户端 CCG $8.9B(+13%)",
+        "grossMarginPct": "GAAP 40.4 / non-GAAP 41.8",
+        "note": "经营面明显回暖但 GAAP 净亏损 $11B(含 $12.5B CHIPS 法案托管股票按市值计价损失);客户端 PC 市场 Intel 仍占约 70% 出货份额",
+        "source": {
+          "name": "CNBC / Investing.com(Q2 2026 财报)",
+          "url": "https://www.cnbc.com/2026/07/23/intel-intc-earnings-report-q2-2026.html",
+          "publishedAt": "2026-07-23"
+        }
+      },
+      {
+        "name": "ARM阵营/自研 ASIC(经由 Broadcom 等)",
+        "ticker": "AVGO 等",
+        "marketSharePct": {
+          "status": "unavailable",
+          "reason": "ARM/自研ASIC阵营无统一份额口径,2026年权威渗透率数据未检索到(见gaps)"
+        },
+        "revenue": {
+          "status": "unavailable",
+          "reason": "本次采集未取到 Broadcom/Google TPU/AWS Trainium 2026 年最新分部收入的可靠原始出处"
+        },
+        "grossMarginPct": {
+          "status": "unavailable",
+          "reason": "该阵营为多家公司(Broadcom/Google/AWS)集合,无单一毛利率口径"
+        },
+        "note": "供应链侧证据:Broadcom 约占 TSMC 2026 年 CoWoS 产能 ~15%,用于 Google/Meta 等定制 AI ASIC,构成对商用 GPU 的结构性替代压力",
+        "source": {
+          "name": "Astute Group(CoWoS 产能分配报道)",
+          "url": "https://www.astutegroup.com/news/industrial/advanced-packaging-demand-soars-nvidia-secures-60-of-cowos-capacity/",
+          "publishedAt": "2026"
+        }
+      }
+    ]
+  },
+  "businessModelMoat": {
+    "oneLiner": "无晶圆厂(fabless)高性能计算芯片设计公司:以 x86 CPU(EPYC/Ryzen)+ Instinct GPU + FPGA/自适应 SoC 覆盖数据中心 AI、PC、嵌入式与半定制游戏主机市场,制造外包台积电",
+    "revenueModel": "芯片销售为主(数据中心 CPU/GPU、客户端 CPU、嵌入式 FPGA);2025 年起叠加整机架系统(收购 ZT Systems 后推出 Helios rack-scale AI 机架方案);游戏主机为半定制 SoC(Sony/Microsoft);2026 Q2 数据中心占收入 58%",
+    "moats": [
+      {
+        "type": "x86 架构授权(与 Intel 交叉授权的双寡头格局)",
+        "evidence": "x86 服务器市场实质仅 AMD/Intel 两家;EPYC 持续夺份,FY2025 数据中心收入创纪录,2026 Q2 数据中心收入 $6.718B、同比 +107%(含 EPYC 与 Instinct)",
+        "trend": "变宽",
+        "source": {
+          "name": "AMD Q2 2026 财报新闻稿 (2026-08-04)",
+          "url": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results"
+        }
+      },
+      {
+        "type": "Chiplet/先进封装设计能力",
+        "evidence": "自 Zen 2 起率先量产 chiplet 架构,MI300/MI350/MI400 采用 2.5D/3D 混合封装与 3D V-Cache,带来成本与良率优势;MI400 系列(MI455X/MI430X)2026 Q2 发布,主打大规模训练/推理的算力密度与内存带宽",
+        "trend": "稳定",
+        "source": {
+          "name": "AMD Q2 2026 财报新闻稿(MI400 发布)",
+          "url": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results"
+        }
+      },
+      {
+        "type": "ROCm 软件生态(相对 CUDA 的追赶项)",
+        "evidence": "2026-08-04 宣布与 Anthropic 多年合作、用 Claude 优化 Instinct GPU 与 ROCm 软件开发;OpenAI 成为核心战略算力伙伴(6GW 协议);Helios 客户含 Anthropic、Meta、Microsoft、OpenAI、Oracle、HUMAIN 等——头部 AI 实验室背书正在补软件生态短板,但与 CUDA 差距仍在",
+        "trend": "待验证",
+        "source": {
+          "name": "AMD Q2 2026 财报新闻稿 + AMD-OpenAI 战略合作 (2025-10-06)",
+          "url": "https://ir.amd.com/news-events/press-releases/detail/1260/amd-and-openai-announce-strategic-partnership-to-deploy-6-gigawatts-of-amd-gpus"
+        }
+      },
+      {
+        "type": "台积电先进制程配额与制造伙伴关系",
+        "evidence": "10-K 披露先进节点晶圆依赖台积电;Zen 5/CDNA4 及 MI400 均用台积电领先节点,AI 需求下先进产能配额本身构成稀缺资源;风险与护城河并存(单一供应商集中)",
+        "trend": "稳定",
+        "source": {
+          "name": "AMD FY2025 10-K (2026-02-04)",
+          "url": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-26-000021/amd-20251227.htm"
+        }
+      },
+      {
+        "type": "整机架系统能力(ZT Systems→Helios)",
+        "evidence": "2025-03-31 完成 $4.9B 收购 ZT Systems 获得机架级设计能力,再以 $3B 把制造剥离给 Sanmina(2025-10-27 完成)保留轻资产;2026 Q2 Helios 机架已向 Anthropic(至多 2GW MI450)、Microsoft Azure 等规模部署",
+        "trend": "变宽",
+        "source": {
+          "name": "AMD 完成收购 ZT Systems / Sanmina 完成收购制造业务",
+          "url": "https://www.datacenterdynamics.com/en/news/amd-completes-49bn-acquisition-of-hyperscale-server-maker-zt-systems/"
+        }
+      }
+    ]
+  },
+  "technology": {
+    "coreTechStack": [
+      "CPU: Zen 5 架构在售(EPYC Turin / Ryzen),Zen 6 开发中(台积电下一代节点)",
+      "AI 加速器: CDNA 系 Instinct — MI300X/MI325X→MI350 系列(2025)→MI400 系列 2026 Q2 发布(MI455X 训练/推理旗舰、MI430X HPC/主权AI)",
+      "整机架: Helios rack-scale(MI450 + EPYC + Pensando 网络),客户含 Anthropic/Microsoft/OpenAI/Meta/Oracle",
+      "Chiplet + 2.5D/3D 先进封装(3D V-Cache、CoWoS 类封装),制造外包台积电先进节点",
+      "ROCm 软件栈: 开源,持续追赶 CUDA;与 Anthropic 多年合作用 Claude 优化 ROCm;Xilinx 自适应 SoC/FPGA 与 Pensando DPU 补全产品面"
+    ],
+    "rdExpense": {
+      "value": 8091,
+      "unit": "百万USD",
+      "period": "FY2025(截至2025-12-27)",
+      "source1": {
+        "name": "AMD FY2025 10-K/A 合并利润表",
+        "url": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-26-000021/amd-20251227.htm",
+        "value": "8,091(FY2024为6,456)"
+      },
+      "source2": {
+        "name": "MarketScreener 10-K 摘要(macrotrends/finviz 被反爬 403,已尝试)",
+        "url": "https://www.marketscreener.com/news/amd-advanced-micro-devices-annual-report-for-fiscal-year-ending-december-27-2025-form-10-k-ce7e5adadb8ff422",
+        "value": "$8.1B,同比 +25%"
+      }
+    },
+    "rdIntensityPct": 23.4,
+    "rdTrend": "绝对额 +25%(6,456→8,091M,AI 战略扩招),研发费用率因收入更快增长由 FY2024 的 25.0% 降至 23.4%",
+    "note": "FY2025 收入 $34,639M(10-K);TTM 收入已达 $41,305M(stockanalysis,2026-08-05)"
+  },
+  "management": {
+    "founderCeo": {
+      "name": "Lisa T. Su(非创始人,职业经理人)",
+      "background": "MIT 电子工程博士;IBM 半导体研发(铜互连工艺)、Freescale CTO/SVP;2012-01 加入 AMD 任 SVP&GM,2014-06 任 COO,2014-10 起任总裁兼 CEO,2022-02 起兼任董事长",
+      "tenure": "CEO 任期 2014-10 至今约 11.8 年(截至 2026-08)"
+    },
+    "ownership": {
+      "economicPct": "Lisa Su 持 4,305,973 股(占 1,630,338,779 股总股本约 0.26%,proxy 标注 <1%);全体董事+高管 16 人合计 8,107,566 股(约 0.50%,<1%);机构大股东 Vanguard 8.8%、BlackRock 7.7%",
+      "votingPct": "与经济权益相同 —— AMD 为单一普通股结构、一股一票,无 AB 双层股权",
+      "source": {
+        "name": "AMD DEF 14A 2026 proxy(2026-03-27 提交,持股基准日 2026-03-19,p.36)",
+        "url": "https://www.sec.gov/Archives/edgar/data/2488/000119312526129057/d85856ddef14a.htm"
+      }
+    },
+    "keyDecisions": [
+      {
+        "date": "2022-02-14",
+        "decision": "全股票约 $50B 完成收购 Xilinx",
+        "outcome": "获得 FPGA/自适应计算与嵌入式业务(Victor Peng 任 AECG 总裁),奠定嵌入式分部并增厚毛利与自由现金流",
+        "source": {
+          "name": "AMD 新闻稿",
+          "url": "https://ir.amd.com/news-events/press-releases/detail/1047/amd-completes-acquisition-of-xilinx"
+        }
+      },
+      {
+        "date": "2022-05",
+        "decision": "约 $1.9B 完成收购 Pensando(DPU/网络)",
+        "outcome": "补齐数据中心网络栈,演化为 Helios 机架中的网络组件",
+        "source": {
+          "name": "AMD 新闻稿(ir.amd.com 新闻列表)",
+          "url": "https://ir.amd.com/news-events/press-releases"
+        }
+      },
+      {
+        "date": "2024-08",
+        "decision": "$665M 收购芬兰 Silo AI",
+        "outcome": "欧洲最大私有 AI 实验室并入,充实 AI 软件/模型团队,支撑 ROCm 生态建设",
+        "source": {
+          "name": "AMD 新闻稿(ir.amd.com 新闻列表)",
+          "url": "https://ir.amd.com/news-events/press-releases"
+        }
+      },
+      {
+        "date": "2025-03-31",
+        "decision": "$4.9B 完成收购 ZT Systems;随后以 $3B(含最高 $450M 或有对价)将其制造业务出售给 Sanmina(2025-10-27 完成),保留机架设计团队",
+        "outcome": "获得 rack-scale 设计能力→Helios 机架 2026 年规模出货,同时保持轻资产模式,Sanmina 成为美国本土优选 NPI 制造伙伴",
+        "source": {
+          "name": "DCD / Sanmina IR",
+          "url": "https://ir.sanmina.com/news/news-details/2025/SANMINA-COMPLETES-ACQUISITION-OF-ZT-SYSTEMS-DATA-CENTER-INFRASTRUCTURE-MANUFACTURING-BUSINESS-FROM-AMD/default.aspx"
+        }
+      },
+      {
+        "date": "2025-05",
+        "decision": "新增 $6B 股票回购授权",
+        "outcome": "回购执行温和:2026 上半年仅回购 $221M(Q2 2026 未回购),现金优先投向 AI 扩张",
+        "source": {
+          "name": "AMD Q2 2026 财报新闻稿",
+          "url": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results"
+        }
+      },
+      {
+        "date": "2025-10-06",
+        "decision": "与 OpenAI 达成 6GW 多代 Instinct GPU 战略合作,向 OpenAI 发行至多 1.6 亿股认股权证(按里程碑分批归属);首个 1GW MI450 于 2026 下半年部署",
+        "outcome": "锁定头部 AI 客户与多年需求,但潜在稀释约 1.6 亿股(约占现有股本 10%);股价当日大涨,后续 Helios 客户群扩大",
+        "source": {
+          "name": "AMD-OpenAI 新闻稿",
+          "url": "https://ir.amd.com/news-events/press-releases/detail/1260/amd-and-openai-announce-strategic-partnership-to-deploy-6-gigawatts-of-amd-gpus"
+        }
+      },
+      {
+        "date": "2026-08-04",
+        "decision": "宣布与 Anthropic 战略合作:在 Helios 机架部署至多 2GW MI450,并多年合作用 Claude 优化 Instinct/ROCm;扩大与 Microsoft Azure 的 Helios 规模部署",
+        "outcome": "Q2 2026 数据中心收入 $6.718B(+107%),Q3 指引约 $13B(+41% YoY);财报后股价单日跌约 6%(市场预期过高、毛利指引平淡)",
+        "source": {
+          "name": "AMD Q2 2026 财报新闻稿",
+          "url": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results"
+        }
+      }
+    ]
+  },
+  "industryOutlook": {
+    "tam": {
+      "value": 1400000000000,
+      "currency": "USD",
+      "definition": "AMD 官方口径:AI 加速器(数据中心 AI)TAM,2030 年;2026-07-24 Advancing AI 大会上调,理由为 agentic AI 算力需求;一年内从 $500B(2025 年中)→ >$1T(2025-11 分析师日)→ $1.4T",
+      "asOf": "2030(预测),发布于 2026-07-24",
+      "source": {
+        "name": "Benzinga(AMD Advancing AI 2026)",
+        "url": "https://www.benzinga.com/markets/tech/26/07/60664477/amd-ai-forecast-grew-900-billion-in-one-year",
+        "publishedAt": "2026-07"
+      }
+    },
+    "tamViews": [
+      {
+        "value": 1400000000000,
+        "currency": "USD",
+        "definition": "AMD 官方口径:AI 加速器(数据中心 AI)TAM,2030 年;2026-07-24 Advancing AI 大会上调,理由为 agentic AI 算力需求;一年内从 $500B(2025 年中)→ >$1T(2025-11 分析师日)→ $1.4T",
+        "asOf": "2030(预测),发布于 2026-07-24",
+        "source": {
+          "name": "Benzinga(AMD Advancing AI 2026)",
+          "url": "https://www.benzinga.com/markets/tech/26/07/60664477/amd-ai-forecast-grew-900-billion-in-one-year",
+          "publishedAt": "2026-07"
+        }
+      },
+      {
+        "value": 1000000000000,
+        "currency": "USD",
+        "definition": "AMD 官方口径(前一版):Lisa Su 在 2025-11-11 金融分析师日称数据中心市场 2030 年将达 $1T",
+        "asOf": "2030(预测),发布于 2025-11-11",
+        "source": {
+          "name": "AMD 官方 X 账号 / Futu 新闻",
+          "url": "https://x.com/AMD/status/1988407656420106727",
+          "publishedAt": "2025-11-11"
+        }
+      },
+      {
+        "value": 220000000000,
+        "currency": "USD",
+        "definition": "AMD 官方口径:数据中心处理器(CPU)市场 2030 年 TAM,自数月前的 $120B 上调",
+        "asOf": "2030(预测),发布于 2026-07-24",
+        "source": {
+          "name": "Benzinga",
+          "url": "https://www.benzinga.com/markets/tech/26/07/60664477/amd-ai-forecast-grew-900-billion-in-one-year",
+          "publishedAt": "2026-07"
+        }
+      },
+      {
+        "value": 1300000000000,
+        "currency": "USD",
+        "definition": "第三方口径(Gartner):2026 年全球半导体总收入 >$1.3T,其中 AI 半导体约占 30%",
+        "asOf": "2026(全年预测)",
+        "source": {
+          "name": "Gartner 新闻稿",
+          "url": "https://www.gartner.com/en/newsroom/press-releases/2026-04-08-gartner-forecasts-worldwide-semiconductor-revenue-to-exceed-us-dollars-one-point-3-trillion-in-2026",
+          "publishedAt": "2026-04-08"
+        }
+      },
+      {
+        "value": 281000000000,
+        "currency": "USD",
+        "definition": "第三方口径(IDC):2026 年'智能数据中心'半导体分部(CPU+AI加速器+GPU+定制ASIC+网络芯片)规模 $281B",
+        "asOf": "2026(预测)",
+        "source": {
+          "name": "IDC 博客(Semiconductor Market Forecast 2026)",
+          "url": "https://www.idc.com/resource-center/blog/semiconductor-market-to-surge-past-the-trillion-dollar-threshold-ai-infrastructure-drives-market-growth/",
+          "publishedAt": "2026"
+        }
+      }
+    ],
+    "growthForecast": {
+      "cagrPct": "[估计] >35(公司整体营收年增速目标,非 CAGR 精确口径)",
+      "horizon": "至 2030",
+      "source": {
+        "name": "Futu(引 AMD CEO Lisa Su,2025-11 分析师日)",
+        "url": "https://news.futunn.com/en/post/64755141/amd-ceo-the-ai-data-center-market-is-expected-to",
+        "publishedAt": "2025-11"
+      }
+    },
+    "growthForecastViews": [
+      {
+        "cagrPct": "[估计] >35(公司整体营收年增速目标,非 CAGR 精确口径)",
+        "horizon": "至 2030",
+        "source": {
+          "name": "Futu(引 AMD CEO Lisa Su,2025-11 分析师日)",
+          "url": "https://news.futunn.com/en/post/64755141/amd-ceo-the-ai-data-center-market-is-expected-to",
+          "publishedAt": "2025-11"
+        }
+      },
+      {
+        "cagrPct": "47(2026 年单年全球 AI 支出增速,非 CAGR)",
+        "horizon": "2026",
+        "source": {
+          "name": "Gartner(via AnySilicon)",
+          "url": "https://anysilicon.com/news/gartner-forecasts-worldwide-ai-spending-to-grow-47-in-2026/",
+          "publishedAt": "2026"
+        }
+      },
+      {
+        "cagrPct": "52.8(2026 年半导体总收入 YoY,IDC;$842.8B→$1.29T)",
+        "horizon": "2026",
+        "source": {
+          "name": "IDC",
+          "url": "https://www.idc.com/resource-center/blog/semiconductor-market-to-surge-past-the-trillion-dollar-threshold-ai-infrastructure-drives-market-growth/",
+          "publishedAt": "2026"
+        }
+      }
+    ]
+  },
+  "riskFactors": {
+    "items": [
+      {
+        "category": "地缘政治",
+        "description": "对华出口管制:2025-04 起 MI308 需许可证,AMD 计提最高 $800M 库存及相关费用;2025 年末起获部分 MI308 出口许可、2026-06 获商务部批准恢复出货;2026 年 BIS 将 H200/MI325X 级芯片审查从'推定拒绝'转为'个案审查'。政策随时可能反复,中国收入可见度低",
+        "evidence": [
+          {
+            "metric": "MI308 出口管制相关库存费用(2025Q2 计提,2026Q2 财报中作为同比基数披露)",
+            "value": "$800M",
+            "asOf": "2025Q2",
+            "source": {
+              "name": "AMD IR Q2 2026 新闻稿",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results"
+            }
+          },
+          {
+            "metric": "MI308 恢复对华出货(获商务部批准)",
+            "value": "2026-06 宣布随许可证批准恢复",
+            "asOf": "2026-06",
+            "source": {
+              "name": "DataCenterDynamics",
+              "url": "https://www.datacenterdynamics.com/en/news/amd-to-resume-shipments-of-instinct-mi308-chips-to-china-following-department-of-commerce-approval/"
+            }
+          },
+          {
+            "metric": "BIS 对 MI325X/H200 审查政策",
+            "value": "由推定拒绝改为个案审查",
+            "asOf": "2026",
+            "source": {
+              "name": "美国国会研究服务处 CRS R48642 / Introl",
+              "url": "https://www.congress.gov/crs-product/R48642"
+            }
+          }
+        ]
+      },
+      {
+        "category": "供应链",
+        "description": "先进制程与封装几乎全部依赖台积电;CoWoS 先进封装为 AI GPU 产能瓶颈,NVIDIA 锁定约 60% 份额,AMD 仅约 11%,且 EPYC Venice 与 MI400 共用同一封装资源池,内部产能互相挤占",
+        "evidence": [
+          {
+            "metric": "TSMC CoWoS 月产能目标",
+            "value": "2026 年底约 130,000 片/月(较 2024 年底 ~35,000 片接近翻四倍)",
+            "asOf": "2026 年底(目标)",
+            "source": {
+              "name": "FinancialContent",
+              "url": "https://markets.financialcontent.com/stocks/article/tokenring-2026-2-5-tsmc-to-quadruple-advanced-packaging-capacity-reaching-130000-cowos-wafers-monthly-by-late-2026"
+            }
+          },
+          {
+            "metric": "2026 年 CoWoS 产能分配",
+            "value": "[估计] NVIDIA ~60%、Broadcom ~15%、AMD ~11%",
+            "asOf": "2026",
+            "source": {
+              "name": "Astute Group / Silicon Analysts",
+              "url": "https://www.astutegroup.com/news/industrial/advanced-packaging-demand-soars-nvidia-secures-60-of-cowos-capacity/"
+            }
+          },
+          {
+            "metric": "产能约束对 AMD 出货的影响讨论",
+            "value": "Forbes 质疑 TSMC 产能紧张或制约 AMD 股价上行",
+            "asOf": "2026-07-13",
+            "source": {
+              "name": "Forbes",
+              "url": "https://www.forbes.com/sites/greatspeculations/2026/07/13/will-tsmcs-capacity-crunch-derail-the-amd-stock-rally/"
+            }
+          }
+        ]
+      },
+      {
+        "category": "竞争",
+        "description": "NVIDIA CUDA 生态与规模优势(单季数据中心收入约为 AMD 的 11 倍、毛利率高约 19pct);Intel 2026Q2 强劲复苏(营收 +25%,客户端仍握约 70% 份额)并在 18A 上追赶;Broadcom/Marvell 承接 Google、Meta 等自研 ASIC 分流商用 GPU 需求",
+        "evidence": [
+          {
+            "metric": "NVIDIA FY27Q1 数据中心收入 vs AMD 2026Q2 数据中心分部",
+            "value": "$75.2B vs $6.718B;毛利率 non-GAAP 75% vs 56%",
+            "asOf": "2026-05-20 / 2026-08-04",
+            "source": {
+              "name": "NVIDIA 8-K (SEC) + AMD IR",
+              "url": "https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000051/q1fy27pr.htm"
+            }
+          },
+          {
+            "metric": "Intel 2026Q2 营收与增速",
+            "value": "$16.1B,+25% YoY;DCAI +59%",
+            "asOf": "2026-07-23",
+            "source": {
+              "name": "CNBC",
+              "url": "https://www.cnbc.com/2026/07/23/intel-intc-earnings-report-q2-2026.html"
+            }
+          },
+          {
+            "metric": "定制 ASIC 阵营 CoWoS 占比(Broadcom,为 Google/Meta 代工)",
+            "value": "[估计] ~15%",
+            "asOf": "2026",
+            "source": {
+              "name": "Astute Group",
+              "url": "https://www.astutegroup.com/news/industrial/advanced-packaging-demand-soars-nvidia-secures-60-of-cowos-capacity/"
+            }
+          }
+        ]
+      },
+      {
+        "category": "客户集中",
+        "description": "FY2025 10-K/A 披露有两名客户各自占合并收入超 10%;数据中心 GPU 增量高度绑定 OpenAI(6GW+认股权证)、Meta(6GW/约 $100B,亦含最多 1.6 亿股权证)、Anthropic(AMD 拟投资最高 $50 亿)等少数超级客户,任何一家部署节奏放缓都会显著冲击收入",
+        "evidence": [
+          {
+            "metric": "占收入 >10% 的客户数量",
+            "value": "2 家(各自 >10%)",
+            "asOf": "FY2025(10-K/A,2026-02-04)",
+            "source": {
+              "name": "AMD 10-K/A (SEC)",
+              "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000021/amd-20251227.htm"
+            }
+          },
+          {
+            "metric": "OpenAI 合作规模与股权绑定",
+            "value": "6GW GPU 部署 + 最多 1.6 亿股认股权证(行权价 $0.01/股,约合 10% 股本,末档与股价 $600 挂钩)",
+            "asOf": "2025-10-06",
+            "source": {
+              "name": "AMD IR / Tom's Hardware",
+              "url": "https://ir.amd.com/news-events/press-releases/detail/1260/amd-and-openai-announce-strategic-partnership-to-deploy-6-gigawatts-of-amd-gpus"
+            }
+          },
+          {
+            "metric": "Meta 协议",
+            "value": "6GW、约 $100B,含最多 1.6 亿股股权安排",
+            "asOf": "2026",
+            "source": {
+              "name": "Tom's Hardware",
+              "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/amd-meta-100-billion-deal"
+            }
+          },
+          {
+            "metric": "Anthropic 协议",
+            "value": "AMD 拟投资最高 $5B,换取多年算力采购(MI455X/Helios)",
+            "asOf": "2026-07-22",
+            "source": {
+              "name": "CNBC",
+              "url": "https://www.cnbc.com/2026/07/22/amd-anthropic-ai-chip-investment.html"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "currentValuation": {
+    "priceAsOf": "2026-08-04 收盘(数据截止 2026-08-05 21:30 北京时间,美股 8/5 常规时段刚开盘,当日盘中约 $487-493、跌约 6%)",
+    "sharePrice": {
+      "value": 518.58,
+      "unit": "currency",
+      "currency": "USD",
+      "source1": {
+        "name": "Google Finance(previous close)",
+        "url": "https://www.google.com/finance/quote/AMD:NASDAQ",
+        "value": "518.58 USD(2026-08-04 收盘)"
+      },
+      "source2": {
+        "name": "Nasdaq.com API previous close(Yahoo Finance chart API 亦为 518.58)",
+        "url": "https://www.nasdaq.com/market-activity/stocks/amd",
+        "value": "518.58 USD(2026-08-04 收盘);stockanalysis 8/5 盘中报 487.03(-6.08%)"
+      },
+      "deviationPct": 0.0,
+      "flag": "ok"
+    },
+    "sharesOutstanding": {
+      "value": 1630.6,
+      "unit": "百万股",
+      "source1": {
+        "name": "AMD 10-Q(Q1 FY2026)封面",
+        "url": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-26-000076/amd-20260328.htm",
+        "value": "1,630,600,639 股"
+      },
+      "source2": {
+        "name": "stockanalysis.com statistics",
+        "url": "https://stockanalysis.com/stocks/AMD/statistics/",
+        "value": "1.63B 股"
+      },
+      "asOf": "2026-04-29(10-Q 封面);DEF 14A 口径 2026-03-19 为 1,630,338,779 股",
+      "deviationPct": 0.02,
+      "flag": "ok"
+    },
+    "marketCap": {
+      "reported": "794.15B USD(2026-08-05 盘中;Nasdaq 同时点报 799.38B、Google 报 790.35B;按 8/4 收盘 518.58×16.306 亿股≈845.6B,与 Barchart 845.6B 一致)",
+      "computed": "845.6B USD = 518.58(8/4收盘) × 1,630.6 百万股,financial_rigor verify-market-cap 偏差 0.00%(与 Barchart 一致;stockanalysis 794.15B 为 8/5 盘中跌价口径)",
+      "flag": "ok"
+    },
+    "pe": {
+      "value": "125.68(8/5 盘中价口径;TTM GAAP EPS 约 $3.90;按 8/4 收盘价约 133)",
+      "basis": "TTM",
+      "source1": {
+        "name": "stockanalysis.com",
+        "url": "https://stockanalysis.com/stocks/AMD/",
+        "value": 125.68
+      },
+      "source2": {
+        "name": "Google Finance",
+        "url": "https://www.google.com/finance/quote/AMD:NASDAQ",
+        "value": "124.71(同时点;Forward PE 44.39 per stockanalysis)"
+      }
+    },
+    "ps": {
+      "value": "20.47(TTM 收入 $41.31B)",
+      "basis": "TTM",
+      "source1": {
+        "name": "stockanalysis.com statistics",
+        "url": "https://stockanalysis.com/stocks/AMD/statistics/",
+        "value": 20.47
+      },
+      "source2": {
+        "name": "Investing.com ratios",
+        "url": "https://www.investing.com/equities/adv-micro-device-ratios",
+        "value": "20.30(注:Barchart/MarketBeat 报 22.8,系用 8/4 收盘市值口径)"
+      }
+    },
+    "peg": {
+      "value": 0.78,
+      "basis": "stockanalysis 口径(高增长预期下 PEG<1)",
+      "source1": {
+        "name": "stockanalysis.com statistics",
+        "url": "https://stockanalysis.com/stocks/AMD/statistics/",
+        "value": 0.78
+      },
+      "source2": {
+        "status": "unavailable",
+        "reason": "已查 Yahoo Finance(503/限流)、finviz(域名拦截+Cloudflare)、macrotrends(403)、Zacks(空页)、Investing.com、Barchart、MarketBeat、fullratio、finbox、gurufocus 均未提供 PEG 第二值"
+      }
+    },
+    "evToRevenue": {
+      "value": "20.26(stockanalysis 报 EV $836.76B / TTM 收入 $41.31B)",
+      "basis": "TTM",
+      "source1": {
+        "name": "stockanalysis.com statistics",
+        "url": "https://stockanalysis.com/stocks/AMD/statistics/",
+        "value": 20.26
+      },
+      "source2": {
+        "name": "推算值(Nasdaq 市值 799.38B + 总债务 3.226B − 现金及短投 13.111B,财报数据取自 Q2 2026 新闻稿)÷ TTM 收入 41.305B",
+        "url": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results",
+        "value": "≈19.1;注意:AMD 为净现金公司,stockanalysis 的 EV(836.76B)高于其自报市值(794.15B),两口径存在明显差异,建议以推算口径复核"
+      }
+    }
+  },
+  "bullBearCase": {
+    "bull": [
+      {
+        "point": "AI 加速器 TAM 一年内从 $500B 上调至 $1.4T(2030),AMD 定位'全套 AI 工厂'供应商,公司目标年营收增速 >35%",
+        "holder": "AMD 官方/CEO Lisa Su(2025-11 分析师日、2026-07-24 Advancing AI)",
+        "evidence": "https://www.benzinga.com/markets/tech/26/07/60664477/amd-ai-forecast-grew-900-billion-in-one-year ; https://x.com/AMD/status/1988407656420106727"
+      },
+      {
+        "point": "超级客户订单锁定需求:OpenAI 6GW、Meta 6GW/约$100B、Anthropic 多年协议(MI455X+Helios),Helios 机架级平台已全面量产、2026-09 起出货并在 2027 上半年加速",
+        "holder": "公司公告 + CNBC/Tom's Hardware 报道",
+        "evidence": "https://ir.amd.com/news-events/press-releases/detail/1260/amd-and-openai-announce-strategic-partnership-to-deploy-6-gigawatts-of-amd-gpus ; https://www.cnbc.com/2026/07/22/amd-anthropic-ai-chip-investment.html"
+      },
+      {
+        "point": "基本面兑现:2026Q2 营收 $11.5B(+50%)创纪录,数据中心 +107%,Q3 指引 ~$13B(+41%)",
+        "holder": "AMD 公司指引(2026-08-04 财报)",
+        "evidence": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results"
+      },
+      {
+        "point": "服务器 CPU 结构性抢份额:x86 服务器收入份额创纪录 46.2%、出货份额 33.2%,Intel 数据中心地位持续被侵蚀",
+        "holder": "Mercury Research(经 Tom's Hardware/The Register 转述)",
+        "evidence": "https://www.tomshardware.com/pc-components/cpus/amd-reaches-46-percent-of-server-x86-cpu-revenue-intel-still-controls-70-percent-of-the-consumer-pc-market-share"
+      },
+      {
+        "point": "卖方集体上调目标价:2026-08 财报后 Jefferies $515→$640、Benchmark $685、BofA $620、UBS $730、Baird 翻倍至 $1,250(街内最高)",
+        "holder": "Jefferies/Benchmark/BofA/UBS/Baird 等卖方(经 TipRanks 汇总)",
+        "evidence": "https://www.tipranks.com/news/article/amd-stock-gets-new-street-high-price-target-as-analysts-hike-targets-heres-why"
+      }
+    ],
+    "bear": [
+      {
+        "point": "估值透支:AMD 静态 P/E 报道区间约 80x-200x、远期约 40x-119x(不同时点口径),若 MI400/MI450 爬坡不及预期或估值向行业均值 ~23x 收敛,看空情形指向 $400",
+        "holder": "FinanceFeeds 汇总的卖方看空情形 / 24-7 Wall St",
+        "evidence": "https://financefeeds.com/amd-stock-forecast-670-bull-400-bear-2026/"
+      },
+      {
+        "point": "'循环交易'与股权补贴质疑:OpenAI 以 $0.01/股获最多 1.6 亿股权证(约 10% 稀释),被批评为用股价上涨补贴订单、放大 AI 景气的自我强化风险",
+        "holder": "Acadian Asset Management(Owenomics 专栏)、Matt Levine 等财经评论",
+        "evidence": "https://www.acadian-asset.com/investment-insights/owenomics/straight-talk-about-circular-deals-in-ai ; https://finviz.com/news/185493/amd-pays-a-high-price-for-blockbuster-openai-deal"
+      },
+      {
+        "point": "与 NVIDIA 差距仍是数量级:NVDA 单季数据中心收入 $75.2B(AMD 的 ~11 倍)、毛利率 75%,CUDA 生态壁垒未破,AMD AI 加速器收入份额仅 [估计] 5-7%",
+        "holder": "财报事实对比(SEC 文件)+ 第三方份额估计",
+        "evidence": "https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000051/q1fy27pr.htm ; https://commandlinux.com/statistics/ai-gpu-market-share-nvidia-vs-amd-vs-intel/"
+      },
+      {
+        "point": "AI 资本开支'消化周期'风险:若 OpenAI/Meta 部署节奏放缓或行业进入 digestion,AMD 高增长指引与高倍数同时承压;财报前已有分析师提示谨慎(Zen 6 发布与 Q2 财报前的'分析师谨慎墙')",
+        "holder": "24/7 Wall St(2026-08-03)/ TechTimes 汇总的谨慎派分析师",
+        "evidence": "https://247wallst.com/investing/2026/08/03/amd-price-prediction-analysts-eye-ai-driven-upside-ahead-of-earnings/ ; https://www.techtimes.com/articles/320380/20260713/amds-rally-hits-wall-analyst-caution-before-zen-6-launch-q2-earnings.htm"
+      },
+      {
+        "point": "供给端硬约束:AMD 仅占 TSMC CoWoS 产能 [估计] ~11%(NVIDIA ~60%),EPYC 与 Instinct 共用封装资源,交付能力可能跟不上已签的 GW 级订单",
+        "holder": "Forbes(Great Speculations,2026-07-13)",
+        "evidence": "https://www.forbes.com/sites/greatspeculations/2026/07/13/will-tsmcs-capacity-crunch-derail-the-amd-stock-rally/"
+      }
+    ]
+  },
+  "crossValidationLog": [
+    {
+      "field": "市值(股价×总股本)",
+      "source1": {
+        "name": "Google/Nasdaq 8/4收盘×10-Q股本",
+        "value": "845.6B"
+      },
+      "source2": {
+        "name": "Barchart 报告市值",
+        "value": "845.6B"
+      },
+      "deviationPct": 0.0,
+      "flag": "ok",
+      "resolution": "financial_rigor verify-market-cap 通过;8/5 盘中口径(794-799B)为财报后下跌所致,已注明"
+    },
+    {
+      "field": "FY2025 收入",
+      "source1": {
+        "name": "SEC 10-K XBRL",
+        "value": 34639
+      },
+      "source2": {
+        "name": "stockanalysis",
+        "value": 34639
+      },
+      "deviationPct": 0.0,
+      "flag": "ok",
+      "resolution": "financial_rigor cross-validate 一致"
+    },
+    {
+      "field": "FY2025 净利润(GAAP)",
+      "source1": {
+        "name": "SEC 10-K XBRL",
+        "value": 4335
+      },
+      "source2": {
+        "name": "stockanalysis",
+        "value": 4335
+      },
+      "deviationPct": 0.0,
+      "flag": "ok",
+      "resolution": "一致"
+    },
+    {
+      "field": "FY2025 现金储备(现金+短投)",
+      "source1": {
+        "name": "SEC 10-K XBRL",
+        "value": 10552
+      },
+      "source2": {
+        "name": "stockanalysis",
+        "value": 10552
+      },
+      "deviationPct": 0.0,
+      "flag": "ok",
+      "resolution": "一致,亦与公司新闻稿一致"
+    },
+    {
+      "field": "FY2025 自由现金流",
+      "source1": {
+        "name": "SEC 推算(经营现金流7709-capex974)",
+        "value": 6735
+      },
+      "source2": {
+        "name": "stockanalysis",
+        "value": 6697
+      },
+      "deviationPct": 0.57,
+      "flag": "ok",
+      "resolution": "偏差0.6%<1%,源于capex口径;公司新闻稿持续经营口径5,519另行注明,未混用"
+    },
+    {
+      "field": "总股本",
+      "source1": {
+        "name": "10-Q封面(2026-04-29)",
+        "value": "1,630.6百万"
+      },
+      "source2": {
+        "name": "stockanalysis",
+        "value": "1,630百万"
+      },
+      "deviationPct": 0.04,
+      "flag": "ok",
+      "resolution": "一致"
+    }
+  ],
+  "gaps": [
+    {
+      "item": "macrotrends.net 全部子页 (revenue/gross-profit/operating-margin/net-income/free-cash-flow/cash-on-hand)",
+      "reason": "Cloudflare 反爬: WebFetch 与带浏览器 UA 的 curl 均返回 403 'Just a moment...',真实 Chrome 打开后停在需人工交互的人机验证页,采集 Agent 不能代为通过验证。已按'每个关键数值双独立来源'要求以 SEC EDGAR 10-K XBRL 原始数据替代 macrotrends 作为第二来源,所有年度指标 SEC 与 stockanalysis 交叉一致",
+      "searched": "macrotrends.net/stocks/charts/AMD/amd/{revenue,net-income,gross-profit,operating-margin,free-cash-flow,cash-on-hand} 经 WebFetch、curl(完整浏览器头)、Chrome 真实浏览器三种方式"
+    },
+    {
+      "item": "分部收入第二独立来源",
+      "reason": "分部明细(Data Center / Client and Gaming / Embedded 及 Client、Gaming 子项)仅公司业绩新闻稿/10-K 单一披露体系,stockanalysis 与 macrotrends 均不提供分部数据,按规范记 source1 并在各分部 note 注明单源",
+      "searched": "stockanalysis.com financials 各页、AMD ir.amd.com 各季新闻稿"
+    },
+    {
+      "item": "FY2025 自由现金流唯一口径",
+      "reason": "非缺失,为口径分歧提示: AMD 新闻稿口径(持续经营)5,519 vs 10-K 总经营现金流推算 6,735 vs stockanalysis 6,697,详见 FY2025 freeCashFlow.note,未编造统一值",
+      "searched": "AMD Q4/FY2025 新闻稿(globenewswire 全文)、SEC 10-K XBRL、stockanalysis cash flow"
+    },
+    {
+      "item": "四分部口径(Data Center/Client/Gaming/Embedded 并列)",
+      "reason": "AMD 自 2025Q1 起将可报告分部改为三个(Client 与 Gaming 合并),FY2025 与最近四个季度均按新口径披露;本 JSON 已同时给出合并段与 Client、Gaming 子项,YoY 为公司披露值",
+      "searched": "AMD 2025Q3-2026Q2 各季业绩新闻稿"
+    },
+    {
+      "item": "AMD Instinct(数据中心 GPU)单独季度收入",
+      "reason": "公司仅披露数据中心分部合计($6.718B,2026Q2),未拆分 GPU 与 EPYC",
+      "searched": "AMD IR Q2 2026 press release; 8-K earnings slides"
+    },
+    {
+      "item": "数据中心 GPU/AI 加速器份额的权威口径(IDC/Mercury 级)",
+      "reason": "免费渠道只有第三方聚合估计(5-7%),未找到 2026 年 IDC/TechInsights 原始数据,故标注[估计]",
+      "searched": "AMD data center GPU market share vs NVIDIA 2026 revenue share; Mercury Research"
+    },
+    {
+      "item": "针对 AMD 的正式做空机构报告(Hindenburg/Kerrisdale 类)",
+      "reason": "2026 年内未检索到知名做空机构针对 AMD 的报告,空方论点以卖方看空情形与评论文章替代",
+      "searched": "AMD short report 2026; bear case skeptical analyst circular deal criticism"
+    },
+    {
+      "item": "FY2025 10-K 中两大 >10% 客户的具体名称与百分比",
+      "reason": "搜索结果仅确认'两名客户各占 >10%',未取得具体数值,需逐页读取 10-K/A 原文",
+      "searched": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000021/amd-20251227.htm"
+    },
+    {
+      "item": "ARM 服务器 CPU / 自研芯片(Graviton、Google Axion 等)2026 年份额",
+      "reason": "本次未检索到 2026 年可靠的 ARM 服务器渗透率原始出处,仅有 Broadcom CoWoS 占比作为间接证据",
+      "searched": "AI semiconductor market forecast 2026; CoWoS allocation"
+    },
+    {
+      "item": "PEG 第二来源",
+      "reason": "主流免费源均被反爬或不提供该指标",
+      "searched": "Yahoo Finance key-statistics(多次 503/API 限流)、finviz(域名安全拦截+Cloudflare)、macrotrends(403/Cloudflare)、Zacks、Investing.com、Barchart、MarketBeat、fullratio、finbox、gurufocus"
+    },
+    {
+      "item": "macrotrends 全站数据(题目指定的第二来源之一)",
+      "reason": "www 与 m 站均返回 403/Cloudflare 质询,curl 带浏览器 UA 亦被拦",
+      "searched": "research-development-expenses、pe-ratio、price-sales 三个页面,替代以 SEC 10-K、Google Finance、Nasdaq、Investing.com、Barchart"
+    },
+    {
+      "item": "8/5 当日收盘价",
+      "reason": "数据截止 2026-08-05 21:30 北京时间时美股尚在盘初(09:30-09:40 EDT),8/5 收盘价尚不存在,故以 8/4 收盘 $518.58 为最新收盘,并注明 8/5 盘中约 $487-493(财报后下跌)",
+      "searched": "stockanalysis/Google Finance/Nasdaq/Yahoo chart API 实时报价交叉核对"
+    }
+  ]
+}

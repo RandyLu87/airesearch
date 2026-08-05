@@ -1,0 +1,112 @@
+{
+  "_spec": {
+    "purpose": "研究流程第 3 步（分析总结）的产出模板。由评估 Agent 基于第 1 步采集与第 2 步分析的落盘文件生成，不重新采集。步骤正文见 docs/research/workflow/03-analysis-summary.md。",
+    "todoSentinel": "所有待填值写 \"__TODO__\"；无法给出的字段不删除，改写 { \"status\": \"unavailable\", \"reason\": \"缺失原因\" }。",
+    "confidence": "信心度总分 10 分（0–10，整数或 0.5 步长）：价值投资视角下对该维度的看多程度，分数越高越看多。梯度：9–10 教科书级优秀（宽护城河/卓越管理层/显著低估）；7–8 明显有利有小瑕疵；5–6 中性或好坏参半；3–4 明显不利；0–2 严重不利。最大风险维度按风险可控程度打分（越致命越低），估值维度按价格吸引力打分（越透支越低）。证据不足向中性收敛并在 scoreBasis 说明，不把数据缺口误报为看空理由。",
+    "traceability": "每个结论、评分、建议的 basis 字段必须写明引用的前两步文件字段路径（如 dimensions.valuation.analysis.threeScenario）与关键数据，不接受凭空判断。",
+    "strategies": "每条策略建议必须绑定可观察触发条件（价格区间 / 指标阈值 / 具体事件），价格类引用第 2 步 threeScenario 结果，基本面类引用 failurePaths、护城河 breaker 或驱动指标。"
+  },
+  "meta": {
+    "companyId": "__TODO__",
+    "companyName": "__TODO__",
+    "summarizedAt": "__TODO__",
+    "dataCutoff": "__TODO__（Asia/Shanghai，与第 1、2 步一致）",
+    "basedOnCollection": "__TODO__（第 1 步采集文件的仓库相对路径）",
+    "basedOnAnalysis": "__TODO__（第 2 步分析文件的仓库相对路径）"
+  },
+  "dimensionSummary": [
+    {
+      "dimensionId": "businessQuality",
+      "title": "生意质量",
+      "mapsTo": "dimensions.businessEssence",
+      "conclusion": "__TODO__（结论总结，一至三句）",
+      "confidence": "__TODO__（0-10）",
+      "scoreBasis": "__TODO__（打分依据：引用第 2 步具体字段与数据、dataGaps 与估计值占比如何影响得分）"
+    },
+    {
+      "dimensionId": "moat",
+      "title": "护城河",
+      "mapsTo": "dimensions.moat",
+      "conclusion": "__TODO__",
+      "confidence": "__TODO__（0-10）",
+      "scoreBasis": "__TODO__"
+    },
+    {
+      "dimensionId": "management",
+      "title": "管理层",
+      "mapsTo": "dimensions.management",
+      "conclusion": "__TODO__",
+      "confidence": "__TODO__（0-10）",
+      "scoreBasis": "__TODO__"
+    },
+    {
+      "dimensionId": "keyRisk",
+      "title": "最大风险",
+      "mapsTo": "dimensions.inversion",
+      "conclusion": "__TODO__（最大风险是什么、为什么是它）",
+      "confidence": "__TODO__（0-10）",
+      "scoreBasis": "__TODO__"
+    },
+    {
+      "dimensionId": "civilizationTrend",
+      "title": "文明趋势",
+      "mapsTo": "dimensions.industryTrend",
+      "conclusion": "__TODO__",
+      "confidence": "__TODO__（0-10）",
+      "scoreBasis": "__TODO__"
+    },
+    {
+      "dimensionId": "valuation",
+      "title": "估值",
+      "mapsTo": "dimensions.valuation",
+      "conclusion": "__TODO__",
+      "confidence": "__TODO__（0-10）",
+      "scoreBasis": "__TODO__"
+    }
+  ],
+  "strategies": {
+    "noPosition": {
+      "title": "空仓者",
+      "advice": "__TODO__（面向尚未持有者的专业建议）",
+      "triggers": [
+        {
+          "condition": "__TODO__（可观察触发条件：价格区间 / 指标阈值 / 事件）",
+          "action": "__TODO__（条件出现时做什么）",
+          "basis": "__TODO__（引用第 2 步字段路径与数字）"
+        }
+      ]
+    },
+    "holding": {
+      "title": "持仓者",
+      "advice": "__TODO__（面向已持有者的专业建议）",
+      "triggers": [
+        {
+          "condition": "__TODO__",
+          "action": "__TODO__",
+          "basis": "__TODO__"
+        }
+      ]
+    },
+    "sellSignals": {
+      "title": "卖出信号",
+      "signals": [
+        {
+          "signal": "__TODO__（什么情况下应当卖出）",
+          "observable": "__TODO__（怎么观察到：哪个指标 / 价格 / 事件，阈值是多少）",
+          "basis": "__TODO__（引用 failurePaths / 护城河 breaker / threeScenario 等具体字段）"
+        }
+      ]
+    },
+    "addSignals": {
+      "title": "加仓信号",
+      "signals": [
+        {
+          "signal": "__TODO__（什么情况下可以加仓）",
+          "observable": "__TODO__",
+          "basis": "__TODO__"
+        }
+      ]
+    }
+  },
+  "disclaimer": "本总结基于公开信息与数据截止时点的分析生成，仅供研究参考，不构成个性化投资建议。"
+}

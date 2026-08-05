@@ -34,3 +34,6 @@ apps/web/out/
 # Python virtualenvs used for ad-hoc data probes
 .venv/
 **/.venv/
+
+# FinMind token（docs/research/tools/twstock_data.py 按脚本位置读取，严禁提交）
+docs/research/local/

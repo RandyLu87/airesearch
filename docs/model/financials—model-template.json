@@ -1,0 +1,190 @@
+{
+  "_spec": {
+    "purpose": "公司数据采集产出模板。采集范围以 docs/model/financial-model.md 的 10 个维度为唯一清单，数据源与交叉验证规范以 docs/model/financial-data.md 为唯一正文。",
+    "todoSentinel": "所有待填值写 \"__TODO__\"；取不到的字段不删除，改写 { \"status\": \"unavailable\", \"reason\": \"缺失原因 + 已查范围\" }。",
+    "verifiedValue": "关键数值统一用校验对象：{ value, unit, currency, source1: {name, url, value}, source2: {name, url, value}, deviationPct, flag }。flag 取值：ok（误差≤1%，取 source1 数值）/ minor-diff（1%~5%，注明可能原因如汇率或会计口径）/ major-diff（>5%，必须回原始财报核实后才能使用）。",
+    "estimates": "只有一手来源、无法双源验证的数值（如未上市对手），value 前置 \"[估计]\" 并在 note 说明依据，不执行交叉验证。",
+    "calculation": "一切除法、乘法、增速、估值倍数必须用 docs/research/tools/financial_rigor.py 验算，禁止心算；工具输出记入 crossValidationLog。"
+  },
+  "meta": {
+    "companyId": "__TODO__",
+    "companyName": "__TODO__",
+    "ticker": "__TODO__",
+    "exchange": "__TODO__",
+    "market": "us | hk | cn-a | tw",
+    "reportingCurrency": "__TODO__",
+    "accountingBasis": "__TODO__",
+    "fiscalYearEnd": "__TODO__",
+    "dataCutoff": "__TODO__（Asia/Shanghai，先运行 date 确认）",
+    "collectedAt": "__TODO__",
+    "sources": {
+      "primary": { "name": "__TODO__", "url": "__TODO__" },
+      "secondary": { "name": "__TODO__", "url": "__TODO__" },
+      "originalFilings": [
+        { "type": "10-K | 10-Q | 年报 | 季报 | 招股书", "period": "__TODO__", "url": "__TODO__" }
+      ]
+    }
+  },
+  "revenueStructure": {
+    "_dimension": "1. 收入结构：最近财年及近4季度分部收入、增速、毛利率",
+    "latestFiscalYear": {
+      "period": "__TODO__",
+      "totalRevenue": {
+        "value": "__TODO__",
+        "unit": "currency",
+        "currency": "__TODO__",
+        "source1": { "name": "__TODO__", "url": "__TODO__", "value": "__TODO__" },
+        "source2": { "name": "__TODO__", "url": "__TODO__", "value": "__TODO__" },
+        "deviationPct": "__TODO__",
+        "flag": "ok | minor-diff | major-diff"
+      },
+      "segments": [
+        {
+          "name": "__TODO__",
+          "revenue": "__TODO__（校验对象）",
+          "revenueSharePct": "__TODO__",
+          "yoyGrowthPct": "__TODO__",
+          "grossMarginPct": "__TODO__（不披露则 unavailable + reason）"
+        }
+      ]
+    },
+    "recentQuarters": [
+      {
+        "period": "__TODO__（最近4个季度，逐季一条）",
+        "totalRevenue": "__TODO__（校验对象）",
+        "yoyGrowthPct": "__TODO__",
+        "segments": [
+          { "name": "__TODO__", "revenue": "__TODO__", "yoyGrowthPct": "__TODO__" }
+        ]
+      }
+    ]
+  },
+  "financialMetrics": {
+    "_dimension": "2. 财务指标：近5年收入、净利润、毛利率、经营利润率、自由现金流、现金储备",
+    "annual": [
+      {
+        "fiscalYear": "__TODO__（近5年逐年一条，上市不足5年则自上市起全部）",
+        "revenue": "__TODO__（校验对象）",
+        "netProfit": "__TODO__（校验对象，注明 GAAP / Non-GAAP 口径）",
+        "grossMarginPct": "__TODO__",
+        "operatingMarginPct": "__TODO__",
+        "freeCashFlow": "__TODO__（校验对象，注明资本支出口径是否含租赁/收购）",
+        "cashReserves": "__TODO__（校验对象，现金+短期投资；如报净现金须注明债务口径是否含经营租赁负债）"
+      }
+    ]
+  },
+  "competitiveLandscape": {
+    "_dimension": "3. 竞争格局：市场份额、主要竞争对手对比",
+    "marketShare": {
+      "valuePct": "__TODO__",
+      "marketDefinition": "__TODO__（分母包含谁、排除谁及原因）",
+      "asOf": "__TODO__",
+      "source": { "name": "__TODO__", "url": "__TODO__" }
+    },
+    "competitors": [
+      {
+        "name": "__TODO__",
+        "ticker": "__TODO__（未上市则填 [估计] 并注明）",
+        "marketSharePct": "__TODO__",
+        "revenue": "__TODO__",
+        "grossMarginPct": "__TODO__",
+        "note": "__TODO__（与本公司的关键差异）"
+      }
+    ]
+  },
+  "businessModelMoat": {
+    "_dimension": "4. 商业模式与护城河：核心竞争优势来源",
+    "oneLiner": "__TODO__（一句话说明这门生意的本质：谁付钱、为什么付、怎么收）",
+    "revenueModel": "__TODO__（一次性销售 / 订阅复购 / 平台抽成 / 广告等）",
+    "moats": [
+      {
+        "type": "品牌定价权 | 转换成本 | 网络效应 | 规模效应 | 技术专利壁垒",
+        "evidence": "__TODO__（支撑证据与数据来源）",
+        "trend": "变宽 | 稳定 | 变窄 | 待验证"
+      }
+    ]
+  },
+  "technology": {
+    "_dimension": "5. 技术能力：核心技术栈、研发投入",
+    "coreTechStack": ["__TODO__"],
+    "rdExpense": "__TODO__（校验对象，最近财年）",
+    "rdIntensityPct": "__TODO__（研发费用/收入，工具验算）",
+    "rdTrend": "__TODO__（近3-5年研发投入走势）",
+    "note": "__TODO__（资本化研发、关键技术资产等口径说明）"
+  },
+  "management": {
+    "_dimension": "6. 管理层：创始人/CEO履历、持股比例、关键决策记录",
+    "founderCeo": {
+      "name": "__TODO__",
+      "background": "__TODO__（履历要点）",
+      "tenure": "__TODO__"
+    },
+    "ownership": {
+      "economicPct": "__TODO__",
+      "votingPct": "__TODO__（AB股结构下经济权益 ≠ 投票权，分开记录）",
+      "source": { "name": "__TODO__", "url": "__TODO__" }
+    },
+    "keyDecisions": [
+      { "date": "__TODO__", "decision": "__TODO__", "outcome": "__TODO__" }
+    ]
+  },
+  "industryOutlook": {
+    "_dimension": "7. 行业前景：TAM（总可寻址市场）、增长预测",
+    "tam": {
+      "value": "__TODO__",
+      "currency": "__TODO__",
+      "definition": "__TODO__（口径：谁的钱、哪个环节）",
+      "asOf": "__TODO__",
+      "source": { "name": "__TODO__", "url": "__TODO__" }
+    },
+    "growthForecast": {
+      "cagrPct": "__TODO__",
+      "horizon": "__TODO__",
+      "source": { "name": "__TODO__", "url": "__TODO__" }
+    }
+  },
+  "riskFactors": {
+    "_dimension": "8. 风险因素：地缘政治、监管、供应链等",
+    "items": [
+      {
+        "category": "地缘政治 | 监管 | 供应链 | 竞争 | 技术 | 其他",
+        "description": "__TODO__",
+        "evidence": "__TODO__（来源，区分公司披露与外部推断）"
+      }
+    ]
+  },
+  "currentValuation": {
+    "_dimension": "9. 当前估值：市值、PE、PS、PEG、EV/Revenue",
+    "priceAsOf": "__TODO__（带时间戳）",
+    "sharePrice": "__TODO__（校验对象）",
+    "sharesOutstanding": "__TODO__（校验对象，最新总股本）",
+    "marketCap": {
+      "reported": "__TODO__",
+      "computed": "__TODO__（用 financial_rigor.py verify-market-cap 验算 股价×总股本，偏差>5% 必须排查单位/币种）",
+      "flag": "ok | major-diff"
+    },
+    "pe": "__TODO__（工具验算，注明 TTM / 静态）",
+    "ps": "__TODO__",
+    "peg": "__TODO__",
+    "evToRevenue": "__TODO__"
+  },
+  "bullBearCase": {
+    "_dimension": "10. 多空双方核心论点",
+    "bull": [
+      { "point": "__TODO__", "evidence": "__TODO__" }
+    ],
+    "bear": [
+      { "point": "__TODO__", "evidence": "__TODO__" }
+    ]
+  },
+  "crossValidationLog": [
+    {
+      "field": "__TODO__（收入 / 净利润 / 现金储备 / 总股本 / 市值 等关键数据逐条记录）",
+      "source1": { "name": "__TODO__", "value": "__TODO__" },
+      "source2": { "name": "__TODO__", "value": "__TODO__" },
+      "deviationPct": "__TODO__",
+      "flag": "ok | minor-diff | major-diff",
+      "resolution": "__TODO__（有差异时的原因与采用依据；major-diff 必须回原始财报）"
+    }
+  ]
+}
