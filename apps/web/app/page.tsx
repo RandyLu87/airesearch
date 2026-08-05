@@ -38,8 +38,9 @@ function CompanyCard({ companyId, final }: { companyId: string; final: FinalRepo
   const meta = final?.meta ?? {};
   const collection = final?.collection ?? {};
   const valuation = collection.currentValuation ?? {};
-  const oneLiner = final?.analysis?.dimensions?.businessEssence?.conclusion
-    ?? collection.businessModelMoat?.oneLiner;
+  // 卡片空间小：优先取短的一句话生意本质，长结论留给公司页。
+  const oneLiner = collection.businessModelMoat?.oneLiner
+    ?? final?.analysis?.dimensions?.businessEssence?.conclusion;
   return (
     <a className="report-link" href={`./companies/${companyId}.html`}>
       <div className="company-card-meta">
@@ -53,12 +54,12 @@ function CompanyCard({ companyId, final }: { companyId: string; final: FinalRepo
           <dt>股价</dt>
           <dd>
             {text(valuation.sharePrice)}
-            {valuation.priceAsOf ? <small>截至 <time>{text(valuation.priceAsOf)}</time></small> : null}
+            {valuation.priceAsOf ? <small>截至 <time>{text(valuation.priceAsOf).split("(")[0].split("（")[0]}</time></small> : null}
           </dd>
         </div>
         <div>
           <dt>市值</dt>
-          <dd>{text(valuation.marketCap?.reported)}</dd>
+          <dd>{text(valuation.marketCap?.reported).split("(")[0].split("（")[0]}</dd>
         </div>
       </dl>
       <span>查看分析报告 →</span>

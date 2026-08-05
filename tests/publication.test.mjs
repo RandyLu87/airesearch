@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import test, { after, before } from "node:test";
 import { fileURLToPath } from "node:url";
@@ -182,12 +182,21 @@ test("the site index derives exactly one card per financials-final.json", () => 
   const indexPath = path.join(siteRoot, "index.html");
   const html = readFileSync(indexPath, "utf8");
   const cardLinks = [...html.matchAll(/class="report-link" href="\.\/companies\/([^"]+)\.html"/g)]
-    .map((match) => match[1]);
-  assert.deepEqual(cardLinks, [fixtureCompany]);
+    .map((match) => match[1])
+    .sort();
+  // 覆盖是派生的：卡片集合必须与带 financials-final.json 的公司目录一一对应，
+  // 夹具之外仓库里已有的真实研究同样各得一张卡。
+  const expected = readdirSync(researchRoot, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory()
+      && existsSync(path.join(researchRoot, entry.name, "financials-final.json")))
+    .map((entry) => entry.name)
+    .sort();
+  assert.deepEqual(cardLinks, expected);
+  assert.equal(cardLinks.includes(fixtureCompany), true);
   const text = pageText(html);
   assert.equal(text.includes("数据截止 2026-08-05"), true, "card must show the data cutoff");
-  // 卡片文案优先取 businessEssence.conclusion，其次 businessModelMoat.oneLiner。
-  assert.equal(text.includes("订阅收入占八成，现金先收后付。"), true, "card must show the one-liner");
+  // 卡片空间小：文案优先取短的 businessModelMoat.oneLiner，长结论留给公司页。
+  assert.equal(text.includes("测试公司以订阅方式向开发者收费。"), true, "card must show the one-liner");
   assertLocalReferencesResolve(html, indexPath, "site index");
 });
 

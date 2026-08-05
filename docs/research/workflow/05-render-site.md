@@ -1,6 +1,6 @@
 # 渲染网站（研究流程第 5 步）
 
-本文件是 `docs/research/public-company-financial-research.md` 第 5 步的唯一正文。把三份校验通过的落盘文件合并为最终 JSON，再由站点生成器渲染成 HTML。样式完全复用 `research/site/assets/research.css` 的既有类，不新增样式。
+本文件是 `docs/research/public-company-financial-research.md` 第 5 步的唯一正文。把三份校验通过的落盘文件合并为最终 JSON，再由站点生成器渲染成 HTML。样式沿用 `research.css` 的既有设计语言（纸白底、黑排版、细分隔线），分析页专用类（折叠溯源 `.fold`、信号列表、追问卡、键值行等）统一维护在同一文件尾部。
 
 - **输入**：第 4 步校验通过的三份文件（统一命名，见下）。
 - **中间产物**：`research/companies/<company-id>/financials-final.json`（`docs/model/financials—final-template.json` 契约）。
