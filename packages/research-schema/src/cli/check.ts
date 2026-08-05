@@ -3,7 +3,9 @@ import path from "node:path";
 import {
   DRIVER_COMPATIBILITY_KEYS,
   RECALIBRATION_GRADES,
+  isCurrentSnapshot,
   researchSnapshotSchema,
+  splitCausalChain,
   type DriverMetric,
 } from "../index.ts";
 import {
@@ -277,6 +279,21 @@ export function checkSnapshotData(input: {
   // Layer 3 — continuity against the previous snapshot. Needs a fully valid
   // snapshot, since it reads driver calibration and the model change grade.
   if (!parsed.success || sentinels.length > 0) return { errors, warnings };
+
+  // The causal chain is rendered as a stepped flow by splitting on the arrow the
+  // driver-tree template mandates. That makes an arrow-less chain a silent
+  // downgrade to a paragraph, so say so — but only as a warning: how many links
+  // a business actually has is a research judgment, not a rendering constraint.
+  if (isCurrentSnapshot(parsed.data)) {
+    const links = splitCausalChain(parsed.data.businessModel.causalChain);
+    if (links.length < 3) {
+      warnings.push(
+        `businessModel.causalChain 只解析出 ${links.length} 个环节（按 → 分隔），` +
+          `因果链会降级为散文渲染而不是阶梯流；按 business-model-playbook 第 2 节的驱动树模板` +
+          `用 → 连接各环节即可恢复图形。`,
+      );
+    }
+  }
 
   const ledger = checkLedger({ data: parsed.data, directory, stem });
   errors.push(...ledger.errors);

@@ -12,6 +12,7 @@ import {
   MarketPositionSection,
   MetricGlossary,
   MetricNote,
+  ProseBlock,
   ValuationMethodPanel,
   ValueBridge,
   formatPrice,
@@ -176,7 +177,7 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
               <li key={constraint.id}>
                 <span className={`trend trend--${constraint.status}`}>{constraint.status}</span>
                 <strong>{constraint.label}</strong>
-                <p>{constraint.explanation}</p>
+                <ProseBlock text={constraint.explanation} />
               </li>
             ))}
           </ul>

@@ -435,6 +435,25 @@ const methodSelectionSchema = z.object({
   }
 });
 
+/**
+ * Split a causal chain into its links.
+ *
+ * `business-model-playbook.md` section 2 mandates the chain shape — 关键投入 →
+ * 获客 → 销量 → 定价 → 单位贡献 → 现金回收 → 再投资 — so the arrow is structure
+ * rather than an author's punctuation habit, and the renderer can lay the chain
+ * out as a stepped flow without a dedicated schema field.
+ *
+ * It lives here, beside the contract, because the checker warns about chains
+ * that will not render as a flow and the renderer decides whether they do. Two
+ * copies of this split could disagree about what counts as a link.
+ */
+export function splitCausalChain(chain: string): string[] {
+  return chain
+    .split("→")
+    .map((link) => link.trim().replace(/[。；;]+$/, "").trim())
+    .filter((link) => link.length > 0);
+}
+
 export const SCHEMA_VERSION = "1.1.0";
 
 /**

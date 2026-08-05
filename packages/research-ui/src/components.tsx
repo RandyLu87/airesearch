@@ -3,6 +3,7 @@ import {
   lookupStandardMetric,
   lookupValuationMethod,
   periodsOfType,
+  splitCausalChain,
   yearOnYearPair,
   type ResearchSnapshot,
 } from "@airesearch/research-schema";
@@ -65,20 +66,151 @@ export function CompanyCoverageCard({
   );
 }
 
+/**
+ * The currency-and-scale suffix, without the number.
+ *
+ * Split out so a chart that puts the unit in its title and a table that puts it
+ * after every figure cannot drift apart — the waterfall used to spell the same
+ * unit "USD百万" while the segment table said "USD百万元".
+ */
+export function financialUnitLabel(value: FinancialValue) {
+  const currency = value.currency === "CNY" ? "人民币" : value.currency ?? "";
+  const scale = value.scale === "hundred-million"
+    ? "亿元"
+    : value.scale === "million"
+      ? "百万元"
+      : "元";
+  return `${currency}${scale}`;
+}
+
 export function formatFinancialValue(value?: FinancialValue) {
   if (!value) return "未披露";
   if (value.unit === "percent") return `${value.value}%`;
   if (value.unit === "percentage-point") return `${value.value} 个百分点`;
-  if (value.unit === "currency") {
-    const currency = value.currency === "CNY" ? "人民币" : value.currency;
-    const scale = value.scale === "hundred-million"
-      ? "亿元"
-      : value.scale === "million"
-        ? "百万元"
-        : "元";
-    return `${value.value} ${currency}${scale}`;
-  }
+  if (value.unit === "currency") return `${value.value} ${financialUnitLabel(value)}`;
   return value.value;
+}
+
+type ProseShape =
+  | { kind: "plain"; text: string }
+  | { kind: "paragraphs"; paragraphs: string[] }
+  | { kind: "enumerated"; lead: string; items: string[]; tail: string };
+
+/**
+ * Break a long research paragraph along the structure its author already wrote.
+ *
+ * Two structures exist in this prose and both are mechanical to detect, so
+ * neither needs a schema field: an explicit `(1)(2)(3)` enumeration, and
+ * sentences ended by the full-width 。 (unambiguous in Chinese — decimals use a
+ * half-width period, so "29.68%" never splits).
+ *
+ * Sentences are grouped to at least `MIN_PARAGRAPH` characters rather than one
+ * per paragraph. Ungrouped, a constraint like AMD's would break into six
+ * fragments, some of them eight characters long, which reads worse than the wall
+ * it replaced. Measured over the four current companies this yields a median
+ * paragraph of 81 characters and never fewer than 46.
+ *
+ * Short text is returned untouched: netease and Circle have no field over 112
+ * characters, and splitting those would only add noise.
+ */
+const MIN_PARAGRAPH = 45;
+/**
+ * The last paragraph may be shorter than the rest — a brief closing sentence is
+ * normal typography. Without this floor the merge-the-remainder rule cancelled
+ * the split outright whenever a field had exactly two sentences and the second
+ * fell just under MIN_PARAGRAPH: AMD's cash engine is 211 characters split
+ * 170 + 41, and 41 lost to 45 collapsed it back into one wall of text.
+ */
+const MIN_FINAL_PARAGRAPH = 25;
+const SPLIT_ABOVE = 110;
+
+export function splitProse(text: string): ProseShape {
+  const markers = [...text.matchAll(/[（(](\d+)[）)]\s*/g)];
+  if (markers.length >= 2) {
+    const items: string[] = [];
+    let tail = "";
+    for (const [index, marker] of markers.entries()) {
+      const start = (marker.index ?? 0) + marker[0].length;
+      const end = index + 1 < markers.length ? markers[index + 1].index ?? text.length : text.length;
+      let chunk = text.slice(start, end).trim();
+      // The enumeration closes with 。 and anything after it is a concluding
+      // remark about the whole list, not part of the last item.
+      if (index + 1 === markers.length) {
+        const stop = chunk.indexOf("。");
+        if (stop !== -1) {
+          tail = chunk.slice(stop + 1).trim();
+          chunk = chunk.slice(0, stop + 1);
+        }
+      }
+      items.push(chunk.replace(/[；;]$/, ""));
+    }
+    return {
+      kind: "enumerated",
+      lead: text.slice(0, markers[0].index ?? 0).trim(),
+      items,
+      tail,
+    };
+  }
+
+  if (text.length > SPLIT_ABOVE) {
+    const sentences = (text.match(/[^。]+。|[^。]+$/g) ?? [])
+      .map((sentence) => sentence.trim())
+      .filter(Boolean);
+    const paragraphs: string[] = [];
+    let current = "";
+    for (const sentence of sentences) {
+      current += sentence;
+      if (current.length >= MIN_PARAGRAPH) {
+        paragraphs.push(current);
+        current = "";
+      }
+    }
+    // Only a genuinely tiny remainder joins the previous paragraph.
+    if (current) {
+      if (paragraphs.length > 0 && current.length < MIN_FINAL_PARAGRAPH) {
+        paragraphs[paragraphs.length - 1] += current;
+      } else {
+        paragraphs.push(current);
+      }
+    }
+    if (paragraphs.length >= 2) return { kind: "paragraphs", paragraphs };
+  }
+
+  return { kind: "plain", text };
+}
+
+/**
+ * Long prose, broken up when it has structure to break on.
+ *
+ * Renders a `<p>` when the text is left whole and a `<div>` when it is not, so
+ * the result is valid wherever a block goes — including inside the `<li>` of a
+ * bullet or risk list, where a nested `<p>` inside `<p>` would not be.
+ */
+export function ProseBlock({ text, className }: { text: string; className?: string }) {
+  const shape = splitProse(text);
+  if (shape.kind === "plain") return <p className={className}>{shape.text}</p>;
+
+  return (
+    <div className={className ? `${className} prose-block` : "prose-block"}>
+      {shape.kind === "paragraphs"
+        ? shape.paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)
+        : (
+          <>
+            {shape.lead ? <p>{shape.lead}</p> : null}
+            <ol className="prose-enum">
+              {shape.items.map((item, index) => <li key={index}>{item}</li>)}
+            </ol>
+            {shape.tail
+              ? splitProse(shape.tail).kind === "paragraphs"
+                ? (splitProse(shape.tail) as { paragraphs: string[] }).paragraphs.map(
+                    (paragraph, index) => <p key={index}>{paragraph}</p>,
+                  )
+                : <p>{shape.tail}</p>
+              : null}
+          </>
+        )}
+    </div>
+  );
 }
 
 /**
@@ -225,6 +357,271 @@ export function MetricGlossary({ snapshot }: { snapshot: ResearchSnapshot }) {
   );
 }
 
+const CIRCLED = ["①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⑩", "⑪", "⑫"];
+
+/**
+ * The causal chain as a vertical stepped flow.
+ *
+ * Deliberately CSS rather than SVG, unlike the four decision charts of
+ * ADR-0004: link labels run from 4 to 54 characters across the current
+ * companies, and only flow text wraps. A fixed `viewBox` would have to truncate,
+ * and what gets truncated is exactly the evidence — "（2026-03-28 为 257 亿美元）".
+ *
+ * Ordinals only, no stage names. The mandated template has seven links but real
+ * chains have six to eight, so mapping position to a stage label would mislabel
+ * any company that does not happen to have eight.
+ */
+function CausalChainFlow({ chain }: { chain: string }) {
+  const links = splitCausalChain(chain);
+  if (links.length < 2) return <p className="model-prose">{chain}</p>;
+
+  return (
+    <div className="causal-flow">
+      <ol>
+        {links.map((link, index) => (
+          <li key={index}>
+            <span className="causal-step" aria-hidden="true">
+              {CIRCLED[index] ?? `${index + 1}.`}
+            </span>
+            <p>
+              <span className="visually-hidden">{`第 ${index + 1} 环：`}</span>
+              {link}
+            </p>
+          </li>
+        ))}
+      </ol>
+      {/* The return path stays as a mark, not a sentence: the dashed stub
+          continues the spine and the arrow turns back up. Screen readers and
+          paper still get the closure spelled out, since neither can read a
+          dashed line. */}
+      <p className="causal-loop">
+        {/* A plain up arrow, not ↺: the loop glyph has poor coverage in the
+            local Inter/PingFang stack and renders as a smudge at this size. */}
+        <span className="causal-loop-mark" aria-hidden="true">↑</span>
+        <span className="causal-loop-note">
+          {CIRCLED[links.length - 1] ?? links.length} → {CIRCLED[0]}
+        </span>
+      </p>
+    </div>
+  );
+}
+
+/**
+ * Keep hyphen- and slash-joined tokens on one line inside the narrow ring cards.
+ *
+ * A card is about 17 characters wide, and the default break opportunity after a
+ * hyphen splits "2026-03-28" into "2026-" / "03-28" — the reader has to
+ * reassemble a date. Same for "HBM4/CoWoS" and "EPYC/Instinct". This wraps such
+ * tokens in a nowrap span; the DOM text is untouched, so copy-paste and search
+ * still see the original string. Long tokens are left alone rather than forced
+ * to overflow the card.
+ */
+function keepTokensIntact(text: string): ReactNode[] {
+  return text
+    .split(/([A-Za-z0-9]+(?:[-/][A-Za-z0-9]+)+)/g)
+    .map((part, index) =>
+      index % 2 === 1 && part.length <= 16
+        ? <span className="nowrap" key={index}>{part}</span>
+        : part,
+    );
+}
+
+/** Geometry of the flywheel ring, shared by the card layer and the arc layer. */
+// Height is tuned so the tallest card at the top and the shortest at the
+// bottom both sit close to the box edge; a taller box just adds dead space.
+const RING = { width: 1000, height: 726, rx: 330, ry: 292 };
+
+function ringPoint(angle: number) {
+  return {
+    x: RING.width / 2 + RING.rx * Math.sin(angle),
+    y: RING.height / 2 - RING.ry * Math.cos(angle),
+  };
+}
+
+/**
+ * The causal chain as a flywheel: full-text cards placed around a ring.
+ *
+ * Cards carry the complete link text, not a summary. That matters — every
+ * mechanical way of shortening these labels to fit a conventional ring either
+ * overflowed or changed the meaning ("扣除人员、合规与软件投入形成股东现金流"
+ * truncates to "扣除人员"), and a real summary would have to be authored into the
+ * snapshot, which no published snapshot has.
+ *
+ * Positions come from the node count at build time, so nothing here needs
+ * tuning per company: with eight cards the centres sit 291px apart on the ring
+ * while a card is 210px wide, so adjacent cards cannot collide however long
+ * their text runs. Fewer nodes only spreads them further.
+ *
+ * PC only. The ring needs ~970px; print has 673mm-equivalent and phones far
+ * less, so both fall back to `CausalChainFlow`, which carries the same text.
+ */
+function CausalChainRing({ links, companyName }: { links: string[]; companyName: string }) {
+  const step = (Math.PI * 2) / links.length;
+  // The arc runs behind the cards it connects — they have an opaque background
+  // and paint after the track — so it can start early and read as a continuous
+  // ring. The arrowhead cannot: it has to land in the visible gap, so it gets a
+  // wider clearance of its own.
+  const arcPad = step * 0.13;
+  const headPad = step * 0.31;
+
+  return (
+    <div className="flywheel" style={{ aspectRatio: `${RING.width} / ${RING.height}` }}>
+      <svg className="flywheel-track" viewBox={`0 0 ${RING.width} ${RING.height}`} aria-hidden="true">
+        {links.map((_, index) => {
+          const from = ringPoint(index * step + arcPad);
+          const to = ringPoint((index + 1) * step - arcPad);
+          const head = (index + 1) * step - headPad;
+          const point = ringPoint(head);
+          // Tangent of (rx sin θ, −ry cos θ) is (rx cos θ, ry sin θ).
+          const rotation =
+            (Math.atan2(RING.ry * Math.sin(head), RING.rx * Math.cos(head)) * 180) / Math.PI;
+          return (
+            <g key={index}>
+              <path
+                className="flywheel-arc"
+                d={`M ${from.x.toFixed(1)} ${from.y.toFixed(1)} A ${RING.rx} ${RING.ry} 0 0 1 ${to.x.toFixed(1)} ${to.y.toFixed(1)}`}
+              />
+              <polygon
+                className="flywheel-head"
+                points="0,-5 11,0 0,5"
+                transform={`translate(${point.x.toFixed(1)} ${point.y.toFixed(1)}) rotate(${rotation.toFixed(1)})`}
+              />
+            </g>
+          );
+        })}
+      </svg>
+      <div className="flywheel-hub">
+        {/* Name and label on separate lines: "Circle Internet Group 增长飞轮"
+            on one line wrapped as "…增长飞" / "轮". No link count and no
+            "末环回指首环" caption — a closed ring of arrows states both, and
+            captioning a graphic with what it already shows is noise. */}
+        <strong>{companyName}</strong>
+        <em>增长飞轮</em>
+      </div>
+      <ol className="flywheel-cards">
+        {links.map((link, index) => {
+          const { x, y } = ringPoint(index * step);
+          return (
+            <li
+              key={index}
+              style={{ left: `${(x / RING.width) * 100}%`, top: `${(y / RING.height) * 100}%` }}
+            >
+              <span className="flywheel-badge" aria-hidden="true">{index + 1}</span>
+              <p>
+                <span className="visually-hidden">{`第 ${index + 1} 环：`}</span>
+                {keepTokensIntact(link)}
+              </p>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
+  );
+}
+
+type WaterfallBar = {
+  key: string;
+  label: string;
+  value: number;
+  display: string;
+  kind: "segment" | "cost" | "total";
+};
+
+/**
+ * Segment operating profit less unallocated cost, as a waterfall.
+ *
+ * Every number is derived: the bars are `financialHistory[].segments[]`, the
+ * subtotal is their sum, and the unallocated block is that sum minus the
+ * period's operating profit. The composition of the unallocated block —
+ * acquisition amortisation versus stock compensation — exists only in the
+ * author's `cashEngine` prose, so it stays in the caption instead of being
+ * regex-scraped into a number nobody can check.
+ *
+ * Returns null when segment operating profit is absent, which is the case for
+ * every company whose ledger records segment revenue only.
+ */
+function CashEngineWaterfall({
+  period,
+  roster,
+}: {
+  period: Period;
+  roster: Map<string, CurrentSnapshot["businessModel"]["segments"][number]>;
+}) {
+  const priced = (period.segments ?? []).filter((segment) => segment.operatingProfit);
+  if (priced.length === 0 || !period.operatingMargin) return null;
+
+  const unit = priced[0].operatingProfit as FinancialValue;
+  const segmentSum = priced.reduce(
+    (sum, segment) => sum + Number((segment.operatingProfit as FinancialValue).value),
+    0,
+  );
+  const operatingProfit =
+    (Number(period.revenue.value) * Number(period.operatingMargin.value)) / 100;
+  const unallocated = segmentSum - operatingProfit;
+  const digits = unit.precision;
+  const show = (value: number) => value.toFixed(digits);
+
+  const bars: WaterfallBar[] = [
+    ...priced.map((segment) => {
+      const value = Number((segment.operatingProfit as FinancialValue).value);
+      return {
+        key: segment.segmentId,
+        label: roster.get(segment.segmentId)?.name ?? segment.segmentId,
+        value,
+        display: `${value >= 0 ? "+" : "−"}${show(Math.abs(value))}`,
+        kind: "segment" as const,
+      };
+    }),
+    { key: "segment-subtotal", label: "分部合计", value: segmentSum, display: show(segmentSum), kind: "total" },
+    { key: "unallocated", label: "未分摊成本", value: -unallocated, display: `−${show(Math.abs(unallocated))}`, kind: "cost" },
+    { key: "operating-profit", label: "经营利润", value: operatingProfit, display: show(operatingProfit), kind: "total" },
+  ];
+
+  // One shared scale so a negative segment reads as shorter-and-opposite rather
+  // than merely shorter. AMD's data centre segment was −155 in 2025 Q2.
+  const reach = Math.max(...bars.map((bar) => Math.abs(bar.value)), 1);
+  const rowHeight = 26;
+  const height = bars.length * rowHeight + 16;
+  const axis = 168;
+  const halfWidth = 132;
+
+  return (
+    <figure className="decision-chart cash-waterfall">
+      <div className="chart-title">
+        利润结构：分部利润扣除未分摊成本（{period.period}，{financialUnitLabel(unit)}）
+      </div>
+      <svg
+        role="img"
+        aria-label={`${period.period} 分部经营利润合计 ${show(segmentSum)}，扣除未分摊成本 ${show(Math.abs(unallocated))} 后为经营利润 ${show(operatingProfit)}`}
+        viewBox={`0 0 340 ${height}`}
+        style={{ height: `${height}px` }}
+      >
+        <title>{`${period.period} 现金引擎瀑布`}</title>
+        {bars.map((bar, index) => {
+          const y = 8 + index * rowHeight;
+          const width = (Math.abs(bar.value) / reach) * halfWidth;
+          return (
+            <g key={bar.key}>
+              <text x="0" y={y + 13} className="waterfall-label">{bar.label}</text>
+              <rect
+                x={bar.value >= 0 ? axis : axis - width}
+                y={y + 3}
+                width={Math.max(width, 0.6)}
+                height="13"
+                className={`waterfall-bar waterfall-bar--${bar.kind}`}
+              />
+              <text x="338" y={y + 13} textAnchor="end" className={`waterfall-value waterfall-value--${bar.kind}`}>
+                {bar.display}
+              </text>
+            </g>
+          );
+        })}
+        <line x1={axis} y1="8" x2={axis} y2={height - 8} className="waterfall-axis" />
+      </svg>
+    </figure>
+  );
+}
+
 export function BusinessModelSection({
   snapshot,
   sourceIds,
@@ -235,24 +632,24 @@ export function BusinessModelSection({
   const latest = snapshot.financialHistory.at(-1);
   const total = latest ? Number(latest.revenue.value) : 0;
   const roster = new Map(snapshot.businessModel.segments.map((segment) => [segment.id, segment]));
+  // Below five links the ring reads as a polygon with big empty gaps, so those
+  // chains keep the stepped flow on every viewport.
+  const ringLinks = splitCausalChain(snapshot.businessModel.causalChain);
 
   return (
     <>
       <p className="lead">{snapshot.summary.businessModel}</p>
-      <div className="model-grid">
-        <article>
-          <span>因果链</span>
-          <p>{snapshot.businessModel.causalChain}</p>
-        </article>
-        <article>
-          <span>利润与现金来源</span>
-          <p>{snapshot.businessModel.cashEngine}</p>
-        </article>
-        <article>
-          <span>交付依赖</span>
-          <p>{snapshot.businessModel.deliveryDependency}</p>
-        </article>
-      </div>
+      <h3 className="block-heading">因果链</h3>
+      {/* Two registers of the same text: the ring on a desktop screen, the
+          stepped flow on phones and on paper, where the ring does not fit.
+          CSS picks one — the other is `display:none`, so assistive technology
+          and search engines see exactly one copy. */}
+      {ringLinks.length >= 5 ? (
+        <CausalChainRing links={ringLinks} companyName={snapshot.company.name} />
+      ) : null}
+      <CausalChainFlow chain={snapshot.businessModel.causalChain} />
+      <h3 className="block-heading">交付依赖</h3>
+      <ProseBlock className="model-prose" text={snapshot.businessModel.deliveryDependency} />
       <h3 className="block-heading">收入结构（{latest?.period ?? "最新期间"}）</h3>
       <div className="segment-list">
         {(latest?.segments ?? []).map((segment) => {
@@ -289,6 +686,11 @@ export function BusinessModelSection({
           );
         })}
       </div>
+      {latest ? <CashEngineWaterfall period={latest} roster={roster} /> : null}
+      {/* The cash engine prose is the caption for the waterfall when there is
+          one, and stands on its own when segment operating profit is missing. */}
+      <h3 className="block-heading">利润与现金来源</h3>
+      <ProseBlock className="model-prose" text={snapshot.businessModel.cashEngine} />
       {sourceIds(snapshot.businessModel.evidenceIds)}
     </>
   );

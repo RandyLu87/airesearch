@@ -60,6 +60,35 @@ function escapeRegExp(value) {
 }
 
 /**
+ * The rendered text with markup removed.
+ *
+ * Long research prose is split into paragraphs and enumerations at render time,
+ * so a field's value no longer appears as one contiguous run in the HTML.
+ * Assertions about "is this text on the page" have to read text, not source.
+ */
+function pageText(html) {
+  return html
+    .replace(/<[^>]+>/g, "")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(Number(code)))
+    .replace(/\s+/g, " ");
+}
+
+/** Whether every sentence of `text` survived into the page. */
+function containsProse(html, text) {
+  const body = pageText(html);
+  return text
+    .split("。")
+    .map((part) => part.trim())
+    .filter((part) => part.length > 6)
+    .every((part) => body.includes(part.replace(/\s+/g, " ")));
+}
+
+/**
  * Mirrors formatPrice in @airesearch/research-ui. These tests are plain .mjs and
  * the package is .tsx, so it cannot be imported here; the existing assertions
  * spell the same rule out inline. Keep the two in step.
@@ -228,6 +257,107 @@ test("the site index header stays inside its above-the-fold budget", () => {
     readFileSync(path.join(siteRoot, "assets", "research.css"), "utf8"),
     "published CSS drifted from the source; run npm run publish",
   );
+});
+
+test("the business model section renders a flow and a closing waterfall", () => {
+  let waterfallsSeen = 0;
+
+  for (const companyId of listSnapshotCompanies()) {
+    const latest = listCompanySnapshots(companyId).at(-1).data;
+    // The legacy contract has no businessModel at all, so the section is skipped
+    // for it entirely rather than rendered empty.
+    if (latest.schemaVersion !== "1.1.0") continue;
+    const html = readFileSync(
+      path.join(siteRoot, "companies", `${companyId}.html`),
+      "utf8",
+    );
+
+    const links = latest.businessModel.causalChain
+      .split("→")
+      .map((link) => link.trim().replace(/[。；;]+$/, "").trim())
+      .filter((link) => link.length > 0);
+    assert.ok(links.length >= 2, `${companyId} 的因果链应至少解析出两个环节`);
+    assert.equal(
+      (html.match(/class="causal-step"/g) ?? []).length,
+      links.length,
+      `${companyId} 阶梯流节点数与因果链环节数不符`,
+    );
+    // Ordinals only. A stage label mapped by position would mislabel any chain
+    // whose length differs from the seven-link template.
+    assert.doesNotMatch(html, /class="causal-step"[^>]*>\s*(供给|分发|变现)</);
+
+    // The flywheel ring is the desktop register of the same chain. Its cards
+    // carry the full text — the whole point of choosing cards over a labelled
+    // ring was that no mechanical 10-character summary preserved the meaning.
+    if (links.length >= 5) {
+      const ring = html.match(/<div class="flywheel"[\s\S]*?<\/ol><\/div>/);
+      assert.ok(ring, `${companyId} 应渲染飞轮环`);
+      assert.equal(
+        (ring[0].match(/class="flywheel-badge"/g) ?? []).length,
+        links.length,
+        `${companyId} 环上卡片数与因果链环节数不符`,
+      );
+      for (const link of links) {
+        // Tokens like 2026-03-28 get a nowrap wrapper, so compare on text only.
+        const plain = ring[0].replace(/<[^>]+>/g, "");
+        assert.ok(
+          plain.includes(link.replace(/\s+/g, " ")) ||
+            link.split(/[（(]/)[0].length > 0 && plain.includes(link.split(/[（(]/)[0]),
+          `${companyId} 环上卡片缺少第 ${links.indexOf(link) + 1} 环全文`,
+        );
+      }
+    } else {
+      assert.doesNotMatch(html, /class="flywheel"/, `${companyId} 环节过少时不该渲染环`);
+    }
+
+    const period = latest.financialHistory.at(-1);
+    const priced = (period.segments ?? []).filter((item) => item.operatingProfit);
+    if (priced.length === 0 || !period.operatingMargin) {
+      assert.doesNotMatch(html, /cash-waterfall/, `${companyId} 缺分部经营利润时不该出现瀑布图`);
+      continue;
+    }
+
+    waterfallsSeen += 1;
+    const digits = priced[0].operatingProfit.precision;
+    const segmentSum = priced.reduce((sum, item) => sum + Number(item.operatingProfit.value), 0);
+    const operatingProfit =
+      (Number(period.revenue.value) * Number(period.operatingMargin.value)) / 100;
+    const waterfall = html.match(
+      /<figure class="decision-chart cash-waterfall">[\s\S]*?<\/figure>/,
+    );
+    assert.ok(waterfall, `${companyId} 应渲染现金引擎瀑布图`);
+    // The bridge has to close: segment profits less the unallocated block equal
+    // the operating profit the income statement reports.
+    const texts = [...waterfall[0].matchAll(/>([^<>]+)<\/text>/g)].map((match) => match[1]);
+    assert.ok(texts.includes(segmentSum.toFixed(digits)), `${companyId} 缺分部合计`);
+    assert.ok(texts.includes(operatingProfit.toFixed(digits)), `${companyId} 缺经营利润`);
+    const unallocated = segmentSum - operatingProfit;
+    assert.ok(
+      texts.some((value) => value.replace("−", "-") === `-${Math.abs(unallocated).toFixed(digits)}`),
+      `${companyId} 缺未分摊成本`,
+    );
+    // ADR-0004: charts ship as inline SVG, so they print and open offline.
+    assert.match(waterfall[0], /<svg/);
+    assert.doesNotMatch(waterfall[0], /<(canvas|img|script)/);
+    // The unallocated composition stays in the author's prose, never scraped
+    // into a number the reader cannot trace to a filing.
+    assert.ok(containsProse(html, latest.businessModel.cashEngine), `${companyId} 缺少现金引擎正文`);
+  }
+
+  assert.ok(
+    waterfallsSeen > 0,
+    "至少要有一家公司的账本记录了分部经营利润，否则瀑布图代码路径从未被执行",
+  );
+
+  // The ring and the stepped flow are two registers of one chain, so exactly one
+  // may be displayed at a time. Without these rules the reader — and any
+  // screen reader — would meet the same eight links twice in a row.
+  const css = readFileSync(path.join(siteRoot, "assets", "research.css"), "utf8");
+  assert.match(css, /@media \(min-width: 1080px\)[^}]*\{\s*\.flywheel ~ \.causal-flow \{ display: none; \}/);
+  assert.match(css, /@media \(max-width: 1079px\)[^}]*\{\s*\.flywheel \{ display: none; \}/);
+  // Paper is 673px of content at A4; the ring needs about 970px.
+  assert.match(css, /\.flywheel \{ display: none !important; \}/);
+  assert.match(css, /\.flywheel ~ \.causal-flow \{ display: block !important; \}/);
 });
 
 test("valuation scenario detail pairs stay on the definition-list grid", () => {
@@ -436,6 +566,45 @@ test("publishes every structured company snapshot as auditable static HTML", () 
       assert.match(companyHtml, new RegExp(escapeRegExp(segment.name)));
       assert.match(companyHtml, new RegExp(escapeRegExp(segment.payer)));
     }
+    // The causal chain renders as a stepped flow, one node per mandated link,
+    // and no link is dropped or truncated on the way into the markup.
+    const links = latestData.businessModel.causalChain
+      .split("→")
+      .map((link) => link.trim().replace(/[。；;]+$/, "").trim())
+      .filter((link) => link.length > 0);
+    if (links.length >= 2) {
+      assert.match(companyHtml, /class="causal-flow"/);
+      for (const link of links) {
+        assert.match(companyHtml, new RegExp(escapeRegExp(link)));
+      }
+      assert.equal(
+        (companyHtml.match(/class="causal-step"/g) ?? []).length,
+        links.length,
+        "阶梯流的节点数必须等于因果链解析出的环节数",
+      );
+    }
+    // The cash-engine waterfall appears only when segment operating profit is
+    // recorded, and when it does its arithmetic must close: segment sum less
+    // unallocated cost equals the period's operating profit.
+    const latestPeriod = latestData.financialHistory.at(-1);
+    const priced = (latestPeriod.segments ?? []).filter((item) => item.operatingProfit);
+    if (priced.length > 0 && latestPeriod.operatingMargin) {
+      assert.match(companyHtml, /class="decision-chart cash-waterfall"/);
+      const segmentSum = priced.reduce((sum, item) => sum + Number(item.operatingProfit.value), 0);
+      const operatingProfit =
+        (Number(latestPeriod.revenue.value) * Number(latestPeriod.operatingMargin.value)) / 100;
+      const digits = priced[0].operatingProfit.precision;
+      assert.match(companyHtml, new RegExp(escapeRegExp(segmentSum.toFixed(digits))));
+      assert.match(companyHtml, new RegExp(escapeRegExp(operatingProfit.toFixed(digits))));
+      // Charts stay inline SVG per ADR-0004: no runtime, no external fetch.
+      assert.doesNotMatch(companyHtml, /<canvas/);
+    } else {
+      assert.doesNotMatch(companyHtml, /cash-waterfall/);
+    }
+    // The three-column model grid is gone; its prose now reads top-to-bottom.
+    assert.doesNotMatch(companyHtml, /class="model-grid"/);
+    assert.ok(containsProse(companyHtml, latestData.businessModel.cashEngine), "缺少现金引擎正文");
+    assert.ok(containsProse(companyHtml, latestData.businessModel.deliveryDependency), "缺少交付依赖正文");
     // Metric definitions are reachable without any client runtime.
     assert.match(companyHtml, /popover=/);
     assert.doesNotMatch(companyHtml, /onclick=/);

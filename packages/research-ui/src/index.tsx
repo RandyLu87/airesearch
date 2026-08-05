@@ -10,6 +10,7 @@ import {
   MarketPositionSection,
   MetricGlossary,
   PeriodHistoryTable,
+  ProseBlock,
   StandardMetricNote,
   ValuationMethodPanel,
   ValueBridge,
@@ -312,7 +313,7 @@ export function ReportView({
             <h2>{section.title}</h2>
             <p className="lead">{section.summary}</p>
             <ul className="editorial-list">
-              {section.bullets.map((item) => <li key={item}>{item}</li>)}
+              {section.bullets.map((item) => <li key={item}><ProseBlock text={item} /></li>)}
             </ul>
             {sourceIds(section.evidenceIds, evidenceNumbers)}
           </div>
@@ -441,7 +442,7 @@ export function ReportView({
       <section className="report-section">
         <div className="section-number">{String(snapshot.sections.length + 6 + extra).padStart(2, "0")}</div>
         <div className="section-content split-section">
-          <article><p className="section-kicker">DOWNSIDE</p><h2>核心风险</h2><ol className="editorial-list">{snapshot.risks.map((risk) => <li key={risk}>{risk}</li>)}</ol></article>
+          <article><p className="section-kicker">DOWNSIDE</p><h2>核心风险</h2><ol className="editorial-list">{snapshot.risks.map((risk) => <li key={risk}><ProseBlock text={risk} /></li>)}</ol></article>
           <article><p className="section-kicker">VALIDATION</p><h2>后续跟踪点</h2><ol className="editorial-list">{snapshot.checkpoints.map((item) => <li key={item}>{item}</li>)}</ol></article>
         </div>
       </section>
