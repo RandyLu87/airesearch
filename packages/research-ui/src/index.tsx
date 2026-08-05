@@ -6,6 +6,7 @@ import {
 } from "@airesearch/research-schema";
 import {
   BusinessModelSection,
+  EvidenceDensityPanel,
   LatestComparison,
   MarketPositionSection,
   MetricGlossary,
@@ -471,6 +472,14 @@ export function ReportView({
               </li>
             ))}
           </ol>
+          {/* Density belongs with the audit trail: it is a statement about this
+              evidence list, not about the valuation that reads it. */}
+          {current ? (
+            <>
+              <h3 className="block-heading">证据密度</h3>
+              <EvidenceDensityPanel snapshot={current} />
+            </>
+          ) : null}
           <p className="disclaimer">{snapshot.disclaimer}</p>
         </div>
       </section>

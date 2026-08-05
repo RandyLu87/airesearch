@@ -1178,6 +1178,71 @@ export function ValueBridge({ snapshot }: { snapshot: CurrentSnapshot }) {
   );
 }
 
+/**
+ * How much of this research rests on missing values and inference.
+ *
+ * Rendered even when nothing fires: "0 条规则被触发" is the useful reading, and a
+ * block that only appears on weak research would let a reader mistake its
+ * absence for a page that simply does not report density.
+ */
+export function EvidenceDensityPanel({ snapshot }: { snapshot: CurrentSnapshot }) {
+  const block = snapshot.evidenceDensity;
+  if (!block) return null;
+  const { computed, responses } = block;
+  const pct = (value: string) => `${(Number(value) * 100).toFixed(1)}%`;
+  const rows = [
+    { label: "缺失值占比", value: pct(computed.unavailableShare), note: "标准指标、驱动与份额口径中 unavailable 的比例" },
+    { label: "推断类证据占比", value: pct(computed.inferenceShare), note: "evidence 中 kind 为 inference 的比例" },
+    { label: "低置信度驱动", value: pct(computed.lowConfidenceDriverShare), note: "置信度为「低」的驱动比例" },
+    { label: "只靠推断支撑的驱动", value: pct(computed.unsupportedDriverShare), note: "所引用证据全为 inference 的驱动比例" },
+  ];
+
+  return (
+    <div className="evidence-density">
+      <p className="company-note">
+        由引擎从本份快照自身统计，作者不得手写。它标出结论有多少建立在缺失值与推断之上，
+        但不阻断发布——证据稀薄有时是被研究对象的事实。
+      </p>
+      <div className="density-grid">
+        {rows.map((row) => (
+          <article key={row.label}>
+            <span>{row.label}</span>
+            <strong>{row.value}</strong>
+            <small>{row.note}</small>
+          </article>
+        ))}
+      </div>
+      {computed.idealMethodBlocked ? (
+        <p className="density-method">理想估值方法与实际采用的主方法不同，缺口见上方「补齐以下数据」清单。</p>
+      ) : null}
+      {responses.length === 0 ? (
+        <p className="density-clear">没有证据密度规则被触发。</p>
+      ) : (
+        <ul className="density-responses">
+          {responses.map((entry) => (
+            <li key={entry.ruleId}>
+              <span className={`health-response health-response--${entry.response}`}>{entry.response}</span>
+              <strong>{entry.observed}</strong>
+              <span>{entry.note}</span>
+              {(entry.blockedBy ?? []).length > 0 ? (
+                <ol className="density-blocked">
+                  {(entry.blockedBy ?? []).map((gap) => (
+                    <li key={gap.dataItem}>
+                      <strong>{gap.dataItem}</strong>
+                      <span>{gap.whyNeeded}</span>
+                      <em>取自：{gap.whereToGet}</em>
+                    </li>
+                  ))}
+                </ol>
+              ) : null}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 /** What the current price already assumes, plus what would sharpen the estimate. */
 export function ValuationMethodPanel({ snapshot }: { snapshot: CurrentSnapshot }) {
   const { methodSelection, impliedExpectation, healthCheck, disagreement } = snapshot.valuation;

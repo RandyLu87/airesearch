@@ -480,6 +480,20 @@ export function buildSkeleton(input: {
     viewChanges: { upgrade: [SENTINEL], downgrade: [SENTINEL] },
     checkpoints: repeat(3, () => SENTINEL),
     evidence: repeat(2, () => evidenceSkeleton()),
+    // Engine output, sentinelled so an unsynced draft cannot publish. `responses`
+    // starts empty because an empty list is the correct answer when no rule
+    // fires; `snapshot:sync` fills `computed` and the checker then demands a
+    // response for whatever that computation triggers.
+    evidenceDensity: {
+      computed: {
+        unavailableShare: SENTINEL,
+        inferenceShare: SENTINEL,
+        lowConfidenceDriverShare: SENTINEL,
+        unsupportedDriverShare: SENTINEL,
+        idealMethodBlocked: false,
+      },
+      responses: [],
+    },
     disclaimer: "本报告仅作研究与教育用途，不构成个性化投资建议。",
   };
 }

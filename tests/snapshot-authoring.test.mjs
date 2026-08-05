@@ -351,6 +351,179 @@ test("snapshot:check accepts a redefined driver when the model change is escalat
   assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
 });
 
+/**
+ * The density of the untouched fixture, computed by hand rather than by calling
+ * the implementation: 11 status-bearing entries with 2 unavailable, 2 evidence
+ * records with none inferred, 6 drivers with 1 on low confidence and none
+ * resting on inference alone. Pinning the arithmetic independently is the point
+ * — re-deriving it from the same function would assert nothing.
+ */
+const BASE_DENSITY = {
+  unavailableShare: "0.1818",
+  inferenceShare: "0.0000",
+  lowConfidenceDriverShare: "0.1667",
+  unsupportedDriverShare: "0.0000",
+  idealMethodBlocked: false,
+};
+
+test("a synced evidence density block with no rule triggered is accepted", () => {
+  const draft = clone(baseSnapshot);
+  draft.evidenceDensity = { computed: { ...BASE_DENSITY }, responses: [] };
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
+});
+
+test("a hand-edited density statistic is rejected and told to re-sync", () => {
+  const draft = clone(baseSnapshot);
+  draft.evidenceDensity = {
+    computed: { ...BASE_DENSITY, unavailableShare: "0.0000" },
+    responses: [],
+  };
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  const output = `${result.stdout}${result.stderr}`;
+  assert.match(output, /evidenceDensity\.computed\.unavailableShare/);
+  assert.match(output, /0\.1818/);
+  assert.match(output, /snapshot:sync/);
+});
+
+/** A driver whose only citation is an inference record, which fires the hardest rule. */
+function withUnsupportedDriver() {
+  const draft = clone(baseSnapshot);
+  draft.evidence.push({
+    id: "ev-analyst-inference",
+    kind: "inference",
+    title: "对付费率路径的区间估算",
+    publisher: "本研究",
+    periodOrEventDate: "2026-08-03",
+    publishedAt: "2026-08-03",
+    retrievedAt: "2026-08-03T21:00:00+08:00",
+    url: "https://example.com/inference-note",
+  });
+  draft.driverMetrics[0].evidenceIds = ["ev-analyst-inference"];
+  return draft;
+}
+
+test("a driver resting only on inference triggers a density rule that must be answered", () => {
+  const draft = withUnsupportedDriver();
+  draft.evidenceDensity = {
+    computed: {
+      unavailableShare: "0.1818",
+      inferenceShare: "0.3333",
+      lowConfidenceDriverShare: "0.1667",
+      unsupportedDriverShare: "0.1667",
+      idealMethodBlocked: false,
+    },
+    responses: [],
+  };
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  const output = `${result.stdout}${result.stderr}`;
+  assert.match(output, /unsupported-drivers/);
+  assert.match(output, /没有回应/);
+});
+
+test("answering the triggered density rule publishes; density itself never blocks", () => {
+  const draft = withUnsupportedDriver();
+  draft.evidenceDensity = {
+    computed: {
+      unavailableShare: "0.1818",
+      inferenceShare: "0.3333",
+      lowConfidenceDriverShare: "0.1667",
+      unsupportedDriverShare: "0.1667",
+      idealMethodBlocked: false,
+    },
+    responses: [
+      {
+        ruleId: "unsupported-drivers",
+        observed: "16.7% 的驱动指标没有任何 fact 或 calculation 证据支撑",
+        response: "blocked",
+        note: "付费率的分子分母公司均未单独披露，只能按年报用户口径区间估算。",
+        blockedBy: [
+          {
+            dataItem: "月均付费用户数与在线音乐服务月活",
+            whyNeeded: "两者相除即付费率，可把该驱动从推断升级为可复算",
+            whereToGet: "年报「在线音乐服务」经营数据表；公司业绩发布会材料同一页",
+          },
+        ],
+      },
+    ],
+  };
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
+});
+
+test("a blocked density response with no retrievable gap is rejected", () => {
+  const draft = withUnsupportedDriver();
+  draft.evidenceDensity = {
+    computed: {
+      unavailableShare: "0.1818",
+      inferenceShare: "0.3333",
+      lowConfidenceDriverShare: "0.1667",
+      unsupportedDriverShare: "0.1667",
+      idealMethodBlocked: false,
+    },
+    responses: [
+      {
+        ruleId: "unsupported-drivers",
+        observed: "16.7% 的驱动指标没有任何 fact 或 calculation 证据支撑",
+        response: "blocked",
+        note: "需要更多数据。",
+      },
+    ],
+  };
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  assert.match(`${result.stdout}${result.stderr}`, /blockedBy/);
+});
+
+test("answering a density rule that did not fire is rejected", () => {
+  const draft = clone(baseSnapshot);
+  draft.evidenceDensity = {
+    computed: { ...BASE_DENSITY },
+    responses: [
+      {
+        ruleId: "inference-heavy-evidence",
+        observed: "无",
+        response: "acknowledged",
+        note: "顺手写一条以示谨慎。",
+      },
+    ],
+  };
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  assert.match(`${result.stdout}${result.stderr}`, /未触发的规则/);
+});
+
+test("the skeleton sentinels the density statistics and starts with no responses", () => {
+  const { root } = makeTree([baseSnapshot]);
+  const result = newSnapshot([fixtureCompany, "--at", "2026-09-02-1000", "--stdout", "--root", root]);
+
+  assert.equal(result.status, 0, result.stderr);
+  const skeleton = JSON.parse(result.stdout);
+  assert.equal(skeleton.evidenceDensity.computed.unavailableShare, SENTINEL);
+  assert.equal(skeleton.evidenceDensity.computed.idealMethodBlocked, false);
+  assert.deepEqual(skeleton.evidenceDensity.responses, []);
+});
+
 test("a moat pointing at a driver that does not exist is rejected by name", () => {
   const draft = clone(baseSnapshot);
   draft.businessModel.moat[0].driverIds = ["subscription-mix", "brand-strength"];

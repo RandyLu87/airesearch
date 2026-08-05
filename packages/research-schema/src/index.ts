@@ -6,6 +6,12 @@ import { z } from "zod";
 import { STANDARD_METRIC_IDS } from "./metric-dictionary.ts";
 import { MONTH_PERIOD_PATTERN } from "./periods.ts";
 import {
+  DENSITY_RULE_IDS,
+  computeEvidenceDensity,
+  densityFactsFrom,
+  triggeredDensityRules,
+} from "./density.ts";
+import {
   HEALTH_RULE_IDS,
   ratioOrNull,
   triggeredRules,
@@ -20,6 +26,7 @@ import {
 
 export * from "./metric-dictionary.ts";
 export * from "./periods.ts";
+export * from "./density.ts";
 export * from "./valuation/methods.ts";
 export * from "./valuation/rules.ts";
 export * from "./valuation/engine.ts";
@@ -472,6 +479,36 @@ const healthCheckResponseSchema = z.object({
   note: z.string().min(1),
 });
 
+/**
+ * One answer to one triggered density rule.
+ *
+ * A response may not be a disclaimer. `blocked` therefore carries the same
+ * three-part gap record as `methodSelection.blockedBy`: what number is missing,
+ * why it would help, where to get it. Writing a disclaimer is cheaper than
+ * fetching data, so the cheap option is the one that has to be closed off.
+ */
+const densityResponseSchema = z.object({
+  ruleId: z.enum(DENSITY_RULE_IDS as [string, ...string[]]),
+  observed: z.string().min(1),
+  response: z.enum(["adopted", "blocked", "rejected", "acknowledged"]),
+  note: z.string().min(1),
+  blockedBy: z.array(z.object({
+    dataItem: z.string().min(1),
+    whyNeeded: z.string().min(1),
+    whereToGet: z.string().min(1),
+  })).optional(),
+}).superRefine((entry, context) => {
+  if (entry.response === "blocked" && (entry.blockedBy ?? []).length === 0) {
+    context.addIssue({
+      code: "custom",
+      path: ["blockedBy"],
+      message:
+        "response 为 blocked 时必须列出 blockedBy：缺的是哪一个数、它为什么能提高证据密度、" +
+        "去哪份文件的哪一部分取。写「需要更多数据」不算合格。",
+    });
+  }
+});
+
 const methodSelectionSchema = z.object({
   ideal: z.enum(VALUATION_METHOD_IDS as [string, ...string[]]),
   idealRationale: z.string().min(1),
@@ -695,6 +732,30 @@ const snapshotShape = z.object({
   }),
   checkpoints: z.array(z.string().min(1)).min(3),
   evidence: z.array(evidenceSchema).min(2),
+  /**
+   * How much of this snapshot rests on missing values and inference.
+   *
+   * `computed` is engine output and recomputed by the checker, like
+   * `impliedExpectation`. Triggering a rule never blocks publication — evidence
+   * really is thin for some companies, and blocking would push an author to
+   * rewrite an honest `unavailable` as an `inference` to get past the checker,
+   * which is the exact behaviour these rules exist to catch. Leaving a triggered
+   * rule unanswered does block.
+   *
+   * Optional so snapshots published before ADR-0020 stay valid: the statistics
+   * can be computed for them, but nobody is going to back-fill a self-audit
+   * nobody performed at the time.
+   */
+  evidenceDensity: z.object({
+    computed: z.object({
+      unavailableShare: decimalString,
+      inferenceShare: decimalString,
+      lowConfidenceDriverShare: decimalString,
+      unsupportedDriverShare: decimalString,
+      idealMethodBlocked: z.boolean(),
+    }),
+    responses: z.array(densityResponseSchema),
+  }).optional(),
   disclaimer: z.string().min(1),
 });
 
@@ -823,7 +884,62 @@ export const researchSnapshotSchema = z
   }
 
   verifyValuation(snapshot, context);
+  verifyEvidenceDensity(snapshot, context);
 });
+
+/**
+ * Recompute the density statistics and hold the author to answering what fires.
+ *
+ * Only the answers are enforced, never the density itself. A thin-evidence
+ * company is a fact about that company, and a checker that refused to publish it
+ * would be asking the author to launder the thinness rather than declare it.
+ */
+function verifyEvidenceDensity(snapshot: SnapshotShape, context: z.RefinementCtx): void {
+  const block = snapshot.evidenceDensity;
+  if (!block) return;
+
+  const expected = computeEvidenceDensity(snapshot);
+  for (const key of [
+    "unavailableShare",
+    "inferenceShare",
+    "lowConfidenceDriverShare",
+    "unsupportedDriverShare",
+    "idealMethodBlocked",
+  ] as const) {
+    if (block.computed[key] !== expected[key]) {
+      context.addIssue({
+        code: "custom",
+        path: ["evidenceDensity", "computed", key],
+        message:
+          `evidenceDensity.computed.${key} 由引擎从快照自身统计，应为 ` +
+          `${String(expected[key])}，写的是 ${String(block.computed[key])}。` +
+          `运行 npm run snapshot:sync 重算，不要手改这个字段。`,
+      });
+    }
+  }
+
+  const triggered = triggeredDensityRules(densityFactsFrom(expected));
+  const answered = new Set(block.responses.map((entry) => entry.ruleId));
+  for (const { rule, observed } of triggered) {
+    if (answered.has(rule.id)) continue;
+    context.addIssue({
+      code: "custom",
+      path: ["evidenceDensity", "responses"],
+      message:
+        `证据密度规则「${rule.label}」被触发（${observed}），但 evidenceDensity.responses 没有回应。` +
+        `补一条 {"ruleId":"${rule.id}","observed":"${observed}","response":"...","note":"..."}；` +
+        `标 blocked 时必须写出可去取的具体数据。`,
+    });
+  }
+  for (const entry of block.responses) {
+    if (triggered.some(({ rule }) => rule.id === entry.ruleId)) continue;
+    context.addIssue({
+      code: "custom",
+      path: ["evidenceDensity", "responses"],
+      message: `evidenceDensity.responses 回应了未触发的规则 ${entry.ruleId}；删除它或核对触发条件。`,
+    });
+  }
+}
 
 /**
  * Recompute everything the engine owns and reject the snapshot if the stored

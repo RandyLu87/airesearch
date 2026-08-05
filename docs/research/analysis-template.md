@@ -156,6 +156,17 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
 
 同时保存标题、发布者、报告期/事件日、发布日期、抓取时间、直接 URL 和必要的口径限制。驱动指标和章节必须通过 `evidenceIds` 引用这些记录。
 
+### `evidenceDensity`
+
+本次结论有多少建立在缺失值与推断之上，由引擎从快照自身统计（见 ADR-0020）。
+
+- `computed` 含 `unavailableShare`（标准指标 + 驱动 + 份额口径中 `unavailable` 的占比）、`inferenceShare`（evidence 中 `inference` 占比）、`lowConfidenceDriverShare`、`unsupportedDriverShare`（所引用证据全为 `inference` 的驱动占比）与 `idealMethodBlocked`。**作者不得手写**，运行 `npm run snapshot:sync`；校验器会重算并在不符时阻断。
+- `responses` 必须逐条回应被触发的规则，也不得回应未触发的规则。四值语义：`adopted` 已按建议下调结论强度或补齐数据、`blocked` 认可但取不到、`rejected` 本公司不适用并说明理由、`acknowledged` 已在风险或约束中反映。
+- **`blocked` 必须附 `blockedBy`**，每项写 `dataItem` / `whyNeeded` / `whereToGet`。回应不能是免责声明——写声明比补数据便宜，所以便宜那条路要被堵住。
+- **规则触发本身不阻断发布**，只有「触发了却没回应」才阻断。证据稀薄有时是被研究对象的事实；用阻断去逼诚实，只会让作者把 `unavailable` 改写成 `inference`。
+- `unsupportedDriverShare` 是这组里最硬的一条：它不看比例，只看有没有。一个驱动引用的证据全是推断，等于在用推断解释推断。
+- 字段可选仅为向后兼容；`snapshot:new` 把 `computed` 写成哨兵、`responses` 留空，因此新研究实际必填。已发布快照不回填。
+
 ## 发布与验收
 
 完成 JSON 后依次运行：

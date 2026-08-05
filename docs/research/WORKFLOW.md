@@ -112,9 +112,9 @@ npm run snapshot:check -- research/companies/<company>/snapshots/<snapshot-id>.j
 
 哨兵提示到某个字段时注意：若该字段本就可选（例如百分比指标没有 `currency`），正确做法是删除整个键，而不是硬填一个值。
 
-**证据密度体检**与估值方法体检同构：引擎从快照自身统计 `unavailable` 字段占比、`inference` 类证据占比、低置信度驱动占比，以及只靠推断支撑的驱动占比，触发的规则必须逐条回应。它不阻断发布——证据稀薄有时是事实而不是错误，阻断只会诱导把 `unavailable` 改写成 `inference`。但回应不能是免责声明：标 `blocked` 时要像 `methodSelection.blockedBy` 那样写清缺哪一个数、为什么需要、去哪份文件取。统计值由引擎写回，作者不得手写。
+**证据密度体检**与估值方法体检同构：引擎从快照自身统计 `unavailable` 字段占比、`inference` 类证据占比、低置信度驱动占比，以及只靠推断支撑的驱动占比，触发的规则必须在 `evidenceDensity.responses` 中逐条回应。规则触发本身不阻断发布——证据稀薄有时是事实而不是错误，阻断只会诱导把 `unavailable` 改写成 `inference`；触发了却没回应才阻断。回应不能是免责声明：标 `blocked` 时必须附 `blockedBy`，写清缺哪一个数、为什么需要、去哪份文件取。统计值由 `npm run snapshot:sync` 写回，作者不得手写。
 
-> 这组规则尚未落地（ADR-0020）。在落地前，本次研究若自觉存在大量 `unavailable` 或纯推断支撑的驱动，在 `thesisChange` 中写明是哪几个、以及需要取哪一个数才能补上。
+任何改动驱动、标准指标、份额口径或证据之后都要重跑一次 `snapshot:sync`——密度统计的输入是整份快照，不像估值只依赖组件。
 
 全部通过后运行 `npm run publish`。生成器必须从同一份 JSON 产生：
 
@@ -128,7 +128,7 @@ npm run snapshot:check -- research/companies/<company>/snapshots/<snapshot-id>.j
 
 - 数据包 manifest、官方来源和报告引用可追溯；事实、计算与推断边界清楚。
 - 商业模式、护城河、核心指标、最新变化、财务、人研、治理、估值、分歧点、风险和后续阈值全部闭环。
-- 估值方法体检触发的规则均已逐条回应，`blocked` 项都写出了可去取的具体数据。
+- 估值方法体检与证据密度体检触发的规则均已逐条回应，`blocked` 项都写出了可去取的具体数据。
 - 最新价格的时间晚于关键公告，或已明确说明尚未反映。
 - 运行 `npm run snapshot:check -- --all`，结果通过。
 - 运行 `python3 scripts/research/validate_research_paths.py`，结果通过。
