@@ -256,7 +256,10 @@ test("snapshot:check reports schema violations with path and expectation", () =>
 
 test("snapshot:check skips the comparability layer when there is no prior snapshot", () => {
   const only = successor(baseSnapshot);
-  only.driverMetrics = only.driverMetrics.slice(0, 4);
+  // A changed driver set is the point; the slice stops short of the drivers the
+  // fixture's moat and disagreement point at, because dropping those is a
+  // referential-integrity error rather than a comparability one.
+  only.driverMetrics = only.driverMetrics.slice(0, 5);
   const { snapshotsDirectory } = makeTree([]);
   const filePath = snapshotFile(snapshotsDirectory, only);
 
@@ -346,6 +349,530 @@ test("snapshot:check accepts a redefined driver when the model change is escalat
 
   const result = checkSnapshot([filePath]);
   assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
+});
+
+/** A promise settled in the company's favour, and a buyback with its valuation. */
+function commitmentLedger(companyId = fixtureCompany, entries = undefined) {
+  return {
+    ledgerVersion: "1.0.0",
+    companyId,
+    coverageFrom: "2023-01-01",
+    entries: entries ?? [
+      {
+        id: "2024-q4-subscription-breakeven",
+        kind: "承诺",
+        statedAt: "2025-03-18",
+        venue: "业绩发布会",
+        quote: "我们预计在 2026 年内让社交娱乐业务的单季经营利润转正。",
+        commitment: "2026 年内社交娱乐业务单季经营利润转正",
+        dueBy: "2026-12-31",
+        status: "待到期",
+        evidence: [
+          {
+            title: "2024 年度业绩发布会记录",
+            publisher: "公司投资者关系",
+            url: "https://example.com/ir/2024-results",
+            retrievedAt: "2026-08-03T20:00:00+08:00",
+          },
+        ],
+      },
+      {
+        id: "2025-buyback-tranche-1",
+        kind: "回购",
+        statedAt: "2025-09-10",
+        venue: "公告",
+        quote: "董事会批准不超过 10 亿港元的股份回购计划。",
+        commitment: "首期回购 6.2 亿港元，均价 HK$118",
+        dueBy: "2026-03-31",
+        status: "兑现",
+        resolvedAt: "2026-03-20",
+        outcome: "累计回购 6.2 亿港元、注销 525 万股，与公告口径一致。",
+        amount: { value: "6.20", unit: "currency", currency: "HKD", scale: "hundred-million", precision: 2 },
+        valuationAtTime: "均价 HK$118，对应当时 11.2x 正常化 P/E，处于自身五年区间下沿",
+        returnAssessment: "回购价低于本次基准价值中枢，时点判断成立。",
+        evidence: [
+          {
+            title: "回购完成公告",
+            publisher: "香港交易所",
+            url: "https://example.com/hkex/buyback-complete",
+            retrievedAt: "2026-08-03T20:10:00+08:00",
+          },
+        ],
+      },
+    ],
+  };
+}
+
+/** The summary the ledger above materialises into, written out by hand. */
+const LEDGER_SUMMARY = {
+  coverageFrom: "2023-01-01",
+  counts: { 兑现: 1, 部分兑现: 0, 未兑现: 0, 待到期: 1, 已撤回: 0 },
+  outstanding: [],
+  latestResolution: {
+    id: "2025-buyback-tranche-1",
+    commitment: "首期回购 6.2 亿港元，均价 HK$118",
+    status: "兑现",
+    resolvedAt: "2026-03-20",
+  },
+  capitalAllocation: [
+    {
+      id: "2025-buyback-tranche-1",
+      kind: "回购",
+      statedAt: "2025-09-10",
+      commitment: "首期回购 6.2 亿港元，均价 HK$118",
+      status: "兑现",
+      amount: { value: "6.20", unit: "currency", currency: "HKD", scale: "hundred-million", precision: 2 },
+      valuationAtTime: "均价 HK$118，对应当时 11.2x 正常化 P/E，处于自身五年区间下沿",
+      returnAssessment: "回购价低于本次基准价值中枢，时点判断成立。",
+    },
+  ],
+};
+
+function writeCommitments(companyDirectory, ledger) {
+  writeFileSync(
+    path.join(companyDirectory, "commitments.json"),
+    `${JSON.stringify(ledger, null, 2)}\n`,
+  );
+}
+
+test("a snapshot whose commitment summary matches the ledger is accepted", () => {
+  const draft = clone(baseSnapshot);
+  draft.commitmentSummary = clone(LEDGER_SUMMARY);
+  const { snapshotsDirectory, companyDirectory } = makeTree([]);
+  writeCommitments(companyDirectory, commitmentLedger());
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
+});
+
+test("a hand-edited commitment summary is caught against the ledger", () => {
+  const draft = clone(baseSnapshot);
+  draft.commitmentSummary = clone(LEDGER_SUMMARY);
+  draft.commitmentSummary.counts.兑现 = 2;
+  const { snapshotsDirectory, companyDirectory } = makeTree([]);
+  writeCommitments(companyDirectory, commitmentLedger());
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  const output = `${result.stdout}${result.stderr}`;
+  assert.match(output, /commitmentSummary/);
+  assert.match(output, /snapshot:sync/);
+});
+
+test("a commitment summary with no ledger behind it is rejected", () => {
+  const draft = clone(baseSnapshot);
+  draft.commitmentSummary = clone(LEDGER_SUMMARY);
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  assert.match(`${result.stdout}${result.stderr}`, /commitments\.json/);
+});
+
+test("the skeleton materialises the commitment summary when a ledger exists", () => {
+  const { root, companyDirectory } = makeTree([baseSnapshot]);
+  writeCommitments(companyDirectory, commitmentLedger());
+  const result = newSnapshot([fixtureCompany, "--at", "2026-09-03-1000", "--stdout", "--root", root]);
+
+  assert.equal(result.status, 0, result.stderr);
+  const skeleton = JSON.parse(result.stdout);
+  assert.deepEqual(skeleton.commitmentSummary, LEDGER_SUMMARY);
+});
+
+test("the skeleton omits the commitment summary when the company has no ledger", () => {
+  const { root } = makeTree([baseSnapshot]);
+  const result = newSnapshot([fixtureCompany, "--at", "2026-09-04-1000", "--stdout", "--root", root]);
+
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal("commitmentSummary" in JSON.parse(result.stdout), false);
+});
+
+test("a missing commitment ledger warns without blocking", () => {
+  const { snapshotsDirectory } = makeTree([baseSnapshot]);
+  const result = checkSnapshot([
+    path.join(snapshotsDirectory, `${baseSnapshot.snapshot.id}.json`),
+  ]);
+
+  assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
+  assert.match(`${result.stdout}${result.stderr}`, /承诺台账/);
+});
+
+test("an empty commitment ledger is legal but says so, keeping it distinct from unchecked", () => {
+  const ledger = commitmentLedger(fixtureCompany, []);
+  const draft = clone(baseSnapshot);
+  draft.commitmentSummary = {
+    coverageFrom: "2023-01-01",
+    counts: { 兑现: 0, 部分兑现: 0, 未兑现: 0, 待到期: 0, 已撤回: 0 },
+    outstanding: [],
+    latestResolution: null,
+    capitalAllocation: [],
+  };
+  const { snapshotsDirectory, companyDirectory } = makeTree([]);
+  writeCommitments(companyDirectory, ledger);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
+  assert.match(`${result.stdout}${result.stderr}`, /台账为空/);
+});
+
+test("a settled commitment without a settlement basis is rejected", () => {
+  const ledger = commitmentLedger();
+  ledger.entries[0].status = "未兑现";
+  ledger.entries[0].resolvedAt = "2026-06-30";
+  const draft = clone(baseSnapshot);
+  draft.commitmentSummary = clone(LEDGER_SUMMARY);
+  const { snapshotsDirectory, companyDirectory } = makeTree([]);
+  writeCommitments(companyDirectory, ledger);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  assert.match(`${result.stdout}${result.stderr}`, /outcome/);
+});
+
+test("a buyback recorded without the valuation it was executed at is rejected", () => {
+  const ledger = commitmentLedger();
+  delete ledger.entries[1].valuationAtTime;
+  const draft = clone(baseSnapshot);
+  draft.commitmentSummary = clone(LEDGER_SUMMARY);
+  const { snapshotsDirectory, companyDirectory } = makeTree([]);
+  writeCommitments(companyDirectory, ledger);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  assert.match(`${result.stdout}${result.stderr}`, /valuationAtTime|当时的估值口径/);
+});
+
+test("the path validator accepts a commitment ledger beside the financial one", () => {
+  const withSummary = clone(baseSnapshot);
+  withSummary.commitmentSummary = clone(LEDGER_SUMMARY);
+  const { companyDirectory } = makeTree([withSummary]);
+  writeCommitments(companyDirectory, commitmentLedger());
+
+  const result = spawnSync(
+    "python3",
+    [path.join(repoRoot, "scripts", "research", "validate_research_paths.py"), "--root", path.resolve(companyDirectory, "../../..")],
+    { cwd: repoRoot, encoding: "utf8" },
+  );
+  assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
+});
+
+/**
+ * The density of the untouched fixture, computed by hand rather than by calling
+ * the implementation: 11 status-bearing entries with 2 unavailable, 2 evidence
+ * records with none inferred, 6 drivers with 1 on low confidence and none
+ * resting on inference alone. Pinning the arithmetic independently is the point
+ * — re-deriving it from the same function would assert nothing.
+ */
+const BASE_DENSITY = {
+  unavailableShare: "0.1818",
+  inferenceShare: "0.0000",
+  lowConfidenceDriverShare: "0.1667",
+  unsupportedDriverShare: "0.0000",
+  idealMethodBlocked: false,
+};
+
+test("a synced evidence density block with no rule triggered is accepted", () => {
+  const draft = clone(baseSnapshot);
+  draft.evidenceDensity = { computed: { ...BASE_DENSITY }, responses: [] };
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
+});
+
+test("a hand-edited density statistic is rejected and told to re-sync", () => {
+  const draft = clone(baseSnapshot);
+  draft.evidenceDensity = {
+    computed: { ...BASE_DENSITY, unavailableShare: "0.0000" },
+    responses: [],
+  };
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  const output = `${result.stdout}${result.stderr}`;
+  assert.match(output, /evidenceDensity\.computed\.unavailableShare/);
+  assert.match(output, /0\.1818/);
+  assert.match(output, /snapshot:sync/);
+});
+
+/** A driver whose only citation is an inference record, which fires the hardest rule. */
+function withUnsupportedDriver() {
+  const draft = clone(baseSnapshot);
+  draft.evidence.push({
+    id: "ev-analyst-inference",
+    kind: "inference",
+    title: "对付费率路径的区间估算",
+    publisher: "本研究",
+    periodOrEventDate: "2026-08-03",
+    publishedAt: "2026-08-03",
+    retrievedAt: "2026-08-03T21:00:00+08:00",
+    url: "https://example.com/inference-note",
+  });
+  draft.driverMetrics[0].evidenceIds = ["ev-analyst-inference"];
+  return draft;
+}
+
+test("a driver resting only on inference triggers a density rule that must be answered", () => {
+  const draft = withUnsupportedDriver();
+  draft.evidenceDensity = {
+    computed: {
+      unavailableShare: "0.1818",
+      inferenceShare: "0.3333",
+      lowConfidenceDriverShare: "0.1667",
+      unsupportedDriverShare: "0.1667",
+      idealMethodBlocked: false,
+    },
+    responses: [],
+  };
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  const output = `${result.stdout}${result.stderr}`;
+  assert.match(output, /unsupported-drivers/);
+  assert.match(output, /没有回应/);
+});
+
+test("answering the triggered density rule publishes; density itself never blocks", () => {
+  const draft = withUnsupportedDriver();
+  draft.evidenceDensity = {
+    computed: {
+      unavailableShare: "0.1818",
+      inferenceShare: "0.3333",
+      lowConfidenceDriverShare: "0.1667",
+      unsupportedDriverShare: "0.1667",
+      idealMethodBlocked: false,
+    },
+    responses: [
+      {
+        ruleId: "unsupported-drivers",
+        observed: "16.7% 的驱动指标没有任何 fact 或 calculation 证据支撑",
+        response: "blocked",
+        note: "付费率的分子分母公司均未单独披露，只能按年报用户口径区间估算。",
+        blockedBy: [
+          {
+            dataItem: "月均付费用户数与在线音乐服务月活",
+            whyNeeded: "两者相除即付费率，可把该驱动从推断升级为可复算",
+            whereToGet: "年报「在线音乐服务」经营数据表；公司业绩发布会材料同一页",
+          },
+        ],
+      },
+    ],
+  };
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
+});
+
+test("a blocked density response with no retrievable gap is rejected", () => {
+  const draft = withUnsupportedDriver();
+  draft.evidenceDensity = {
+    computed: {
+      unavailableShare: "0.1818",
+      inferenceShare: "0.3333",
+      lowConfidenceDriverShare: "0.1667",
+      unsupportedDriverShare: "0.1667",
+      idealMethodBlocked: false,
+    },
+    responses: [
+      {
+        ruleId: "unsupported-drivers",
+        observed: "16.7% 的驱动指标没有任何 fact 或 calculation 证据支撑",
+        response: "blocked",
+        note: "需要更多数据。",
+      },
+    ],
+  };
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  assert.match(`${result.stdout}${result.stderr}`, /blockedBy/);
+});
+
+test("answering a density rule that did not fire is rejected", () => {
+  const draft = clone(baseSnapshot);
+  draft.evidenceDensity = {
+    computed: { ...BASE_DENSITY },
+    responses: [
+      {
+        ruleId: "inference-heavy-evidence",
+        observed: "无",
+        response: "acknowledged",
+        note: "顺手写一条以示谨慎。",
+      },
+    ],
+  };
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  assert.match(`${result.stdout}${result.stderr}`, /未触发的规则/);
+});
+
+test("the skeleton sentinels the density statistics and starts with no responses", () => {
+  const { root } = makeTree([baseSnapshot]);
+  const result = newSnapshot([fixtureCompany, "--at", "2026-09-02-1000", "--stdout", "--root", root]);
+
+  assert.equal(result.status, 0, result.stderr);
+  const skeleton = JSON.parse(result.stdout);
+  assert.equal(skeleton.evidenceDensity.computed.unavailableShare, SENTINEL);
+  assert.equal(skeleton.evidenceDensity.computed.idealMethodBlocked, false);
+  assert.deepEqual(skeleton.evidenceDensity.responses, []);
+});
+
+test("a moat pointing at a driver that does not exist is rejected by name", () => {
+  const draft = clone(baseSnapshot);
+  draft.businessModel.moat[0].driverIds = ["subscription-mix", "brand-strength"];
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  const output = `${result.stdout}${result.stderr}`;
+  assert.match(output, /businessModel\.moat\.0\.driverIds/);
+  assert.match(output, /brand-strength/);
+  assert.match(output, /catalog-social-lock/, "the message should name the offending moat");
+});
+
+test("a moat typed 其他 must say what it actually is", () => {
+  const draft = clone(baseSnapshot);
+  draft.businessModel.moat[0].type = "其他";
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  assert.match(`${result.stdout}${result.stderr}`, /typeNote/);
+});
+
+test("more than three moats is a checklist, not a declaration, and is rejected", () => {
+  const draft = clone(baseSnapshot);
+  const base = draft.businessModel.moat[0];
+  draft.businessModel.moat = ["a", "b", "c", "d"].map((suffix) => ({
+    ...clone(base),
+    id: `${base.id}-${suffix}`,
+  }));
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  assert.match(`${result.stdout}${result.stderr}`, /businessModel\.moat/);
+});
+
+test("a moat whose trend moved warns without blocking", () => {
+  const next = successor(baseSnapshot);
+  next.businessModel.moat[0].trend = "变窄";
+  const { snapshotsDirectory } = makeTree([baseSnapshot]);
+  const filePath = snapshotFile(snapshotsDirectory, next);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
+  const output = `${result.stdout}${result.stderr}`;
+  assert.match(output, /catalog-social-lock/);
+  assert.match(output, /稳定/);
+  assert.match(output, /变窄/);
+});
+
+test("a dropped moat warns without blocking, unlike a dropped driver", () => {
+  const next = successor(baseSnapshot);
+  next.businessModel.moat = [
+    { ...clone(baseSnapshot.businessModel.moat[0]), id: "scale-cost-curve" },
+  ];
+  const { snapshotsDirectory } = makeTree([baseSnapshot]);
+  const filePath = snapshotFile(snapshotsDirectory, next);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
+  const output = `${result.stdout}${result.stderr}`;
+  assert.match(output, /护城河不再声明/);
+  assert.match(output, /护城河新增/);
+});
+
+test("a disagreement anchored to a driver that does not exist is rejected", () => {
+  const draft = clone(baseSnapshot);
+  draft.valuation.disagreement.driverId = "competitive-intensity";
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  const output = `${result.stdout}${result.stderr}`;
+  assert.match(output, /valuation\.disagreement\.driverId/);
+  assert.match(output, /competitive-intensity/);
+});
+
+test("the skeleton carries a moat's structure forward but re-asks for its trend", () => {
+  const { root } = makeTree([baseSnapshot]);
+  const result = newSnapshot([fixtureCompany, "--at", "2026-09-01-1000", "--stdout", "--root", root]);
+
+  assert.equal(result.status, 0, result.stderr);
+  const skeleton = JSON.parse(result.stdout);
+  const [moat] = skeleton.businessModel.moat;
+  assert.equal(moat.id, "catalog-social-lock");
+  assert.equal(moat.type, "转换成本");
+  assert.deepEqual(moat.driverIds, ["subscription-mix", "paying-ratio"]);
+  assert.equal(moat.breaker, baseSnapshot.businessModel.moat[0].breaker);
+  assert.equal(moat.trend, SENTINEL, "the reading must be re-judged, never inherited");
+  assert.deepEqual(moat.evidenceIds, [SENTINEL]);
+
+  const { disagreement } = skeleton.valuation;
+  assert.equal(disagreement.driverId, "paying-ratio", "which observable is disputed is calibration");
+  assert.equal(disagreement.marketAssumption, SENTINEL);
+  assert.equal(disagreement.ourAssumption, SENTINEL);
+  assert.equal(disagreement.converged, false);
+});
+
+test("a monthly driver is accepted when its period is written YYYY-MM", () => {
+  const draft = clone(baseSnapshot);
+  draft.driverMetrics[0].periodType = "month";
+  draft.driverMetrics[0].period = "2026-01";
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
+});
+
+test("a monthly driver written 2026 M1 is rejected before it can misorder", () => {
+  const draft = clone(baseSnapshot);
+  draft.driverMetrics[0].periodType = "month";
+  draft.driverMetrics[0].period = "2026 M1";
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  const output = `${result.stdout}${result.stderr}`;
+  assert.match(output, /driverMetrics\.0\.period/);
+  assert.match(output, /YYYY-MM/);
+});
+
+test("the financial period ledger refuses a monthly period", () => {
+  const draft = clone(baseSnapshot);
+  draft.financialHistory.at(-1).periodType = "month";
+  draft.financialHistory.at(-1).period = "2026-01";
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  assert.match(`${result.stdout}${result.stderr}`, /financialHistory\.\d+\.periodType/);
 });
 
 test("snapshot:check warns about constraint churn without blocking", () => {

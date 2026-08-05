@@ -622,6 +622,70 @@ function CashEngineWaterfall({
   );
 }
 
+/**
+ * The declared moats, each shown with the drivers that hold it up.
+ *
+ * Resolving `driverIds` to driver labels here is what makes the binding visible
+ * to a reader rather than only to the checker: a moat whose supporting metric is
+ * named, dated and thresholded reads differently from one that is asserted.
+ */
+function MoatBlock({
+  snapshot,
+  sourceIds,
+}: {
+  snapshot: CurrentSnapshot;
+  sourceIds: (ids: string[]) => ReactNode;
+}) {
+  const moats = snapshot.businessModel.moat ?? [];
+  if (moats.length === 0) {
+    return (
+      <>
+        <h3 className="block-heading">护城河与转折点</h3>
+        <p className="model-prose moat-absent">本次研究未声明护城河。</p>
+      </>
+    );
+  }
+  const drivers = new Map(snapshot.driverMetrics.map((metric) => [metric.id, metric]));
+
+  return (
+    <>
+      <h3 className="block-heading">护城河与转折点</h3>
+      <div className="moat-list">
+        {moats.map((moat) => (
+          <article className="moat-card" key={moat.id}>
+            <div className="moat-head">
+              <span className="moat-type">
+                {moat.type}
+                {moat.typeNote ? `——${moat.typeNote}` : ""}
+              </span>
+              <span className={`moat-trend moat-trend--${moat.trend}`}>{moat.trend}</span>
+            </div>
+            <p className="moat-mechanism">{moat.mechanism}</p>
+            <dl>
+              <div>
+                <dt>支撑驱动</dt>
+                <dd>
+                  {moat.driverIds
+                    .map((id) => {
+                      const driver = drivers.get(id);
+                      return driver ? `${driver.label}（${driver.displayValue}）` : id;
+                    })
+                    .join("、")}
+                </dd>
+              </div>
+              <div>
+                <dt>什么会摧毁它</dt>
+                <dd className="cell-prose">{moat.breaker}</dd>
+              </div>
+            </dl>
+            {sourceIds(moat.evidenceIds)}
+          </article>
+        ))}
+      </div>
+    </>
+  );
+}
+
 export function BusinessModelSection({
   snapshot,
   sourceIds,
@@ -686,6 +750,7 @@ export function BusinessModelSection({
           );
         })}
       </div>
+      <MoatBlock snapshot={snapshot} sourceIds={sourceIds} />
       {latest ? <CashEngineWaterfall period={latest} roster={roster} /> : null}
       {/* The cash engine prose is the caption for the waterfall when there is
           one, and stands on its own when segment operating profit is missing. */}
@@ -1113,11 +1178,164 @@ export function ValueBridge({ snapshot }: { snapshot: CurrentSnapshot }) {
   );
 }
 
+/**
+ * What management said and what it did with the money, across dates.
+ *
+ * Counts and the outstanding list, never a delivery grade: the denominator
+ * depends on which promises were recorded, so a grade would be improvable by
+ * writing down fewer soft ones. Buyback rows carry the valuation they were
+ * executed at, which is what turns "bought back while expensive" from an
+ * impression into something a reader can check against today's value range.
+ */
+export function CommitmentPanel({ snapshot }: { snapshot: CurrentSnapshot }) {
+  const summary = snapshot.commitmentSummary;
+  if (!summary) return null;
+  const { counts, outstanding, latestResolution, capitalAllocation } = summary;
+  const total = Object.values(counts).reduce((sum, value) => sum + value, 0);
+
+  return (
+    <div className="commitment-panel">
+      <p className="company-note">
+        覆盖自 {summary.coverageFrom}，共 {total} 条记录。只呈现计数与未结清清单，不给兑现率档位——
+        分母取决于录入了哪些承诺，档位会让一个可被挑选操纵的数字看起来像评级。
+      </p>
+      <div className="commitment-counts">
+        {(Object.entries(counts) as Array<[string, number]>).map(([status, count]) => (
+          <article key={status}>
+            <span>{status}</span>
+            <strong>{count}</strong>
+          </article>
+        ))}
+      </div>
+      {total === 0 ? (
+        <p className="density-clear">台账为空：这段时间没有可判定的承诺，而不是没有查。</p>
+      ) : null}
+
+      {outstanding.length > 0 ? (
+        <>
+          <h4 className="block-heading">未结清</h4>
+          <ul className="commitment-outstanding">
+            {outstanding.map((entry) => (
+              <li key={entry.id}>
+                <span className={`commitment-status commitment-status--${entry.status}`}>{entry.status}</span>
+                <strong>{entry.commitment}</strong>
+                <em>到期：{entry.dueBy}</em>
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : total > 0 ? (
+        <p className="density-clear">没有未兑现或部分兑现的承诺。</p>
+      ) : null}
+
+      {latestResolution ? (
+        <p className="commitment-latest">
+          最近一次结算：{latestResolution.resolvedAt} · {latestResolution.status} ·{" "}
+          {latestResolution.commitment}
+        </p>
+      ) : null}
+
+      {capitalAllocation.length > 0 ? (
+        <>
+          <h4 className="block-heading">资本配置逐笔</h4>
+          <div className="table-wrap">
+            <table>
+              <thead>
+                <tr><th>时间</th><th>类型</th><th>内容</th><th>金额</th><th>当时估值</th><th>事后评估</th></tr>
+              </thead>
+              <tbody>
+                {capitalAllocation.map((entry) => (
+                  <tr key={entry.id}>
+                    <th>{entry.statedAt}</th>
+                    <td>{entry.kind}</td>
+                    <td className="cell-prose">{entry.commitment}</td>
+                    <td>{entry.amount ? formatFinancialValue(entry.amount) : "—"}</td>
+                    <td className="cell-prose">{entry.valuationAtTime ?? "—"}</td>
+                    <td className="cell-prose">{entry.returnAssessment ?? "—"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      ) : null}
+    </div>
+  );
+}
+
+/**
+ * How much of this research rests on missing values and inference.
+ *
+ * Rendered even when nothing fires: "0 条规则被触发" is the useful reading, and a
+ * block that only appears on weak research would let a reader mistake its
+ * absence for a page that simply does not report density.
+ */
+export function EvidenceDensityPanel({ snapshot }: { snapshot: CurrentSnapshot }) {
+  const block = snapshot.evidenceDensity;
+  if (!block) return null;
+  const { computed, responses } = block;
+  const pct = (value: string) => `${(Number(value) * 100).toFixed(1)}%`;
+  const rows = [
+    { label: "缺失值占比", value: pct(computed.unavailableShare), note: "标准指标、驱动与份额口径中 unavailable 的比例" },
+    { label: "推断类证据占比", value: pct(computed.inferenceShare), note: "evidence 中 kind 为 inference 的比例" },
+    { label: "低置信度驱动", value: pct(computed.lowConfidenceDriverShare), note: "置信度为「低」的驱动比例" },
+    { label: "只靠推断支撑的驱动", value: pct(computed.unsupportedDriverShare), note: "所引用证据全为 inference 的驱动比例" },
+  ];
+
+  return (
+    <div className="evidence-density">
+      <p className="company-note">
+        由引擎从本份快照自身统计，作者不得手写。它标出结论有多少建立在缺失值与推断之上，
+        但不阻断发布——证据稀薄有时是被研究对象的事实。
+      </p>
+      <div className="density-grid">
+        {rows.map((row) => (
+          <article key={row.label}>
+            <span>{row.label}</span>
+            <strong>{row.value}</strong>
+            <small>{row.note}</small>
+          </article>
+        ))}
+      </div>
+      {computed.idealMethodBlocked ? (
+        <p className="density-method">理想估值方法与实际采用的主方法不同，缺口见上方「补齐以下数据」清单。</p>
+      ) : null}
+      {responses.length === 0 ? (
+        <p className="density-clear">没有证据密度规则被触发。</p>
+      ) : (
+        <ul className="density-responses">
+          {responses.map((entry) => (
+            <li key={entry.ruleId}>
+              <span className={`health-response health-response--${entry.response}`}>{entry.response}</span>
+              <strong>{entry.observed}</strong>
+              <span>{entry.note}</span>
+              {(entry.blockedBy ?? []).length > 0 ? (
+                <ol className="density-blocked">
+                  {(entry.blockedBy ?? []).map((gap) => (
+                    <li key={gap.dataItem}>
+                      <strong>{gap.dataItem}</strong>
+                      <span>{gap.whyNeeded}</span>
+                      <em>取自：{gap.whereToGet}</em>
+                    </li>
+                  ))}
+                </ol>
+              ) : null}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 /** What the current price already assumes, plus what would sharpen the estimate. */
 export function ValuationMethodPanel({ snapshot }: { snapshot: CurrentSnapshot }) {
-  const { methodSelection, impliedExpectation, healthCheck } = snapshot.valuation;
+  const { methodSelection, impliedExpectation, healthCheck, disagreement } = snapshot.valuation;
   const ideal = lookupValuationMethod(methodSelection.ideal);
   const adopted = lookupValuationMethod(methodSelection.adoptedPrimary);
+  const disagreementDriver = disagreement
+    ? snapshot.driverMetrics.find((metric) => metric.id === disagreement.driverId)
+    : undefined;
 
   return (
     <div className="valuation-method">
@@ -1158,6 +1376,26 @@ export function ValuationMethodPanel({ snapshot }: { snapshot: CurrentSnapshot }
           : "（基准情景含多个估值组件，无法解出单一倍数）"}
         。{snapshot.valuation.currentExpectation}
       </p>
+
+      {disagreement ? (
+        <div className={`disagreement${disagreement.converged ? " disagreement--converged" : ""}`}>
+          <h4>
+            {disagreement.converged ? "与市场没有实质分歧" : "分歧点"}
+            <span className="disagreement-driver">
+              {disagreementDriver?.label ?? disagreement.driverId}
+              {disagreementDriver ? ` · ${disagreementDriver.displayValue}` : ""}
+            </span>
+          </h4>
+          <dl>
+            <div><dt>市场假设</dt><dd className="cell-prose">{disagreement.marketAssumption}</dd></div>
+            <div><dt>我的假设</dt><dd className="cell-prose">{disagreement.ourAssumption}</dd></div>
+            <div>
+              <dt>{disagreement.converged ? "这意味着什么" : "如果市场对了"}</dt>
+              <dd className="cell-prose">{disagreement.ifMarketIsRight}</dd>
+            </div>
+          </dl>
+        </div>
+      ) : null}
 
       {methodSelection.blockedBy.length > 0 ? (
         <div className="upgrade-hint">

@@ -64,6 +64,11 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
 - `causalChain`：从投入到再投资的一条因果链。
 - `deliveryDependency`：获客、供给、履约依赖的渠道、资产、牌照或合作方。
 - `cashEngine`：利润与现金究竟来自哪一段。
+- `moat`：1–3 条**真正起作用的**护城河，不是逐类打勾（见 ADR-0018）。每条含稳定 ID、`type`（品牌定价权 / 转换成本 / 网络效应 / 规模成本 / 技术与牌照 / 其他，取「其他」必须写 `typeNote`）、`mechanism`（它作用在 `causalChain` 哪一环——写位置，不写形容词）、`driverIds`、`trend`（变宽 / 稳定 / 变窄 / 待验证）、`breaker`（什么能摧毁它，含可观察的前置信号）和 evidence IDs。
+  - **`driverIds` 必须命中已声明的 `driverMetrics[].id`**，校验器强制。这是整块的意义所在：护城河因此继承驱动指标的定义、口径、阈值、证据与跨快照延续；找不到指标支撑的护城河，先怀疑它并不存在。
+  - `trend` 用「变宽/变窄」而不复用 `constraints` 的「改善/恶化」——护城河宽度变化本身没有好坏方向。
+  - 增删与趋势变动只产生**警告**，与最紧约束一致：护城河被证伪或新护城河成型是研究进展的正常结果，且它没有口径字段可供 `driverChanges` 那套机制比较。说明义务由 `WORKFLOW.md` 承担。
+  - 字段可选只为向后兼容。`snapshot:new` 生成的骨架把它写成哨兵，因此新研究实际必填；已发布快照不回填，页面显示「本次研究未声明护城河」。
 
 声明了两个及以上分部时，最新期间必须给出分部数据；取不到就逐个写 `status: "unavailable"` 与 reason。
 
@@ -99,6 +104,8 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
 
 跨快照驱动只有在定义、定义版本、单位、币种、scale、期间类型和会计基础全部兼容时才可连接或判断变化；否则必须标为“不可比较”，不能把年度值与季度值直接相减。
 
+`periodType` 允许 `month`，**且只有驱动指标允许**。最有价值的领先指标常常是月度的——销量、产量、保费、月营收——压成季度就丢掉了值得跟踪的那个拐点。月度期间必须写成零填充的 `YYYY-MM`（如 `2026-01`），校验器强制；写成 `2026 M1` 会让字典序静默错排（`M1 < M10 < M2`）。月度经营数据未经审计、通常也不在会计准则口径内，因此不得进入 `financialHistory` 与 `standardMetrics`。
+
 **驱动指标延续优先。** 驱动指标集不是每次研究自由重选的。新快照默认继承上一份快照的驱动 ID、定义与全部口径字段，只更新数值、期间、趋势、阈值和证据。`npm run snapshot:new` 生成的骨架已经替你继承好这些字段。增删改必须按下一节在 `thesisChange.driverChanges` 中交代，校验器会强制。
 
 ### `constraints`
@@ -130,13 +137,14 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
 
 ### `financialHistory`、`sections` 与 `valuation`
 
-- **`period` 字符串必须能按字典序排出时间顺序。** `sortPeriods` 先按期间类型再按 `period.localeCompare` 排序，`financialHistory` 的最后一项就是「最新期间」——健康体检的分部走势、最新期对比表和 `at(-1)` 全部依赖它。写成 `Q1 2026` 的公司一旦攒够跨年的季度就会静默错序（`Q1 2026` < `Q1 2027` < `Q2 2026`，最新期变成 Q2 2026）。季度一律写成 `2026 Q1`、半年度写成 `2026 H1`，年度写成 `FY2026`。
+- **`period` 字符串必须能按字典序排出时间顺序。** `sortPeriods` 先按期间类型再按 `period.localeCompare` 排序，`financialHistory` 的最后一项就是「最新期间」——健康体检的分部走势、最新期对比表和 `at(-1)` 全部依赖它。写成 `Q1 2026` 的公司一旦攒够跨年的季度就会静默错序（`Q1 2026` < `Q1 2027` < `Q2 2026`，最新期变成 Q2 2026）。季度一律写成 `2026 Q1`、半年度写成 `2026 H1`，年度写成 `FY2026`；月度只出现在驱动指标里，写成 `2026-01`。
 - `financialHistory` **由 `research/companies/<company-id>/financials.json` 物化，不手写**。运行 `npm run snapshot:sync` 生成，校验器逐字段比对；一致性只约束该公司的当前快照，历史快照按发布时的数字冻结（见 ADR-0014）。每个期间记录 `periodType`、`accountingBasis` 与 `status`（`reported` 或由其他披露值 `calculated`）；每个财务值使用对象保存十进制字符串 `value`、`unit`、`currency`（货币值必填）、`scale` 和 `precision`，缺失字段直接省略，禁止由渲染层假设“亿元”或默认币种。分部数据放在期间的 `segments` 里。
 - `sections` 负责完整的商业模式、竞争、财务质量、组织研发、治理等论证。每节包含结论性摘要、证据要点和 evidence IDs。
 - `valuation` 先读 `docs/research/valuation-playbook.md`。必填 `currency`、`valueScale`、`tradingCurrency`、`shares`（scale 必须等于 `valueScale`）与 `fx`（至少两条 evidence，按 ADR-0013 双源交叉）。
 - `valuation.scenarios` 恰好三个（熊市/基准/牛市），各自写明假设、触发条件与 `components`。组件是倍数项（指标区间 × 倍数区间）或面值项（金额，可带 `discountPct` 与 `discountReason`）。
 - **`computed`、`actionZones` 的边界、`impliedExpectation` 与 `summary.fairValue` 全部由引擎计算，作者不得手写。** 运行 `npm run snapshot:sync`；校验器会重算并在不符时阻断。`actionZones` 只有 `action` 文案可以手写。
 - `valuation.healthCheck` 必须回应每一条被触发的体检规则；`methodSelection` 必须同时给出理想方法与实际采用的主方法，两者不同时 `blockedBy` 不能为空。
+- `valuation.disagreement` 记录分歧点：`driverId`（**必须命中已声明的驱动**，校验器强制）、`marketAssumption`、`ourAssumption`、`ifMarketIsRight`、`converged`。隐含倍数是市场的数字，不是市场的理由；把分歧锚在一个可观测量上，下一份财报才能判定谁对。「竞争加剧」「监管风险」对任何公司在任何价格都成立，因此解释不了任何具体价差。`converged` 为真时 `ifMarketIsRight` 改写为「当前价格不提供安全边际」的含义，而不是硬编一个错误。
 
 ### `evidence`
 
@@ -147,6 +155,28 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
 - `inference`：分析判断或区间估算。
 
 同时保存标题、发布者、报告期/事件日、发布日期、抓取时间、直接 URL 和必要的口径限制。驱动指标和章节必须通过 `evidenceIds` 引用这些记录。
+
+### `commitmentSummary`
+
+治理的纵向证据，从 `research/companies/<company-id>/commitments.json` 物化（见 ADR-0019），**不手写**。
+
+- 台账每条记录含稳定 ID、`kind`（`承诺` / `并购` / `回购` / `分红` / `新业务投入`）、`statedAt`、`venue`、`quote`（原文摘录，不转述）、`commitment`（可判定的内容）、`dueBy`（日期或 `未给时限`）、`status`（`兑现` / `部分兑现` / `未兑现` / `待到期` / `已撤回`）、`resolvedAt`、`outcome` 与至少一条 evidence。
+- 已结算的条目必须写 `resolvedAt` 与 `outcome`：`status` 的判定本身是判断，只写一个状态字不合格。
+- `并购` 与 `回购` 额外必填 `amount` 与 `valuationAtTime`——留下当时的估值坐标，才能把「回购发生在明显高估区」从印象变成可复算的记录。
+- 快照里的摘要含覆盖起始时点、五种状态的计数、未结清清单、最近一次结算与资本配置逐笔。`npm run snapshot:sync` 物化，`npm run snapshot:check` 逐字段比对；一致性只约束该公司的当前快照，历史快照按发布时冻结（同 ADR-0014）。
+- **只呈现计数与清单，不给兑现率档位，也不做加权综合评分。** 计数是事实，档位是判断，而这个判断的分母取决于录入了哪些承诺——写成档位会让一个可靠「少录几条软承诺」改善的数字看起来像评级。
+- 台账缺失只产生警告（刚上市的公司可能确实没有可录条目），但**空台账也必须显式存在并写明 `coverageFrom`**：「没有承诺」和「没查」必须能区分。快照有摘要而目录没有台账则是错误——那份摘要来自无处。
+
+### `evidenceDensity`
+
+本次结论有多少建立在缺失值与推断之上，由引擎从快照自身统计（见 ADR-0020）。
+
+- `computed` 含 `unavailableShare`（标准指标 + 驱动 + 份额口径中 `unavailable` 的占比）、`inferenceShare`（evidence 中 `inference` 占比）、`lowConfidenceDriverShare`、`unsupportedDriverShare`（所引用证据全为 `inference` 的驱动占比）与 `idealMethodBlocked`。**作者不得手写**，运行 `npm run snapshot:sync`；校验器会重算并在不符时阻断。
+- `responses` 必须逐条回应被触发的规则，也不得回应未触发的规则。四值语义：`adopted` 已按建议下调结论强度或补齐数据、`blocked` 认可但取不到、`rejected` 本公司不适用并说明理由、`acknowledged` 已在风险或约束中反映。
+- **`blocked` 必须附 `blockedBy`**，每项写 `dataItem` / `whyNeeded` / `whereToGet`。回应不能是免责声明——写声明比补数据便宜，所以便宜那条路要被堵住。
+- **规则触发本身不阻断发布**，只有「触发了却没回应」才阻断。证据稀薄有时是被研究对象的事实；用阻断去逼诚实，只会让作者把 `unavailable` 改写成 `inference`。
+- `unsupportedDriverShare` 是这组里最硬的一条：它不看比例，只看有没有。一个驱动引用的证据全是推断，等于在用推断解释推断。
+- 字段可选仅为向后兼容；`snapshot:new` 把 `computed` 写成哨兵、`responses` 留空，因此新研究实际必填。已发布快照不回填。
 
 ## 发布与验收
 

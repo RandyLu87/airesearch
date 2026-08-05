@@ -169,11 +169,28 @@ function businessModelSkeleton(prior?: Json): Json {
     chargingMode: source?.chargingMode ?? SENTINEL,
     evidenceIds: [SENTINEL],
   });
+  // A moat's type, mechanism, supporting drivers and breaker are structure and
+  // carry over; its trend is the reading and is re-judged every time. Carrying
+  // the trend forward would let "still widening" survive by inertia, which is
+  // the one thing this block exists to prevent.
+  const priorMoats = (prior?.moat as Json[] | undefined) ?? [];
+  const moat = (source?: Json): Json => ({
+    id: source?.id ?? SENTINEL,
+    type: source?.type ?? SENTINEL,
+    ...(source?.typeNote === undefined ? {} : { typeNote: source.typeNote }),
+    mechanism: source?.mechanism ?? SENTINEL,
+    driverIds: source?.driverIds ?? [SENTINEL],
+    trend: SENTINEL,
+    breaker: source?.breaker ?? SENTINEL,
+    evidenceIds: [SENTINEL],
+  });
+
   return {
     segments: priorSegments.length > 0 ? priorSegments.map(segment) : [segment()],
     causalChain: prior?.causalChain ?? SENTINEL,
     deliveryDependency: prior?.deliveryDependency ?? SENTINEL,
     cashEngine: prior?.cashEngine ?? SENTINEL,
+    moat: priorMoats.length > 0 ? priorMoats.map(moat) : [moat()],
     evidenceIds: [SENTINEL],
   };
 }
@@ -342,6 +359,19 @@ function valuationSkeleton(prior?: Json, priorCompany?: Json): Json {
       metricLabel: null,
     },
     currentExpectation: SENTINEL,
+    // The driver the market disagrees about is calibration — which observable
+    // the argument is actually over rarely changes between two research runs —
+    // while both sides' assumed paths are readings and get re-sourced.
+    disagreement: {
+      driverId: (prior?.disagreement as Json | undefined)?.driverId ?? SENTINEL,
+      marketAssumption: SENTINEL,
+      ourAssumption: SENTINEL,
+      ifMarketIsRight: SENTINEL,
+      // No sentinel exists for a boolean. `false` is the load-bearing default:
+      // it asserts a gap the author then has to describe, whereas `true` would
+      // let "the market and I agree" pass without anyone having checked.
+      converged: false,
+    },
     evidenceIds: [SENTINEL],
   };
 }
@@ -352,8 +382,9 @@ export function buildSkeleton(input: {
   createdAt: string;
   prior?: Json;
   ledger?: { periods: unknown[] };
+  commitmentSummary?: unknown;
 }): Json {
-  const { companyId, snapshotId, createdAt, prior, ledger } = input;
+  const { companyId, snapshotId, createdAt, prior, ledger, commitmentSummary } = input;
   const priorSummary = prior?.summary as Json | undefined;
   const priorReferencePrice = priorSummary?.referencePrice as Json | undefined;
   const priorFairValue = priorSummary?.fairValue as Json | undefined;
@@ -449,7 +480,25 @@ export function buildSkeleton(input: {
     risks: repeat(3, () => SENTINEL),
     viewChanges: { upgrade: [SENTINEL], downgrade: [SENTINEL] },
     checkpoints: repeat(3, () => SENTINEL),
+    // Materialised, not sentinelled: settled promises are disclosed history, the
+    // same category as a closed fiscal year, so re-sourcing them every run is the
+    // waste the ledger exists to end. Absent when the company has no ledger yet.
+    ...(commitmentSummary === undefined ? {} : { commitmentSummary }),
     evidence: repeat(2, () => evidenceSkeleton()),
+    // Engine output, sentinelled so an unsynced draft cannot publish. `responses`
+    // starts empty because an empty list is the correct answer when no rule
+    // fires; `snapshot:sync` fills `computed` and the checker then demands a
+    // response for whatever that computation triggers.
+    evidenceDensity: {
+      computed: {
+        unavailableShare: SENTINEL,
+        inferenceShare: SENTINEL,
+        lowConfidenceDriverShare: SENTINEL,
+        unsupportedDriverShare: SENTINEL,
+        idealMethodBlocked: false,
+      },
+      responses: [],
+    },
     disclaimer: "本报告仅作研究与教育用途，不构成个性化投资建议。",
   };
 }

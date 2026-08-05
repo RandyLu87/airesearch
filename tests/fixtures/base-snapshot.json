@@ -646,6 +646,13 @@
       "metricLabel": "正常化归母净利润"
     },
     "currentExpectation": "当前价格对应正常化盈利的中枢倍数。",
+    "disagreement": {
+      "driverId": "paying-ratio",
+      "marketAssumption": "当前价隐含的倍数对应付费率三年内停在现有水平。",
+      "ourAssumption": "基准情景假设付费率每年提升约一个百分点，由歌单迁移成本支撑。",
+      "ifMarketIsRight": "错在获客到留存那一环：付费率停滞意味着免费向付费的转化已到天花板。下一期先看新增付费用户环比。",
+      "converged": false
+    },
     "evidenceIds": [
       "ev-annual-report"
     ]
@@ -717,6 +724,22 @@
     "causalChain": "销售投入 → 新签席位 → 续费与扩座 → 订阅收入 → 毛利 → 现金 → 再投入研发。",
     "deliveryDependency": "自有云基础设施与实施团队。",
     "cashEngine": "现金几乎全部来自核心订阅的预收年费。",
+    "moat": [
+      {
+        "id": "catalog-social-lock",
+        "type": "转换成本",
+        "mechanism": "位于获客与留存之间：歌单、收藏与社交关系留在站内，迁移等于重建全部个人资产。",
+        "driverIds": [
+          "subscription-mix",
+          "paying-ratio"
+        ],
+        "trend": "稳定",
+        "breaker": "版权方转向独家直供，或监管要求平台开放歌单互导；前置信号是新增付费用户中来自站外导入工具的比例上升。",
+        "evidenceIds": [
+          "ev-annual-report"
+        ]
+      }
+    ],
     "evidenceIds": [
       "ev-annual-report"
     ]

@@ -4,6 +4,13 @@ import path from "node:path";
 import Decimal from "decimal.js";
 import { z } from "zod";
 import { STANDARD_METRIC_IDS } from "./metric-dictionary.ts";
+import { MONTH_PERIOD_PATTERN } from "./periods.ts";
+import {
+  DENSITY_RULE_IDS,
+  computeEvidenceDensity,
+  densityFactsFrom,
+  triggeredDensityRules,
+} from "./density.ts";
 import {
   HEALTH_RULE_IDS,
   ratioOrNull,
@@ -19,6 +26,7 @@ import {
 
 export * from "./metric-dictionary.ts";
 export * from "./periods.ts";
+export * from "./density.ts";
 export * from "./valuation/methods.ts";
 export * from "./valuation/rules.ts";
 export * from "./valuation/engine.ts";
@@ -86,7 +94,14 @@ const driverMetricSchema = z.object({
   scale: metricScaleSchema,
   precision: z.number().int().min(0).max(6),
   period: z.string().min(1),
-  periodType: z.enum(["instant", "quarter", "half-year", "fiscal-year"]),
+  /**
+   * `month` is a driver-only cadence. The most useful leading indicators are
+   * often monthly — sales volume, output, premiums, monthly revenue — and
+   * flattening them into a quarter throws away the turn that made them worth
+   * watching. They stay out of `financialHistory` because monthly operating
+   * disclosures are unaudited and usually outside the accounting standard.
+   */
+  periodType: z.enum(["instant", "month", "quarter", "half-year", "fiscal-year"]),
   accountingBasis: z.string().min(1),
   baseline: z.string().min(1),
   trend: z.enum(["改善", "稳定", "恶化", "待验证"]),
@@ -103,6 +118,15 @@ const driverMetricSchema = z.object({
   }
   if (metric.unit === "currency" && !metric.currency) {
     context.addIssue({ code: "custom", message: "货币驱动必须填写 currency" });
+  }
+  if (metric.periodType === "month" && !MONTH_PERIOD_PATTERN.test(metric.period)) {
+    context.addIssue({
+      code: "custom",
+      path: ["period"],
+      message:
+        `月度驱动的 period 必须写成零填充的 YYYY-MM（如 2026-01）。` +
+        `写成「2026 M1」这类形式会让字典序静默错排——M1 < M10 < M2。`,
+    });
   }
 });
 
@@ -178,6 +202,12 @@ const periodSegmentSchema = z.object({
 
 export const financialPeriodSchema = z.object({
   period: z.string().min(1),
+  /**
+   * No `month` here, deliberately. Monthly operating disclosures are unaudited
+   * and usually outside the accounting standard, so letting one into the ledger
+   * would put a number that cannot be reconciled to a filing into the same
+   * series the valuation reads. Monthly cadence belongs to `driverMetrics`.
+   */
   periodType: z.enum(["quarter", "half-year", "fiscal-year"]),
   accountingBasis: z.string().min(1),
   /**
@@ -227,11 +257,65 @@ const businessSegmentSchema = z.object({
   evidenceIds: z.array(z.string()).min(1),
 });
 
+/**
+ * One moat that actually holds, bound to the metric that shows it holding.
+ *
+ * A declaration, not a checklist. Walking five moat types and writing a line
+ * under each produces four moats that do not exist and one that does, with
+ * nothing to tell a reader which is which — the same failure mode
+ * `business-model-playbook.md` guards against when it forbids scoring a company
+ * by weighted total.
+ *
+ * `driverIds` is the whole point. A moat pinned to a driver inherits everything
+ * that driver already carries: a definition, a calibration, a threshold,
+ * evidence, and continuity across snapshots. A moat with no driver behind it is
+ * a compliment, and the honest reading of one that cannot find a driver is that
+ * it may not be there.
+ */
+const moatSchema = z.object({
+  id: z.string().min(1),
+  type: z.enum([
+    "品牌定价权",
+    "转换成本",
+    "网络效应",
+    "规模成本",
+    "技术与牌照",
+    "其他",
+  ]),
+  typeNote: z.string().min(1).optional(),
+  /** Where in `causalChain` it acts — a position, not an adjective. */
+  mechanism: z.string().min(1),
+  driverIds: z.array(z.string().min(1)).min(1),
+  /**
+   * Width, not quality. A moat moving from 待验证 to 稳定 is not an
+   * "improvement" in the sense `constraints.status` means, so this enum stays
+   * separate rather than reusing 改善/恶化.
+   */
+  trend: z.enum(["变宽", "稳定", "变窄", "待验证"]),
+  /** What would destroy it, with the observable signal that precedes that. */
+  breaker: z.string().min(1),
+  evidenceIds: z.array(z.string()).min(1),
+}).superRefine((moat, context) => {
+  if (moat.type === "其他" && !moat.typeNote) {
+    context.addIssue({
+      code: "custom",
+      path: ["typeNote"],
+      message: "护城河类型取「其他」时必须填写 typeNote 说明它究竟是什么",
+    });
+  }
+});
+
 const businessModelSchema = z.object({
   segments: z.array(businessSegmentSchema).min(1),
   causalChain: z.string().min(1),
   deliveryDependency: z.string().min(1),
   cashEngine: z.string().min(1),
+  /**
+   * Optional in the contract, mandatory in practice: `snapshot:new` writes it
+   * as sentinels, so the authoring path demands it while snapshots published
+   * before ADR-0018 stay valid without being back-filled.
+   */
+  moat: z.array(moatSchema).min(1).max(3).optional(),
   evidenceIds: z.array(z.string()).min(1),
 });
 
@@ -394,6 +478,83 @@ const healthCheckResponseSchema = z.object({
   response: z.enum(["adopted", "blocked", "rejected", "acknowledged"]),
   note: z.string().min(1),
 });
+
+/**
+ * One answer to one triggered density rule.
+ *
+ * A response may not be a disclaimer. `blocked` therefore carries the same
+ * three-part gap record as `methodSelection.blockedBy`: what number is missing,
+ * why it would help, where to get it. Writing a disclaimer is cheaper than
+ * fetching data, so the cheap option is the one that has to be closed off.
+ */
+const densityResponseSchema = z.object({
+  ruleId: z.enum(DENSITY_RULE_IDS as [string, ...string[]]),
+  observed: z.string().min(1),
+  response: z.enum(["adopted", "blocked", "rejected", "acknowledged"]),
+  note: z.string().min(1),
+  blockedBy: z.array(z.object({
+    dataItem: z.string().min(1),
+    whyNeeded: z.string().min(1),
+    whereToGet: z.string().min(1),
+  })).optional(),
+}).superRefine((entry, context) => {
+  if (entry.response === "blocked" && (entry.blockedBy ?? []).length === 0) {
+    context.addIssue({
+      code: "custom",
+      path: ["blockedBy"],
+      message:
+        "response 为 blocked 时必须列出 blockedBy：缺的是哪一个数、它为什么能提高证据密度、" +
+        "去哪份文件的哪一部分取。写「需要更多数据」不算合格。",
+    });
+  }
+});
+
+/**
+ * The governance summary materialised from `commitments.json` (ADR-0019).
+ *
+ * Defined here rather than in `commitments.ts` so the dependency runs one way:
+ * that module needs `financialValueSchema` from this one, exactly as `ledger.ts`
+ * does, and a snapshot field cannot be validated by a schema this file imports
+ * back from it.
+ *
+ * Counts and lists only, never a delivery *grade*. A rate mapped onto
+ * ">80% 优秀 / <40% 不可信赖" reads like a rating while its denominator depends
+ * on which promises were written down — improvable by recording fewer soft ones.
+ */
+export const commitmentSummarySchema = z.object({
+  coverageFrom: z.string().min(1),
+  counts: z.object({
+    兑现: z.number().int().min(0),
+    部分兑现: z.number().int().min(0),
+    未兑现: z.number().int().min(0),
+    待到期: z.number().int().min(0),
+    已撤回: z.number().int().min(0),
+  }),
+  outstanding: z.array(z.object({
+    id: z.string().min(1),
+    commitment: z.string().min(1),
+    dueBy: z.string().min(1),
+    status: z.string().min(1),
+  })),
+  latestResolution: z.object({
+    id: z.string().min(1),
+    commitment: z.string().min(1),
+    status: z.string().min(1),
+    resolvedAt: z.string().min(1),
+  }).nullable(),
+  capitalAllocation: z.array(z.object({
+    id: z.string().min(1),
+    kind: z.string().min(1),
+    statedAt: z.string().min(1),
+    commitment: z.string().min(1),
+    status: z.string().min(1),
+    amount: financialValueSchema.optional(),
+    valuationAtTime: z.string().min(1).optional(),
+    returnAssessment: z.string().min(1).optional(),
+  })),
+});
+
+export type CommitmentSummary = z.infer<typeof commitmentSummarySchema>;
 
 const methodSelectionSchema = z.object({
   ideal: z.enum(VALUATION_METHOD_IDS as [string, ...string[]]),
@@ -587,6 +748,28 @@ const snapshotShape = z.object({
       metricLabel: z.string().min(1).nullable(),
     }),
     currentExpectation: z.string().min(1),
+    /**
+     * Where the market and this snapshot actually disagree.
+     *
+     * The implied multiple is the market's number, not the market's reason.
+     * Anchoring the disagreement to a declared driver is what turns "I know the
+     * market disagrees" into "I know which observable the market disagrees
+     * about" — and only the second can be settled by the next filing.
+     * "竞争加剧" and "监管风险" hold for every company at every price, so they
+     * explain no particular gap; hence the id, checked for existence.
+     */
+    disagreement: z.object({
+      driverId: z.string().min(1),
+      marketAssumption: z.string().min(1),
+      ourAssumption: z.string().min(1),
+      /**
+       * When `converged` is true this states that the price offers no margin of
+       * safety, rather than naming an error — the honest reading when the
+       * implied path and the base case are the same path.
+       */
+      ifMarketIsRight: z.string().min(1),
+      converged: z.boolean(),
+    }).optional(),
     evidenceIds: z.array(z.string()).min(1),
   }),
   risks: z.array(z.string().min(1)).min(3),
@@ -595,7 +778,40 @@ const snapshotShape = z.object({
     downgrade: z.array(z.string().min(1)).min(1),
   }),
   checkpoints: z.array(z.string().min(1)).min(3),
+  /**
+   * Materialised from `commitments.json`, never hand-written: `snapshot:sync`
+   * writes it and `snapshot:check` compares it against the ledger, exactly as
+   * with `financialHistory`. Optional because a newly listed company may
+   * genuinely have nothing to record — but an empty ledger still has to exist
+   * and state its coverage start, so "no commitments" and "nobody looked" stay
+   * distinguishable.
+   */
+  commitmentSummary: commitmentSummarySchema.optional(),
   evidence: z.array(evidenceSchema).min(2),
+  /**
+   * How much of this snapshot rests on missing values and inference.
+   *
+   * `computed` is engine output and recomputed by the checker, like
+   * `impliedExpectation`. Triggering a rule never blocks publication — evidence
+   * really is thin for some companies, and blocking would push an author to
+   * rewrite an honest `unavailable` as an `inference` to get past the checker,
+   * which is the exact behaviour these rules exist to catch. Leaving a triggered
+   * rule unanswered does block.
+   *
+   * Optional so snapshots published before ADR-0020 stay valid: the statistics
+   * can be computed for them, but nobody is going to back-fill a self-audit
+   * nobody performed at the time.
+   */
+  evidenceDensity: z.object({
+    computed: z.object({
+      unavailableShare: decimalString,
+      inferenceShare: decimalString,
+      lowConfidenceDriverShare: decimalString,
+      unsupportedDriverShare: decimalString,
+      idealMethodBlocked: z.boolean(),
+    }),
+    responses: z.array(densityResponseSchema),
+  }).optional(),
   disclaimer: z.string().min(1),
 });
 
@@ -639,6 +855,7 @@ export const researchSnapshotSchema = z
       ? [
           ...snapshot.businessModel.evidenceIds,
           ...snapshot.businessModel.segments.flatMap((segment) => segment.evidenceIds),
+          ...(snapshot.businessModel.moat ?? []).flatMap((moat) => moat.evidenceIds),
           ...snapshot.marketPosition.evidenceIds,
           ...snapshot.marketPosition.measures.flatMap((measure) => measure.evidenceIds),
           ...snapshot.marketPosition.competitors.flatMap((competitor) => competitor.evidenceIds),
@@ -679,6 +896,35 @@ export const researchSnapshotSchema = z
     }
   }
 
+  // A moat has to point at a driver that exists, and the disagreement has to
+  // point at one too. Both are the entire mechanism by which those blocks stay
+  // falsifiable rather than becoming two more prose fields.
+  const driverIds = new Set(snapshot.driverMetrics.map((metric) => metric.id));
+  for (const [index, moat] of (snapshot.businessModel.moat ?? []).entries()) {
+    for (const driverId of moat.driverIds) {
+      if (driverIds.has(driverId)) continue;
+      context.addIssue({
+        code: "custom",
+        path: ["businessModel", "moat", index, "driverIds"],
+        message:
+          `护城河「${moat.id}」引用了不存在的驱动指标 ${driverId}。` +
+          `护城河必须落在已声明的 driverMetrics 上；找不到支撑它的指标时，` +
+          `先怀疑这条护城河并不存在，再考虑是不是缺了一个该建的驱动。`,
+      });
+    }
+  }
+  const disagreement = snapshot.valuation.disagreement;
+  if (disagreement && !driverIds.has(disagreement.driverId)) {
+    context.addIssue({
+      code: "custom",
+      path: ["valuation", "disagreement", "driverId"],
+      message:
+        `分歧点引用了不存在的驱动指标 ${disagreement.driverId}。` +
+        `分歧必须锚在一个已声明的驱动上——「竞争加剧」这类说法对任何公司在任何价格都成立，` +
+        `因此解释不了任何具体的价差。`,
+    });
+  }
+
   // A multi-segment company that shows no split for its most recent period has
   // left the single most informative part of the business model blank.
   if (snapshot.businessModel.segments.length >= 2) {
@@ -694,7 +940,62 @@ export const researchSnapshotSchema = z
   }
 
   verifyValuation(snapshot, context);
+  verifyEvidenceDensity(snapshot, context);
 });
+
+/**
+ * Recompute the density statistics and hold the author to answering what fires.
+ *
+ * Only the answers are enforced, never the density itself. A thin-evidence
+ * company is a fact about that company, and a checker that refused to publish it
+ * would be asking the author to launder the thinness rather than declare it.
+ */
+function verifyEvidenceDensity(snapshot: SnapshotShape, context: z.RefinementCtx): void {
+  const block = snapshot.evidenceDensity;
+  if (!block) return;
+
+  const expected = computeEvidenceDensity(snapshot);
+  for (const key of [
+    "unavailableShare",
+    "inferenceShare",
+    "lowConfidenceDriverShare",
+    "unsupportedDriverShare",
+    "idealMethodBlocked",
+  ] as const) {
+    if (block.computed[key] !== expected[key]) {
+      context.addIssue({
+        code: "custom",
+        path: ["evidenceDensity", "computed", key],
+        message:
+          `evidenceDensity.computed.${key} 由引擎从快照自身统计，应为 ` +
+          `${String(expected[key])}，写的是 ${String(block.computed[key])}。` +
+          `运行 npm run snapshot:sync 重算，不要手改这个字段。`,
+      });
+    }
+  }
+
+  const triggered = triggeredDensityRules(densityFactsFrom(expected));
+  const answered = new Set(block.responses.map((entry) => entry.ruleId));
+  for (const { rule, observed } of triggered) {
+    if (answered.has(rule.id)) continue;
+    context.addIssue({
+      code: "custom",
+      path: ["evidenceDensity", "responses"],
+      message:
+        `证据密度规则「${rule.label}」被触发（${observed}），但 evidenceDensity.responses 没有回应。` +
+        `补一条 {"ruleId":"${rule.id}","observed":"${observed}","response":"...","note":"..."}；` +
+        `标 blocked 时必须写出可去取的具体数据。`,
+    });
+  }
+  for (const entry of block.responses) {
+    if (triggered.some(({ rule }) => rule.id === entry.ruleId)) continue;
+    context.addIssue({
+      code: "custom",
+      path: ["evidenceDensity", "responses"],
+      message: `evidenceDensity.responses 回应了未触发的规则 ${entry.ruleId}；删除它或核对触发条件。`,
+    });
+  }
+}
 
 /**
  * Recompute everything the engine owns and reject the snapshot if the stored
@@ -1202,6 +1503,30 @@ export function compareResearchSnapshots(
     (item) => !priorEvidenceIds.has(item.id),
   );
 
+  // Moat width across two research dates. Only the trend is compared, because
+  // that is the only field a moat carries that is a reading rather than
+  // structure — and "is it still widening" is the question the block exists for.
+  const priorMoats = new Map(
+    (isCurrentSnapshot(prior) ? prior.businessModel.moat ?? [] : []).map((moat) => [moat.id, moat]),
+  );
+  const currentMoats = isCurrentSnapshot(current) ? current.businessModel.moat ?? [] : [];
+  const moats = currentMoats.map((moat) => {
+    const previous = priorMoats.get(moat.id);
+    return {
+      id: moat.id,
+      type: moat.type,
+      mechanism: moat.mechanism,
+      driverIds: moat.driverIds,
+      breaker: moat.breaker,
+      priorTrend: previous?.trend ?? null,
+      currentTrend: moat.trend,
+      changed: previous !== undefined && previous.trend !== moat.trend,
+    };
+  });
+  const droppedMoats = [...priorMoats.values()]
+    .filter((moat) => !currentMoats.some((item) => item.id === moat.id))
+    .map((moat) => ({ id: moat.id, type: moat.type, priorTrend: moat.trend }));
+
   return {
     prior: {
       date: prior.snapshot.dataCutoff.slice(0, 10),
@@ -1225,6 +1550,8 @@ export function compareResearchSnapshots(
     },
     metrics,
     driverMetrics,
+    moats,
+    droppedMoats,
     evidence: {
       added: addedEvidence,
       supersededAssumptions: current.thesisChange.supersededAssumptions,

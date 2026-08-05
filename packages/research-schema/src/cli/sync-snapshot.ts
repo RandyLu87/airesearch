@@ -13,13 +13,20 @@ import {
   loadFinancialLedger,
   materializeFinancialHistory,
 } from "../ledger.ts";
+import { computeEvidenceDensity } from "../density.ts";
+import {
+  hasCommitmentLedger,
+  loadCommitmentLedger,
+  materializeCommitmentSummary,
+} from "../commitments.ts";
 import { findRepoRoot, parseArgs, runCli } from "./shared.ts";
 
 const USAGE = `用法：npm run snapshot:sync -- <snapshot-path> [--check]
 
-把两类派生数据写回研究快照：
+把三类派生数据写回研究快照：
   1. financialHistory —— 从 research/companies/<company>/financials.json 物化；
-  2. 估值引擎输出 —— 情景区间、操作区间边界、隐含预期、summary.fairValue。
+  2. 估值引擎输出 —— 情景区间、操作区间边界、隐含预期、summary.fairValue；
+  3. 证据密度统计 —— 缺失值、推断与低置信度驱动的占比。
 
 这些字段都不该手写。--check 只报告差异，不落盘。`;
 
@@ -123,6 +130,49 @@ function syncValuation(snapshot: Json, notes: string[]): void {
   }
 }
 
+function syncCommitments(snapshot: Json, root: string, notes: string[]): void {
+  const companyId = (snapshot.company as Json | undefined)?.id;
+  if (typeof companyId !== "string") {
+    notes.push("快照缺少 company.id，跳过承诺台账同步。");
+    return;
+  }
+  if (!hasCommitmentLedger(root, companyId)) {
+    notes.push(
+      `没有找到 research/companies/${companyId}/commitments.json，` +
+        `commitmentSummary 保持原样。首次建账覆盖最近三年。`,
+    );
+    return;
+  }
+  const ledger = loadCommitmentLedger(root, companyId);
+  snapshot.commitmentSummary = materializeCommitmentSummary(ledger) as unknown as Json;
+  const summary = snapshot.commitmentSummary as { outstanding: unknown[] };
+  notes.push(
+    `commitmentSummary ← 台账物化（${ledger.entries.length} 条，` +
+      `其中未结清 ${summary.outstanding.length} 条，覆盖自 ${ledger.coverageFrom}）`,
+  );
+}
+
+/**
+ * Restate the density statistics from the snapshot's own contents.
+ *
+ * Only when the block already exists. Adding it to a snapshot that predates
+ * ADR-0020 would compute an honest number and then demand answers nobody wrote
+ * at the time, which is precisely the back-fill that ADR forbids.
+ */
+function syncEvidenceDensity(snapshot: Json, notes: string[]): void {
+  const block = snapshot.evidenceDensity as Json | undefined;
+  if (!block) {
+    notes.push("快照没有 evidenceDensity 块（ADR-0020 之前的快照如此），跳过证据密度同步。");
+    return;
+  }
+  const computed = computeEvidenceDensity(snapshot);
+  block.computed = computed as unknown as Json;
+  notes.push(
+    `证据密度 → 缺失 ${computed.unavailableShare}、推断 ${computed.inferenceShare}、` +
+      `低置信驱动 ${computed.lowConfidenceDriverShare}、无实证驱动 ${computed.unsupportedDriverShare}`,
+  );
+}
+
 function syncLedger(snapshot: Json, root: string, notes: string[]): void {
   const companyId = (snapshot.company as Json | undefined)?.id;
   if (typeof companyId !== "string") {
@@ -167,7 +217,11 @@ function main(): number {
 
   const notes: string[] = [];
   syncLedger(snapshot, root, notes);
+  syncCommitments(snapshot, root, notes);
   syncValuation(snapshot, notes);
+  // Last: the density statistics count what the steps above may have just
+  // materialised, so they have to be computed against the final contents.
+  syncEvidenceDensity(snapshot, notes);
 
   const updated = `${JSON.stringify(snapshot, null, 2)}\n`;
   const changed = updated !== original;

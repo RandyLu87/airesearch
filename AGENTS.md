@@ -10,6 +10,7 @@ Maintain evidence-based, long-term research on public companies. Treat the core 
 - Keep shared research assets in `docs/research/` (methodology, snapshot contract) and `scripts/research/` (data fetching, validation).
 - Store canonical JSON snapshots in `research/companies/<market>-<ticker>-<slug>/snapshots/`.
 - Store each company's financial period ledger at `research/companies/<company-dir>/financials.json`; fetch reported periods once and reuse them.
+- Store each company's management commitment ledger at `research/companies/<company-dir>/commitments.json`; append settled promises and capital-allocation entries rather than restating them in every snapshot.
 - Publish generated company pages and dated HTML reports to `research/site/`; commit this final static output.
 - Store polished thematic reports and final exports in `research/reports/<topic>/`.
 - Keep disposable generation, rendering, review screenshots, caches, and smoke-test files under `tmp/`; do not commit them.
@@ -33,7 +34,9 @@ Maintain evidence-based, long-term research on public companies. Treat the core 
 - Keep only one canonical snapshot per company per calendar day. Update the same JSON snapshot for later same-day work instead of creating another timestamped version.
 - Treat root-level `YYYY-MM-DD-HHMM-analysis.md` files inside an existing company directory as read-only legacy notes. New research must not use Markdown as its canonical output.
 - Generate a new snapshot with `npm run snapshot:new -- <company-id>`; it inherits calibration from the previous snapshot and materialises `financialHistory` from the ledger so the two stay comparable.
-- Never hand-write `financialHistory` or any engine-computed valuation field. Run `npm run snapshot:sync -- <snapshot-path>` instead; the checker rejects hand edits.
+- Never hand-write `financialHistory`, `commitmentSummary`, `evidenceDensity.computed`, or any engine-computed valuation field. Run `npm run snapshot:sync -- <snapshot-path>` instead; the checker rejects hand edits.
+- Re-run `snapshot:sync` after editing drivers, standard metrics, share measures, or evidence: the density statistics read the whole snapshot, not just the valuation components.
+- Bind every declared moat to at least one existing driver metric, and anchor `valuation.disagreement` to one as well. The checker rejects dangling ids.
 - Every company directory that holds snapshots must also hold `financials.json` covering at least the last two fiscal years.
 - Author new snapshots against `schemaVersion` 1.1.0. Snapshots already published as 1.0.0 stay untouched.
 - Never drop, add, or recalibrate a driver metric without recording it in `thesisChange.driverChanges`.

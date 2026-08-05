@@ -15,6 +15,11 @@ import {
   loadLedgerAt,
 } from "../ledger.ts";
 import {
+  commitmentLedgerPathForCompanyDir,
+  compareCommitmentLedgerToSummary,
+  loadCommitmentLedgerAt,
+} from "../commitments.ts";
+import {
   SENTINEL,
   findLatestSnapshot,
   findPriorSnapshot,
@@ -147,6 +152,34 @@ function checkComparability(current: Json, prior: Json): CheckResult {
     }
   }
 
+  // Moat churn warns rather than blocks, following the constraint precedent: a
+  // moat being disproved or a new one forming is a normal research outcome, and
+  // a moat carries no calibration fields for `driverChanges` to compare. The
+  // obligation to explain it in `thesisChange.thesis` is a process rule in
+  // WORKFLOW.md, not something a checker can verify.
+  const priorMoats = indexById((prior.businessModel as Json | undefined)?.moat);
+  const currentMoats = indexById((current.businessModel as Json | undefined)?.moat);
+  const droppedMoats = [...priorMoats.keys()].filter((id) => !currentMoats.has(id));
+  const addedMoats = [...currentMoats.keys()].filter((id) => !priorMoats.has(id));
+  if (droppedMoats.length > 0) {
+    warnings.push(
+      `护城河不再声明：${droppedMoats.join("、")}。` +
+        `确认它确实已被证伪，并在 thesisChange 中说明。`,
+    );
+  }
+  if (addedMoats.length > 0) {
+    warnings.push(
+      `护城河新增：${addedMoats.join("、")}。确认它有驱动指标支撑，而不是换了个说法。`,
+    );
+  }
+  for (const [moatId, currentMoat] of currentMoats) {
+    const priorMoat = priorMoats.get(moatId);
+    if (!priorMoat || priorMoat.trend === currentMoat.trend) continue;
+    warnings.push(
+      `护城河 ${moatId} 的趋势由「${String(priorMoat.trend)}」变为「${String(currentMoat.trend)}」。`,
+    );
+  }
+
   const priorConstraints = indexById(prior.constraints);
   const currentConstraints = indexById(current.constraints);
   const droppedConstraints = [...priorConstraints.keys()].filter((id) => !currentConstraints.has(id));
@@ -200,6 +233,75 @@ function checkLedger(input: {
         (data.financialHistory as never[]) ?? [],
       ),
       warnings: shortfall ? [shortfall] : [],
+    };
+  } catch (error) {
+    return {
+      errors: [error instanceof Error ? error.message : String(error)],
+      warnings: [],
+    };
+  }
+}
+
+/**
+ * Hold the snapshot's `commitmentSummary` against the commitment ledger.
+ *
+ * Only the company's current snapshot is governed, same reasoning as the
+ * financial ledger: earlier snapshots are frozen records, and a promise that
+ * settles later legitimately leaves them showing the state they were written at.
+ *
+ * A missing ledger is a warning, not an error — a newly listed company may have
+ * nothing to record. A snapshot that carries a summary with no ledger behind it
+ * *is* an error, because that summary then came from nowhere.
+ */
+function checkCommitments(input: {
+  data: { company: { id: string }; commitmentSummary?: unknown };
+  directory: string;
+  stem: string;
+}): CheckResult {
+  const { data, directory, stem } = input;
+  const latest = findLatestSnapshot(directory);
+  if (latest && latest.stem !== stem) return { errors: [], warnings: [] };
+
+  const companyDirectory = path.dirname(directory);
+  const filePath = commitmentLedgerPathForCompanyDir(companyDirectory);
+  const relative = path.relative(companyDirectory, filePath);
+
+  if (!existsSync(filePath)) {
+    if (data.commitmentSummary !== undefined) {
+      return {
+        errors: [
+          `快照有 commitmentSummary 但公司目录没有 ${relative}；` +
+            `该块必须由 npm run snapshot:sync 从台账物化，不能手写。`,
+        ],
+        warnings: [],
+      };
+    }
+    return {
+      errors: [],
+      warnings: [
+        `该公司还没有承诺台账 ${relative}；管理层说过的话无处累积，` +
+          `治理评价只能停留在横截面。见 docs/adr/0019-commit-a-management-commitment-ledger.md。`,
+      ],
+    };
+  }
+
+  try {
+    const ledger = loadCommitmentLedgerAt(filePath, data.company.id);
+    if (data.commitmentSummary === undefined) {
+      return {
+        errors: [
+          `公司目录有 ${relative} 但快照没有 commitmentSummary；` +
+            `运行 npm run snapshot:sync 物化它。`,
+        ],
+        warnings: [],
+      };
+    }
+    const warnings = ledger.entries.length === 0
+      ? [`承诺台账为空（覆盖自 ${ledger.coverageFrom}）；确认这段时间确实没有可判定的承诺。`]
+      : [];
+    return {
+      errors: compareCommitmentLedgerToSummary(ledger, data.commitmentSummary),
+      warnings,
     };
   } catch (error) {
     return {
@@ -298,6 +400,10 @@ export function checkSnapshotData(input: {
   const ledger = checkLedger({ data: parsed.data, directory, stem });
   errors.push(...ledger.errors);
   warnings.push(...ledger.warnings);
+
+  const commitments = checkCommitments({ data: parsed.data, directory, stem });
+  errors.push(...commitments.errors);
+  warnings.push(...commitments.warnings);
 
   const exemptionKey = `${parsed.data.company.id}/${parsed.data.snapshot.id}`;
   if (CONTINUITY_EXEMPT_SNAPSHOTS.has(exemptionKey)) return { errors, warnings };
