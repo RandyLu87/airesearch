@@ -348,6 +348,43 @@ test("snapshot:check accepts a redefined driver when the model change is escalat
   assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
 });
 
+test("a monthly driver is accepted when its period is written YYYY-MM", () => {
+  const draft = clone(baseSnapshot);
+  draft.driverMetrics[0].periodType = "month";
+  draft.driverMetrics[0].period = "2026-01";
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
+});
+
+test("a monthly driver written 2026 M1 is rejected before it can misorder", () => {
+  const draft = clone(baseSnapshot);
+  draft.driverMetrics[0].periodType = "month";
+  draft.driverMetrics[0].period = "2026 M1";
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  const output = `${result.stdout}${result.stderr}`;
+  assert.match(output, /driverMetrics\.0\.period/);
+  assert.match(output, /YYYY-MM/);
+});
+
+test("the financial period ledger refuses a monthly period", () => {
+  const draft = clone(baseSnapshot);
+  draft.financialHistory.at(-1).periodType = "month";
+  draft.financialHistory.at(-1).period = "2026-01";
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  assert.match(`${result.stdout}${result.stderr}`, /financialHistory\.\d+\.periodType/);
+});
+
 test("snapshot:check warns about constraint churn without blocking", () => {
   const next = successor(baseSnapshot);
   next.constraints = [

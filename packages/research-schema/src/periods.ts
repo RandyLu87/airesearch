@@ -5,12 +5,13 @@
  * — `ledger.ts` depends on the schema, these helpers depend on nothing.
  */
 
-export type PeriodType = "fiscal-year" | "half-year" | "quarter";
+export type PeriodType = "fiscal-year" | "half-year" | "quarter" | "month";
 
 const PERIOD_TYPE_RANK: Record<PeriodType, number> = {
   "fiscal-year": 0,
   "half-year": 1,
   quarter: 2,
+  month: 3,
 };
 
 /** Periods per year for each cadence, used to find the year-ago counterpart. */
@@ -18,7 +19,24 @@ export const PERIODS_PER_YEAR: Record<PeriodType, number> = {
   "fiscal-year": 1,
   "half-year": 2,
   quarter: 4,
+  month: 12,
 };
+
+/**
+ * The only accepted spelling for a monthly period: `2026-01`.
+ *
+ * Every period string in this repository has to sort chronologically under
+ * `localeCompare`, because that is how `sortPeriods` and `at(-1)` decide which
+ * period is the latest. A month written `2026 M1` breaks that silently — `M1 <
+ * M10 < M2` — so the one spelling that cannot misorder is enforced rather than
+ * merely documented.
+ *
+ * Monthly cadence exists for driver metrics only. Monthly operating disclosures
+ * (sales volume, output, premiums, monthly revenue) are unaudited and usually
+ * outside the accounting standard, so they inform a leading indicator but must
+ * never enter the financial period ledger.
+ */
+export const MONTH_PERIOD_PATTERN = /^\d{4}-(?:0[1-9]|1[0-2])$/;
 
 type Periodic = { period: string; periodType: PeriodType };
 

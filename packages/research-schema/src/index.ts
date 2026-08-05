@@ -4,6 +4,7 @@ import path from "node:path";
 import Decimal from "decimal.js";
 import { z } from "zod";
 import { STANDARD_METRIC_IDS } from "./metric-dictionary.ts";
+import { MONTH_PERIOD_PATTERN } from "./periods.ts";
 import {
   HEALTH_RULE_IDS,
   ratioOrNull,
@@ -86,7 +87,14 @@ const driverMetricSchema = z.object({
   scale: metricScaleSchema,
   precision: z.number().int().min(0).max(6),
   period: z.string().min(1),
-  periodType: z.enum(["instant", "quarter", "half-year", "fiscal-year"]),
+  /**
+   * `month` is a driver-only cadence. The most useful leading indicators are
+   * often monthly — sales volume, output, premiums, monthly revenue — and
+   * flattening them into a quarter throws away the turn that made them worth
+   * watching. They stay out of `financialHistory` because monthly operating
+   * disclosures are unaudited and usually outside the accounting standard.
+   */
+  periodType: z.enum(["instant", "month", "quarter", "half-year", "fiscal-year"]),
   accountingBasis: z.string().min(1),
   baseline: z.string().min(1),
   trend: z.enum(["改善", "稳定", "恶化", "待验证"]),
@@ -103,6 +111,15 @@ const driverMetricSchema = z.object({
   }
   if (metric.unit === "currency" && !metric.currency) {
     context.addIssue({ code: "custom", message: "货币驱动必须填写 currency" });
+  }
+  if (metric.periodType === "month" && !MONTH_PERIOD_PATTERN.test(metric.period)) {
+    context.addIssue({
+      code: "custom",
+      path: ["period"],
+      message:
+        `月度驱动的 period 必须写成零填充的 YYYY-MM（如 2026-01）。` +
+        `写成「2026 M1」这类形式会让字典序静默错排——M1 < M10 < M2。`,
+    });
   }
 });
 
@@ -178,6 +195,12 @@ const periodSegmentSchema = z.object({
 
 export const financialPeriodSchema = z.object({
   period: z.string().min(1),
+  /**
+   * No `month` here, deliberately. Monthly operating disclosures are unaudited
+   * and usually outside the accounting standard, so letting one into the ledger
+   * would put a number that cannot be reconciled to a filing into the same
+   * series the valuation reads. Monthly cadence belongs to `driverMetrics`.
+   */
   periodType: z.enum(["quarter", "half-year", "fiscal-year"]),
   accountingBasis: z.string().min(1),
   /**
