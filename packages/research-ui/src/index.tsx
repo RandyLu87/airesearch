@@ -1,29 +1,39 @@
 import type { ReactNode } from "react";
 import {
   compareResearchSnapshots,
+  fairValueOf,
+  hasStructuredModel,
   isCurrentSnapshot,
+  isPriorSnapshot,
+  stanceOf,
+  type CurrentSnapshot,
+  type FrozenSnapshot,
   type ResearchSnapshot,
+  type StructuredSnapshot,
 } from "@airesearch/research-schema";
 import {
+  AssumptionSetPanel,
   BusinessModelSection,
   CommitmentPanel,
+  DisagreementPanel,
   EvidenceDensityPanel,
+  FrozenValueBridge,
   LatestComparison,
   MarketPositionSection,
   MetricGlossary,
+  MultiplePercentileCell,
   PeriodHistoryTable,
   ProseBlock,
   StandardMetricNote,
   ValuationMethodPanel,
-  ValueBridge,
   formatFinancialValue,
+  formatMarketCap,
   formatPrice,
   formatRange,
 } from "./components.tsx";
 
 export * from "./components.tsx";
 
-type CurrentSnapshot = Extract<ResearchSnapshot, { schemaVersion: "1.1.0" }>;
 
 function sourceIds(ids: string[], evidenceNumbers: Map<string, number>) {
   const uniqueIds = [...new Set(ids)];
@@ -162,34 +172,88 @@ function MarginCapitalChart({ snapshot }: { snapshot: ResearchSnapshot }) {
   );
 }
 
-function ValuationScenarioChart({ snapshot }: { snapshot: ResearchSnapshot }) {
-  // 1.1.0 carries engine-computed bounds. Legacy snapshots only ever had prose,
-  // so their bars are still scraped out of it — which is exactly why the field
-  // stopped being prose.
-  const scenarios = isCurrentSnapshot(snapshot)
-    ? snapshot.valuation.scenarios.map((scenario) => ({
-        ...scenario,
-        low: Number(scenario.computed.low),
-        high: Number(scenario.computed.high),
-      }))
-    : snapshot.valuation.scenarios.map((scenario) => {
-        const values = scenario.valueRange.match(/\d+(?:\.\d+)?/g)?.map(Number) ?? [];
-        return { ...scenario, low: values[0] ?? 0, high: values[1] ?? values[0] ?? 0 };
-      });
+/**
+ * Every declared range against the price, one bar each.
+ *
+ * Under 1.2.0 the bars are attributed sources rather than 熊市/基准/牛市, and no
+ * bar is highlighted: highlighting one was how the previous chart told a reader
+ * which future to believe. Frozen generations keep the chart they published with.
+ */
+function ValuationRangeChart({ snapshot }: { snapshot: ResearchSnapshot }) {
+  const bands = isCurrentSnapshot(snapshot)
+    ? snapshot.valuation.assumptionSets
+        .filter((set) => set.computed !== undefined)
+        .map((set) => ({
+          // Keyed and labelled by id, not `sourceKind`: ADR-0022 expects five or six
+          // seats on a well-covered company, and two 做空报告 seats would otherwise
+          // collide on the React key and draw two indistinguishable bars.
+          key: set.id,
+          label: set.sourceKind,
+          emphasis: false,
+          low: Number(set.computed?.low ?? 0),
+          high: Number(set.computed?.high ?? 0),
+        }))
+    : hasStructuredModel(snapshot)
+      ? snapshot.valuation.scenarios.map((scenario) => ({
+          key: scenario.name,
+          label: scenario.name,
+          emphasis: scenario.name === "基准",
+          low: Number(scenario.computed.low),
+          high: Number(scenario.computed.high),
+        }))
+      : // Legacy snapshots only ever had prose, so their bars are still scraped
+        // out of it — which is exactly why the field stopped being prose.
+        snapshot.valuation.scenarios.map((scenario) => {
+          const values = scenario.valueRange.match(/\d+(?:\.\d+)?/g)?.map(Number) ?? [];
+          return {
+            key: scenario.name,
+            label: scenario.name,
+            emphasis: scenario.name === "基准",
+            low: values[0] ?? 0,
+            high: values[1] ?? values[0] ?? 0,
+          };
+        });
   const current = Number(snapshot.summary.referencePrice.value);
-  const max = Math.max(current, ...scenarios.map((scenario) => scenario.high), 1);
+  const max = Math.max(current, ...bands.map((band) => band.high), 1);
   const x = (value: number) => 90 + (value / max) * 225;
+  const label = isCurrentSnapshot(snapshot)
+    ? "各署名假设集对应的价值区间与当前价格"
+    : "熊市、基准和牛市估值区间与当前价格对比";
   return (
-    <svg role="img" aria-label="熊市、基准和牛市估值区间与当前价格对比" viewBox="0 0 340 165">
-      <title>估值情景与当前价格</title>
-      {scenarios.map((scenario, index) => <g key={scenario.name}><text x="8" y={35 + index * 42} className="chart-driver-label">{scenario.name}</text><rect x={x(scenario.low)} y={21 + index * 42} width={Math.max(3, x(scenario.high) - x(scenario.low))} height="18" className={scenario.name === "基准" ? "chart-value--signal" : "chart-value--ink"} /></g>)}
-      <line x1={x(current)} y1="10" x2={x(current)} y2="145" className="chart-marker" />
-      <text x={Math.min(x(current) + 4, 286)} y="158" className="chart-legend">当前 {formatPrice(snapshot.summary.referencePrice.value, snapshot.summary.referencePrice.currency)}</text>
+    <svg role="img" aria-label={label} viewBox={`0 0 340 ${Math.max(165, 23 + bands.length * 42)}`}>
+      <title>{label}</title>
+      {bands.map((band, index) => (
+        <g key={band.key}>
+          <text x="8" y={35 + index * 42} className="chart-driver-label">{band.label}</text>
+          <rect
+            x={x(band.low)}
+            y={21 + index * 42}
+            width={Math.max(3, x(band.high) - x(band.low))}
+            height="18"
+            className={band.emphasis ? "chart-value--signal" : "chart-value--ink"}
+          />
+        </g>
+      ))}
+      <line x1={x(current)} y1="10" x2={x(current)} y2={Math.max(145, 9 + bands.length * 42)} className="chart-marker" />
+      <text x={Math.min(x(current) + 4, 286)} y={Math.max(158, 22 + bands.length * 42)} className="chart-legend">当前 {formatPrice(snapshot.summary.referencePrice.value, snapshot.summary.referencePrice.currency)}</text>
     </svg>
   );
 }
 
+/**
+ * The first thing a reader sees.
+ *
+ * Under 1.2.0 that is three facts — what the company costs, what one share
+ * costs and where that price ranks in its own multiple history — and nothing
+ * that tells the reader what to do about them.
+ */
 function ReportHeader({ snapshot }: { snapshot: ResearchSnapshot }) {
+  const stance = stanceOf(snapshot);
+  const fairValue = fairValueOf(snapshot);
+  const current = isCurrentSnapshot(snapshot) ? snapshot : null;
+  const withStance = isCurrentSnapshot(snapshot) ? null : snapshot;
+  const { referencePrice } = snapshot.summary;
+
   return (
     <header className="report-hero" id="top">
       <div className="eyebrow-row">
@@ -200,17 +264,34 @@ function ReportHeader({ snapshot }: { snapshot: ResearchSnapshot }) {
         <div>
           <p className="kicker">{snapshot.company.market} · {snapshot.company.ticker}</p>
           <h1>{snapshot.company.name}</h1>
-          <p className="headline">{snapshot.summary.headline}</p>
+          {/* A frozen report keeps the headline it was published with. Swapping in
+              `businessModel` for every generation would have quietly rewritten
+              those pages, which is the one thing ADR-0021 refuses to do. */}
+          <p className="headline">{withStance?.summary.headline ?? snapshot.summary.businessModel}</p>
         </div>
-        <div className="stance-block">
-          <span className="label">当前判断</span>
-          <strong>{snapshot.summary.stance}</strong>
-          <span>置信度 {snapshot.summary.confidence}</span>
-        </div>
+        {stance ? (
+          <div className="stance-block">
+            <span className="label">当前判断</span>
+            <strong>{stance.stance}</strong>
+            <span>置信度 {stance.confidence}</span>
+          </div>
+        ) : null}
       </div>
       <div className="hero-facts">
-        <div><span>参考价格</span><strong>{formatPrice(snapshot.summary.referencePrice.value, snapshot.summary.referencePrice.currency)}</strong></div>
-        <div><span>合理价值</span><strong>{formatRange(snapshot.summary.fairValue.low, snapshot.summary.fairValue.high, snapshot.summary.fairValue.currency)}</strong></div>
+        {current ? (
+          <div><span>市值</span><strong>{formatMarketCap(current.summary.marketCap)}</strong></div>
+        ) : null}
+        <div>
+          <span>参考价格</span>
+          <strong>{formatPrice(referencePrice.value, referencePrice.currency)}</strong>
+          <small>截至 <time>{referencePrice.asOf.slice(0, 16).replace("T", " ")}</time></small>
+        </div>
+        {/* The third of the three facts, in the same cell shape as the other two —
+            it is a price fact and belongs beside them, not in a footnote. */}
+        {current ? <MultiplePercentileCell percentile={current.summary.multiplePercentile} /> : null}
+        {fairValue ? (
+          <div><span>合理价值</span><strong>{formatRange(fairValue.low, fairValue.high, fairValue.currency)}</strong></div>
+        ) : null}
         <div><span>商业模式变化</span><strong>{snapshot.summary.businessModelChange}</strong></div>
         <div><span>研究周期</span><strong>{snapshot.investmentHorizon}</strong></div>
       </div>
@@ -234,13 +315,18 @@ export function ReportView({
     ...new Set(snapshot.financialHistory.flatMap((item) => item.evidenceIds)),
   ];
   const current: CurrentSnapshot | null = isCurrentSnapshot(snapshot) ? snapshot : null;
-  const legacy = isCurrentSnapshot(snapshot) ? null : snapshot;
-  // Two structured sections only exist under the 1.1.0 contract; everything
-  // after them renumbers so a legacy report keeps the numbering it published with.
-  const extra = current ? 2 : 0;
+  const structured: StructuredSnapshot | null = hasStructuredModel(snapshot) ? snapshot : null;
+  const frozen: FrozenSnapshot | null = isPriorSnapshot(snapshot) ? snapshot : null;
+  const legacy = hasStructuredModel(snapshot) ? null : snapshot;
+  // Both frozen generations published a stance, a safety margin and an action
+  // ladder. One binding covers them so the JSX below narrows once, not thrice.
+  const publishedAStance = isCurrentSnapshot(snapshot) ? null : snapshot;
+  // Two structured sections exist from 1.1.0 onwards; everything after them
+  // renumbers so a legacy report keeps the numbering it published with.
+  const extra = structured ? 2 : 0;
   // The governance section only exists once a company has a commitment ledger,
   // so everything after it renumbers rather than leaving a gap.
-  const governanceExtra = current?.commitmentSummary ? 1 : 0;
+  const governanceExtra = structured?.commitmentSummary ? 1 : 0;
   const refs = (ids: string[]) => sourceIds(ids, evidenceNumbers);
 
   return (
@@ -248,9 +334,9 @@ export function ReportView({
       <ReportHeader snapshot={snapshot} />
       <nav className="section-nav" aria-label="报告目录">
         <a href="#summary">摘要</a>
-        {/* 1.1.0 has guaranteed anchors for both blocks. Legacy reports keep
-            the link they published with, which pointed at a narrative section. */}
-        {current ? (
+        {/* 1.1.0 onwards has guaranteed anchors for both blocks. Legacy reports
+            keep the link they published with, which pointed at a narrative section. */}
+        {structured ? (
           <>
             <a href="#model-structure">商业模式</a>
             <a href="#market-position">行业地位</a>
@@ -268,14 +354,23 @@ export function ReportView({
       <section className="report-section summary-section" id="summary">
         <div className="section-number">01</div>
         <div className="section-content">
-          <p className="section-kicker">DECISION FIRST</p>
-          <h2>投资判断摘要</h2>
+          <p className="section-kicker">{current ? "FACTS FIRST" : "DECISION FIRST"}</p>
+          <h2>{current ? "本次研究摘要" : "投资判断摘要"}</h2>
           <p className="lead">{snapshot.summary.businessModel}</p>
           <div className="summary-grid">
-            <article><span>安全边际</span><p>{snapshot.summary.marginOfSafety}</p></article>
-            <article><span>最强证据</span><p>{snapshot.summary.strongestEvidence}</p></article>
-            <article><span>最大风险</span><p>{snapshot.summary.largestRisk}</p></article>
-            <article><span>下一验证</span><p>{snapshot.summary.nextValidation}</p></article>
+            {publishedAStance ? (
+              <>
+                <article><span>安全边际</span><p>{publishedAStance.summary.marginOfSafety}</p></article>
+                <article><span>最强证据</span><p>{publishedAStance.summary.strongestEvidence}</p></article>
+                <article><span>最大风险</span><p>{publishedAStance.summary.largestRisk}</p></article>
+                <article><span>下一验证</span><p>{publishedAStance.summary.nextValidation}</p></article>
+              </>
+            ) : (
+              <>
+                <article><span>商业模式变化</span><p>{snapshot.summary.businessModelChange}</p></article>
+                <article><span>下一个可判定时点</span><p>{snapshot.summary.nextValidation}</p></article>
+              </>
+            )}
           </div>
           <div className="change-ledger">
             <h3>相对上一份研究发生了什么</h3>
@@ -289,14 +384,14 @@ export function ReportView({
         </div>
       </section>
 
-      {current ? (
+      {structured ? (
         <>
           <section className="report-section" id="model-structure">
             <div className="section-number">02</div>
             <div className="section-content">
               <p className="section-kicker">HOW THE MONEY IS MADE</p>
               <h2>商业模式</h2>
-              <BusinessModelSection snapshot={current} sourceIds={refs} />
+              <BusinessModelSection snapshot={structured} sourceIds={refs} />
             </div>
           </section>
           <section className="report-section" id="market-position">
@@ -304,7 +399,7 @@ export function ReportView({
             <div className="section-content">
               <p className="section-kicker">WHERE IT STANDS</p>
               <h2>行业地位</h2>
-              <MarketPositionSection snapshot={current} sourceIds={refs} />
+              <MarketPositionSection snapshot={structured} sourceIds={refs} />
             </div>
           </section>
         </>
@@ -348,7 +443,7 @@ export function ReportView({
             <DecisionFigure title="财务趋势" caption="收入、净利润与近似自由现金流使用同一年度序列；缺失年份不补零。" references={sourceIds(financialEvidenceIds, evidenceNumbers)}><FinancialTrendChart snapshot={snapshot} /></DecisionFigure>
             <DecisionFigure title="核心驱动趋势" caption={priorSnapshot ? "展示两份研究快照中的实际值；只有定义版本、单位、期间类型与会计口径兼容时才连接并判断变化。" : "这是首份结构化快照，图中只展示本次实际值，并明确标注没有可比较的前期基线。"} references={sourceIds(snapshot.driverMetrics.flatMap((metric) => metric.evidenceIds), evidenceNumbers)}><DriverTrendChart snapshot={snapshot} priorSnapshot={priorSnapshot} /></DecisionFigure>
             <DecisionFigure title="利润率与资本回报" caption="毛利率呈现多期变化；ROIC 因投入资本口径不足而明确标为不可用。" references={sourceIds(financialEvidenceIds, evidenceNumbers)}><MarginCapitalChart snapshot={snapshot} /></DecisionFigure>
-            <DecisionFigure title="估值情景" caption="熊市、基准与牛市区间相对当前参考价格的位置。" references={sourceIds(snapshot.valuation.evidenceIds, evidenceNumbers)}><ValuationScenarioChart snapshot={snapshot} /></DecisionFigure>
+            <DecisionFigure title={current ? "各来源假设对应的区间" : "估值情景"} caption={current ? "每条是一组署名假设算出的区间，相对当前参考价格的位置。没有哪一条被标为基准。" : "熊市、基准与牛市区间相对当前参考价格的位置。"} references={sourceIds(snapshot.valuation.evidenceIds, evidenceNumbers)}><ValuationRangeChart snapshot={snapshot} /></DecisionFigure>
           </div>
         </div>
       </section>
@@ -359,11 +454,11 @@ export function ReportView({
           <p className="section-kicker">REPORTED SERIES</p>
           {/* 1.1.0 shows several reporting cadences; a legacy report only ever
               had the annual series, and keeps the heading it published with. */}
-          <h2>{current ? "财务轨迹" : "年度财务轨迹"}</h2>
-          {current ? (
+          <h2>{structured ? "财务轨迹" : "年度财务轨迹"}</h2>
+          {structured ? (
             <>
               <p className="lead">最近两年、按报告口径分档；每个科目名旁的 ⓘ 给出定义、算式与陷阱。</p>
-              <PeriodHistoryTable snapshot={current} sourceIds={refs} />
+              <PeriodHistoryTable snapshot={structured} sourceIds={refs} />
             </>
           ) : (
             <div className="table-wrap">
@@ -383,20 +478,29 @@ export function ReportView({
       <section className="report-section" id="valuation">
         <div className="section-number">{String(snapshot.sections.length + 4 + extra).padStart(2, "0")}</div>
         <div className="section-content">
-          <p className="section-kicker">PRICE VS. VALUE</p>
-          <h2>估值情景与操作区间</h2>
+          <p className="section-kicker">{current ? "WHOSE ASSUMPTIONS" : "PRICE VS. VALUE"}</p>
+          <h2>{current ? "各来源假设与价格隐含" : "估值情景与操作区间"}</h2>
           {current ? (
             <>
-              <ValueBridge snapshot={current} />
+              <AssumptionSetPanel snapshot={current} />
+              <h3 className="block-heading">价格与某一来源的分歧</h3>
+              <DisagreementPanel snapshot={current} />
+              <h3 className="block-heading">方法与交叉验证</h3>
               <ValuationMethodPanel snapshot={current} />
               {refs(current.valuation.evidenceIds)}
+            </>
+          ) : frozen ? (
+            <>
+              <FrozenValueBridge snapshot={frozen} />
+              <ValuationMethodPanel snapshot={frozen} />
+              {refs(frozen.valuation.evidenceIds)}
               <h3 className="block-heading">三情景与组件</h3>
               <div className="scenario-grid">
-                {current.valuation.scenarios.map((scenario) => (
+                {frozen.valuation.scenarios.map((scenario) => (
                   <article key={scenario.name}>
                     <span>{scenario.name}</span>
                     <h3>
-                      {formatPrice(scenario.computed.low, current.valuation.tradingCurrency)}–
+                      {formatPrice(scenario.computed.low, frozen.valuation.tradingCurrency)}–
                       {scenario.computed.high}
                     </h3>
                     <p>{scenario.assumptions}</p>
@@ -430,21 +534,23 @@ export function ReportView({
               </div>
             </>
           ) : null}
-          <div className="action-zones">
-            {snapshot.valuation.actionZones.map((zone) => <div key={zone.label}><strong>{zone.range}</strong><span>{zone.label}</span><p>{zone.action}</p></div>)}
-          </div>
+          {publishedAStance ? (
+            <div className="action-zones">
+              {publishedAStance.valuation.actionZones.map((zone) => <div key={zone.label}><strong>{zone.range}</strong><span>{zone.label}</span><p>{zone.action}</p></div>)}
+            </div>
+          ) : null}
         </div>
       </section>
 
       {/* Governance is the one dimension that can only be observed lengthwise,
           so it gets its own section rather than a line in the narrative. */}
-      {current?.commitmentSummary ? (
+      {structured?.commitmentSummary ? (
         <section className="report-section" id="commitments">
           <div className="section-number">{String(snapshot.sections.length + 5 + extra).padStart(2, "0")}</div>
           <div className="section-content">
             <p className="section-kicker">SAID VS. DONE</p>
             <h2>管理层承诺与资本配置</h2>
-            <CommitmentPanel snapshot={current} />
+            <CommitmentPanel snapshot={structured} />
           </div>
         </section>
       ) : null}
@@ -452,8 +558,8 @@ export function ReportView({
       <section className="report-section" id="view-changes">
         <div className="section-number">{String(snapshot.sections.length + 5 + extra + governanceExtra).padStart(2, "0")}</div>
         <div className="section-content split-section">
-          <article><p className="section-kicker">UPGRADE CONDITIONS</p><h2>什么会提高当前判断</h2><ol className="editorial-list">{snapshot.viewChanges.upgrade.map((item) => <li key={item}>{item}</li>)}</ol></article>
-          <article><p className="section-kicker">DOWNGRADE CONDITIONS</p><h2>什么会降低当前判断</h2><ol className="editorial-list">{snapshot.viewChanges.downgrade.map((item) => <li key={item}>{item}</li>)}</ol></article>
+          <article><p className="section-kicker">UPGRADE CONDITIONS</p><h2>{current ? "什么会让基本面向上" : "什么会提高当前判断"}</h2><ol className="editorial-list">{snapshot.viewChanges.upgrade.map((item) => <li key={item}>{item}</li>)}</ol></article>
+          <article><p className="section-kicker">DOWNGRADE CONDITIONS</p><h2>{current ? "什么会让基本面向下" : "什么会降低当前判断"}</h2><ol className="editorial-list">{snapshot.viewChanges.downgrade.map((item) => <li key={item}>{item}</li>)}</ol></article>
         </div>
       </section>
 
@@ -491,10 +597,10 @@ export function ReportView({
           </ol>
           {/* Density belongs with the audit trail: it is a statement about this
               evidence list, not about the valuation that reads it. */}
-          {current ? (
+          {structured ? (
             <>
               <h3 className="block-heading">证据密度</h3>
-              <EvidenceDensityPanel snapshot={current} />
+              <EvidenceDensityPanel snapshot={structured} />
             </>
           ) : null}
           <p className="disclaimer">{snapshot.disclaimer}</p>

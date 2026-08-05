@@ -1,14 +1,20 @@
 import type { CSSProperties, ReactNode } from "react";
 import {
+  fairValueOf,
+  isCurrentSnapshot,
   lookupStandardMetric,
   lookupValuationMethod,
+  marketCapOf,
   periodsOfType,
   splitCausalChain,
+  stanceOf,
   yearOnYearPair,
+  type CurrentSnapshot,
+  type FrozenSnapshot,
   type ResearchSnapshot,
+  type StructuredSnapshot,
 } from "@airesearch/research-schema";
 
-type CurrentSnapshot = Extract<ResearchSnapshot, { schemaVersion: "1.1.0" }>;
 type Period = CurrentSnapshot["financialHistory"][number];
 type FinancialValue = Period["revenue"];
 
@@ -22,9 +28,81 @@ export function formatRange(low: string, high: string, currency: string) {
 }
 
 /**
- * One company on the site index. It reads only the fields both snapshot
- * contracts share, so a company whose latest research is still 1.0.0 is carded
- * the same way as a current one.
+ * A market capitalisation with its scale spelled out.
+ *
+ * The scale is part of the number, not a footnote: "86" means nothing until you
+ * know whether it is yuan or hundreds of millions of them.
+ */
+export function formatMarketCap(cap: {
+  value: string;
+  currency: string;
+  scale: "one" | "million" | "hundred-million";
+}) {
+  const suffix = cap.scale === "hundred-million" ? "亿" : cap.scale === "million" ? "百万" : "";
+  return `${cap.currency} ${cap.value}${suffix}`;
+}
+
+/**
+ * The percentile as a header cell, in the same shape as market cap and price.
+ *
+ * It is a price fact and sits beside the other two rather than under them, so the
+ * header really is the three facts ADR-0021 describes.
+ */
+export function MultiplePercentileCell({
+  percentile,
+}: {
+  percentile: CurrentSnapshot["summary"]["multiplePercentile"];
+}) {
+  if (percentile.status === "unavailable") {
+    return (
+      <div>
+        <span>{percentile.metricLabel} 历史分位</span>
+        <strong>不可用</strong>
+        <small>{percentile.reason}</small>
+      </div>
+    );
+  }
+  return (
+    <div>
+      <span>{percentile.metricLabel} 历史分位</span>
+      <strong>{percentile.percentile}%</strong>
+      <small>
+        当前 {percentile.value}× · {percentile.windowFrom}–{percentile.windowTo} · {percentile.adjustmentBasis}
+      </small>
+    </div>
+  );
+}
+
+/** The same reading as a standalone paragraph, for the company page's fact bar. */
+export function MultiplePercentileBlock({
+  percentile,
+}: {
+  percentile: CurrentSnapshot["summary"]["multiplePercentile"];
+}) {
+  if (percentile.status === "unavailable") {
+    return (
+      <p className="multiple-percentile multiple-percentile--unavailable">
+        {percentile.metricLabel} 历史分位不可用：{percentile.reason}
+      </p>
+    );
+  }
+  return (
+    <p className="multiple-percentile">
+      当前 {percentile.metricLabel} <strong>{percentile.value}×</strong>，
+      位于 {percentile.windowFrom}–{percentile.windowTo} 自身区间的{" "}
+      <strong>{percentile.percentile}%</strong> 分位
+      <small>价格序列口径：{percentile.adjustmentBasis}</small>
+    </p>
+  );
+}
+
+/**
+ * One company on the site index.
+ *
+ * Reads through the version accessors rather than a field, because what a card
+ * can say about a company depends on which contract its latest research was
+ * written under: 1.2.0 leads with what the company costs today, and the two
+ * frozen generations keep the stance and fair value they published with.
  */
 export function CompanyCoverageCard({
   companyId,
@@ -34,7 +112,10 @@ export function CompanyCoverageCard({
   snapshot: ResearchSnapshot;
 }) {
   const { company, summary } = snapshot;
-  const { referencePrice, fairValue } = summary;
+  const { referencePrice } = summary;
+  const stance = stanceOf(snapshot);
+  const fairValue = fairValueOf(snapshot);
+  const marketCap = marketCapOf(snapshot);
 
   return (
     <a className="report-link" href={`./companies/${companyId}.html`}>
@@ -44,7 +125,7 @@ export function CompanyCoverageCard({
       </div>
       <strong>{company.name}</strong>
       <p className="company-card-stance">
-        {summary.stance}（确信度 {summary.confidence}）
+        {stance ? `${stance.stance}（确信度 ${stance.confidence}）` : summary.businessModel}
       </p>
       <dl className="company-card-facts">
         <div>
@@ -56,10 +137,18 @@ export function CompanyCoverageCard({
             <small>截至 <time>{referencePrice.asOf.slice(0, 10)}</time></small>
           </dd>
         </div>
-        <div>
-          <dt>合理价值</dt>
-          <dd>{formatRange(fairValue.low, fairValue.high, fairValue.currency)}</dd>
-        </div>
+        {marketCap ? (
+          <div>
+            <dt>市值</dt>
+            <dd>{formatMarketCap(marketCap)}</dd>
+          </div>
+        ) : null}
+        {fairValue ? (
+          <div>
+            <dt>合理价值</dt>
+            <dd>{formatRange(fairValue.low, fairValue.high, fairValue.currency)}</dd>
+          </div>
+        ) : null}
       </dl>
       <span>查看公司研究主页 →</span>
     </a>
@@ -545,7 +634,7 @@ function CashEngineWaterfall({
   roster,
 }: {
   period: Period;
-  roster: Map<string, CurrentSnapshot["businessModel"]["segments"][number]>;
+  roster: Map<string, StructuredSnapshot["businessModel"]["segments"][number]>;
 }) {
   const priced = (period.segments ?? []).filter((segment) => segment.operatingProfit);
   if (priced.length === 0 || !period.operatingMargin) return null;
@@ -633,7 +722,7 @@ function MoatBlock({
   snapshot,
   sourceIds,
 }: {
-  snapshot: CurrentSnapshot;
+  snapshot: StructuredSnapshot;
   sourceIds: (ids: string[]) => ReactNode;
 }) {
   const moats = snapshot.businessModel.moat ?? [];
@@ -690,7 +779,7 @@ export function BusinessModelSection({
   snapshot,
   sourceIds,
 }: {
-  snapshot: CurrentSnapshot;
+  snapshot: StructuredSnapshot;
   sourceIds: (ids: string[]) => ReactNode;
 }) {
   const latest = snapshot.financialHistory.at(-1);
@@ -765,7 +854,7 @@ export function MarketPositionSection({
   snapshot,
   sourceIds,
 }: {
-  snapshot: CurrentSnapshot;
+  snapshot: StructuredSnapshot;
   sourceIds: (ids: string[]) => ReactNode;
 }) {
   const { marketPosition } = snapshot;
@@ -978,7 +1067,7 @@ export function LatestComparison({
   snapshot,
   sourceIds,
 }: {
-  snapshot: CurrentSnapshot;
+  snapshot: StructuredSnapshot;
   sourceIds: (ids: string[]) => ReactNode;
 }) {
   const roster = new Map(snapshot.businessModel.segments.map((segment) => [segment.id, segment]));
@@ -1046,7 +1135,7 @@ export function PeriodHistoryTable({
   years = 2,
   sourceIds,
 }: {
-  snapshot: CurrentSnapshot;
+  snapshot: StructuredSnapshot;
   years?: number;
   sourceIds: (ids: string[]) => ReactNode;
 }) {
@@ -1107,7 +1196,133 @@ export function PeriodHistoryTable({
  * The value bridge: where each unit of value comes from, and what is taken back
  * out again, against the price you can actually pay today.
  */
-export function ValueBridge({ snapshot }: { snapshot: CurrentSnapshot }) {
+/**
+ * Every attributed assumption set, side by side, each solved against today's price.
+ *
+ * Deliberately not a verdict. A seat shows whose numbers it uses, what that
+ * source's lean is, what its own component range multiplies out to, and what
+ * multiple the current price implies on the same metric. Two of those four are
+ * arithmetic and the other two are citations, so a reader comparing them is
+ * comparing published numbers rather than being walked to a conclusion.
+ *
+ * Seats keep the order the snapshot declares. No seat is marked primary, because
+ * marking one would reintroduce the "基准" the previous contract had — a private
+ * forecast wearing the word "base".
+ */
+export function AssumptionSetPanel({ snapshot }: { snapshot: CurrentSnapshot }) {
+  const currency = snapshot.valuation.tradingCurrency;
+  const price = snapshot.summary.referencePrice.value;
+
+  return (
+    <div className="assumption-sets">
+      <p className="assumption-sets-note">
+        每一组假设都署名到本仓库以外的来源，并标出该来源的已知偏向。区间由引擎从组件算出，
+        「价格隐含」是把当前价 {formatPrice(price, currency)} 反解到同一个指标上的结果。
+        没有哪一组被标为基准。
+      </p>
+      {snapshot.valuation.assumptionSets.map((set) => (
+        <article className="assumption-set" key={set.id}>
+          <div className="assumption-set-head">
+            <span className="assumption-set-kind">{set.sourceKind}</span>
+            <strong>{set.sourceLabel}</strong>
+          </div>
+          {/* The bias sits above the numbers, not in a footnote: a short
+              report and an issuer's guidance render identically otherwise. */}
+          <p className="assumption-set-bias">
+            <span>来源偏向</span>
+            {set.sourceBias}
+          </p>
+          {set.status === "unavailable" || !set.computed ? (
+            <p className="assumption-set-missing">
+              本次未取到：{set.reason}
+            </p>
+          ) : (
+            <>
+              <dl className="assumption-set-facts">
+                <div>
+                  <dt>该组假设对应</dt>
+                  <dd>
+                    {formatPrice(set.computed.low, currency)}–{set.computed.high}
+                    <small>中枢 {set.computed.center}</small>
+                  </dd>
+                </div>
+                <div>
+                  <dt>当前价格隐含</dt>
+                  <dd>
+                    {set.impliedExpectation?.multipleLow === null ||
+                    set.impliedExpectation === undefined ? (
+                      "组件不止一项倍数项，无法反解出单一倍数"
+                    ) : (
+                      <>
+                        {set.impliedExpectation.multipleLow}×–
+                        {set.impliedExpectation.multipleHigh}×
+                        <small>作用在{set.impliedExpectation.metricLabel}上</small>
+                      </>
+                    )}
+                  </dd>
+                </div>
+              </dl>
+              <p className="assumption-set-assumptions">{set.assumptions}</p>
+              <ul className="assumption-set-components">
+                {(set.components ?? []).map((component) => (
+                  <li key={component.id}>
+                    <span>{component.kind === "multiple" ? "倍数项" : "面值项"}</span>
+                    {component.kind === "multiple"
+                      ? `${component.metricLabel} ${component.metricLow}–${component.metricHigh} × ${component.multipleLow}–${component.multipleHigh}x`
+                      : `${component.amount}${component.discountPct ? `（折价 ${component.discountPct}%）` : ""}`}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+        </article>
+      ))}
+    </div>
+  );
+}
+
+/**
+ * Where the price and one named source part company, on one observable.
+ *
+ * Both columns are someone else's number. The row that matters is the last one:
+ * which link of the causal chain the two readings diverge at, because that is
+ * what the next filing can settle.
+ */
+export function DisagreementPanel({ snapshot }: { snapshot: CurrentSnapshot }) {
+  const { disagreement, assumptionSets } = snapshot.valuation;
+  if (!disagreement) return null;
+  const against = assumptionSets.find((set) => set.id === disagreement.assumptionSetId);
+
+  return (
+    <div className="disagreement">
+      <p className="disagreement-anchor">
+        锚定驱动 <strong>{disagreement.driverId}</strong>
+        {against ? <span>对照 {against.sourceLabel}</span> : null}
+      </p>
+      <dl>
+        <div>
+          <dt>当前价格隐含</dt>
+          <dd>{disagreement.marketAssumption}</dd>
+        </div>
+        <div>
+          <dt>该来源假设</dt>
+          <dd>{disagreement.referenceAssumption}</dd>
+        </div>
+        <div>
+          <dt>分歧落在因果链哪一环</dt>
+          <dd>{disagreement.divergenceLink}</dd>
+        </div>
+      </dl>
+      {disagreement.converged ? (
+        <p className="disagreement-converged">
+          两者几乎重合：当前价格与该来源的假设指向同一条路径。
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+export function FrozenValueBridge({ snapshot }: { snapshot: FrozenSnapshot }) {
   const base = snapshot.valuation.scenarios.find((scenario) => scenario.name === "基准");
   if (!base) return null;
 
@@ -1187,7 +1402,7 @@ export function ValueBridge({ snapshot }: { snapshot: CurrentSnapshot }) {
  * executed at, which is what turns "bought back while expensive" from an
  * impression into something a reader can check against today's value range.
  */
-export function CommitmentPanel({ snapshot }: { snapshot: CurrentSnapshot }) {
+export function CommitmentPanel({ snapshot }: { snapshot: StructuredSnapshot }) {
   const summary = snapshot.commitmentSummary;
   if (!summary) return null;
   const { counts, outstanding, latestResolution, capitalAllocation } = summary;
@@ -1270,7 +1485,7 @@ export function CommitmentPanel({ snapshot }: { snapshot: CurrentSnapshot }) {
  * block that only appears on weak research would let a reader mistake its
  * absence for a page that simply does not report density.
  */
-export function EvidenceDensityPanel({ snapshot }: { snapshot: CurrentSnapshot }) {
+export function EvidenceDensityPanel({ snapshot }: { snapshot: StructuredSnapshot }) {
   const block = snapshot.evidenceDensity;
   if (!block) return null;
   const { computed, responses } = block;
@@ -1328,13 +1543,22 @@ export function EvidenceDensityPanel({ snapshot }: { snapshot: CurrentSnapshot }
   );
 }
 
-/** What the current price already assumes, plus what would sharpen the estimate. */
-export function ValuationMethodPanel({ snapshot }: { snapshot: CurrentSnapshot }) {
-  const { methodSelection, impliedExpectation, healthCheck, disagreement } = snapshot.valuation;
+/**
+ * Which method this company's accounting admits, and what would let it improve.
+ *
+ * Under 1.2.0 the reverse valuation and the disagreement have moved out of here:
+ * the price implication is computed once per attributed seat and belongs beside
+ * the seat, and the disagreement gets its own block. What is left is all method —
+ * which is a fact about the company's disclosures, not a view about its price.
+ */
+export function ValuationMethodPanel({ snapshot }: { snapshot: StructuredSnapshot }) {
+  const { methodSelection, healthCheck } = snapshot.valuation;
+  const frozen = isCurrentSnapshot(snapshot) ? null : snapshot;
   const ideal = lookupValuationMethod(methodSelection.ideal);
   const adopted = lookupValuationMethod(methodSelection.adoptedPrimary);
-  const disagreementDriver = disagreement
-    ? snapshot.driverMetrics.find((metric) => metric.id === disagreement.driverId)
+  const frozenDisagreement = frozen?.valuation.disagreement;
+  const disagreementDriver = frozenDisagreement
+    ? snapshot.driverMetrics.find((metric) => metric.id === frozenDisagreement.driverId)
     : undefined;
 
   return (
@@ -1368,30 +1592,33 @@ export function ValuationMethodPanel({ snapshot }: { snapshot: CurrentSnapshot }
         </article>
       </div>
 
-      <p className="implied-line">
-        <strong>反向估值</strong>
-        当前价隐含
-        {impliedExpectation.multipleLow && impliedExpectation.multipleHigh
-          ? ` ${impliedExpectation.multipleLow}x–${impliedExpectation.multipleHigh}x（${impliedExpectation.metricLabel}）`
-          : "（基准情景含多个估值组件，无法解出单一倍数）"}
-        。{snapshot.valuation.currentExpectation}
-      </p>
+      {frozen ? (
+        <p className="implied-line">
+          <strong>反向估值</strong>
+          当前价隐含
+          {frozen.valuation.impliedExpectation.multipleLow &&
+          frozen.valuation.impliedExpectation.multipleHigh
+            ? ` ${frozen.valuation.impliedExpectation.multipleLow}x–${frozen.valuation.impliedExpectation.multipleHigh}x（${frozen.valuation.impliedExpectation.metricLabel}）`
+            : "（基准情景含多个估值组件，无法解出单一倍数）"}
+          。{frozen.valuation.currentExpectation}
+        </p>
+      ) : null}
 
-      {disagreement ? (
-        <div className={`disagreement${disagreement.converged ? " disagreement--converged" : ""}`}>
+      {frozenDisagreement ? (
+        <div className={`disagreement${frozenDisagreement.converged ? " disagreement--converged" : ""}`}>
           <h4>
-            {disagreement.converged ? "与市场没有实质分歧" : "分歧点"}
+            {frozenDisagreement.converged ? "与市场没有实质分歧" : "分歧点"}
             <span className="disagreement-driver">
-              {disagreementDriver?.label ?? disagreement.driverId}
+              {disagreementDriver?.label ?? frozenDisagreement.driverId}
               {disagreementDriver ? ` · ${disagreementDriver.displayValue}` : ""}
             </span>
           </h4>
           <dl>
-            <div><dt>市场假设</dt><dd className="cell-prose">{disagreement.marketAssumption}</dd></div>
-            <div><dt>我的假设</dt><dd className="cell-prose">{disagreement.ourAssumption}</dd></div>
+            <div><dt>市场假设</dt><dd className="cell-prose">{frozenDisagreement.marketAssumption}</dd></div>
+            <div><dt>我的假设</dt><dd className="cell-prose">{frozenDisagreement.ourAssumption}</dd></div>
             <div>
-              <dt>{disagreement.converged ? "这意味着什么" : "如果市场对了"}</dt>
-              <dd className="cell-prose">{disagreement.ifMarketIsRight}</dd>
+              <dt>{frozenDisagreement.converged ? "这意味着什么" : "如果市场对了"}</dt>
+              <dd className="cell-prose">{frozenDisagreement.ifMarketIsRight}</dd>
             </div>
           </dl>
         </div>

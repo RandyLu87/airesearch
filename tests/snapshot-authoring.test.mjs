@@ -94,17 +94,27 @@ test("snapshot:new prints a fully sentinelled skeleton without touching disk", (
   const skeleton = JSON.parse(result.stdout);
   assert.equal(skeleton.company.id, "hk-0002-greenfield-co");
   assert.equal(skeleton.snapshot.id, "2026-05-04-0930-analysis");
-  assert.equal(skeleton.schemaVersion, "1.1.0");
+  assert.equal(skeleton.schemaVersion, "1.2.0");
   assert.equal(skeleton.company.name, SENTINEL);
-  assert.equal(skeleton.summary.stance, SENTINEL);
+  assert.equal(skeleton.summary.businessModel, SENTINEL);
+  assert.equal(
+    "stance" in skeleton.summary,
+    false,
+    "1.2.0 publishes no stance; a sentinelled one would invite the author to write it back",
+  );
   assert.ok(skeleton.driverMetrics.length >= 4, "skeleton must satisfy the driver minimum");
   assert.ok(skeleton.financialHistory.length >= 2);
   assert.ok(skeleton.sections.length >= 3);
-  assert.equal(skeleton.valuation.scenarios.length, 3);
+  // A starting list of seats, not a floor: an author deletes the ones this
+  // company has no source for. Every seat still owes its bias.
   assert.deepEqual(
-    skeleton.valuation.scenarios.map((scenario) => scenario.name),
-    ["熊市", "基准", "牛市"],
+    skeleton.valuation.assumptionSets.map((set) => set.sourceKind),
+    ["发行人指引", "卖方一致预期", "历史区间回归"],
   );
+  for (const set of skeleton.valuation.assumptionSets) {
+    assert.equal(set.sourceBias, SENTINEL, "every seat must be asked for its source's lean");
+  }
+  assert.equal("actionZones" in skeleton.valuation, false);
   assert.ok(skeleton.evidence.length >= 2);
 
   assert.equal(
@@ -195,7 +205,16 @@ test("snapshot:new inherits calibration from the prior snapshot but never its nu
   }
 
   assert.equal(skeleton.summary.referencePrice.value, SENTINEL);
-  assert.equal(skeleton.summary.fairValue.low, SENTINEL);
+  assert.equal(skeleton.summary.marketCap.value, SENTINEL);
+  // Which multiple this company is read on is calibration; the reading is not.
+  assert.equal(skeleton.summary.multiplePercentile.metricLabel, "P/E（正常化）");
+  assert.equal(skeleton.summary.multiplePercentile.percentile, SENTINEL);
+  assert.equal(skeleton.summary.multiplePercentile.adjustmentBasis, SENTINEL);
+  // Which source a seat draws on carries over; what the source said does not.
+  assert.deepEqual(
+    skeleton.valuation.assumptionSets.map((set) => set.id),
+    baseSnapshot.valuation.assumptionSets.map((set) => set.id),
+  );
   assert.equal(skeleton.thesisChange.investmentLogic, SENTINEL);
 });
 
@@ -228,7 +247,7 @@ test("snapshot:check accepts a valid snapshot", () => {
 
 test("snapshot:check reports leftover sentinels with their JSON paths", () => {
   const draft = clone(baseSnapshot);
-  draft.summary.stance = SENTINEL;
+  draft.summary.businessModel = SENTINEL;
   draft.driverMetrics[0].displayValue = SENTINEL;
   const { snapshotsDirectory } = makeTree([]);
   const filePath = snapshotFile(snapshotsDirectory, draft);
@@ -236,7 +255,7 @@ test("snapshot:check reports leftover sentinels with their JSON paths", () => {
   const result = checkSnapshot([filePath]);
   assert.equal(result.status, 1);
   const output = `${result.stdout}${result.stderr}`;
-  assert.match(output, /summary\.stance/);
+  assert.match(output, /summary\.businessModel/);
   assert.match(output, /driverMetrics\.0\.displayValue/);
   assert.match(output, /待办|哨兵/);
 });
@@ -564,13 +583,14 @@ test("the path validator accepts a commitment ledger beside the financial one", 
 
 /**
  * The density of the untouched fixture, computed by hand rather than by calling
- * the implementation: 11 status-bearing entries with 2 unavailable, 2 evidence
- * records with none inferred, 6 drivers with 1 on low confidence and none
- * resting on inference alone. Pinning the arithmetic independently is the point
+ * the implementation: 14 status-bearing entries (5 standard metrics, 6 drivers,
+ * 2 share denominators, 3 assumption sets) with 2 unavailable, 4 evidence records
+ * with none inferred, 6 drivers with 1 on low confidence and none resting on
+ * inference alone. Pinning the arithmetic independently is the point
  * — re-deriving it from the same function would assert nothing.
  */
 const BASE_DENSITY = {
-  unavailableShare: "0.1818",
+  unavailableShare: "0.1429",
   inferenceShare: "0.0000",
   lowConfidenceDriverShare: "0.1667",
   unsupportedDriverShare: "0.0000",
@@ -600,7 +620,7 @@ test("a hand-edited density statistic is rejected and told to re-sync", () => {
   assert.equal(result.status, 1);
   const output = `${result.stdout}${result.stderr}`;
   assert.match(output, /evidenceDensity\.computed\.unavailableShare/);
-  assert.match(output, /0\.1818/);
+  assert.match(output, /0\.1429/);
   assert.match(output, /snapshot:sync/);
 });
 
@@ -621,12 +641,41 @@ function withUnsupportedDriver() {
   return draft;
 }
 
+test("an unsourced assumption set shows up in the evidence density", () => {
+  // The whole point of counting seats: a snapshot resting on one attributed source
+  // must not report the same density as one resting on three.
+  const draft = clone(baseSnapshot);
+  for (const id of ["issuer-guidance", "sellside-consensus"]) {
+    const target = seat(draft, id);
+    target.status = "unavailable";
+    target.reason = "本次取不到。";
+    delete target.assumptions;
+    delete target.components;
+    delete target.computed;
+    delete target.impliedExpectation;
+  }
+  draft.valuation.disagreement.assumptionSetId = "historical-range";
+  // 4 of 14 now unavailable, up from 2 — and past the 25% rule, so it has to be answered.
+  draft.evidenceDensity = {
+    computed: { ...BASE_DENSITY, unavailableShare: "0.2857" },
+    responses: [],
+  };
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  const output = `${result.stdout}${result.stderr}`;
+  assert.match(output, /high-unavailable-share/);
+  assert.match(output, /假设集/, "the rule text must say seats are counted");
+});
+
 test("a driver resting only on inference triggers a density rule that must be answered", () => {
   const draft = withUnsupportedDriver();
   draft.evidenceDensity = {
     computed: {
-      unavailableShare: "0.1818",
-      inferenceShare: "0.3333",
+      unavailableShare: "0.1429",
+      inferenceShare: "0.2000",
       lowConfidenceDriverShare: "0.1667",
       unsupportedDriverShare: "0.1667",
       idealMethodBlocked: false,
@@ -647,8 +696,8 @@ test("answering the triggered density rule publishes; density itself never block
   const draft = withUnsupportedDriver();
   draft.evidenceDensity = {
     computed: {
-      unavailableShare: "0.1818",
-      inferenceShare: "0.3333",
+      unavailableShare: "0.1429",
+      inferenceShare: "0.2000",
       lowConfidenceDriverShare: "0.1667",
       unsupportedDriverShare: "0.1667",
       idealMethodBlocked: false,
@@ -680,8 +729,8 @@ test("a blocked density response with no retrievable gap is rejected", () => {
   const draft = withUnsupportedDriver();
   draft.evidenceDensity = {
     computed: {
-      unavailableShare: "0.1818",
-      inferenceShare: "0.3333",
+      unavailableShare: "0.1429",
+      inferenceShare: "0.2000",
       lowConfidenceDriverShare: "0.1667",
       unsupportedDriverShare: "0.1667",
       idealMethodBlocked: false,
@@ -833,9 +882,307 @@ test("the skeleton carries a moat's structure forward but re-asks for its trend"
 
   const { disagreement } = skeleton.valuation;
   assert.equal(disagreement.driverId, "paying-ratio", "which observable is disputed is calibration");
+  assert.equal(disagreement.assumptionSetId, "issuer-guidance", "so is which seat it contrasts with");
   assert.equal(disagreement.marketAssumption, SENTINEL);
-  assert.equal(disagreement.ourAssumption, SENTINEL);
+  assert.equal(disagreement.referenceAssumption, SENTINEL);
   assert.equal(disagreement.converged, false);
+});
+
+/** The seat the fixture's disagreement contrasts against. */
+function seat(snapshot, id) {
+  return snapshot.valuation.assumptionSets.find((set) => set.id === id);
+}
+
+test("an assumption set with no declared source bias is rejected", () => {
+  const draft = clone(baseSnapshot);
+  delete seat(draft, "sellside-consensus").sourceBias;
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  assert.match(`${result.stdout}${result.stderr}`, /sourceBias/);
+});
+
+test("a declared but unsourced seat is legal when it says why, keeping it distinct from unchecked", () => {
+  const draft = clone(baseSnapshot);
+  const target = seat(draft, "sellside-consensus");
+  target.status = "unavailable";
+  target.reason = "港股无已登记的一致预期取数源，注册表第 3.1 节的 FMP 仅覆盖美股。";
+  delete target.assumptions;
+  delete target.components;
+  delete target.computed;
+  delete target.impliedExpectation;
+  // The disagreement has to move off the seat it can no longer read.
+  draft.valuation.disagreement.assumptionSetId = "historical-range";
+  draft.valuation.disagreement.referenceAssumption = "历史区间对应的付费率停在五年均值。";
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
+});
+
+test("an unsourced seat that does not say why is rejected", () => {
+  const draft = clone(baseSnapshot);
+  const target = seat(draft, "sellside-consensus");
+  target.status = "unavailable";
+  delete target.assumptions;
+  delete target.components;
+  delete target.computed;
+  delete target.impliedExpectation;
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  assert.match(`${result.stdout}${result.stderr}`, /reason/);
+});
+
+test("an unsourced seat that still carries numbers is rejected", () => {
+  const draft = clone(baseSnapshot);
+  const target = seat(draft, "sellside-consensus");
+  target.status = "unavailable";
+  target.reason = "公司不提供指引。";
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  assert.match(`${result.stdout}${result.stderr}`, /不得填写/);
+});
+
+test("a valuation block where every seat is unsourced has nothing to compare a price against", () => {
+  const draft = clone(baseSnapshot);
+  for (const set of draft.valuation.assumptionSets) {
+    set.status = "unavailable";
+    set.reason = "本次未取到。";
+    delete set.assumptions;
+    delete set.components;
+    delete set.computed;
+    delete set.impliedExpectation;
+  }
+  delete draft.valuation.disagreement;
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  const output = `${result.stdout}${result.stderr}`;
+  assert.match(output, /至少需要一组 available/);
+  assert.match(output, /历史区间回归/, "the message should name the seat any ledger can compute");
+});
+
+test("a disagreement contrasted against an unsourced seat is rejected", () => {
+  const draft = clone(baseSnapshot);
+  const target = seat(draft, "issuer-guidance");
+  target.status = "unavailable";
+  target.reason = "公司自 FY2025 起不再提供全年指引。";
+  delete target.assumptions;
+  delete target.components;
+  delete target.computed;
+  delete target.impliedExpectation;
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  const output = `${result.stdout}${result.stderr}`;
+  assert.match(output, /valuation\.disagreement\.assumptionSetId/);
+  assert.match(output, /没有可对比的数字/);
+});
+
+test("a disagreement pointing at a seat that does not exist is rejected by name", () => {
+  const draft = clone(baseSnapshot);
+  draft.valuation.disagreement.assumptionSetId = "buyside-whisper";
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  assert.match(`${result.stdout}${result.stderr}`, /buyside-whisper/);
+});
+
+test("a hand-written market capitalisation is caught against the engine", () => {
+  const draft = clone(baseSnapshot);
+  draft.summary.marketCap.value = "9000000000.00";
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  const output = `${result.stdout}${result.stderr}`;
+  assert.match(output, /summary\.marketCap\.value/);
+  assert.match(output, /8600000000\.00/);
+  assert.match(output, /snapshot:sync/);
+});
+
+test("a market capitalisation timed differently from its own price is rejected", () => {
+  const draft = clone(baseSnapshot);
+  draft.summary.marketCap.asOf = "2026-08-01T08:00:00+08:00";
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  assert.match(`${result.stdout}${result.stderr}`, /summary\.marketCap\.asOf/);
+});
+
+test("a hand-edited per-seat price implication is caught against the engine", () => {
+  const draft = clone(baseSnapshot);
+  seat(draft, "historical-range").impliedExpectation.multipleHigh = "9.00";
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  const output = `${result.stdout}${result.stderr}`;
+  assert.match(output, /historical-range/);
+  assert.match(output, /impliedExpectation\.multipleHigh/);
+});
+
+test("a multiple percentile computed on an unadjusted series is rejected", () => {
+  // The distortion this blocks is silent: the number looks entirely normal.
+  const draft = clone(baseSnapshot);
+  draft.summary.multiplePercentile.adjustmentBasis = "不复权";
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  const output = `${result.stdout}${result.stderr}`;
+  assert.match(output, /adjustmentBasis/);
+  assert.match(output, /前复权/);
+});
+
+test("an unavailable multiple percentile is legal with a reason", () => {
+  const draft = clone(baseSnapshot);
+  draft.summary.multiplePercentile = {
+    metricLabel: "P/E（正常化）",
+    status: "unavailable",
+    reason: "上市不足两年，没有足以构成分位的历史序列。",
+    evidenceIds: [],
+  };
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
+});
+
+test("a percentile outside 0–100 is rejected", () => {
+  const draft = clone(baseSnapshot);
+  draft.summary.multiplePercentile.percentile = "112.0";
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  assert.match(`${result.stdout}${result.stderr}`, /0–100/);
+});
+
+test("a vanished assumption set blocks until the reason is recorded", () => {
+  const next = successor(baseSnapshot);
+  next.valuation.assumptionSets = next.valuation.assumptionSets.filter(
+    (set) => set.id !== "sellside-consensus",
+  );
+  const { snapshotsDirectory } = makeTree([baseSnapshot]);
+  const filePath = snapshotFile(snapshotsDirectory, next);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  const output = `${result.stdout}${result.stderr}`;
+  assert.match(output, /sellside-consensus/);
+  assert.match(output, /assumptionSetChanges/);
+  assert.match(output, /这次没查/, "the message should name what the record distinguishes");
+});
+
+test("a vanished assumption set is accepted once the reason is recorded", () => {
+  const next = successor(baseSnapshot);
+  next.valuation.assumptionSets = next.valuation.assumptionSets.filter(
+    (set) => set.id !== "sellside-consensus",
+  );
+  next.thesisChange.assumptionSetChanges = [
+    {
+      assumptionSetId: "sellside-consensus",
+      change: "removed",
+      reason: "覆盖券商降到两家，聚合值不再构成一致预期。",
+    },
+  ];
+  const { snapshotsDirectory } = makeTree([baseSnapshot]);
+  const filePath = snapshotFile(snapshotsDirectory, next);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
+});
+
+test("a newly introduced source has to say why it was introduced", () => {
+  const next = successor(baseSnapshot);
+  next.valuation.assumptionSets.push({
+    ...clone(seat(baseSnapshot, "historical-range")),
+    id: "short-report",
+    sourceKind: "做空报告",
+    sourceLabel: "某做空机构 2026-07 报告的自建模型",
+    sourceBias: "报告作者持有空头仓位，其假设组合在方向上服务于该仓位。",
+  });
+  const { snapshotsDirectory } = makeTree([baseSnapshot]);
+  const filePath = snapshotFile(snapshotsDirectory, next);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  assert.match(`${result.stdout}${result.stderr}`, /short-report/);
+});
+
+test("a seat that keeps its id while changing source must declare the swap", () => {
+  const next = successor(baseSnapshot);
+  seat(next, "sellside-consensus").sourceLabel = "另一家数据商的聚合，覆盖 4 家券商";
+  const { snapshotsDirectory } = makeTree([baseSnapshot]);
+  const filePath = snapshotFile(snapshotsDirectory, next);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  const output = `${result.stdout}${result.stderr}`;
+  assert.match(output, /sourceLabel/);
+  assert.match(output, /redefined/);
+});
+
+test("the first 1.2.0 snapshot after a 1.1.0 one does not have to re-declare every seat", () => {
+  // The generation boundary. Every one of the four covered companies hits this on
+  // its first 1.2.0 run, and demanding an `added` record per seat there would be
+  // asking each company to re-declare a contract change ADR-0021 already records.
+  const frozen = JSON.parse(
+    readFileSync(path.join(repoRoot, "tests", "fixtures", "prior-snapshot.json"), "utf8"),
+  );
+  frozen.snapshot.id = "2026-08-01-1000-analysis";
+  frozen.snapshot.createdAt = "2026-08-01T10:00:00+08:00";
+  frozen.snapshot.dataCutoff = "2026-08-01T09:00:00+08:00";
+
+  const next = successor(baseSnapshot);
+  const { snapshotsDirectory } = makeTree([frozen]);
+  const filePath = snapshotFile(snapshotsDirectory, next);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
+  assert.doesNotMatch(`${result.stdout}${result.stderr}`, /assumptionSetChanges/);
+});
+
+test("the frozen 1.1.0 generation is still verified against the engine that produced it", () => {
+  // Those six snapshots are not migrated, so the only thing standing between a
+  // committed file and a hand edit is that this verification still runs.
+  const frozen = JSON.parse(
+    readFileSync(path.join(repoRoot, "tests", "fixtures", "prior-snapshot.json"), "utf8"),
+  );
+  assert.equal(frozen.schemaVersion, "1.1.0");
+
+  const { snapshotsDirectory } = makeTree([]);
+  const clean = checkSnapshot([snapshotFile(snapshotsDirectory, frozen)]);
+  assert.equal(clean.status, 0, `${clean.stdout}${clean.stderr}`);
+
+  const tampered = clone(frozen);
+  tampered.summary.fairValue.center = "120.0";
+  const result = checkSnapshot([snapshotFile(snapshotsDirectory, tampered)]);
+  assert.equal(result.status, 1);
+  assert.match(`${result.stdout}${result.stderr}`, /summary\.fairValue/);
 });
 
 test("a monthly driver is accepted when its period is written YYYY-MM", () => {
@@ -969,7 +1316,7 @@ test("a real company skeleton never sentinels an absent optional field", () => {
 test("snapshot:check reports sentinels and real schema errors together", () => {
   // Half-filled draft: one field genuinely wrong, others still placeholders.
   const draft = clone(baseSnapshot);
-  draft.summary.stance = SENTINEL;
+  draft.summary.businessModel = SENTINEL;
   draft.driverMetrics[0].trend = "上升";
   const { snapshotsDirectory } = makeTree([]);
   const filePath = snapshotFile(snapshotsDirectory, draft);
@@ -977,7 +1324,7 @@ test("snapshot:check reports sentinels and real schema errors together", () => {
   const result = checkSnapshot([filePath, "--json"]);
   const payload = JSON.parse(result.stdout);
   assert.ok(
-    payload.errors.some((message) => message.startsWith("sentinel: summary.stance")),
+    payload.errors.some((message) => message.startsWith("sentinel: summary.businessModel")),
     "the placeholder must be reported",
   );
   assert.ok(

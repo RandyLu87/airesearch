@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "1.2.0",
+  "schemaVersion": "1.1.0",
   "company": {
     "id": "hk-0001-fixture-co",
     "name": "示例公司",
@@ -20,31 +20,25 @@
   },
   "investmentHorizon": "3-5 年",
   "summary": {
+    "stance": "观察",
+    "confidence": "中",
+    "headline": "订阅结构改善但现金转换尚未验证。",
     "businessModel": "以订阅会员为主要收费方式，靠内容供给驱动付费转化。",
     "businessModelChange": "参数变化",
-    "marketCap": {
-      "value": "8600000000.00",
-      "currency": "CNY",
-      "scale": "one",
-      "asOf": "2026-08-04T08:00:00+08:00"
-    },
     "referencePrice": {
       "value": "100.00",
       "currency": "HKD",
       "asOf": "2026-08-04T08:00:00+08:00"
     },
-    "multiplePercentile": {
-      "metricLabel": "P/E（正常化）",
-      "status": "calculated",
-      "value": "9.56",
-      "percentile": "62.0",
-      "windowFrom": "FY2021",
-      "windowTo": "FY2025",
-      "adjustmentBasis": "前复权",
-      "evidenceIds": [
-        "ev-price-series"
-      ]
+    "fairValue": {
+      "low": "99.4",
+      "center": "104.9",
+      "high": "110.5",
+      "currency": "HKD"
     },
+    "marginOfSafety": "当前价格对应基准情景约 9% 折价。",
+    "strongestEvidence": "订阅收入连续四个季度双位数增长。",
+    "largestRisk": "内容成本重新上行会压缩单位贡献。",
     "nextValidation": "下一期订阅 ARPU 是否维持在 7.0 元以上。"
   },
   "standardMetrics": [
@@ -277,7 +271,7 @@
     "investmentLogic": "未变：订阅驱动的收入结构改善仍在延续。",
     "financialQuality": "未变：毛利率改善但现金转换待验证。",
     "governance": "未变：控制权与激励安排无调整。",
-    "valuation": "未变：三组署名假设集的来源与口径都与上次一致，只更新了各自的最新读数与当前价格隐含。",
+    "valuation": "未变：合理价值区间维持 90–130 港元。",
     "newEvidence": [
       "FY2025 年报披露订阅收入占比升至 72%。"
     ],
@@ -484,122 +478,11 @@
         }
       ]
     },
-    "assumptionSets": [
+    "scenarios": [
       {
-        "id": "issuer-guidance",
-        "sourceKind": "发行人指引",
-        "sourceLabel": "公司 FY2025 年度业绩发布会给出的次年订阅收入与利润率指引",
-        "sourceBias": "发行人自报。历史上给出的下限偏保守，好让后续季度可以超预期。",
-        "status": "available",
-        "assumptions": "按业绩会指引的订阅收入增速与稳态利润率推出正常化归母净利润，倍数取公司自身五年中位。",
-        "components": [
-          {
-            "id": "consolidated-earnings",
-            "label": "合并经营价值",
-            "kind": "multiple",
-            "sign": "add",
-            "metricLabel": "正常化归母净利润",
-            "metricLow": "900000000",
-            "metricHigh": "950000000",
-            "multipleLow": "9.5",
-            "multipleHigh": "10",
-            "note": "按正常化归母净利润乘以可比倍数。",
-            "evidenceIds": [
-              "ev-exchange-filing"
-            ]
-          }
-        ],
-        "evidenceIds": [
-          "ev-exchange-filing"
-        ],
-        "computed": {
-          "low": "99.4",
-          "high": "110.5",
-          "center": "104.9",
-          "totalLow": "8550000000.00",
-          "totalHigh": "9500000000.00",
-          "bridge": [
-            {
-              "id": "consolidated-earnings",
-              "label": "合并经营价值",
-              "kind": "multiple",
-              "amountLow": "8550000000.00",
-              "amountHigh": "9500000000.00",
-              "perShareLow": "99.4",
-              "perShareHigh": "110.5"
-            }
-          ]
-        },
-        "impliedExpectation": {
-          "marketCap": "8600000000.00",
-          "operatingValue": "8600000000.00",
-          "nonOperatingPerShare": "0.0",
-          "multipleLow": "9.05",
-          "multipleHigh": "9.56",
-          "metricLabel": "正常化归母净利润"
-        }
-      },
-      {
-        "id": "sellside-consensus",
-        "sourceKind": "卖方一致预期",
-        "sourceLabel": "第三方一致预期聚合，2026-08-04 抓取，覆盖 11 家券商",
-        "sourceBias": "覆盖券商与发行人普遍存在承销与研究付费关系，一致预期在分布上偏乐观。",
-        "status": "available",
-        "assumptions": "采用一致预期的次年归母净利润区间，倍数沿用一致预期隐含的目标倍数区间。",
-        "components": [
-          {
-            "id": "consolidated-earnings",
-            "label": "合并经营价值",
-            "kind": "multiple",
-            "sign": "add",
-            "metricLabel": "正常化归母净利润",
-            "metricLow": "1100000000",
-            "metricHigh": "1200000000",
-            "multipleLow": "11",
-            "multipleHigh": "12",
-            "note": "按正常化归母净利润乘以可比倍数。",
-            "evidenceIds": [
-              "ev-consensus"
-            ]
-          }
-        ],
-        "evidenceIds": [
-          "ev-consensus"
-        ],
-        "computed": {
-          "low": "140.7",
-          "high": "167.4",
-          "center": "154.1",
-          "totalLow": "12100000000.00",
-          "totalHigh": "14400000000.00",
-          "bridge": [
-            {
-              "id": "consolidated-earnings",
-              "label": "合并经营价值",
-              "kind": "multiple",
-              "amountLow": "12100000000.00",
-              "amountHigh": "14400000000.00",
-              "perShareLow": "140.7",
-              "perShareHigh": "167.4"
-            }
-          ]
-        },
-        "impliedExpectation": {
-          "marketCap": "8600000000.00",
-          "operatingValue": "8600000000.00",
-          "nonOperatingPerShare": "0.0",
-          "multipleLow": "7.17",
-          "multipleHigh": "7.82",
-          "metricLabel": "正常化归母净利润"
-        }
-      },
-      {
-        "id": "historical-range",
-        "sourceKind": "历史区间回归",
-        "sourceLabel": "FY2021–FY2025 年报口径的正常化归母净利润与自身估值倍数区间",
-        "sourceBias": "以过去五年为分母，隐含假设未来仍在同一机制内运行；机制已经改变时它系统性偏低。",
-        "status": "available",
-        "assumptions": "把正常化归母净利润与倍数各自回归到五年区间，不叠加任何前瞻改善。",
+        "name": "熊市",
+        "assumptions": "续费率下滑，扩座停滞。",
+        "trigger": "NRR 跌破 100%。",
         "components": [
           {
             "id": "consolidated-earnings",
@@ -616,9 +499,6 @@
               "ev-annual-report"
             ]
           }
-        ],
-        "evidenceIds": [
-          "ev-annual-report"
         ],
         "computed": {
           "low": "69.2",
@@ -637,23 +517,140 @@
               "perShareHigh": "78.5"
             }
           ]
-        },
-        "impliedExpectation": {
-          "marketCap": "8600000000.00",
-          "operatingValue": "8600000000.00",
-          "nonOperatingPerShare": "0.0",
-          "multipleLow": "11.47",
-          "multipleHigh": "12.29",
-          "metricLabel": "正常化归母净利润"
+        }
+      },
+      {
+        "name": "基准",
+        "assumptions": "续费稳定，扩座温和。",
+        "trigger": "订阅收入维持双位数增长。",
+        "components": [
+          {
+            "id": "consolidated-earnings",
+            "label": "合并经营价值",
+            "kind": "multiple",
+            "sign": "add",
+            "metricLabel": "正常化归母净利润",
+            "metricLow": "900000000",
+            "metricHigh": "950000000",
+            "multipleLow": "9.5",
+            "multipleHigh": "10",
+            "note": "按正常化归母净利润乘以可比倍数。",
+            "evidenceIds": [
+              "ev-annual-report"
+            ]
+          }
+        ],
+        "computed": {
+          "low": "99.4",
+          "high": "110.5",
+          "center": "104.9",
+          "totalLow": "8550000000.00",
+          "totalHigh": "9500000000.00",
+          "bridge": [
+            {
+              "id": "consolidated-earnings",
+              "label": "合并经营价值",
+              "kind": "multiple",
+              "amountLow": "8550000000.00",
+              "amountHigh": "9500000000.00",
+              "perShareLow": "99.4",
+              "perShareHigh": "110.5"
+            }
+          ]
+        }
+      },
+      {
+        "name": "牛市",
+        "assumptions": "扩座加速且毛利率抬升。",
+        "trigger": "NRR 回到 120% 以上。",
+        "components": [
+          {
+            "id": "consolidated-earnings",
+            "label": "合并经营价值",
+            "kind": "multiple",
+            "sign": "add",
+            "metricLabel": "正常化归母净利润",
+            "metricLow": "1100000000",
+            "metricHigh": "1200000000",
+            "multipleLow": "11",
+            "multipleHigh": "12",
+            "note": "按正常化归母净利润乘以可比倍数。",
+            "evidenceIds": [
+              "ev-annual-report"
+            ]
+          }
+        ],
+        "computed": {
+          "low": "140.7",
+          "high": "167.4",
+          "center": "154.1",
+          "totalLow": "12100000000.00",
+          "totalHigh": "14400000000.00",
+          "bridge": [
+            {
+              "id": "consolidated-earnings",
+              "label": "合并经营价值",
+              "kind": "multiple",
+              "amountLow": "12100000000.00",
+              "amountHigh": "14400000000.00",
+              "perShareLow": "140.7",
+              "perShareHigh": "167.4"
+            }
+          ]
         }
       }
     ],
+    "actionZones": [
+      {
+        "label": "深度价值区",
+        "rangeLow": null,
+        "rangeHigh": "69.2",
+        "range": "HK$69.2 以下",
+        "action": "分批建立底仓。"
+      },
+      {
+        "label": "基础仓位区",
+        "rangeLow": "69.2",
+        "rangeHigh": "78.5",
+        "range": "HK$69.2–78.5",
+        "action": "建立基础仓位。"
+      },
+      {
+        "label": "小仓观察区",
+        "rangeLow": "78.5",
+        "rangeHigh": "99.4",
+        "range": "HK$78.5–99.4",
+        "action": "小仓等待续费数据。"
+      },
+      {
+        "label": "合理价值区",
+        "rangeLow": "99.4",
+        "rangeHigh": "110.5",
+        "range": "HK$99.4–110.5",
+        "action": "持有观察。"
+      },
+      {
+        "label": "兑现要求区",
+        "rangeLow": "110.5",
+        "rangeHigh": null,
+        "range": "HK$110.5 以上",
+        "action": "等待牛市情景兑现。"
+      }
+    ],
+    "impliedExpectation": {
+      "marketCap": "8600000000.00",
+      "operatingValue": "8600000000.00",
+      "nonOperatingPerShare": "0.0",
+      "multipleLow": "9.05",
+      "multipleHigh": "9.56",
+      "metricLabel": "正常化归母净利润"
+    },
+    "currentExpectation": "当前价格对应正常化盈利的中枢倍数。",
     "disagreement": {
       "driverId": "paying-ratio",
-      "assumptionSetId": "issuer-guidance",
       "marketAssumption": "当前价隐含的倍数对应付费率三年内停在现有水平。",
-      "referenceAssumption": "发行人指引对应的付费率每年提升约一个百分点，由歌单迁移成本支撑。",
-      "divergenceLink": "获客到留存那一环：价格隐含的路径认为免费向付费的转化已到天花板，指引认为迁移成本仍在把用户往付费推。下一期先看新增付费用户环比。",
+      "ourAssumption": "基准情景假设付费率每年提升约一个百分点，由歌单迁移成本支撑。",
+      "ifMarketIsRight": "错在获客到留存那一环：付费率停滞意味着免费向付费的转化已到天花板。下一期先看新增付费用户环比。",
       "converged": false
     },
     "evidenceIds": [
@@ -698,27 +695,6 @@
       "publishedAt": "2025-12-18",
       "retrievedAt": "2026-08-04T09:00:00+08:00",
       "url": "https://example.com/fixture/board-announcement.pdf"
-    },
-    {
-      "id": "ev-price-series",
-      "kind": "calculation",
-      "title": "FY2021–FY2025 前复权收盘价序列与正常化市盈率分位",
-      "publisher": "本研究，基于交易所行情",
-      "periodOrEventDate": "2021-01-04/2026-08-04",
-      "publishedAt": "2026-08-04",
-      "retrievedAt": "2026-08-04T08:10:00+08:00",
-      "url": "https://example.com/price-series",
-      "caveat": "序列已统一到前复权；不复权口径下同一分位会偏离，见 data-source-registry.md 第 9 节。"
-    },
-    {
-      "id": "ev-consensus",
-      "kind": "fact",
-      "title": "第三方一致预期聚合（11 家券商）",
-      "publisher": "第三方数据商",
-      "periodOrEventDate": "2026-08-04",
-      "publishedAt": "2026-08-04",
-      "retrievedAt": "2026-08-04T08:05:00+08:00",
-      "url": "https://example.com/consensus"
     }
   ],
   "disclaimer": "本报告仅作研究与教育用途，不构成个性化投资建议。",

@@ -20,6 +20,7 @@ import {
 import { VALUATION_METHOD_IDS } from "./valuation/methods.ts";
 import {
   computeImpliedExpectation,
+  computeMarketCap,
   computeScenario,
   deriveActionZones,
 } from "./valuation/engine.ts";
@@ -132,6 +133,18 @@ const driverMetricSchema = z.object({
 
 const driverChangeSchema = z.object({
   driverId: z.string().min(1),
+  change: z.enum(["added", "removed", "redefined"]),
+  reason: z.string().min(1),
+});
+
+/**
+ * The same mechanism as `driverChangeSchema`, applied to attributed assumption
+ * seats. Seats are extensible with no floor, so drift is the expected failure:
+ * without a recorded reason, a source that went unchecked this run reads exactly
+ * like one that stopped publishing.
+ */
+const assumptionSetChangeSchema = z.object({
+  assumptionSetId: z.string().min(1),
   change: z.enum(["added", "removed", "redefined"]),
   reason: z.string().min(1),
 });
@@ -456,6 +469,195 @@ const scenarioComputationSchema = z.object({
   })).min(1),
 });
 
+const impliedExpectationSchema = z.object({
+  marketCap: decimalString,
+  operatingValue: decimalString,
+  nonOperatingPerShare: decimalString,
+  multipleLow: decimalString.nullable(),
+  multipleHigh: decimalString.nullable(),
+  metricLabel: z.string().min(1).nullable(),
+});
+
+/**
+ * Where an assumption set's numbers came from. Every entry names someone other
+ * than this repository, which is the whole mechanism: 熊市/基准/牛市 asked the
+ * author which future was most likely, and "基准" was a private forecast wearing
+ * the word "base".
+ */
+export const ASSUMPTION_SOURCE_KINDS = [
+  "发行人指引",
+  "卖方一致预期",
+  "历史区间回归",
+  "做空报告",
+  "监管与政策文件",
+  "同业公开指引",
+  "其他",
+] as const;
+
+/**
+ * One attributed set of assumptions, and what today's price does to it.
+ *
+ * Seats are extensible and have no floor: a company with a short report, a
+ * consensus feed and issuer guidance can carry five sets, and one that discloses
+ * nothing but its own filings carries the historical range alone. What every
+ * seat owes instead is `sourceBias` — a short-seller's model and an issuer's
+ * guidance are both citable and neither is neutral, and a page that renders them
+ * identically is borrowing someone else's mouth to express a view.
+ *
+ * A seat may be declared and empty. `status: "unavailable"` with a reason is how
+ * "this company gives no guidance" stays distinguishable from "nobody looked".
+ */
+const assumptionSetSchema = z.object({
+  id: z.string().min(1),
+  sourceKind: z.enum(ASSUMPTION_SOURCE_KINDS),
+  /** Who specifically — "公司 FY26 中期业绩会", "FMP consensus 2026-08-04". */
+  sourceLabel: z.string().min(1),
+  /**
+   * The source's known lean, stated rather than left to the reader. Required on
+   * every seat with no exception: a bias field that only appeared on sources
+   * someone judged biased would itself be a judgment.
+   */
+  sourceBias: z.string().min(1),
+  sourceNote: z.string().min(1).optional(),
+  status: z.enum(["available", "unavailable"]),
+  reason: z.string().min(1).optional(),
+  assumptions: z.string().min(1).optional(),
+  components: z.array(valuationComponentSchema).min(1).optional(),
+  /** Engine output, recomputed by the checker. */
+  computed: scenarioComputationSchema.optional(),
+  /** Engine output, recomputed by the checker: this set solved backwards. */
+  impliedExpectation: impliedExpectationSchema.optional(),
+  evidenceIds: z.array(z.string()),
+}).superRefine((set, context) => {
+  if (set.sourceKind === "其他" && !set.sourceNote) {
+    context.addIssue({
+      code: "custom",
+      path: ["sourceNote"],
+      message: "sourceKind 取「其他」时必须填写 sourceNote 说明这一组假设究竟出自哪里",
+    });
+  }
+  if (set.status === "unavailable") {
+    if (!set.reason) {
+      context.addIssue({
+        code: "custom",
+        path: ["reason"],
+        message:
+          "unavailable 的假设集必须写 reason（例如「公司明确不提供全年指引」" +
+          "或「港股无已登记的一致预期源」）——「没有这一组」与「没有查」必须能区分。",
+      });
+    }
+    for (const key of ["assumptions", "components", "computed", "impliedExpectation"] as const) {
+      if (set[key] !== undefined) {
+        context.addIssue({
+          code: "custom",
+          path: [key],
+          message: `unavailable 的假设集不得填写 ${key}`,
+        });
+      }
+    }
+    return;
+  }
+  for (const key of ["assumptions", "components", "computed", "impliedExpectation"] as const) {
+    if (set[key] === undefined) {
+      context.addIssue({
+        code: "custom",
+        path: [key],
+        message: `available 的假设集必须填写 ${key}`,
+      });
+    }
+  }
+  if (set.evidenceIds.length === 0) {
+    context.addIssue({
+      code: "custom",
+      path: ["evidenceIds"],
+      message: "available 的假设集必须至少引用一条 evidence——署名到外部来源才算署名",
+    });
+  }
+});
+
+/**
+ * Where today's price sits in the multiple's own history.
+ *
+ * A fact about the market, not a verdict on it: the multiple is arithmetic and
+ * the percentile is a rank inside a stated window. `adjustmentBasis` is forced
+ * to 前复权 because a percentile computed across a mixed adjustment basis is
+ * wrong in a way nothing on the page would reveal — the A-share `daily` and US
+ * `us_daily` feeds are unadjusted while the HK feed is not, so the default
+ * outcome of not saying is a silently distorted rank (registry §9).
+ */
+const multiplePercentileSchema = z.object({
+  /** Which multiple — "P/E（正常化）", "P/S", "EV/EBITDA". */
+  metricLabel: z.string().min(1),
+  status: z.enum(["calculated", "unavailable"]),
+  value: decimalString.optional(),
+  /** 0–100. */
+  percentile: decimalString.optional(),
+  windowFrom: z.string().min(1).optional(),
+  windowTo: z.string().min(1).optional(),
+  adjustmentBasis: z.enum(["前复权", "后复权", "不复权"]).optional(),
+  reason: z.string().min(1).optional(),
+  evidenceIds: z.array(z.string()),
+}).superRefine((entry, context) => {
+  if (entry.status === "unavailable") {
+    if (!entry.reason) {
+      context.addIssue({
+        code: "custom",
+        path: ["reason"],
+        message: "unavailable 的倍数分位必须写 reason",
+      });
+    }
+    for (const key of ["value", "percentile", "windowFrom", "windowTo", "adjustmentBasis"] as const) {
+      if (entry[key] !== undefined) {
+        context.addIssue({
+          code: "custom",
+          path: [key],
+          message: `unavailable 的倍数分位不得填写 ${key}`,
+        });
+      }
+    }
+    return;
+  }
+  for (const key of ["value", "percentile", "windowFrom", "windowTo", "adjustmentBasis"] as const) {
+    if (entry[key] === undefined) {
+      context.addIssue({
+        code: "custom",
+        path: [key],
+        message: `calculated 的倍数分位必须填写 ${key}`,
+      });
+    }
+  }
+  if (entry.adjustmentBasis !== undefined && entry.adjustmentBasis !== "前复权") {
+    context.addIssue({
+      code: "custom",
+      path: ["adjustmentBasis"],
+      message:
+        `历史倍数分位必须统一到前复权，写的是「${entry.adjustmentBasis}」。` +
+        `三个市场的行情接口口径不一致，混用后的分位数看起来完全正常但是错的` +
+        `（见 data-source-registry.md 第 9 节）。`,
+    });
+  }
+  // Guarded rather than parsed straight: `snapshot:sync` and the checker both run
+  // against half-filled drafts, and `new Decimal("__TODO__")` throws instead of
+  // reporting, which would take down the whole check on an untouched skeleton.
+  if (entry.percentile !== undefined && /^-?\d+(?:\.\d+)?$/.test(entry.percentile)) {
+    const percentile = new Decimal(entry.percentile);
+    if (percentile.lessThan(0) || percentile.greaterThan(100)) {
+      context.addIssue({
+        code: "custom",
+        path: ["percentile"],
+        message: `分位必须落在 0–100，写的是 ${entry.percentile}`,
+      });
+    }
+  }
+  if (entry.evidenceIds.length === 0) {
+    context.addIssue({
+      code: "custom",
+      path: ["evidenceIds"],
+      message: "calculated 的倍数分位必须引用价格序列与倍数分母的 evidence",
+    });
+  }
+});
+
 const valuationScenarioSchema = z.object({
   name: z.enum(["熊市", "基准", "牛市"]),
   assumptions: z.string().min(1),
@@ -615,7 +817,18 @@ export function splitCausalChain(chain: string): string[] {
     .filter((link) => link.length > 0);
 }
 
-export const SCHEMA_VERSION = "1.1.0";
+export const SCHEMA_VERSION = "1.2.0";
+
+/**
+ * The contract that led with a stance, a fair value and an action ladder.
+ *
+ * Frozen, not migrated, for the same reason 1.0.0 is: those snapshots really did
+ * say "不追价，等回撤" and really did compute a fair value, and deleting those
+ * fields would rewrite what was published rather than change what gets published
+ * next (ADR-0021). Six snapshots carry this version; they keep rendering and keep
+ * being verified against the engine that produced them.
+ */
+export const PRIOR_SCHEMA_VERSION = "1.1.0";
 
 /**
  * The contract before structured business model, market position and a computed
@@ -624,8 +837,7 @@ export const SCHEMA_VERSION = "1.1.0";
  * Kept parseable rather than migrated. ADR-0002 makes a dated research report an
  * immutable record, and back-filling the new blocks would mean inventing an
  * exchange rate and a market-share denominator for a judgment made months ago —
- * writing today's numbers into yesterday's conclusion. Legacy snapshots stay
- * exactly as published; every snapshot authored from now on is 1.1.0.
+ * writing today's numbers into yesterday's conclusion.
  */
 const legacyValuationSchema = z.object({
   scenarios: z.array(z.object({
@@ -645,8 +857,9 @@ const legacyValuationSchema = z.object({
   evidenceIds: z.array(z.string()).min(1),
 });
 
-const snapshotShape = z.object({
-  schemaVersion: z.literal(SCHEMA_VERSION),
+/** The 1.1.0 shape, kept whole so the six snapshots published under it stay verified. */
+const priorSnapshotShape = z.object({
+  schemaVersion: z.literal(PRIOR_SCHEMA_VERSION),
   company: z.object({
     id: z.string().min(1),
     name: z.string().min(1),
@@ -815,24 +1028,152 @@ const snapshotShape = z.object({
   disclaimer: z.string().min(1),
 });
 
-const legacySnapshotShape = snapshotShape
+/**
+ * The current contract: market capitalisation is a fact, the price is a fact, and
+ * every assumption behind a number is attributed to someone outside this
+ * repository (ADR-0021, ADR-0022).
+ *
+ * What left `summary`: `stance`, `confidence`, `headline`, `fairValue`,
+ * `marginOfSafety`, `strongestEvidence` and `largestRisk`. Each was a price-class
+ * judgment or a "most important" ranking, and neither can ever be settled by a
+ * filing. What stayed is what can: how the company makes money, whether that
+ * mechanism changed, what it costs today, and when the next number lands.
+ */
+const snapshotShape = priorSnapshotShape
+  .omit({ schemaVersion: true, summary: true, valuation: true, thesisChange: true })
+  .extend({
+    schemaVersion: z.literal(SCHEMA_VERSION),
+    summary: z.object({
+      businessModel: z.string().min(1),
+      businessModelChange: z.enum(["未变", "参数变化", "机制变化", "结构性变化"]),
+      /** Engine output: referencePrice × shares × fx, at `valuation.valueScale`. */
+      marketCap: z.object({
+        value: decimalString,
+        currency: z.string().min(1),
+        scale: metricScaleSchema,
+        asOf: z.iso.datetime({ offset: true }),
+      }),
+      referencePrice: z.object({
+        value: decimalString,
+        currency: z.string().min(1),
+        asOf: z.iso.datetime({ offset: true }),
+      }),
+      multiplePercentile: multiplePercentileSchema,
+      nextValidation: z.string().min(1),
+    }),
+    thesisChange: priorSnapshotShape.shape.thesisChange.extend({
+      /**
+       * Which attributed seats appeared or vanished since the last snapshot.
+       * Optional in the contract, enforced by the comparability layer, exactly as
+       * `driverChanges` is: seats have no floor, so without this a source that
+       * simply went unchecked is indistinguishable from one that stopped existing.
+       */
+      assumptionSetChanges: z.array(assumptionSetChangeSchema).optional(),
+    }),
+    valuation: priorSnapshotShape.shape.valuation
+      .omit({
+        scenarios: true,
+        actionZones: true,
+        impliedExpectation: true,
+        currentExpectation: true,
+        disagreement: true,
+      })
+      .extend({
+        assumptionSets: z.array(assumptionSetSchema).min(1),
+        /**
+         * Where the price and one attributed set differ, on one observable.
+         *
+         * The implied multiple is the market's number, not the market's reason.
+         * Anchoring to a declared driver is what turns "the market disagrees"
+         * into "the market disagrees about this observable" — and only the second
+         * can be settled by the next filing. "竞争加剧" and "监管风险" hold for
+         * every company at every price, so they explain no particular gap.
+         *
+         * Both sides are now citable: `referenceAssumption` belongs to a named
+         * source rather than to this repository, so the comparison is arithmetic
+         * on two published numbers instead of a private forecast versus a price.
+         */
+        disagreement: z.object({
+          driverId: z.string().min(1),
+          assumptionSetId: z.string().min(1),
+          marketAssumption: z.string().min(1),
+          referenceAssumption: z.string().min(1),
+          /** Which link of `causalChain` the two readings part company at. */
+          divergenceLink: z.string().min(1),
+          converged: z.boolean(),
+        }).optional(),
+      }),
+  });
+
+const legacySnapshotShape = priorSnapshotShape
   .omit({ schemaVersion: true, company: true, businessModel: true, marketPosition: true, valuation: true })
   .extend({
     schemaVersion: z.literal("1.0.0"),
-    company: snapshotShape.shape.company.omit({ industryTags: true }),
+    company: priorSnapshotShape.shape.company.omit({ industryTags: true }),
     valuation: legacyValuationSchema,
   });
 
 type SnapshotShape = z.infer<typeof snapshotShape>;
+type PriorSnapshotShape = z.infer<typeof priorSnapshotShape>;
 type LegacySnapshotShape = z.infer<typeof legacySnapshotShape>;
-type AnySnapshotShape = SnapshotShape | LegacySnapshotShape;
+type AnySnapshotShape = SnapshotShape | PriorSnapshotShape | LegacySnapshotShape;
+
+/**
+ * The three generations, named once.
+ *
+ * Exported because every renderer needs them and three private copies keyed off
+ * hard-coded version literals is three places to forget when a fourth generation
+ * lands. They derive from `SCHEMA_VERSION` / `PRIOR_SCHEMA_VERSION` so the literal
+ * appears exactly once in the package.
+ */
+export type CurrentSnapshot = SnapshotShape;
+export type FrozenSnapshot = PriorSnapshotShape;
+export type StructuredSnapshot = SnapshotShape | PriorSnapshotShape;
+export type LegacySnapshot = LegacySnapshotShape;
 
 export function isCurrentSnapshot(snapshot: AnySnapshotShape): snapshot is SnapshotShape {
   return snapshot.schemaVersion === SCHEMA_VERSION;
 }
 
+export function isPriorSnapshot(snapshot: AnySnapshotShape): snapshot is PriorSnapshotShape {
+  return snapshot.schemaVersion === PRIOR_SCHEMA_VERSION;
+}
+
+/**
+ * Whether the structured business model and market position blocks exist.
+ *
+ * Both 1.2.0 and 1.1.0 carry them, so the renderers and the referential-integrity
+ * checks share one predicate rather than each deciding what "current" means.
+ */
+export function hasStructuredModel(
+  snapshot: AnySnapshotShape,
+): snapshot is SnapshotShape | PriorSnapshotShape {
+  return snapshot.schemaVersion !== "1.0.0";
+}
+
+/**
+ * The stance a snapshot published, or `null` for a contract that publishes none.
+ *
+ * A reader of a frozen 1.1.0 page still sees the stance it was published with;
+ * accessors exist so nothing downstream has to branch on a version literal to
+ * find that out.
+ */
+export function stanceOf(snapshot: AnySnapshotShape): { stance: string; confidence: string } | null {
+  return isCurrentSnapshot(snapshot)
+    ? null
+    : { stance: snapshot.summary.stance, confidence: snapshot.summary.confidence };
+}
+
+export function fairValueOf(snapshot: AnySnapshotShape) {
+  return isCurrentSnapshot(snapshot) ? null : snapshot.summary.fairValue;
+}
+
+export function marketCapOf(snapshot: AnySnapshotShape) {
+  return isCurrentSnapshot(snapshot) ? snapshot.summary.marketCap : null;
+}
+
 export const researchSnapshotSchema = z
-  .discriminatedUnion("schemaVersion", [snapshotShape, legacySnapshotShape])
+  .discriminatedUnion("schemaVersion", [snapshotShape, priorSnapshotShape, legacySnapshotShape])
   .superRefine((snapshot, context) => {
   const evidenceIds = new Set<string>();
   for (const evidence of snapshot.evidence) {
@@ -851,7 +1192,7 @@ export const researchSnapshotSchema = z
     ]),
     ...snapshot.sections.flatMap((section) => section.evidenceIds),
     ...snapshot.valuation.evidenceIds,
-    ...(isCurrentSnapshot(snapshot)
+    ...(hasStructuredModel(snapshot)
       ? [
           ...snapshot.businessModel.evidenceIds,
           ...snapshot.businessModel.segments.flatMap((segment) => segment.evidenceIds),
@@ -862,10 +1203,21 @@ export const researchSnapshotSchema = z
           ...snapshot.valuation.shares.evidenceIds,
           ...snapshot.valuation.fx.evidenceIds,
           ...snapshot.valuation.methodSelection.crossChecks.flatMap((check) => check.evidenceIds),
-          ...snapshot.valuation.scenarios.flatMap((scenario) =>
-            scenario.components.flatMap((component) => component.evidenceIds),
-          ),
         ]
+      : []),
+    ...(isCurrentSnapshot(snapshot)
+      ? [
+          ...snapshot.summary.multiplePercentile.evidenceIds,
+          ...snapshot.valuation.assumptionSets.flatMap((set) => [
+            ...set.evidenceIds,
+            ...(set.components ?? []).flatMap((component) => component.evidenceIds),
+          ]),
+        ]
+      : []),
+    ...(isPriorSnapshot(snapshot)
+      ? snapshot.valuation.scenarios.flatMap((scenario) =>
+          scenario.components.flatMap((component) => component.evidenceIds),
+        )
       : []),
   ];
   for (const evidenceId of references) {
@@ -873,14 +1225,16 @@ export const researchSnapshotSchema = z
       context.addIssue({ code: "custom", message: `引用了不存在的 evidence id：${evidenceId}` });
     }
   }
-  const low = new Decimal(snapshot.summary.fairValue.low);
-  const center = new Decimal(snapshot.summary.fairValue.center);
-  const high = new Decimal(snapshot.summary.fairValue.high);
-  if (low.greaterThan(center) || center.greaterThan(high)) {
-    context.addIssue({ code: "custom", message: "合理价值必须满足 low <= center <= high" });
+  if (!isCurrentSnapshot(snapshot)) {
+    const low = new Decimal(snapshot.summary.fairValue.low);
+    const center = new Decimal(snapshot.summary.fairValue.center);
+    const high = new Decimal(snapshot.summary.fairValue.high);
+    if (low.greaterThan(center) || center.greaterThan(high)) {
+      context.addIssue({ code: "custom", message: "合理价值必须满足 low <= center <= high" });
+    }
   }
 
-  if (!isCurrentSnapshot(snapshot)) return;
+  if (!hasStructuredModel(snapshot)) return;
 
   // Every segment number must belong to a segment the business model declares,
   // so a stray id cannot produce a revenue row with no name attached.
@@ -939,7 +1293,36 @@ export const researchSnapshotSchema = z
     }
   }
 
-  verifyValuation(snapshot, context);
+  // A disagreement has to contrast the price with a seat that actually carries
+  // numbers. Pointing it at an `unavailable` seat would name a gap against
+  // nothing — the arithmetic version of citing a source that says nothing.
+  if (isCurrentSnapshot(snapshot) && snapshot.valuation.disagreement) {
+    const { assumptionSetId } = snapshot.valuation.disagreement;
+    const target = snapshot.valuation.assumptionSets.find((set) => set.id === assumptionSetId);
+    if (!target) {
+      context.addIssue({
+        code: "custom",
+        path: ["valuation", "disagreement", "assumptionSetId"],
+        message:
+          `分歧点引用了不存在的假设集 ${assumptionSetId}；` +
+          `它必须命中 valuation.assumptionSets[].id。`,
+      });
+    } else if (target.status !== "available") {
+      context.addIssue({
+        code: "custom",
+        path: ["valuation", "disagreement", "assumptionSetId"],
+        message:
+          `分歧点对照的假设集「${target.id}」状态为 unavailable，没有可对比的数字。` +
+          `换一个 available 的假设集，或先把这一组取到。`,
+      });
+    }
+  }
+
+  if (isCurrentSnapshot(snapshot)) {
+    verifyValuation(snapshot, context);
+  } else {
+    verifyPriorValuation(snapshot, context);
+  }
   verifyEvidenceDensity(snapshot, context);
 });
 
@@ -950,7 +1333,10 @@ export const researchSnapshotSchema = z
  * company is a fact about that company, and a checker that refused to publish it
  * would be asking the author to launder the thinness rather than declare it.
  */
-function verifyEvidenceDensity(snapshot: SnapshotShape, context: z.RefinementCtx): void {
+function verifyEvidenceDensity(
+  snapshot: SnapshotShape | PriorSnapshotShape,
+  context: z.RefinementCtx,
+): void {
   const block = snapshot.evidenceDensity;
   if (!block) return;
 
@@ -998,16 +1384,18 @@ function verifyEvidenceDensity(snapshot: SnapshotShape, context: z.RefinementCtx
 }
 
 /**
- * Recompute everything the engine owns and reject the snapshot if the stored
- * answer disagrees.
+ * The basis checks both contracts share: one declared scale, one reporting
+ * currency, one trading currency.
  *
- * A JSON file has no read-only fields, so this is what "the author cannot write
- * the value range" actually means in practice. It runs inside the schema rather
- * than only in the CLI so that publishing a snapshot cannot bypass it either.
+ * Returns false when the scale mismatch makes every downstream number wrong by an
+ * order of magnitude, which is worth reporting alone rather than burying under
+ * fifty consequential failures.
  */
-function verifyValuation(snapshot: SnapshotShape, context: z.RefinementCtx): void {
+function verifyValuationBasis(
+  snapshot: SnapshotShape | PriorSnapshotShape,
+  context: z.RefinementCtx,
+): boolean {
   const { valuation, summary } = snapshot;
-
   if (valuation.shares.scale !== valuation.valueScale) {
     context.addIssue({
       code: "custom",
@@ -1015,7 +1403,7 @@ function verifyValuation(snapshot: SnapshotShape, context: z.RefinementCtx): voi
         `valuation.shares.scale（${valuation.shares.scale}）必须与 valueScale（${valuation.valueScale}）一致，` +
         `否则每股价值会差一个数量级。`,
     });
-    return;
+    return false;
   }
   if (valuation.currency !== snapshot.company.reportingCurrency) {
     context.addIssue({
@@ -1029,44 +1417,206 @@ function verifyValuation(snapshot: SnapshotShape, context: z.RefinementCtx): voi
       message: "valuation.tradingCurrency 必须等于参考价格币种",
     });
   }
+  return true;
+}
+
+/**
+ * Recompute one component set and compare it against what the file stores.
+ *
+ * Shared because 1.2.0 verifies this per attributed seat and 1.1.0 verifies it per
+ * scenario, and the arithmetic is identical — only the label in the message differs.
+ * Two copies would let the frozen generation's verification rot unnoticed, which is
+ * exactly what it exists to prevent.
+ */
+function verifyComponentComputation(input: {
+  label: string;
+  components: readonly z.infer<typeof valuationComponentSchema>[];
+  computed: z.infer<typeof scenarioComputationSchema>;
+  stored: z.infer<typeof impliedExpectationSchema> | undefined;
+  basis: { fx: string; shares: string };
+  referencePrice: string;
+  path: PropertyKey[];
+  context: z.RefinementCtx;
+}): void {
+  const { label, components, computed, stored, basis, referencePrice, path: issuePath, context } = input;
+  const issue = (message: string) => context.addIssue({ code: "custom", path: issuePath, message });
+
+  let expected;
+  try {
+    expected = computeScenario(components, basis);
+  } catch (error) {
+    issue(`${label}无法计算：${error instanceof Error ? error.message : String(error)}`);
+    return;
+  }
+  for (const key of ["low", "center", "high", "totalLow", "totalHigh"] as const) {
+    if (computed[key] !== expected[key]) {
+      issue(
+        `${label}的 computed.${key} 与组件算出的结果不符：` +
+        `写的是 ${computed[key]}，按组件应为 ${expected[key]}。` +
+        `运行 npm run snapshot:sync 重算，不要手改这个字段。`,
+      );
+    }
+  }
+  if (JSON.stringify(computed.bridge) !== JSON.stringify(expected.bridge)) {
+    issue(`${label}的 computed.bridge 与组件不符；运行 npm run snapshot:sync 重算。`);
+  }
+  if (new Decimal(computed.low).greaterThan(computed.high)) {
+    issue(`${label}的下沿高于上沿，检查组件的加减方向。`);
+  }
+
+  if (stored === undefined) return;
+  try {
+    const implied = computeImpliedExpectation(components, basis, referencePrice);
+    for (const key of [
+      "marketCap",
+      "operatingValue",
+      "nonOperatingPerShare",
+      "multipleLow",
+      "multipleHigh",
+      "metricLabel",
+    ] as const) {
+      if (stored[key] !== implied[key]) {
+        issue(
+          `${label}的 impliedExpectation.${key} 与组件算出的结果不符：` +
+          `写的是 ${String(stored[key])}，应为 ${String(implied[key])}。`,
+        );
+      }
+    }
+  } catch (error) {
+    issue(`${label}的隐含预期无法计算：${error instanceof Error ? error.message : String(error)}`);
+  }
+}
+
+/**
+ * Recompute everything the engine owns under 1.2.0 and reject the snapshot if the
+ * stored answer disagrees.
+ *
+ * A JSON file has no read-only fields, so this is what "the author cannot write
+ * the market capitalisation" actually means in practice. It runs inside the schema
+ * rather than only in the CLI so that publishing cannot bypass it either.
+ *
+ * What is no longer checked, because it is no longer published: a fair value equal
+ * to the base scenario, an action ladder derived from bear and base bounds, and
+ * the monotonic 熊 < 基准 < 牛 ordering. Attributed seats have no ordering to
+ * enforce — an issuer's guidance sitting above a short report is information, not
+ * an inconsistency.
+ */
+function verifyValuation(snapshot: SnapshotShape, context: z.RefinementCtx): void {
+  const { valuation, summary } = snapshot;
+  if (!verifyValuationBasis(snapshot, context)) return;
+
+  const basis = { fx: valuation.fx.value, shares: valuation.shares.value };
+
+  if (summary.marketCap.currency !== valuation.currency) {
+    context.addIssue({
+      code: "custom",
+      path: ["summary", "marketCap", "currency"],
+      message: `summary.marketCap.currency 必须等于 valuation.currency（${valuation.currency}）`,
+    });
+  }
+  if (summary.marketCap.scale !== valuation.valueScale) {
+    context.addIssue({
+      code: "custom",
+      path: ["summary", "marketCap", "scale"],
+      message: `summary.marketCap.scale 必须等于 valuation.valueScale（${valuation.valueScale}）`,
+    });
+  }
+  if (summary.marketCap.asOf !== summary.referencePrice.asOf) {
+    context.addIssue({
+      code: "custom",
+      path: ["summary", "marketCap", "asOf"],
+      message:
+        "summary.marketCap.asOf 必须等于参考价格的时点——市值是这个价格乘出来的，" +
+        "两个时点不同意味着页头第一格与第二格说的不是同一个时刻。",
+    });
+  }
+  try {
+    const expected = computeMarketCap(basis, summary.referencePrice.value);
+    if (summary.marketCap.value !== expected) {
+      context.addIssue({
+        code: "custom",
+        path: ["summary", "marketCap", "value"],
+        message:
+          `summary.marketCap.value 由引擎计算（参考价 × 股数 × 汇率），应为 ${expected}，` +
+          `写的是 ${summary.marketCap.value}。运行 npm run snapshot:sync 重算。`,
+      });
+    }
+  } catch (error) {
+    context.addIssue({
+      code: "custom",
+      path: ["summary", "marketCap", "value"],
+      message: `无法计算市值：${error instanceof Error ? error.message : String(error)}`,
+    });
+  }
+
+  const seatIds = new Set<string>();
+  for (const set of valuation.assumptionSets) {
+    if (seatIds.has(set.id)) {
+      context.addIssue({
+        code: "custom",
+        path: ["valuation", "assumptionSets"],
+        message: `重复的假设集 id：${set.id}`,
+      });
+    }
+    seatIds.add(set.id);
+  }
+
+  const available = valuation.assumptionSets.filter((set) => set.status === "available");
+  if (available.length === 0) {
+    context.addIssue({
+      code: "custom",
+      path: ["valuation", "assumptionSets"],
+      message:
+        "至少需要一组 available 的假设集。席位数量不设下限，但一组都算不出来时" +
+        "价格隐含就没有任何可对照的数字，估值块也就没有内容。" +
+        "「历史区间回归」只依赖 financials.json，任何有账本的公司都能算出来。",
+    });
+  }
+
+  for (const set of available) {
+    if (!set.computed) continue;
+    verifyComponentComputation({
+      label: `假设集「${set.id}」`,
+      components: set.components ?? [],
+      computed: set.computed,
+      stored: set.impliedExpectation,
+      basis,
+      referencePrice: summary.referencePrice.value,
+      path: ["valuation", "assumptionSets"],
+      context,
+    });
+  }
+
+  verifyHealthCheck(snapshot, context);
+}
+
+/**
+ * The 1.1.0 verification, kept intact.
+ *
+ * Those six snapshots are frozen, so this is not dead code guarding nothing: it is
+ * what stops a committed file from being edited by hand years after the contract
+ * that produced it stopped being authored.
+ */
+function verifyPriorValuation(snapshot: PriorSnapshotShape, context: z.RefinementCtx): void {
+  const { valuation, summary } = snapshot;
+  if (!verifyValuationBasis(snapshot, context)) return;
 
   const basis = { fx: valuation.fx.value, shares: valuation.shares.value };
   const byName = new Map(valuation.scenarios.map((scenario) => [scenario.name, scenario]));
 
   for (const scenario of valuation.scenarios) {
-    let expected;
-    try {
-      expected = computeScenario(scenario.components, basis);
-    } catch (error) {
-      context.addIssue({
-        code: "custom",
-        message: `估值情景「${scenario.name}」无法计算：${error instanceof Error ? error.message : String(error)}`,
-      });
-      continue;
-    }
-    for (const key of ["low", "center", "high", "totalLow", "totalHigh"] as const) {
-      if (scenario.computed[key] !== expected[key]) {
-        context.addIssue({
-          code: "custom",
-          message:
-            `估值情景「${scenario.name}」的 computed.${key} 与组件算出的结果不符：` +
-            `写的是 ${scenario.computed[key]}，按组件应为 ${expected[key]}。` +
-            `运行 npm run snapshot:sync 重算，不要手改这个字段。`,
-        });
-      }
-    }
-    if (JSON.stringify(scenario.computed.bridge) !== JSON.stringify(expected.bridge)) {
-      context.addIssue({
-        code: "custom",
-        message: `估值情景「${scenario.name}」的 computed.bridge 与组件不符；运行 npm run snapshot:sync 重算。`,
-      });
-    }
-    if (new Decimal(scenario.computed.low).greaterThan(scenario.computed.high)) {
-      context.addIssue({
-        code: "custom",
-        message: `估值情景「${scenario.name}」的下沿高于上沿，检查组件的加减方向。`,
-      });
-    }
+    verifyComponentComputation({
+      label: `估值情景「${scenario.name}」`,
+      components: scenario.components,
+      computed: scenario.computed,
+      // 1.1.0 stores one implied expectation for the base scenario only, checked
+      // separately below against `summary.fairValue`.
+      stored: undefined,
+      basis,
+      referencePrice: summary.referencePrice.value,
+      path: [],
+      context,
+    });
   }
 
   const bear = byName.get("熊市");
@@ -1146,6 +1696,21 @@ function verifyValuation(snapshot: SnapshotShape, context: z.RefinementCtx): voi
     }
   }
 
+  verifyHealthCheck(snapshot, context);
+}
+
+/**
+ * The valuation health check, shared by both contracts.
+ *
+ * Unchanged by 1.2.0 on purpose: which method breaks on which company is a fact
+ * about the company's accounting, not a view about its price, so it survives the
+ * ban on price-class judgment untouched.
+ */
+function verifyHealthCheck(
+  snapshot: SnapshotShape | PriorSnapshotShape,
+  context: z.RefinementCtx,
+): void {
+  const { valuation } = snapshot;
   // The health check is only worth running if the author has to answer it.
   const facts = deriveHealthFacts(snapshot);
   const answered = new Set(valuation.healthCheck.map((entry) => entry.ruleId));
@@ -1199,7 +1764,7 @@ function atScale(
 }
 
 function metricDecimal(
-  snapshot: SnapshotShape,
+  snapshot: SnapshotShape | PriorSnapshotShape,
   metricId: string,
   target: keyof typeof SCALE_FACTOR,
 ): Decimal | null {
@@ -1215,7 +1780,7 @@ function metricDecimal(
  * "cannot judge". A rule must never read a missing number as evidence that the
  * risk it guards against is absent.
  */
-export function deriveHealthFacts(snapshot: SnapshotShape): HealthFacts {
+export function deriveHealthFacts(snapshot: SnapshotShape | PriorSnapshotShape): HealthFacts {
   const scale = snapshot.valuation.valueScale;
   const marketCap = new Decimal(snapshot.summary.referencePrice.value)
     .times(snapshot.valuation.shares.value)
@@ -1507,9 +2072,9 @@ export function compareResearchSnapshots(
   // that is the only field a moat carries that is a reading rather than
   // structure — and "is it still widening" is the question the block exists for.
   const priorMoats = new Map(
-    (isCurrentSnapshot(prior) ? prior.businessModel.moat ?? [] : []).map((moat) => [moat.id, moat]),
+    (hasStructuredModel(prior) ? prior.businessModel.moat ?? [] : []).map((moat) => [moat.id, moat]),
   );
-  const currentMoats = isCurrentSnapshot(current) ? current.businessModel.moat ?? [] : [];
+  const currentMoats = hasStructuredModel(current) ? current.businessModel.moat ?? [] : [];
   const moats = currentMoats.map((moat) => {
     const previous = priorMoats.get(moat.id);
     return {
@@ -1527,27 +2092,48 @@ export function compareResearchSnapshots(
     .filter((moat) => !currentMoats.some((item) => item.id === moat.id))
     .map((moat) => ({ id: moat.id, type: moat.type, priorTrend: moat.trend }));
 
+  // A side, described by whichever fields its own contract published. A 1.2.0
+  // snapshot has no stance and no fair value to report, so the page renders one
+  // fewer row rather than a row saying "—" as if something had gone missing.
+  const side = (snapshot: ResearchSnapshot) => ({
+    date: snapshot.snapshot.dataCutoff.slice(0, 10),
+    stance: stanceOf(snapshot)?.stance ?? null,
+    confidence: stanceOf(snapshot)?.confidence ?? null,
+    businessModel: snapshot.summary.businessModel,
+    businessModelChange: snapshot.summary.businessModelChange,
+    constraints: snapshot.constraints,
+    referencePrice: snapshot.summary.referencePrice,
+    fairValue: fairValueOf(snapshot),
+    marketCap: marketCapOf(snapshot),
+    multiplePercentile: isCurrentSnapshot(snapshot) ? snapshot.summary.multiplePercentile : null,
+  });
+
+  const priorSets = new Map(
+    (isCurrentSnapshot(prior) ? prior.valuation.assumptionSets : []).map((set) => [set.id, set]),
+  );
+  const currentSets = isCurrentSnapshot(current) ? current.valuation.assumptionSets : [];
+  const assumptionSets = currentSets.map((set) => {
+    const previous = priorSets.get(set.id);
+    return {
+      id: set.id,
+      sourceKind: set.sourceKind,
+      sourceLabel: set.sourceLabel,
+      sourceBias: set.sourceBias,
+      status: set.status,
+      priorStatus: previous?.status ?? null,
+      priorComputed: previous?.computed ?? null,
+      currentComputed: set.computed ?? null,
+    };
+  });
+  const droppedAssumptionSets = [...priorSets.values()]
+    .filter((set) => !currentSets.some((item) => item.id === set.id))
+    .map((set) => ({ id: set.id, sourceKind: set.sourceKind, sourceLabel: set.sourceLabel }));
+
   return {
-    prior: {
-      date: prior.snapshot.dataCutoff.slice(0, 10),
-      stance: prior.summary.stance,
-      confidence: prior.summary.confidence,
-      businessModel: prior.summary.businessModel,
-      businessModelChange: prior.summary.businessModelChange,
-      constraints: prior.constraints,
-      referencePrice: prior.summary.referencePrice,
-      fairValue: prior.summary.fairValue,
-    },
-    current: {
-      date: current.snapshot.dataCutoff.slice(0, 10),
-      stance: current.summary.stance,
-      confidence: current.summary.confidence,
-      businessModel: current.summary.businessModel,
-      businessModelChange: current.summary.businessModelChange,
-      constraints: current.constraints,
-      referencePrice: current.summary.referencePrice,
-      fairValue: current.summary.fairValue,
-    },
+    prior: side(prior),
+    current: side(current),
+    assumptionSets,
+    droppedAssumptionSets,
     metrics,
     driverMetrics,
     moats,

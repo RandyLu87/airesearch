@@ -2,7 +2,9 @@
 
 新研究的规范产出是 JSON `Research Snapshot`，不是 Markdown 或手写 HTML。最终可执行定义以仓库 `packages/research-schema/src/index.ts` 的 Zod schema 为准；修改字段时先改 schema 和测试，再改本文件。
 
-`schemaVersion` 目前有两个合法取值。**新研究一律写 `1.1.0`。** `1.0.0` 是结构化商业模式、行业地位与计算式估值出现之前的契约，仅供已发布的历史快照原样保留（见 ADR-0017）；回填历史快照等于给几个月前的判断编造当时并未记录的汇率与份额分母，不允许。
+`schemaVersion` 目前有三个合法取值。**新研究一律写 `1.2.0`。**
+
+`1.1.0` 是以投资立场、合理价值和操作区间开篇的契约，`1.0.0` 更早。两者都仅供已发布的历史快照原样保留（ADR-0017、ADR-0021），继续渲染、继续被引擎校验，但不回填：那些快照确实写过「不追价，等回撤」，删掉这些字段是改写已经发布的记录，而不是改变接下来发布什么。回填同样不允许——等于给几个月前的判断编造当时并未记录的汇率、份额分母与来源偏向。
 
 ## 路径与生命周期
 
@@ -20,7 +22,7 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
 
 ```json
 {
-  "schemaVersion": "1.1.0",
+  "schemaVersion": "1.2.0",
   "company": {},
   "snapshot": {},
   "investmentHorizon": "3-5 年",
@@ -52,9 +54,14 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
 
 ### `summary`
 
-必须一眼回答：当前立场与确信度、一句话商业模式、商业模式变化等级、带时点的参考价格、合理价值区间、安全边际、最强证据、最大风险和下一验证条件。
+必须一眼回答：这家公司现在值多少（市值）、一股多少钱（带时点的参考价格）、这个价格在自身倍数历史里排第几、一句话商业模式、商业模式变化等级、下一个可判定时点。
 
-`businessModelChange` 只能是：`未变`、`参数变化`、`机制变化`、`结构性变化`。
+**不再包含** `stance`、`confidence`、`headline`、`fairValue`、`marginOfSafety`、`strongestEvidence`、`largestRisk`（ADR-0021）。前四个是价格类判断，后两个是「最」字排序——证据谁最强取决于想论证什么，而风险哪个最大取决于持有期，两者都无法被下一份财报判定。
+
+- `marketCap`：**引擎计算**，等于参考价 × 股数 × 汇率，scale 与币种跟随 `valuation`，`asOf` 必须等于参考价格的时点。作者不得手写，运行 `npm run snapshot:sync`。
+- `referencePrice`：带时区的取价时点。它可以早于研究截止时间，页面因此单独标它自己的时点。
+- `multiplePercentile`：当前倍数与它在自身历史中的分位。`adjustmentBasis` **必须是「前复权」**，校验器强制：A 股 `daily` 与美股 `us_daily` 都是不复权口径，混用后的分位数看起来完全正常但是错的（注册表第 9 节）。用 `python3 scripts/research/multiple_percentile.py` 计算。取不到足够序列时写 `status: "unavailable"` 与 reason，不得留空。
+- `businessModelChange` 只能是：`未变`、`参数变化`、`机制变化`、`结构性变化`。
 
 ### `businessModel`
 
@@ -116,6 +123,10 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
 
 分别说明投资逻辑、财务质量、治理和估值相对上一快照如何变化，并列出本次新增证据和已被替换的旧假设。没有变化也必须明确写“未变”及理由。
 
+可选字段 `assumptionSetChanges` 与 `driverChanges` 同构，记录假设集席位的增删与换源：每项含 `assumptionSetId`、`change`（`added` / `removed` / `redefined`）与 `reason`。校验器只在**两份都是 1.2.0** 的快照之间执行——1.1.0 前身没有席位，否则每一席都会读成新增，而那是契约代际边界，ADR-0021 已经记过一次。同一个 id 换了 `sourceKind` 或 `sourceLabel` 算 `redefined`：跨快照的数值对比会因此不再指同一件事。
+
+席位没有下限，所以这条记录是「这一组不再存在」与「这次没查」唯一的区分手段。
+
 可选字段 `driverChanges` 记录驱动指标集相对上一快照的变动，每项包含 `driverId`、`change`（`added` / `removed` / `redefined`）和 `reason`：
 
 ```json
@@ -141,10 +152,17 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
 - `financialHistory` **由 `research/companies/<company-id>/financials.json` 物化，不手写**。运行 `npm run snapshot:sync` 生成，校验器逐字段比对；一致性只约束该公司的当前快照，历史快照按发布时的数字冻结（见 ADR-0014）。每个期间记录 `periodType`、`accountingBasis` 与 `status`（`reported` 或由其他披露值 `calculated`）；每个财务值使用对象保存十进制字符串 `value`、`unit`、`currency`（货币值必填）、`scale` 和 `precision`，缺失字段直接省略，禁止由渲染层假设“亿元”或默认币种。分部数据放在期间的 `segments` 里。
 - `sections` 负责完整的商业模式、竞争、财务质量、组织研发、治理等论证。每节包含结论性摘要、证据要点和 evidence IDs。
 - `valuation` 先读 `docs/research/valuation-playbook.md`。必填 `currency`、`valueScale`、`tradingCurrency`、`shares`（scale 必须等于 `valueScale`）与 `fx`（至少两条 evidence，按 ADR-0013 双源交叉）。
-- `valuation.scenarios` 恰好三个（熊市/基准/牛市），各自写明假设、触发条件与 `components`。组件是倍数项（指标区间 × 倍数区间）或面值项（金额，可带 `discountPct` 与 `discountReason`）。
-- **`computed`、`actionZones` 的边界、`impliedExpectation` 与 `summary.fairValue` 全部由引擎计算，作者不得手写。** 运行 `npm run snapshot:sync`；校验器会重算并在不符时阻断。`actionZones` 只有 `action` 文案可以手写。
+- `valuation.assumptionSets` 取代了 1.1.0 的 `scenarios` 与 `actionZones`（ADR-0022）。每一席是一组**署名到本仓库以外来源**的假设：
+  - `sourceKind`：`发行人指引` / `卖方一致预期` / `历史区间回归` / `做空报告` / `监管与政策文件` / `同业公开指引` / `其他`（取「其他」必须写 `sourceNote`）；
+  - `sourceLabel`：具体是谁、什么时候；
+  - **`sourceBias`：该来源的已知偏向，无例外必填。** 做空报告的作者持有空头仓位，发行人指引由发行人自报，卖方与发行人普遍有承销关系。只在「可疑来源」上要求这个字段，本身就是一个判断，所以每一席都要写；
+  - `status`：`available` 或 `unavailable`。后者必须写 `reason` 且不得携带 `assumptions`、`components`、`computed`、`impliedExpectation`——「没有这一组」与「没有查」必须能区分；
+  - `components`：与 1.1.0 相同的组件模型，倍数项或面值项。
+  - **席位没有下限，也没有上限。** 骨架给三个起点（发行人指引、卖方一致预期、历史区间回归），但港股与 A 股没有已登记的一致预期源，很多公司不提供指引。引擎只要求至少一组 `available`：一组都算不出来时，价格隐含没有任何可对照的数字。
+- **`computed`、`impliedExpectation` 与 `summary.marketCap` 全部由引擎计算，作者不得手写。** 运行 `npm run snapshot:sync`；校验器会重算并在不符时阻断。反向估值对每一席各解一次，因此「价格隐含」是逐组的。
 - `valuation.healthCheck` 必须回应每一条被触发的体检规则；`methodSelection` 必须同时给出理想方法与实际采用的主方法，两者不同时 `blockedBy` 不能为空。
-- `valuation.disagreement` 记录分歧点：`driverId`（**必须命中已声明的驱动**，校验器强制）、`marketAssumption`、`ourAssumption`、`ifMarketIsRight`、`converged`。隐含倍数是市场的数字，不是市场的理由；把分歧锚在一个可观测量上，下一份财报才能判定谁对。「竞争加剧」「监管风险」对任何公司在任何价格都成立，因此解释不了任何具体价差。`converged` 为真时 `ifMarketIsRight` 改写为「当前价格不提供安全边际」的含义，而不是硬编一个错误。
+- `valuation.disagreement` 记录分歧点：`driverId`（**必须命中已声明的驱动**）、`assumptionSetId`（**必须命中一个 `available` 席位**，两者校验器都强制）、`marketAssumption`、`referenceAssumption`、`divergenceLink`、`converged`。隐含倍数是市场的数字，不是市场的理由；把分歧锚在一个可观测量上，下一份财报才能判定。「竞争加剧」「监管风险」对任何公司在任何价格都成立，因此解释不了任何具体价差。对照一个 `unavailable` 席位等于跟沉默比较，校验器阻断。
+- **两边都是别人的数字。** 1.1.0 这一栏叫 `ourAssumption`，于是分歧永远是「我 vs 市场」；换成 `referenceAssumption` + `assumptionSetId` 之后，一端由价格反解、一端由发行人或卖方公开说出，差值是算术。
 
 ### `evidence`
 

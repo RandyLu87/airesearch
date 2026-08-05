@@ -48,7 +48,7 @@ export default function HomePage() {
         <header className="company-header">
           <div className="company-eyebrow"><span>AIRESEARCH</span><span>LONG-TERM VALUE</span></div>
           <h1>上市公司研究</h1>
-          <p className="company-current">以商业模式、核心驱动、最新变化和安全边际为主线的长期价值研究。</p>
+          <p className="company-current">以商业模式、核心驱动、最新变化和当前价格隐含的假设为主线的长期价值研究。</p>
         </header>
         {/* Nothing stands between the header and the cards but the label: the
             first card has to be readable without scrolling. */}

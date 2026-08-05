@@ -1,3 +1,4 @@
+import { ASSUMPTION_SOURCE_KINDS } from "../index.ts";
 import { SENTINEL } from "./shared.ts";
 
 type Json = Record<string, unknown>;
@@ -260,44 +261,83 @@ function valuationComponentSkeleton(prior?: Json): Json {
   return base;
 }
 
+/**
+ * The three seats a first draft starts from.
+ *
+ * A starting list, not a floor. Seats are extensible and none is mandatory — an
+ * author deletes the ones this company has no source for, or marks them
+ * `unavailable` with a reason, and adds a short report or a regulatory filing
+ * where one exists. They are pre-listed because "which sources exist for this
+ * company" is a question worth being asked every time rather than remembered.
+ */
+const DEFAULT_ASSUMPTION_SEATS = ASSUMPTION_SOURCE_KINDS.filter((kind) =>
+  ["发行人指引", "卖方一致预期", "历史区间回归"].includes(kind),
+);
+
 function valuationSkeleton(prior?: Json, priorCompany?: Json): Json {
-  const priorScenarios = (prior?.scenarios as Json[] | undefined) ?? [];
-  const priorZones = (prior?.actionZones as Json[] | undefined) ?? [];
+  const priorSets = (prior?.assumptionSets as Json[] | undefined) ?? [];
   const priorSelection = prior?.methodSelection as Json | undefined;
   const priorShares = prior?.shares as Json | undefined;
   const priorFx = prior?.fx as Json | undefined;
 
-  const scenario = (name: string) => {
-    const source = priorScenarios.find((item) => item.name === name);
+  // Engine output. Sentinelled so an unsynced skeleton can never publish;
+  // `npm run snapshot:sync` fills these in once the components are real.
+  const computedSkeleton = () => ({
+    low: SENTINEL,
+    center: SENTINEL,
+    high: SENTINEL,
+    totalLow: SENTINEL,
+    totalHigh: SENTINEL,
+    // One sentinelled entry rather than an empty array: the schema requires
+    // at least one bridge row, and an empty array would surface as a schema
+    // error on an untouched skeleton instead of as an outstanding to-do.
+    bridge: [{
+      id: SENTINEL,
+      label: SENTINEL,
+      kind: SENTINEL,
+      amountLow: SENTINEL,
+      amountHigh: SENTINEL,
+      perShareLow: SENTINEL,
+      perShareHigh: SENTINEL,
+    }],
+  });
+
+  const impliedSkeleton = () => ({
+    marketCap: SENTINEL,
+    operatingValue: SENTINEL,
+    nonOperatingPerShare: SENTINEL,
+    multipleLow: null,
+    multipleHigh: null,
+    metricLabel: null,
+  });
+
+  /**
+   * Which source a seat draws on carries over; everything the source said does
+   * not. Consensus moves every week, so inheriting last run's numbers would be
+   * the "fake update" the whole skeleton exists to make impossible.
+   */
+  const assumptionSet = (source: Json | undefined, fallbackKind: string) => {
     const components = (source?.components as Json[] | undefined) ?? [undefined];
-    return {
-      name,
+    const kind = (source?.sourceKind as string | undefined) ?? fallbackKind;
+    const base: Json = {
+      id: source?.id ?? SENTINEL,
+      sourceKind: kind,
+      sourceLabel: SENTINEL,
+      sourceBias: SENTINEL,
+      status: SENTINEL,
       assumptions: SENTINEL,
-      trigger: SENTINEL,
       components: components.map((item) => valuationComponentSkeleton(item as Json | undefined)),
-      // Engine output. Sentinelled so an unsynced skeleton can never publish;
-      // `npm run snapshot:sync` fills these in once the components are real.
-      computed: {
-        low: SENTINEL,
-        center: SENTINEL,
-        high: SENTINEL,
-        totalLow: SENTINEL,
-        totalHigh: SENTINEL,
-        // One sentinelled entry rather than an empty array: the schema requires
-        // at least one bridge row, and an empty array would surface as a schema
-        // error on an untouched skeleton instead of as an outstanding to-do.
-        bridge: [{
-          id: SENTINEL,
-          label: SENTINEL,
-          kind: SENTINEL,
-          amountLow: SENTINEL,
-          amountHigh: SENTINEL,
-          perShareLow: SENTINEL,
-          perShareHigh: SENTINEL,
-        }],
-      },
+      computed: computedSkeleton(),
+      impliedExpectation: impliedSkeleton(),
+      evidenceIds: [SENTINEL],
     };
+    if (kind === "其他") base.sourceNote = SENTINEL;
+    return base;
   };
+
+  const assumptionSets = priorSets.length > 0
+    ? priorSets.map((set) => assumptionSet(set, String(set.sourceKind ?? SENTINEL)))
+    : DEFAULT_ASSUMPTION_SEATS.map((kind) => assumptionSet(undefined, kind));
 
   return {
     currency: prior?.currency ?? priorCompany?.reportingCurrency ?? SENTINEL,
@@ -333,43 +373,19 @@ function valuationSkeleton(prior?: Json, priorCompany?: Json): Json {
         }),
       ),
     },
-    scenarios: ["熊市", "基准", "牛市"].map(scenario),
-    actionZones:
-      priorZones.length >= 3
-        ? priorZones.map((zone) => ({
-            label: zone.label ?? SENTINEL,
-            rangeLow: null,
-            rangeHigh: null,
-            range: SENTINEL,
-            action: SENTINEL,
-          }))
-        : repeat(3, () => ({
-            label: SENTINEL,
-            rangeLow: null,
-            rangeHigh: null,
-            range: SENTINEL,
-            action: SENTINEL,
-          })),
-    impliedExpectation: {
-      marketCap: SENTINEL,
-      operatingValue: SENTINEL,
-      nonOperatingPerShare: SENTINEL,
-      multipleLow: null,
-      multipleHigh: null,
-      metricLabel: null,
-    },
-    currentExpectation: SENTINEL,
+    assumptionSets,
     // The driver the market disagrees about is calibration — which observable
     // the argument is actually over rarely changes between two research runs —
     // while both sides' assumed paths are readings and get re-sourced.
     disagreement: {
       driverId: (prior?.disagreement as Json | undefined)?.driverId ?? SENTINEL,
+      assumptionSetId: (prior?.disagreement as Json | undefined)?.assumptionSetId ?? SENTINEL,
       marketAssumption: SENTINEL,
-      ourAssumption: SENTINEL,
-      ifMarketIsRight: SENTINEL,
+      referenceAssumption: SENTINEL,
+      divergenceLink: SENTINEL,
       // No sentinel exists for a boolean. `false` is the load-bearing default:
       // it asserts a gap the author then has to describe, whereas `true` would
-      // let "the market and I agree" pass without anyone having checked.
+      // let "the price and this source agree" pass without anyone having checked.
       converged: false,
     },
     evidenceIds: [SENTINEL],
@@ -387,14 +403,14 @@ export function buildSkeleton(input: {
   const { companyId, snapshotId, createdAt, prior, ledger, commitmentSummary } = input;
   const priorSummary = prior?.summary as Json | undefined;
   const priorReferencePrice = priorSummary?.referencePrice as Json | undefined;
-  const priorFairValue = priorSummary?.fairValue as Json | undefined;
+  const priorMarketCap = priorSummary?.marketCap as Json | undefined;
+  const priorPercentile = priorSummary?.multiplePercentile as Json | undefined;
   const priorDrivers = (prior?.driverMetrics as Json[] | undefined) ?? [];
   const priorObservations = (prior?.standardMetrics as Json[] | undefined) ?? [];
   const priorConstraints = (prior?.constraints as Json[] | undefined) ?? [];
   const priorHistory = (prior?.financialHistory as Json[] | undefined) ?? [];
   const priorSections = (prior?.sections as Json[] | undefined) ?? [];
   const priorValuation = prior?.valuation as Json | undefined;
-  const priorActionZones = (priorValuation?.actionZones as Json[] | undefined) ?? [];
 
   const company = (prior?.company as Json | undefined) ?? {
     id: companyId,
@@ -408,7 +424,7 @@ export function buildSkeleton(input: {
   };
 
   return {
-    schemaVersion: "1.1.0",
+    schemaVersion: "1.2.0",
     // A prior snapshot written against the 1.0.0 contract has no industry tags,
     // and an absent required field reads as a plain schema error rather than as
     // "you still have to fill this in". Sentinel it so the author is told.
@@ -418,25 +434,35 @@ export function buildSkeleton(input: {
     // re-stated each time rather than inherited.
     investmentHorizon: SENTINEL,
     summary: {
-      stance: SENTINEL,
-      confidence: SENTINEL,
-      headline: SENTINEL,
       businessModel: SENTINEL,
       businessModelChange: SENTINEL,
+      // Engine output; `snapshot:sync` fills it once price, shares and FX exist.
+      marketCap: {
+        value: SENTINEL,
+        currency:
+          priorMarketCap?.currency ??
+          (prior?.company as Json | undefined)?.reportingCurrency ??
+          SENTINEL,
+        scale: priorMarketCap?.scale ?? SENTINEL,
+        asOf: SENTINEL,
+      },
       referencePrice: {
         value: SENTINEL,
         currency: priorReferencePrice?.currency ?? SENTINEL,
         asOf: SENTINEL,
       },
-      fairValue: {
-        low: SENTINEL,
-        center: SENTINEL,
-        high: SENTINEL,
-        currency: priorFairValue?.currency ?? SENTINEL,
+      // Which multiple this company is read on is calibration and carries over;
+      // the reading, the window and the adjustment basis are re-sourced.
+      multiplePercentile: {
+        metricLabel: priorPercentile?.metricLabel ?? SENTINEL,
+        status: SENTINEL,
+        value: SENTINEL,
+        percentile: SENTINEL,
+        windowFrom: SENTINEL,
+        windowTo: SENTINEL,
+        adjustmentBasis: SENTINEL,
+        evidenceIds: [SENTINEL],
       },
-      marginOfSafety: SENTINEL,
-      strongestEvidence: SENTINEL,
-      largestRisk: SENTINEL,
       nextValidation: SENTINEL,
     },
     businessModel: businessModelSkeleton(prior?.businessModel as Json | undefined),

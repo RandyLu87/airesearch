@@ -4,6 +4,8 @@
 
 Maintain evidence-based, long-term research on public companies. Treat the core business model and its operating drivers as the main analytical thread.
 
+Market capitalisation and share price are facts and get reported as such, without a view on whether either is reasonable. The repository publishes no stance, no fair value, no margin of safety and no action zones (ADR-0021); every assumption behind a number is attributed to a source outside this repository (ADR-0022). What it does publish is what a filing can settle: driver thresholds, moat trends, constraint status, and the assumptions today's price implies.
+
 ## Repository layout
 
 - Follow `docs/research/WORKFLOW.md` for company research; the skills under `.agents/skills/` and `.claude/skills/` are thin pointers to it.
@@ -34,12 +36,14 @@ Maintain evidence-based, long-term research on public companies. Treat the core 
 - Keep only one canonical snapshot per company per calendar day. Update the same JSON snapshot for later same-day work instead of creating another timestamped version.
 - Treat root-level `YYYY-MM-DD-HHMM-analysis.md` files inside an existing company directory as read-only legacy notes. New research must not use Markdown as its canonical output.
 - Generate a new snapshot with `npm run snapshot:new -- <company-id>`; it inherits calibration from the previous snapshot and materialises `financialHistory` from the ledger so the two stay comparable.
-- Never hand-write `financialHistory`, `commitmentSummary`, `evidenceDensity.computed`, or any engine-computed valuation field. Run `npm run snapshot:sync -- <snapshot-path>` instead; the checker rejects hand edits.
+- Never hand-write `financialHistory`, `commitmentSummary`, `evidenceDensity.computed`, `summary.marketCap`, or any engine-computed valuation field. Run `npm run snapshot:sync -- <snapshot-path>` instead; the checker rejects hand edits.
 - Re-run `snapshot:sync` after editing drivers, standard metrics, share measures, or evidence: the density statistics read the whole snapshot, not just the valuation components.
-- Bind every declared moat to at least one existing driver metric, and anchor `valuation.disagreement` to one as well. The checker rejects dangling ids.
+- Bind every declared moat to at least one existing driver metric. Anchor `valuation.disagreement` to a driver metric *and* to an `available` assumption set. The checker rejects dangling ids and refuses a disagreement contrasted against an unsourced seat.
+- Give every assumption set a `sourceBias`. Seats have no floor and no ceiling, but at least one must be `available`, and a seat that cannot be sourced stays declared with `status: "unavailable"` and a reason.
+- Compute `summary.multiplePercentile` from a front-adjusted price series via `python3 scripts/research/multiple_percentile.py`. The A-share and US price feeds are unadjusted, so a percentile taken straight off closing prices is wrong in a way nothing on the page reveals.
 - Every company directory that holds snapshots must also hold `financials.json` covering at least the last two fiscal years.
-- Author new snapshots against `schemaVersion` 1.1.0. Snapshots already published as 1.0.0 stay untouched.
-- Never drop, add, or recalibrate a driver metric without recording it in `thesisChange.driverChanges`.
+- Author new snapshots against `schemaVersion` 1.2.0. Snapshots already published as 1.1.0 or 1.0.0 stay untouched and keep rendering under the contract they were written for.
+- Never drop, add, or recalibrate a driver metric without recording it in `thesisChange.driverChanges`, and never add, drop or re-source an assumption set without recording it in `thesisChange.assumptionSetChanges`.
 - Generate HTML only through `npm run publish`; never hand-edit `research/site/`.
 - Never invent a different filename. Before finishing any research task, run `python3 scripts/research/validate_research_paths.py` and fix every reported violation without asking the user.
 - Keep only the current final report source and useful final export; remove superseded exports and intermediate text conversions.

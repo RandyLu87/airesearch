@@ -121,7 +121,7 @@ HKEX 面向机构提供 Issuer Information Feed Service 和市场数据产品，
 
 ### 4.1 估值时点参考价格
 
-每次研究只需要**一个带时间戳的参考价格**，用于 `summary.referencePrice`，并向下影响合理价值、安全边际与行动区间。它不是行情流，不需要数据订阅。
+每次研究只需要**一个带时间戳的参考价格**，用于 `summary.referencePrice`，并向下影响引擎计算的市值、倍数分位与每一组假设集的价格隐含。它不是行情流，不需要数据订阅。
 
 规则：
 
@@ -339,6 +339,29 @@ API 数据进入报告前至少抽查：最新一期收入、归母利润、经�
 | 美股 | `us_daily` | 不复权 |
 
 也就是说，**同一份跨市场对比或任何跨快照的历史价格序列，默认就是在混用两种口径**。画决策图表或计算历史估值分位时必须显式统一到前复权，并在该图表的 evidence `caveat` 里写明用的是哪一种口径。做不到统一，就不要画那张图——一条口径混用的历史曲线比没有曲线更糟。
+
+### 9.1 统一口径的工具
+
+`summary.multiplePercentile` 的 `adjustmentBasis` 由 schema 强制为「前复权」，统一由这个脚本完成：
+
+```bash
+python3 scripts/research/multiple_percentile.py compute --input <path>   # 输出可直接填进 summary
+python3 scripts/research/multiple_percentile.py self-test                # 离线确定性检查
+```
+
+它不联网，只做算术，输入是一份已经取好的价格与分母 JSON（格式见脚本 docstring）。三条输入路径对应三个市场：
+
+| 市场 | 取数 | 传给脚本 |
+| --- | --- | --- |
+| A 股 | `daily` + `adj_factor` | `basis: "不复权"`，每行带 `adjFactor` |
+| 美股 | `historical-price-eod/full` | `basis: "不复权"`，每行带 `adjClose` |
+| 港股 | `hk_daily_adj` | `basis: "前复权"`，无需因子 |
+
+三件它替你挡住的事：
+
+1. **后复权序列直接拒绝**，不做转换。后复权已把分红再投资折进价格，转换出来的「前复权」和交易所口径不是同一条线，两者分位可以差十几个百分点。
+2. **当前倍数用不复权收盘价**，只有历史序列复权。当前市值与倍数必须能和交易所行情对上（本节规则 2）。
+3. **分母按「当时已公开」取**，用 `effectiveFrom` 而不是报告期末。否则历史分位会用上当天还看不到的利润，让历史显得比真实更便宜，且偏差集中在财报前后。
 
 ## 10. 管理层言论取证路径
 

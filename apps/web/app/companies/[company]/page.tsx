@@ -1,29 +1,38 @@
 import {
   compareResearchSnapshots,
+  hasStructuredModel,
   isCurrentSnapshot,
+  isPriorSnapshot,
   listResearchCompanyIds,
   listResearchSnapshots,
   lookupValuationMethod,
+  stanceOf,
+  type CurrentSnapshot,
+  type FrozenSnapshot,
   type ResearchSnapshot,
+  type StructuredSnapshot,
 } from "@airesearch/research-schema";
 import {
+  AssumptionSetPanel,
   BusinessModelSection,
   CommitmentPanel,
+  DisagreementPanel,
   EvidenceDensityPanel,
+  FrozenValueBridge,
   LatestComparison,
   MarketPositionSection,
   MetricGlossary,
   MetricNote,
+  MultiplePercentileCell,
   ProseBlock,
   ValuationMethodPanel,
-  ValueBridge,
+  formatMarketCap,
   formatPrice,
   formatRange,
 } from "@airesearch/research-ui";
 import type { Metadata } from "next";
 import path from "node:path";
 
-type CurrentSnapshot = Extract<ResearchSnapshot, { schemaVersion: "1.1.0" }>;
 
 function repoRoot() {
   return path.resolve(process.cwd(), "../..");
@@ -66,6 +75,18 @@ function evidenceLink(companyId: string, snapshotId: string) {
   );
 }
 
+/** The fair-value cell, which only the two frozen contracts ever published. */
+function fairValueSummary(snapshot: ResearchSnapshot) {
+  if (isCurrentSnapshot(snapshot)) return null;
+  const { fairValue } = snapshot.summary;
+  return (
+    <div>
+      <span>合理价值</span>
+      <strong>{formatRange(fairValue.low, fairValue.high, fairValue.currency)}</strong>
+    </div>
+  );
+}
+
 export default async function CompanyPage({ params }: CompanyPageProps) {
   const route = await params;
   const snapshots = listResearchSnapshots(repoRoot(), route.company);
@@ -77,9 +98,12 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
   }
   const data = latest.data;
   const current: CurrentSnapshot | null = isCurrentSnapshot(data) ? data : null;
+  const structured: StructuredSnapshot | null = hasStructuredModel(data) ? data : null;
+  const frozen: FrozenSnapshot | null = isPriorSnapshot(data) ? data : null;
   const comparison = previous ? compareResearchSnapshots(previous.data, data) : null;
   const refs = evidenceLink(route.company, data.snapshot.id);
   const driverChanges = data.thesisChange.driverChanges ?? [];
+  const assumptionSetChanges = current?.thesisChange.assumptionSetChanges ?? [];
 
   return (
     <>
@@ -90,29 +114,42 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
         <header className="company-header">
           <div className="company-eyebrow"><span>COMPANY RESEARCH</span><span>{data.company.ticker}</span></div>
           <h1>{data.company.name}</h1>
-          <p className="company-current">{data.summary.headline}</p>
+          <p className="company-current">{data.summary.businessModel}</p>
         </header>
+        {/* ① 前三格全是可复核事实：公司现在值多少、一股多少钱、这个价格在自身
+            倍数历史里排第几。没有一格告诉读者该拿它怎么办。冻结代际额外保留它们
+            当初发布的立场与合理价值两格。 */}
         <div className="company-summary">
+          {current ? (
+            <div><span>市值</span><strong>{formatMarketCap(current.summary.marketCap)}</strong></div>
+          ) : null}
+          <div>
+            <span>参考价格</span>
+            <strong>{formatPrice(data.summary.referencePrice.value, data.summary.referencePrice.currency)}</strong>
+            <small>截至 <time>{data.summary.referencePrice.asOf.slice(0, 16).replace("T", " ")}</time></small>
+          </div>
+          {current ? <MultiplePercentileCell percentile={current.summary.multiplePercentile} /> : null}
+          {stanceOf(data) ? (
+            <div><span>投资立场</span><strong>{stanceOf(data)?.stance}</strong></div>
+          ) : null}
+          {fairValueSummary(data)}
           <div><span>当前研究</span><strong>{data.snapshot.dataCutoff.slice(0, 10)}</strong></div>
-          <div><span>投资立场</span><strong>{data.summary.stance}</strong></div>
-          <div><span>参考价格</span><strong>{formatPrice(data.summary.referencePrice.value, data.summary.referencePrice.currency)}</strong></div>
-          <div><span>合理价值</span><strong>{formatRange(data.summary.fairValue.low, data.summary.fairValue.high, data.summary.fairValue.currency)}</strong></div>
         </div>
 
-        {current ? (
+        {structured ? (
           <>
             {/* ② 商业模式 */}
             <section className="company-section" aria-labelledby="business-model">
               <p className="section-kicker">HOW THE MONEY IS MADE</p>
               <h2 id="business-model">商业模式</h2>
-              <BusinessModelSection snapshot={current} sourceIds={refs} />
+              <BusinessModelSection snapshot={structured} sourceIds={refs} />
             </section>
 
             {/* ③ 行业地位 */}
             <section className="company-section" aria-labelledby="market-position">
               <p className="section-kicker">WHERE IT STANDS</p>
               <h2 id="market-position">行业地位</h2>
-              <MarketPositionSection snapshot={current} sourceIds={refs} />
+              <MarketPositionSection snapshot={structured} sourceIds={refs} />
             </section>
 
             {/* ④ 最新财报对比 */}
@@ -122,7 +159,7 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
               <p className="company-note">
                 两列永远取同一口径的相邻同比期间，不把全年和半年并排。科目名旁的 ⓘ 给出定义、算式和陷阱。
               </p>
-              <LatestComparison snapshot={current} sourceIds={refs} />
+              <LatestComparison snapshot={structured} sourceIds={refs} />
             </section>
           </>
         ) : (
@@ -131,7 +168,7 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
             <h2>商业模式与行业地位</h2>
             <p className="company-note">
               最新一份研究快照仍是 1.0.0 契约，没有结构化的商业模式、行业地位与估值模型。
-              下一次研究会按 1.1.0 契约补齐。当前一句话商业模式：{data.summary.businessModel}
+              下一次研究会按 1.2.0 契约补齐。当前一句话商业模式：{data.summary.businessModel}
             </p>
           </section>
         )}
@@ -187,26 +224,34 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
 
         {/* ⑥ 估值 */}
         <section className="company-section" aria-labelledby="valuation">
-          <p className="section-kicker">PRICE VS. VALUE</p>
-          <h2 id="valuation">估值</h2>
+          <p className="section-kicker">{current ? "WHOSE ASSUMPTIONS" : "PRICE VS. VALUE"}</p>
+          <h2 id="valuation">{current ? "各来源假设与价格隐含" : "估值"}</h2>
           {current ? (
             <>
-              <ValueBridge snapshot={current} />
+              <AssumptionSetPanel snapshot={current} />
+              <h3 className="block-heading">价格与某一来源的分歧</h3>
+              <DisagreementPanel snapshot={current} />
+              <h3 className="block-heading">方法与交叉验证</h3>
               <ValuationMethodPanel snapshot={current} />
             </>
-          ) : (
+          ) : frozen ? (
+            <>
+              <FrozenValueBridge snapshot={frozen} />
+              <ValuationMethodPanel snapshot={frozen} />
+              <h3 className="block-heading">操作区间</h3>
+              <div className="action-zones">
+                {frozen.valuation.actionZones.map((zone) => (
+                  <div key={zone.label}>
+                    <strong>{zone.range}</strong>
+                    <span>{zone.label}</span>
+                    <p>{zone.action}</p>
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : hasStructuredModel(data) ? null : (
             <p className="company-note">{data.valuation.currentExpectation}</p>
           )}
-          <h3 className="block-heading">操作区间</h3>
-          <div className="action-zones">
-            {data.valuation.actionZones.map((zone) => (
-              <div key={zone.label}>
-                <strong>{zone.range}</strong>
-                <span>{zone.label}</span>
-                <p>{zone.action}</p>
-              </div>
-            ))}
-          </div>
         </section>
 
         {/* ⑦ 相对上次研究 */}
@@ -215,21 +260,34 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
           <h2 id="since-last">相对上次研究</h2>
           {comparison ? (
             <>
+              {/* A row appears only when both sides published the field. A 1.2.0
+                  snapshot has no stance and no fair value, so the page renders one
+                  fewer row rather than a row of dashes reading like a data gap. */}
               <dl className="delta-line">
-                <div>
-                  <dt>投资立场</dt>
-                  <dd>{comparison.prior.stance === comparison.current.stance
-                    ? `${comparison.current.stance}（未变）`
-                    : `${comparison.prior.stance} → ${comparison.current.stance}`}</dd>
-                </div>
+                {comparison.prior.stance && comparison.current.stance ? (
+                  <div>
+                    <dt>投资立场</dt>
+                    <dd>{comparison.prior.stance === comparison.current.stance
+                      ? `${comparison.current.stance}（未变）`
+                      : `${comparison.prior.stance} → ${comparison.current.stance}`}</dd>
+                  </div>
+                ) : null}
                 <div>
                   <dt>参考价格</dt>
                   <dd>{formatPrice(comparison.prior.referencePrice.value, comparison.prior.referencePrice.currency)} → {formatPrice(comparison.current.referencePrice.value, comparison.current.referencePrice.currency)}</dd>
                 </div>
-                <div>
-                  <dt>合理价值</dt>
-                  <dd>{formatRange(comparison.prior.fairValue.low, comparison.prior.fairValue.high, comparison.prior.fairValue.currency)} → {formatRange(comparison.current.fairValue.low, comparison.current.fairValue.high, comparison.current.fairValue.currency)}</dd>
-                </div>
+                {comparison.prior.marketCap && comparison.current.marketCap ? (
+                  <div>
+                    <dt>市值</dt>
+                    <dd>{formatMarketCap(comparison.prior.marketCap)} → {formatMarketCap(comparison.current.marketCap)}</dd>
+                  </div>
+                ) : null}
+                {comparison.prior.fairValue && comparison.current.fairValue ? (
+                  <div>
+                    <dt>合理价值</dt>
+                    <dd>{formatRange(comparison.prior.fairValue.low, comparison.prior.fairValue.high, comparison.prior.fairValue.currency)} → {formatRange(comparison.current.fairValue.low, comparison.current.fairValue.high, comparison.current.fairValue.currency)}</dd>
+                  </div>
+                ) : null}
                 <div>
                   <dt>商业模式变化</dt>
                   <dd>{comparison.current.businessModelChange}</dd>
@@ -246,6 +304,22 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
                     </li>
                   ))}
                 </ul>
+              ) : null}
+              {/* Seats have no floor, so a source that vanished and one that
+                  went unchecked look identical without this list. */}
+              {assumptionSetChanges.length > 0 ? (
+                <>
+                  <h3 className="block-heading">假设集变动</h3>
+                  <ul className="driver-change-list">
+                    {assumptionSetChanges.map((change) => (
+                      <li key={change.assumptionSetId}>
+                        <span className={`driver-change driver-change--${change.change}`}>{change.change}</span>
+                        <strong>{change.assumptionSetId}</strong>
+                        <p>{change.reason}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </>
               ) : null}
               {/* Moat width is the one long-horizon judgment that only means
                   something across dates, so it is reported here rather than in
@@ -304,20 +378,20 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
         </section>
 
         {/* ⑧ 管理层承诺与资本配置 */}
-        {current?.commitmentSummary ? (
+        {structured?.commitmentSummary ? (
           <section className="company-section" aria-labelledby="commitments">
             <p className="section-kicker">SAID VS. DONE</p>
             <h2 id="commitments">管理层承诺与资本配置</h2>
-            <CommitmentPanel snapshot={current} />
+            <CommitmentPanel snapshot={structured} />
           </section>
         ) : null}
 
         {/* ⑨ 证据密度 */}
-        {current ? (
+        {structured ? (
           <section className="company-section" aria-labelledby="evidence-density">
             <p className="section-kicker">HOW MUCH IS EVIDENCE</p>
             <h2 id="evidence-density">证据密度</h2>
-            <EvidenceDensityPanel snapshot={current} />
+            <EvidenceDensityPanel snapshot={structured} />
           </section>
         ) : null}
 
@@ -329,11 +403,11 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
             {[...snapshots].reverse().map(({ data: item }) => (
               <a className="report-link" href={`./${route.company}/reports/${item.snapshot.id}.html`} key={item.snapshot.id}>
                 <time>{item.snapshot.createdAt.slice(0, 10)}</time>
-                <strong>{item.summary.stance}</strong>
+                <strong>{stanceOf(item)?.stance ?? item.summary.businessModel}</strong>
                 <span>
                   {formatPrice(item.summary.referencePrice.value, item.summary.referencePrice.currency)}
                   {" · "}
-                  {isCurrentSnapshot(item)
+                  {hasStructuredModel(item)
                     ? lookupValuationMethod(item.valuation.methodSelection.adoptedPrimary)?.label ?? ""
                     : "1.0.0 契约"}
                 </span>

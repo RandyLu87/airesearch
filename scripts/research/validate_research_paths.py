@@ -51,11 +51,11 @@ def validate_snapshot(snapshot: Path, company_id: str, root: Path) -> list[str]:
         return [f"研究快照不是有效 JSON：{snapshot.relative_to(root)}；{exc}"]
 
     expected_id = snapshot.stem
-    # 1.0.0 是结构化商业模式、行业地位与计算式估值之前的契约，仅供已发布的
-    # 历史快照原样保留；新研究一律 1.1.0。见 ADR-0017。
-    if data.get("schemaVersion") not in {"1.0.0", "1.1.0"}:
+    # 1.1.0 是以立场、合理价值和操作区间开篇的契约，1.0.0 更早。两者仅供已发布的
+    # 历史快照原样保留，不回填；新研究一律 1.2.0。见 ADR-0017、ADR-0021。
+    if data.get("schemaVersion") not in {"1.0.0", "1.1.0", "1.2.0"}:
         errors.append(
-            f"研究快照 schemaVersion 必须为 1.1.0（历史快照可保留 1.0.0）："
+            f"研究快照 schemaVersion 必须为 1.2.0（历史快照可保留 1.1.0 或 1.0.0）："
             f"{snapshot.relative_to(root)}"
         )
     if data.get("company", {}).get("id") != company_id:

@@ -3,11 +3,11 @@ import Decimal from "decimal.js";
 /**
  * How much of a snapshot's conclusion rests on missing values and inference.
  *
- * The contract demands completeness — a stance, a confidence, a fair value, three
- * scenarios — and the pressure that creates runs one way: inference is the only
- * thing that can always be supplied. Nothing in the repository noticed. A snapshot
- * with most drivers `unavailable` and mostly `inference` evidence rendered exactly
- * like one sourced entirely from filings.
+ * The contract demands completeness — a business model, six drivers, two share
+ * denominators, an attributed assumption set — and the pressure that creates runs
+ * one way: inference is the only thing that can always be supplied. Nothing in the
+ * repository noticed. A snapshot with most drivers `unavailable` and mostly
+ * `inference` evidence rendered exactly like one sourced entirely from filings.
  *
  * Every input already existed (`evidence.kind`, `driverMetrics.confidence`, the
  * various `status` fields); the only thing missing was someone counting. Counting
@@ -20,7 +20,7 @@ import Decimal from "decimal.js";
 
 /** Shares are 0–1. `null` means the denominator was empty, not that all is well. */
 export type DensityFacts = {
-  /** `unavailable` share across standard metrics, drivers and share measures. */
+  /** `unavailable` share across standard metrics, drivers, share measures and assumption sets. */
   unavailableShare: number | null;
   /** Share of evidence records marked `inference`. */
   inferenceShare: number | null;
@@ -60,10 +60,11 @@ export const DENSITY_RULES: readonly DensityRule[] = [
     label: "缺失值占比偏高",
     rationale:
       "契约要求填满，而 unavailable 是唯一诚实的空位。空位一多，结论就不再由观测支撑，" +
-      "但页面上看不出与全部取证的研究有任何区别。",
+      "但页面上看不出与全部取证的研究有任何区别。署名假设集也计入：席位没有下限，" +
+      "所以「三席里两席取不到」必须能在这个数字上看见。",
     evaluate: (facts) =>
       facts.unavailableShare !== null && facts.unavailableShare > 0.25
-        ? `标准指标、驱动与份额口径中 ${percent(facts.unavailableShare)} 为 unavailable，超过 25% 阈值`
+        ? `标准指标、驱动、份额口径与假设集中 ${percent(facts.unavailableShare)} 为 unavailable，超过 25% 阈值`
         : null,
   },
   {
@@ -82,7 +83,7 @@ export const DENSITY_RULES: readonly DensityRule[] = [
     label: "低置信度驱动偏多",
     rationale:
       "驱动指标是投资逻辑的承重墙。低置信度驱动过多意味着承重墙本身没有站稳，" +
-      "而 summary 仍然要给出一个立场和一个价值区间。",
+      "而页面上的驱动读数、阈值和分歧点仍然照常呈现。",
     evaluate: (facts) =>
       facts.lowConfidenceDriverShare !== null && facts.lowConfidenceDriverShare > 0.3
         ? `驱动指标中 ${percent(facts.lowConfidenceDriverShare)} 的置信度为「低」，超过 30% 阈值`
@@ -165,8 +166,19 @@ export function computeEvidenceDensity(snapshot: DensityInput): DensityComputati
     (snapshot.marketPosition as { measures?: unknown } | undefined)?.measures,
   );
   const evidence = asArray(snapshot.evidence);
+  // Seats have no floor, so "two of the three sources could not be reached" has to
+  // show up somewhere. Without this, a snapshot resting on one attributed source
+  // reports the same density as one resting on five — the exact invisibility this
+  // module exists to end.
+  //
+  // Absent on 1.1.0 and 1.0.0 snapshots, which have `scenarios` instead. Those
+  // therefore contribute nothing here and their stored statistics stay valid,
+  // which is what keeps the frozen generations from failing their own checker.
+  const assumptionSets = asArray(
+    (snapshot.valuation as { assumptionSets?: unknown } | undefined)?.assumptionSets,
+  );
 
-  const statusBearing = [...standardMetrics, ...drivers, ...measures];
+  const statusBearing = [...standardMetrics, ...drivers, ...measures, ...assumptionSets];
   const unavailable = statusBearing.filter((item) => item.status === "unavailable").length;
 
   const inference = evidence.filter((item) => item.kind === "inference").length;

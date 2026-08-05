@@ -169,6 +169,22 @@ export function computeScenario(
   };
 }
 
+/**
+ * Market capitalisation from the declared basis, at the declared scale.
+ *
+ * Derived rather than authored because the page now leads with it. The same
+ * product already appears inside `computeImpliedExpectation`, and two places
+ * multiplying the same three numbers is two places that can disagree about the
+ * scale — the exact failure `valueScale` exists to prevent.
+ */
+export function computeMarketCap(basis: ValuationBasis, referencePrice: string): string {
+  const fx = new Decimal(basis.fx);
+  const shares = new Decimal(basis.shares);
+  if (fx.lessThanOrEqualTo(0)) throw new Error("汇率必须为正数");
+  if (shares.lessThanOrEqualTo(0)) throw new Error("股数必须为正数");
+  return new Decimal(referencePrice).times(shares).times(fx).toFixed(TOTAL_DP);
+}
+
 export type ActionZone = {
   label: string;
   rangeLow: string | null;
@@ -190,6 +206,12 @@ export type ZoneAction = { label: string; action: string };
 /**
  * Derive the action ladder from the bear and base ranges rather than letting the
  * author list them.
+ *
+ * Frozen-generation only. Action zones told a reader what to buy and sell, which
+ * the 1.2.0 contract does not publish (ADR-0021); nothing on the authoring path
+ * calls this any more. It stays because the six snapshots published as 1.1.0 are
+ * still checked against the engine that produced them, and a verification that
+ * quietly stopped running would be worse than one that still costs a function.
  *
  * Hand-listed zones drift: the pilot company's five zones both overlapped
  * (HK$120–125 belonged to two zones with contradictory instructions) and left a
@@ -252,8 +274,13 @@ export type ImpliedExpectation = {
 };
 
 /**
- * Solve the base scenario backwards: hold every face-value component fixed and
+ * Solve one component set backwards: hold every face-value component fixed and
  * ask what multiple the current price implies on the operating business.
+ *
+ * Run once per assumption set under 1.2.0, which is the point of that block. The
+ * answer is not "the company is worth X" but "at today's price, this source's
+ * own metric range implies this multiple" — arithmetic on someone else's numbers,
+ * settled by the next filing rather than by argument.
  *
  * `metric-playbook.md` already requires stating the market's implied
  * expectation; doing it by hand is where the pilot's `currentExpectation` went

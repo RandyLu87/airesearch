@@ -3,7 +3,7 @@ import path from "node:path";
 import {
   DRIVER_COMPATIBILITY_KEYS,
   RECALIBRATION_GRADES,
-  isCurrentSnapshot,
+  hasStructuredModel,
   researchSnapshotSchema,
   splitCausalChain,
   type DriverMetric,
@@ -79,16 +79,91 @@ function indexById(entities: unknown): Map<string, Json> {
   );
 }
 
-function driverChangeIndex(snapshot: Json): Map<string, string> {
+/** Index a declared change list by the id it names. */
+function changeIndex(snapshot: Json, listKey: string, idKey: string): Map<string, string> {
   const thesisChange = snapshot.thesisChange as Json | undefined;
-  const changes = (thesisChange?.driverChanges as Json[] | undefined) ?? [];
+  const changes = (thesisChange?.[listKey] as Json[] | undefined) ?? [];
   const index = new Map<string, string>();
   for (const change of changes) {
-    if (typeof change?.driverId === "string" && typeof change?.change === "string") {
-      index.set(change.driverId, change.change);
+    if (typeof change?.[idKey] === "string" && typeof change?.change === "string") {
+      index.set(change[idKey] as string, change.change as string);
     }
   }
   return index;
+}
+
+/**
+ * Hold attributed assumption seats to the same continuity rule as drivers.
+ *
+ * Only between two 1.2.0 snapshots. A 1.1.0 predecessor has no seats at all, so
+ * every seat would read as newly added — that is the generation boundary, which
+ * ADR-0021 records once, not a drift to be re-declared per company.
+ *
+ * `sourceKind` and `sourceLabel` are the calibration here: a seat that keeps its
+ * id while pointing at a different source is the assumption-set equivalent of a
+ * redefined driver, and the value comparison across snapshots silently stops
+ * meaning anything.
+ */
+function checkAssumptionSetContinuity(current: Json, prior: Json): string[] {
+  // The generation boundary, not a drift. A 1.1.0 predecessor has no seats, so
+  // every seat in the first 1.2.0 snapshot would read as newly added — which is
+  // the transition ADR-0021 records once, not something each company re-declares.
+  // Keyed on the version rather than on an empty index: a 1.2.0 snapshot really
+  // cannot have zero seats (the schema requires at least one), so an empty index
+  // on a 1.2.0 prior would mean something else went wrong and should not be
+  // silently forgiven here.
+  if (prior.schemaVersion !== current.schemaVersion) return [];
+
+  const priorSets = indexById((prior.valuation as Json | undefined)?.assumptionSets);
+  const currentSets = indexById((current.valuation as Json | undefined)?.assumptionSets);
+  if (priorSets.size === 0 && currentSets.size === 0) return [];
+
+  const declared = changeIndex(current, "assumptionSetChanges", "assumptionSetId");
+  const errors: string[] = [];
+
+  for (const setId of priorSets.keys()) {
+    if (currentSets.has(setId)) continue;
+    if (declared.get(setId) !== "removed") {
+      errors.push(
+        `comparability: 假设集 ${setId} 相对上一份研究快照消失了，` +
+          `但 thesisChange.assumptionSetChanges 没有对应的 removed 记录。` +
+          `席位没有下限，所以「这一组不再存在」与「这次没查」只能靠这条记录区分：` +
+          `补一条 {"assumptionSetId":"${setId}","change":"removed","reason":"..."}，` +
+          `或把该席位保留为 status:"unavailable" 并写明 reason。`,
+      );
+    }
+  }
+
+  for (const setId of currentSets.keys()) {
+    if (priorSets.has(setId)) continue;
+    if (declared.get(setId) !== "added") {
+      errors.push(
+        `comparability: 假设集 ${setId} 是本次新增，` +
+          `但 thesisChange.assumptionSetChanges 没有对应的 added 记录。` +
+          `补一条 {"assumptionSetId":"${setId}","change":"added","reason":"..."}——` +
+          `选择引入哪一个来源本身就是一个需要交代的动作。`,
+      );
+    }
+  }
+
+  for (const [setId, currentSet] of currentSets) {
+    const priorSet = priorSets.get(setId);
+    if (!priorSet) continue;
+    const mismatch = (["sourceKind", "sourceLabel"] as const).find(
+      (key) => priorSet[key] !== currentSet[key],
+    );
+    if (!mismatch) continue;
+    if (declared.get(setId) !== "redefined") {
+      errors.push(
+        `comparability: 假设集 ${setId} 的 ${mismatch} 发生变化` +
+          `（${String(priorSet[mismatch])} → ${String(currentSet[mismatch])}），` +
+          `但 thesisChange.assumptionSetChanges 没有对应的 redefined 记录。` +
+          `同一个 id 换了来源之后，跨快照的数值对比就不再指同一件事。`,
+      );
+    }
+  }
+
+  return errors;
 }
 
 /**
@@ -102,7 +177,7 @@ function checkComparability(current: Json, prior: Json): CheckResult {
 
   const priorDrivers = indexById(prior.driverMetrics);
   const currentDrivers = indexById(current.driverMetrics);
-  const declared = driverChangeIndex(current);
+  const declared = changeIndex(current, "driverChanges", "driverId");
   const summary = current.summary as Json | undefined;
   const modelChange = summary?.businessModelChange;
   const escalated = RECALIBRATION_GRADES.some((grade) => grade === modelChange);
@@ -179,6 +254,8 @@ function checkComparability(current: Json, prior: Json): CheckResult {
       `护城河 ${moatId} 的趋势由「${String(priorMoat.trend)}」变为「${String(currentMoat.trend)}」。`,
     );
   }
+
+  errors.push(...checkAssumptionSetContinuity(current, prior));
 
   const priorConstraints = indexById(prior.constraints);
   const currentConstraints = indexById(current.constraints);
@@ -386,7 +463,7 @@ export function checkSnapshotData(input: {
   // driver-tree template mandates. That makes an arrow-less chain a silent
   // downgrade to a paragraph, so say so — but only as a warning: how many links
   // a business actually has is a research judgment, not a rendering constraint.
-  if (isCurrentSnapshot(parsed.data)) {
+  if (hasStructuredModel(parsed.data)) {
     const links = splitCausalChain(parsed.data.businessModel.causalChain);
     if (links.length < 3) {
       warnings.push(

@@ -96,7 +96,7 @@ export const HEALTH_RULES: readonly HealthRule[] = [
   {
     id: "negative-fcf",
     label: "自由现金流为负",
-    rationale: "现金流为负时，以现金流为分母的倍数不可用，且安全边际必须另行论证。",
+    rationale: "现金流为负时，以现金流为分母的倍数不可用，反解出的隐含值也失去参照。",
     discourages: [],
     recommends: ["multiple-ev-sales"],
     evaluate: (facts) =>

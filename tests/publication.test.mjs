@@ -460,6 +460,74 @@ test("the site index covers exactly the companies that have a research snapshot"
   );
 });
 
+/**
+ * The structural labels 1.2.0 removed. Each was emitted by the renderer, not
+ * written by an author, so their absence is a property of the code rather than of
+ * one snapshot's prose — and their reappearance would mean a render path came back.
+ *
+ * Author prose is deliberately out of scope: a snapshot may legitimately quote a
+ * sell-side note that uses the words "合理价值", and a checker that banned the
+ * phrase outright would be policing quotations rather than the contract.
+ */
+const REMOVED_LABELS = [
+  "当前判断",
+  "安全边际",
+  "最强证据",
+  "最大风险",
+  "我的假设",
+  "深度价值区",
+  "基础仓位区",
+  "小仓观察区",
+  "兑现要求区",
+];
+
+/**
+ * Arms itself on the first real 1.2.0 page.
+ *
+ * There is no 1.2.0 snapshot committed yet — the four covered companies each need
+ * a fresh research run against the new contract — so today this asserts on the
+ * frozen generations only. That is stated rather than hidden: the moment a 1.2.0
+ * snapshot lands, this test starts checking that its page carries none of the
+ * labels ADR-0021 removed, without anyone remembering to switch it on.
+ */
+test("a 1.2.0 page carries none of the labels the contract removed", () => {
+  publishSite();
+
+  const pages = listSnapshotCompanies().flatMap((companyId) =>
+    listCompanySnapshots(companyId)
+      .filter((snapshot) => snapshot.data.schemaVersion === "1.2.0")
+      .map((snapshot) => ({
+        companyId,
+        stem: snapshot.stem,
+        html: readFileSync(
+          path.join(siteRoot, "companies", companyId, "reports", `${snapshot.stem}.html`),
+          "utf8",
+        ),
+      })),
+  );
+
+  for (const page of pages) {
+    for (const label of REMOVED_LABELS) {
+      assert.ok(
+        !page.html.includes(label),
+        `${page.companyId}/${page.stem} still renders the removed label 「${label}」`,
+      );
+    }
+    // And it must carry what replaced them.
+    assert.match(page.html, /市值/, `${page.companyId}/${page.stem} must open with market cap`);
+    assert.match(page.html, /没有哪一组被标为基准/, `${page.companyId}/${page.stem} must say no seat is primary`);
+  }
+
+  // Frozen pages keep every label they published with; that is the whole point of
+  // freezing them, so assert it rather than leaving it to chance.
+  const frozenReport = readFileSync(
+    path.join(siteRoot, "companies", pilotCompany, "reports", "2026-08-03-2230-analysis.html"),
+    "utf8",
+  );
+  assert.match(frozenReport, /当前判断/);
+  assert.match(frozenReport, /基础仓位区/);
+});
+
 test("publishes every structured company snapshot as auditable static HTML", () => {
   publishSite();
 
@@ -478,7 +546,7 @@ test("publishes every structured company snapshot as auditable static HTML", () 
     assertLocalReferencesResolve(companyHtml, companyPath, `${companyId} company page`);
 
     for (const snapshot of snapshots) {
-      assert.ok(["1.0.0", "1.1.0"].includes(snapshot.data.schemaVersion));
+      assert.ok(["1.0.0", "1.1.0", "1.2.0"].includes(snapshot.data.schemaVersion));
       assert.ok(snapshot.data.driverMetrics.every((driver) =>
         driver.definitionVersion && driver.periodType && driver.accountingBasis,
       ));
@@ -503,8 +571,15 @@ test("publishes every structured company snapshot as auditable static HTML", () 
       const expectedHash = createHash("sha256").update(snapshot.source).digest("hex");
       assert.match(reportHtml, new RegExp(`<meta[^>]+name=["']research-snapshot-sha256["'][^>]+content=["']${expectedHash}["']`));
       assert.match(reportHtml, /<meta[^>]+name=["']research-publication-version["'][^>]+content=["']0\.1\.0["']/);
-      assert.match(reportHtml, /什么会提高当前判断/);
-      assert.match(reportHtml, /什么会降低当前判断/);
+      // The heading changed with the contract: 1.2.0 asks what moves the
+      // business, not what moves a judgment it no longer publishes.
+      if (snapshot.data.schemaVersion === "1.2.0") {
+        assert.match(reportHtml, /什么会让基本面向上/);
+        assert.match(reportHtml, /什么会让基本面向下/);
+      } else {
+        assert.match(reportHtml, /什么会提高当前判断/);
+        assert.match(reportHtml, /什么会降低当前判断/);
+      }
       assert.match(reportHtml, /核心经营驱动实际值/);
       assertLocalReferencesResolve(reportHtml, reportPath, `${companyId}/${snapshot.stem}`);
     }

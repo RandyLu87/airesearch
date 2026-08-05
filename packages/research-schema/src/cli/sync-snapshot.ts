@@ -2,8 +2,8 @@ import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import {
   computeImpliedExpectation,
+  computeMarketCap,
   computeScenario,
-  deriveActionZones,
   type ValuationComponent,
 } from "../valuation/engine.ts";
 import {
@@ -23,18 +23,15 @@ import { findRepoRoot, parseArgs, runCli } from "./shared.ts";
 
 const USAGE = `用法：npm run snapshot:sync -- <snapshot-path> [--check]
 
-把三类派生数据写回研究快照：
+把四类派生数据写回研究快照：
   1. financialHistory —— 从 research/companies/<company>/financials.json 物化；
-  2. 估值引擎输出 —— 情景区间、操作区间边界、隐含预期、summary.fairValue；
-  3. 证据密度统计 —— 缺失值、推断与低置信度驱动的占比。
+  2. commitmentSummary —— 从 commitments.json 物化；
+  3. 估值引擎输出 —— 每一组假设集的价值区间与价格隐含、summary.marketCap；
+  4. 证据密度统计 —— 缺失值、推断与低置信度驱动的占比。
 
 这些字段都不该手写。--check 只报告差异，不落盘。`;
 
 type Json = Record<string, unknown>;
-
-function currencyPrefix(tradingCurrency: unknown): string {
-  return tradingCurrency === "HKD" ? "HK$" : `${String(tradingCurrency)} `;
-}
 
 /**
  * Recompute every engine-owned field in place.
@@ -42,6 +39,11 @@ function currencyPrefix(tradingCurrency: unknown): string {
  * Best-effort by design: an author runs this mid-draft, when half the snapshot
  * is still placeholders. Anything that cannot be computed yet is reported and
  * left alone rather than throwing away the parts that can.
+ *
+ * What this no longer writes: `summary.fairValue` and `valuation.actionZones`.
+ * Neither exists under 1.2.0 — the first was a conclusion and the second was a
+ * buy/sell ladder. What it writes instead is one computation per attributed
+ * assumption set plus the market capitalisation the page now opens with.
  */
 function syncValuation(snapshot: Json, notes: string[]): void {
   const valuation = snapshot.valuation as Json | undefined;
@@ -58,75 +60,65 @@ function syncValuation(snapshot: Json, notes: string[]): void {
     return;
   }
   const basis = { fx: fx.value, shares: shares.value };
+  const referencePrice = (summary.referencePrice as Json | undefined)?.value;
 
-  const scenarios = (valuation.scenarios as Json[] | undefined) ?? [];
-  const computedByName = new Map<string, { low: string; center: string; high: string }>();
+  const marketCap = summary.marketCap as Json | undefined;
+  if (marketCap && typeof referencePrice === "string") {
+    try {
+      marketCap.value = computeMarketCap(basis, referencePrice);
+      marketCap.currency = valuation.currency;
+      marketCap.scale = valuation.valueScale;
+      marketCap.asOf = (summary.referencePrice as Json).asOf;
+      notes.push(
+        `summary.marketCap → ${String(marketCap.value)} ` +
+          `${String(marketCap.currency)}（${String(marketCap.scale)}）`,
+      );
+    } catch (error) {
+      notes.push(`市值无法计算：${error instanceof Error ? error.message : String(error)}`);
+    }
+  }
 
-  for (const scenario of scenarios) {
-    const components = scenario.components as ValuationComponent[] | undefined;
+  const assumptionSets = (valuation.assumptionSets as Json[] | undefined) ?? [];
+  if (assumptionSets.length === 0) {
+    notes.push("valuation.assumptionSets 为空，跳过逐组估值同步。");
+    return;
+  }
+
+  for (const set of assumptionSets) {
+    const label = String(set.id);
+    if (set.status === "unavailable") {
+      notes.push(`假设集「${label}」标为 unavailable，不参与计算。`);
+      continue;
+    }
+    const components = set.components as ValuationComponent[] | undefined;
     if (!Array.isArray(components) || components.length === 0) {
-      notes.push(`情景「${String(scenario.name)}」还没有 components，跳过。`);
+      notes.push(`假设集「${label}」还没有 components，跳过。`);
       continue;
     }
     try {
       const computed = computeScenario(components, basis);
-      scenario.computed = computed;
-      computedByName.set(String(scenario.name), computed);
+      set.computed = computed;
+      notes.push(`假设集「${label}」→ ${computed.low}–${computed.high}（中枢 ${computed.center}）`);
+    } catch (error) {
       notes.push(
-        `情景「${String(scenario.name)}」→ ${computed.low}–${computed.high}（中枢 ${computed.center}）`,
+        `假设集「${label}」无法计算：${error instanceof Error ? error.message : String(error)}`,
+      );
+      continue;
+    }
+    if (typeof referencePrice !== "string") continue;
+    try {
+      const implied = computeImpliedExpectation(components, basis, referencePrice);
+      set.impliedExpectation = implied;
+      notes.push(
+        `假设集「${label}」价格隐含 → 经营业务 ${implied.operatingValue}，` +
+          `隐含倍数 ${String(implied.multipleLow)}x–${String(implied.multipleHigh)}x`,
       );
     } catch (error) {
       notes.push(
-        `情景「${String(scenario.name)}」无法计算：${error instanceof Error ? error.message : String(error)}`,
+        `假设集「${label}」的价格隐含无法计算：` +
+          `${error instanceof Error ? error.message : String(error)}`,
       );
     }
-  }
-
-  const base = computedByName.get("基准");
-  const bear = computedByName.get("熊市");
-
-  if (base) {
-    const fairValue = summary.fairValue as Json | undefined;
-    if (fairValue) {
-      fairValue.low = base.low;
-      fairValue.center = base.center;
-      fairValue.high = base.high;
-      notes.push(`summary.fairValue → ${base.low}/${base.center}/${base.high}`);
-    }
-
-    const baseScenario = scenarios.find((scenario) => scenario.name === "基准");
-    const referencePrice = (summary.referencePrice as Json | undefined)?.value;
-    if (baseScenario && typeof referencePrice === "string") {
-      try {
-        valuation.impliedExpectation = computeImpliedExpectation(
-          baseScenario.components as ValuationComponent[],
-          basis,
-          referencePrice,
-        );
-        const implied = valuation.impliedExpectation as Json;
-        notes.push(
-          `隐含预期 → 经营业务 ${String(implied.operatingValue)}，` +
-            `隐含倍数 ${String(implied.multipleLow)}x–${String(implied.multipleHigh)}x`,
-        );
-      } catch (error) {
-        notes.push(`隐含预期无法计算：${error instanceof Error ? error.message : String(error)}`);
-      }
-    }
-  }
-
-  if (base && bear) {
-    // Action text is the author's; only the boundaries are derived.
-    const existing = ((valuation.actionZones as Json[] | undefined) ?? []).map((zone) => ({
-      label: String(zone.label),
-      action: typeof zone.action === "string" ? zone.action : "",
-    }));
-    valuation.actionZones = deriveActionZones(
-      bear,
-      base,
-      existing,
-      currencyPrefix(valuation.tradingCurrency),
-    ) as unknown as Json[];
-    notes.push(`操作区间 → 由熊市与基准区间推导出 ${(valuation.actionZones as Json[]).length} 档`);
   }
 }
 
