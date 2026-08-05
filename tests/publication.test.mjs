@@ -97,6 +97,12 @@ function formatPrice(value, currency) {
   return `${currency === "HKD" ? "HK$" : `${currency} `}${value}`;
 }
 
+/** Mirrors formatMarketCap in @airesearch/research-ui, for the same reason. */
+function formatMarketCap(cap) {
+  const suffix = cap.scale === "hundred-million" ? "亿" : cap.scale === "million" ? "百万" : "";
+  return `${cap.currency} ${cap.value}${suffix}`;
+}
+
 function assertLocalReferencesResolve(html, pagePath, label) {
   const references = [...html.matchAll(/(?:href|src)=["']([^"']+)["']/g)]
     .map((match) => match[1])
@@ -422,17 +428,21 @@ test("the site index covers exactly the companies that have a research snapshot"
   for (const companyId of companies) {
     const latest = listCompanySnapshots(companyId).at(-1).data;
     const { company, summary, snapshot } = latest;
+    // What a card can say depends on the contract its latest snapshot was written
+    // under. A 1.2.0 card leads with what the company costs; the frozen ones keep
+    // the stance and fair value they published with.
+    const contractFragments = latest.schemaVersion === "1.2.0"
+      ? [summary.businessModel, formatMarketCap(summary.marketCap)]
+      : [summary.stance, formatPrice(summary.fairValue.low, summary.fairValue.currency), summary.fairValue.high];
     for (const fragment of [
       company.name,
       company.ticker,
-      summary.stance,
       // The research cutoff and the price timestamp are different facts; the
       // card must not let the reader read the older price as same-day.
       snapshot.dataCutoff.slice(0, 10),
       summary.referencePrice.asOf.slice(0, 10),
       formatPrice(summary.referencePrice.value, summary.referencePrice.currency),
-      formatPrice(summary.fairValue.low, summary.fairValue.currency),
-      summary.fairValue.high,
+      ...contractFragments,
     ]) {
       assert.match(
         indexHtml,
