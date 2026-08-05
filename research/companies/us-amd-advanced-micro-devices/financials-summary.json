@@ -1,0 +1,170 @@
+{
+  "meta": {
+    "companyId": "us-amd-advanced-micro-devices",
+    "companyName": "AMD (Advanced Micro Devices)",
+    "summarizedAt": "2026-08-05T23:55+08:00（按新信心度定义重评：价值投资视角看多程度）",
+    "dataCutoff": "2026-08-05 21:30(Asia/Shanghai)",
+    "basedOnCollection": "research/companies/us-amd-advanced-micro-devices/financials-collection.json",
+    "basedOnAnalysis": "research/companies/us-amd-advanced-micro-devices/financials-analysis.json"
+  },
+  "dimensionSummary": [
+    {
+      "dimensionId": "businessQuality",
+      "title": "生意质量",
+      "mapsTo": "dimensions.businessEssence",
+      "conclusion": "这是一门被报表验证了经营杠杆的fabless设计生意:FY2025收入34,639M(+34%)、26Q2再加速到+50%且数据中心占58%,GAAP经营利润率从FY2023的1.77%修复到26Q2约17%(non-GAAP 27%),FY2025自由现金流约67亿、净现金资产负债表。但49.5-54%的毛利率与NVIDIA的75%相差约20个百分点,决定了它是'性价比份额挑战者'而非定价者,且Helios整机架占比上升会结构性稀释毛利率。",
+      "confidence": 7,
+      "scoreBasis": "看多依据:dimensions.businessEssence.operatingLeverage——FY2025收入+34.3%而研发费用率25.0%→23.4%,26Q2收入+50% vs opex+40%,GAAP经营利润率5年轨迹22.2%→1.77%→10.66%→约17%,'一次设计、按颗销售'的固定成本杠杆已是报表事实而非故事;financialMetrics FY2025 FCF 6,735M(SEC口径)、现金储备10,552M。压分因素:grossMarginVsPeers——49.52%(26Q2 GAAP 54%)显著低于NVIDIA 75%/Broadcom 69.5%,AI侧仍靠折价竞争(MI300X租价比H100低15-30%);Helios整机架毛利率无独立披露(dataGaps),稀释判断为[估计]。证据质量高(SEC与stockanalysis双源零偏差),不设证据折价,定7分:明显有利、但缺定价权这一质量上限。"
+    },
+    {
+      "dimensionId": "moat",
+      "title": "护城河",
+      "mapsTo": "dimensions.moat",
+      "conclusion": "护城河真实但分层:x86双寡头交叉授权是法律上不可复制的结构性排他,服务器CPU收入份额46.2% vs 出货份额33.2%的13个百分点剪刀差证明既抢份额又有ASP溢价,且2026上半年提价10-30%未损失销量;但AI加速器侧护城河仍薄——ROCm对CUDA(400万+开发者)无可比生态,只能靠性价比与股权/长约绑定客户,x86基本盘同时被ARM(超大规模新增CPU算力约50%)侵蚀。",
+      "confidence": 6.5,
+      "scoreBasis": "看多依据:dimensions.moat.types——x86授权'结构性排他、无法被复制';EPYC对Intel领先1-2代(Venice N2量产 vs Diamond Rapids 2027);trendPast5y三条硬数据判定'变宽'(份额10%+→46.2%、扩张中毛利率不降、技术位势反转)。压分因素:网络效应verdict'待验证'——UALink截至2026-05生产部署为零,CUDA Gap Score 28.7-99.1;转换成本'双向'——x86锁定正被ARM系统性消解;规模效应对NVIDIA仍是劣势(R&D $8.1B vs $18.5B,CoWoS份额[估计]11% vs 60%)。证据限制:ROCm开发者数、CoWoS精确份额、ARM 50%口径均为dataGaps或[估计],AI侧护城河判断部分依赖定性推理,故在7与6之间取6.5——CPU侧接近8分,AI侧约5分,按现金流权重折中。"
+    },
+    {
+      "dimensionId": "management",
+      "title": "管理层",
+      "mapsTo": "dimensions.management",
+      "conclusion": "Lisa Su用11.8年完成半导体史上最完整的扭转之一(市值<$20亿→~$8,456亿),ZT Systems'买整卖零、留脑卖厂'(净$1.9B拿到机架能力)是教科书级资本配置,薪酬92%股权/绩效挂钩、无双层股权。瑕疵:Xilinx $50B收购的财务回报至今未兑现($49.3B商誉悬置、嵌入式连续两年下滑),CEO近一年按10b5-1计划减持约$1.02亿而公司回购近乎停摆(26H1仅$221M/授权$6B),外加极高的关键人依赖。",
+      "confidence": 8,
+      "scoreBasis": "看多依据:dimensions.management.keyDecisions——2014年押注Zen(★5)、ZT买卖(★5)、OpenAI 6GW锁定(★4);capitalAllocation.rdReturn'证据链完整且正向'(收入CAGR~20%期间研发→产品转化有实物证据);alignment——FY2025薪酬$55.16M中92%为股权/绩效,2026年LTI 75%为TSR挂钩PRSU;组织稳定(Norrod/Papermaster超10年,Glassdoor CEO支持率95%)。压分因素:maTrackRecord'只有ZT能明确判定为成功';insiderSelling+回购停滞被分析明确读作'管理层自己也不认为当前价格便宜';keyPersonRisk'高'且无公开接班计划;OpenAI权证~10%稀释是用股本换订单。能力接近满分,资本配置纪律与股东摩擦扣分,定8。"
+    },
+    {
+      "dimensionId": "keyRisk",
+      "title": "最大风险",
+      "mapsTo": "dimensions.inversion",
+      "conclusion": "最大风险是叠加态且大部分不可对冲:现价把'MI400放量+AI capex不减速+CUDA被侵蚀'三个假设同时定价为确定事件,而云厂capex增速80% vs 收入增速15.5%的剪刀差不可持续,估值压缩路径被标注'概率高、冲击高'——不需要任何业务失败,情绪转向即可让约126-133倍PE向行业约23倍回归。财报双超、上调指引仍跌7-9%已显示'利好免疫、利空放大'结构确立。",
+      "confidence": 3,
+      "scoreBasis": "低分依据:dimensions.inversion.failurePaths共11条,其中'估值压缩(无需基本面证伪)'概率高×冲击高,'ASIC分流推理市场'概率高(ASIC增速44.6% vs GPU 16.1%);客户集中(FY2025两客户各>10%)嵌套OpenAI自身2026年预亏~$140亿的二阶脆弱性;inquiry.answer点明三个AMD完全控制不了的开关——NVIDIA定价、hyperscaler capex预算、对华政策(2025年已发生$800M计提),均无法对冲;反身性检验指出权证与股价里程碑($600档)构成下行自我强化回路。缓解项防止更低分:净现金~$99亿排除生存风险、x86现金牛提供压舱石、'唯一有能力二供'的尾部期权价值。风险明确不利但非致命归零型,定3。"
+    },
+    {
+      "dimensionId": "civilizationTrend",
+      "title": "文明趋势",
+      "mapsTo": "dimensions.industryTrend",
+      "conclusion": "AI算力是真实的范式转移(Google月处理token一年7倍至3.2千万亿、四大云厂2026年capex约$725B、AI投资占美国GDP 1.4%),AMD卡住'第二供应商'的黄金位置,OpenAI/Meta/Anthropic/Oracle合计14GW级承诺把客户议价权阶段性推向AMD。但资本层面循环融资已超$800B、投资曲线跑在应用收入前面2-3年,历史基准率提示'基建热潮中的设备商在定价见顶后多数跑输',且ASIC正以3倍于商用GPU的增速切走推理底座。",
+      "confidence": 7,
+      "scoreBasis": "看多依据:dimensions.industryTrend.paradigmShift verdict'部分'但实物证据(token曲线、电力约束、capex/GDP)无法造假;growthCurve判定'成长期中段'而非顶点(NVDA远期PE 24-26x vs 思科2000年472x);valueChainPosition'两头受益、当前净受益',客户以股权/长约反向锁定AMD产能;collection.industryOutlook AMD官方TAM $1.4T(2030)。压分因素:historicalAnalogy预期'一次20-40%的消化性回调'[估计];techRouteRisk'中高'——ASIC占AI服务器出货2026年27.8%、ARM占超大规模新增CPU约50%,趋势利好的是'算力'而不必然是'商用GPU二供';TAM $1.4T含AMD拿不到的ASIC部分(dataGaps明示会高估)。趋势方向明确有利、结构位置打折,定7。"
+    },
+    {
+      "dimensionId": "valuation",
+      "title": "估值",
+      "mapsTo": "dimensions.valuation",
+      "conclusion": "价格已预支大部分乐观情形:TTM PE约126-133为同业组内最高,对FY2026共识EPS $7.46也要65-70倍;工具精算三情景显示中性(35%增长+30x退出)三年目标价$550.6、较$518.58仅+6.2%,悲观$198.6、-61.7%——基准情形几乎无回报而下行深度巨大,赔率严重不对称。分析自问'股市关5年愿否以此价持有'的答案是'不愿意'。",
+      "confidence": 2.5,
+      "scoreBasis": "低分依据:dimensions.valuation.analysis.threeScenario(financial_rigor精算,2026-08-05)——中性+6.2%意味着现价≈中性情形的三年终值,零安全边际;reverseDcf显示现价隐含'5-10年净利25-30%复合增长且终局仍享25-30x';vsPeers——P/FY26E约65-70x高于NVDA(21x)/AVGO(27x)/TSM(19x),PS 20.47与NVDA 20.25持平但净利率远低;dilutionNote或有~19.6%权证稀释未计入多数口径;inversion.failurePaths估值压缩'概率高'并有8/5财报双超仍跌7-9%的即时验证。抬分因素:PEG 0.78(单源)、P/FY27E=37.39——若2027年EPS $13.87兑现则回到'贵但可辩护',且反向DCF为自建[估计]框架,存在共识单源限制,故不给0-2最底档,定2.5。"
+    }
+  ],
+  "strategies": {
+    "noPosition": {
+      "title": "空仓者",
+      "advice": "现价(8/4收盘$518.58、8/5盘中约$487)不宜建仓:按分析师共识2026年每股收益$7.46计算市盈率仍有65-70倍,精算的中性情景三年只有+6.2%回报,悲观情景-61.7%,为一家自己控制不了英伟达定价、云厂预算和对华政策的公司承担这种赔率不划算。正确姿势是'等价格'或'等证据':要么等股价回落到$400以下再分批介入,要么等AI加速器份额突破10%等硬证据被多家独立机构确认后,再用更小的仓位换确定性。在两者都没出现之前,做的唯一动作是跟踪季报里的四个先行指标(云厂capex增速、MI450交付、毛利率、份额剪刀差)。",
+      "triggers": [
+        {
+          "condition": "股价回落至$400以下(约为2027年共识每股收益$13.87的29倍,也是卖方空头情形的普遍目标价),且当季四大云厂capex指引同比增速仍高于+20%",
+          "action": "分批建立不超过目标仓位1/3的底仓,预留向$300以下加码的弹药",
+          "basis": "dimensions.valuation.analysis.threeScenario(悲观$198.6/-61.7%)、dimensions.valuation.analysis.consensus.fy2027Eps=$13.87、dimensions.inversion.failurePaths[1]空方目标$400与$300支撑位、failurePaths[0] capex剪刀差80% vs 15.5%"
+        },
+        {
+          "condition": "至少两家独立研究机构(Mercury/IDC级别)确认AMD在AI加速器的收入份额突破10%——当前5-7%仅为单源第三方聚合估计,必须多源确认",
+          "action": "允许在$500以下用不超过半仓的规模买入:证据升级可部分抵偿估值溢价,但估值分2.5决定了任何价位都不满仓",
+          "basis": "competitiveLandscape.marketShareByMarket(AI加速器[估计]5-7%,单源标注'谨慎使用')、dimensions.industryTrend.inquiry关键分辨指标'AI GPU份额是否突破10%'"
+        },
+        {
+          "condition": "2026年Q3财报确认收入达到约$13B(±$0.3B)指引且毛利率回到56%以上(证明Helios爬坡成本已消化),同时股价仍低于$450",
+          "action": "可小仓位试水,仓位上限1/4,并以$400为补仓参考位",
+          "basis": "competitiveLandscape.competitors[AMD].revenue(Q3指引~$13B±$0.3B)、dimensions.inversion.failurePaths(Q2毛利率54% vs 共识56%,主因Helios爬坡)"
+        },
+        {
+          "condition": "未来两个季度内出现:OpenAI首个1GW MI450未在2026H2如期部署,或Oracle 5万颗MI450推迟到2027年之后",
+          "action": "放弃等待买点,把AMD从'长期候选'降级为不参与——'第二供应商'核心论点被交付证伪",
+          "basis": "dimensions.businessEssence.stickiness.evidence(OpenAI首期1GW 2026H2、Oracle 5万颗2026Q3起部署)、dimensions.inversion.failurePaths(MI400/Helios机架级执行失误)"
+        }
+      ]
+    },
+    "holding": {
+      "title": "持仓者",
+      "advice": "持有者的核心任务不是判断AI真假,而是管理'估值透支'——中性情形三年只值$550.6,现价已经把它付完了。建议:(1)把仓位压到能承受-60%回撤的规模(悲观情景$198.6不是尾部想象,是精算结果);(2)现价不加仓,任何加仓都留给$400以下;(3)自己的每股价值测算要按最多约19.6%的权证稀释(OpenAI+Meta各至多1.6亿股)打折;(4)每季度盯四个数:云厂capex增速、数据中心收入环比、毛利率、服务器CPU收入份额与出货份额之差,任何一个转坏就按下面的触发器执行,不跟股价情绪走。",
+      "triggers": [
+        {
+          "condition": "四大云厂商中任何两家把年度资本开支指引的同比增速下调到+20%以下,或任一家capex绝对额连续两个季度环比下降",
+          "action": "先减仓1/3——AI消化周期开始时'第二供应商'最先被砍单,不要等收入数据确认",
+          "basis": "dimensions.inversion.failurePaths[0](capex +80% vs 收入+15.5%不可持续)、dimensions.industryTrend.inquiry前置信号'超大规模capex >20% YoY减速是泡沫破裂领先指标'"
+        },
+        {
+          "condition": "毛利率连续两个季度低于54%(2026Q2已因Helios爬坡录得54%、低于共识56%),且公司归因仍是系统业务成本",
+          "action": "下调自己的盈利模型并减仓1/4:整机架生意正在结构性改变公司的利润率天花板,30倍退出估值假设需要同步下修",
+          "basis": "dimensions.inversion.bearCase(毛利率结构性稀释,Q2 GM 54% vs 56%共识)、dimensions.businessEssence.operatingLeverage风险提示(Helios占比上升稀释毛利率)"
+        },
+        {
+          "condition": "股价上冲至$900-1,100区间(接近乐观情景$1,111.2)而2027年共识EPS未从$13.87同步显著上调",
+          "action": "减持至核心底仓(不超过原仓位1/2),把三年乐观情形提前兑现的部分落袋",
+          "basis": "dimensions.valuation.analysis.threeScenario.optimistic($1,111.2=55%增长×40x,+114.3%)、consensus.fy2027Eps=$13.87"
+        },
+        {
+          "condition": "Mercury口径下服务器CPU收入份额与出货份额之差从当前13个百分点收窄到8个百分点以下",
+          "action": "减仓1/4:这是现金牛提价能力见顶的直接信号,x86压舱石开始漏水",
+          "basis": "dimensions.moat.types[品牌/定价权].evidence(收入份额46.2% vs 出货33.2%)、dimensions.moat.inquiry前置信号(3)'ASP溢价剪刀差收窄说明提价能力见顶'"
+        }
+      ]
+    },
+    "sellSignals": {
+      "title": "卖出信号",
+      "signals": [
+        {
+          "signal": "云厂资本开支周期见顶",
+          "observable": "四大hyperscaler合计季度capex同比增速跌破+20%,或其中任一家给出绝对额下降的年度指引;伴随AMD数据中心收入环比转负则立即清仓而非减仓",
+          "basis": "dimensions.inversion.failurePaths[0](2026年capex约$725B、增速80% vs 收入15.5%)、dimensions.inversion.biasSelfCheck锚定效应'若2027年DC收入环比转负,市场愿意给多少倍'"
+        },
+        {
+          "signal": "MI450/Helios交付证伪",
+          "observable": "OpenAI首个1GW未在2026H2完成部署、Oracle 5万颗MI450推迟出货,或财报电话会把2027上半年'加速交付'措辞改为'按需调整'",
+          "basis": "dimensions.businessEssence.stickiness.evidence(OpenAI 6GW首期1GW 2026H2、Oracle 2026Q3起部署)、dimensions.inversion.failurePaths(MI400/Helios执行失误,概率中×冲击高)"
+        },
+        {
+          "signal": "循环融资链条断裂",
+          "observable": "OpenAI(2026年预亏约$140亿)出现融资失败、大幅缩减部署或重谈协议的公告;AMD 8-K披露权证里程碑失效或协议修订",
+          "basis": "dimensions.inversion.failurePaths(客户集中+循环交易反噬,FY2025两客户各>10%收入)、dimensions.industryTrend.analysis.concentration(OpenAI占Oracle backlog近半的二阶集中风险)、crossDisciplinaryChecks反身性检验"
+        },
+        {
+          "signal": "NVIDIA发动定向价格战",
+          "observable": "NVIDIA旗舰GPU公开降价或租赁市场价差系统性收窄——当前MI355X约$5.45/小时 vs B200 $9.36/小时,若价差收窄到15%以内,AMD'同成本多40% token'的性价比论点失效",
+          "basis": "dimensions.inversion.failurePaths(NVIDIA可用75%毛利率纵深定向降价,AMD仅56%缓冲)、dimensions.moat.types[品牌/定价权]反证(GPU租赁仍需折价15-30%)"
+        },
+        {
+          "signal": "x86基本盘绝对萎缩",
+          "observable": "Mercury口径x86服务器CPU市场TAM绝对值出现同比负增长(不只是份额内移),或第二梯队云厂/企业本地部署开始规模采用ARM服务器",
+          "basis": "dimensions.moat.inquiry前置信号(1)(2)、dimensions.moat.types[转换成本](ARM占超大规模新增CPU算力约50%,Computex 2026口径)"
+        }
+      ]
+    },
+    "addSignals": {
+      "title": "加仓信号",
+      "signals": [
+        {
+          "signal": "AI加速器份额突破10%且多源确认",
+          "observable": "至少两家独立机构(Mercury/IDC/TechInsights级)先后确认AMD AI加速器收入份额>10%——当前5-7%是单源第三方聚合的[估计]值,单一报道不构成信号;确认后仍要求买入价对应2027年共识EPS不超过40倍(约$555)",
+          "basis": "competitiveLandscape.marketShareByMarket(AI加速器[估计]5-7%、'无权威免费口径,谨慎使用')、dimensions.industryTrend.inquiry分辨指标、dimensions.valuation.analysis.consensus.fy2027Eps"
+        },
+        {
+          "signal": "深度回调且基本面完好",
+          "observable": "股价跌破$400(2027共识29倍以下)乃至$300,同时最近一季收入仍达成指引区间、云厂capex增速仍>+20%、MI450交付未爆雷——三项同时满足才是'错杀',缺一项就是'正杀'",
+          "basis": "dimensions.valuation.analysis.threeScenario(悲观$198.6为下限锚)、dimensions.inversion.failurePaths[1]($400/$300空方锚)、failurePaths[0]capex前置指标"
+        },
+        {
+          "signal": "ROCm生态从承诺变成事实",
+          "observable": "第三方独立基准(非AMD委托)确认MI450推理tokens-per-dollar优势达到30%宣称值,且UALink出现首批生产环境部署(当前为零)——软件护城河由'待验证'转'存在'",
+          "basis": "dimensions.moat.types[网络效应](UALink截至2026-05生产部署为零、CUDA Gap Score 28.7-99.1)、dimensions.industryTrend.inquiry分辨指标'tokens-per-dollar是否兑现30%优势宣称'"
+        },
+        {
+          "signal": "毛利率拐点确认",
+          "observable": "Helios规模出货后毛利率连续两季回到56%以上、数据中心收入占比站上60%——证明系统业务爬坡成本是一次性而非结构性;仍须满足价格纪律(对2026共识EPS不超过55倍,约$410)才执行加仓",
+          "basis": "dimensions.inversion.failurePaths(Q2 GM 54% vs 56%)、dimensions.businessEssence.grossMarginVsPeers(26Q2毛利率54%创新高因DC占比58%)、dimensions.valuation.analysis.consensus.fy2026Eps=$7.46"
+        }
+      ]
+    }
+  },
+  "disclaimer": "本总结基于公开信息与数据截止时点(2026-08-05 21:30 Asia/Shanghai)的分析生成,仅供研究参考,不构成个性化投资建议。"
+}
