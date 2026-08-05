@@ -47,5 +47,33 @@
         {"api": "us_fina_indicator"}
       ]
     }
+  },
+  "fmp": {
+    "provider": "Financial Modeling Prep",
+    "base_url": "https://financialmodelingprep.com/stable",
+    "mcp_url_template": "https://financialmodelingprep.com/mcp?apikey={apikey}",
+    "request_interval_seconds": 0.7,
+    "row_limit": 5,
+    "profiles": {
+      "us": [
+        {"label": "profile", "endpoint": "profile"},
+        {"label": "quote", "endpoint": "quote"},
+        {"label": "price-eod", "endpoint": "historical-price-eod/full", "dated": true},
+        {"label": "income-annual", "endpoint": "income-statement", "params": {"period": "annual", "limit": 5}},
+        {"label": "income-quarter", "endpoint": "income-statement", "params": {"period": "quarter", "limit": 5}},
+        {"label": "balance-annual", "endpoint": "balance-sheet-statement", "params": {"period": "annual", "limit": 5}},
+        {"label": "balance-quarter", "endpoint": "balance-sheet-statement", "params": {"period": "quarter", "limit": 5}},
+        {"label": "cashflow-annual", "endpoint": "cash-flow-statement", "params": {"period": "annual", "limit": 5}},
+        {"label": "cashflow-quarter", "endpoint": "cash-flow-statement", "params": {"period": "quarter", "limit": 5}},
+        {"label": "segments-product-annual", "endpoint": "revenue-product-segmentation", "params": {"period": "annual"}},
+        {"label": "segments-geographic-annual", "endpoint": "revenue-geographic-segmentation", "params": {"period": "annual"}},
+        {"label": "key-metrics-annual", "endpoint": "key-metrics", "params": {"period": "annual", "limit": 5}},
+        {"label": "ratios-annual", "endpoint": "ratios", "params": {"period": "annual", "limit": 5}},
+        {"label": "enterprise-values", "endpoint": "enterprise-values", "params": {"limit": 5}},
+        {"label": "employee-count", "endpoint": "employee-count", "params": {"limit": 5}},
+        {"label": "analyst-estimates-annual", "endpoint": "analyst-estimates", "params": {"period": "annual", "limit": 5}},
+        {"label": "earnings", "endpoint": "earnings", "params": {"limit": 5}}
+      ]
+    }
   }
 }

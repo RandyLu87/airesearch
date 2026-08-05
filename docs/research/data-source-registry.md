@@ -6,7 +6,7 @@
 
 1. 固定运行方式
 2. 凭证与安全
-3. 美股数据面
+3. 美股数据面（3.1 FMP）
 4. 港股数据面
 5. A 股数据面
 6. Tushare 固定接口
@@ -21,6 +21,10 @@
 # 美股：SEC 官方 submissions、最新文件列表和 companyfacts
 python3 scripts/research/fetch_financial_data.py \
   sec --ticker CRCL
+
+# 美股：FMP 标准化年度/季度三表、分部、人员与一致预期（先跑 SEC，再用它加速与交叉核对）
+python3 scripts/research/fetch_financial_data.py \
+  fmp --symbol AMD --from-date 2026-01-01 --to-date 2026-08-04
 
 # A 股：Tushare 行情、估值、三表、财务指标、主营构成与分红
 python3 scripts/research/fetch_financial_data.py \
@@ -41,6 +45,8 @@ python3 scripts/research/fetch_financial_data.py \
 
 - SEC 公共数据 API 不需要 key。请求必须带可识别 User-Agent；脚本优先读取 `SEC_USER_AGENT`，否则使用仓库 `git config user.email` 生成。两者均缺失时停止。
 - Tushare 只从环境变量 `TUSHARE_TOKEN` 读取 token。不要把 token 写入参数、配置文件、研究记录、manifest 或 Git。
+- FMP 只从环境变量 `FMP_API_KEY` 读取 key。它的 key 走 query string，因此脚本只在发请求那一刻拼上 `apikey=`，manifest 的 `sources[].url` 与 `errors[].error` 一律不含 key（`redact()` 兜底）。仓库根的 `.mcp.json` 用 `${FMP_API_KEY}` 展开，同样不落明文。
+- 环境变量写在 `~/.zshrc` 时，非交互 shell 可能读不到。本仓库脚本在这种情况下先 `set -a; . ~/.zshrc; set +a` 再执行，不要把 key 改成命令行参数绕过。
 - 当前环境未配置 Tushare token 时，脚本明确失败；按对应市场的官方来源降级，不临时寻找匿名私有接口。
 - 不在 skill 中保存付费供应商账号、cookies、浏览器会话或 API key。
 
@@ -52,12 +58,48 @@ python3 scripts/research/fetch_financial_data.py \
 
 SEC APIs 实时更新且无需认证。`companyfacts` 只覆盖标准 taxonomy、整家公司层面的 XBRL facts；公司扩展标签、分部、附注和管理层解释必须回到 10-K、10-Q、20-F、40-F、6-K、8-K 或 proxy 原文。
 
-固定优先级：SEC 原文与 XBRL → 公司 IR 镜像/演示 → Tushare 标准化数据交叉检查 → 其他数据商。
+固定优先级：SEC 原文与 XBRL → 公司 IR 镜像/演示 → FMP / Tushare 标准化数据交叉检查 → 其他数据商。
 
 官方文档：
 
 - https://www.sec.gov/search-filings/edgar-application-programming-interfaces
 - https://www.sec.gov/about/developer-resources
+
+### 3.1 FMP —— 美股结构化加速层（不作主来源）
+
+**定位（2026-08-04 按第 8 节「新增供应商」门槛登记）：** Financial Modeling Prep 是商业数据商，从 SEC filing 解析标准化字段。它的价值是**把「从 companyfacts 和多份 10-Q 里手工拼季度序列」压缩成一次调用**，并补上 companyfacts 拿不到的三类数据：分部收入、员工数、第三方一致预期。投资结论的最终证据仍然是 SEC 原文。
+
+| 维度 | 实测结论（2026-08-04，`AMD`） |
+| --- | --- |
+| 权威性 | 三级来源：解析 SEC filing 后标准化；返回 `filingDate`/`acceptedDate`，可回指原文 |
+| 覆盖 | **仅美股。**`.HK` 代码全部 402（`3690.HK`、`0700.HK`、`1523.HK` 实测），因此 `profiles` 只登记 `us` |
+| 时点 | 年度回溯到 FY2021、季度最近 5 期；`earnings` 含未来财报日与一致预期 |
+| 认证 | `apikey` query 参数，读环境变量 `FMP_API_KEY`；另有 MCP 端点（见下） |
+| 限流 | 稳定但偶发 TLS 中断，`request_json` 现有重试足以覆盖；请求间隔 0.7 秒 |
+| 成本 | 已有订阅；**`limit > 5` 一律 402**，`row_limit` 已固化进目录并由 self-test 强制 |
+| 降级 | 任一 dataset 失败即回到 SEC companyfacts 与 filing 原文，不改参数硬绕 |
+
+**已核实可用**（`us` profile 17 项全部 200）：`profile`、`quote`、`historical-price-eod/full`、`income-statement`、`balance-sheet-statement`、`cash-flow-statement`（年度与季度）、`revenue-product-segmentation`（年度）、`revenue-geographic-segmentation`、`key-metrics`、`ratios`、`enterprise-values`、`employee-count`、`analyst-estimates`、`earnings`。
+
+**已核实不可用：** `revenue-product-segmentation` 的 `period=quarter`（"Special Endpoint" 402）——**季度分部收入仍必须回 10-Q 分部附注**，这恰好是公司研究里最关键的那张表。
+
+**四条口径陷阱**（AMD 实测，违反任一条就不要用它的数字）：
+
+1. **分部字段会把分部与子业务混在一个对象里。** AMD FY2025 返回 `Data Center`、`Client and Gaming`、`Embedded` **加上** `Gaming`，四项相加会把 Gaming 计两次。必须先按 10-K 分部附注确认层级，且加总要回到营业收入。
+2. **不区分持续经营与终止经营。** FMP 的经营现金流是**含终止经营的合计数**：AMD FY2025 给 7,709 百万美元，而 10-K 持续经营口径是 6,493（差额 1,216 来自已出售的 ZT 制造业务）。用它的 `freeCashFlow` 前必须先确认该年度有没有终止经营。
+3. **回购口径在年份之间不一致。** FY2025 的 `commonStockRepurchased` 等于 10-K 回购计划金额 1,316，FY2024 却给 1,590（含代扣税回购），与 10-K 的 862 不符。股东回报类指标一律自己从现金流量表算。
+4. **`ratios`、`key-metrics`、`enterprise-values` 是数据商的衍生计算。** 与第 6 节对 Tushare、6.2 节对 AkShare 的禁令一致：可用于反算校验，不可直接当成自己可复核的计算写进快照。
+
+**已验证吻合的部分：** FY2021–FY2025 与最近 5 个季度的收入、毛利、经营利润、净利润、研发费用、摊薄股数与摊薄 EPS，以及 Q1 2026 资产负债表的现金与短期投资，与 SEC companyfacts 及 10-K/10-Q 逐项一致；`employee-count` 的 31,000 人与 FY2025 10-K 相同；`historical-price-eod/full` 的 2026-08-03 收盘 484.64 美元可作参考价格的独立交叉源。
+
+**MCP 端点。** `https://financialmodelingprep.com/mcp?apikey=<key>` 是 streamable-HTTP MCP 服务（`FMP MCP Server 1.0.0`），返回 28 个分组工具；与本仓库相关的是 `statements`、`company`、`quote`、`chart`、`analyst`、`calendar`、`secFilings`、`news`、`economics`、`forex`，而 `ESG`、`earningsTranscript`、`form13F`、`commitmentOfTraders`、`tipranks` 需更高档订阅。仓库根 `.mcp.json` 已登记，交互式会话可直接调用。
+
+**分工是刻意的：** 脚本走 REST，因为数据包需要固定的 manifest 与 SHA-256 才能复现；MCP 走交互式探索（一致预期、财报日历、新闻、filing 检索），它不产出可哈希的数据包，**因此不作为快照证据的取数路径**。
+
+官方文档：
+
+- 端点索引：`https://site.financialmodelingprep.com/developer/docs/stable`
+- MCP：`https://site.financialmodelingprep.com/developer/docs/mcp`
 
 ## 4. 港股数据面
 
@@ -67,7 +109,7 @@ HKEX 面向机构提供 Issuer Information Feed Service 和市场数据产品，
 
 固定路径：
 
-1. 用 Tushare 构建标准化三表与历史行情数据包；它是二级数据源，**港股属于独立权限模块，需在基础积分之上单独付费**（详见第 6 节）。当前仓库未购买该权限，所以港股三表以年报和业绩公告原文为准，Tushare 仅在已获授权时用作交叉核对。
+1. 用 Tushare 构建标准化三表与历史行情数据包；它是二级数据源，**港股属于独立权限模块，需在基础积分之上单独付费**（详见第 6 节）。当前仓库未购买该权限，所以港股三表以年报和业绩公告原文为准，Tushare 仅在已获授权时用作交叉核对。**FMP 对港股同样不可用**（3.1 节实测 402），不要拿它当港股的替代路径。
 2. 用 HKEXnews 标题搜索确认截至当前的全部定期报告和重大公告，并下载直接 PDF。
 3. 用公司 IR 补充电话会、演示、经营 KPI、产品与组织信息。
 4. 参考价格按下一节取证。

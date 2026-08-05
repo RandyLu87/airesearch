@@ -29,6 +29,8 @@ npm run snapshot:new -- <company-id> --stdout   # 只预览，不落盘
 
 每次先读 `docs/research/data-source-registry.md`，按市场运行 `scripts/research/fetch_financial_data.py`。API 负责发现与结构化，不替代原始财报、公告和附注。
 
+**美股先跑 `sec`，再跑 `fmp`。** 前者是监管原文与 XBRL，后者把年度与最近 5 个季度的三表、分部、员工数和一致预期一次取齐，省掉手工拼季度序列。FMP 是三级来源且**仅覆盖美股**，它的分部字段、终止经营口径、回购口径和衍生倍数各有陷阱，用前读注册表 3.1 节。
+
 数据包至少覆盖：最新定期报告、上次截止日后的重大公告、三张财务报表与至少三年年度数据、公司特定经营 KPI、股本与资本配置、带时间戳的参考价格。读取脚本生成的 `manifest.json`，逐项处理 `errors`；缺失项按 `docs/research/sources-and-priority.md` 回到官方来源补齐。
 
 **参考价格单独按 `docs/research/data-source-registry.md` 第 4.1 节取证**：允许任何可公开访问、可引用、带时间戳的源，但必须双源交叉、必须建 `evidence` 记录、且不得把取价过程写进 `scripts/`。取不到可靠价格就中止本次研究，不要估——它会一路传导进估值结论。当前仓库没有 Tushare 港股权限，港股三表以年报和业绩公告原文为准。

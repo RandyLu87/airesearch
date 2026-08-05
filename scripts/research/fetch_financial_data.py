@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build auditable SEC or Tushare data packs for company research."""
+"""Build auditable SEC, Tushare or FMP data packs for company research."""
 
 from __future__ import annotations
 
@@ -37,6 +37,9 @@ def load_catalog() -> Dict[str, Any]:
     tushare = catalog.get("tushare")
     if not isinstance(tushare, dict) or not isinstance(tushare.get("profiles"), dict):
         raise FetchError("API 目录缺少 tushare.profiles 配置。")
+    fmp = catalog.get("fmp")
+    if not isinstance(fmp, dict) or not isinstance(fmp.get("profiles"), dict):
+        raise FetchError("API 目录缺少 fmp.profiles 配置。")
     return catalog
 
 
@@ -44,6 +47,8 @@ API_CATALOG = load_catalog()
 SEC_CONFIG = API_CATALOG["sec"]
 TUSHARE_CONFIG = API_CATALOG["tushare"]
 TUSHARE_PROFILES: Dict[str, List[Dict[str, Any]]] = TUSHARE_CONFIG["profiles"]
+FMP_CONFIG = API_CATALOG["fmp"]
+FMP_PROFILES: Dict[str, List[Dict[str, Any]]] = FMP_CONFIG["profiles"]
 DEFAULT_FORMS = ",".join(SEC_CONFIG["default_forms"])
 
 
@@ -74,6 +79,11 @@ def safe_component(value: str) -> str:
 def validate_date(value: Optional[str]) -> None:
     if value is not None and not re.fullmatch(r"\d{8}", value):
         raise FetchError(f"日期必须使用 YYYYMMDD：{value}")
+
+
+def validate_iso_date(value: Optional[str]) -> None:
+    if value is not None and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", value):
+        raise FetchError(f"日期必须使用 YYYY-MM-DD：{value}")
 
 
 def write_json(path: Path, payload: Any) -> Dict[str, Any]:
@@ -396,6 +406,95 @@ def fetch_tushare(args: argparse.Namespace) -> int:
     return 0 if files else 2
 
 
+def fmp_dataset_url(dataset: Dict[str, Any], symbol: str, dates: Dict[str, str]) -> str:
+    """The dataset URL with every parameter except the API key.
+
+    The key is appended only at request time so that neither the manifest nor an
+    error message can carry it. A credential that reaches `tmp/data` has already
+    escaped the environment variable it was supposed to live in.
+    """
+    params: Dict[str, Any] = {"symbol": symbol}
+    params.update(dataset.get("params") or {})
+    if dataset.get("dated"):
+        params.update(dates)
+    query = "&".join(f"{key}={value}" for key, value in params.items())
+    return f"{FMP_CONFIG['base_url']}/{dataset['endpoint']}?{query}"
+
+
+def redact(text: str, secret: str) -> str:
+    return text.replace(secret, "<redacted>") if secret else text
+
+
+def fetch_fmp(args: argparse.Namespace) -> int:
+    apikey = os.environ.get("FMP_API_KEY", "").strip()
+    if not apikey:
+        raise FetchError(
+            "未设置 FMP_API_KEY。请把 key 放入环境变量，不要写入仓库或命令参数。"
+        )
+    validate_iso_date(args.from_date)
+    validate_iso_date(args.to_date)
+
+    dates = {}
+    if args.from_date:
+        dates["from"] = args.from_date
+    if args.to_date:
+        dates["to"] = args.to_date
+
+    symbol = args.symbol.upper()
+    output_root = Path(args.output_root)
+    run_dir = output_root / f"fmp-{args.market}-{safe_component(symbol)}" / path_stamp()
+    files: List[Dict[str, Any]] = []
+    errors: List[Dict[str, Any]] = []
+    sources: List[Dict[str, Any]] = []
+
+    for dataset in FMP_PROFILES[args.market]:
+        label = dataset["label"]
+        url = fmp_dataset_url(dataset, symbol, dates)
+        separator = "&" if "?" in url else "?"
+        try:
+            payload = request_json(f"{url}{separator}apikey={apikey}")
+        except FetchError as error:
+            errors.append({"dataset": label, "url": url, "error": redact(str(error), apikey)})
+            time.sleep(FMP_CONFIG["request_interval_seconds"])
+            continue
+        rows = len(payload) if isinstance(payload, list) else 1
+        files.append(write_json(run_dir / f"{label}.json", payload))
+        sources.append({"dataset": label, "url": url, "rows": rows})
+        time.sleep(FMP_CONFIG["request_interval_seconds"])
+
+    manifest = {
+        "schema_version": 1,
+        "provider": FMP_CONFIG["provider"],
+        "market": args.market,
+        "symbol": symbol,
+        "fetched_at": utc_now(),
+        "requested_range": {"from": args.from_date, "to": args.to_date},
+        "sources": sources,
+        "api_catalog": catalog_metadata(),
+        "files": files,
+        "errors": errors,
+        "caveats": [
+            "FMP is a secondary normalized data source, not a regulatory filing source",
+            "revenue-product-segmentation mixes a reportable segment with its sub-business "
+            "(AMD returns both 'Client and Gaming' and 'Gaming'), so segment values must "
+            "never be summed blindly — reconcile against the filing's segment note",
+            "ratios, key-metrics and enterprise-values are vendor calculations; recompute "
+            "any multiple before writing it into a snapshot",
+            "analyst-estimates are third-party consensus, usable only as an implied-expectation "
+            "benchmark and never as a company disclosure",
+        ],
+    }
+    write_json(run_dir / "manifest.json", manifest)
+    write_json(run_dir.parent / "latest.json", {"run_dir": str(run_dir), **manifest})
+    print(run_dir)
+    if errors:
+        print(
+            f"warning: {len(errors)} dataset(s) failed; inspect manifest.json",
+            file=sys.stderr,
+        )
+    return 0 if files else 2
+
+
 def self_test() -> int:
     sample_tushare = {
         "code": 0,
@@ -431,6 +530,34 @@ def self_test() -> int:
     assert set(TUSHARE_PROFILES) == {"a", "hk", "us"}
     assert TUSHARE_CONFIG["endpoint"].startswith("https://")
     assert SEC_CONFIG["submissions_url_template"].startswith("https://data.sec.gov/")
+
+    # FMP is registered for US symbols only: the repository key returns HTTP 402
+    # for `.HK` tickers, so a Hong Kong profile here would promise coverage that
+    # does not exist and quietly skip the annual-report path that does.
+    assert set(FMP_PROFILES) == {"us"}
+    assert FMP_CONFIG["base_url"].startswith("https://")
+    # The repository plan rejects `limit` above 5 with HTTP 402 on every
+    # statement endpoint, so a larger value in the catalog does not fetch more
+    # history — it fetches nothing at all.
+    row_limit = FMP_CONFIG["row_limit"]
+    for market, datasets in FMP_PROFILES.items():
+        for dataset in datasets:
+            limit = (dataset.get("params") or {}).get("limit")
+            assert limit is None or limit <= row_limit, (
+                f"fmp.{market} 的 {dataset['label']} limit={limit} 超过 {row_limit}"
+            )
+    dated = {"label": "price-eod", "endpoint": "historical-price-eod/full", "dated": True}
+    url = fmp_dataset_url(dated, "AMD", {"from": "2026-01-01", "to": "2026-08-04"})
+    assert url.endswith("symbol=AMD&from=2026-01-01&to=2026-08-04")
+    assert "apikey" not in url
+    plain = fmp_dataset_url(
+        {"label": "income-annual", "endpoint": "income-statement", "params": {"period": "annual"}},
+        "AMD",
+        {},
+    )
+    assert plain.endswith("income-statement?symbol=AMD&period=annual")
+    assert redact("HTTP 402 ...key=abc123", "abc123") == "HTTP 402 ...key=<redacted>"
+
     metadata = catalog_metadata()
     assert not Path(metadata["path"]).is_absolute()
     assert len(metadata["sha256"]) == 64
@@ -458,6 +585,15 @@ def build_parser() -> argparse.ArgumentParser:
     tushare.add_argument("--start-date")
     tushare.add_argument("--end-date")
     tushare.set_defaults(handler=fetch_tushare)
+
+    fmp = subparsers.add_parser(
+        "fmp", help="Fetch a normalized US fundamentals pack through Financial Modeling Prep"
+    )
+    fmp.add_argument("--market", choices=sorted(FMP_PROFILES), default="us")
+    fmp.add_argument("--symbol", required=True)
+    fmp.add_argument("--from-date", dest="from_date")
+    fmp.add_argument("--to-date", dest="to_date")
+    fmp.set_defaults(handler=fetch_fmp)
 
     test = subparsers.add_parser("self-test", help="Run deterministic offline checks")
     test.set_defaults(handler=lambda _args: self_test())
