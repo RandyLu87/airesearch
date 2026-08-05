@@ -472,6 +472,24 @@ test("a commitment summary with no ledger behind it is rejected", () => {
   assert.match(`${result.stdout}${result.stderr}`, /commitments\.json/);
 });
 
+test("the skeleton materialises the commitment summary when a ledger exists", () => {
+  const { root, companyDirectory } = makeTree([baseSnapshot]);
+  writeCommitments(companyDirectory, commitmentLedger());
+  const result = newSnapshot([fixtureCompany, "--at", "2026-09-03-1000", "--stdout", "--root", root]);
+
+  assert.equal(result.status, 0, result.stderr);
+  const skeleton = JSON.parse(result.stdout);
+  assert.deepEqual(skeleton.commitmentSummary, LEDGER_SUMMARY);
+});
+
+test("the skeleton omits the commitment summary when the company has no ledger", () => {
+  const { root } = makeTree([baseSnapshot]);
+  const result = newSnapshot([fixtureCompany, "--at", "2026-09-04-1000", "--stdout", "--root", root]);
+
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal("commitmentSummary" in JSON.parse(result.stdout), false);
+});
+
 test("a missing commitment ledger warns without blocking", () => {
   const { snapshotsDirectory } = makeTree([baseSnapshot]);
   const result = checkSnapshot([

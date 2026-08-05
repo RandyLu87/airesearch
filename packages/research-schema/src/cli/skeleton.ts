@@ -382,8 +382,9 @@ export function buildSkeleton(input: {
   createdAt: string;
   prior?: Json;
   ledger?: { periods: unknown[] };
+  commitmentSummary?: unknown;
 }): Json {
-  const { companyId, snapshotId, createdAt, prior, ledger } = input;
+  const { companyId, snapshotId, createdAt, prior, ledger, commitmentSummary } = input;
   const priorSummary = prior?.summary as Json | undefined;
   const priorReferencePrice = priorSummary?.referencePrice as Json | undefined;
   const priorFairValue = priorSummary?.fairValue as Json | undefined;
@@ -479,6 +480,10 @@ export function buildSkeleton(input: {
     risks: repeat(3, () => SENTINEL),
     viewChanges: { upgrade: [SENTINEL], downgrade: [SENTINEL] },
     checkpoints: repeat(3, () => SENTINEL),
+    // Materialised, not sentinelled: settled promises are disclosed history, the
+    // same category as a closed fiscal year, so re-sourcing them every run is the
+    // waste the ledger exists to end. Absent when the company has no ledger yet.
+    ...(commitmentSummary === undefined ? {} : { commitmentSummary }),
     evidence: repeat(2, () => evidenceSkeleton()),
     // Engine output, sentinelled so an unsynced draft cannot publish. `responses`
     // starts empty because an empty list is the correct answer when no rule

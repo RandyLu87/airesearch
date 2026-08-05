@@ -1,6 +1,11 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { hasLedger, loadFinancialLedger } from "../ledger.ts";
+import {
+  hasCommitmentLedger,
+  loadCommitmentLedger,
+  materializeCommitmentSummary,
+} from "../commitments.ts";
 import { buildSkeleton } from "./skeleton.ts";
 import {
   assertStamp,
@@ -50,12 +55,19 @@ function main(): number {
   // a closed fiscal year is a disclosed fact, not last run's judgment, and
   // re-sourcing it every time is exactly the waste the ledger exists to end.
   const ledger = hasLedger(root, companyId) ? loadFinancialLedger(root, companyId) : undefined;
+  // Same reasoning for the commitment ledger, plus one practical one: a skeleton
+  // without the summary trips the checker's "you have a ledger but no summary"
+  // error on the very first run, which reads as a defect rather than a to-do.
+  const commitmentSummary = hasCommitmentLedger(root, companyId)
+    ? materializeCommitmentSummary(loadCommitmentLedger(root, companyId))
+    : undefined;
   const skeleton = buildSkeleton({
     companyId,
     snapshotId,
     createdAt: stampToIso(stamp),
     prior: latest?.data,
     ledger,
+    commitmentSummary,
   });
   const serialised = `${JSON.stringify(skeleton, null, 2)}\n`;
 
