@@ -147,6 +147,34 @@ function checkComparability(current: Json, prior: Json): CheckResult {
     }
   }
 
+  // Moat churn warns rather than blocks, following the constraint precedent: a
+  // moat being disproved or a new one forming is a normal research outcome, and
+  // a moat carries no calibration fields for `driverChanges` to compare. The
+  // obligation to explain it in `thesisChange.thesis` is a process rule in
+  // WORKFLOW.md, not something a checker can verify.
+  const priorMoats = indexById((prior.businessModel as Json | undefined)?.moat);
+  const currentMoats = indexById((current.businessModel as Json | undefined)?.moat);
+  const droppedMoats = [...priorMoats.keys()].filter((id) => !currentMoats.has(id));
+  const addedMoats = [...currentMoats.keys()].filter((id) => !priorMoats.has(id));
+  if (droppedMoats.length > 0) {
+    warnings.push(
+      `护城河不再声明：${droppedMoats.join("、")}。` +
+        `确认它确实已被证伪，并在 thesisChange 中说明。`,
+    );
+  }
+  if (addedMoats.length > 0) {
+    warnings.push(
+      `护城河新增：${addedMoats.join("、")}。确认它有驱动指标支撑，而不是换了个说法。`,
+    );
+  }
+  for (const [moatId, currentMoat] of currentMoats) {
+    const priorMoat = priorMoats.get(moatId);
+    if (!priorMoat || priorMoat.trend === currentMoat.trend) continue;
+    warnings.push(
+      `护城河 ${moatId} 的趋势由「${String(priorMoat.trend)}」变为「${String(currentMoat.trend)}」。`,
+    );
+  }
+
   const priorConstraints = indexById(prior.constraints);
   const currentConstraints = indexById(current.constraints);
   const droppedConstraints = [...priorConstraints.keys()].filter((id) => !currentConstraints.has(id));

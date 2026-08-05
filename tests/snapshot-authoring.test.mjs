@@ -256,7 +256,10 @@ test("snapshot:check reports schema violations with path and expectation", () =>
 
 test("snapshot:check skips the comparability layer when there is no prior snapshot", () => {
   const only = successor(baseSnapshot);
-  only.driverMetrics = only.driverMetrics.slice(0, 4);
+  // A changed driver set is the point; the slice stops short of the drivers the
+  // fixture's moat and disagreement point at, because dropping those is a
+  // referential-integrity error rather than a comparability one.
+  only.driverMetrics = only.driverMetrics.slice(0, 5);
   const { snapshotsDirectory } = makeTree([]);
   const filePath = snapshotFile(snapshotsDirectory, only);
 
@@ -346,6 +349,109 @@ test("snapshot:check accepts a redefined driver when the model change is escalat
 
   const result = checkSnapshot([filePath]);
   assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
+});
+
+test("a moat pointing at a driver that does not exist is rejected by name", () => {
+  const draft = clone(baseSnapshot);
+  draft.businessModel.moat[0].driverIds = ["subscription-mix", "brand-strength"];
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  const output = `${result.stdout}${result.stderr}`;
+  assert.match(output, /businessModel\.moat\.0\.driverIds/);
+  assert.match(output, /brand-strength/);
+  assert.match(output, /catalog-social-lock/, "the message should name the offending moat");
+});
+
+test("a moat typed 其他 must say what it actually is", () => {
+  const draft = clone(baseSnapshot);
+  draft.businessModel.moat[0].type = "其他";
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  assert.match(`${result.stdout}${result.stderr}`, /typeNote/);
+});
+
+test("more than three moats is a checklist, not a declaration, and is rejected", () => {
+  const draft = clone(baseSnapshot);
+  const base = draft.businessModel.moat[0];
+  draft.businessModel.moat = ["a", "b", "c", "d"].map((suffix) => ({
+    ...clone(base),
+    id: `${base.id}-${suffix}`,
+  }));
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  assert.match(`${result.stdout}${result.stderr}`, /businessModel\.moat/);
+});
+
+test("a moat whose trend moved warns without blocking", () => {
+  const next = successor(baseSnapshot);
+  next.businessModel.moat[0].trend = "变窄";
+  const { snapshotsDirectory } = makeTree([baseSnapshot]);
+  const filePath = snapshotFile(snapshotsDirectory, next);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
+  const output = `${result.stdout}${result.stderr}`;
+  assert.match(output, /catalog-social-lock/);
+  assert.match(output, /稳定/);
+  assert.match(output, /变窄/);
+});
+
+test("a dropped moat warns without blocking, unlike a dropped driver", () => {
+  const next = successor(baseSnapshot);
+  next.businessModel.moat = [
+    { ...clone(baseSnapshot.businessModel.moat[0]), id: "scale-cost-curve" },
+  ];
+  const { snapshotsDirectory } = makeTree([baseSnapshot]);
+  const filePath = snapshotFile(snapshotsDirectory, next);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 0, `${result.stdout}${result.stderr}`);
+  const output = `${result.stdout}${result.stderr}`;
+  assert.match(output, /护城河不再声明/);
+  assert.match(output, /护城河新增/);
+});
+
+test("a disagreement anchored to a driver that does not exist is rejected", () => {
+  const draft = clone(baseSnapshot);
+  draft.valuation.disagreement.driverId = "competitive-intensity";
+  const { snapshotsDirectory } = makeTree([]);
+  const filePath = snapshotFile(snapshotsDirectory, draft);
+
+  const result = checkSnapshot([filePath]);
+  assert.equal(result.status, 1);
+  const output = `${result.stdout}${result.stderr}`;
+  assert.match(output, /valuation\.disagreement\.driverId/);
+  assert.match(output, /competitive-intensity/);
+});
+
+test("the skeleton carries a moat's structure forward but re-asks for its trend", () => {
+  const { root } = makeTree([baseSnapshot]);
+  const result = newSnapshot([fixtureCompany, "--at", "2026-09-01-1000", "--stdout", "--root", root]);
+
+  assert.equal(result.status, 0, result.stderr);
+  const skeleton = JSON.parse(result.stdout);
+  const [moat] = skeleton.businessModel.moat;
+  assert.equal(moat.id, "catalog-social-lock");
+  assert.equal(moat.type, "转换成本");
+  assert.deepEqual(moat.driverIds, ["subscription-mix", "paying-ratio"]);
+  assert.equal(moat.breaker, baseSnapshot.businessModel.moat[0].breaker);
+  assert.equal(moat.trend, SENTINEL, "the reading must be re-judged, never inherited");
+  assert.deepEqual(moat.evidenceIds, [SENTINEL]);
+
+  const { disagreement } = skeleton.valuation;
+  assert.equal(disagreement.driverId, "paying-ratio", "which observable is disputed is calibration");
+  assert.equal(disagreement.marketAssumption, SENTINEL);
+  assert.equal(disagreement.ourAssumption, SENTINEL);
+  assert.equal(disagreement.converged, false);
 });
 
 test("a monthly driver is accepted when its period is written YYYY-MM", () => {

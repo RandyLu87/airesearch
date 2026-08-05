@@ -250,11 +250,65 @@ const businessSegmentSchema = z.object({
   evidenceIds: z.array(z.string()).min(1),
 });
 
+/**
+ * One moat that actually holds, bound to the metric that shows it holding.
+ *
+ * A declaration, not a checklist. Walking five moat types and writing a line
+ * under each produces four moats that do not exist and one that does, with
+ * nothing to tell a reader which is which — the same failure mode
+ * `business-model-playbook.md` guards against when it forbids scoring a company
+ * by weighted total.
+ *
+ * `driverIds` is the whole point. A moat pinned to a driver inherits everything
+ * that driver already carries: a definition, a calibration, a threshold,
+ * evidence, and continuity across snapshots. A moat with no driver behind it is
+ * a compliment, and the honest reading of one that cannot find a driver is that
+ * it may not be there.
+ */
+const moatSchema = z.object({
+  id: z.string().min(1),
+  type: z.enum([
+    "品牌定价权",
+    "转换成本",
+    "网络效应",
+    "规模成本",
+    "技术与牌照",
+    "其他",
+  ]),
+  typeNote: z.string().min(1).optional(),
+  /** Where in `causalChain` it acts — a position, not an adjective. */
+  mechanism: z.string().min(1),
+  driverIds: z.array(z.string().min(1)).min(1),
+  /**
+   * Width, not quality. A moat moving from 待验证 to 稳定 is not an
+   * "improvement" in the sense `constraints.status` means, so this enum stays
+   * separate rather than reusing 改善/恶化.
+   */
+  trend: z.enum(["变宽", "稳定", "变窄", "待验证"]),
+  /** What would destroy it, with the observable signal that precedes that. */
+  breaker: z.string().min(1),
+  evidenceIds: z.array(z.string()).min(1),
+}).superRefine((moat, context) => {
+  if (moat.type === "其他" && !moat.typeNote) {
+    context.addIssue({
+      code: "custom",
+      path: ["typeNote"],
+      message: "护城河类型取「其他」时必须填写 typeNote 说明它究竟是什么",
+    });
+  }
+});
+
 const businessModelSchema = z.object({
   segments: z.array(businessSegmentSchema).min(1),
   causalChain: z.string().min(1),
   deliveryDependency: z.string().min(1),
   cashEngine: z.string().min(1),
+  /**
+   * Optional in the contract, mandatory in practice: `snapshot:new` writes it
+   * as sentinels, so the authoring path demands it while snapshots published
+   * before ADR-0018 stay valid without being back-filled.
+   */
+  moat: z.array(moatSchema).min(1).max(3).optional(),
   evidenceIds: z.array(z.string()).min(1),
 });
 
@@ -610,6 +664,28 @@ const snapshotShape = z.object({
       metricLabel: z.string().min(1).nullable(),
     }),
     currentExpectation: z.string().min(1),
+    /**
+     * Where the market and this snapshot actually disagree.
+     *
+     * The implied multiple is the market's number, not the market's reason.
+     * Anchoring the disagreement to a declared driver is what turns "I know the
+     * market disagrees" into "I know which observable the market disagrees
+     * about" — and only the second can be settled by the next filing.
+     * "竞争加剧" and "监管风险" hold for every company at every price, so they
+     * explain no particular gap; hence the id, checked for existence.
+     */
+    disagreement: z.object({
+      driverId: z.string().min(1),
+      marketAssumption: z.string().min(1),
+      ourAssumption: z.string().min(1),
+      /**
+       * When `converged` is true this states that the price offers no margin of
+       * safety, rather than naming an error — the honest reading when the
+       * implied path and the base case are the same path.
+       */
+      ifMarketIsRight: z.string().min(1),
+      converged: z.boolean(),
+    }).optional(),
     evidenceIds: z.array(z.string()).min(1),
   }),
   risks: z.array(z.string().min(1)).min(3),
@@ -662,6 +738,7 @@ export const researchSnapshotSchema = z
       ? [
           ...snapshot.businessModel.evidenceIds,
           ...snapshot.businessModel.segments.flatMap((segment) => segment.evidenceIds),
+          ...(snapshot.businessModel.moat ?? []).flatMap((moat) => moat.evidenceIds),
           ...snapshot.marketPosition.evidenceIds,
           ...snapshot.marketPosition.measures.flatMap((measure) => measure.evidenceIds),
           ...snapshot.marketPosition.competitors.flatMap((competitor) => competitor.evidenceIds),
@@ -700,6 +777,35 @@ export const researchSnapshotSchema = z
         });
       }
     }
+  }
+
+  // A moat has to point at a driver that exists, and the disagreement has to
+  // point at one too. Both are the entire mechanism by which those blocks stay
+  // falsifiable rather than becoming two more prose fields.
+  const driverIds = new Set(snapshot.driverMetrics.map((metric) => metric.id));
+  for (const [index, moat] of (snapshot.businessModel.moat ?? []).entries()) {
+    for (const driverId of moat.driverIds) {
+      if (driverIds.has(driverId)) continue;
+      context.addIssue({
+        code: "custom",
+        path: ["businessModel", "moat", index, "driverIds"],
+        message:
+          `护城河「${moat.id}」引用了不存在的驱动指标 ${driverId}。` +
+          `护城河必须落在已声明的 driverMetrics 上；找不到支撑它的指标时，` +
+          `先怀疑这条护城河并不存在，再考虑是不是缺了一个该建的驱动。`,
+      });
+    }
+  }
+  const disagreement = snapshot.valuation.disagreement;
+  if (disagreement && !driverIds.has(disagreement.driverId)) {
+    context.addIssue({
+      code: "custom",
+      path: ["valuation", "disagreement", "driverId"],
+      message:
+        `分歧点引用了不存在的驱动指标 ${disagreement.driverId}。` +
+        `分歧必须锚在一个已声明的驱动上——「竞争加剧」这类说法对任何公司在任何价格都成立，` +
+        `因此解释不了任何具体的价差。`,
+    });
   }
 
   // A multi-segment company that shows no split for its most recent period has
@@ -1225,6 +1331,30 @@ export function compareResearchSnapshots(
     (item) => !priorEvidenceIds.has(item.id),
   );
 
+  // Moat width across two research dates. Only the trend is compared, because
+  // that is the only field a moat carries that is a reading rather than
+  // structure — and "is it still widening" is the question the block exists for.
+  const priorMoats = new Map(
+    (isCurrentSnapshot(prior) ? prior.businessModel.moat ?? [] : []).map((moat) => [moat.id, moat]),
+  );
+  const currentMoats = isCurrentSnapshot(current) ? current.businessModel.moat ?? [] : [];
+  const moats = currentMoats.map((moat) => {
+    const previous = priorMoats.get(moat.id);
+    return {
+      id: moat.id,
+      type: moat.type,
+      mechanism: moat.mechanism,
+      driverIds: moat.driverIds,
+      breaker: moat.breaker,
+      priorTrend: previous?.trend ?? null,
+      currentTrend: moat.trend,
+      changed: previous !== undefined && previous.trend !== moat.trend,
+    };
+  });
+  const droppedMoats = [...priorMoats.values()]
+    .filter((moat) => !currentMoats.some((item) => item.id === moat.id))
+    .map((moat) => ({ id: moat.id, type: moat.type, priorTrend: moat.trend }));
+
   return {
     prior: {
       date: prior.snapshot.dataCutoff.slice(0, 10),
@@ -1248,6 +1378,8 @@ export function compareResearchSnapshots(
     },
     metrics,
     driverMetrics,
+    moats,
+    droppedMoats,
     evidence: {
       added: addedEvidence,
       supersededAssumptions: current.thesisChange.supersededAssumptions,

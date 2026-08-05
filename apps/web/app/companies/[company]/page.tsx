@@ -245,6 +245,38 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
                   ))}
                 </ul>
               ) : null}
+              {/* Moat width is the one long-horizon judgment that only means
+                  something across dates, so it is reported here rather than in
+                  the business-model block, which describes a single snapshot. */}
+              {comparison.moats.length > 0 || comparison.droppedMoats.length > 0 ? (
+                <>
+                  <h3 className="block-heading">护城河趋势</h3>
+                  <ul className="moat-trend-list">
+                    {comparison.moats.map((moat) => (
+                      <li key={moat.id}>
+                        <span className={`moat-trend moat-trend--${moat.currentTrend}`}>
+                          {moat.currentTrend}
+                        </span>
+                        <strong>{moat.type}</strong>
+                        <p>
+                          {moat.priorTrend === null
+                            ? "本次新增，无前期基线"
+                            : moat.changed
+                              ? `上次「${moat.priorTrend}」→ 本次「${moat.currentTrend}」`
+                              : `与上次一致（${moat.currentTrend}）`}
+                        </p>
+                      </li>
+                    ))}
+                    {comparison.droppedMoats.map((moat) => (
+                      <li key={moat.id}>
+                        <span className="moat-trend moat-trend--已撤销">已撤销</span>
+                        <strong>{moat.type}</strong>
+                        <p>上次为「{moat.priorTrend}」，本次不再声明</p>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : null}
               {comparison.evidence.added.length > 0 ? (
                 <>
                   <h3 className="block-heading">新增证据</h3>

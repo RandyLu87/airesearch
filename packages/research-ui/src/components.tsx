@@ -622,6 +622,70 @@ function CashEngineWaterfall({
   );
 }
 
+/**
+ * The declared moats, each shown with the drivers that hold it up.
+ *
+ * Resolving `driverIds` to driver labels here is what makes the binding visible
+ * to a reader rather than only to the checker: a moat whose supporting metric is
+ * named, dated and thresholded reads differently from one that is asserted.
+ */
+function MoatBlock({
+  snapshot,
+  sourceIds,
+}: {
+  snapshot: CurrentSnapshot;
+  sourceIds: (ids: string[]) => ReactNode;
+}) {
+  const moats = snapshot.businessModel.moat ?? [];
+  if (moats.length === 0) {
+    return (
+      <>
+        <h3 className="block-heading">护城河与转折点</h3>
+        <p className="model-prose moat-absent">本次研究未声明护城河。</p>
+      </>
+    );
+  }
+  const drivers = new Map(snapshot.driverMetrics.map((metric) => [metric.id, metric]));
+
+  return (
+    <>
+      <h3 className="block-heading">护城河与转折点</h3>
+      <div className="moat-list">
+        {moats.map((moat) => (
+          <article className="moat-card" key={moat.id}>
+            <div className="moat-head">
+              <span className="moat-type">
+                {moat.type}
+                {moat.typeNote ? `——${moat.typeNote}` : ""}
+              </span>
+              <span className={`moat-trend moat-trend--${moat.trend}`}>{moat.trend}</span>
+            </div>
+            <p className="moat-mechanism">{moat.mechanism}</p>
+            <dl>
+              <div>
+                <dt>支撑驱动</dt>
+                <dd>
+                  {moat.driverIds
+                    .map((id) => {
+                      const driver = drivers.get(id);
+                      return driver ? `${driver.label}（${driver.displayValue}）` : id;
+                    })
+                    .join("、")}
+                </dd>
+              </div>
+              <div>
+                <dt>什么会摧毁它</dt>
+                <dd className="cell-prose">{moat.breaker}</dd>
+              </div>
+            </dl>
+            {sourceIds(moat.evidenceIds)}
+          </article>
+        ))}
+      </div>
+    </>
+  );
+}
+
 export function BusinessModelSection({
   snapshot,
   sourceIds,
@@ -686,6 +750,7 @@ export function BusinessModelSection({
           );
         })}
       </div>
+      <MoatBlock snapshot={snapshot} sourceIds={sourceIds} />
       {latest ? <CashEngineWaterfall period={latest} roster={roster} /> : null}
       {/* The cash engine prose is the caption for the waterfall when there is
           one, and stands on its own when segment operating profit is missing. */}
@@ -1115,9 +1180,12 @@ export function ValueBridge({ snapshot }: { snapshot: CurrentSnapshot }) {
 
 /** What the current price already assumes, plus what would sharpen the estimate. */
 export function ValuationMethodPanel({ snapshot }: { snapshot: CurrentSnapshot }) {
-  const { methodSelection, impliedExpectation, healthCheck } = snapshot.valuation;
+  const { methodSelection, impliedExpectation, healthCheck, disagreement } = snapshot.valuation;
   const ideal = lookupValuationMethod(methodSelection.ideal);
   const adopted = lookupValuationMethod(methodSelection.adoptedPrimary);
+  const disagreementDriver = disagreement
+    ? snapshot.driverMetrics.find((metric) => metric.id === disagreement.driverId)
+    : undefined;
 
   return (
     <div className="valuation-method">
@@ -1158,6 +1226,26 @@ export function ValuationMethodPanel({ snapshot }: { snapshot: CurrentSnapshot }
           : "（基准情景含多个估值组件，无法解出单一倍数）"}
         。{snapshot.valuation.currentExpectation}
       </p>
+
+      {disagreement ? (
+        <div className={`disagreement${disagreement.converged ? " disagreement--converged" : ""}`}>
+          <h4>
+            {disagreement.converged ? "与市场没有实质分歧" : "分歧点"}
+            <span className="disagreement-driver">
+              {disagreementDriver?.label ?? disagreement.driverId}
+              {disagreementDriver ? ` · ${disagreementDriver.displayValue}` : ""}
+            </span>
+          </h4>
+          <dl>
+            <div><dt>市场假设</dt><dd className="cell-prose">{disagreement.marketAssumption}</dd></div>
+            <div><dt>我的假设</dt><dd className="cell-prose">{disagreement.ourAssumption}</dd></div>
+            <div>
+              <dt>{disagreement.converged ? "这意味着什么" : "如果市场对了"}</dt>
+              <dd className="cell-prose">{disagreement.ifMarketIsRight}</dd>
+            </div>
+          </dl>
+        </div>
+      ) : null}
 
       {methodSelection.blockedBy.length > 0 ? (
         <div className="upgrade-hint">

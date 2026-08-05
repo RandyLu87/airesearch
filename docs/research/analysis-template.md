@@ -64,6 +64,11 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
 - `causalChain`：从投入到再投资的一条因果链。
 - `deliveryDependency`：获客、供给、履约依赖的渠道、资产、牌照或合作方。
 - `cashEngine`：利润与现金究竟来自哪一段。
+- `moat`：1–3 条**真正起作用的**护城河，不是逐类打勾（见 ADR-0018）。每条含稳定 ID、`type`（品牌定价权 / 转换成本 / 网络效应 / 规模成本 / 技术与牌照 / 其他，取「其他」必须写 `typeNote`）、`mechanism`（它作用在 `causalChain` 哪一环——写位置，不写形容词）、`driverIds`、`trend`（变宽 / 稳定 / 变窄 / 待验证）、`breaker`（什么能摧毁它，含可观察的前置信号）和 evidence IDs。
+  - **`driverIds` 必须命中已声明的 `driverMetrics[].id`**，校验器强制。这是整块的意义所在：护城河因此继承驱动指标的定义、口径、阈值、证据与跨快照延续；找不到指标支撑的护城河，先怀疑它并不存在。
+  - `trend` 用「变宽/变窄」而不复用 `constraints` 的「改善/恶化」——护城河宽度变化本身没有好坏方向。
+  - 增删与趋势变动只产生**警告**，与最紧约束一致：护城河被证伪或新护城河成型是研究进展的正常结果，且它没有口径字段可供 `driverChanges` 那套机制比较。说明义务由 `WORKFLOW.md` 承担。
+  - 字段可选只为向后兼容。`snapshot:new` 生成的骨架把它写成哨兵，因此新研究实际必填；已发布快照不回填，页面显示「本次研究未声明护城河」。
 
 声明了两个及以上分部时，最新期间必须给出分部数据；取不到就逐个写 `status: "unavailable"` 与 reason。
 
@@ -139,6 +144,7 @@ research/companies/<company-id>/snapshots/YYYY-MM-DD-HHMM-analysis.json
 - `valuation.scenarios` 恰好三个（熊市/基准/牛市），各自写明假设、触发条件与 `components`。组件是倍数项（指标区间 × 倍数区间）或面值项（金额，可带 `discountPct` 与 `discountReason`）。
 - **`computed`、`actionZones` 的边界、`impliedExpectation` 与 `summary.fairValue` 全部由引擎计算，作者不得手写。** 运行 `npm run snapshot:sync`；校验器会重算并在不符时阻断。`actionZones` 只有 `action` 文案可以手写。
 - `valuation.healthCheck` 必须回应每一条被触发的体检规则；`methodSelection` 必须同时给出理想方法与实际采用的主方法，两者不同时 `blockedBy` 不能为空。
+- `valuation.disagreement` 记录分歧点：`driverId`（**必须命中已声明的驱动**，校验器强制）、`marketAssumption`、`ourAssumption`、`ifMarketIsRight`、`converged`。隐含倍数是市场的数字，不是市场的理由；把分歧锚在一个可观测量上，下一份财报才能判定谁对。「竞争加剧」「监管风险」对任何公司在任何价格都成立，因此解释不了任何具体价差。`converged` 为真时 `ifMarketIsRight` 改写为「当前价格不提供安全边际」的含义，而不是硬编一个错误。
 
 ### `evidence`
 

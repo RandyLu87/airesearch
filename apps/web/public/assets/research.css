@@ -634,6 +634,36 @@ tbody th { font-weight: 650; }
 .driver-change-list p { margin: 8px 0 0; color: var(--muted); font-size: 14px; }
 .driver-change { display: inline-block; margin-right: 12px; padding: 3px 9px; border: 1px solid var(--signal); border-radius: 999px; color: var(--signal); font-size: 10px; text-transform: uppercase; }
 
+/* ── 护城河与转折点 ───────────────────────────────────── */
+.moat-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0 30px; border-top: 1px solid var(--ink); }
+.moat-card { padding: 20px 0 24px; border-bottom: 1px solid var(--line); }
+.moat-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px; }
+.moat-type { font-size: 15px; font-weight: 650; }
+.moat-trend { display: inline-block; margin-left: auto; padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; font-weight: 650; white-space: nowrap; }
+.moat-trend--变宽 { color: var(--signal); border-color: var(--signal); }
+.moat-trend--变窄 { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.moat-trend--待验证 { border-style: dashed; }
+.moat-trend--已撤销 { color: var(--muted); border-style: dotted; }
+.moat-mechanism { margin: 0 0 16px; font-size: 14px; }
+.moat-card dl { display: grid; gap: 12px; margin: 0; }
+.moat-card dt { margin-bottom: 4px; color: var(--muted); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+.moat-card dd { margin: 0; font-size: 13px; }
+.moat-absent { margin: 0; color: var(--muted); font-size: 14px; }
+.moat-trend-list { margin: 26px 0 0; padding: 0; list-style: none; }
+.moat-trend-list li { display: grid; grid-template-columns: 90px 200px 1fr; gap: 20px; align-items: baseline; padding: 14px 0; border-top: 1px solid var(--line); }
+.moat-trend-list p { margin: 0; color: var(--muted); font-size: 14px; }
+.moat-trend-list .moat-trend { margin-left: 0; }
+
+/* ── 分歧点 ───────────────────────────────────────────── */
+.disagreement { margin-bottom: 30px; padding: 22px 24px; border: 1px solid var(--line-dark); }
+.disagreement h4 { display: flex; align-items: baseline; gap: 12px; margin: 0 0 18px; font-size: 15px; font-weight: 650; }
+.disagreement-driver { margin-left: auto; color: var(--muted); font-size: 12px; font-weight: 480; }
+.disagreement dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin: 0; }
+.disagreement dt { margin-bottom: 6px; color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.disagreement dd { margin: 0; }
+/* 重合不是错误，但也不是好消息：虚线边框把它和一条真实分歧区分开。 */
+.disagreement--converged { border-style: dashed; }
+
 /* ── 打印用指标释义表（屏幕隐藏） ─────────────────────── */
 .metric-glossary { display: none; }
 
@@ -645,6 +675,8 @@ tbody th { font-weight: 650; }
   .driver-card:not(:nth-child(3n)) { border-right: 0; }
   .driver-card:not(:nth-child(3n+1)) { padding-left: 0; }
   .constraint-list > li { grid-template-columns: 1fr; gap: 8px; }
+  .moat-trend-list li { grid-template-columns: 1fr; gap: 8px; }
+  .disagreement dl { grid-template-columns: 1fr; }
   .bridge-rows li { grid-template-columns: minmax(96px, 1fr) 64px; }
   .bridge-track { display: none; }
   .segment-head { flex-wrap: wrap; }

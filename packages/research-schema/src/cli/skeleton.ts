@@ -169,11 +169,28 @@ function businessModelSkeleton(prior?: Json): Json {
     chargingMode: source?.chargingMode ?? SENTINEL,
     evidenceIds: [SENTINEL],
   });
+  // A moat's type, mechanism, supporting drivers and breaker are structure and
+  // carry over; its trend is the reading and is re-judged every time. Carrying
+  // the trend forward would let "still widening" survive by inertia, which is
+  // the one thing this block exists to prevent.
+  const priorMoats = (prior?.moat as Json[] | undefined) ?? [];
+  const moat = (source?: Json): Json => ({
+    id: source?.id ?? SENTINEL,
+    type: source?.type ?? SENTINEL,
+    ...(source?.typeNote === undefined ? {} : { typeNote: source.typeNote }),
+    mechanism: source?.mechanism ?? SENTINEL,
+    driverIds: source?.driverIds ?? [SENTINEL],
+    trend: SENTINEL,
+    breaker: source?.breaker ?? SENTINEL,
+    evidenceIds: [SENTINEL],
+  });
+
   return {
     segments: priorSegments.length > 0 ? priorSegments.map(segment) : [segment()],
     causalChain: prior?.causalChain ?? SENTINEL,
     deliveryDependency: prior?.deliveryDependency ?? SENTINEL,
     cashEngine: prior?.cashEngine ?? SENTINEL,
+    moat: priorMoats.length > 0 ? priorMoats.map(moat) : [moat()],
     evidenceIds: [SENTINEL],
   };
 }
@@ -342,6 +359,19 @@ function valuationSkeleton(prior?: Json, priorCompany?: Json): Json {
       metricLabel: null,
     },
     currentExpectation: SENTINEL,
+    // The driver the market disagrees about is calibration — which observable
+    // the argument is actually over rarely changes between two research runs —
+    // while both sides' assumed paths are readings and get re-sourced.
+    disagreement: {
+      driverId: (prior?.disagreement as Json | undefined)?.driverId ?? SENTINEL,
+      marketAssumption: SENTINEL,
+      ourAssumption: SENTINEL,
+      ifMarketIsRight: SENTINEL,
+      // No sentinel exists for a boolean. `false` is the load-bearing default:
+      // it asserts a gap the author then has to describe, whereas `true` would
+      // let "the market and I agree" pass without anyone having checked.
+      converged: false,
+    },
     evidenceIds: [SENTINEL],
   };
 }
