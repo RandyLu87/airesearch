@@ -1,0 +1,130 @@
+{
+  "meta": {
+    "companyId": "sh-600519-kweichow-moutai",
+    "companyName": "贵州茅台酒股份有限公司",
+    "summarizedAt": "2026-08-06",
+    "dataCutoff": "2026-08-06",
+    "basedOnCollection": "research/companies/sh-600519-kweichow-moutai/financials-collection.json",
+    "basedOnAnalysis": "research/companies/sh-600519-kweichow-moutai/financials-analysis.json"
+  },
+  "dimensionSummary": [
+    {
+      "dimensionId": "businessQuality",
+      "title": "生意质量",
+      "mapsTo": "dimensions.businessEssence",
+      "conclusion": "生意本质是靠原产地稀缺性与品牌定价权持续提价的高毛利消费品，FY2025净利率仍达48.76%，但收入利润五年来首次同比转负。",
+      "confidence": 8,
+      "scoreBasis": "①businessEssence.analysis.profitabilityTrend5y：FY2025毛利率91.23%、净利率48.76%，单位经济优异。②businessEssence.analysis.operatingLeverage：FY2025营收-1.21%/净利润-4.53%，经营杠杆转负。③businessEssence.dataGaps：FY2021-2022毛利率为估计值，证据打折收敛评分。"
+    },
+    {
+      "dimensionId": "moat",
+      "title": "护城河",
+      "mapsTo": "dimensions.moat",
+      "conclusion": "护城河核心是原产地稀缺与品牌定价权，规模与工艺壁垒稳固，网络效应缺失；过去5年未实质收窄，但未来5年预判边际变窄。",
+      "confidence": 8,
+      "scoreBasis": "①moat.analysis.types：品牌定价权/转换成本/规模效应/技术壁垒verdict均为存在，仅网络效应不存在。②moat.analysis.types[0].evidence：2023年出厂价+20.64%、2026年再+8.55%，提价能力持续验证。③moat.analysis.trendNext5y：判断变窄，因消费税风险与管理层动荡叠加渠道承压。"
+    },
+    {
+      "dimensionId": "management",
+      "title": "管理层",
+      "mapsTo": "dimensions.management",
+      "conclusion": "核心壁垒不依赖个人，但5年4换帅、两任前董事长涉腐败被查，新任董事长陈华无白酒背景，治理连续性风险突出。",
+      "confidence": 4.5,
+      "scoreBasis": "①management.analysis.organization.teamStability：5年4换帅，两任董事长涉受贿/洗钱被查。②management.analysis.organization.keyPersonRisk：陈华无白酒背景，任职不足1年，连续性存疑。③management.analysis.capitalAllocation.buybackTiming：两期回购均价均高于回购时点股价，非精准择时但持续注销。"
+    },
+    {
+      "dimensionId": "keyRisk",
+      "title": "最大风险",
+      "mapsTo": "dimensions.inversion",
+      "conclusion": "最大风险是经济周期性商务消费萎缩叠加渠道价格倒挂，FY2025营收/净利润/经营现金流三项指标多年来首次同比全面转负。",
+      "confidence": 5,
+      "scoreBasis": "①inversion.analysis.failurePaths：经济周期性商务消费萎缩probability=高、impact=高，风险等级最高。②inversion.analysis.failurePaths：2025Q4营收/净利润同比-19.35%/-30.34%，需求端压力显现。③inversion.analysis.historicalAnalogies：2012-2015周期茅台股价跌52.6%后触底反弹，风险具历史可控先例。"
+    },
+    {
+      "dimensionId": "civilizationTrend",
+      "title": "文明趋势",
+      "mapsTo": "dimensions.industryTrend",
+      "conclusion": "白酒行业处于存量竞争结构性调整而非范式转移，茅台品牌渠道双强占主导，但年轻世代消费转移是长期结构性变量。",
+      "confidence": 7,
+      "scoreBasis": "①industryTrend.analysis.paradigmShift：verdict为否，属周期调整而非品类消亡。②industryTrend.analysis.techRouteRisk：30岁以下人群贡献不足白酒市场4%，主力31-50岁占超70%，短中期冲击有限。③industryTrend.analysis.valueChainPosition：直销占比50.09%，公司对上下游议价权持续增强。"
+    },
+    {
+      "dimensionId": "valuation",
+      "title": "估值",
+      "mapsTo": "dimensions.valuation",
+      "conclusion": "静态PE19.90x处于近10年1.6%分位历史低位，三情景中性涨9.8%、乐观涨67.2%、悲观跌35.4%，估值合理偏低。",
+      "confidence": 7.5,
+      "scoreBasis": "①valuation.analysis.vsOwnHistory：当前PE处于近10年1.6%分位、近5年3.6%分位，历史低位。②valuation.analysis.threeScenario：中性目标价1435元(+9.8%)、乐观2184.8元(+67.2%)、悲观844.4元(-35.4%)。③valuation.analysis.reverseDcf：隐含永续增长率仅[估计]4.3%-5.2%，远低于历史12.29%CAGR，预期已趋保守。"
+    }
+  ],
+  "strategies": {
+    "noPosition": {
+      "title": "空仓者",
+      "advice": "①PE处于历史低位（近10年1.6%分位）且护城河未破，适合分批建仓而非一次性重仓。②FY2025三项核心指标首次全面转负，建议等待后续季度数据验证渠道去库存企稳再加仓。③单一消费股仓位不宜过重，治理与代际转移风险仍处观察期。",
+      "triggers": [
+        {
+          "condition": "股价回落至850元附近（对应悲观情景目标价844元）",
+          "action": "可分批建仓，风险已较充分定价",
+          "basis": "①valuation.analysis.threeScenario：悲观情景目标价844.4元(-35.4%)已price in负面情形。②moat.analysis.trendPast5y：判断稳定，护城河未破，安全边际提升。"
+        },
+        {
+          "condition": "连续两季度营收同比转正（参考2026Q1已+6.54%）",
+          "action": "视为周期底部确认信号，可开始建仓",
+          "basis": "①第1步collection.revenueStructure.recentQuarters：2026Q1营收同比+6.54%，边际回暖初现。②inversion.analysis.failurePaths（经济周期性）：probability=高，需连续数据佐证而非单季判断。"
+        }
+      ]
+    },
+    "holding": {
+      "title": "持仓者",
+      "advice": "①FY2025三项指标转负但护城河未见结构性瓦解，无需恐慌性卖出核心仓位。②可通过股息率2.15%分红与公司回购获得现金回报，同时密切跟踪渠道去库存进度。③若新任董事长战略明显偏离核心酿造与品牌定价逻辑，应重新评估持仓。",
+      "triggers": [
+        {
+          "condition": "股价上探2185元附近（对应乐观情景目标价2184.8元）",
+          "action": "可考虑逐步兑现部分收益，锁定涨幅",
+          "basis": "①valuation.analysis.threeScenario：乐观情景目标价2184.8元(+67.2%)，对应PE25x。②valuation.analysis.vsOwnHistory：历史PE均值30.83x，25x尚未严重高估但赔率转差。"
+        },
+        {
+          "condition": "经销商价格倒挂占比自79%改善至50%以下",
+          "action": "视为渠道去库存见效，继续持有不减仓",
+          "basis": "①inversion.analysis.failurePaths（渠道价格倒挂）：79%经销商反映倒挂为最大利润压力，改善即验证风险缓解。"
+        }
+      ]
+    },
+    "sellSignals": {
+      "title": "卖出信号",
+      "signals": [
+        {
+          "signal": "公司被迫下调出厂价或终端价格体系大范围崩塌，定价权实质丧失",
+          "observable": "官方下调出厂价或1499元指导价，而非渠道自然价格倒挂",
+          "basis": "①moat.analysis.types（品牌定价权）：verdict基于持续提价（2023+20.64%、2026+8.55%），逆转即moat breaker。②inversion.analysis.failurePaths（渠道价格倒挂）：impact=高，是护城河松动的直接观察窗口。"
+        },
+        {
+          "signal": "FY2026年报营收、净利润、经营现金流连续第二年同比下滑",
+          "observable": "2026年年报公布时三项指标同比增速仍为负",
+          "basis": "①inversion.analysis.bearCase：FY2025三项首次全面转负为多年来首次。②businessEssence.analysis.operatingLeverage：负经营杠杆已现，连续验证周期性衰退。"
+        },
+        {
+          "signal": "管理层再度非正常换帅，或高管出现新的腐败/合规调查",
+          "observable": "公司公告董事长非正常离任，或监管机关介入调查高管",
+          "basis": "①management.analysis.organization.teamStability：5年4换帅且两任前董事长涉腐败被查，为可观察治理breaker。②management.analysis.organization.keyPersonRisk：当前对陈华的信任本就基于观察期假设。"
+        }
+      ]
+    },
+    "addSignals": {
+      "title": "加仓信号",
+      "signals": [
+        {
+          "signal": "股价跌至850元以下且护城河未出现结构性破坏",
+          "observable": "股价触及或跌破844.4元，经销商网络与提价能力未见瓦解",
+          "basis": "①valuation.analysis.threeScenario：悲观情景目标价844.4元(-35.4%)。②moat.analysis.trendPast5y：判断稳定，二者同时满足即安全边际显著提升。"
+        },
+        {
+          "signal": "渠道价格倒挂明显缓解且营收连续两季度同比转正",
+          "observable": "经销商倒挂占比降至50%以下，单季营收增速连续两季转正",
+          "basis": "①第1步collection.revenueStructure.recentQuarters：2026Q1营收+6.54%已现回暖苗头。②inversion.analysis.failurePaths（渠道价格倒挂）：79%经销商反映倒挂为最大压力，指标改善即验证风险缓释。"
+        }
+      ]
+    }
+  },
+  "disclaimer": "本总结基于公开信息与数据截止时点的分析生成，仅供研究参考，不构成个性化投资建议。"
+}
