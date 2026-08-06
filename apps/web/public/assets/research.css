@@ -798,6 +798,15 @@ td .fold { margin-top: 4px; border-top: 0; }
 td .fold summary { padding: 0; }
 td .fold p, td .fold ul { font-size: 12px; }
 
+/*
+ * 分点叙述：分析文件里长字段按「① ② ③」分点书写（见
+ * docs/research/workflow/02-multi-dimension-analysis.md），渲染层切成 .prose-point，
+ * 每点独占一行；序号悬挂在文字左侧，折行后与首字对齐，长段落才真正可扫读。
+ */
+.prose-point { display: block; padding-left: 1.35em; text-indent: -1.35em; }
+.prose-point + .prose-point { margin-top: 6px; }
+.fold .prose-point + .prose-point, td .prose-point + .prose-point { margin-top: 4px; }
+
 /* 每节开头的一句话结论：正文级可读，不再用 muted 小字 */
 .section-lead { max-width: 900px; margin: 0 0 34px; font-size: clamp(17px, 1.4vw, 20px); line-height: 1.6; }
 

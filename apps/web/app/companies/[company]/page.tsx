@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { isValidElement } from "react";
 import { existsSync } from "node:fs";
 import { finalPath, listFinalCompanies, loadFinal } from "../../../lib/final-report";
 
@@ -48,6 +49,52 @@ function text(value: Json): string {
     return `${value.value}${unit ? ` ${unit}` : ""}`;
   }
   return "—";
+}
+
+/**
+ * 百分比字段渲染：value 按规范本身可能已带 `%`（见
+ * docs/research/workflow/02-multi-dimension-analysis.md「数字纯净」规则），
+ * `unavailable` 缺失说明或 `—` 占位更不该被拼接单位——仅当结果是纯数字结尾时才补 `%`。
+ */
+function pctText(value: Json): string {
+  const raw = text(value);
+  if (raw === "—" || raw.startsWith("缺失：") || raw.endsWith("%")) return raw;
+  return `${raw}%`;
+}
+
+/**
+ * 分点断行：分析文件里的长字段按「① ② ③」（或 `1)`、换行）分点书写
+ * （见 docs/research/workflow/02-multi-dimension-analysis.md），这里按点切开，
+ * 每点独占一行——否则序号会糊在同一段里，分点等于没分。
+ * 只切出 1 段时按普通文本渲染，不加行结构。
+ *
+ * `1)` 形式必须紧跟句末标点，且序号后不能再接数字：否则「任期 11.8 年」这类
+ * 句首小数会被当成列表序号，把一句话劈成两行。
+ */
+const POINT_BOUNDARY = /\s*(?:\n+|(?=[①-⑳])|(?<=[。；;])\s*(?=\d{1,2}[.)）](?!\d)))/;
+
+function splitPoints(raw: string): string[] {
+  const parts = raw.split(POINT_BOUNDARY).map((part) => part.trim()).filter(Boolean);
+  return parts.length > 1 ? parts : [];
+}
+
+/** 分点内容（不含块级包装，可直接放进 dd / p / li）。 */
+function Points({ value }: { value: Json }) {
+  const raw = text(value);
+  const points = splitPoints(raw);
+  if (points.length === 0) return <>{raw}</>;
+  return (
+    <>
+      {points.map((point, index) => (
+        <span className="prose-point" key={index}>{point}</span>
+      ))}
+    </>
+  );
+}
+
+/** 段落形态的分点叙述。 */
+function Prose({ value, className }: { value: Json; className?: string }) {
+  return <p className={className}><Points value={value} /></p>;
 }
 
 /** 双源校验对象的误差标记。 */
@@ -104,7 +151,7 @@ function Inquiry({ inquiry }: { inquiry: Json }) {
   return (
     <aside className="inquiry-block">
       <p className="q">追问 · {inquiry.question}</p>
-      <p className="a">{text(inquiry.answer)}</p>
+      <Prose className="a" value={inquiry.answer} />
     </aside>
   );
 }
@@ -136,14 +183,18 @@ function Section({ id, kicker, title, children }: {
   );
 }
 
-/** 键值行：承载长文本的 dt/dd（四列窄栏放长段会变成高塔，改用全宽行）。 */
+/**
+ * 键值行：承载长文本的 dt/dd（四列窄栏放长段会变成高塔，改用全宽行）。
+ * 值可以直接给原始字段（对象、unavailable 占位都交给 Points → text 处理），
+ * 也可以给已经拼好的 JSX。
+ */
 function KvList({ rows }: { rows: [string, Json][] }) {
   return (
     <dl className="kv-list">
       {rows.map(([label, value]) => (
         <div key={label}>
           <dt>{label}</dt>
-          <dd>{typeof value === "string" || typeof value === "number" ? text(value) : value}</dd>
+          <dd>{isValidElement(value) ? value : <Points value={value} />}</dd>
         </div>
       ))}
     </dl>
@@ -174,6 +225,12 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
   const valuation = collection.currentValuation ?? {};
   const scores = final.meta?.validation?.scores ?? {};
   const essence = dims.businessEssence ?? {};
+  /**
+   * 收入结构表的金额单位：分析文件用 revenueBreakdown.unit 显式声明（如「亿元」），
+   * 未声明时退回报告币种的百万口径——否则跨市场公司会被标上错误币种。
+   */
+  const revenueUnitLabel = essence.analysis?.revenueBreakdown?.unit
+    ?? `百万 ${collection.meta?.reportingCurrency ?? "USD"}`;
   const moat = dims.moat ?? {};
   const inversion = dims.inversion ?? {};
   const management = dims.management ?? {};
@@ -224,9 +281,9 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
               <article className="driver-card" key={dim.dimensionId}>
                 <h3>{dim.title}</h3>
                 <strong>{text(dim.confidence)} / 10</strong>
-                <p className="dim-conclusion">{text(dim.conclusion)}</p>
+                <Prose className="dim-conclusion" value={dim.conclusion} />
                 <Fold label="打分依据">
-                  <p>{text(dim.scoreBasis)}</p>
+                  <Prose value={dim.scoreBasis} />
                 </Fold>
               </article>
             ))}
@@ -240,7 +297,7 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
             {[strategies.noPosition, strategies.holding].filter(Boolean).map((strategy: Json) => (
               <article key={strategy.title}>
                 <h3>{strategy.title}</h3>
-                <p className="advice">{text(strategy.advice)}</p>
+                <Prose className="advice" value={strategy.advice} />
                 {Array.isArray(strategy.triggers) && strategy.triggers.length > 0 ? (
                   <>
                     <ul className="trigger-lines">
@@ -254,7 +311,7 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
                     <Fold label="各触发条件的依据">
                       <ul>
                         {strategy.triggers.map((trigger: Json, index: number) => (
-                          <li key={index}>{text(trigger.basis)}</li>
+                          <li key={index}><Points value={trigger.basis} /></li>
                         ))}
                       </ul>
                     </Fold>
@@ -271,9 +328,9 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
                   {group.signals.map((signal: Json, index: number) => (
                     <li key={index}>
                       <strong className="signal-name">{text(signal.signal)}</strong>
-                      <p className="signal-desc">{text(signal.observable)}</p>
+                      <Prose className="signal-desc" value={signal.observable} />
                       <Fold label="依据">
-                        <p>{text(signal.basis)}</p>
+                        <Prose value={signal.basis} />
                       </Fold>
                     </li>
                   ))}
@@ -288,7 +345,7 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
           <h3 className="block-heading">收入结构（{text(essence.analysis?.revenueBreakdown?.period)}）</h3>
           <div className="table-wrap">
             <table>
-              <thead><tr><th>分部</th><th>收入（百万 USD）</th><th>占比（%）</th><th>来源</th></tr></thead>
+              <thead><tr><th>分部</th><th>收入（{revenueUnitLabel}）</th><th>占比（%）</th><th>来源</th></tr></thead>
               <tbody>
                 {(essence.analysis?.revenueBreakdown?.items ?? []).map((item: Json, index: number) => (
                   <tr key={index}>
@@ -311,9 +368,9 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
                     {(essence.analysis?.profitabilityTrend5y?.series ?? []).map((row: Json, index: number) => (
                       <tr key={index}>
                         <td>{text(row.fiscalYear)}</td>
-                        <td>{text(row.grossMarginPct)}%</td>
-                        <td>{text(row.operatingMarginPct)}%</td>
-                        <td>{text(row.netMarginPct)}%</td>
+                        <td>{pctText(row.grossMarginPct)}</td>
+                        <td>{pctText(row.operatingMarginPct)}</td>
+                        <td>{pctText(row.netMarginPct)}</td>
                         <td><SourceLink source={row.source} /></td>
                       </tr>
                     ))}
@@ -322,7 +379,7 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
               </div>
               {essence.analysis?.profitabilityTrend5y?.interpretation ? (
                 <Fold label="趋势解读">
-                  <p>{text(essence.analysis.profitabilityTrend5y.interpretation)}</p>
+                  <Prose value={essence.analysis.profitabilityTrend5y.interpretation} />
                 </Fold>
               ) : null}
             </>
@@ -330,9 +387,9 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
           <h3 className="block-heading">商业模式与粘性</h3>
           <KvList rows={[
             ["商业模式", `${text(essence.analysis?.businessModelCanvas?.salesModel)} · ${text(essence.analysis?.businessModelCanvas?.productForm)}`],
-            ["粘性 / 锁定", `${text(essence.analysis?.stickiness?.level)}——${text(essence.analysis?.stickiness?.mechanism)}`],
-            ["毛利率 vs 同行", `${text(essence.analysis?.grossMarginVsPeers?.companyPct)}%：${text(essence.analysis?.grossMarginVsPeers?.whyHigherOrLower)}`],
-            ["经营杠杆", text(essence.analysis?.operatingLeverage?.observation)],
+            [`粘性 / 锁定 · ${text(essence.analysis?.stickiness?.level)}`, essence.analysis?.stickiness?.mechanism],
+            [`毛利率 vs 同行 · ${pctText(essence.analysis?.grossMarginVsPeers?.companyPct)}`, essence.analysis?.grossMarginVsPeers?.whyHigherOrLower],
+            ["经营杠杆", essence.analysis?.operatingLeverage?.observation],
           ]} />
           <EvidenceFold items={[...(essence.analysis?.stickiness?.evidence ?? []), ...(essence.analysis?.operatingLeverage?.evidence ?? [])]} label="本节证据" />
           <Inquiry inquiry={essence.inquiry} />
@@ -358,8 +415,8 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
             </table>
           </div>
           <KvList rows={[
-            ["过去 5 年", `${text(moat.analysis?.trendPast5y?.direction)}——${text(moat.analysis?.trendPast5y?.basis)}`],
-            ["未来 5 年", `${text(moat.analysis?.trendNext5y?.direction)}——${text(moat.analysis?.trendNext5y?.basis)}`],
+            [`过去 5 年 · ${text(moat.analysis?.trendPast5y?.direction)}`, moat.analysis?.trendPast5y?.basis],
+            [`未来 5 年 · ${text(moat.analysis?.trendNext5y?.direction)}`, moat.analysis?.trendNext5y?.basis],
           ]} />
           <Inquiry inquiry={moat.inquiry} />
           <DataGaps gaps={moat.dataGaps} />
@@ -405,10 +462,10 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
           <Fold label={`跨学科检验 ${(inversion.analysis?.crossDisciplinaryChecks ?? []).length} 项 · 偏误自查 ${(inversion.analysis?.biasSelfCheck ?? []).length} 项`}>
             <ul>
               {(inversion.analysis?.crossDisciplinaryChecks ?? []).map((item: Json, index: number) => (
-                <li key={`m${index}`}><strong>{text(item.model)}</strong>：{text(item.finding)}</li>
+                <li key={`m${index}`}><strong>{text(item.model)}</strong>：<Points value={item.finding} /></li>
               ))}
               {(inversion.analysis?.biasSelfCheck ?? []).map((item: Json, index: number) => (
-                <li key={`b${index}`}><strong>{text(item.bias)}</strong>：{text(item.check)}</li>
+                <li key={`b${index}`}><strong>{text(item.bias)}</strong>：<Points value={item.check} /></li>
               ))}
             </ul>
           </Fold>
@@ -436,12 +493,15 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
             </table>
           </div>
           <KvList rows={[
-            ["资本配置", `研发回报：${text(management.analysis?.capitalAllocation?.rdReturn)}`],
-            ["并购记录", text(management.analysis?.capitalAllocation?.maTrackRecord)],
-            ["回购时机", text(management.analysis?.capitalAllocation?.buybackTiming)],
-            ["利益一致性", `持股 ${text(management.analysis?.alignment?.ownership)}`],
-            ["薪酬与减持", `${text(management.analysis?.alignment?.compensation)} 减持：${text(management.analysis?.alignment?.insiderSelling)}`],
-            ["组织与文化", `${text(management.analysis?.organization?.teamStability)} 关键人风险：${text(management.analysis?.organization?.keyPersonRisk)} 文化：${text(management.analysis?.culture)}`],
+            ["研发回报", management.analysis?.capitalAllocation?.rdReturn],
+            ["并购记录", management.analysis?.capitalAllocation?.maTrackRecord],
+            ["回购时机", management.analysis?.capitalAllocation?.buybackTiming],
+            ["管理层持股", management.analysis?.alignment?.ownership],
+            ["薪酬结构", management.analysis?.alignment?.compensation],
+            ["减持记录", management.analysis?.alignment?.insiderSelling],
+            ["团队稳定性", management.analysis?.organization?.teamStability],
+            ["关键人风险", management.analysis?.organization?.keyPersonRisk],
+            ["企业文化", management.analysis?.culture],
           ]} />
           <EvidenceFold items={[...(management.analysis?.capitalAllocation?.evidence ?? []), ...(management.analysis?.alignment?.evidence ?? [])]} label="本节证据" />
           <Inquiry inquiry={management.inquiry} />
@@ -453,15 +513,16 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
           <p className="section-lead">{text(industry.conclusion)}</p>
           <KvList rows={[
             ["范式转移", `${text(industry.analysis?.paradigmShift?.verdict)}`],
-            ["历史类比", text(industry.analysis?.historicalAnalogy)],
+            ["历史类比", industry.analysis?.historicalAnalogy],
             ["TAM", `${text(industry.analysis?.tam?.current)}；阶段：${text(industry.analysis?.tam?.growthCurve)}`],
-            ["价值链位置", text(industry.analysis?.valueChainPosition)],
-            ["技术路线风险", text(industry.analysis?.techRouteRisk)],
-            ["集中度", `客户：${text(industry.analysis?.concentration?.customers)} 供应商：${text(industry.analysis?.concentration?.suppliers)}`],
+            ["价值链位置", industry.analysis?.valueChainPosition],
+            ["技术路线风险", industry.analysis?.techRouteRisk],
+            ["客户集中度", industry.analysis?.concentration?.customers],
+            ["供应商集中度", industry.analysis?.concentration?.suppliers],
           ]} />
           <Fold label="范式转移正反方证据与 TAM 天花板检验">
-            <p>{text(industry.analysis?.paradigmShift?.reasoning)}</p>
-            <p>{text(industry.analysis?.tam?.ceiling)}</p>
+            <Prose value={industry.analysis?.paradigmShift?.reasoning} />
+            <Prose value={industry.analysis?.tam?.ceiling} />
           </Fold>
           <EvidenceFold items={industry.analysis?.concentration?.evidence} label="本节证据" />
           <Inquiry inquiry={industry.inquiry} />
@@ -484,8 +545,8 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
               ))}
           </div>
           <Fold label="三情景假设依据与工具输出">
-            <p>{text(scenario.assumptionBasis)}</p>
-            <p>{text(scenario.toolOutput)}</p>
+            <Prose value={scenario.assumptionBasis} />
+            <p className="tool-output">{text(scenario.toolOutput)}</p>
           </Fold>
           <h3 className="block-heading">当前倍数</h3>
           <div className="table-wrap">
@@ -507,9 +568,9 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
             </table>
           </div>
           <KvList rows={[
-            ["反向 DCF", `${text(dimValuation.analysis?.reverseDcf?.impliedGrowth)}`],
-            ["vs 自身历史", `${text(dimValuation.analysis?.vsOwnHistory?.metric)} 当前 ${text(dimValuation.analysis?.vsOwnHistory?.currentValue)}；${text(dimValuation.analysis?.vsOwnHistory?.historicalRange)}`],
-            ["或有稀释", text(dimValuation.analysis?.dilutionNote)],
+            ["反向 DCF", dimValuation.analysis?.reverseDcf?.impliedGrowth],
+            [`vs 自身历史 · ${text(dimValuation.analysis?.vsOwnHistory?.metric)} 当前 ${text(dimValuation.analysis?.vsOwnHistory?.currentValue)}`, dimValuation.analysis?.vsOwnHistory?.historicalRange],
+            ["或有稀释", dimValuation.analysis?.dilutionNote],
           ]} />
           {peerRows.length > 0 ? (
             <>
@@ -531,8 +592,8 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
               </div>
               {peerVerdict ? (
                 <Fold label="同行对比结论">
-                  <p>{text(peerVerdict.peForward)}</p>
-                  <p>{text(peerVerdict.ps)}</p>
+                  <Prose value={peerVerdict.peForward} />
+                  <Prose value={peerVerdict.ps} />
                 </Fold>
               ) : null}
             </>

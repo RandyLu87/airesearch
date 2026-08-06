@@ -19,7 +19,7 @@
 |------|--------|--------|---------|
 | 美股 | macrotrends | stockanalysis | SEC EDGAR（10-K / 10-Q） |
 | 港股 | aastocks | macrotrends（ADR 代码） | HKEX 披露易年报 PDF |
-| A股 | 东方财富 | 巨潮资讯 | 原始年报 / 季报 PDF |
+| A股 | 东方财富 | 巨潮资讯；行情/估值/复权/分红另用 Tushare（`TUSHARE_TOKEN`，报表接口无权限、多个接口 1 次/小时，用法与频次见规范正文） | 原始年报 / 季报 PDF |
 | 台股 | FinMind（`docs/research/tools/twstock_data.py`） | Goodinfo | 公开资讯观测站 MOPS |
 
 误差处理规则、常见差异原因（GAAP vs Non-GAAP、汇率、财年定义、合并口径）、未上市公司 `[估计]` 标记、历史序列前复权要求，全部以该规范正文为准，不在此复述。

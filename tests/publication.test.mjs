@@ -67,6 +67,18 @@ const fixtureFinal = {
             ],
           },
           profitabilityTrend5y: { series: [] },
+          // 长字段按 ①②③ 分点书写（docs/research/workflow/02-multi-dimension-analysis.md），
+          // 页面必须把每点断成独立一行，而不是糊成一整段。
+          stickiness: {
+            level: "强",
+            mechanism: "① 数据沉淀在平台内，迁移要重做接入。② 年约加预付款，违约成本高。③ 工作流与 API 深度绑定。",
+            evidence: [],
+          },
+          // 句末标点后的小数不是列表序号：这一句必须整段留在一行。
+          operatingLeverage: {
+            observation: "费用增速低于收入增速。11.8 个百分点的差额来自规模摊薄。",
+            evidence: [],
+          },
         },
         inquiry: { question: "这门生意好在哪？", answer: "现金流前置，边际成本趋零。" },
         dataGaps: [],
@@ -167,6 +179,27 @@ test("publishes a company analysis page from financials-final.json", () => {
   // 完整性得分来自合并脚本记录的校验结果。
   assert.equal(text.includes("9.1 / 8.4 / 9.6"), true, "validation scores missing");
   assertLocalReferencesResolve(html, pagePath, "company analysis page");
+});
+
+test("point-numbered long fields render one point per line", () => {
+  const html = readFileSync(path.join(siteRoot, "companies", `${fixtureCompany}.html`), "utf8");
+  const points = [...html.matchAll(/<span class="prose-point">([^<]*)<\/span>/g)].map((m) => m[1]);
+  // 三个 ① 点各自成为一个 .prose-point（CSS 里 display:block），序号不写进同一段。
+  assert.equal(points.includes("① 数据沉淀在平台内，迁移要重做接入。"), true, `points: ${points}`);
+  assert.equal(points.includes("② 年约加预付款，违约成本高。"), true, `points: ${points}`);
+  assert.equal(points.includes("③ 工作流与 API 深度绑定。"), true, `points: ${points}`);
+  // 句首小数（11.8）不是序号，不能把整句劈开。
+  assert.equal(
+    points.some((point) => point.startsWith("11.8")),
+    false,
+    `a decimal after a full stop must not split a line: ${points}`,
+  );
+  // 单点字段不该被包成 .prose-point——它没有分点结构。
+  assert.equal(
+    points.some((point) => point.includes("现金流前置")),
+    false,
+    "single-point text must stay a plain paragraph",
+  );
 });
 
 test("missing values render their reason, never zeros or blanks", () => {
