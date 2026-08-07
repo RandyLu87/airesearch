@@ -1,0 +1,992 @@
+{
+  "meta": {
+    "companyId": "hk-2015-li-auto",
+    "companyName": "理想汽车 (Li Auto Inc.)",
+    "ticker": "2015.HK（港股）/ LI（美股ADS，纳斯达克）",
+    "exchange": "香港交易所主板 + 纳斯达克（双重主要上市，2020年8月纳斯达克IPO，2021年8月港股双重主要上市）",
+    "market": "hk",
+    "reportingCurrency": "人民币 (RMB/CNY)",
+    "accountingBasis": "US GAAP",
+    "fiscalYearEnd": "12月31日（自然年）",
+    "dataCutoff": "2026-08-07",
+    "collectedAt": "2026-08-07",
+    "sourceNote": "港股规范主来源 aastocks.com 页面为纯前端异步加载（JS token化接口），本会话浏览器扩展未连接，curl/WebFetch 均无法取得渲染后数值；美股规范副来源 macrotrends.net 对自动化请求返回 403。已用 stockanalysis.com + FMP + investing.com 三方交叉替代，并以 SEC EDGAR 原始 6-K/20-F 一手文件为最终裁决依据。",
+    "sources": {
+      "primary": {
+        "name": "stockanalysis.com",
+        "url": "https://stockanalysis.com/stocks/li/financials/"
+      },
+      "secondary": {
+        "name": "Financial Modeling Prep / investing.com",
+        "url": "https://www.investing.com/equities/li-auto"
+      },
+      "originalFilings": [
+        {
+          "type": "20-F",
+          "period": "FY2025（截至2025-12-31，2026-04-10申报）",
+          "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926041705/li-20251231x20f.htm"
+        },
+        {
+          "type": "6-K",
+          "period": "FY2025 Q4及全年业绩（2026-03-12）",
+          "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926026803/tm268559d1_ex99-1.htm"
+        },
+        {
+          "type": "6-K",
+          "period": "2026 Q1业绩（2026-05-28）",
+          "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926067465/tm2615887d1_ex99-1.htm"
+        },
+        {
+          "type": "6-K",
+          "period": "港交所股本变动披露（截至2026-07-24）",
+          "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926089389/tm2621849d1_ex99-1.htm"
+        }
+      ]
+    }
+  },
+  "revenueStructure": {
+    "_dimension": "1. 收入结构：最近财年及近4季度分部收入、增速、毛利率",
+    "latestFiscalYear": {
+      "period": "FY2025（2025-01-01 至 2025-12-31）",
+      "totalRevenue": {
+        "value": 112312.511,
+        "unit": "currency",
+        "currency": "RMB百万",
+        "source1": {
+          "name": "SEC EDGAR (6-K/20-F 原始披露)",
+          "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926026803/tm268559d1_ex99-1.htm",
+          "value": 112312.511
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "url": "https://stockanalysis.com/stocks/li/financials/",
+          "value": 112313
+        },
+        "deviationPct": 0.0009,
+        "flag": "ok"
+      },
+      "segments": [
+        {
+          "name": "车辆销售收入 (Vehicle sales)",
+          "revenue": {
+            "value": 106683.1,
+            "unit": "currency",
+            "currency": "RMB百万",
+            "source1": {
+              "name": "SEC EDGAR (6-K/20-F 原始披露)",
+              "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926026803/tm268559d1_ex99-1.htm",
+              "value": 106683.1
+            },
+            "source2": {
+              "status": "unavailable",
+              "reason": "stockanalysis.com 财务模型仅披露合并总收入，未拆分车辆销售与其他服务收入，已查其 financials/income-statement 子页确认无分部数据"
+            }
+          },
+          "revenueSharePct": 94.99,
+          "yoyGrowthPct": {
+            "status": "unavailable",
+            "reason": "已获取FY2025分部数据，但未采集到FY2024同口径分部拆分用于同比计算，SEC 6-K FY2024原文与stockanalysis均未在本轮采集中被要求逐分部取数，仅取到FY2024合并总收入"
+          },
+          "grossMarginPct": 17.9
+        },
+        {
+          "name": "其他销售及服务收入 (Other sales and services)",
+          "revenue": {
+            "value": 5629.411,
+            "unit": "currency",
+            "currency": "RMB百万",
+            "source1": {
+              "name": "SEC EDGAR (6-K/20-F 原始披露)",
+              "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926026803/tm268559d1_ex99-1.htm",
+              "value": 5629.411
+            },
+            "source2": {
+              "status": "unavailable",
+              "reason": "同上，第三方聚合站未单列该分部"
+            }
+          },
+          "revenueSharePct": 5.01,
+          "yoyGrowthPct": {
+            "status": "unavailable",
+            "reason": "同车辆销售分部，缺FY2024同口径数据"
+          },
+          "grossMarginPct": {
+            "status": "unavailable",
+            "reason": "公司仅披露综合毛利率(18.7%)与车辆毛利率(17.9%)，未单独披露其他收入分部毛利率，已查SEC 6-K原文及stockanalysis.com均无此拆分"
+          }
+        }
+      ]
+    },
+    "recentQuarters": [
+      {
+        "period": "2025 Q2（2025-04-01至2025-06-30）",
+        "totalRevenue": {
+          "value": 30245.613,
+          "unit": "currency",
+          "currency": "RMB百万",
+          "source1": {
+            "name": "SEC EDGAR (6-K/20-F 原始披露)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465925084336/tm2524527d1_ex99-1.htm",
+            "value": 30245.613
+          }
+        },
+        "yoyGrowthPct": -4.5,
+        "segments": [
+          {
+            "name": "车辆销售",
+            "revenue": 28885.133,
+            "yoyGrowthPct": {
+              "status": "unavailable",
+              "reason": "缺2024Q2同口径分部数据"
+            }
+          },
+          {
+            "name": "其他收入",
+            "revenue": 1360.48,
+            "yoyGrowthPct": {
+              "status": "unavailable",
+              "reason": "缺2024Q2同口径分部数据"
+            }
+          }
+        ]
+      },
+      {
+        "period": "2025 Q3（2025-07-01至2025-09-30）",
+        "totalRevenue": {
+          "value": 27364.662,
+          "unit": "currency",
+          "currency": "RMB百万",
+          "source1": {
+            "name": "SEC EDGAR (6-K/20-F 原始披露)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465925116474/tm2532303d1_ex99-1.htm",
+            "value": 27364.662
+          }
+        },
+        "yoyGrowthPct": -36.2,
+        "segments": [
+          {
+            "name": "车辆销售",
+            "revenue": 25867.091,
+            "yoyGrowthPct": {
+              "status": "unavailable",
+              "reason": "缺2024Q3同口径分部数据"
+            }
+          },
+          {
+            "name": "其他收入",
+            "revenue": 1497.571,
+            "yoyGrowthPct": {
+              "status": "unavailable",
+              "reason": "缺2024Q3同口径分部数据"
+            }
+          }
+        ]
+      },
+      {
+        "period": "2025 Q4（2025-10-01至2025-12-31）",
+        "totalRevenue": {
+          "value": 28775.422,
+          "unit": "currency",
+          "currency": "RMB百万",
+          "source1": {
+            "name": "SEC EDGAR (6-K/20-F 原始披露)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926026803/tm268559d1_ex99-1.htm",
+            "value": 28775.422
+          }
+        },
+        "yoyGrowthPct": -35.0,
+        "segments": [
+          {
+            "name": "车辆销售",
+            "revenue": 27252.291,
+            "yoyGrowthPct": {
+              "status": "unavailable",
+              "reason": "缺2024Q4同口径分部数据"
+            }
+          },
+          {
+            "name": "其他收入",
+            "revenue": 1523.131,
+            "yoyGrowthPct": {
+              "status": "unavailable",
+              "reason": "缺2024Q4同口径分部数据"
+            }
+          }
+        ]
+      },
+      {
+        "period": "2026 Q1（2026-01-01至2026-03-31，最新已披露季度）",
+        "totalRevenue": {
+          "value": 22982.911,
+          "unit": "currency",
+          "currency": "RMB百万",
+          "source1": {
+            "name": "SEC EDGAR (6-K/20-F 原始披露)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926067465/tm2615887d1_ex99-1.htm",
+            "value": 22982.911
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/li/financials/?p=quarterly",
+            "value": 22983
+          }
+        },
+        "yoyGrowthPct": -11.4,
+        "segments": [
+          {
+            "name": "车辆销售",
+            "revenue": 21533.182,
+            "yoyGrowthPct": {
+              "status": "unavailable",
+              "reason": "缺2025Q1同口径分部数据"
+            }
+          },
+          {
+            "name": "其他收入",
+            "revenue": 1449.729,
+            "yoyGrowthPct": {
+              "status": "unavailable",
+              "reason": "缺2025Q1同口径分部数据"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "financialMetrics": {
+    "_dimension": "2. 财务指标：近5年收入、净利润、毛利率、经营利润率、自由现金流、现金储备",
+    "annual": [
+      {
+        "fiscalYear": "FY2021",
+        "revenue": {
+          "value": 27009.779,
+          "unit": "currency",
+          "currency": "RMB百万",
+          "source1": {
+            "name": "SEC EDGAR (6-K/20-F 原始披露)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465922027018/tm227715d1_ex99-2.htm",
+            "value": 27009.779
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/li/financials/",
+            "value": 27010
+          },
+          "deviationPct": 0.001,
+          "flag": "ok"
+        },
+        "netProfit": {
+          "gaap": {
+            "value": -321.455,
+            "unit": "RMB百万",
+            "note": "GAAP口径，归属普通股股东净亏损"
+          },
+          "nonGaap": {
+            "value": 779.9,
+            "unit": "RMB百万",
+            "note": "公司自定义Non-GAAP口径（剔除股权激励费用等），仅一手来源，第三方聚合站不单列"
+          }
+        },
+        "grossMarginPct": 21.3,
+        "operatingMarginPct": -3.8,
+        "freeCashFlow": {
+          "value": 4332.7,
+          "unit": "RMB百万",
+          "note": "公司口径；stockanalysis口径为4,896（偏差13.0%，major-diff），经排查系资本开支统计范围不同（是否含融资租赁/无形资产投入），非数据错误，以公司披露口径为准，详见crossValidationLog"
+        },
+        "cashReserves": {
+          "value": 50161.3,
+          "unit": "RMB百万",
+          "note": "现金及等价物+受限现金+短期投资，含受限现金约2,638.8百万；stockanalysis口径不含受限现金"
+        }
+      },
+      {
+        "fiscalYear": "FY2022",
+        "revenue": {
+          "value": 45286.816,
+          "unit": "currency",
+          "currency": "RMB百万",
+          "source1": {
+            "name": "SEC EDGAR (6-K/20-F 原始披露)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465923023364/",
+            "value": 45286.816
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/li/financials/",
+            "value": 45287
+          },
+          "deviationPct": 0.0004,
+          "flag": "ok"
+        },
+        "netProfit": {
+          "gaap": {
+            "value": -2012.215,
+            "unit": "RMB百万",
+            "note": "GAAP口径净亏损"
+          },
+          "nonGaap": {
+            "value": 20.8,
+            "unit": "RMB百万",
+            "note": "Non-GAAP口径，仅一手来源"
+          }
+        },
+        "grossMarginPct": 19.4,
+        "operatingMarginPct": -8.1,
+        "freeCashFlow": {
+          "value": 2252.4,
+          "unit": "RMB百万"
+        },
+        "cashReserves": {
+          "value": 58449.6,
+          "unit": "RMB百万"
+        }
+      },
+      {
+        "fiscalYear": "FY2023",
+        "revenue": {
+          "value": 123851.332,
+          "unit": "currency",
+          "currency": "RMB百万",
+          "source1": {
+            "name": "SEC EDGAR (6-K/20-F 原始披露)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465924027311/tm247238d1_ex99-1.htm",
+            "value": 123851.332
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/li/financials/",
+            "value": 123851
+          },
+          "deviationPct": 0.0003,
+          "flag": "ok"
+        },
+        "netProfit": {
+          "gaap": {
+            "value": 11704.133,
+            "unit": "RMB百万",
+            "note": "GAAP口径净利润，首次全年盈利"
+          },
+          "nonGaap": {
+            "value": 12197.6,
+            "unit": "RMB百万",
+            "note": "Non-GAAP口径，仅一手来源"
+          }
+        },
+        "grossMarginPct": 22.2,
+        "operatingMarginPct": 6.0,
+        "freeCashFlow": {
+          "value": 44186.3,
+          "unit": "RMB百万"
+        },
+        "cashReserves": {
+          "value": 103262.8,
+          "unit": "RMB百万"
+        }
+      },
+      {
+        "fiscalYear": "FY2024",
+        "revenue": {
+          "value": 144459.946,
+          "unit": "currency",
+          "currency": "RMB百万",
+          "source1": {
+            "name": "SEC EDGAR (6-K/20-F 原始披露)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926026803/tm268559d1_ex99-1.htm",
+            "value": 144459.946
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/li/financials/",
+            "value": 144460
+          },
+          "deviationPct": 4e-05,
+          "flag": "ok"
+        },
+        "netProfit": {
+          "gaap": {
+            "value": 8032.35,
+            "unit": "RMB百万"
+          },
+          "nonGaap": {
+            "value": 10670.1,
+            "unit": "RMB百万",
+            "note": "仅一手来源"
+          }
+        },
+        "grossMarginPct": 20.5,
+        "operatingMarginPct": 4.9,
+        "freeCashFlow": {
+          "value": 8203.1,
+          "unit": "RMB百万"
+        },
+        "cashReserves": {
+          "value": 112812.5,
+          "unit": "RMB百万"
+        }
+      },
+      {
+        "fiscalYear": "FY2025",
+        "revenue": {
+          "value": 112312.511,
+          "unit": "currency",
+          "currency": "RMB百万",
+          "source1": {
+            "name": "SEC EDGAR (6-K/20-F 原始披露)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926026803/tm268559d1_ex99-1.htm",
+            "value": 112312.511
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/li/financials/",
+            "value": 112313
+          },
+          "deviationPct": 0.0009,
+          "flag": "ok"
+        },
+        "netProfit": {
+          "gaap": {
+            "value": 1124.438,
+            "unit": "RMB百万",
+            "note": "同比2024年大幅下滑约86%"
+          },
+          "nonGaap": {
+            "value": 2397.2,
+            "unit": "RMB百万",
+            "note": "仅一手来源"
+          }
+        },
+        "grossMarginPct": 18.7,
+        "operatingMarginPct": -0.5,
+        "freeCashFlow": {
+          "value": -12816.9,
+          "unit": "RMB百万",
+          "note": "2025年自由现金流转负，主要消耗集中在Q1-Q3（Q3单季FCF约-8,900百万），Q4转正"
+        },
+        "cashReserves": {
+          "value": 101239.5,
+          "unit": "RMB百万",
+          "note": "含受限现金约216.3百万；stockanalysis口径(不含受限现金)为101,023，偏差0.11%，一致"
+        }
+      }
+    ]
+  },
+  "competitiveLandscape": {
+    "_dimension": "3. 竞争格局：市场份额、主要竞争对手对比",
+    "marketShare": {
+      "valuePct": 13.4,
+      "marketDefinition": "中国20万元以上新能源汽车市场份额（境外分析机构BeyondSPX估算口径，2025年Q2数据），分母为全国20万元以上NEV零售，分子为理想汽车该价格带销量",
+      "asOf": "2025年Q2（估算）",
+      "source": {
+        "name": "BeyondSPX",
+        "url": "https://beyondspx.com/quote/LI/analysis/li-auto-s-identity-crisis-can-entrepreneurial-agility-reverse-execution-stumbles-nasdaq-li"
+      },
+      "note": "口径差异较大，未找到乘联会/中汽协对该口径的官方精确数字。另有多个并存口径：①20万以上新能源中国品牌销量排名第一（2026年Q1起，定性排名非百分比，来源：盖世汽车2026-05）；②增程式细分市场份额约30%（2025财年，境外估算口径，2026年因纯电转型出现结构性下滑）；③全部NEV市场份额未查到官方精确百分比（已查中汽协/乘联会公开报道均未直接披露）。多口径并存反映市场份额统计本身存在方法论分歧，建议交叉参考而非单一采信。"
+    },
+    "competitors": [
+      {
+        "name": "蔚来 NIO",
+        "ticker": "NIO (NYSE) / 9866.HK",
+        "marketSharePct": {
+          "status": "unavailable",
+          "reason": "未查到统一口径的精确份额数字"
+        },
+        "revenue": "2026Q1: 255.3亿元人民币（同比+112.2%）",
+        "grossMarginPct": 19.0,
+        "note": "同属高端定位但技术路线为纯电+换电；2026Q1整车毛利率18.8%创四年新高，已连续两季度Non-GAAP经营盈利，现金储备482亿元，营收增速远超理想同期(-11.4%)"
+      },
+      {
+        "name": "小鹏汽车 XPeng",
+        "ticker": "XPEV (NYSE) / 9868.HK",
+        "marketSharePct": {
+          "status": "unavailable",
+          "reason": "未查到统一口径的精确份额数字"
+        },
+        "revenue": "2026Q1: 130.3亿元人民币（汽车销售110.0亿+服务及其他20.3亿，同比+41.2%）",
+        "grossMarginPct": 20.6,
+        "note": "纯电+智能化路线，2026Q1毛利率20.6%已反超理想同期(7.9%)，服务收入占比提升显示软件贡献增大"
+      },
+      {
+        "name": "问界 AITO / 赛力斯 Seres",
+        "ticker": "601127.SH（赛力斯）",
+        "marketSharePct": {
+          "status": "unavailable",
+          "reason": "未查到统一口径的精确份额数字"
+        },
+        "revenue": "赛力斯2025全年营收1650.5亿元人民币（同比+13.7%），净利润59.6亿元",
+        "grossMarginPct": 28.8,
+        "note": "华为智选模式（渠道+智能化由华为赋能），M9/M8定价40-50万元以上，直接对标理想高端家庭SUV；2025年毛利率28.8%显著高于理想(17.9%)，但2026年上半年因锂价与芯片涨价预告转亏(净利润-15至-18亿元)"
+      },
+      {
+        "name": "小米汽车 Xiaomi EV",
+        "ticker": "1810.HK（小米集团）",
+        "marketSharePct": {
+          "status": "unavailable",
+          "reason": "未查到统一口径的精确份额数字"
+        },
+        "revenue": "2026Q1智能电动汽车业务收入190亿元人民币",
+        "grossMarginPct": 20.1,
+        "note": "互联网品牌+生态导入，YU7直接对标理想i6所在的中大型纯电SUV细分；2026上半年YU7交付10.46万辆 vs 理想i6交付12.04万辆，竞争激烈；公司预计2026全年毛利率同比继续下滑"
+      },
+      {
+        "name": "比亚迪高端矩阵（腾势/仰望/方程豹）",
+        "ticker": "1211.HK / 002594.SZ（比亚迪）",
+        "marketSharePct": {
+          "status": "unavailable",
+          "reason": "三品牌合计约占比亚迪集团总销量8.4%（2025年），但未查到其在理想所处细分市场的独立份额"
+        },
+        "revenue": "未单独披露（比亚迪整体口径）",
+        "grossMarginPct": {
+          "status": "unavailable",
+          "reason": "未查到腾势/方程豹/仰望单独毛利率，仅有比亚迪集团整体口径约20.5%"
+        },
+        "note": "方程豹主打越野、腾势主打家用高端(N8L/N9)、仰望主打百万级豪华，与理想在30万+家庭SUV上正面竞争；2026年7月三品牌合计约6万辆"
+      }
+    ]
+  },
+  "businessModelMoat": {
+    "_dimension": "4. 商业模式与护城河：核心竞争优势来源",
+    "oneLiner": "理想汽车是一家面向中国家庭用户的整车制造商，核心盈利来自一次性整车销售（增程式+纯电SUV/MPV），软件与智驾能力目前主要通过整车配置一次性定价（选装/版本差价）变现，而非订阅制经常性收入",
+    "revenueModel": "一次性整车销售为主（占比约95%），叠加少量嵌入式服务/软件包/金融保险导流收入（约5%），不同于特斯拉FSD或蔚来BaaS换电的订阅制模式",
+    "moats": [
+      {
+        "type": "品牌定价权",
+        "evidence": "以\"移动的家\"理念主打家庭用户空间与智能交互需求，2025年品牌均价溢价约12%（ASP约31.2万元）高于增程式竞品均值；来源：BeyondSPX分析",
+        "trend": "变窄"
+      },
+      {
+        "type": "技术专利壁垒（增程式先发优势）",
+        "evidence": "2019年逆势押注EREV路线，一度占据增程细分市场约30%份额（2025财年）；但2025年增程式行业增速从70.9%骤降至6%，2026年前5月零售同比下跌15.9%，份额从10.3%收缩至7%，技术路线已被零跑、小鹏等厂商跟进",
+        "trend": "变窄"
+      },
+      {
+        "type": "规模效应",
+        "evidence": "连续三年(2023-2025)营收破千亿元并保持盈利，2025年末现金储备1012亿元，为国内新势力现金实力最强梯队之一",
+        "trend": "稳定"
+      },
+      {
+        "type": "技术专利壁垒（自研三电+芯片，新押注）",
+        "evidence": "自研5C增程电池（欣旺达代工，团队约270-280人）应用于全新理想L8；自研\"马赫M100\"AI芯片(5nm，1280TOPS)已于2026年5月量产上车，实现芯片-编译器-操作系统-域控制器全栈自研，架构论文入选ISCA 2026",
+        "trend": "变宽（商业化效果待验证，2026Q1毛利率反而大幅下滑至7.9%）"
+      },
+      {
+        "type": "渠道网络",
+        "evidence": "截至2026-06-30，全国零售中心495家覆盖160城；超充网络4097座站/22,593桩，5C超充桩超5000根，2026年底目标8300根/4800座以上",
+        "trend": "变宽"
+      },
+      {
+        "type": "供应链自研程度",
+        "evidence": "三电\"自研定义+外部制造\"混合模式（宁德时代/欣旺达代工），介于比亚迪全垂直整合与纯代工模式之间",
+        "trend": "稳定"
+      }
+    ]
+  },
+  "technology": {
+    "_dimension": "5. 技术能力：核心技术栈、研发投入",
+    "coreTechStack": [
+      "增程式电动系统(EREV) — 第三代增程器+800V碳化硅电驱",
+      "自研5C增程专用电池（CLTC纯电续航430km，理想L8搭载）",
+      "自动驾驶：AD Max（VLA司机大模型，2025年8月理想i8首搭，OTA 8.2版本强化）/ AD Pro（城市NOA，J6M平台）",
+      "智能座舱：理想同学（2026年OTA 8.2起具备主动对话能力）",
+      "自研AI芯片：马赫M100（5nm车规工艺，单芯片1280 TOPS，2026年5月量产上车，理想L9首发）"
+    ],
+    "rdExpense": {
+      "value": 11300,
+      "unit": "currency",
+      "currency": "RMB百万",
+      "note": "FY2025研发费用约113亿元，同比基本持平（FY2024为111亿元，+4.6%）；FY2025 Q4单季30亿元，同比+25.3%",
+      "source1": {
+        "name": "SEC EDGAR (6-K/20-F 原始披露)",
+        "url": "https://finance.eastmoney.com/a/202603133671605762.html",
+        "value": 11300
+      }
+    },
+    "rdIntensityPct": 10.06,
+    "rdTrend": "2021→2022翻倍增长(32.9亿→67.8亿)，2022→2023继续大增(→106亿)，2023→2024增速大幅放缓(→111亿，+4.6%)，2024→2025基本持平(→113亿)；研发费用率因营收波动而波动：2024年营收大增使费用率降至7.7%，2025年营收下滑22.3%使费用率被动回升至约10.06%",
+    "note": "AI相关研发占比达50%（2025年官方口径）；未查到理想资本化研发支出的具体披露口径，已查SEC 6-K/20-F及stockanalysis均未见资本化研发单独列示"
+  },
+  "management": {
+    "_dimension": "6. 管理层：创始人/CEO履历、持股比例、关键决策记录",
+    "founderCeo": {
+      "name": "李想 (Li Xiang)",
+      "background": "1981年生，高中学历；2000年创办IT垂直网站\"泡泡网\"；2005年创办\"汽车之家\"并于2013年推动其纽交所上市（巅峰市值约150亿美元），上市约两年后卸任汽车之家总裁；2015年创立\"车和家\"（2019年更名理想汽车）",
+      "tenure": "约11年（自2015年创立起任创始人、董事长兼CEO）"
+    },
+    "ownership": {
+      "economicPct": 21.7,
+      "votingPct": 68.7,
+      "source": {
+        "name": "理想汽车2025年年报(20-F)，媒体转述截至2026-03-18口径",
+        "url": "https://finance.sina.com.cn/wm/2026-04-10/doc-inhtztir5018834.shtml"
+      },
+      "note": "AB股结构：A类每股1票不可转B类，B类每股10票可随时1:1转A类。李想持有B类股355,812,080股+A类股108,557,400股。2024年年报口径(截至2025-02-28)为经济权益21.9%/投票权68.9%，同比小幅下降系股权激励行权稀释。"
+    },
+    "otherMajorShareholders": [
+      {
+        "name": "王兴(美团创始人)",
+        "economicPct": 17.2,
+        "votingPct": 6.9,
+        "asOf": "2025年年报(截至2026-03-18)",
+        "note": "2019年C轮融资危机时期领投5.3亿美元关键轮次的核心投资人"
+      }
+    ],
+    "keyDecisions": [
+      {
+        "date": "2019-08",
+        "decision": "行业普遍质疑增程式路线、公司C轮融资遇冷之际，坚持增程式技术路线，获王兴领投5.3亿美元C轮融资渡过至暗时刻",
+        "outcome": "2020-2023年增程式SUV成为核心盈利来源，助力理想成为造车新势力中最早规模化盈利的公司之一"
+      },
+      {
+        "date": "2024-03",
+        "decision": "发布首款纯电旗舰MPV理想MEGA（近60万元）",
+        "outcome": "上市72小时退订量(10,297台)远超大定(3,218台)，因外观设计引发\"灵车梗\"舆论危机；李想公开承认\"节奏、目标判断错误\"，放弃年销80万辆目标；同年10月因冷却液渗漏召回11,411辆，18人被问责"
+      },
+      {
+        "date": "2024-04",
+        "decision": "史上最大内部重组之一：矩阵组织2.0升级，CEO办公室更名\"产品与战略群组\"",
+        "outcome": "弱化供应链与商业销售职能，为后续多轮架构调整埋下基础"
+      },
+      {
+        "date": "2025-03至2025-08",
+        "decision": "销售区域架构反复调整：3月合并五大\"战区\"放权→6月成立\"智能汽车群组\"→8月撤销战区改总部直管",
+        "outcome": "反映销量下滑压力下的组织试错，被称为\"第六次重大组织重组\"，决策效率问题未完全解决"
+      },
+      {
+        "date": "2026-07",
+        "decision": "再次调整架构，拆分产品部门部分职能并入研发体系，据报道转向类似丰田的Chief Engineer(CE)制",
+        "outcome": "2025年全年销量405,943-406,343辆，仅完成原定64万辆目标的约63.4%；净利润同比暴跌85.8%；促使公司2026年3月推出10亿美元股票回购计划"
+      }
+    ]
+  },
+  "industryOutlook": {
+    "_dimension": "7. 行业前景：TAM（总可寻址市场）、增长预测",
+    "tam": {
+      "value": 19000000,
+      "currency": "辆（销量口径，非货币金额）",
+      "definition": "中国新能源汽车(NEV)市场2026年预测销量，中汽协官方口径；2026年上半年NEV渗透率57.4%(乘联会)/67.2%(中汽协，口径含更广泛车型/批发范围)",
+      "asOf": "2026年预测（中汽协，2026年发布）",
+      "source": {
+        "name": "中国汽车工业协会(中汽协)",
+        "url": "https://k.sina.com.cn/article_7880068204_1d5b04c6c06801c2aa.html"
+      }
+    },
+    "growthForecast": {
+      "cagrPct": 15.2,
+      "horizon": "2026年单年同比增速（中汽协预测，短期官方口径）；中长期口径：麦肯锡预测2030年中国NEV乘用车渗透率接近70%、销量达1800万辆",
+      "source": {
+        "name": "中汽协 / 麦肯锡中国",
+        "url": "https://www.mckinsey.com.cn/2030%E5%B9%B4%E5%85%A8%E7%90%83%E4%B9%98%E7%94%A8%E8%BD%A6%E5%B8%82%E5%9C%BA%E6%96%B0%E8%83%BD%E6%BA%90%E6%B8%97%E9%80%8F%E7%8E%87%E5%B0%86%E8%BE%BE50/"
+      }
+    },
+    "note": "理想所处细分赛道景气度分化明显：①增程式细分市场已进入成熟期，2025年零售123.5万辆(+6%，较2024年70.9%增速大幅放缓)，2026年前5月同比下跌15.9%；②40万元以上高端NEV市场2026上半年逆势大增46%(销量24万辆，渗透率44%→56%)，是理想2026年战略重心转移方向。未查到\"高端家庭用户SUV/MPV\"狭义细分的独立TAM绝对规模与专门CAGR预测，已查中汽协/乘联会/麦肯锡/罗兰贝格公开资料均未见该细分独立测算，仅有价格带销量数据可作间接代理指标。"
+  },
+  "riskFactors": {
+    "_dimension": "8. 风险因素：地缘政治、监管、供应链等",
+    "items": [
+      {
+        "category": "地缘政治",
+        "description": "HFCAA/PCAOB审计监管与ADR潜在退市风险：理想20-F警示若未来连续两个财年被重新认定为\"委员会认定发行人\"将触发美国交易禁令风险；2025年2月美国\"优先投资政策\"备忘录重启HFCAA执法力度",
+        "evidence": "公司20-F风险披露章节 + StockTitan 20-F摘要转述"
+      },
+      {
+        "category": "地缘政治",
+        "description": "中美贸易/芯片出口管制间接冲击汽车供应链：2025年10月中国对Nexperia芯片出口限制引发欧洲车企停产警告，虽经中美元首会晤后于11月缓和，但显示科技/贸易摩擦可随时冲击汽车芯片供应链",
+        "evidence": "外部行业媒体报道(Automotive Logistics)，非理想公司专门披露，理想虽未被明确点名但同处该产业链风险敞口"
+      },
+      {
+        "category": "监管",
+        "description": "新能源汽车购置税优惠退坡：2026年1月1日起从\"全免\"改为\"减半征收\"(实际税率5%)，单车减税上限从3万元收紧至1.5万元，30万元以上高端车型(理想主力价格带)基本无法享受该减免",
+        "evidence": "官方政策公开信息(腾讯新闻/中国能源新闻网转述)，直接影响理想主力定价带产品需求"
+      },
+      {
+        "category": "监管",
+        "description": "自动驾驶法规加速但仍处早期试点：2025年12月工信部公布首批L3级准入许可(长安深蓝、极狐)，理想未在列，其City NOA/智驾能力商业化节奏受制于监管试点进度",
+        "evidence": "行业公开政策信息(中国青年网/新京报)，非理想专属披露"
+      },
+      {
+        "category": "供应链",
+        "description": "动力电池供应商集中度：长期高度依赖宁德时代(CATL)，近年通过引入欣旺达、蜂巢能源等第二供应商及自研电池分散风险",
+        "evidence": "行业媒体报道(虎嗅网/财联社)，非公司专项风险披露原文"
+      },
+      {
+        "category": "供应链",
+        "description": "零部件短缺可能冲击交付：2026年7月理想高管称大灯供应问题导致i6产量减少约4000台",
+        "evidence": "外部媒体报道(CnEVPost 2026-07-27)"
+      },
+      {
+        "category": "竞争",
+        "description": "价格战持续侵蚀毛利率：2025年综合毛利率18.7%(2024年20.5%)，2025Q4经营利润率转负至-1.5%(2024年同期+8.4%)；同期小米汽车毛利率达24.3%已反超理想",
+        "evidence": "公司财报数据(SEC 6-K) + 行业媒体竞品对比(OFweek)"
+      },
+      {
+        "category": "竞争",
+        "description": "增程式细分市场增速骤降，天花板隐现：2025年国内增程式乘用车销量增速仅6%(2024年约70%)，市场解读为渗透接近饱和，纯电与插混挤压增程份额",
+        "evidence": "行业分析师观点(OFweek)，为外部推断而非公司自我承认"
+      },
+      {
+        "category": "技术",
+        "description": "纯电转型进展不及预期：i8(2025年7月上市)月销持续走弱，2026年5月仅交付1,564台(环比-25.1%)；i6虽表现较好但中大型纯电SUV(i8对标)尚未验证市场",
+        "evidence": "公司交付数据(CnEVPost转述SEC披露的月度交付)"
+      },
+      {
+        "category": "技术",
+        "description": "智驾技术声量与商业化节奏落后头部：截至2026年上半年理想未进入工信部首批L3准入名单，市场认为其智驾声量弱于华为乾崑ADS体系",
+        "evidence": "外部市场推断(行业媒体交叉对比)，非公司自我承认"
+      },
+      {
+        "category": "其他",
+        "description": "海外扩张早期，执行不确定性：2025年为\"出海元年\"，聚焦中东/中亚，2026年拟进一步拓展沙特/阿联酋并布局欧洲，尚处起步阶段",
+        "evidence": "公司披露(IR新闻稿) + 媒体报道(EqualOcean/carnewschina)，未披露具体海外收入占比或量化目标"
+      },
+      {
+        "category": "其他",
+        "description": "自由现金流转负，现金消耗加快：2025全年自由现金流约-128亿元人民币(主要消耗集中在前三季度，Q3单季约-89亿元)，尽管现金储备仍达1012亿元",
+        "evidence": "公司财报数据(SEC 6-K)"
+      }
+    ]
+  },
+  "currentValuation": {
+    "_dimension": "9. 当前估值：市值、PE、PS、PEG、EV/Revenue",
+    "priceAsOf": "2026-08-07 16:08 HKT（港股收盘）/ 2026-08-07 10:28 EDT（美股ADS盘中）",
+    "sharePrice": {
+      "hk": {
+        "value": 49.92,
+        "unit": "HKD",
+        "source1": {
+          "name": "stockanalysis.com",
+          "url": "https://stockanalysis.com/quote/hkg/2015/",
+          "value": 49.92
+        },
+        "source2": {
+          "name": "Financial Modeling Prep (mcp__fmp__company) / investing.com",
+          "url": "https://www.investing.com/equities/li-auto",
+          "value": 49.92
+        },
+        "deviationPct": 0,
+        "flag": "ok"
+      },
+      "us_ads": {
+        "value": 12.8973,
+        "unit": "USD",
+        "source1": {
+          "name": "Financial Modeling Prep (mcp__fmp__company)",
+          "url": "https://site.financialmodelingprep.com/",
+          "value": 12.8973
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "url": "https://stockanalysis.com/stocks/li/",
+          "value": 12.91
+        },
+        "deviationPct": 0.06,
+        "flag": "ok"
+      }
+    },
+    "sharesOutstanding": {
+      "value": 2092558209,
+      "unit": "股",
+      "note": "A类(不含库存股1,736,746,129) + B类(355,812,080)，截至约2026-07-24，为最贴近当前股价日期的最新股本；ADS换算比例：1 ADS = 2 A类普通股",
+      "source1": {
+        "name": "SEC 20-F(B类股本，截至2025-12-31) + SEC 6-K港交所Next Day Disclosure(A类最新股本，截至2026-07-24)",
+        "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926089389/tm2621849d1_ex99-1.htm",
+        "value": 2092558209
+      },
+      "source2": {
+        "status": "unavailable",
+        "reason": "第三方行情站(stockanalysis约985.63M、companiesmarketcap约1,013.81M)仅统计ADS流通当量，不含直接以HK普通股形式流通的A类股及全部B类股，与公司口径定义不同，不可直接作为交叉验证的第二来源，已在下方市值验算中说明"
+      }
+    },
+    "marketCap": {
+      "reported": {
+        "hk_hkd": 101219774273,
+        "us_usd": 13025761661,
+        "source": "FMP(2026-08-07)，stockanalysis口径分别为98.12B HKD/12.72B USD(偏差约2.4%-3.06%，判断为不同股本口径快照时点差异)"
+      },
+      "computed": {
+        "value": 104461105000,
+        "unit": "HKD",
+        "method": "financial_rigor.py verify-market-cap: 49.92 HKD × 2,092,558,209股",
+        "toolOutput": "计算市值104.46B HKD，报告市值(FMP)101.22B HKD，偏差3.20%"
+      },
+      "flag": "minor-diff"
+    },
+    "pe": {
+      "status": "unavailable",
+      "reason": "TTM(2025Q2-2026Q1)GAAP净利润为负(-1,783.25 RMB百万，四份SEC季报加总，与stockanalysis TTM口径-1,815百万交叉验证偏差1.7%一致)；TTM Non-GAAP净利润同样为负(-724.99 RMB百万)，两口径PE均不适用，主因2026Q1单季净亏损22.76亿元人民币"
+    },
+    "ps": {
+      "value": 0.82,
+      "note": "计算方法：市值(RMB) ÷ TTM营收(109,368.608 RMB百万)。市值取股价49.92 HKD×最新股本2,092,558,209股=104.46B HKD，按2026-08-07 HKD/CNY即期汇率0.86折算为约89.84B RMB(汇率来源：currency.wiki)，经financial_rigor.py verify-valuation验算得PS=0.82x",
+      "toolVerified": true
+    },
+    "peg": {
+      "status": "unavailable",
+      "reason": "PE本身因TTM净利润为负不适用，PEG无法计算"
+    },
+    "evToRevenue": {
+      "value": -0.017,
+      "note": "EV = 市值(RMB, 89.84B) + 总债务(FY2025期末短期借款6,217.745+长期借款3,299.203=9,516.948 RMB百万) - 现金储备(101,239.486 RMB百万) ≈ -18.87亿元人民币(负值)；EV/TTM营收(109,368.608 RMB百万) ≈ -0.02x。企业价值为负，即净现金已超过市值与总债务之和，反映市场对理想整车主业隐含负估值——这是本次估值维度的关键异常信号，经financial_rigor.py精确计算验证"
+    }
+  },
+  "bullBearCase": {
+    "_dimension": "10. 多空双方核心论点",
+    "bull": [
+      {
+        "point": "现金储备极其充裕，抗风险能力强",
+        "evidence": "截至2025年末现金储备(含短期投资)达1012亿元人民币，远超同业造车新势力，即使经历2025年营收-22.3%/净利润-85.8%的低谷期仍能维持运转并推出10亿美元回购计划"
+      },
+      {
+        "point": "管理层用真金白银回购传递信心",
+        "evidence": "2026-03-24董事会批准最高10亿美元股票/ADS回购计划(执行至2027-03-31)，完全用现有现金及经营现金流支持，大摩在公告后重申评级"
+      },
+      {
+        "point": "纯电i6车型验证BEV转型产品力，打破\"理想做不好纯电\"的偏见",
+        "evidence": "i6自2025-09-26上市后连续多月交付超2万台，2026年6月交付21,453台占当月总交付69.44%，累计产量突破15万辆，稳居国内中大型纯电SUV销量前列"
+      },
+      {
+        "point": "家庭用户心智与增程式差异化定位仍具粘性",
+        "evidence": "2023年单店销售额均值达2.65亿元/家，建立起清晰的\"奶爸车/家庭科技旗舰\"品牌心智，为渠道效率提供支撑"
+      },
+      {
+        "point": "渠道持续优化提升单店效率，主动收缩低效门店控制费用",
+        "evidence": "2025年主动关闭约100家低效直营门店，提升AutoPark园区中心店占比，并推进\"百城繁星计划\"轻资产模式下沉三四线城市"
+      }
+    ],
+    "bear": [
+      {
+        "point": "纯电转型整体不及预期，MEGA是标志性失败案例",
+        "evidence": "MEGA上市72小时退订(10,297台)远超大定(3,218台)，10月因冷却液渗漏召回11,411辆；第二款纯电走量车型i8同样疲软，2026年5月仅交付1,564台(环比-25.1%)"
+      },
+      {
+        "point": "价格战持续侵蚀毛利率与盈利能力",
+        "evidence": "2025年综合毛利率降至18.7%(2024年20.5%)，Q4经营利润率转负至-1.5%；全年营收-22.3%至1123亿元，净利润暴跌85.8%至11亿元，全年自由现金流转负(约-128亿元)"
+      },
+      {
+        "point": "增程式路线面临增速天花板与政策边际收紧双重压力",
+        "evidence": "2025年国内增程式乘用车销量增速骤降至6%(2024年约70%)；2026年起购置税优惠减半，30万元以上高端车型减税红利基本消失"
+      },
+      {
+        "point": "智能驾驶技术声量与商业化节奏落后头部竞品",
+        "evidence": "截至2026年上半年理想未进入工信部首批L3准入名单(长安深蓝、极狐入选)，市场认为其智驾声量弱于华为乾崑ADS体系"
+      },
+      {
+        "point": "组织架构频繁反复调整，反映管理层战略执行不稳定",
+        "evidence": "一年内多次重大组织调整(2024年4月矩阵2.0→2025年3月五大战区→6月智能汽车群组→8月撤销战区→2026年7月再拆分)，被称为\"第六次重大组织重组\"，2025年全年销量目标仅完成63.4%"
+      }
+    ]
+  },
+  "crossValidationLog": [
+    {
+      "field": "港股市值验算",
+      "source1": {
+        "name": "计算值(股价×最新股本)",
+        "value": "104.46B HKD"
+      },
+      "source2": {
+        "name": "FMP报告市值",
+        "value": "101.22B HKD"
+      },
+      "deviationPct": 3.2,
+      "flag": "minor-diff",
+      "resolution": "financial_rigor.py verify-market-cap 验算：偏差3.20%在可接受范围(≤5%)，判断系持续回购导致股本口径/快照时点略有差异，不影响结论"
+    },
+    {
+      "field": "FY2025营业收入",
+      "source1": {
+        "name": "SEC 6-K",
+        "value": 112312.511
+      },
+      "source2": {
+        "name": "stockanalysis.com",
+        "value": 112313
+      },
+      "deviationPct": 0.0009,
+      "flag": "ok",
+      "resolution": "financial_rigor.py cross-validate：偏差0.00%，两源一致"
+    },
+    {
+      "field": "FY2025净利润(GAAP)",
+      "source1": {
+        "name": "SEC 6-K",
+        "value": 1124.438
+      },
+      "source2": {
+        "name": "stockanalysis.com",
+        "value": 1124.4
+      },
+      "deviationPct": 0.0003,
+      "flag": "ok",
+      "resolution": "financial_rigor.py cross-validate：偏差0.00%，两源一致"
+    },
+    {
+      "field": "FY2025现金储备",
+      "source1": {
+        "name": "SEC 6-K(含受限现金)",
+        "value": 101239.486
+      },
+      "source2": {
+        "name": "stockanalysis.com(不含受限现金)",
+        "value": 101023
+      },
+      "deviationPct": 0.11,
+      "flag": "ok",
+      "resolution": "financial_rigor.py cross-validate：偏差0.11%，差额恰好等于FY2025受限现金(约216.3百万)，定义差异非错误"
+    },
+    {
+      "field": "TTM营业收入(截至2026Q1)",
+      "source1": {
+        "name": "SEC四季度加总",
+        "value": 109368.608
+      },
+      "source2": {
+        "name": "stockanalysis.com TTM",
+        "value": 109369
+      },
+      "deviationPct": 0.0004,
+      "flag": "ok",
+      "resolution": "financial_rigor.py cross-validate：偏差0.00%，两源一致"
+    },
+    {
+      "field": "FY2021自由现金流",
+      "source1": {
+        "name": "公司口径(SEC)",
+        "value": 4332.7
+      },
+      "source2": {
+        "name": "stockanalysis.com",
+        "value": 4896
+      },
+      "deviationPct": 13.0,
+      "flag": "major-diff",
+      "resolution": "排查为资本开支统计口径不同(是否含融资租赁/无形资产投入)所致，非数据错误；用公司自定义口径的经营现金流8,340.4减去公司口径资本开支反推可与两个数字互相解释，以公司披露口径4,332.7为最终采用值"
+    },
+    {
+      "field": "PS(TTM,市销率)",
+      "source1": {
+        "name": "financial_rigor.py verify-valuation计算",
+        "value": "0.82x"
+      },
+      "source2": {
+        "name": "N/A(单一计算结果，非交叉验证)",
+        "value": "—"
+      },
+      "deviationPct": 0,
+      "flag": "ok",
+      "resolution": "股价42.9312 RMB(49.92 HKD按0.86 HKD/CNY折算) ÷ TTM每股营收52.2655 RMB = 0.82x，精确十进制计算，无浮点误差"
+    },
+    {
+      "field": "EV/Revenue",
+      "source1": {
+        "name": "financial_rigor.py calc计算",
+        "value": "-0.017x"
+      },
+      "source2": {
+        "name": "N/A",
+        "value": "—"
+      },
+      "deviationPct": 0,
+      "flag": "ok",
+      "resolution": "EV=市值89.84B RMB+总债务9.52B RMB-现金储备101.24B RMB=-18.87亿元人民币(负值)，EV为负反映净现金超过市值+总债务，是估值维度的关键异常信号"
+    }
+  ]
+}
