@@ -24,8 +24,8 @@ apps/web/out/
 *.tsbuildinfo
 
 # Secrets. Tokens belong in the shell environment, never in the repo —
-# see docs/research/data-source-registry.md section 2. These entries are a
-# backstop against a slip, not an alternative storage location.
+# see docs/model/financial-data.md「Tushare 使用规范 / token 规则」。These
+# entries are a backstop against a slip, not an alternative storage location.
 .env
 .env.*
 !.env.example
@@ -37,3 +37,7 @@ apps/web/out/
 
 # FinMind token（docs/research/tools/twstock_data.py 按脚本位置读取，严禁提交）
 docs/research/local/
+
+# 相邻的独立工程，不属于本仓库：AGENTS.md 规定本仓库不直接引用它，
+# 用到什么先迁移进 docs/ 独立维护（约 75M，误提交会污染仓库体积与历史）
+ai-berkshire/
