@@ -188,12 +188,37 @@ test("cost metrics degrade to empty values when no transcript matches", () => {
   rmSync(emptyTranscripts, { recursive: true, force: true });
 });
 
+test("finding no defect is a valid answer that leaves no defect record", () => {
+  const before = { runs: readJsonl("runs.jsonl").length, defects: readJsonl("defects.jsonl").length };
+  const ratingPath = path.join(workDir, "rating-none.json");
+  writeFileSync(ratingPath, JSON.stringify({
+    trust: 4, insight: 4, readability: 4, actionable: 4, density: 4,
+    vsLast: "same", worstPart: "无",
+    changedMyPosition: false, familiarIndustry: true,
+  }));
+
+  const ran = runPython("research_feedback.py", [
+    "--company", fixtureCompany, "--rating-json", ratingPath, "--no-publish",
+  ]);
+  assert.equal(ran.status, 0, ran.stderr);
+
+  const runs = readJsonl("runs.jsonl");
+  assert.equal(runs.length, before.runs + 1, "the evaluation record is still written");
+  const latest = runs[runs.length - 1];
+  // 「暂时没发现」是明确状态，不是一段写着「无」的自由文本。
+  assert.equal(latest.rating.noneFound, true);
+  assert.equal(latest.rating.worstPart, null);
+  // 没发现缺陷就不该有缺陷条目——否则日志会被 status=open 的「无」填满。
+  assert.equal(readJsonl("defects.jsonl").length, before.defects, "no defect record is created");
+});
+
 test("an invalid rating writes nothing at all", () => {
   const before = { runs: readJsonl("runs.jsonl").length, defects: readJsonl("defects.jsonl").length };
   const ratingPath = path.join(workDir, "rating-bad.json");
   writeFileSync(ratingPath, JSON.stringify({
     trust: 9, insight: 3, readability: 4, actionable: 2, density: 3,
-    vsLast: "nope", worstPart: "   ",
+    // 空白与「无」都是合法的「暂时没发现」，所以这里用一个类型就错的值。
+    vsLast: "nope", worstPart: 123,
     changedMyPosition: "no", familiarIndustry: true,
   }));
 

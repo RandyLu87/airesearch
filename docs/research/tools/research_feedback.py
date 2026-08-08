@@ -50,6 +50,11 @@ VS_LAST = ("better", "same", "worse")
 VS_LAST_LABELS = {"better": "更好", "same": "差不多", "worse": "更差"}
 DEFECT_STEPS = ("collection", "analysis", "summary", "render", "process", "unspecified")
 
+# 这些答案等价于「暂时没发现」。它们是合法结果，但不产生缺陷记录——
+# 没发现缺陷却往日志里塞一条 status=open 的「无」，会让日志失去清单的作用。
+NONE_ANSWERS = {"", "无", "没有", "暂无", "未发现", "暂时没发现", "没发现",
+                "none", "n/a", "na", "-", "—"}
+
 # 相邻消息间隔超过这个分钟数视为离开，不计入实际投入时长。
 IDLE_GAP_MINUTES = 10
 
@@ -301,11 +306,18 @@ def validate_rating(raw):
     else:
         rating["vsLast"] = vs_last
 
+    # 「暂时没发现」是一个合法结果，不是漏填：强制每次都说出一处缺陷，只会逼出
+    # 为了过校验而编的琐碎抱怨，把缺陷日志填成噪音。但它必须是一个**明确的状态**
+    # 而不是一段写着「无」的自由文本——后者会被当成真缺陷记进日志。
     worst = raw.get("worstPart")
-    if not isinstance(worst, str) or not worst.strip():
-        errors.append("worstPart 必填：五个分数会向上漂移直至饱和，「最差的一处」不会。")
+    if worst is None or (isinstance(worst, str) and worst.strip().lower() in NONE_ANSWERS):
+        rating["worstPart"] = None
+        rating["noneFound"] = True
+    elif not isinstance(worst, str) or not worst.strip():
+        errors.append("worstPart 要么写具体的一处，要么留空/写「无」表示暂时没发现。")
     else:
         rating["worstPart"] = worst.strip()
+        rating["noneFound"] = False
 
     for field in ("changedMyPosition", "familiarIndustry"):
         value = raw.get(field)
@@ -358,19 +370,15 @@ def ask_rating():
             break
         print("  请输入 1、2 或 3。")
 
-    while True:
-        answer = input("这份报告最差的一处是什么（必填）：").strip()
-        if answer:
-            raw["worstPart"] = answer
-            break
-        print("  这一条不能跳过——它是整套机制里唯一不会饱和的信号。")
+    raw["worstPart"] = input("这份报告最差的一处是什么（回车 = 暂时没发现）：").strip()
 
-    print("缺陷归属步骤：%s" % " / ".join(
-        "%d %s" % (i + 1, s) for i, s in enumerate(DEFECT_STEPS)))
-    answer = input("选一个（回车 = unspecified）：").strip()
-    raw["defectStep"] = (DEFECT_STEPS[int(answer) - 1]
-                         if answer.isdigit() and 1 <= int(answer) <= len(DEFECT_STEPS)
-                         else "unspecified")
+    if raw["worstPart"].lower() not in NONE_ANSWERS:
+        print("缺陷归属步骤：%s" % " / ".join(
+            "%d %s" % (i + 1, s) for i, s in enumerate(DEFECT_STEPS)))
+        answer = input("选一个（回车 = unspecified）：").strip()
+        raw["defectStep"] = (DEFECT_STEPS[int(answer) - 1]
+                             if answer.isdigit() and 1 <= int(answer) <= len(DEFECT_STEPS)
+                             else "unspecified")
 
     raw["changedMyPosition"] = input("这次研究改变了你的仓位或关注列表吗（y/N）：").strip().lower() == "y"
     raw["familiarIndustry"] = input("这家公司属于你熟悉的行业吗（y/N）：").strip().lower() == "y"
@@ -449,15 +457,19 @@ def main():
         "rating": rating,
     }
     wrote_run = evals_log.append(evals_log.RUNS_FILE, run_record)
-    wrote_defect = evals_log.append(evals_log.DEFECTS_FILE, {
-        "at": rated_at,
-        "company": company,
-        "step": defect_step,
-        "symptom": rating["worstPart"],
-        "skillCommit": commit,
-        "model": model,
-        "status": "open",
-    })
+    # 「暂时没发现」不产生缺陷记录：日志是改研究方法时该改什么的清单，
+    # 往里塞一条 status=open 的「无」，只会让这份清单失去清单的作用。
+    wrote_defect = True
+    if not rating["noneFound"]:
+        wrote_defect = evals_log.append(evals_log.DEFECTS_FILE, {
+            "at": rated_at,
+            "company": company,
+            "step": defect_step,
+            "symptom": rating["worstPart"],
+            "skillCommit": commit,
+            "model": model,
+            "status": "open",
+        })
     if not wrote_run or not wrote_defect:
         sys.stderr.write("错误：评估记录写入失败，评分未被保存。\n")
         sys.exit(2)
@@ -467,7 +479,11 @@ def main():
         company, average, VS_LAST_LABELS[rating["vsLast"]],
         "校验一次通过" if machine["firstPassValidation"] else
         "校验 %d 轮" % machine["validationRounds"]))
-    print("   缺陷已登记：%s" % rating["worstPart"])
+    if rating["noneFound"]:
+        print("   本次未发现缺陷，不产生缺陷记录。（这个比例本身会被评估页盯着："
+              "长期偏高说明的多半不是报告变好了，而是这一项在走过场。）")
+    else:
+        print("   缺陷已登记：%s" % rating["worstPart"])
     if machine.get("costSource") == "unavailable":
         print("   成本指标不可用：%s" % machine.get("costReason", "未知原因"))
     else:

@@ -77,6 +77,9 @@ export default function EvalsPage() {
     : null;
   const passRate = firstPassRate(runs);
   const changedPosition = runs.filter((run) => run.rating?.changedMyPosition === true).length;
+  // 「暂时没发现」是合法结果，但它的比例本身是个信号：长期偏高说明的多半不是
+  // 报告变好了，而是这一项在走过场。所以它必须可见，而不是被静静吞掉。
+  const noneFound = runs.filter((run) => run.rating?.noneFound === true).length;
 
   return (
     <>
@@ -120,6 +123,11 @@ export default function EvalsPage() {
                 <span>改变了仓位</span>
                 <strong>{changedPosition} / {runs.length}</strong>
                 <small>比自评分更诚实的行为指标</small>
+              </div>
+              <div>
+                <span>未发现缺陷</span>
+                <strong>{noneFound} / {runs.length}</strong>
+                <small>合法结果；长期偏高说明这一项在走过场</small>
               </div>
             </section>
 
@@ -195,8 +203,10 @@ export default function EvalsPage() {
               <p className="section-kicker">DEFECTS</p>
               <h2>最差的一处</h2>
               <p className="section-lead">
-                每次评分必填一条。五个分数一定会随习惯向上漂移直至饱和，这一条不会——
-                改研究方法时，改的应该是这里记下的失败，而不是印象里的问题。
+                五个分数一定会随习惯向上漂移直至饱和，这一条不会——改研究方法时，
+                改的应该是这里记下的失败，而不是印象里的问题。
+                「暂时没发现」是合法结果、不产生记录，因此这里的条数少于研究次数是正常的；
+                但上面那格「未发现缺陷」的比例长期偏高，说明的多半不是报告变好了。
               </p>
               {defects.length === 0 ? (
                 <p className="company-note">暂无缺陷记录。</p>
