@@ -1,25 +1,25 @@
 #!/usr/bin/env python3
-"""研究收尾与评分 — 研究流程第 7 步（docs/research/workflow/07-close-and-review.md）。
+"""研究评估与反馈 — 研究流程第 7 步（docs/research/workflow/07-evaluation-and-feedback.md）。
 
 把一次研究的机器指标与人工阅读评分合并成一条研究评估记录，并把「最差的一处」
 物化成一条缺陷记录，最后重跑一次站点发布，让研究评估页立刻是最新的。
 
 用法：
-    # 交互式（正常收尾）
-    python3 docs/research/tools/research_close.py --company hk-2015-li-auto
+    # 交互式（正常反馈）
+    python3 docs/research/tools/research_feedback.py --company hk-2015-li-auto
 
     # 非交互（测试与离线补录）
-    python3 docs/research/tools/research_close.py --company hk-2015-li-auto \
+    python3 docs/research/tools/research_feedback.py --company hk-2015-li-auto \
         --rating-json tmp/rating.json --no-publish
 
-退出码：0 = 已写入；1 = 记录已写入但收尾发布失败；2 = 参数或评分输入不合法（未写入任何记录）。
+退出码：0 = 已写入；1 = 记录已写入但发布失败；2 = 参数或评分输入不合法（未写入任何记录）。
 
 机器指标有两个来源，可靠性分层：
   - 运行事件（research/evals/events.jsonl）由工具自己写，是一等事实——
     校验轮数、是否一次过、三份得分都取自这里。
   - 会话日志只用来补 token 与耗时这两个工具自身拿不到的量。它依赖编辑器的
     内部日志格式、会随版本变化，因此解析全部包在 try 里：**取不到就写空值，
-    绝不阻断收尾**。记账的准确性让位于研究流程的健壮性。
+    绝不阻断本步骤**。记账的准确性让位于研究流程的健壮性。
 
 零外部依赖，仅用 Python 标准库，Python >= 3.7。
 """
@@ -164,6 +164,23 @@ def scan_transcript(path):
     }
 
 
+def scan_with_subagents(path):
+    """一份会话日志连同它派发的后台 Agent——后者的开销同样是本次研究的成本。"""
+    scan = scan_transcript(path)
+    usage = dict(scan["usage"])
+    stamps = list(scan["stamps"])
+    stem = os.path.splitext(path)[0]
+    for sub in sorted(glob.glob(os.path.join(stem, "subagents", "*.jsonl"))):
+        try:
+            sub_scan = scan_transcript(sub)
+        except OSError:
+            continue
+        for key in usage:
+            usage[key] += sub_scan["usage"][key]
+        stamps.extend(sub_scan["stamps"])
+    return {**scan, "usage": usage, "stamps": sorted(stamps)}
+
+
 def active_minutes(stamps):
     """相邻消息间隔小于阈值的部分才算实际投入，避免把过夜挂机算成耗时。"""
     total = 0.0
@@ -174,8 +191,36 @@ def active_minutes(stamps):
     return round(total, 1)
 
 
-def session_metrics(events, explicit_dir):
-    """挑出承载本次研究的会话并统计成本。任何异常都退化成空值。"""
+def metrics_from_scans(scans, names, source):
+    """把若干份会话日志的统计合并成一条成本指标。"""
+    usage = {"outputTokens": 0, "inputTokens": 0, "cacheReadTokens": 0, "cacheWriteTokens": 0}
+    stamps = []
+    users = 0
+    for scan in scans:
+        for key in usage:
+            usage[key] += scan["usage"][key]
+        stamps.extend(scan["stamps"])
+        users += scan["userMessages"]
+    stamps.sort()
+    # 跨会话时 wallClock 取首尾之差；中间的空档由 activeMinutes 排除。
+    wall = ((stamps[-1] - stamps[0]).total_seconds() / 60.0) if len(stamps) > 1 else 0.0
+    return {
+        **usage,
+        "wallClockMinutes": round(wall, 1),
+        "activeMinutes": active_minutes(stamps),
+        "userMessages": users,
+        "transcript": names if len(names) > 1 else (names[0] if names else None),
+        "costSource": source,
+    }
+
+
+def session_metrics(events, explicit_dir, explicit_files=None):
+    """挑出承载本次研究的会话并统计成本。任何异常都退化成空值。
+
+    一次研究可能跨多个会话文件（上下文压缩、中途换会话），自动识别只认得出
+    含第 4 步校验事件的那一个，因此显式传入的文件优先——补录历史研究时更是
+    只能靠它。
+    """
     empty = {
         "outputTokens": None, "inputTokens": None,
         "cacheReadTokens": None, "cacheWriteTokens": None,
@@ -183,6 +228,16 @@ def session_metrics(events, explicit_dir):
         "userMessages": None, "transcript": None,
         "costSource": "unavailable",
     }
+    if explicit_files:
+        try:
+            scans, names = [], []
+            for path in explicit_files:
+                scans.append(scan_with_subagents(path))
+                names.append(os.path.basename(path))
+            return metrics_from_scans(scans, names, "transcript-explicit")
+        except Exception as exc:  # noqa: BLE001
+            empty["costReason"] = "指定的会话日志无法解析：%s" % exc
+            return empty
     try:
         anchors = [parse_ts(e.get("at")) for e in events]
         anchors = [a for a in anchors if a]
@@ -213,30 +268,9 @@ def session_metrics(events, explicit_dir):
             return empty
 
         path = chosen[0]
-        usage = dict(chosen_scan["usage"])
-        stamps = list(chosen_scan["stamps"])
-        # 后台 Agent 的开销同样是本次研究的成本，一并计入。
-        stem = os.path.splitext(path)[0]
-        for sub in sorted(glob.glob(os.path.join(stem, "subagents", "*.jsonl"))):
-            try:
-                sub_scan = scan_transcript(sub)
-            except OSError:
-                continue
-            for key in usage:
-                usage[key] += sub_scan["usage"][key]
-            stamps.extend(sub_scan["stamps"])
-
-        stamps.sort()
-        wall = (chosen_scan["last"] - chosen_scan["first"]).total_seconds() / 60.0
-        return {
-            **usage,
-            "wallClockMinutes": round(wall, 1),
-            "activeMinutes": active_minutes(stamps),
-            "userMessages": chosen_scan["userMessages"],
-            "transcript": os.path.basename(path),
-            "costSource": "transcript",
-        }
-    except Exception as exc:  # noqa: BLE001  解析失败绝不阻断收尾
+        return metrics_from_scans(
+            [scan_with_subagents(path)], [os.path.basename(path)], "transcript")
+    except Exception as exc:  # noqa: BLE001  解析失败绝不阻断本步骤
         empty["costReason"] = "会话日志解析失败：%s" % exc
         return empty
 
@@ -354,11 +388,13 @@ def ask_rating():
 # --------------------------------------------------------------------------
 
 def main():
-    parser = argparse.ArgumentParser(description="研究流程第 7 步：收尾与评分")
+    parser = argparse.ArgumentParser(description="研究流程第 7 步：评估与反馈")
     parser.add_argument("--company", required=True, help="公司目录名，如 hk-2015-li-auto")
     parser.add_argument("--rating-json", help="非交互模式：一份填好的评分 JSON")
     parser.add_argument("--transcript-dir", help="会话日志目录（默认自动查找）")
-    parser.add_argument("--no-publish", action="store_true", help="只写记录，不跑收尾发布")
+    parser.add_argument("--transcript", action="append",
+                        help="显式指定会话日志文件，可重复；一次研究跨多个会话或补录历史研究时用")
+    parser.add_argument("--no-publish", action="store_true", help="只写记录，不跑发布")
     args = parser.parse_args()
 
     company = args.company.strip().strip("/")
@@ -388,7 +424,7 @@ def main():
         sys.exit(2)
 
     machine, events = machine_metrics_from_events(company)
-    machine.update(session_metrics(events, args.transcript_dir))
+    machine.update(session_metrics(events, args.transcript_dir, args.transcript))
     machine["correctionMessages"] = rating.pop("correctionMessages", None)
 
     company_name, data_cutoff = company_facts_from_events(events)
@@ -397,7 +433,7 @@ def main():
         company_name = company_name or fallback_name
         data_cutoff = data_cutoff or fallback_cutoff
 
-    closed_at = evals_log.now_iso()
+    rated_at = evals_log.now_iso()
     commit = evals_log.skill_commit()
     defect_step = rating.pop("defectStep")
     model = rating.pop("model")
@@ -405,7 +441,7 @@ def main():
     run_record = {
         "company": company,
         "companyName": company_name,
-        "closedAt": closed_at,
+        "ratedAt": rated_at,
         "dataCutoff": data_cutoff,
         "skillCommit": commit,
         "model": model,
@@ -414,7 +450,7 @@ def main():
     }
     wrote_run = evals_log.append(evals_log.RUNS_FILE, run_record)
     wrote_defect = evals_log.append(evals_log.DEFECTS_FILE, {
-        "at": closed_at,
+        "at": rated_at,
         "company": company,
         "step": defect_step,
         "symptom": rating["worstPart"],
@@ -432,8 +468,13 @@ def main():
         "校验一次通过" if machine["firstPassValidation"] else
         "校验 %d 轮" % machine["validationRounds"]))
     print("   缺陷已登记：%s" % rating["worstPart"])
-    if machine.get("costSource") != "transcript":
+    if machine.get("costSource") == "unavailable":
         print("   成本指标不可用：%s" % machine.get("costReason", "未知原因"))
+    else:
+        print("   本次成本：输出 %s token，投入 %s 分钟（来源：%s）" % (
+            f"{machine['outputTokens']:,}", machine["activeMinutes"], machine["costSource"]))
+    if machine.get("note"):
+        print("   注意：%s" % machine["note"])
 
     if args.no_publish:
         sys.exit(0)
@@ -441,7 +482,7 @@ def main():
     print("正在重跑发布，让研究评估页包含这次评分……")
     result = subprocess.run(["npm", "run", "publish"], cwd=REPO_ROOT)
     if result.returncode != 0:
-        sys.stderr.write("提示：记录已写入，但收尾发布失败。修好后手动跑一次 npm run publish 即可。\n")
+        sys.stderr.write("提示：记录已写入，但发布失败。修好后手动跑一次 npm run publish 即可。\n")
         sys.exit(1)
     sys.exit(0)
 

@@ -4,7 +4,7 @@
 
 本文件是研究流程的唯一正文。Codex 与 Claude Code 两端的 skill 都只是指向这里的薄壳，因此在这里做的改动两端同时生效。
 
-> 本流程于 2026-08-05 重构为六步管线，2026-08-08 增加第 7 步「收尾与评分」，共 7 步；旧快照流程（骨架继承、数据包、快照契约、承诺台账等）已整体移除：渲染引擎、CLI 与旧页面都已删除，站点只渲染新管线产出；公司目录里的旧快照与账本文件作为只读数据存档保留。**本流程不直接引用 `ai-berkshire/` 工程内的任何文件**——用到什么就先迁移进本仓库独立维护（规范类迁至 `docs/model/`，工具类迁至 `docs/research/tools/`）。步骤正文按序号存放在 `docs/research/workflow/`（如 `01-data-collection.md`），新拆出的步骤照此编号。
+> 本流程于 2026-08-05 重构为六步管线，2026-08-08 增加第 7 步「评估与反馈」，共 7 步；旧快照流程（骨架继承、数据包、快照契约、承诺台账等）已整体移除：渲染引擎、CLI 与旧页面都已删除，站点只渲染新管线产出；公司目录里的旧快照与账本文件作为只读数据存档保留。**本流程不直接引用 `ai-berkshire/` 工程内的任何文件**——用到什么就先迁移进本仓库独立维护（规范类迁至 `docs/model/`，工具类迁至 `docs/research/tools/`）。步骤正文按序号存放在 `docs/research/workflow/`（如 `01-data-collection.md`），新拆出的步骤照此编号。
 
 ## 0. 执行纪律（贯穿全流程，动手前先读）
 
@@ -52,9 +52,9 @@
 
 **完成标准**：首页卡片与 `research/companies/` 下的数据文件一一对应；本次研究公司的卡片时间正确；`npm test` 通过。
 
-## 7. 收尾与评分
+## 7. 评估与反馈
 
-执行 `docs/research/workflow/07-close-and-review.md`（本步骤唯一正文）。运行 `npm run research:close -- --company <company-id>`：把本次研究的机器指标（校验轮数、是否一次通过、token 用量、投入时长、干预次数）与**读完报告当场打的**阅读评分合并成一条研究评估记录，写入 `research/evals/`，并把「这份报告最差的一处」登记成一条缺陷记录，最后重跑发布让研究评估页包含这次评分。
+执行 `docs/research/workflow/07-evaluation-and-feedback.md`（本步骤唯一正文）。运行 `npm run research:feedback -- --company <company-id>`：把本次研究的机器指标（校验轮数、是否一次通过、token 用量、投入时长、干预次数）与**读完报告当场打的**阅读评分合并成一条研究评估记录，写入 `research/evals/`，并把「这份报告最差的一处」登记成一条缺陷记录，最后重跑发布让研究评估页包含这次评分。
 
 这一步评估的是**研究方法本身**在变好还是变坏，与本次公司结论无关。第 4 步的完整性分是放行闸门而不是质量指标——它衡量模板填写率，且长期贴在 9.7 以上，对方法好坏没有区分度。判定标准：固定模型与固定任务下，正确性 / 依从性 / 自主性 / 成本 / 稳定性 / 阅读评分中至少一项显著提升、其余不回归、成本不显著变差，才算改进；任何一项回归都不算。
 
@@ -70,7 +70,7 @@
 - 数据校验步骤正文（第 4 步唯一正文）：`docs/research/workflow/04-data-validation.md`，校验脚本：`docs/research/tools/data_validator.py`
 - 渲染网站步骤正文（第 5 步唯一正文）：`docs/research/workflow/05-render-site.md`，合并脚本：`docs/research/tools/build_final.py`
 - 更新首页步骤正文（第 6 步唯一正文）：`docs/research/workflow/06-update-home.md`
-- 收尾与评分步骤正文（第 7 步唯一正文）：`docs/research/workflow/07-close-and-review.md`，收尾脚本：`docs/research/tools/research_close.py`，记账模块：`docs/research/tools/evals_log.py`
+- 评估与反馈步骤正文（第 7 步唯一正文）：`docs/research/workflow/07-evaluation-and-feedback.md`，反馈脚本：`docs/research/tools/research_feedback.py`，记账模块：`docs/research/tools/evals_log.py`
 - 数据源与交叉验证规范：`docs/model/financial-data.md`
 - 数据采集清单：`docs/model/financial-model.md`
 - 数据采集产出模板：`docs/model/financials—model-template.json`

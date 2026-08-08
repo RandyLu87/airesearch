@@ -8,7 +8,7 @@ import path from "node:path";
 
 /**
  * 发布链路测试 — 研究流程第 5/6/7 步（docs/research/workflow/05-render-site.md、
- * 06-update-home.md、07-close-and-review.md）。
+ * 06-update-home.md、07-evaluation-and-feedback.md）。
  *
  * 放一个夹具公司的 financials-final.json 进 research/companies/，跑一次真实的
  * npm run publish，断言公司分析页、首页卡片与研究评估页；测试收尾删除夹具并再
@@ -31,7 +31,7 @@ const fixtureRuns = [
   {
     company: fixtureCompany,
     companyName: "发布链路测试公司",
-    closedAt: "2026-08-05T21:30:00+08:00",
+    ratedAt: "2026-08-05T21:30:00+08:00",
     dataCutoff: "2026-08-05",
     skillCommit: "abc1234",
     model: "test-model",
@@ -49,7 +49,7 @@ const fixtureRuns = [
   {
     company: fixtureCompany,
     companyName: "发布链路测试公司",
-    closedAt: "2026-08-06T10:00:00+08:00",
+    ratedAt: "2026-08-06T10:00:00+08:00",
     dataCutoff: "2026-08-06",
     skillCommit: "def5678",
     model: "test-model",
@@ -67,7 +67,7 @@ const fixtureRuns = [
   },
 ];
 const fixtureDefects = fixtureRuns.map((run) => ({
-  at: run.closedAt,
+  at: run.ratedAt,
   company: run.company,
   step: "summary",
   symptom: run.rating.worstPart,

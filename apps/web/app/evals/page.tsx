@@ -12,7 +12,7 @@ import {
 } from "../../lib/evals";
 
 /**
- * 研究评估页 — 研究流程第 7 步（docs/research/workflow/07-close-and-review.md）。
+ * 研究评估页 — 研究流程第 7 步（docs/research/workflow/07-evaluation-and-feedback.md）。
  *
  * 呈现的是研究方法本身的可靠程度，不是某家公司的结论。数据在构建时从
  * research/evals/ 读入，因此第 5 步与第 7 步的每次发布都会刷新它。
@@ -86,7 +86,7 @@ export default function EvalsPage() {
           <div className="company-eyebrow"><span>AIRESEARCH</span><span>METHOD EVALUATION</span></div>
           <h1>研究评估</h1>
           <p className="company-current">
-            这一页评估的是研究方法本身，不是任何一家公司的结论。每次研究收尾时记录一条：
+            这一页评估的是研究方法本身，不是任何一家公司的结论。每次研究做完时记录一条：
             机器指标由工具运行时自己写，阅读评分由人读完报告当场打。
           </p>
         </header>
@@ -95,7 +95,7 @@ export default function EvalsPage() {
           <section className="company-section">
             <p className="section-kicker">LEDGER</p>
             <p className="company-note">
-              暂无评估记录。完成一次研究流程的第 7 步（收尾与评分）后，这里会自动出现一行。
+              暂无评估记录。完成一次研究流程的第 7 步（评估与反馈）后，这里会自动出现一行。
             </p>
           </section>
         ) : (
@@ -139,7 +139,7 @@ export default function EvalsPage() {
                   <thead>
                     <tr>
                       <th>公司</th>
-                      <th>收尾</th>
+                      <th>评分日</th>
                       {RATING_FIELDS.map((field) => <th key={field}>{RATING_LABELS[field]}</th>)}
                       <th>均分</th>
                       <th>比上次</th>
@@ -155,9 +155,9 @@ export default function EvalsPage() {
                       const average = averageRating(run);
                       const machine = run.machine ?? {};
                       return (
-                        <tr key={`${run.company}-${run.closedAt}-${index}`}>
+                        <tr key={`${run.company}-${run.ratedAt}-${index}`}>
                           <td>{run.companyName || run.company || "—"}</td>
-                          <td>{String(run.closedAt ?? "").slice(0, 10) || "—"}</td>
+                          <td>{String(run.ratedAt ?? "").slice(0, 10) || "—"}</td>
                           {RATING_FIELDS.map((field) => (
                             <td key={field}>{ratingText(run.rating?.[field])}</td>
                           ))}

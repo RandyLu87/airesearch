@@ -9,7 +9,7 @@
   "scripts": {
     "build": "npm run build --workspace @airesearch/web",
     "publish": "npm run publish --workspace @airesearch/web",
-    "research:close": "python3 docs/research/tools/research_close.py",
+    "research:feedback": "python3 docs/research/tools/research_feedback.py",
     "test": "node --test --test-concurrency=1 tests/*.test.mjs",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "verify": "npm run typecheck && npm test && python3 scripts/research/validate_research_paths.py"

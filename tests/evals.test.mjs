@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 import path from "node:path";
 
 /**
- * 评估记账链路测试 — 研究流程第 7 步（docs/research/workflow/07-close-and-review.md）。
+ * 评估记账链路测试 — 研究流程第 7 步（docs/research/workflow/07-evaluation-and-feedback.md）。
  *
  * 把三个 Python 工具当子进程跑，断言它们写出的 JSONL：这是外部行为，不触碰任何
  * 内部函数。评估目录用环境变量指向临时目录，测试全程不读写真实的 research/evals/；
@@ -128,7 +128,7 @@ test("the merge tool records a run event", () => {
   assert.equal(events[0].companyName, "记账链路测试公司");
 });
 
-test("closing a research run merges events and rating into one record", () => {
+test("recording feedback merges events and rating into one record", () => {
   const ratingPath = path.join(workDir, "rating.json");
   writeFileSync(ratingPath, JSON.stringify({
     trust: 4, insight: 3, readability: 4, actionable: 2, density: 3,
@@ -137,10 +137,10 @@ test("closing a research run merges events and rating into one record", () => {
     correctionMessages: 5, model: "test-model",
   }));
 
-  const closed = runPython("research_close.py", [
+  const ran = runPython("research_feedback.py", [
     "--company", fixtureCompany, "--rating-json", ratingPath, "--no-publish",
   ]);
-  assert.equal(closed.status, 0, closed.stderr);
+  assert.equal(ran.status, 0, ran.stderr);
 
   const runs = readJsonl("runs.jsonl");
   assert.equal(runs.length, 1);
@@ -171,12 +171,12 @@ test("cost metrics degrade to empty values when no transcript matches", () => {
   }));
   const emptyTranscripts = mkdtempSync(path.join(tmpdir(), "airesearch-transcripts-"));
 
-  const closed = runPython("research_close.py", [
+  const ran = runPython("research_feedback.py", [
     "--company", fixtureCompany, "--rating-json", ratingPath,
     "--transcript-dir", emptyTranscripts, "--no-publish",
   ]);
   // 会话日志取不到只让成本字段为空，绝不阻断收尾——记账的准确性让位于流程的健壮性。
-  assert.equal(closed.status, 0, closed.stderr);
+  assert.equal(ran.status, 0, ran.stderr);
 
   const runs = readJsonl("runs.jsonl");
   assert.equal(runs.length, 2, "append-only: the earlier record must survive");
@@ -197,13 +197,13 @@ test("an invalid rating writes nothing at all", () => {
     changedMyPosition: "no", familiarIndustry: true,
   }));
 
-  const closed = runPython("research_close.py", [
+  const ran = runPython("research_feedback.py", [
     "--company", fixtureCompany, "--rating-json", ratingPath, "--no-publish",
   ]);
-  assert.equal(closed.status, 2);
+  assert.equal(ran.status, 2);
   // 所有问题一次报全，而不是修一个报一个。
   for (const probe of ["trust", "vsLast", "worstPart", "changedMyPosition"]) {
-    assert.equal(closed.stderr.includes(probe), true, `stderr must name ${probe}: ${closed.stderr}`);
+    assert.equal(ran.stderr.includes(probe), true, `stderr must name ${probe}: ${ran.stderr}`);
   }
   assert.deepEqual(
     { runs: readJsonl("runs.jsonl").length, defects: readJsonl("defects.jsonl").length },
@@ -212,12 +212,12 @@ test("an invalid rating writes nothing at all", () => {
   );
 });
 
-test("closing an unknown company fails before writing anything", () => {
+test("an unknown company fails before writing anything", () => {
   const before = readJsonl("runs.jsonl").length;
-  const closed = runPython("research_close.py", [
+  const ran = runPython("research_feedback.py", [
     "--company", "us-nope-not-a-company", "--rating-json", path.join(workDir, "rating.json"),
     "--no-publish",
   ]);
-  assert.equal(closed.status, 2);
+  assert.equal(ran.status, 2);
   assert.equal(readJsonl("runs.jsonl").length, before);
 });

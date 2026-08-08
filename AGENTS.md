@@ -19,14 +19,14 @@
 
 ## 研究流程
 
-- 新公司研究与更新一律使用 `$public-company-financial-research` skill，执行 `docs/research/public-company-financial-research.md` 的 1–7 步：**数据采集 → 多维度分析 → 分析总结 → 数据校验 → 渲染网站 → 更新首页 → 收尾与评分**。第 7 步是完成标准的一部分，不是可选收尾。
+- 新公司研究与更新一律使用 `$public-company-financial-research` skill，执行 `docs/research/public-company-financial-research.md` 的 1–7 步：**数据采集 → 多维度分析 → 分析总结 → 数据校验 → 渲染网站 → 更新首页 → 评估与反馈**。第 7 步是完成标准的一部分，不是可选步骤。
 - 动手前先读该文件的**第 0 节「执行纪律」**：不预创建公司目录、启动 Agent 的回合不能结束、结构化数据先落盘再交给 Agent。三条都是流程能否跑完的前提，与研究内容无关。
 - 数据源与交叉验证规范的唯一正文是 `docs/model/financial-data.md`：**分级交叉验证**——Level 1（收入、净利润、自由现金流、总股本、市值、现金、负债）必须两个独立来源，Level 2（毛利率、经营利润率、ROE、ROIC、PEG）建议双源、单源须注明，Level 3（CEO 履历、公司沿革、技术栈、商业模式描述、企业文化）单源即可；误差 >1% 标记，>5% 必须回原始财报。比较数值前先过 Metadata 闸门（报告期/币种/单位/准则/合并口径/是否追溯调整），口径不一致直接记「不可比」而非算误差率。
 - 采集清单的唯一正文是 `docs/model/financial-model.md` 的 10 个维度，不多不少。
 - 网络采集、维度分析与缺口补全通过 Task 工具启动后台 Agent 执行；每个数据点必须带来源名称、URL 与所属报告期，无出处的数字不接受。
 - 涉及计算的数字用 `docs/research/tools/financial_rigor.py` 验算（市值、交叉验证、估值倍数、三情景），工具输出记入 `crossValidationLog`。
 - 完整性闸门有两道：第 4 步 `data_validator.py` 打分（满分 10，任一文件低于 7 分走关键信息补全流程，最多 2 轮）；第 5 步 `build_final.py` 合并时复用同一校验，低于阈值拒绝生成。**这个分数是放行闸门，不是质量指标**——它衡量模板槽位的填写率，已发布公司长期贴在 9.7 以上，对研究质量没有区分度；质量看第 7 步的评估记录。
-- 第 7 步收尾与评分是研究方法自身的观察机制：机器指标由工具运行时自己记账，阅读评分读完报告当场打，唯一正文是 `docs/research/workflow/07-close-and-review.md`。**改研究方法必须能指出这次改动修的是 `research/evals/defects.jsonl` 里哪一条已记录的失败**，没有对应缺陷记录的改动是凭感觉，不该进。
+- 第 7 步评估与反馈是研究方法自身的观察机制：机器指标由工具运行时自己记账，阅读评分读完报告当场打，唯一正文是 `docs/research/workflow/07-evaluation-and-feedback.md`。**改研究方法必须能指出这次改动修的是 `research/evals/defects.jsonl` 里哪一条已记录的失败**，没有对应缺陷记录的改动是凭感觉，不该进。
 - **本仓库不直接引用 `ai-berkshire/` 工程内的任何文件**：用到什么先迁移进本仓库独立维护（规范类迁至 `docs/model/`，工具类迁至 `docs/research/tools/`），迁移件顶部注明来源与日期，此后不回读原件。
 
 ## 文件规范
@@ -48,7 +48,7 @@
 - 研究方法改动只发生在 `docs/research/` 与 `docs/model/`，不改 skill 薄壳；两端 agent 读同一份正文。
 - 第 4 步：`python3 docs/research/tools/data_validator.py check --collection … --analysis … --summary … --gaps-out tmp/<id>-gaps.json`，三份全部 ≥ 7 分才放行。
 - 第 5 步：`python3 docs/research/tools/build_final.py …` 合并（内置同一阈值闸门），然后 `npm run publish`。
-- 第 7 步：`npm run research:close -- --company <id>`，写入评估记录与缺陷记录并重跑发布。评估数据的读写目录可用 `AIRESEARCH_EVALS_DIR` 覆盖，测试即靠它指向临时目录，从不触碰真实记录。
+- 第 7 步：`npm run research:feedback -- --company <id>`，写入评估记录与缺陷记录并重跑发布。评估数据的读写目录可用 `AIRESEARCH_EVALS_DIR` 覆盖，测试即靠它指向临时目录，从不触碰真实记录。
 - 新建、改名或移动公司研究后运行 `python3 scripts/research/validate_research_paths.py`。
 - 改动模板、渲染组件、样式或发布逻辑后运行 `npm run verify`（typecheck + 测试 + 路径校验）。
 - 交接结构性改动前运行 `git diff --check`，并确认 README 链接可达。

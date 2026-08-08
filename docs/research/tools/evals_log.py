@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""评估记录的写入与读取 — 研究流程第 7 步（docs/research/workflow/07-close-and-review.md）。
+"""评估记录的写入与读取 — 研究流程第 7 步（docs/research/workflow/07-evaluation-and-feedback.md）。
 
 三份追加式、不追溯改写的 JSONL 保存在 `research/evals/`：
 
     events.jsonl   运行事件：校验 / 合并 / 发布每跑一次追加一行，由工具自己写。
-    runs.jsonl     研究评估记录：一次研究一行，由第 7 步收尾命令合并生成。
+    runs.jsonl     研究评估记录：一次研究一行，由第 7 步反馈命令合并生成。
     defects.jsonl  缺陷记录：由每次评分的「最差的一处」物化而来。
 
 追加式是硬约束：历史评价一旦可以被后来的认知改写，纵向比较就不成立。

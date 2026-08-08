@@ -2,10 +2,10 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 
 /**
- * 评估记录的读取 — 研究流程第 7 步（docs/research/workflow/07-close-and-review.md）。
+ * 评估记录的读取 — 研究流程第 7 步（docs/research/workflow/07-evaluation-and-feedback.md）。
  *
  * 记录由 docs/research/tools/ 下的工具追加写入 research/evals/：运行事件由校验、
- * 合并、发布三个工具自己写，研究评估记录与缺陷记录由收尾命令写。本模块只读，
+ * 合并、发布三个工具自己写，研究评估记录与缺陷记录由反馈命令写。本模块只读，
  * 在构建时执行——研究评估页因此随每次 npm run publish 自动刷新，不需要任何
  * 额外的触发机制。
  *
@@ -41,7 +41,7 @@ export type Json = any;
 export type RunRecord = {
   company?: string;
   companyName?: string;
-  closedAt?: string;
+  ratedAt?: string;
   dataCutoff?: string;
   skillCommit?: string;
   model?: string;
@@ -91,7 +91,7 @@ function readJsonl<T>(filename: string): T[] {
 /** 研究评估记录，最新一次在前。追加式写入，这里只排序不改写。 */
 export function listRuns(): RunRecord[] {
   return readJsonl<RunRecord>("runs.jsonl").sort((left, right) =>
-    String(right.closedAt ?? "").localeCompare(String(left.closedAt ?? "")),
+    String(right.ratedAt ?? "").localeCompare(String(left.ratedAt ?? "")),
   );
 }
 
