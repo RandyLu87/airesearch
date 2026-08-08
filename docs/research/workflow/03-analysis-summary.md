@@ -2,7 +2,7 @@
 
 本文件是 `docs/research/public-company-financial-research.md` 第 3 步的唯一正文。基于第 1 步采集的数据与第 2 步各维度分析的结果，由评估 Agent 给出六个维度的结论总结与信心度评分，并对四类主要策略给出专业建议。
 
-- **输入**：第 1 步采集文件（`financials—model-template.json` 结构）+ 第 2 步分析文件（`financials—analysis-template.json` 结构）。
+- **输入**：第 1 步采集文件 `research/companies/<company-id>/financials-collection.json`（`financials—model-template.json` 结构，可能含 Evidence Agent 补写的 `evidenceAppendix`）+ 第 2 步分析文件 `research/companies/<company-id>/financials-analysis.json`（`financials—analysis-template.json` 结构）。
 - **产出**：按 `docs/model/financials—summary-template.json` 结构生成总结文件，落盘为 `research/companies/<company-id>/financials-summary.json`（文件名固定，渲染层按名发现）。
 
 ## 执行方式
@@ -12,6 +12,7 @@
 评估 Agent 的职责边界：
 
 - **只基于前两步已落盘的数据与分析做评估，不重新采集**。发现某维度证据不足时，不补采数据，而是降低该维度信心度并在 `scoreBasis` 中写明缺口；
+- **不产生新的 `evidenceRequest`、不触发新一轮取证**——第 2 步最多 2 轮的取证流程已经是证据获取的终点（见 `02-multi-dimension-analysis.md`「第二步联网规则」），本步骤只对已定型的数据与分析做评估；
 - 每个结论、每个评分、每条策略建议都必须能指回第 2 步分析文件的具体字段或第 1 步的具体数据点，不接受凭空判断。
 
 ## 维度结论与信心度评分
@@ -33,7 +34,7 @@
 - 各维度的评分语义：**生意质量**=这门生意本身有多好（单位经济、现金创造、经营杠杆）；**护城河**=有多宽、多耐久；**管理层**=能力、资本配置纪律与股东利益一致性有多强；**最大风险**=风险有多可控——风险越致命、越不可对冲，分数越低；**文明趋势**=长期趋势对公司有多有利；**估值**=当前价格相对内在价值有多有吸引力——越低估分越高，价格透支越严重分越低；
 - 参考梯度：9–10 教科书级优秀（宽护城河 / 卓越管理层 / 显著低估这类特征）；7–8 明显有利、有小瑕疵；5–6 中性或好坏参半；3–4 明显不利；0–2 严重不利（如护城河不存在、估值严重透支、致命且不可控的风险）；
 - 打分依据（`scoreBasis`）必须引用第 2 步分析文件的具体字段与数据，写清「为什么看多/看空到这个程度」；
-- **证据不足不等于利空**：该维度 `dataGaps` 多、`[估计]` 值占比高时，评分向中性（5–6）收敛并在 `scoreBasis` 写明证据限制，不把数据缺口误报为看空理由。
+- **证据不足不等于利空**：该维度 `dataGaps` 多、`[估计]` 值占比高、或结论主要依赖 `evidenceAppendix` 中**未做双源交叉验证的单源补充事实**（Evidence Agent 因检索预算限制只取到一个来源）时，评分同样向中性（5–6）收敛并在 `scoreBasis` 写明证据限制，不把数据缺口或未双源验证的补充事实误当作已验证的确定事实推高信心度。
 
 ## 策略建议
 

@@ -14,7 +14,7 @@
 
 ## 2. 多维度分析
 
-执行 `docs/research/workflow/02-multi-dimension-analysis.md`（本步骤唯一正文）。在第 1 步采集产出的基础上，对六个维度——生意本质、护城河、逆向思考与风险、管理层、行业与长期趋势、估值——**每个维度用 Task 工具启动一个独立后台 Agent 继续网络搜索材料后汇总**。六个维度共用统一输出信封（结论 / 分析 / 追问及回答 / 缺口），所有分析必须有数据支撑并附来源，追问必须有回答；涉及计算的数字经 `docs/research/tools/financial_rigor.py` 验算（估值维度含 `three-scenario` 三情景计算），汇总后按 `docs/model/financials—analysis-template.json` 落盘到 `research/companies/<company-id>/`。
+执行 `docs/research/workflow/02-multi-dimension-analysis.md`（本步骤唯一正文）。在第 1 步采集产出的基础上，对六个维度——生意本质、护城河、逆向思考与风险、管理层、行业与长期趋势、估值——**每个维度用 Task 工具启动一个独立后台 Agent，默认禁止联网、只读第 1 步采集文件分析**；遇到采集清单之外的关键事实缺失（如 NPS、App DAU 等），生成 `evidenceRequest` 交由主会话去重后派单给统一的 Evidence Agent 取证补写回采集文件，再重跑受影响维度（最多 2 轮）。六个维度共用统一输出信封（结论 / 分析 / 追问及回答 / 缺口），所有分析必须有数据支撑并附来源，追问必须有回答；涉及计算的数字经 `docs/research/tools/financial_rigor.py` 验算（估值维度含 `three-scenario` 三情景计算），汇总后按 `docs/model/financials—analysis-template.json` 落盘到 `research/companies/<company-id>/`。
 
 **完成标准**：六个维度全部返回且格式统一；每个结论都有数据与来源支撑；追问全部有回答；估值数字全部经工具验算；缺失项写明原因与已查范围。
 

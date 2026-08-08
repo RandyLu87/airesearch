@@ -11,18 +11,23 @@
 2. 明确公司、代码、交易所、报告币种、会计准则。
 3. 搜索 `research/companies/`；已有记录时先读最近一次研究产出作为可比基线。按仓库 `AGENTS.md` 确定公司目录命名；同一公司同一天只维护一份产出，不新建第二份。
 
-## 2. 按市场选定双源
+## 2. 按市场选定来源
 
-按 `docs/model/financial-data.md` 的优先级取数，主副来源缺一不可：
+按 `docs/model/financial-data.md` 的优先级取数，策略是 **Cache → Primary → Reference → Official**：默认只访问 Primary，Reference 仅用于分级交叉验证或 Primary 失败时降级，Official 只在 >5% 重大差异或 Level 1 数据点需最终核实时访问——**不默认访问全部来源**。
 
-| 市场 | 主来源 | 副来源 | 原始一手 |
-|------|--------|--------|---------|
-| 美股 | macrotrends | stockanalysis | SEC EDGAR（10-K / 10-Q） |
-| 港股 | aastocks | macrotrends（ADR 代码） | HKEX 披露易年报 PDF |
-| A股 | 东方财富 | 巨潮资讯；行情/估值/复权/分红另用 Tushare（`TUSHARE_TOKEN`，报表接口无权限、多个接口 1 次/小时，用法与频次见规范正文） | 原始年报 / 季报 PDF |
+| 市场 | Primary（主） | Reference（副，交叉验证用） | Official（原始一手） |
+|------|--------------|---------------------------|---------------------|
+| 美股 | **FMP**（`mcp__fmp__statements` / `quote` / `company`） | stockanalysis → macrotrends | SEC EDGAR（10-K / 10-Q） |
+| A股 | **Tushare**（用 `docs/research/tools/cnstock_data.py`，报表/指标/分部/估值/股东全覆盖） | 东方财富 | 巨潮资讯年报 / 季报 PDF |
+| 港股 | aastocks | macrotrends（ADR 代码）；行情可用 Tushare `hk_daily`（1 次/分钟），概况可用 FMP profile | HKEX 披露易年报 PDF |
 | 台股 | FinMind（`docs/research/tools/twstock_data.py`） | Goodinfo | 公开资讯观测站 MOPS |
 
-误差处理规则、常见差异原因（GAAP vs Non-GAAP、汇率、财年定义、合并口径）、未上市公司 `[估计]` 标记、历史序列前复权要求，全部以该规范正文为准，不在此复述。
+**两条减少冗余请求的硬要求**：
+
+1. **单次采集**——同一公司、同一报告期、同一来源的同一份报表只请求一次，10 个维度共用同一次取数结果（如维度 1 收入结构与维度 2 财务指标共用一次利润表），不为不同维度重复调用；
+2. **整表获取**——一次取回整份报表与整段时间序列，再从结果里拆字段，不为 Revenue / Gross Margin / Net Income 分别调三次接口。
+
+误差处理规则、分级交叉验证（Level 1/2/3）、Metadata 校验闸门、Tushare 的四个数据陷阱（重复行去重、`report_type` 过滤、日期参数是公告日期、分部合计行剔除）、未上市公司 `[估计]` 标记、历史序列前复权要求，全部以该规范正文为准，不在此复述。
 
 ## 3. 采集十个维度
 
@@ -61,11 +66,12 @@ python3 docs/research/tools/financial_rigor.py verify-valuation \
 
 **验证规则**：
 
-1. 每个关键数据点至少 2 个独立来源；
-2. 发现来源间有差异时，优先采用公司年报/交易所数据，并注明差异原因；
-3. 所有涉及计算的数据必须通过工具验算，禁止 LLM 心算；
-4. 工具输出结果直接嵌入采集产出的 `crossValidationLog`（即报告附录「关键数据交叉验证记录」）；
-5. 如果工具报告 ❌ 偏差过大，必须排查原因后才能继续分析。
+1. **按等级定双源要求**（完整定义见 `docs/model/financial-data.md`「分级交叉验证」）：Level 1（收入、净利润、自由现金流、总股本、市值、现金、负债）必须 2 个独立来源；Level 2（毛利率、经营利润率、ROE、ROIC、PEG）建议双源，仅单源时在该字段注明「仅单源」；Level 3（CEO 履历、公司沿革、技术栈、商业模式描述、企业文化）单源即可，不做交叉验证；
+2. **比较数值前先过 Metadata 闸门**：核对报告期、币种、金额单位、会计准则、合并口径、是否追溯调整；任一不一致直接记「口径不可比」并写明差异项，**不计算误差率**；
+3. 发现来源间有差异时，优先采用公司年报/交易所数据，并注明差异原因；
+4. 所有涉及计算的数据必须通过工具验算，禁止 LLM 心算；
+5. 工具输出结果直接嵌入采集产出的 `crossValidationLog`（即报告附录「关键数据交叉验证记录」）；
+6. 如果工具报告 ❌ 偏差过大，必须排查原因后才能继续分析。
 
 **常见错误防范**：
 

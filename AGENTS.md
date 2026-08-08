@@ -19,7 +19,7 @@
 ## 研究流程
 
 - 新公司研究与更新一律使用 `$public-company-financial-research` skill，执行 `docs/research/public-company-financial-research.md` 的 1–6 步：**数据采集 → 多维度分析 → 分析总结 → 数据校验 → 渲染网站 → 更新首页**。
-- 数据源与交叉验证规范的唯一正文是 `docs/model/financial-data.md`：每个关键数据两个独立来源，误差 >1% 标记，>5% 必须回原始财报。
+- 数据源与交叉验证规范的唯一正文是 `docs/model/financial-data.md`：**分级交叉验证**——Level 1（收入、净利润、自由现金流、总股本、市值、现金、负债）必须两个独立来源，Level 2（毛利率、经营利润率、ROE、ROIC、PEG）建议双源、单源须注明，Level 3（CEO 履历、公司沿革、技术栈、商业模式描述、企业文化）单源即可；误差 >1% 标记，>5% 必须回原始财报。比较数值前先过 Metadata 闸门（报告期/币种/单位/准则/合并口径/是否追溯调整），口径不一致直接记「不可比」而非算误差率。
 - 采集清单的唯一正文是 `docs/model/financial-model.md` 的 10 个维度，不多不少。
 - 网络采集、维度分析与缺口补全通过 Task 工具启动后台 Agent 执行；每个数据点必须带来源名称、URL 与所属报告期，无出处的数字不接受。
 - 涉及计算的数字用 `docs/research/tools/financial_rigor.py` 验算（市值、交叉验证、估值倍数、三情景），工具输出记入 `crossValidationLog`。
