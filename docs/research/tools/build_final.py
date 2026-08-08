@@ -27,6 +27,7 @@ _TOOLS_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, _TOOLS_DIR)
 
 import data_validator  # noqa: E402  复用第 4 步的校验与打分逻辑
+import evals_log  # noqa: E402  第 7 步的运行事件记账（写失败不阻断本流程）
 
 REPO_ROOT = data_validator.REPO_ROOT
 FINAL_VERSION = "1.0.0"
@@ -57,9 +58,13 @@ def main():
     for res in results:
         mark = "✅" if res["score"] >= args.threshold else "❌"
         print("%s %s  %.1f 分（阈值 %.1f）  %s" % (mark, res["stepLabel"], res["score"], args.threshold, res["file"]))
+    merge_company = evals_log.company_from_paths(*[path for _, path in targets], args.out)
+    scores = {r["step"]: r["score"] for r in results}
     if failing:
         sys.stderr.write("拒绝合并：%d 份文件低于阈值。先回到第 4 步跑关键信息补全流程"
                          "（data_validator.py --gaps-out），达标后再来。\n" % len(failing))
+        evals_log.log_event("build_final", "merge", company=merge_company, exit_code=1,
+                            threshold=args.threshold, scores=scores, reason="below-threshold")
         sys.exit(1)
 
     # 2) 三份文件必须属于同一家公司
@@ -69,6 +74,8 @@ def main():
     if len(distinct) != 1:
         sys.stderr.write("拒绝合并：三份文件的 meta.companyId 不一致或缺失：%s\n"
                          % json.dumps(company_ids, ensure_ascii=False))
+        evals_log.log_event("build_final", "merge", company=merge_company, exit_code=1,
+                            threshold=args.threshold, scores=scores, reason="company-mismatch")
         sys.exit(1)
     company_id = distinct.pop()
 
@@ -103,6 +110,10 @@ def main():
     print("✅ 已生成 %s（公司 %s，三份得分 %s）"
           % (rel_to_repo(args.out), company_id,
              " / ".join("%.1f" % r["score"] for r in results)))
+    evals_log.log_event("build_final", "merge", company=company_id, exit_code=0,
+                        threshold=args.threshold, scores=scores,
+                        companyName=collection_meta.get("companyName", ""),
+                        dataCutoff=collection_meta.get("dataCutoff", ""))
     sys.exit(0)
 
 

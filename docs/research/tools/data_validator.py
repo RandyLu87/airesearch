@@ -33,6 +33,10 @@ import json
 import os
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+import evals_log  # noqa: E402  第 7 步的运行事件记账（写失败不阻断本流程）
+
 _TOOLS_DIR = os.path.dirname(os.path.abspath(__file__))          # docs/research/tools
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(_TOOLS_DIR)))
 MODEL_DIR = os.path.join(REPO_ROOT, "docs", "model")
@@ -278,7 +282,17 @@ def main():
         if args.gaps_out and failing:
             print("缺口清单已写入：%s" % args.gaps_out)
 
-    sys.exit(1 if failing else 0)
+    exit_code = 1 if failing else 0
+    # 通过与未过都要记：第 4 步跑了几轮、是不是一次过，靠的正是失败那几行。
+    evals_log.log_event(
+        "data_validator", "validate",
+        company=evals_log.company_from_paths(*[path for _, path in targets]),
+        exit_code=exit_code,
+        threshold=args.threshold,
+        scores={r["step"]: r["score"] for r in results},
+        gapCounts={r["step"]: r["gapCount"] for r in results},
+    )
+    sys.exit(exit_code)
 
 
 if __name__ == "__main__":

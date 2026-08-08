@@ -75,7 +75,12 @@ export default function HomePage() {
       <link rel="stylesheet" href="./assets/research.css" />
       <main className="company-page">
         <header className="company-header">
-          <div className="company-eyebrow"><span>AIRESEARCH</span><span>LONG-TERM VALUE</span></div>
+          {/* 评估页入口放在 eyebrow 里：它不占额外高度，第一张公司卡片仍然不用滚动。 */}
+          <div className="company-eyebrow">
+            <span>AIRESEARCH</span>
+            <span>LONG-TERM VALUE</span>
+            <span><a href="./evals.html">研究评估</a></span>
+          </div>
           <h1>上市公司研究</h1>
           <p className="company-current">以商业模式、核心驱动、最新变化和当前价格隐含的假设为主线的长期价值研究。</p>
         </header>

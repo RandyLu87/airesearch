@@ -438,6 +438,7 @@ def cmd_holders(code):
         "end_date,holder_num",
     )
     if nums:
+        nums = [r for r in nums if r.get("holder_num") not in (None, "")]
         nums.sort(key=lambda r: r["end_date"], reverse=True)
         trend = "  ".join(f"{r['end_date']}:{int(r['holder_num']):,}" for r in nums[:5])
         print(f"\n  股东户数（近5期）: {trend}")

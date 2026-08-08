@@ -60,6 +60,13 @@ def validate(root: Path) -> list[str]:
         if not entry.is_dir():
             errors.append(f"公司目录根部不允许文件：{entry.relative_to(root)}")
             continue
+        contents = [item for item in sorted(entry.iterdir()) if item.name != ".DS_Store"]
+        if not contents:
+            # 空目录一律跳过：git 不追踪空目录，它永远不可能是被提交的仓库状态，
+            # 只可能是研究流程跑到一半时的临时残留（产出尚未落盘）。对它报错会让
+            # Stop hook 在长流程中途误伤——这正是本校验要避免的失败模式。
+            continue
+
         if not any(pattern.fullmatch(entry.name) for pattern in COMPANY_PATTERNS):
             errors.append(
                 "公司目录命名不合规："
@@ -69,9 +76,7 @@ def validate(root: Path) -> list[str]:
 
         has_new_flow = False
         has_archive = False
-        for item in sorted(entry.iterdir()):
-            if item.name == ".DS_Store":
-                continue
+        for item in contents:
             if item.is_dir():
                 if item.name == "snapshots":
                     has_archive = True  # 旧流程快照存档，不校验内容
