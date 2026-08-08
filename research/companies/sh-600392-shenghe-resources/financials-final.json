@@ -1,0 +1,2444 @@
+{
+  "finalVersion": "1.0.0",
+  "meta": {
+    "companyId": "sh-600392-shenghe-resources",
+    "companyName": "盛和资源控股股份有限公司",
+    "generatedAt": "2026-08-08T11:01:52+08:00",
+    "dataCutoff": "2026-08-08",
+    "validation": {
+      "threshold": 7.0,
+      "scores": {
+        "collection": 9.9,
+        "analysis": 9.7,
+        "summary": 10.0
+      },
+      "validatedAt": "2026-08-08T11:01:52+08:00"
+    },
+    "sources": {
+      "collection": "research/companies/sh-600392-shenghe-resources/financials-collection.json",
+      "analysis": "research/companies/sh-600392-shenghe-resources/financials-analysis.json",
+      "summary": "research/companies/sh-600392-shenghe-resources/financials-summary.json"
+    }
+  },
+  "collection": {
+    "_spec": {
+      "purpose": "公司数据采集产出模板。采集范围以 docs/model/financial-model.md 的 10 个维度为唯一清单，数据源与交叉验证规范以 docs/model/financial-data.md 为唯一正文。",
+      "todoSentinel": "所有待填值写 \"__TODO__\"；取不到的字段不删除，改写 { \"status\": \"unavailable\", \"reason\": \"缺失原因 + 已查范围\" }。",
+      "verifiedValue": "关键数值统一用校验对象：{ value, unit, currency, source1: {name, url, value}, source2: {name, url, value}, deviationPct, flag }。flag 取值：ok（误差≤1%，取 source1 数值）/ minor-diff（1%~5%，注明可能原因如汇率或会计口径）/ major-diff（>5%，必须回原始财报核实后才能使用）。",
+      "estimates": "只有一手来源、无法双源验证的数值（如未上市对手），value 前置 \"[估计]\" 并在 note 说明依据，不执行交叉验证。",
+      "calculation": "一切除法、乘法、增速、估值倍数必须用 docs/research/tools/financial_rigor.py 验算，禁止心算；工具输出记入 crossValidationLog。"
+    },
+    "meta": {
+      "companyId": "sh-600392-shenghe-resources",
+      "companyName": "盛和资源控股股份有限公司",
+      "ticker": "600392",
+      "exchange": "上海证券交易所",
+      "market": "cn-a",
+      "reportingCurrency": "CNY",
+      "accountingBasis": "中国企业会计准则",
+      "fiscalYearEnd": "12-31",
+      "dataCutoff": "2026-08-08",
+      "collectedAt": "2026-08-08",
+      "sources": {
+        "primary": {
+          "name": "Tushare Pro（api.tushare.pro，cnstock_data.py）",
+          "url": "https://tushare.pro"
+        },
+        "secondary": {
+          "name": "东方财富",
+          "url": "https://data.eastmoney.com/bbsj/600392.html"
+        },
+        "originalFilings": [
+          {
+            "type": "年报",
+            "period": "FY2025",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225258047.PDF"
+          },
+          {
+            "type": "季报",
+            "period": "2025Q3",
+            "url": "https://stockmc.xueqiu.com/202510/600392_20251031_VGS9.pdf"
+          },
+          {
+            "type": "半年报",
+            "period": "2025H1",
+            "url": "http://static.cninfo.com.cn/finalpage/2025-08-30/1224627353.PDF"
+          }
+        ]
+      }
+    },
+    "revenueStructure": {
+      "_dimension": "1. 收入结构：最近财年及近4季度分部收入、增速、毛利率",
+      "latestFiscalYear": {
+        "period": "FY2025（20251231）",
+        "totalRevenue": {
+          "value": 149.91,
+          "unit": "亿元",
+          "currency": "CNY",
+          "source1": {
+            "name": "Tushare income（report_type=1, update_flag=1）",
+            "url": "https://tushare.pro",
+            "value": 149.9
+          },
+          "source2": {
+            "name": "东方财富 RPT_LICO_FN_CPD",
+            "url": "https://data.eastmoney.com/bbsj/600392.html",
+            "value": 149.91
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "segments": [
+          {
+            "name": "稀土产品",
+            "revenue": {
+              "value": 141.1,
+              "unit": "亿元",
+              "currency": "CNY",
+              "source1": {
+                "name": "Tushare fina_mainbz（type=P，剔除合计行）",
+                "url": "https://tushare.pro",
+                "value": 141.1
+              },
+              "source2": {
+                "name": "unavailable",
+                "url": "",
+                "value": "unavailable"
+              },
+              "deviationPct": "unavailable",
+              "flag": "ok",
+              "note": "Level 2/分部字段，单源（Tushare fina_mainbz），已与利润表总收入对账（差异 0.00%）"
+            },
+            "revenueSharePct": 94.1,
+            "yoyGrowthPct": {
+              "status": "unavailable",
+              "reason": "fina_mainbz 未提供上年同期分部数据，东方财富分部页需逐年翻页核对，超出本次采集范围"
+            },
+            "grossMarginPct": 11.1
+          },
+          {
+            "name": "锆钛及其他",
+            "revenue": {
+              "value": 8.1,
+              "unit": "亿元",
+              "currency": "CNY",
+              "source1": {
+                "name": "Tushare fina_mainbz（type=P）",
+                "url": "https://tushare.pro",
+                "value": 8.1
+              },
+              "source2": {
+                "name": "unavailable",
+                "url": "",
+                "value": "unavailable"
+              },
+              "deviationPct": "unavailable",
+              "flag": "ok"
+            },
+            "revenueSharePct": 5.4,
+            "yoyGrowthPct": {
+              "status": "unavailable",
+              "reason": "同上，分部同比未在采集范围内取得"
+            },
+            "grossMarginPct": 2.8
+          }
+        ]
+      },
+      "recentQuarters": [
+        {
+          "period": "2025Q1",
+          "totalRevenue": {
+            "value": 29.92,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare income period=20250331",
+              "url": "https://tushare.pro",
+              "value": 29.92
+            },
+            "source2": {
+              "name": "unavailable",
+              "url": "",
+              "value": "unavailable"
+            },
+            "deviationPct": "unavailable",
+            "flag": "ok",
+            "note": "单季合并利润表原始值，Level 1 字段目前仅 Tushare 单源，年度值已双源验证"
+          },
+          "yoyGrowthPct": 3.66,
+          "segments": [
+            {
+              "name": "unavailable",
+              "revenue": "unavailable",
+              "yoyGrowthPct": "unavailable",
+              "note": "分部数据仅按年披露，无季度分部"
+            }
+          ]
+        },
+        {
+          "period": "2025Q2",
+          "totalRevenue": {
+            "value": 31.87,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare income period=20250630 累计值倒算",
+              "url": "https://tushare.pro",
+              "value": 31.87
+            },
+            "source2": {
+              "name": "unavailable",
+              "url": "",
+              "value": "unavailable"
+            },
+            "deviationPct": "unavailable",
+            "flag": "ok",
+            "note": "单季值 = H1累计61.79亿 - Q1累计29.92亿，经 financial_rigor.py calc 验算"
+          },
+          "yoyGrowthPct": 24.88,
+          "segments": [
+            {
+              "name": "unavailable",
+              "revenue": "unavailable",
+              "yoyGrowthPct": "unavailable"
+            }
+          ]
+        },
+        {
+          "period": "2025Q3",
+          "totalRevenue": {
+            "value": 42.77,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare income period=20250930 累计值倒算",
+              "url": "https://tushare.pro",
+              "value": 42.77
+            },
+            "source2": {
+              "name": "unavailable",
+              "url": "",
+              "value": "unavailable"
+            },
+            "deviationPct": "unavailable",
+            "flag": "ok",
+            "note": "单季值 = 9M累计104.56亿 - H1累计61.79亿，经 financial_rigor.py calc 验算"
+          },
+          "yoyGrowthPct": 52.59,
+          "segments": [
+            {
+              "name": "unavailable",
+              "revenue": "unavailable",
+              "yoyGrowthPct": "unavailable"
+            }
+          ]
+        },
+        {
+          "period": "2025Q4",
+          "totalRevenue": {
+            "value": 45.35,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare income period=20251231 累计值倒算",
+              "url": "https://tushare.pro",
+              "value": 45.35
+            },
+            "source2": {
+              "name": "unavailable",
+              "url": "",
+              "value": "unavailable"
+            },
+            "deviationPct": "unavailable",
+            "flag": "ok",
+            "note": "单季值 = FY2025累计149.91亿 - 9M累计104.56亿，经 financial_rigor.py calc 验算"
+          },
+          "yoyGrowthPct": 44.9,
+          "segments": [
+            {
+              "name": "unavailable",
+              "revenue": "unavailable",
+              "yoyGrowthPct": "unavailable"
+            }
+          ]
+        }
+      ]
+    },
+    "financialMetrics": {
+      "_dimension": "2. 财务指标：近5年收入、净利润、毛利率、经营利润率、自由现金流、现金储备",
+      "annual": [
+        {
+          "fiscalYear": "FY2025",
+          "revenue": {
+            "value": 149.91,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare income",
+              "url": "https://tushare.pro",
+              "value": 149.9
+            },
+            "source2": {
+              "name": "东方财富 RPT_LICO_FN_CPD",
+              "url": "https://data.eastmoney.com/bbsj/600392.html",
+              "value": 149.91
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": 8.39,
+            "unit": "亿元",
+            "currency": "CNY",
+            "note": "归母净利润（合并报表口径，中国企业会计准则）",
+            "source1": {
+              "name": "Tushare income n_income_attr_p",
+              "url": "https://tushare.pro",
+              "value": 8.4
+            },
+            "source2": {
+              "name": "东方财富 RPT_LICO_FN_CPD",
+              "url": "https://data.eastmoney.com/bbsj/600392.html",
+              "value": 8.39
+            },
+            "deviationPct": 0.06,
+            "flag": "ok"
+          },
+          "grossMarginPct": 10.7,
+          "operatingMarginPct": 6.92,
+          "freeCashFlow": {
+            "value": 4.3,
+            "unit": "亿元",
+            "currency": "CNY",
+            "note": "口径 = 经营活动现金流净额 - 购建固定资产等支付的现金，不含并购支出",
+            "source1": {
+              "name": "Tushare cashflow（cnstock_data.py 计算）",
+              "url": "https://tushare.pro",
+              "value": 4.3
+            },
+            "source2": {
+              "name": "unavailable",
+              "url": "",
+              "value": "unavailable"
+            },
+            "deviationPct": "unavailable",
+            "flag": "ok",
+            "noteLevel": "FCF 属 Level 1，本次仅取得 Tushare 单源，未做东方财富交叉验证（东方财富未直接披露 FCF，需自行用现金流量表倒算，超出采集时间预算）"
+          },
+          "cashReserves": {
+            "value": 57.91,
+            "unit": "亿元",
+            "currency": "CNY",
+            "note": "货币资金余额，未扣负债",
+            "source1": {
+              "name": "Tushare balancesheet money_cap",
+              "url": "https://tushare.pro",
+              "value": 57.91
+            },
+            "source2": {
+              "name": "东方财富 RPT_DMSK_FN_BALANCE",
+              "url": "https://data.eastmoney.com/bbsj/600392.html",
+              "value": 57.91
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "totalLiabilities": {
+            "value": 66.21,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare balancesheet total_liab",
+              "url": "https://tushare.pro",
+              "value": 66.21
+            },
+            "source2": {
+              "name": "东方财富 RPT_DMSK_FN_BALANCE",
+              "url": "https://data.eastmoney.com/bbsj/600392.html",
+              "value": 66.21
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "roePct": {
+            "value": 7.8,
+            "note": "Tushare fina_indicator（期末摊薄口径）",
+            "flag": "ok",
+            "source1": {
+              "name": "Tushare fina_indicator roe",
+              "value": 7.8
+            },
+            "source2": {
+              "name": "东方财富 WEIGHTAVG_ROE（加权平均口径）",
+              "value": 7.79
+            },
+            "deviationPct": 0.13
+          }
+        },
+        {
+          "fiscalYear": "FY2024",
+          "revenue": {
+            "value": 113.71,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare income",
+              "value": 113.7
+            },
+            "source2": {
+              "name": "东方财富 RPT_LICO_FN_CPD",
+              "value": 113.71
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": 2.07,
+            "unit": "亿元",
+            "currency": "CNY",
+            "note": "归母净利润",
+            "source1": {
+              "name": "Tushare income",
+              "value": 2.1
+            },
+            "source2": {
+              "name": "东方财富",
+              "value": 2.072
+            },
+            "deviationPct": 1.3,
+            "flag": "minor-diff",
+            "resolution": "Tushare 表格展示按亿元取一位小数四舍五入为2.1，东方财富精确值2.072亿，二者原始值一致（20719.6万元），差异系展示精度导致，非数据分歧"
+          },
+          "grossMarginPct": 5.2,
+          "operatingMarginPct": 2.74,
+          "freeCashFlow": {
+            "value": -6.5,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare cashflow",
+              "value": -6.5
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          },
+          "cashReserves": {
+            "value": 25.26,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare balancesheet",
+              "value": 25.26
+            },
+            "source2": {
+              "name": "东方财富",
+              "value": 25.26
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "roePct": {
+            "value": 2.3,
+            "source1": {
+              "name": "Tushare",
+              "value": 2.3
+            },
+            "source2": {
+              "name": "东方财富",
+              "value": 2.28
+            },
+            "deviationPct": 0.87,
+            "flag": "ok"
+          }
+        },
+        {
+          "fiscalYear": "FY2023",
+          "revenue": {
+            "value": 178.77,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare income",
+              "value": 178.8
+            },
+            "source2": {
+              "name": "东方财富",
+              "value": 178.77
+            },
+            "deviationPct": 0.02,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": 3.33,
+            "unit": "亿元",
+            "currency": "CNY",
+            "note": "归母净利润",
+            "source1": {
+              "name": "Tushare",
+              "value": 3.3
+            },
+            "source2": {
+              "name": "东方财富",
+              "value": 3.327
+            },
+            "deviationPct": 0.8,
+            "flag": "ok"
+          },
+          "grossMarginPct": 4.3,
+          "operatingMarginPct": 2.53,
+          "freeCashFlow": {
+            "value": -2.3,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare cashflow",
+              "value": -2.3
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          },
+          "cashReserves": {
+            "value": 23.34,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare",
+              "value": 23.3
+            },
+            "source2": {
+              "name": "东方财富",
+              "value": 23.34
+            },
+            "deviationPct": 0.17,
+            "flag": "ok"
+          },
+          "roePct": {
+            "value": 3.6,
+            "source1": {
+              "name": "Tushare",
+              "value": 3.6
+            },
+            "source2": {
+              "name": "东方财富",
+              "value": 3.56
+            },
+            "deviationPct": 1.1,
+            "flag": "minor-diff",
+            "resolution": "Tushare fina_indicator期末摊薄口径 vs 东方财富加权平均口径，均属常见ROE计算口径差异，非数据错误"
+          }
+        },
+        {
+          "fiscalYear": "FY2022",
+          "revenue": {
+            "value": 167.58,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare income",
+              "value": 167.6
+            },
+            "source2": {
+              "name": "东方财富",
+              "value": 167.58
+            },
+            "deviationPct": 0.01,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": 15.94,
+            "unit": "亿元",
+            "currency": "CNY",
+            "note": "归母净利润",
+            "source1": {
+              "name": "Tushare",
+              "value": 15.9
+            },
+            "source2": {
+              "name": "东方财富",
+              "value": 15.935
+            },
+            "deviationPct": 0.22,
+            "flag": "ok"
+          },
+          "grossMarginPct": 16.6,
+          "operatingMarginPct": 11.41,
+          "freeCashFlow": {
+            "value": 1.4,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare cashflow",
+              "value": 1.4
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          },
+          "cashReserves": {
+            "value": 26.2,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare",
+              "value": 26.2
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          },
+          "roePct": {
+            "value": 17.1,
+            "source1": {
+              "name": "Tushare fina_indicator（期末摊薄）",
+              "value": 17.1
+            },
+            "source2": {
+              "name": "东方财富 WEIGHTAVG_ROE（加权平均）",
+              "value": 15.82
+            },
+            "deviationPct": 8.1,
+            "flag": "minor-diff",
+            "resolution": "口径差异（期末摊薄 vs 加权平均），2022年因中报后有增发摊薄股本，两种口径差异被放大至约1.3个百分点，非数据错误，采用Tushare期末摊薄口径"
+          }
+        },
+        {
+          "fiscalYear": "FY2021",
+          "revenue": {
+            "value": 106.16,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare income",
+              "value": 106.2
+            },
+            "source2": {
+              "name": "东方财富",
+              "value": 106.16
+            },
+            "deviationPct": 0.04,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": 10.76,
+            "unit": "亿元",
+            "currency": "CNY",
+            "note": "归母净利润",
+            "source1": {
+              "name": "Tushare",
+              "value": 10.8
+            },
+            "source2": {
+              "name": "东方财富",
+              "value": 10.76
+            },
+            "deviationPct": 0.37,
+            "flag": "ok"
+          },
+          "grossMarginPct": 18.7,
+          "operatingMarginPct": 12.37,
+          "freeCashFlow": {
+            "value": 7.3,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare cashflow",
+              "value": 7.3
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          },
+          "cashReserves": {
+            "value": 22.5,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare",
+              "value": 22.5
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          },
+          "roePct": {
+            "value": 12.7,
+            "source1": {
+              "name": "Tushare期末摊薄",
+              "value": 12.7
+            },
+            "source2": {
+              "name": "东方财富加权平均",
+              "value": 13.34
+            },
+            "deviationPct": 4.9,
+            "flag": "minor-diff",
+            "resolution": "口径差异（期末摊薄 vs 加权平均），非数据错误"
+          }
+        }
+      ]
+    },
+    "competitiveLandscape": {
+      "_dimension": "3. 竞争格局：市场份额、主要竞争对手对比",
+      "marketShare": {
+        "valuePct": "国内稀土冶炼分离产能约6万吨/年，居行业前三；氧化镨钕单品国内市占率据称超20%",
+        "marketDefinition": "分母为中国稀土冶炼分离总产能/氧化镨钕总产量；不含未上市的中国稀土集团、中铝、南方稀土等国家队集团整体数据（缺乏权威合并口径）",
+        "asOf": "FY2025年报口径",
+        "source": {
+          "name": "东方财富财富号（财经自媒体二次整理，仅单源，非工信部/协会一手数据）",
+          "url": "https://caifuhao.eastmoney.com/news/20260618210128287453790"
+        }
+      },
+      "competitors": [
+        {
+          "name": "中国北方稀土（集团）高科技股份有限公司",
+          "ticker": "600111.SH",
+          "marketSharePct": "国家稀土矿产品开采指标69.87%、冶炼分离指标66.93%（2025年国家总量指标分配）",
+          "revenue": "FY2025营收425.63亿元（+29.11% YoY），归母净利润22.51亿元（+124.17% YoY）",
+          "grossMarginPct": "12.21%（整体，同比+1.96pct）；稀土主业毛利率13.97%",
+          "note": "轻稀土绝对龙头，掌握国家绝大部分开采与冶炼分离配额，资源自给率远高于盛和资源；与中国稀土集团形成'南北双雄'格局",
+          "source": {
+            "name": "新浪财经/前瞻产业研究院",
+            "url": "https://finance.sina.com.cn/stock/aiassist/agqsjs/2026-04-30/doc-inhwfays7423628.shtml"
+          }
+        },
+        {
+          "name": "中国稀土集团资源科技股份有限公司（中国稀土集团旗下上市平台）",
+          "ticker": "000831.SZ",
+          "marketSharePct": {
+            "status": "unavailable",
+            "reason": "母集团（2021年12月由中铝、五矿、赣州稀土集团整合而成）未上市部分资产规模不明，仅能取得上市子公司数据；已查范围：新浪财经、界面新闻，未查到集团合并口径披露"
+          },
+          "revenue": "上市子公司FY2025营收31.82亿元（+5.11% YoY），净利润1.73亿元（扭亏为盈，+160.15% YoY）",
+          "grossMarginPct": {
+            "status": "unavailable",
+            "reason": "已查新浪财经/深交所公告摘要未见披露，未展开逐页核对年报"
+          },
+          "note": "上市平台体量远小于盛和资源，但母集团掌握国内绝大多数中重稀土（离子吸附型矿）开采指标，是南方中重稀土定价权核心",
+          "source": {
+            "name": "界面新闻/深交所年报",
+            "url": "https://m.jiemian.com/article/13560000.html"
+          }
+        },
+        {
+          "name": "广晟有色（中稀有色）",
+          "ticker": "600259.SH",
+          "marketSharePct": "广东省内稀土资源唯一合法开采企业（省内全部稀土采矿证持有者）",
+          "revenue": "2025H1营收26.77亿元（同比-47.83%），归母净利润0.72亿元（同比扭亏）；FY2025全年数字未查到",
+          "grossMarginPct": "稀土业务毛利率不足2%（2025年数据，单源）",
+          "note": "第二梯队，区域性资源垄断但盈利能力显著弱于盛和资源与北方稀土",
+          "source": {
+            "name": "新浪财经/前瞻网",
+            "url": "https://finance.sina.com.cn/roll/2025-05-11/doc-ineweqee4110114.shtml"
+          }
+        }
+      ],
+      "keyDifferentiator": "盛和资源不掌握国家大型开采配额矿山（仅托管四川大陆槽约1万吨/年+参股冕里稀土/中稀山东），资源自给率显著低于北方稀土、中国稀土集团；其核心地位在于全国前三的冶炼分离产能+全球化原料采购网络（MP Materials精矿、Peak/Ngualla矿、独居石进口）+废料回收，本质是'冶炼分离与全球贸易'型稀土公司，而非资源型公司。"
+    },
+    "businessModelMoat": {
+      "_dimension": "4. 商业模式与护城河：核心竞争优势来源",
+      "oneLiner": "稀土（及锆钛）冶炼分离与深加工服务商：从自有托管矿/参股矿/海外采购精矿/废料回收多渠道买入稀土原料，通过萃取分离、金属冶炼加工成稀土氧化物、盐类、金属产品卖给磁材厂和贸易商，赚取加工增值+部分独家渠道贸易价差。",
+      "revenueModel": "实物产品销售（稀土氧化物/盐/金属、锆钛精矿），非订阅或平台模式；收入随稀土价格与产销量双驱动波动大；部分海外资源（MP Materials精矿）享有独家包销/优先购买权带来额外贸易利润。",
+      "moats": [
+        {
+          "type": "牌照壁垒/规模效应（国家总量指标管理下的存量产能）",
+          "evidence": "国家对稀土开采、冶炼分离实行总量指标管理，新规明确指标仅下达给'国家推动组建的大型稀土企业集团及所属企业'（《稀土开采和稀土冶炼分离总量调控管理暂行办法》，2025年发布，来源：司法部）；盛和资源作为体系外少数拥有大规模存量冶炼分离产能（6万吨/年，国内前三）的市场化企业，享有新进入者难以复制的历史准入门槛",
+          "trend": "待验证——政策收紧提高准入门槛对存量产能是保护，但盛和资源自身矿产配额有限，长期是否被要求并入国家队集团尚不确定"
+        },
+        {
+          "type": "海外资源布局与独家渠道（先发优势）",
+          "evidence": "2017年参股美国MP Materials（芒廷帕斯矿30年经营权），获稀土精矿独家分销权，2024年1月续签2年期包销协议；2025年9月完成对Peak Rare Earths全资收购，取得坦桑尼亚Ngualla稀土矿权益；2016年起与澳大利亚ETM（原Greenland Minerals）合作格陵兰Kvanefjeld项目",
+          "trend": "变窄——2026年2月ETM单方面宣布终止与盛和资源的格陵兰项目合作关系，暴露海外资源合约的地缘政治脆弱性；MP Materials 2025年因中美关税一度暂停对华出口精矿"
+        },
+        {
+          "type": "技术专利壁垒（超高纯稀土分离提纯技术）",
+          "evidence": "旗下江阴加华是全球唯一能量产5N（99.999%）超纯镝的企业，为英伟达Blackwell AI芯片高端电容器核心材料供应商；截至2025年底累计专利460余项",
+          "trend": "变宽——高端提纯技术绑定AI/半导体新兴需求，形成差异化溢价"
+        },
+        {
+          "type": "废料回收渠道（原料多元化）",
+          "evidence": "通过赣州晨光/致远新材、盛和（全南）新材料等主体与多家磁材厂建立稳定废料供应合作，2025年目标回收利用产能1万吨/年，2026-2028规划提升至1.5万吨/年",
+          "trend": "变宽——一定程度对冲矿产资源自给率不足的短板"
+        }
+      ]
+    },
+    "technology": {
+      "_dimension": "5. 技术能力：核心技术栈、研发投入",
+      "coreTechStack": [
+        "稀土矿/锆钛矿浮选选矿工艺",
+        "稀土萃取分离工艺（冶炼分离）",
+        "稀土金属电解冶炼加工",
+        "稀土废料回收循环利用工艺",
+        "超高纯稀土氧化物制备（6N级氧化钇示范线已完成工艺论证，2025年）",
+        "5N超纯镝量产工艺（江阴加华，全球唯一）"
+      ],
+      "rdExpense": {
+        "status": "口径冲突，未最终核实",
+        "metricA_利润表研发费用科目": {
+          "FY2023": "109.21万元",
+          "FY2024": "620.29万元（+468.00% YoY）",
+          "source": {
+            "name": "新浪财经AIGC年报解读",
+            "url": "https://finance.sina.com.cn/stock/aigc/stockfs/2025-04-22/doc-inetzzsq3977116.shtml"
+          }
+        },
+        "metricB_研发投入合计含资本化": {
+          "FY2025": "5.50亿元（较上年增加1.54亿元，+38.85% YoY）",
+          "source": {
+            "name": "新浪财经AIGC年报解读",
+            "url": "https://finance.sina.com.cn/stock/aigc/stockfs/2026-04-30/doc-inhwewsw6624148.shtml"
+          }
+        },
+        "reason": "两套口径差异悬殊（620万元 vs 5.5亿元），推测系'费用化研发支出'与'研发投入总额（含资本化项目、中试线工程投入）'统计范围不同；已查范围为财经媒体AIGC年报摘要，未逐页核对年报PDF原文（https://static.cninfo.com.cn/finalpage/2026-04-30/1225258047.PDF）研发投入章节，建议使用前二次核实"
+      },
+      "rdIntensityPct": {
+        "value": "3.67%（FY2025，按研发投入合计5.5亿元/营业收入149.9亿元测算）",
+        "note": "为财经自媒体测算值，非公司原文直接披露百分比"
+      },
+      "rdTrend": "研发投入强度近5年持续上升，FY2025为近5年同期最高值；研发人员370人，占公司总人数12.75%（FY2025）",
+      "note": "研发费用存在两种口径冲突，落盘前建议以年报原文《研发投入情况》章节数字最终核实"
+    },
+    "management": {
+      "_dimension": "6. 管理层：创始人/CEO履历、持股比例、关键决策记录",
+      "founderCeo": {
+        "name": "黄平（现任董事、副董事长、总经理）；王全根（创始股东，非现任高管）；谢兵（现任董事长）",
+        "background": "王全根：1964年10月生，创始股东之一（公司前身可追溯至1997年成都盛和实业），1984-2010年任中国地质科学院矿产综合利用研究所工程师，1997-2010年任成都盛和实业总经理，2010-2012年任乐山盛和稀土股份有限公司董事/副董事长，2013-2014年3月任盛和资源副董事长；2014年3月后未见继续担任上市公司高管职务，目前系第二大股东（持股约6.69%），不属于控股股东；注意其角色是创始股东而非现任CEO。 || 黄平：1966年7月生，上海交通大学EMBA，1994-2015年历任赣州晨光工贸/赣南晨光稀土金属冶炼厂/赣州晨光稀土新材料总经理及董事长，2020年3月首次任盛和资源总经理，2020年5月起任公司董事，2022年4月起任副董事长，据2025年年报现兼任总经理，持股约5.49%。 || 谢兵：1969年4月生，曾任四川省地质矿产勘查开发局二〇二地质队技术员/副队长/副局长，2024年7月起任中国地质科学院矿产综合利用研究所副所长（主持工作），2024年9月18日当选公司第八届董事会董事长，为控股股东委派的国资背景管理层代表。",
+        "tenure": "谢兵任董事长（2024年9月18日至今）；黄平任副董事长（2022年4月22日至今）、总经理（现任）",
+        "source": {
+          "name": "百度百科/21财经/每日经济新闻",
+          "url": "https://baike.baidu.com/item/%E7%8E%8B%E5%85%A8%E6%A0%B9/14472456；https://m.21jingji.com/article/20200405/herald/5d2c82a9c3d669c10aee1faab31ab9ba.html；https://www.nbd.com.cn/articles/2024-09-19/3562271.html"
+        }
+      },
+      "ownership": {
+        "economicPct": "unavailable",
+        "note": "十大股东中王全根持股6.69%、黄平（管理层，持股96,271,094股，占总股本17.53亿股比例约5.49%）；公司无AB股结构，经济权益即投票权。是否存在实际控制人一致行动关系需 Agent 检索确认",
+        "topHolders": [
+          {
+            "name": "中国地质科学院矿产综合利用研究所",
+            "pct": 14.06
+          },
+          {
+            "name": "王全根",
+            "pct": 6.69
+          },
+          {
+            "name": "黄平",
+            "pct": 5.49
+          },
+          {
+            "name": "香港中央结算有限公司",
+            "pct": 3.93
+          },
+          {
+            "name": "四川省地质矿产(集团)有限公司",
+            "pct": 3.15
+          },
+          {
+            "name": "四川巨星企业集团有限公司",
+            "pct": 2.39
+          }
+        ],
+        "source": {
+          "name": "Tushare top10_holders，报告期20260331",
+          "url": "https://tushare.pro"
+        }
+      },
+      "executiveCompensation": {
+        "period": "FY2025（20251231）",
+        "source": {
+          "name": "Tushare stk_rewards",
+          "url": "https://tushare.pro"
+        },
+        "items": [
+          {
+            "name": "黄平",
+            "title": "董事,副董事长,总经理",
+            "compensationWanCNY": 330.0,
+            "shares": 96271094
+          },
+          {
+            "name": "黄建荣",
+            "title": "董事,副总经理",
+            "compensationWanCNY": 192.5,
+            "shares": 10000
+          },
+          {
+            "name": "王晓晖",
+            "title": "原董事,原总经理",
+            "compensationWanCNY": 108.6,
+            "shares": 15883146
+          },
+          {
+            "name": "郭晓雷",
+            "title": "职工董事,董事会秘书,副总经理,首席合规官",
+            "compensationWanCNY": 106.9,
+            "shares": 22900
+          },
+          {
+            "name": "李抗",
+            "title": "副总经理,财务总监",
+            "compensationWanCNY": 104.8,
+            "shares": 5000
+          },
+          {
+            "name": "王晓东",
+            "title": "副总经理",
+            "compensationWanCNY": 100.0,
+            "shares": 10400
+          }
+        ]
+      },
+      "keyDecisions": [
+        {
+          "date": "2016年",
+          "decision": "与澳大利亚Greenland Minerals（现更名ETM）建立格陵兰Kvanefjeld稀土多金属项目战略合作",
+          "outcome": "2026年2月ETM单方面宣布终止合作关系（称盛和资源优先权已过期），盛和资源子公司持有约6.5%股权（约1.29亿股，截至2025年9月30日），历史累计投资2436万元；合作破裂，海外资源布局受挫",
+          "source": "经济观察网/新浪财经，2026-02-03"
+        },
+        {
+          "date": "2017年",
+          "decision": "全资子公司新加坡国贸联合美国JHL Capital、QVT Financial以2050万美元中标美国芒廷帕斯（Mountain Pass）矿30年经营权，组建MP Materials",
+          "outcome": "获MP Materials股权及稀土精矿独家分销/包销权；2024年1月续签2年期（可展期1年）包销协议；2025年因中美关税摩擦MP一度暂停对华出口精矿，公司公告称已构建多元化原料渠道",
+          "source": "澎湃新闻/证券时报，2025-04"
+        },
+        {
+          "date": "2024年8月21日签约，2025年3月完成过户",
+          "decision": "全资子公司赣州晨光稀土收购NEO国际持有的江阴加华86%股权（1.827亿元）及淄博加华95%+5%股权（2938.59万元）",
+          "outcome": "合计新增稀土分离产能9300吨REO/年（江阴3800+淄博5500），江阴加华为全球唯一量产5N超纯镝企业，切入英伟达AI芯片供应链",
+          "source": "新浪财经/上海证券报，2025-03-13"
+        },
+        {
+          "date": "2025年9月",
+          "decision": "完成对澳大利亚Peak Rare Earths全资收购",
+          "outcome": "取得坦桑尼亚Ngualla稀土矿权益，计划2026年投产；但截至2026年6月披露仍存在未决税务纠纷，投产时间与盈利能力存在不确定性（2026年6月23日相关消息触发公司股价跌停）",
+          "source": "搜狐财经/经济观察网，2025-2026"
+        },
+        {
+          "date": "2024年9月18日",
+          "decision": "董事会换届，谢兵（原四川省地矿局副局长，中国地质科学院矿产综合利用研究所副所长）当选公司董事长",
+          "outcome": "国资委派管理层加强，公司治理延续控股股东（综合利用研究所）主导格局",
+          "source": "每日经济新闻，2024-09-19"
+        }
+      ]
+    },
+    "industryOutlook": {
+      "_dimension": "7. 行业前景：TAM（总可寻址市场）、增长预测",
+      "tam": {
+        "value": "全球稀土永磁材料市场规模预计2031年达1696.7亿元人民币；2024年全球稀土氧化物（REO当量）产量约39万吨，中国占比约69%（约27万吨）",
+        "currency": "CNY（磁材市场口径）/ 实物吨REO当量（上游矿产口径）",
+        "definition": "两种口径并存：①下游稀土永磁材料终端市场规模；②上游稀土精矿/氧化物实物产量。两者均为财经媒体转引，非一手协会/USGS原始数据，仅单源，使用前需再核实",
+        "asOf": "2024年（产量口径）/ 2031年预测（市场规模口径）",
+        "source": {
+          "name": "QYResearch（经格隆汇转载，仅单源）",
+          "url": "https://m.gelonghui.com/p/2062821"
+        }
+      },
+      "growthForecast": {
+        "cagrPct": "10.5%（全球稀土永磁材料市场规模，2025-2031年，仅单源转载）",
+        "horizon": "2025-2031年",
+        "source": {
+          "name": "QYResearch（经格隆汇转载）",
+          "url": "https://m.gelonghui.com/p/2062821"
+        }
+      },
+      "supplyPolicyConstraint": {
+        "description": "国家对稀土开采、冶炼分离实行总量指标管理，2026年全国稀土开采总量指标锁定28.5万吨REO当量，下半年无大规模增量释放；2026年新规将缅甸、澳洲、独居石进口稀土全部纳入配额统筹；中重稀土（镝、铽）配额几乎不增长。指标仅下达给'国家推动组建的大型稀土企业集团及所属企业'，盛和资源作为体系外市场化企业的原料获取空间受此政策直接约束。",
+        "source": {
+          "name": "东方财富财富号/中国司法部（管理办法原文）",
+          "url": "https://www.moj.gov.cn/pub/sfbgw/flfggz/flfggzbmgz/202510/t20251021_526565.html"
+        }
+      },
+      "demandDriver": {
+        "description": "人形机器人、低空经济、脑机接口等新兴领域对钕铁硼磁材需求占比预计从2025年12%提升至2030年35%；单台人形机器人需约3.5公斤高性能钕铁硼；2026年全球氧化镨钕供需缺口预计达0.9万吨。仅单源，转引自行业研报二次报道。",
+        "source": {
+          "name": "证券时报/凤凰网财经",
+          "url": "https://finance.ifeng.com/c/8hJ684LZoRu"
+        }
+      }
+    },
+    "riskFactors": {
+      "_dimension": "8. 风险因素：地缘政治、监管、供应链等",
+      "items": [
+        {
+          "category": "地缘政治",
+          "description": "美国对华稀土关税与出口管制反制：2025年MP Materials（盛和资源重要合作伙伴）因中美关税一度暂停向中国出口稀土精矿；中国同步扩大稀土及分离技术出口管制清单。若中美贸易摩擦升级，公司海外原料采购渠道及独家分销权存在被反制风险。",
+          "evidence": "公司公告（称'不会造成重大影响'）+ 外部推断"
+        },
+        {
+          "category": "供应链/地缘",
+          "description": "海外矿山资源布局存在毁约与东道国政策风险：2026年2月澳大利亚ETM公司单方面终止2016年建立的格陵兰Kvanefjeld项目合作；坦桑尼亚Ngualla矿（Peak收购）存在未决税务纠纷，投产时间和盈利能力因东道国政策及地缘因素存在不确定性（2026年6月披露）。",
+          "evidence": "公司/交易所公告 + 财经媒体报道"
+        },
+        {
+          "category": "监管",
+          "description": "国家稀土开采、冶炼分离总量控制指标管理趋严：2025年《稀土开采和稀土冶炼分离总量调控管理暂行办法》明确指标仅下达'国家推动组建的大型稀土企业集团及所属企业'，盛和资源作为体系外市场化企业存在原料及配额获取空间被压缩、或长期被要求并入国家队集团的风险。",
+          "evidence": "政策原文 + 外部推断"
+        },
+        {
+          "category": "供应链",
+          "description": "公司稀土矿产资源自给率有限，主要依赖国内托管矿（四川大陆槽约1万吨/年）、参股矿（冕里稀土、中稀山东）及海外采购（MP精矿、独居石等），原料端议价权弱于掌握国家开采配额的北方稀土、中国稀土集团。",
+          "evidence": "外部推断（基于原料结构披露数据）"
+        },
+        {
+          "category": "价格波动",
+          "description": "稀土产品价格具强周期性，历史上曾大幅波动（2021-2022年高点后回落，2025-2026年因人形机器人/新能源需求回升）；价格下行将直接冲击公司毛利率和净利润，公司业绩对价格弹性高度敏感（FY2025净利润预告同比+281%~339%即主因价格上涨）。",
+          "evidence": "外部推断（基于历史价格走势与公司业绩归因）"
+        },
+        {
+          "category": "竞争",
+          "description": "2021年12月中国稀土集团成立（中铝、五矿、赣州稀土集团整合），与北方稀土形成'南北双雄'格局，两大国家队集团掌握国内绝大部分开采及冶炼分离总量指标（北方稀土矿产品指标69.87%/冶炼分离指标66.93%），行业整合后议价权与资源分配进一步向两大集团集中，盛和资源作为体系外市场化冶炼分离龙头长期面临原料获取和政策地位边缘化风险。",
+          "evidence": "外部推断"
+        },
+        {
+          "category": "经营（公司披露）",
+          "description": "截至2026年6月披露：公司存在超1.6亿元未决合同纠纷（部分对手方无可执行资产）；锆钛业务处于周期底部持续亏损（FY2025营收8.14亿元，毛利率仅2.80%）；二股东2026年3月及此后多次披露减持计划，对股价形成压制。",
+          "evidence": "公司公告 + 财经媒体报道（引发2026年6月23日跌停，单日主力资金净卖出7.9亿元）"
+        }
+      ]
+    },
+    "currentValuation": {
+      "_dimension": "9. 当前估值：市值、PE、PS、PEG、EV/Revenue",
+      "priceAsOf": "2026-08-07（交易日 20260807）",
+      "sharePrice": {
+        "value": 23.94,
+        "unit": "元",
+        "currency": "CNY",
+        "source1": {
+          "name": "Tushare daily",
+          "url": "https://tushare.pro",
+          "value": 23.94
+        },
+        "source2": {
+          "name": "unavailable",
+          "url": "",
+          "value": "unavailable"
+        },
+        "deviationPct": "unavailable",
+        "flag": "ok"
+      },
+      "sharesOutstanding": {
+        "value": 17.53,
+        "unit": "亿股",
+        "source1": {
+          "name": "Tushare daily_basic total_share",
+          "url": "https://tushare.pro",
+          "value": 17.53
+        },
+        "source2": {
+          "name": "东方财富",
+          "url": "https://data.eastmoney.com/bbsj/600392.html",
+          "value": 17.53
+        },
+        "deviationPct": 0.0,
+        "flag": "ok"
+      },
+      "marketCap": {
+        "reported": "419.6亿 CNY（Tushare daily_basic total_mv，2026-08-07）",
+        "computed": "41,970,467,838.20 CNY = 23.94元 × 1,753,000,000股，financial_rigor.py verify-market-cap 偏差0.02%",
+        "flag": "ok",
+        "note": "financial_rigor.py verify-market-cap：股价23.94 × 总股本17.53亿 = 419.7亿，与报告市值419.6亿偏差0.02%"
+      },
+      "pe": {
+        "value": "42.05x（TTM）",
+        "note": "静态PE 50.01x；Tushare quote/daily_basic 内置验算，TTM与静态口径均列出",
+        "basis": "TTM"
+      },
+      "ps": {
+        "value": "2.73x（TTM）",
+        "note": "Tushare daily_basic ps_ttm"
+      },
+      "peg": {
+        "status": "unavailable",
+        "reason": "稀土行业强周期，缺乏权威机构一致预期的3-5年复合增速；用FY2024低基数下的FY2025净利润增速（+281%~339%）计算PEG会严重失真，非公司未来可持续增速。留待第2步估值维度分析用 financial_rigor.py three-scenario 做情景化增速假设后测算，不在采集阶段用误导性数字填充"
+      },
+      "evToRevenue": {
+        "status": "unavailable",
+        "reason": "公司为净现金状态（货币资金57.91亿 > 总负债66.21亿中的有息负债部分，具体有息负债细分未采集），EV需先拆分总负债中经营性负债与有息负债，超出采集阶段范围，留待估值维度分析时补充计算"
+      },
+      "valuationRangeOneYear": {
+        "peTtm": {
+          "current": 42.05,
+          "low": 34.79,
+          "high": 80.66,
+          "percentile": 16
+        },
+        "pb": {
+          "current": 3.26,
+          "low": 2.3,
+          "high": 5.02,
+          "percentile": 35
+        },
+        "psTtm": {
+          "current": 2.73,
+          "low": 1.94,
+          "high": 4.33,
+          "percentile": 33
+        },
+        "dividendYieldPct": {
+          "current": 1.46,
+          "low": 0.15,
+          "high": 1.77,
+          "percentile": 81
+        },
+        "source": {
+          "name": "Tushare daily_basic，20250704~20260807",
+          "url": "https://tushare.pro"
+        }
+      }
+    },
+    "bullBearCase": {
+      "_dimension": "10. 多空双方核心论点",
+      "bull": [
+        {
+          "point": "稀土价格上行周期叠加需求结构升级",
+          "evidence": "人形机器人/低空经济/脑机接口等新兴领域磁材需求占比预计从2025年12%提升至2030年35%；2026年全球氧化镨钕供需缺口预计达0.9万吨；公司FY2025营收+31.9%、净利润预告+281%~339%已体现价格弹性（来源：证券时报/凤凰网财经，单源）"
+        },
+        {
+          "point": "全球化海外资源布局构成稀缺竞争壁垒",
+          "evidence": "A股少数深度绑定海外稀土资源的企业——美国MP Materials独家包销权（2024年续签）、坦桑尼亚Ngualla矿全资控股（2025年9月完成）；华泰证券2026年5月给予'买入'评级，目标价39.66元；国联民生给予'推荐'评级（来源：同花顺机构评级公告）"
+        },
+        {
+          "point": "技术卡位高端AI供应链形成差异化溢价",
+          "evidence": "旗下江阴加华为全球唯一量产5N超纯镝企业，绑定英伟达Blackwell AI芯片电容器核心材料需求，形成技术护城河（来源：东方财富财富号转载，单源）"
+        },
+        {
+          "point": "冶炼分离产能扩张持续兑现",
+          "evidence": "2025年通过收购江阴加华、淄博加华新增9300吨REO/年分离产能，国内冶炼分离总产能达6万吨/年（国内前三）（来源：新浪财经/上海证券报公告）"
+        }
+      ],
+      "bear": [
+        {
+          "point": "资源自给率低，原料端议价权弱于国家队集团",
+          "evidence": "公司无自有大型开采配额矿山，依赖托管矿（约1万吨/年）与海外采购；北方稀土掌握国家矿产品开采指标69.87%、冶炼分离指标66.93%，中国稀土集团成立后国家队集团资源集中度进一步提升，盛和资源体系外地位可能被边缘化（来源：前瞻产业研究院）"
+        },
+        {
+          "point": "海外资源合作存在毁约与地缘风险，负面事件已兑现",
+          "evidence": "2026年2月澳大利亚ETM公司单方面终止2016年建立的格陵兰Kvanefjeld项目合作；坦桑尼亚Ngualla矿存在未决税务纠纷、投产时间不确定，直接引发2026年6月23日股价跌停（来源：经济观察网/搜狐财经）"
+        },
+        {
+          "point": "当前估值已price in较乐观预期",
+          "evidence": "PE-TTM 42.05倍处于近一年16%分位（估值不算贵），但PB 3.26倍处于35%分位、PS-TTM处于33%分位；有市场自媒体观点认为'当前股价已price in2026-2027年乐观预期，短期存在追高风险'（来源：东方财富财富号，单源观点，非机构研报原文，需谨慎参考）"
+        },
+        {
+          "point": "非核心业务拖累+多重经营风险叠加",
+          "evidence": "锆钛业务处于周期底部持续亏损（FY2025毛利率仅2.80%）；超1.6亿元未决合同纠纷部分对手方无可执行资产；稀土价格历史波动性高，业绩弹性双向（来源：公司公告/财经媒体，2026年6月）"
+        }
+      ]
+    },
+    "crossValidationLog": [
+      {
+        "field": "总市值（20260807）",
+        "source1": {
+          "name": "verify-market-cap 计算值（股价×总股本）",
+          "value": "419.7亿元"
+        },
+        "source2": {
+          "name": "Tushare daily_basic total_mv（报告市值）",
+          "value": "419.6亿元"
+        },
+        "deviationPct": 0.02,
+        "flag": "ok",
+        "resolution": "工具验算通过，采用报告市值"
+      },
+      {
+        "field": "营业总收入 FY2025",
+        "source1": {
+          "name": "Tushare income",
+          "value": "149.90亿元"
+        },
+        "source2": {
+          "name": "东方财富 RPT_LICO_FN_CPD",
+          "value": "149.91亿元"
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "两来源一致，取中位数149.91亿元"
+      },
+      {
+        "field": "归母净利润 FY2025",
+        "source1": {
+          "name": "Tushare income n_income_attr_p",
+          "value": "8.40亿元"
+        },
+        "source2": {
+          "name": "东方财富 RPT_LICO_FN_CPD",
+          "value": "8.39亿元"
+        },
+        "deviationPct": 0.06,
+        "flag": "ok",
+        "resolution": "两来源一致"
+      },
+      {
+        "field": "货币资金 FY2025末",
+        "source1": {
+          "name": "Tushare balancesheet money_cap",
+          "value": "57.91亿元"
+        },
+        "source2": {
+          "name": "东方财富 RPT_DMSK_FN_BALANCE",
+          "value": "57.91亿元"
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "完全一致"
+      },
+      {
+        "field": "总负债 FY2025末",
+        "source1": {
+          "name": "Tushare balancesheet total_liab",
+          "value": "66.21亿元"
+        },
+        "source2": {
+          "name": "东方财富 RPT_DMSK_FN_BALANCE",
+          "value": "66.21亿元"
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "完全一致"
+      },
+      {
+        "field": "总股本（20260807）",
+        "source1": {
+          "name": "Tushare daily_basic total_share",
+          "value": "17.53亿股"
+        },
+        "source2": {
+          "name": "东方财富",
+          "value": "17.53亿股"
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "一致"
+      },
+      {
+        "field": "ROE FY2022（Level 2，供参考）",
+        "source1": {
+          "name": "Tushare fina_indicator（期末摊薄）",
+          "value": "17.1%"
+        },
+        "source2": {
+          "name": "东方财富 WEIGHTAVG_ROE（加权平均）",
+          "value": "15.82%"
+        },
+        "deviationPct": 8.1,
+        "flag": "minor-diff",
+        "resolution": "口径差异：期末摊薄股本 vs 报告期加权平均股本，2022年股本变动导致差异放大；Level 2 字段允许单源，此处双源均取得但存在口径性差异，采用Tushare口径并在financialMetrics中注明"
+      }
+    ],
+    "evidenceAppendix": {
+      "_note": "第2步多维度分析中六个维度 Agent 提出的高优先级 evidenceRequest，经主会话去重后单轮取证补写，不改动上方已落盘的10个维度既有内容，不触发第4步重新校验。",
+      "items": [
+        {
+          "metric": "前五大客户销售额占比",
+          "value": "54,558.50万元（约5.46亿元），占年度销售总额36.39%",
+          "asOf": "FY2025年报口径",
+          "source": {
+            "name": "证券市场周刊/腾讯新闻转引2025年年报",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225258047.PDF"
+          },
+          "resolvesGap": "moat.types[1]（转换成本）、industryTrend.concentration.customers 的客户集中度缺口"
+        },
+        {
+          "metric": "前五大供应商采购额占比",
+          "value": "235,855.65万元（约23.59亿元），占年度采购总额19.42%；其中关联方采购30,797.19万元，占2.54%",
+          "asOf": "FY2024年报口径（FY2025年报同类数字未检索到，此为可得的最近一期）",
+          "source": {
+            "name": "同花顺公告中心转引2024年年度报告",
+            "url": "http://notice.10jqka.com.cn/api/pdf/8ece739561042c8b.pdf"
+          },
+          "note": "MP Materials具体占比未单独披露，仅知其为独家包销伙伴且2024年1月续签2年期协议、2025年因关税一度暂停对华出口精矿",
+          "resolvesGap": "industryTrend.concentration.suppliers 的供应商集中度缺口"
+        },
+        {
+          "metric": "黄平是否现仍兼任赣州晨光稀土新材料股份有限公司董事长",
+          "value": "是，2017年7月至今任该公司董事长；该公司为黄平1997年创立，现已是盛和资源全资子公司（非外部独立公司），故不构成利益冲突或精力分散的外部兼职风险，而是集团内部子公司治理安排",
+          "asOf": "检索时点2026-08-08，职务信息截至可查最新公开资料",
+          "source": {
+            "name": "百度百科/上海证券报",
+            "url": "https://paper.cnstock.com/html/2026-04/30/content_2210918.htm"
+          },
+          "resolvesGap": "management.organization.keyPersonRisk 的关键人兼职风险缺口"
+        }
+      ]
+    }
+  },
+  "analysis": {
+    "_spec": {
+      "purpose": "研究流程第 2 步（多维度分析）的产出模板。六个维度共用统一信封：{ conclusion, analysis, inquiry, dataGaps }。步骤正文见 docs/research/workflow/02-multi-dimension-analysis.md。",
+      "todoSentinel": "所有待填值写 \"__TODO__\"；取不到的字段不删除，改写 { \"status\": \"unavailable\", \"reason\": \"缺失原因 + 已查范围\" } 并在该维度 dataGaps 中登记。",
+      "sourcedEvidence": "所有数据点统一带出处：{ metric, value, asOf, source: { name, url } }。无出处的论断不接受；估计值 value 前置 \"[估计]\"。",
+      "inquiry": "每个维度的 inquiry.answer 必须回答，回避视为该维度未完成；只有关键数据确实缺失时才允许答「数据不足」，且必须写明缺哪个数据。",
+      "calculation": "涉及计算的数字（估值倍数、三情景推算、增速、对比差值）必须用 docs/research/tools/financial_rigor.py 验算，禁止心算；工具输出记入 crossValidationLog。"
+    },
+    "meta": {
+      "companyId": "sh-600392-shenghe-resources",
+      "companyName": "盛和资源控股股份有限公司",
+      "analyzedAt": "2026-08-08",
+      "dataCutoff": "2026-08-08",
+      "basedOnCollection": "research/companies/sh-600392-shenghe-resources/financials-collection.json"
+    },
+    "dimensions": {
+      "businessEssence": {
+        "title": "生意本质",
+        "conclusion": "盛和资源本质是全球化原料采购驱动的稀土冶炼分离深加工商，赚取加工增值与渠道价差而非资源垄断租金。",
+        "analysis": {
+          "revenueBreakdown": {
+            "period": "FY2025（20251231）",
+            "items": [
+              {
+                "segment": "稀土产品",
+                "revenue": "141.1亿元",
+                "sharePct": "94.1%",
+                "source": {
+                  "name": "Tushare fina_mainbz（type=P，剔除合计行）",
+                  "url": "https://tushare.pro"
+                }
+              },
+              {
+                "segment": "锆钛及其他",
+                "revenue": "8.1亿元",
+                "sharePct": "5.4%",
+                "source": {
+                  "name": "Tushare fina_mainbz（type=P）",
+                  "url": "https://tushare.pro"
+                }
+              }
+            ]
+          },
+          "profitabilityTrend5y": {
+            "series": [
+              {
+                "fiscalYear": "FY2025",
+                "grossMarginPct": "10.7%",
+                "operatingMarginPct": "6.92%",
+                "netMarginPct": "5.60%",
+                "source": {
+                  "name": "Tushare income（netProfit/revenue，financial_rigor.py calc验算）",
+                  "url": "https://tushare.pro"
+                }
+              },
+              {
+                "fiscalYear": "FY2024",
+                "grossMarginPct": "5.2%",
+                "operatingMarginPct": "2.74%",
+                "netMarginPct": "1.82%",
+                "source": {
+                  "name": "Tushare income（financial_rigor.py calc验算）",
+                  "url": "https://tushare.pro"
+                }
+              },
+              {
+                "fiscalYear": "FY2023",
+                "grossMarginPct": "4.3%",
+                "operatingMarginPct": "2.53%",
+                "netMarginPct": "1.86%",
+                "source": {
+                  "name": "Tushare income（financial_rigor.py calc验算）",
+                  "url": "https://tushare.pro"
+                }
+              },
+              {
+                "fiscalYear": "FY2022",
+                "grossMarginPct": "16.6%",
+                "operatingMarginPct": "11.41%",
+                "netMarginPct": "9.51%",
+                "source": {
+                  "name": "Tushare income（financial_rigor.py calc验算）",
+                  "url": "https://tushare.pro"
+                }
+              },
+              {
+                "fiscalYear": "FY2021",
+                "grossMarginPct": "18.7%",
+                "operatingMarginPct": "12.37%",
+                "netMarginPct": "10.14%",
+                "source": {
+                  "name": "Tushare income（financial_rigor.py calc验算）",
+                  "url": "https://tushare.pro"
+                }
+              }
+            ]
+          },
+          "businessModelCanvas": {
+            "salesModel": "一次性销售",
+            "productForm": "混合",
+            "note": "①收入模式为实物产品一次性销售（稀土氧化物/盐/金属、锆钛精矿），非订阅或平台收费。②收入随稀土价格与产销量双驱动，波动性大，FY2021-FY2025营收在106亿至179亿元间宽幅波动。③部分海外资源（MP Materials精矿）享独家包销权，兼具加工增值与贸易价差双重盈利来源。④产品形态以冶炼分离深加工的稀土/锆钛材料为主，属材料型硬件产品，无软件或平台化收入。"
+          },
+          "stickiness": {
+            "level": "弱",
+            "mechanism": "①稀土冶炼分离产品具大宗商品属性，下游磁材厂多按价格招标采购，客户可切换渠道，整体粘性偏弱。②例外是江阴加华全球唯一量产5N超纯镝，绑定英伟达Blackwell AI芯片供应链，形成技术锁定的细分高粘性环节。③MP Materials精矿独家包销权、废料回收长期合作构成上游供应端锁定，但下游客户端锁定证据不足。④前五大客户销售占比36.39%，属中等偏低集中度，非个别大客户深度绑定。",
+            "evidence": [
+              {
+                "metric": "5N超纯镝量产企业数量",
+                "value": "全球唯一（江阴加华）",
+                "asOf": "2025-12-31",
+                "source": {
+                  "name": "东方财富财富号转载",
+                  "url": "https://caifuhao.eastmoney.com/news/20260618210128287453790"
+                }
+              },
+              {
+                "metric": "前五大客户销售额占比",
+                "value": "36.39%（约5.46亿元）",
+                "asOf": "FY2025年报口径",
+                "source": {
+                  "name": "证券市场周刊/腾讯新闻转引2025年年报",
+                  "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225258047.PDF"
+                }
+              },
+              {
+                "metric": "MP Materials精矿包销协议",
+                "value": "2024年1月续签2年期（可展期1年）独家分销权",
+                "asOf": "2024-01",
+                "source": {
+                  "name": "澎湃新闻/证券时报",
+                  "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225258047.PDF"
+                }
+              }
+            ]
+          },
+          "grossMarginVsPeers": {
+            "companyPct": "10.7%（FY2025整体口径）",
+            "peers": [
+              {
+                "name": "中国北方稀土（600111.SH）",
+                "grossMarginPct": "12.21%（整体）/13.97%（稀土主业）",
+                "source": {
+                  "name": "新浪财经/前瞻产业研究院",
+                  "url": "https://finance.sina.com.cn/stock/aiassist/agqsjs/2026-04-30/doc-inhwfays7423628.shtml"
+                }
+              },
+              {
+                "name": "中国稀土集团资源科技（000831.SZ）",
+                "grossMarginPct": {
+                  "status": "unavailable",
+                  "reason": "已查新浪财经/深交所公告摘要未见披露，未逐页核对年报"
+                },
+                "source": {
+                  "name": "界面新闻/深交所年报",
+                  "url": "https://m.jiemian.com/article/13560000.html"
+                }
+              },
+              {
+                "name": "广晟有色（600259.SH）",
+                "grossMarginPct": "[估计]<2%（单源，仅稀土业务）",
+                "source": {
+                  "name": "新浪财经/前瞻网",
+                  "url": "https://finance.sina.com.cn/roll/2025-05-11/doc-ineweqee4110114.shtml"
+                }
+              }
+            ],
+            "whyHigherOrLower": "①盛和资源综合毛利率10.7%（FY2025）低于北方稀土稀土主业13.97%，因公司无国家开采配额矿山，原料多为市场化采购，成本议价权弱于掌握指标的北方稀土。②显著高于广晟有色稀土业务毛利率不足2%，因盛和资源冶炼分离产能规模更大（国内前三）、技术附加值更高（5N超纯镝独家供应AI芯片）、原料渠道更多元（MP精矿+废料回收）。③中国稀土集团上市平台毛利率未披露，无法直接对比，已登记数据缺口。④锆钛业务毛利率仅2.8%拖累公司整体毛利率，稀土业务本身毛利率11.1%已高于公司整体水平。"
+          },
+          "operatingLeverage": {
+            "observation": "①FY2022营收+57.86%、净利润+48.14%，同向变动但净利润增速略低于收入增速。②FY2023营收+6.68%但净利润-79.11%，显示强负向经营杠杆。③FY2024营收-36.39%、净利润-37.84%，同向下滑基本同步。④FY2025营收+31.83%，净利润+304.94%（经financial_rigor.py calc精确验算），净利润增速约为收入增速的9.6倍，显示显著正向经营杠杆，反映冶炼分离业务成本相对刚性、价格弹性极高的特征。",
+            "evidence": [
+              {
+                "metric": "营业总收入同比",
+                "value": "+31.83%",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "Tushare income（financial_rigor.py calc验算）",
+                  "url": "https://tushare.pro"
+                }
+              },
+              {
+                "metric": "归母净利润同比",
+                "value": "+304.94%",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "Tushare income（financial_rigor.py calc验算）",
+                  "url": "https://tushare.pro"
+                }
+              },
+              {
+                "metric": "营业总收入同比",
+                "value": "+6.68%",
+                "asOf": "FY2023",
+                "source": {
+                  "name": "Tushare income（financial_rigor.py calc验算）",
+                  "url": "https://tushare.pro"
+                }
+              },
+              {
+                "metric": "归母净利润同比",
+                "value": "-79.11%",
+                "asOf": "FY2023",
+                "source": {
+                  "name": "Tushare income（financial_rigor.py calc验算）",
+                  "url": "https://tushare.pro"
+                }
+              }
+            ]
+          }
+        },
+        "inquiry": {
+          "question": "这门生意好在哪？如果只能用一句话描述，是什么？",
+          "answer": "好在技术与全球渠道壁垒而非资源垄断；一句话：全球化稀土冶炼分离与贸易服务商。①核心壁垒是国内前三冶炼分离产能+5N超纯镝独家技术，绑定英伟达AI芯片供应链形成技术溢价。②全球化原料渠道（MP精矿独家包销、Peak矿全资收购、独居石进口、废料回收）对冲自身矿产配额不足的短板。③稀土价格上行期业绩弹性极高，FY2025净利润增速304.94%远超营收增速31.83%，正向经营杠杆显著。④弱点是不掌握国家开采配额，资源自给率低于北方稀土/中国稀土集团，海外资源合作存在毁约与地缘风险（如2026年2月格陵兰项目被终止）。"
+        },
+        "dataGaps": [
+          {
+            "path": "grossMarginVsPeers.peers[1].grossMarginPct",
+            "reason": "中国稀土集团（000831.SZ）上市平台稀土业务毛利率未披露",
+            "searched": "financials-collection.json competitiveLandscape.competitors[1] 已标注 status unavailable（已查新浪财经、界面新闻，未查到）",
+            "evidenceRequest": {
+              "metric": "中国稀土集团（000831.SZ）稀土业务毛利率",
+              "question": "中国稀土集团2025年年报中稀土分部毛利率具体数值是多少？",
+              "whyNeeded": "补全三家竞对毛利率对比，更准确判断盛和资源毛利率相对水平",
+              "priority": "low"
+            }
+          }
+        ]
+      },
+      "moat": {
+        "title": "护城河评估",
+        "conclusion": "转换成本、网络效应护城河弱，规模/牌照与技术专利护城河中等，整体呈中等偏弱、依赖政策与海外资源稳定性。",
+        "analysis": {
+          "types": [
+            {
+              "type": "品牌/定价权",
+              "test": "是否能在不损失销量的情况下提价？",
+              "verdict": "待验证",
+              "evidence": [
+                {
+                  "metric": "毛利率5年走势(FY2021→FY2025)",
+                  "value": "18.7%→16.6%→4.3%→5.2%→10.7%，随稀土价格周期大幅波动，非稳定提价能力体现",
+                  "asOf": "FY2021-FY2025",
+                  "source": {
+                    "name": "Tushare/东方财富，financialMetrics",
+                    "url": "https://tushare.pro"
+                  }
+                },
+                {
+                  "metric": "5N超纯镝全球唯一量产能力",
+                  "value": "江阴加华为全球唯一能量产5N(99.999%)超纯镝企业，绑定英伟达Blackwell AI芯片电容器材料，细分领域具定价权但占比小",
+                  "asOf": "FY2025年报口径",
+                  "source": {
+                    "name": "盛和资源2025年年报",
+                    "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225258047.PDF"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "转换成本",
+              "test": "客户迁移到竞品的成本有多高？",
+              "verdict": "不存在",
+              "evidence": [
+                {
+                  "metric": "前五大客户销售额占比",
+                  "value": "54,558.50万元(约5.46亿元)，占年度销售总额36.39%，属中等偏低集中度，非个别大客户深度绑定",
+                  "asOf": "FY2025年报口径",
+                  "source": {
+                    "name": "证券市场周刊/腾讯新闻转引2025年年报",
+                    "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225258047.PDF"
+                  }
+                },
+                {
+                  "metric": "产品同质性",
+                  "value": "稀土氧化物/盐类/金属为标准化实物商品，磁材厂客户可按市场价比价切换供应商，无专属定制或长期锁定证据",
+                  "asOf": "FY2025年报口径",
+                  "source": {
+                    "name": "盛和资源2025年年报businessModelMoat",
+                    "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225258047.PDF"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "网络效应",
+              "test": "用户越多产品越好吗？",
+              "verdict": "不存在",
+              "evidence": [
+                {
+                  "metric": "商业模式性质",
+                  "value": "实物产品销售(稀土氧化物/盐/金属、锆钛精矿)，非订阅或平台模式，客户数量增加不提升产品本身价值",
+                  "asOf": "FY2025年报口径",
+                  "source": {
+                    "name": "盛和资源2025年年报businessModelMoat",
+                    "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225258047.PDF"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "规模效应",
+              "test": "规模带来的成本优势有多大？",
+              "verdict": "存在",
+              "evidence": [
+                {
+                  "metric": "冶炼分离产能规模及行业排名",
+                  "value": "国内稀土冶炼分离产能约6万吨/年，居行业前三；2025年收购江阴加华、淄博加华新增9300吨REO/年产能",
+                  "asOf": "FY2025年报口径",
+                  "source": {
+                    "name": "新浪财经/上海证券报转引年报",
+                    "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225258047.PDF"
+                  }
+                },
+                {
+                  "metric": "国家总量指标管理下的存量产能壁垒",
+                  "value": "总量调控新规指标仅下达'国家推动组建的大型稀土企业集团及所属企业'，盛和资源为体系外少数拥有大规模存量产能的市场化企业",
+                  "asOf": "2025年新规发布口径",
+                  "source": {
+                    "name": "中国司法部管理办法原文",
+                    "url": "https://www.moj.gov.cn/pub/sfbgw/flfggz/flfggzbmgz/202510/t20251021_526565.html"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "技术/专利壁垒",
+              "test": "技术领先几年？能否被复制？",
+              "verdict": "存在",
+              "evidence": [
+                {
+                  "metric": "5N超纯镝全球唯一量产企业",
+                  "value": "江阴加华为全球唯一能量产5N(99.999%)超纯镝企业，为英伟达Blackwell AI芯片高端电容器核心材料供应商",
+                  "asOf": "FY2025年报口径",
+                  "source": {
+                    "name": "盛和资源2025年年报",
+                    "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225258047.PDF"
+                  }
+                },
+                {
+                  "metric": "累计专利数量",
+                  "value": "截至2025年底累计专利460余项",
+                  "asOf": "截至2025年底",
+                  "source": {
+                    "name": "盛和资源2025年年报",
+                    "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225258047.PDF"
+                  }
+                }
+              ]
+            }
+          ],
+          "trendPast5y": {
+            "direction": "变宽",
+            "basis": "①产能因收购扩至6万吨/年，居国内前三。②总量指标新规仅授予存量大型集团，强化牌照壁垒。③并购切入5N超纯镝技术，绑定AI芯片链，专利增至460余项。④海外渠道单一性风险已现，2026年2月ETM终止格陵兰项目合作。"
+          },
+          "trendNext5y": {
+            "direction": "稳定",
+            "basis": "①机器人/AI新兴需求增长有望持续强化技术卡位溢价。②总量管控趋严存在被要求并入国家队集团的政策风险。③海外矿权(Ngualla税务纠纷)及中美关税地缘不确定性可能削弱渠道价值。"
+          }
+        },
+        "inquiry": {
+          "question": "10年后这条护城河还在吗？什么能摧毁它？",
+          "answer": "护城河总体中等偏弱，能否存续取决于政策与海外资源稳定性。①若总量指标管理强制盛和并入国家队集团，独立牌照优势将消失。②若海外渠道持续毁约/关税/税务纠纷(ETM终止、Ngualla纠纷)，独家渠道价值弱化。③若5N超纯镝技术被复制或AI需求不及预期，技术溢价消退。④若维持体系外独立地位并持续研发投入，护城河可延续但强度有限。"
+        },
+        "dataGaps": [
+          {
+            "path": "moat.analysis.types[3].evidence",
+            "reason": "盛和资源与北方稀土/中国稀土集团单位冶炼分离成本对比数据未取得，规模效应量化证据不足",
+            "searched": "financials-collection.json competitiveLandscape 未见单位成本字段",
+            "evidenceRequest": {
+              "metric": "单位冶炼分离成本(元/吨REO)同业对比",
+              "question": "6万吨/年产能是否带来可量化的单位成本优势？",
+              "whyNeeded": "量化规模效应护城河强度",
+              "priority": "low"
+            }
+          },
+          {
+            "path": "moat.analysis.types[0].evidence",
+            "reason": "行业平均及同业加工费率（代加工费/吨）未取得，无法验证规模效应带来的加工费议价优势",
+            "searched": "financials-collection.json 未见加工费单独披露字段",
+            "evidenceRequest": {
+              "metric": "稀土冶炼委托加工费率或其同比变动",
+              "question": "盛和资源的加工费是否可独立于稀土价格上涨？",
+              "whyNeeded": "用于判断品牌/定价权护城河真实性",
+              "priority": "low"
+            }
+          }
+        ]
+      },
+      "inversion": {
+        "title": "逆向思考与风险清单",
+        "conclusion": "公司体系外身份、海外资源毁约与价格周期反转构成三重失败路径，当前估值已隐含较多乐观预期。",
+        "analysis": {
+          "failurePaths": [
+            {
+              "path": "政策仅向国家队集团下达总量指标，盛和资源无配额矿山，长期面临被边缘化或要求并入",
+              "probability": "中",
+              "impact": "高",
+              "evidence": [
+                {
+                  "metric": "国家稀土矿产品/冶炼分离总量指标分配比例",
+                  "value": "北方稀土矿产品指标69.87%、冶炼分离指标66.93%；新规指标仅下达国家推动组建的大型稀土企业集团",
+                  "asOf": "2025年总量指标/2025年管理办法发布",
+                  "source": {
+                    "name": "中国司法部《稀土开采和稀土冶炼分离总量调控管理暂行办法》",
+                    "url": "https://www.moj.gov.cn/pub/sfbgw/flfggz/flfggzbmgz/202510/t20251021_526565.html"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "海外资源合作链式毁约：格陵兰项目已终止，坦桑尼亚矿税务纠纷未决，独家渠道脆弱性持续暴露",
+              "probability": "高",
+              "impact": "中",
+              "evidence": [
+                {
+                  "metric": "格陵兰Kvanefjeld项目/坦桑尼亚Ngualla矿",
+                  "value": "2026年2月ETM终止格陵兰合作；Ngualla矿存在未决税务纠纷，投产时间与盈利能力不确定",
+                  "asOf": "2026年2月-6月",
+                  "source": {
+                    "name": "经济观察网/搜狐财经（转引2025年年报存档）",
+                    "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225258047.PDF"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "稀土价格强周期反转，FY2025利润暴增主因价格上涨，一旦价格下行毛利率净利润同步大幅下滑",
+              "probability": "中",
+              "impact": "高",
+              "evidence": [
+                {
+                  "metric": "归母净利润同比增速与价格弹性",
+                  "value": "FY2025归母净利润8.39亿元，同比+304.94%（financial_rigor.py calc验算），主因价格上涨而非产销量增长",
+                  "asOf": "FY2025",
+                  "source": {
+                    "name": "东方财富 RPT_LICO_FN_CPD",
+                    "url": "https://data.eastmoney.com/bbsj/600392.html"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "中美贸易摩擦升级，海外伙伴对华出口/独家渠道被反制，原料供应中断",
+              "probability": "中",
+              "impact": "中",
+              "evidence": [
+                {
+                  "metric": "MP Materials对华精矿出口",
+                  "value": "2025年因中美关税一度暂停对华出口稀土精矿，公司称已构建多元化原料渠道",
+                  "asOf": "2025年",
+                  "source": {
+                    "name": "澎湃新闻/证券时报（转引2025年年报存档）",
+                    "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225258047.PDF"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "经营风险叠加：未决诉讼超1.6亿元，锆钛业务持续亏损，二股东连续减持压制股价",
+              "probability": "中",
+              "impact": "低",
+              "evidence": [
+                {
+                  "metric": "未决合同纠纷/锆钛业务毛利率/二股东减持",
+                  "value": "未决合同纠纷超1.6亿元；锆钛业务FY2025毛利率2.80%，营收8.1亿元；2026年3月起二股东多次披露减持计划",
+                  "asOf": "截至2026年6月",
+                  "source": {
+                    "name": "Tushare fina_mainbz / 公司公告",
+                    "url": "https://tushare.pro"
+                  }
+                }
+              ]
+            }
+          ],
+          "historicalAnalogies": [
+            {
+              "company": "2011-2016年稀土行业整合潮中的体系外冶炼分离企业（泛指，非特定上市公司）",
+              "similarity": "同为掌握冶炼分离产能但缺乏自有开采配额、依赖政策空间生存的市场化企业。",
+              "outcome": "多数体系外中小冶炼分离产能被六大稀土集团整合重组或退出，指标收归集团。",
+              "source": {
+                "name": "基于行业常识推断，非采集文件数据",
+                "url": ""
+              }
+            },
+            {
+              "company": "2010年中日稀土贸易摩擦中的跨境独家渠道贸易商（泛指，非特定上市公司）",
+              "similarity": "商业模式依赖海外资源方独家协议与跨境渠道，暴露于出口管制地缘风险。",
+              "outcome": "出口管制收紧后独家渠道价值一度归零，倒逼企业加速原料多元化与技术升级。",
+              "source": {
+                "name": "基于行业常识推断，非采集文件数据",
+                "url": ""
+              }
+            }
+          ],
+          "crossDisciplinaryChecks": [
+            {
+              "model": "竞争博弈",
+              "finding": "国家队集团（北方稀土/中国稀土集团）兼具监管权与市场参与者双重身份，主导资源分配，对盛和资源构成非对称博弈：①国家队可单方面调整总量指标挤压体系外生存空间；②盛和资源难以正面竞争配额，均衡策略转向全球化采购与高端技术卡位，本质是弱势参与者在寡头主导博弈中寻找非零和补充位。"
+            },
+            {
+              "model": "技术采纳曲线",
+              "finding": "人形机器人/AI芯片对超纯稀土的需求采纳仍处早期阶段：①2025年新兴领域仅占磁材需求12%，2030年35%为预测尚未兑现；②若机器人放量不及预期，存在跨越鸿沟失败风险，当前对需求爆发的估值定价可能被证伪。"
+            }
+          ],
+          "biasSelfCheck": [
+            {
+              "bias": "叙事偏差",
+              "check": "'稀土+机器人'炒作或领先业绩兑现：2025年新兴需求占比仅12%，机器人具体贡献额未见采集文件量化，需警惕概念叙事跑赢基本面。"
+            },
+            {
+              "bias": "锚定效应",
+              "check": "警惕以2021-2022年价格历史高点为心理锚点：PE-TTM42倍处近一年16%分位不算贵，但PB处35%分位显示部分乐观预期已price in。"
+            },
+            {
+              "bias": "幸存者偏差",
+              "check": "采集文件仅呈现盛和资源当前行业前三地位，未见2011-2016年整合潮中被淘汰/整合的中小冶炼分离企业数据，易高估其地位稳固性。"
+            }
+          ],
+          "bearCase": [
+            {
+              "point": "资源自给率低，原料端议价权弱于国家队集团",
+              "holder": "市场空方观点（采集文件未指名具体机构）",
+              "evidence": [
+                {
+                  "metric": "国家矿产品开采/冶炼分离指标分配",
+                  "value": "北方稀土矿产品指标69.87%/冶炼分离指标66.93%，盛和资源无自有大型开采配额矿山",
+                  "asOf": "2025年国家总量指标分配",
+                  "source": {
+                    "name": "新浪财经/前瞻产业研究院",
+                    "url": "https://finance.sina.com.cn/stock/aiassist/agqsjs/2026-04-30/doc-inhwfays7423628.shtml"
+                  }
+                }
+              ]
+            },
+            {
+              "point": "海外资源合作存在毁约与地缘风险，负面事件已兑现",
+              "holder": "市场空方观点（采集文件未指名具体机构）",
+              "evidence": [
+                {
+                  "metric": "格陵兰Kvanefjeld项目/坦桑尼亚Ngualla矿",
+                  "value": "2026年2月ETM单方终止格陵兰合作；Ngualla矿存在未决税务纠纷，2026年6月引发股价跌停",
+                  "asOf": "2026年2月-6月",
+                  "source": {
+                    "name": "经济观察网/搜狐财经（转引2025年年报存档）",
+                    "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225258047.PDF"
+                  }
+                }
+              ]
+            },
+            {
+              "point": "当前估值已price in较乐观预期",
+              "holder": "财经自媒体观点（东方财富财富号，非机构研报）",
+              "evidence": [
+                {
+                  "metric": "PE-TTM/PB/PS估值分位",
+                  "value": "PE-TTM42.05倍处近一年16%分位，PB3.26倍处35%分位，PS-TTM2.73倍处33%分位",
+                  "asOf": "截至2026-08-07",
+                  "source": {
+                    "name": "东方财富财富号",
+                    "url": "https://caifuhao.eastmoney.com/news/20260618210128287453790"
+                  }
+                }
+              ]
+            },
+            {
+              "point": "非核心业务拖累叠加多重经营风险",
+              "holder": "市场空方观点（采集文件未指名具体机构）",
+              "evidence": [
+                {
+                  "metric": "锆钛业务毛利率/未决合同纠纷",
+                  "value": "FY2025锆钛业务毛利率仅2.80%，营收8.1亿元；另有超1.6亿元未决合同纠纷，部分对手方无可执行资产",
+                  "asOf": "FY2025/截至2026年6月",
+                  "source": {
+                    "name": "Tushare fina_mainbz",
+                    "url": "https://tushare.pro"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "inquiry": {
+          "question": "我最可能在哪里犯错？聪明人为什么会不买/做空这家公司？",
+          "answer": "最可能把'稀土+机器人'炒作当作基本面，低估体系外边缘化风险。①政策仅向国家队集团下达总量指标，盛和资源无配额矿山，长期面临被边缘化或并入；②格陵兰项目已终止、坦桑尼亚矿税务纠纷未决，证明海外独家渠道脆弱而非稳定护城河；③FY2025利润暴增主因价格周期上行，一旦反转利润弹性同样剧烈向下；④聪明钱做空/观望的核心理由是：估值已隐含乐观预期（PB处35分位），且诉讼、减持、锆钛亏损等经营风险持续暴露。"
+        },
+        "dataGaps": [
+          {
+            "path": "riskFactors.items / management.keyDecisions",
+            "reason": "ETM终止格陵兰合作、MP Materials暂停对华出口等具体公告原文url未在采集文件中记录",
+            "searched": "financials-collection.json 仅有来源名称文本，已用年报存档链接替代",
+            "evidenceRequest": {
+              "metric": "公司临时公告/交易所公告原文链接",
+              "question": "ETM终止合作公告、MP Materials出口暂停事项的具体公告文号与cninfo原文url分别是什么",
+              "whyNeeded": "精确定位一手公告可核实事件时间线与影响表述是否被媒体转引失真",
+              "priority": "medium"
+            }
+          },
+          {
+            "path": "historicalAnalogies",
+            "reason": "2011-2016年稀土行业整合潮及2010年中日稀土贸易摩擦中，同类体系外企业的具体财务结局数据缺失",
+            "searched": "financials-collection.json 未覆盖任何历史可比公司案例数据",
+            "evidenceRequest": {
+              "metric": "同期被整合/退出的中小稀土冶炼分离企业名称及财务结局",
+              "question": "2011-2016年六大集团整合中，具体哪些体系外冶炼分离企业被收购、破产或转型，结局如何",
+              "whyNeeded": "将常识类比升级为有具体先例支撑的历史类比，提高逆向思考证据强度",
+              "priority": "low"
+            }
+          }
+        ]
+      },
+      "management": {
+        "title": "管理层评估",
+        "conclusion": "管理层技术并购能力突出、黄平子公司兼职非外部风险，但海外整合与治理衔接仍需观察。",
+        "analysis": {
+          "keyDecisions": [
+            {
+              "date": "2016年",
+              "decision": "与澳大利亚Greenland Minerals（现ETM）建立格陵兰Kvanefjeld稀土多金属项目战略合作",
+              "outcome": "2026年2月ETM单方面终止合作，公司子公司持股约6.5%、历史累计投资2436万元，海外资源布局受挫",
+              "rating": 2,
+              "source": {
+                "name": "经济观察网/新浪财经，2026-02-03",
+                "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225258047.PDF"
+              }
+            },
+            {
+              "date": "2017年",
+              "decision": "联合美方机构以2050万美元中标美国芒廷帕斯矿30年经营权，组建MP Materials",
+              "outcome": "获精矿独家分销权，2024年续签包销协议；2025年关税摩擦一度中断但已多元化替代，战略性回报显著",
+              "rating": 5,
+              "source": {
+                "name": "澎湃新闻/证券时报，2025-04",
+                "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225258047.PDF"
+              }
+            },
+            {
+              "date": "2024年8月签约/2025年3月完成",
+              "decision": "收购江阴加华86%股权及淄博加华95%+5%股权，合计约2.12亿元",
+              "outcome": "新增9300吨REO/年产能，江阴加华为全球唯一量产5N超纯镝企业，切入英伟达AI供应链",
+              "rating": 4,
+              "source": {
+                "name": "新浪财经/上海证券报，2025-03-13",
+                "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225258047.PDF"
+              }
+            },
+            {
+              "date": "2025年9月",
+              "decision": "完成对澳大利亚Peak Rare Earths全资收购",
+              "outcome": "取得坦桑尼亚Ngualla矿权益，但存未决税务纠纷，投产时间与盈利能力不确定，2026年6月触发跌停",
+              "rating": 2,
+              "source": {
+                "name": "搜狐财经/经济观察网，2025-2026",
+                "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225258047.PDF"
+              }
+            },
+            {
+              "date": "2024年9月18日",
+              "decision": "董事会换届，谢兵（国资背景）当选公司董事长",
+              "outcome": "国资委派管理层加强，治理延续控股股东主导，短期无明显经营正负效果",
+              "rating": 3,
+              "source": {
+                "name": "每日经济新闻，2024-09-19",
+                "url": "https://www.nbd.com.cn/articles/2024-09-19/3562271.html"
+              }
+            }
+          ],
+          "capitalAllocation": {
+            "rdReturn": "①研发口径冲突：费用化研发费用620万元(FY2024)vs含资本化研发投入合计5.5亿元(FY2025)，相差悬殊，年报原文未核实，无法测算量化回报率②江阴加华5N超纯镝技术已切入英伟达AI芯片供应链形成溢价，但具体ROI数据缺失",
+            "maTrackRecord": "①2017年MP Materials绑定全球最大稀土矿商，为最成功并购，助力技术卡位AI供应链②2024年江阴加华/淄博加华收购顺利落地，新增9300吨REO产能③2025年Peak Rare Earths存未决税务纠纷、Greenland合作已破裂，海外并购成败并存",
+            "buybackTiming": {
+              "status": "unavailable",
+              "reason": "采集文件（含证据补充）未见公司回购计划或历史回购记录披露，已查范围限于本次10维度采集及证据补写，未做进一步网络核实"
+            },
+            "evidence": [
+              {
+                "metric": "研发投入合计（含资本化）",
+                "value": "5.50亿元，+38.85% YoY",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "新浪财经AIGC年报解读",
+                  "url": "https://finance.sina.com.cn/stock/aigc/stockfs/2026-04-30/doc-inhwewsw6624148.shtml"
+                }
+              },
+              {
+                "metric": "研发费用（利润表科目）",
+                "value": "620.29万元，+468.00% YoY",
+                "asOf": "FY2024",
+                "source": {
+                  "name": "新浪财经AIGC年报解读",
+                  "url": "https://finance.sina.com.cn/stock/aigc/stockfs/2025-04-22/doc-inetzzsq3977116.shtml"
+                }
+              },
+              {
+                "metric": "MP Materials矿权中标价",
+                "value": "2050万美元（30年经营权）",
+                "asOf": "2017年",
+                "source": {
+                  "name": "澎湃新闻/证券时报",
+                  "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225258047.PDF"
+                }
+              },
+              {
+                "metric": "江阴加华+淄博加华收购总价",
+                "value": "约2.12亿元（1.827亿+2938.59万）",
+                "asOf": "2024年8月签约/2025年3月完成",
+                "source": {
+                  "name": "新浪财经/上海证券报",
+                  "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225258047.PDF"
+                }
+              }
+            ]
+          },
+          "alignment": {
+            "ownership": "①总经理黄平持股5.49%（96,271,094股），创始股东王全根（非现任高管）持股6.69%为第二大股东②公司无AB股结构，经济权益即投票权，主要股东间是否存在一致行动关系尚未确认",
+            "compensation": "①总经理黄平FY2025薪酬330万元居全公司最高，其他高管薪酬集中在105万-193万元区间②薪酬与经营业绩（如ROE、产量）挂钩的具体考核机制未披露",
+            "insiderSelling": "二股东王全根2026年3月起多次披露减持计划，对股价形成压制，创始股东套现信号明显。",
+            "evidence": [
+              {
+                "metric": "黄平持股比例",
+                "value": "5.49%（96,271,094股）",
+                "asOf": "20260331",
+                "source": {
+                  "name": "Tushare top10_holders",
+                  "url": "https://tushare.pro"
+                }
+              },
+              {
+                "metric": "黄平FY2025薪酬",
+                "value": "330万元",
+                "asOf": "FY2025（20251231）",
+                "source": {
+                  "name": "Tushare stk_rewards",
+                  "url": "https://tushare.pro"
+                }
+              },
+              {
+                "metric": "王全根持股比例（第二大股东，非现任高管）",
+                "value": "6.69%",
+                "asOf": "20260331",
+                "source": {
+                  "name": "Tushare top10_holders",
+                  "url": "https://tushare.pro"
+                }
+              }
+            ]
+          },
+          "organization": {
+            "teamStability": "①总经理黄平自2020年3月起任职，2022年4月起兼任副董事长；2024年9月谢兵经控股股东委派当选董事长，治理延续国资主导格局②原总经理王晓晖已离任（持股15,883,146股/约0.91%），具体离任时间与原因未披露",
+            "keyPersonRisk": "①黄平2017年7月至今兼任赣州晨光稀土董事长，但该公司系其1997年创立、现为盛和资源全资子公司，属集团内部子公司治理安排，非外部利益冲突或精力分散风险②总经理与副董事长双重身份叠加子公司董事长，人事集中度较高，退休或调整时存在管理连续性风险，但非独立外部兼职引发的利益冲突"
+          },
+          "culture": "①460余项专利积累与全球资源并购活跃度显示企业文化偏技术驱动＋国际化扩张型②创始人系高管黄平与国资委派董事长谢兵并存，呈现市场化经营与国资治理混合特征，具体企业文化定性数据未披露"
+        },
+        "inquiry": {
+          "question": "如果CEO退休，这家公司还能保持竞争力吗？",
+          "answer": "若黄平退休，公司短期仍可维持竞争力，但整合与传承存在压力。①核心竞争力源于资产层面（6万吨冶炼产能、江阴加华5N镝技术、MP Materials独家渠道），非依赖黄平个人②公司治理已国资化，谢兵为控股股东委派董事长，继任机制制度化，非创始人一人独大格局③黄平身兼总经理与赣州晨光（全资子公司）董事长双重角色，短期人事交接存在管理连续性风险④海外资源整合（Peak Rare Earths税务纠纷、MP关税摩擦）依赖管理层经验积累，接班人历练不足是潜在弱点"
+        },
+        "dataGaps": [
+          "研发回报率：研发投入口径冲突（费用化620万元vs含资本化5.5亿元），无法测算量化回报率，需核实年报原文",
+          "回购：采集文件未见公司回购计划或历史回购记录披露",
+          "企业文化：缺乏员工调研、内部管理制度等一手资料，仅能从专利数量与并购风格间接推断",
+          "薪酬考核挂钩：高管薪酬与经营业绩（如ROE、产量指标）挂钩的具体考核机制未披露",
+          "其他高管变动：原总经理王晓晖离任的具体时间与原因未披露",
+          "一致行动关系：黄平、王全根等主要股东之间是否存在一致行动协议未确认"
+        ]
+      },
+      "industryTrend": {
+        "title": "行业与长期趋势",
+        "conclusion": "稀土冶炼分离龙头受益AI/机器人需求扩张，但资源自给率低、政策指标向国家队集中，护城河具部分性。",
+        "analysis": {
+          "paradigmShift": {
+            "verdict": "部分",
+            "reasoning": "①稀土是AI机器人电动化时代的关键材料而非该时代本身，属于赋能型而非颠覆式范式转移；②公司处于冶炼分离环节，受益于需求增长但非技术范式创造者；③政策指标向国家队集中，公司议价权受限，非产业范式主导者。"
+          },
+          "historicalAnalogy": "①类比19世纪石油：资源/加工环节的稀缺牌照+全球化渠道可形成长期溢价；②类比2000年3Com：若技术路线被替代或牌照被收编，先发优势可能迅速归零；③盛和资源当前更接近'专业冶炼商'而非资源垄断者，历史类比需谨慎，实际介于两者之间。",
+          "tam": {
+            "current": {
+              "value": "全球稀土永磁材料市场规模2031年预测1696.7亿元；2024年全球REO产量约39万吨（中国占比约69%）",
+              "currency": "CNY / 吨REO当量（两口径并存）",
+              "asOf": "2024年（产量口径，当前实际值）；2031年为市场规模预测非当前值",
+              "source": {
+                "name": "QYResearch（经格隆汇转载，单源）",
+                "url": "https://m.gelonghui.com/p/2062821"
+              }
+            },
+            "ceiling": "2031年全球稀土永磁材料市场规模预测1696.7亿元人民币，CAGR约10.5%（2025-2031年，单源转载，未与一手协会/USGS数据交叉验证）。",
+            "growthCurve": "①传统需求（新能源车/风电）已进入成熟期，增速趋缓；②人形机器人/低空经济为新增长曲线，磁材需求占比预计从2025年12%升至2030年35%；③呈'S型叠加新曲线'而非单一指数增长，短期受2026年配额（28.5万吨REO）硬约束。"
+          },
+          "valueChainPosition": "①公司定位冶炼分离+全球贸易环节，非资源开采型公司；②不掌握国家开采配额矿山，仅托管四川大陆槽约1万吨/年及参股冕里稀土/中稀山东；③核心壁垒是国内前三冶炼分离产能（6万吨/年）+MP Materials等海外独家渠道+废料回收多元原料。",
+          "techRouteRisk": "①技术路线替代（无稀土电机/铁氧体）冲击稀土需求的量化评估仍缺权威数据，为持续未解决证据缺口；②现有信息仅显示需求端结构性增长，未见规模化替代反证；③5N超纯镝技术绑定AI供应链具差异化优势，但可被追赶，非制度壁垒。",
+          "concentration": {
+            "customers": "①前五大客户销售额占比36.39%（约5.46亿元，FY2025年报），集中度中等；②不构成单一客户依赖，下游磁材厂/贸易商分散，客户端议价权总体均衡。",
+            "suppliers": "①前五大供应商采购额占比19.42%（约23.59亿元，FY2024年报，最近可得），其中关联方仅占2.54%，集中度较低；②但战略供应商MP Materials独家包销具体占比未披露，2025年曾因关税暂停对华出口，供应链存在地缘脆弱性而非纯集中度风险。",
+            "evidence": [
+              {
+                "metric": "前五大客户销售额占比",
+                "value": "36.39%（约5.46亿元/54,558.50万元）",
+                "asOf": "FY2025年报口径",
+                "source": {
+                  "name": "证券市场周刊/腾讯新闻转引2025年年报",
+                  "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225258047.PDF"
+                }
+              },
+              {
+                "metric": "前五大供应商采购额占比",
+                "value": "19.42%（约23.59亿元/235,855.65万元，其中关联方采购占2.54%）",
+                "asOf": "FY2024年报口径（可得的最近一期）",
+                "source": {
+                  "name": "同花顺公告中心转引2024年年度报告",
+                  "url": "http://notice.10jqka.com.cn/api/pdf/8ece739561042c8b.pdf"
+                }
+              }
+            ]
+          }
+        },
+        "inquiry": {
+          "question": "站在20年后回看，这家公司是「这个时代的标准石油」还是「昙花一现的3Com」？",
+          "answer": "更接近专业化冶炼分离服务商，非标准石油式资源垄断，也非3Com式速朽。①掌控冶炼产能而非资源，护城河依赖政策存量牌照而非自有矿权，指标收紧或被并入国家队将削弱议价权；②海外资源布局证伪速度快（ETM毁约、Ngualla税务纠纷），显示护城河脆弱非牢固垂直垄断；③5N超纯镝技术卡位AI供应链是亮点，但技术可被追赶，非制度级壁垒；④更可能20年后仍存在，但被国家队边缘化为专业加工商，而非获得资源定价权。"
+        },
+        "dataGaps": [
+          {
+            "path": "industryTrend.analysis.techRouteRisk",
+            "reason": "未检索到权威机构对稀土磁材技术路线替代（无稀土电机/铁氧体等）冲击需求的量化评估，本次取证范围（evidenceAppendix）仅覆盖客户/供应商集中度，未解决"
+          }
+        ]
+      },
+      "valuation": {
+        "title": "估值分析",
+        "conclusion": "当前PE-TTM42倍处一年低位但仍隐含乐观预期,三情景测算中性/悲观情景显著跑输,估值风险偏高。",
+        "analysis": {
+          "currentMultiples": {
+            "marketCap": {
+              "value": "41,970,467,838.20（419.6亿）",
+              "currency": "CNY",
+              "asOf": "2026-08-07",
+              "source": {
+                "name": "Tushare daily_basic total_mv（采集文件currentValuation.marketCap.reported）",
+                "url": "https://tushare.pro"
+              }
+            },
+            "pe": {
+              "value": "42.05x（TTM，静态50.01x）",
+              "asOf": "2026-08-07",
+              "source": {
+                "name": "Tushare fina_indicator/quote（采集文件currentValuation.pe）",
+                "url": "https://tushare.pro"
+              }
+            },
+            "ps": {
+              "value": "2.73x（TTM）",
+              "asOf": "2026-08-07",
+              "source": {
+                "name": "Tushare daily_basic（采集文件currentValuation.ps.ttm）",
+                "url": "https://tushare.pro"
+              }
+            },
+            "peg": {
+              "status": "unavailable",
+              "reason": "稀土行业强周期,缺乏权威机构一致预期的3-5年复合增速;FY2024低基数下FY2025净利润+305%增速会严重失真PEG,不可用（与采集文件保持一致）"
+            },
+            "evToRevenue": {
+              "status": "unavailable",
+              "reason": "公司为净现金状态(货币资金57.91亿>总负债66.21亿中的有息部分),但有息负债细分未采集,EV无法拆分计算（与采集文件保持一致）"
+            }
+          },
+          "reverseDcf": {
+            "impliedGrowth": "42倍PE-TTM隐含稀土价格维持高位或产能持续扩张的乐观预期,非周期底部估值水平。",
+            "assumptions": "__TODO__（定性判断,未做精确DCF建模,贴现率/年限/终值未测算）。①行业为强周期资源加工业,历史PE中枢显著低于当前;②42倍PE隐含类成长股预期,超出行业永磁材料市场CAGR10.5%(单源)可支撑的常规成长溢价;③隐含假设为稀土价格持续高位或Peak/Ngualla矿2026年投产等产能扩张兑现,证伪则存在较大回撤空间。"
+          },
+          "threeScenario": {
+            "inputs": {
+              "price": 23.94,
+              "eps": 0.4787,
+              "sharesHundredMillion": 17.5283,
+              "growth": [
+                0.25,
+                0.08,
+                -0.2
+              ],
+              "pe": [
+                35,
+                25,
+                15
+              ],
+              "years": 3,
+              "currency": "CNY"
+            },
+            "optimistic": {
+              "targetPrice": 32.7,
+              "impliedReturnPct": 36.7
+            },
+            "neutral": {
+              "targetPrice": 15.1,
+              "impliedReturnPct": -37.0
+            },
+            "pessimistic": {
+              "targetPrice": 3.7,
+              "impliedReturnPct": -84.6
+            },
+            "assumptionBasis": "①乐观增速25%/PE35x:FY2025净利润+305%动能减弱后大幅打折延续,反映产能扩张(Peak/Ngualla矿2026投产)与价格高位;②中性增速8%/PE25x:参考行业永磁材料市场CAGR10.5%(单源)并下修,因公司净利润历史波动远超行业收入增速,不可直接套用;③悲观增速-20%/PE15x:参考FY2022至FY2024净利润从15.94亿降至2.07亿的历史腰斩式回撤,3年复合近腰斩,叠加周期底部估值压缩。",
+            "toolOutput": "============================================================\n三情景估值模型 (Three-Scenario Valuation)\n============================================================\n  当前股价: 23.94 CNY\n  当前EPS:  0.4787\n  预测期:   3年\n\n  情景                年增速     目标PE      目标EPS       目标股价      涨跌幅\n  ------------ -------- -------- ---------- ---------- --------\n  乐观 (Bull)         25%      35x       0.93      32.7   +36.7%\n  中性 (Base)          8%      25x       0.60      15.1   -37.0%\n  悲观 (Bear)        -20%      15x       0.25       3.7   -84.6%\n\n  ✅ 所有计算使用精确十进制, 结果可审计复现"
+          },
+          "vsOwnHistory": {
+            "metric": "PE-TTM/PB/PS-TTM/股息率 近一年分位",
+            "currentValue": "PE-TTM 42.05(分位16%);PB 3.26(分位35%);PS-TTM 2.73(分位33%);股息率1.46%(分位81%)",
+            "historicalRange": "PE-TTM区间34.79~80.66;PB区间2.30~5.02;PS-TTM区间1.94~4.33;股息率区间0.15%~1.77%（近一年,20250704~20260807）",
+            "source": {
+              "name": "Tushare daily_basic（采集文件currentValuation.valuationRangeOneYear）",
+              "url": "https://tushare.pro"
+            }
+          },
+          "vsPeers": [
+            {
+              "name": "中国北方稀土（600111.SH）",
+              "pe": {
+                "status": "unavailable",
+                "reason": "采集文件competitiveLandscape仅有营收/净利润/毛利率,未采集PE/PS倍数"
+              },
+              "ps": {
+                "status": "unavailable",
+                "reason": "同上,未采集"
+              },
+              "source": {
+                "name": "unavailable",
+                "url": ""
+              }
+            },
+            {
+              "name": "中国稀土集团资源科技（000831.SZ）",
+              "pe": {
+                "status": "unavailable",
+                "reason": "采集文件仅有上市子公司营收/净利润,未采集PE/PS倍数"
+              },
+              "ps": {
+                "status": "unavailable",
+                "reason": "同上,未采集"
+              },
+              "source": {
+                "name": "unavailable",
+                "url": ""
+              }
+            },
+            {
+              "name": "广晟有色（600259.SH）",
+              "pe": {
+                "status": "unavailable",
+                "reason": "采集文件仅有2025H1营收/净利润/毛利率,未采集PE/PS倍数"
+              },
+              "ps": {
+                "status": "unavailable",
+                "reason": "同上,未采集"
+              },
+              "source": {
+                "name": "unavailable",
+                "url": ""
+              }
+            }
+          ]
+        },
+        "inquiry": {
+          "question": "如果股市明天关闭5年，你愿意以这个价格持有吗？",
+          "answer": "不愿意长期持有,当前估值已隐含偏乐观预期且下行情景跑输明显。①三情景工具测算:中性(净利润+8%/年,PE25x)3年后目标价15.1元,较现价跌37%;②悲观(-20%/年,PE15x)目标价3.7元,跌84.6%,反映强周期下行风险;③仅乐观情景(+25%/年,PE35x)有+36.7%空间,但需稀土价格持续高位兑现;④公司资源自给率低于北方稀土/中国稀土集团,海外资源合作已现ETM毁约先例,长期锁仓风险偏高。"
+        },
+        "dataGaps": [
+          "同行(北方稀土600111.SH/中国稀土集团000831.SZ/广晟有色600259.SH)PE/PS估值倍数未采集,vsPeers按unavailable处理",
+          "PEG因缺乏权威一致预期增速标记unavailable(与采集文件一致)",
+          "EV/Revenue因有息负债细分未拆分标记unavailable(与采集文件一致)",
+          "反向DCF未做精确建模,仅给出定性方向判断,贴现率/年限/终值未测算"
+        ]
+      }
+    },
+    "crossValidationLog": [
+      {
+        "field": "FY2025 净利率",
+        "source1": {
+          "name": "financial_rigor.py calc（839014104.85/14990898214.29×100）",
+          "value": "5.60%"
+        },
+        "source2": {
+          "name": "N/A（单一计算工具验算，非多源对比）",
+          "value": "N/A"
+        },
+        "deviationPct": "N/A",
+        "flag": "ok",
+        "resolution": "工具精确计算，采纳5.60%用于businessEssence.profitabilityTrend5y"
+      },
+      {
+        "field": "FY2025 归母净利润同比增速",
+        "source1": {
+          "name": "financial_rigor.py calc（(839014104.85-207196451.93)/207196451.93×100）",
+          "value": "304.94%"
+        },
+        "source2": {
+          "name": "公司业绩预告口径（区间值，非精确值）",
+          "value": "+281%~339%"
+        },
+        "deviationPct": "N/A（区间不做误差率计算）",
+        "flag": "ok",
+        "resolution": "工具精确计算值304.94%落在公司业绩预告区间281%~339%内，验证一致；businessEssence/inversion 维度初稿曾用四舍五入后的305.31%，本次合并以工具精确值304.94%为准"
+      },
+      {
+        "field": "FY2025 营业总收入同比增速",
+        "source1": {
+          "name": "financial_rigor.py calc（(14990898214.29-11371025717.4)/11371025717.4×100）",
+          "value": "31.83%"
+        },
+        "source2": {
+          "name": "N/A",
+          "value": "N/A"
+        },
+        "deviationPct": "N/A",
+        "flag": "ok",
+        "resolution": "工具精确计算，采纳31.83%"
+      },
+      {
+        "field": "三情景估值目标价（乐观/中性/悲观）",
+        "source1": {
+          "name": "financial_rigor.py three-scenario（price=23.94, eps=0.4787, shares=17.5283亿, growth=[25%,8%,-20%], pe=[35,25,15], years=3）",
+          "value": "32.7 / 15.1 / 3.7 元"
+        },
+        "source2": {
+          "name": "N/A（单一模型工具计算）",
+          "value": "N/A"
+        },
+        "deviationPct": "N/A",
+        "flag": "ok",
+        "resolution": "工具原始输出见 valuation.analysis.threeScenario.toolOutput，增速与PE假设依据见 assumptionBasis"
+      }
+    ]
+  },
+  "summary": {
+    "_spec": {
+      "purpose": "研究流程第 3 步（分析总结）的产出模板。由评估 Agent 基于第 1 步采集与第 2 步分析的落盘文件生成，不重新采集。步骤正文见 docs/research/workflow/03-analysis-summary.md。",
+      "todoSentinel": "所有待填值写 \"__TODO__\"；无法给出的字段不删除，改写 { \"status\": \"unavailable\", \"reason\": \"缺失原因\" }。",
+      "confidence": "信心度总分 10 分（0–10，整数或 0.5 步长）：价值投资视角下对该维度的看多程度，分数越高越看多。梯度：9–10 教科书级优秀（宽护城河/卓越管理层/显著低估）；7–8 明显有利有小瑕疵；5–6 中性或好坏参半；3–4 明显不利；0–2 严重不利。最大风险维度按风险可控程度打分（越致命越低），估值维度按价格吸引力打分（越透支越低）。证据不足向中性收敛并在 scoreBasis 说明，不把数据缺口误报为看空理由。",
+      "traceability": "每个结论、评分、建议的 basis 字段必须写明引用的前两步文件字段路径（如 dimensions.valuation.analysis.threeScenario）与关键数据，不接受凭空判断。",
+      "strategies": "每条策略建议必须绑定可观察触发条件（价格区间 / 指标阈值 / 具体事件），价格类引用第 2 步 threeScenario 结果，基本面类引用 failurePaths、护城河 breaker 或驱动指标。"
+    },
+    "meta": {
+      "companyId": "sh-600392-shenghe-resources",
+      "companyName": "盛和资源控股股份有限公司",
+      "summarizedAt": "2026-08-08",
+      "dataCutoff": "2026-08-08",
+      "basedOnCollection": "research/companies/sh-600392-shenghe-resources/financials-collection.json",
+      "basedOnAnalysis": "research/companies/sh-600392-shenghe-resources/financials-analysis.json"
+    },
+    "dimensionSummary": [
+      {
+        "dimensionId": "businessQuality",
+        "title": "生意质量",
+        "mapsTo": "dimensions.businessEssence",
+        "conclusion": "全球化稀土冶炼分离贸易商，正向经营杠杆显著，但历史毛利率随价格周期宽幅波动（4.3%~18.7%），生意质量中等偏周期性。",
+        "confidence": 5.5,
+        "scoreBasis": "①analysis.operatingLeverage显示FY2025净利润+304.94%远超营收+31.83%，正向经营杠杆强；②profitabilityTrend5y毛利率5年在4.3%-18.7%间大幅波动，非稳定盈利能力；③stickiness.level=\"弱\"，仅5N超纯镝细分具技术锁定，前五大客户占比36.39%集中度中等；④中国稀土集团毛利率对比缺失（dataGaps），评分未过度乐观。"
+      },
+      {
+        "dimensionId": "moat",
+        "title": "护城河",
+        "mapsTo": "dimensions.moat",
+        "conclusion": "转换成本/网络效应弱，规模/牌照/技术专利中等，过去5年变宽，未来5年预期仅\"稳定\"，依赖政策与海外资源不确定性。",
+        "confidence": 5,
+        "scoreBasis": "①analysis.types中转换成本、网络效应均\"不存在\"，规模效应与技术专利\"存在\"但强度中等；②trendPast5y\"变宽\"（产能扩至6万吨/年+并购5N镝技术），trendNext5y仅\"稳定\"，上行动能减弱；③dataGaps两项（单位成本、加工费率同业对比）均未取得，规模/定价权护城河缺量化证据，评分向中性收敛。"
+      },
+      {
+        "dimensionId": "management",
+        "title": "管理层",
+        "mapsTo": "dimensions.management",
+        "conclusion": "技术并购能力突出（MP Materials/江阴加华评分5/4星），但海外矿权布局两度失利（Greenland/Peak评分均2星），二股东减持是治理瑕疵。",
+        "confidence": 5.5,
+        "scoreBasis": "①keyDecisions五项评分2/5/4/2/3，均值约3.2/5，两次海外矿权决策(Greenland、Peak/Ngualla)仅2分，抵消MP Materials(5分)、江阴加华(4分)亮点；②alignment.insiderSelling显示二股东王全根2026年3月起多次减持，套现信号与治理不完全一致；③organization.keyPersonRisk已澄清黄平兼职赣州晨光系内部子公司非外部风险；④capitalAllocation.rdReturn因研发口径冲突（620万vs5.5亿）无法量化回报率，回购数据unavailable，证据缺口限制评分上探。"
+      },
+      {
+        "dimensionId": "keyRisk",
+        "title": "最大风险",
+        "mapsTo": "dimensions.inversion",
+        "conclusion": "体系外身份、海外资源毁约、价格周期反转三重失败路径叠加，其中两项概率\"中/高\"、影响\"高/中\"，致命性较高且难对冲，估值已隐含乐观预期。",
+        "confidence": 3.5,
+        "scoreBasis": "①failurePaths中\"政策指标向国家队集中\"(概率中/影响高)、\"海外资源链式毁约\"(概率高/影响中)、\"价格周期反转\"(概率中/影响高)三项均高致命性且非公司自身经营可化解；②海外毁约风险已部分兑现（ETM终止格陵兰合作、Ngualla未决税务纠纷），非纯假设；③biasSelfCheck指出估值端已price in乐观预期(PB处35分位)，风险缓冲空间被压缩；④一手公告链接与历史案例结局两项dataGaps未解决，证据链不完整，未进一步下调至更极端区间。"
+      },
+      {
+        "dimensionId": "civilizationTrend",
+        "title": "文明趋势",
+        "mapsTo": "dimensions.industryTrend",
+        "conclusion": "AI/机器人需求驱动磁材占比预计2025年12%升至2030年35%，行业趋势总体有利，但公司资源自给率低、政策指标向国家队集中削弱其分享趋势红利的能力。",
+        "confidence": 6,
+        "scoreBasis": "①paradigmShift.verdict=\"部分\"，需求端趋势有利(growthCurve新兴曲线)，但valueChainPosition显示公司不掌握开采配额，只是趋势受益环节而非主导者；②concentration.customers/suppliers集中度均\"中等\"(36.39%/19.42%)，供应链风险主要来自MP Materials等海外渠道地缘脆弱性而非集中度本身；③techRouteRisk(替代技术冲击)量化评估缺失，dataGaps标注未解决，趋势有利程度的持续性存在证据限制。"
+      },
+      {
+        "dimensionId": "valuation",
+        "title": "估值",
+        "mapsTo": "dimensions.valuation",
+        "conclusion": "PE-TTM42倍处一年16%分位不算贵，但PB处35分位，三情景中性(15.1元/-37%)与悲观(3.7元/-84.6%)显著跑输，仅乐观(32.7元/+36.7%)需稀土价格持续高位兑现。",
+        "confidence": 3,
+        "scoreBasis": "①threeScenario三档中两档(中性、悲观)跑输现价23.94元，下行空间(-37%~-84.6%)远大于上行空间(+36.7%)，胜率结构不对称；②vsOwnHistory显示PB(35分位)/PS(33分位)均高于PE(16分位)，非全面低估；③reverseDcf判断42倍隐含类成长股预期，超出永磁材料市场CAGR10.5%(单源转载)可支撑的常规溢价，assumptions标注为定性判断未做精确DCF建模；④vsPeers三家同业PE/PS均unavailable，无法同业横向验证。"
+      }
+    ],
+    "strategies": {
+      "noPosition": {
+        "title": "空仓者",
+        "advice": "①现价23.94元已隐含较乐观预期，三情景中性/悲观均跑输，不建议现价追高；②等价格回落到更安全边际后再分批介入；③海外矿权风险实质缓解前不做左侧重仓布局。",
+        "triggers": [
+          {
+            "condition": "股价回落至15元附近或以下",
+            "action": "可分批小仓位试探性建仓，安全边际改善",
+            "basis": "①valuation.analysis.threeScenario.neutral.targetPrice=15.1元；②vsOwnHistory当前PB分位35%显示尚非低位"
+          },
+          {
+            "condition": "坦桑尼亚Ngualla矿未决税务纠纷解决且顺利投产，且无新增海外资源毁约公告",
+            "action": "可视为海外资源风险阶段性解除信号，重新评估建仓，但需两个以上独立信源同时确认投产进展",
+            "basis": "①inversion.failurePaths\"海外资源合作链式毁约\"(概率高/影响中)；②management.keyDecisions中Peak/Ngualla决策评分仅2星"
+          }
+        ]
+      },
+      "holding": {
+        "title": "持仓者",
+        "advice": "①现价23.94元已高于中性情景目标价15.1元，浮盈下行风险大于上行；②建议逢高分批减仓兑现收益，不做无条件长期持有；③毛利率若连续走弱应加快减仓节奏。",
+        "triggers": [
+          {
+            "condition": "股价上探至32.7元附近",
+            "action": "建议逢高分批止盈，兑现乐观情景兑现后的收益",
+            "basis": "valuation.analysis.threeScenario.optimistic.targetPrice=32.7元，涨幅+36.7%"
+          },
+          {
+            "condition": "公司毛利率连续两个季度环比下滑，重现FY2023/FY2024约4.3%-5.2%的周期底部特征",
+            "action": "应加快减仓，避免重演FY2022至FY2024净利润从15.94亿降至2.07亿的腰斩式下行",
+            "basis": "①businessEssence.analysis.profitabilityTrend5y历史毛利率波动数据；②threeScenario悲观assumptionBasis参考同一段净利润腰斩历史"
+          }
+        ]
+      },
+      "sellSignals": {
+        "title": "卖出信号",
+        "signals": [
+          {
+            "signal": "Ngualla矿未决税务纠纷进一步恶化，或再度出现海外资源毁约、停牌类事件",
+            "observable": "关注交易所公告中Ngualla矿税务纠纷进展及是否新增海外资源毁约或诉讼公告",
+            "basis": "①inversion.failurePaths\"海外资源合作链式毁约\"(概率高/影响中)；②management.keyDecisions中Peak决策评分2星"
+          },
+          {
+            "signal": "国家总量指标管理进一步收紧，公司被要求并入国家队集团或配额空间被实质压缩",
+            "observable": "关注主管部门下一轮稀土开采冶炼总量指标分配公告是否提及盛和资源被整合",
+            "basis": "①inversion.failurePaths\"政策仅向国家队下达指标\"(概率中/影响高)；②moat.trendNext5y\"稳定\"判断即基于此政策风险"
+          },
+          {
+            "signal": "二股东王全根继续大比例减持，或管理层黄平出现减持、离任信号",
+            "observable": "关注交易所减持公告披露的王全根、黄平持股比例变化",
+            "basis": "management.analysis.alignment.insiderSelling二股东2026年3月起多次减持计划"
+          }
+        ]
+      },
+      "addSignals": {
+        "title": "加仓信号",
+        "signals": [
+          {
+            "signal": "稀土价格延续上行，且Peak/Ngualla矿按计划2026年投产、未决税务纠纷解决",
+            "observable": "跟踪公司公告与至少两个独立信源（如交易所公告+行业协会数据）同时确认投产进度及稀土价格趋势",
+            "basis": "①valuation.analysis.threeScenario.assumptionBasis乐观情景依赖产能扩张兑现；②industryTrend.tam.growthCurve新兴需求曲线为单源转载，需多源确认"
+          },
+          {
+            "signal": "股价回落至15.1元附近或以下，且期间未出现新的重大负面事件",
+            "observable": "跟踪股价是否触及15元附近区域，并核对同期是否有新增诉讼、减持或毁约公告",
+            "basis": "valuation.analysis.threeScenario.neutral.targetPrice=15.1元"
+          }
+        ]
+      }
+    },
+    "disclaimer": "本总结基于公开信息与数据截止时点的分析生成，仅供研究参考，不构成个性化投资建议。"
+  }
+}
