@@ -3,7 +3,7 @@
   "meta": {
     "companyId": "hk-2015-li-auto",
     "companyName": "理想汽车 (Li Auto Inc.)",
-    "generatedAt": "2026-08-07T23:12:01+08:00",
+    "generatedAt": "2026-08-09T16:33:45+08:00",
     "dataCutoff": "2026-08-07",
     "validation": {
       "threshold": 7.0,
@@ -12,7 +12,7 @@
         "analysis": 10.0,
         "summary": 10.0
       },
-      "validatedAt": "2026-08-07T23:12:01+08:00"
+      "validatedAt": "2026-08-09T16:33:45+08:00"
     },
     "sources": {
       "collection": "research/companies/hk-2015-li-auto/financials-collection.json",
@@ -771,7 +771,7 @@
       "_dimension": "9. 当前估值：市值、PE、PS、PEG、EV/Revenue",
       "priceAsOf": "2026-08-07 16:08 HKT（港股收盘）/ 2026-08-07 10:28 EDT（美股ADS盘中）",
       "sharePrice": {
-        "hk": {
+        "primary": {
           "value": 49.92,
           "unit": "HKD",
           "source1": {
@@ -785,24 +785,28 @@
             "value": 49.92
           },
           "deviationPct": 0,
-          "flag": "ok"
+          "flag": "ok",
+          "currency": "HKD"
         },
-        "us_ads": {
-          "value": 12.8973,
-          "unit": "USD",
-          "source1": {
-            "name": "Financial Modeling Prep (mcp__fmp__company)",
-            "url": "https://site.financialmodelingprep.com/",
-            "value": 12.8973
-          },
-          "source2": {
-            "name": "stockanalysis.com",
-            "url": "https://stockanalysis.com/stocks/li/",
-            "value": 12.91
-          },
-          "deviationPct": 0.06,
-          "flag": "ok"
-        }
+        "alt": [
+          {
+            "value": 12.8973,
+            "unit": "USD",
+            "source1": {
+              "name": "Financial Modeling Prep (mcp__fmp__company)",
+              "url": "https://site.financialmodelingprep.com/",
+              "value": 12.8973
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/stocks/li/",
+              "value": 12.91
+            },
+            "deviationPct": 0.06,
+            "flag": "ok",
+            "currency": "USD"
+          }
+        ]
       },
       "sharesOutstanding": {
         "value": 2092558209,
@@ -820,8 +824,18 @@
       },
       "marketCap": {
         "reported": {
-          "hk_hkd": 101219774273,
-          "us_usd": 13025761661,
+          "primary": {
+            "value": "101.22B",
+            "currency": "HKD",
+            "note": "港股主上市地口径，原始值 101219774273 HKD"
+          },
+          "alt": [
+            {
+              "value": "13.03B",
+              "currency": "USD",
+              "note": "美股 ADS 口径，原始值 13025761661 USD"
+            }
+          ],
           "source": "FMP(2026-08-07)，stockanalysis口径分别为98.12B HKD/12.72B USD(偏差约2.4%-3.06%，判断为不同股本口径快照时点差异)"
         },
         "computed": {
@@ -833,7 +847,7 @@
         "flag": "minor-diff"
       },
       "pe": {
-        "status": "unavailable",
+        "status": "not-applicable",
         "reason": "TTM(2025Q2-2026Q1)GAAP净利润为负(-1,783.25 RMB百万，四份SEC季报加总，与stockanalysis TTM口径-1,815百万交叉验证偏差1.7%一致)；TTM Non-GAAP净利润同样为负(-724.99 RMB百万)，两口径PE均不适用，主因2026Q1单季净亏损22.76亿元人民币"
       },
       "ps": {
@@ -842,7 +856,7 @@
         "toolVerified": true
       },
       "peg": {
-        "status": "unavailable",
+        "status": "not-applicable",
         "reason": "PE本身因TTM净利润为负不适用，PEG无法计算"
       },
       "evToRevenue": {

@@ -105,10 +105,18 @@ const fixtureFinal = {
     businessModelMoat: { oneLiner: "测试公司以订阅方式向开发者收费。" },
     currentValuation: {
       priceAsOf: "2026-08-05 15:00",
-      sharePrice: { value: "12.34", currency: "USD", flag: "ok" },
-      marketCap: { reported: "1234 百万 USD" },
-      // 页面必须如实渲染 unavailable 的原因，而不是显示 0 或留白。
-      pe: { status: "unavailable", reason: "尚未盈利，TTM PE 无意义" },
+      // 双重上市：两个上市地的价格是同一个字段的两个口径（_spec.multiListing），
+      // 页面必须两个都渲染，而不是因为顶层没有 value 就退回破折号。
+      sharePrice: {
+        primary: { value: "12.34", currency: "USD", flag: "ok" },
+        alt: [{ value: "98.70", currency: "HKD", flag: "ok" }],
+      },
+      marketCap: { reported: "1234 百万 USD（双源中位数）" },
+      // 亏损公司的 PE 是「算不出」而不是「查不到」，且原因里的括号不能把它截断。
+      pe: {
+        status: "not-applicable",
+        reason: "TTM(2025Q2-2026Q1)净利润为负，PE 不适用",
+      },
     },
   },
   analysis: {
@@ -143,6 +151,19 @@ const fixtureFinal = {
           },
         },
         inquiry: { question: "这门生意好在哪？", answer: "现金流前置，边际成本趋零。" },
+        dataGaps: [],
+      },
+      valuation: {
+        title: "估值",
+        conclusion: "当前价格隐含的增长假设偏乐观。",
+        analysis: {
+          currentMultiples: {
+            ps: { value: "4.2x", source: { name: "工具验算", url: "https://example.com/ps" } },
+            // 查不到与算不出是两回事：这一格必须说「未取得」。
+            peg: { status: "unavailable", reason: "卖方一致预期未覆盖，无增速可用" },
+          },
+        },
+        inquiry: { question: "贵不贵？", answer: "以现价买入需要三年翻倍。" },
         dataGaps: [],
       },
     },
@@ -290,11 +311,35 @@ test("point-numbered long fields render one point per line", () => {
 
 test("missing values render their reason, never zeros or blanks", () => {
   const html = readFileSync(path.join(siteRoot, "companies", `${fixtureCompany}.html`), "utf8");
+  const text = pageText(html);
+  // 查不到 = 未取得，原因照登。
   assert.equal(
-    pageText(html).includes("缺失：尚未盈利，TTM PE 无意义"),
+    text.includes("未取得：卖方一致预期未覆盖，无增速可用"),
     true,
     "unavailable field must surface its reason",
   );
+  // 算不出 = 不适用；页头给短标签，原因跟在副行，**不能**在第一个括号处被截断。
+  assert.equal(text.includes("不适用"), true, "a not-applicable field needs its own label");
+  assert.equal(
+    text.includes("TTM(2025Q2-2026Q1)净利润为负，PE 不适用"),
+    true,
+    "the reason must survive intact instead of being cut at the first bracket",
+  );
+});
+
+test("a dual-listed price renders every leg instead of a dash", () => {
+  const html = readFileSync(path.join(siteRoot, "companies", `${fixtureCompany}.html`), "utf8");
+  const indexHtml = readFileSync(path.join(siteRoot, "index.html"), "utf8");
+  for (const [label, page] of [["company page", html], ["site index", indexHtml]]) {
+    const text = pageText(page);
+    assert.equal(
+      text.includes("12.34 USD（98.70 HKD）"),
+      true,
+      `${label} must render both listings of a dual-listed price`,
+    );
+  }
+  // 页头三格不该出现「有数据却只给破折号」：市值与股价都必须是实值。
+  assert.equal(pageText(html).includes("1234 百万 USD"), true, "market cap must render");
 });
 
 test("the site index derives exactly one card per financials-final.json", () => {
