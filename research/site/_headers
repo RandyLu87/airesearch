@@ -1,18 +1,22 @@
 # Cloudflare Pages 的响应头规则（GitHub Pages 会忽略这个文件）。
 # 随 public/ 一起进 out/，再由 copy-output.mjs 原样带进 research/site/。
+#
+# 坑一：Pages 对同一个 header 的重叠规则是「拼接」而不是「取最具体的那条」。
+# 之前同时写了 /assets/fonts/* 与 /assets/*，字体实际拿到的是
+#   cache-control: public, max-age=2592000, public, max-age=86400
+# 所以下面的规则必须两两不重叠，宁可逐个文件列出来。
+#
+# 坑二：不要再设置 HTML 的 Cache-Control 与 X-Content-Type-Options。实测 Pages 默认
+# 就发 `public, max-age=0, must-revalidate` 与 `nosniff`，正好是想要的；而且页面 URL
+# 被 Pages 去掉了 .html 后缀，`/*.html` 这类规则根本匹配不到它们，写了纯属自欺。
 
-# 字体是页面上唯一还需要单独发请求的子资源（CSS 已内联进 HTML），缓存它能省掉回访的
-# 那一次往返——这在大陆弱网下是实打实的收益。
+# 字体是页面上唯一还需要单独发请求的子资源（CSS 已内联进 HTML），缓存它能省掉回访时
+# 的那一次往返——这在大陆弱网下是实打实的收益。
 # 不用 immutable：文件名没有内容哈希，而字体是可能重新生成的（见 assets/fonts/README.md）。
-# 30 天是个折中，真换了字体最坏情况是部分访客最多 30 天内看到旧字形，纯观感问题。
+# 30 天是折中，真换了字体最坏情况是部分访客最多 30 天内看到旧字形，纯观感问题。
 /assets/fonts/*
   Cache-Control: public, max-age=2592000
 
-/assets/*
+# 章节导航高亮，纯渐进增强，只有公司分析页会取。
+/assets/research.js
   Cache-Control: public, max-age=86400
-
-# HTML 里内联着整份 CSS，但研究内容随时会更新，所以每次都回源校验。
-# 内容没变时是一次 304，代价只有一个往返，不会重传正文。
-/*.html
-  Cache-Control: public, max-age=0, must-revalidate
-  X-Content-Type-Options: nosniff
