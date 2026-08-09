@@ -1,0 +1,387 @@
+{
+  "meta": {
+    "companyId": "sh-601318-ping-an-insurance",
+    "companyName": "中国平安保险(集团)股份有限公司",
+    "ticker": "601318",
+    "exchange": "上海证券交易所（A股）；H股同步上市于香港联交所(2318.HK)",
+    "market": "cn-a",
+    "reportingCurrency": "CNY",
+    "accountingBasis": "中国企业会计准则（合并报表）；2023年起执行新保险合同准则(I17)及新金融工具准则(I9)，2022年及以前数据未追溯调整，与2023年起数据口径不完全可比",
+    "fiscalYearEnd": "12-31",
+    "dataCutoff": "2026-08-07（最近交易日；2026-08-09为周日，行情取上一交易日）",
+    "collectedAt": "2026-08-09",
+    "sources": {
+      "primary": { "name": "Tushare Pro（cnstock_data.py：income/balancesheet/cashflow/fina_indicator/fina_mainbz/daily_basic/top10_holders/stk_rewards）", "url": "https://tushare.pro" },
+      "secondary": { "name": "东方财富 datacenter（RPT_F10_FINANCE_MAINFINADATA 主要指标 + RPT_DMSK_FN_BALANCE 资产负债表）", "url": "https://data.eastmoney.com/bbsj/601318.html" },
+      "originalFilings": [
+        { "type": "年报", "period": "FY2025", "url": "https://www.pingan.cn（2025年年度报告，2026-03-27披露）" },
+        { "type": "年报", "period": "FY2022", "url": "https://www.pingan.cn（2022年年度报告，2023-03-16披露）" }
+      ]
+    }
+  },
+  "revenueStructure": {
+    "_dimension": "1. 收入结构：最近财年及近4季度分部收入、增速、毛利率",
+    "latestFiscalYear": {
+      "period": "FY2025",
+      "totalRevenue": {
+        "value": 1050506000000,
+        "unit": "currency",
+        "currency": "CNY",
+        "source1": { "name": "Tushare income(period=20251231, report_type=1, total_revenue)", "url": "https://tushare.pro", "value": 1050506000000 },
+        "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA（TOTALOPERATEREVE）", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 1050506000000 },
+        "deviationPct": "0.00%",
+        "flag": "ok"
+      },
+      "segments": [
+        {
+          "name": "保险服务收入（寿险及健康险+财产保险，新保险合同准则口径）",
+          "revenue": { "value": 559500000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare fina_mainbz(type=P, 20251231)", "url": "https://tushare.pro", "value": 559500000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
+          "revenueSharePct": "38.6%",
+          "yoyGrowthPct": "unavailable（fina_mainbz 未提供分部同比，需回年报逐项核对）",
+          "grossMarginPct": { "status": "unavailable", "reason": "保险/银行/投资类收入不适用传统『毛利率』概念，公司未按此口径披露；fina_mainbz 分部表无毛利率字段" }
+        },
+        {
+          "name": "银行业务利息净收入（合计，含多笔明细行）",
+          "revenue": { "value": 169700000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare fina_mainbz(type=P, 20251231)，主表行『银行业务利息净收入：银行业务利』", "url": "https://tushare.pro", "value": 169700000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
+          "revenueSharePct": "11.7%",
+          "yoyGrowthPct": "unavailable",
+          "grossMarginPct": { "status": "unavailable", "reason": "同上，银行利息净收入不适用毛利率" }
+        },
+        {
+          "name": "投资收益",
+          "revenue": { "value": 152860000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare fina_mainbz(type=P, 20251231)", "url": "https://tushare.pro", "value": 152860000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
+          "revenueSharePct": "10.5%",
+          "yoyGrowthPct": "unavailable",
+          "grossMarginPct": { "status": "unavailable", "reason": "不适用" }
+        },
+        {
+          "name": "非银行业务利息收入（合计，含多笔明细行）",
+          "revenue": { "value": 135800000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare fina_mainbz(type=P, 20251231)", "url": "https://tushare.pro", "value": 135800000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
+          "revenueSharePct": "9.4%",
+          "yoyGrowthPct": "unavailable",
+          "grossMarginPct": { "status": "unavailable", "reason": "不适用" }
+        }
+      ],
+      "note": "本表用 fina_mainbz(type=P) 的会计科目式分部，仅覆盖利润表收入构成的最大四项（合计约70%），与总收入对账偏差38.09%（差异来自被剔除的合计/调整行及其余细分科目，详见 crossValidationLog）——保险集团的『分部』更常用业务板块口径（寿险及健康险/财产保险/银行/资产管理/科技），该口径下 2025 年营运利润：寿险及健康险1,033亿（+7.5% YoY）、平安银行净利润426.33亿，见 competitiveLandscape/businessModelMoat 中的板块数据（来源：公司2025年年报业绩摘要，经东方财富/中新网转引）；两种口径不可直接相加或对比，保险集团财报结构性决定收入无法像制造业一样简单分部与算毛利率，此为行业特征而非数据缺失。",
+      "reason_no_gross_margin": "银行/保险/资产管理集团财务报表不披露传统『毛利率』，营业成本科目结构与工业企业不同，本报告的『护城河』『盈利能力』改用净利率、ROE、新业务价值率（NBV margin）、综合成本率（COR）等保险/金融行业专用指标，见 financialMetrics 与 currentValuation。"
+    },
+    "recentQuarters": {
+      "status": "unavailable",
+      "reason": "cnstock_data.py segments 仅返回年度分部（fina_mainbz 无季度分部数据）；A股保险公司季报（一季报）不强制按业务板块拆分披露分部收入，仅披露合并利润表总额，已查2026年一季报仅有集团层面营业收入2,184.05亿元（同比-6.18%）、归母净利润250.22亿元（同比-7.38%），无季度分部拆分"
+    }
+  },
+  "financialMetrics": {
+    "_dimension": "2. 财务指标：近5年收入、净利润、毛利率、经营利润率、自由现金流、现金储备",
+    "annual": [
+      {
+        "fiscalYear": "FY2021",
+        "revenue": { "value": 1180440000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare income(period=20211231, report_type=1)", "url": "https://tushare.pro", "value": 1180440000000 }, "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 1180444000000 }, "deviationPct": "0.00%", "flag": "ok" },
+        "netProfit": { "value": 101620000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare income(n_income_attr_p)", "url": "https://tushare.pro", "value": 101620000000 }, "source2": { "name": "东方财富", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 101618000000 }, "deviationPct": "0.00%", "flag": "ok" },
+        "grossMarginPct": { "status": "unavailable", "reason": "保险/银行集团不适用传统毛利率口径，公司未披露，见 revenueStructure.reason_no_gross_margin" },
+        "operatingMarginPct": { "status": "unavailable", "reason": "cnstock_data.py fina_indicator 未返回该标的 operating margin 字段；集团层面『营业利润/营业总收入』受保险准备金评估利率波动影响极大，公司年报未单列该比率，本次未自行推算" },
+        "freeCashFlow": { "value": 77930000000, "unit": "currency", "currency": "CNY", "note": "口径为『经营活动现金流净额-资本支出』，来自 Tushare fina_indicator/cashflow；对保险集团而言，经营现金流主要反映保费流入与赔付/退保流出的净额，含大量保险浮存金（float），与工业企业『自由现金流』概念含义不同，不宜直接类比制造业估值", "source1": { "name": "Tushare cashflow/fina_indicator", "url": "https://tushare.pro", "value": 77930000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
+        "cashReserves": { "value": 535070000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare balancesheet（货币资金）", "url": "https://tushare.pro", "value": 535070000000 }, "source2": { "name": "东方财富 RPT_DMSK_FN_BALANCE（MONETARYFUNDS）", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 535067000000 }, "deviationPct": "0.00%", "flag": "ok" }
+      },
+      {
+        "fiscalYear": "FY2022",
+        "revenue": { "value": 1110570000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare income(period=20221231, report_type=1)，与官方2022年报『营业收入11,105.68亿元』一致", "url": "https://tushare.pro", "value": 1110568000000 }, "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA（该字段值8,803.55亿元，与官方年报及Tushare偏差11.56%，financial_rigor.py判定❌重大差异；经WebSearch核实公司2022年报官方披露『营业收入11,105.68亿元，同比降5.9%；归母净利润837.74亿元，同比降17.56%』，与东方财富该接口不符，判定为该接口对保险类公司的数据异常，本字段弃用东方财富数值", "url": "https://finance.sina.com.cn/jjxw/2023-03-22/doc-imymtrua9968957.shtml", "value": 880355000000 }, "deviationPct": "11.56%（东方财富异常值，已弃用；采用Tushare与官方年报一致值）", "flag": "major-diff-resolved" },
+        "netProfit": { "value": 83774000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare income(n_income_attr_p)，与官方年报一致", "url": "https://tushare.pro", "value": 83774000000 }, "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA（异常值，已弃用，理由同上）", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 111008000000 }, "deviationPct": "13.98%（东方财富异常值，已弃用）", "flag": "major-diff-resolved" },
+        "grossMarginPct": { "status": "unavailable", "reason": "同 FY2021" },
+        "operatingMarginPct": { "status": "unavailable", "reason": "同 FY2021" },
+        "freeCashFlow": { "value": 477030000000, "unit": "currency", "currency": "CNY", "note": "同 FY2021 口径说明", "source1": { "name": "Tushare cashflow/fina_indicator", "url": "https://tushare.pro", "value": 477030000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
+        "cashReserves": { "value": 612590000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare balancesheet", "url": "https://tushare.pro", "value": 612590000000 }, "source2": { "name": "东方财富 RPT_DMSK_FN_BALANCE", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 613737000000 }, "deviationPct": "0.19%", "flag": "ok" }
+      },
+      {
+        "fiscalYear": "FY2023",
+        "revenue": { "value": 913790000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare income(period=20231231, report_type=1)", "url": "https://tushare.pro", "value": 913790000000 }, "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 913789000000 }, "deviationPct": "0.00%", "flag": "ok", "note": "2023年起执行新保险合同准则(I17)，与2022年及以前数据口径不完全可比，公司年报已就此专门说明，本报告不直接计算2022→2023同比增速" },
+        "netProfit": { "value": 85660000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare income(n_income_attr_p)", "url": "https://tushare.pro", "value": 85660000000 }, "source2": { "name": "东方财富", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 85665000000 }, "deviationPct": "0.00%", "flag": "ok" },
+        "grossMarginPct": { "status": "unavailable", "reason": "同 FY2021" },
+        "operatingMarginPct": { "status": "unavailable", "reason": "同 FY2021" },
+        "freeCashFlow": { "value": 352590000000, "unit": "currency", "currency": "CNY", "note": "同 FY2021 口径说明", "source1": { "name": "Tushare cashflow/fina_indicator", "url": "https://tushare.pro", "value": 352590000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
+        "cashReserves": { "value": 577210000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare balancesheet", "url": "https://tushare.pro", "value": 577210000000 }, "source2": { "name": "东方财富 RPT_DMSK_FN_BALANCE", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 577212000000 }, "deviationPct": "0.00%", "flag": "ok" }
+      },
+      {
+        "fiscalYear": "FY2024",
+        "revenue": { "value": 1028920000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare income(period=20241231, report_type=1)", "url": "https://tushare.pro", "value": 1028920000000 }, "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 1028925000000 }, "deviationPct": "0.00%", "flag": "ok" },
+        "netProfit": { "value": 126610000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare income(n_income_attr_p)", "url": "https://tushare.pro", "value": 126610000000 }, "source2": { "name": "东方财富", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 126607000000 }, "deviationPct": "0.00%", "flag": "ok" },
+        "grossMarginPct": { "status": "unavailable", "reason": "同 FY2021" },
+        "operatingMarginPct": { "status": "unavailable", "reason": "同 FY2021" },
+        "freeCashFlow": { "value": 375800000000, "unit": "currency", "currency": "CNY", "note": "同 FY2021 口径说明", "source1": { "name": "Tushare cashflow/fina_indicator", "url": "https://tushare.pro", "value": 375800000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
+        "cashReserves": { "value": 683430000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare balancesheet", "url": "https://tushare.pro", "value": 683430000000 }, "source2": { "name": "东方财富 RPT_DMSK_FN_BALANCE", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 683433000000 }, "deviationPct": "0.00%", "flag": "ok" }
+      },
+      {
+        "fiscalYear": "FY2025",
+        "revenue": { "value": 1050510000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare income(period=20251231, report_type=1)", "url": "https://tushare.pro", "value": 1050510000000 }, "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 1050506000000 }, "deviationPct": "0.00%", "flag": "ok" },
+        "netProfit": { "value": 134780000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare income(n_income_attr_p)", "url": "https://tushare.pro", "value": 134780000000 }, "source2": { "name": "东方财富", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 134778000000 }, "deviationPct": "0.00%", "flag": "ok" },
+        "grossMarginPct": { "status": "unavailable", "reason": "同 FY2021" },
+        "operatingMarginPct": { "status": "unavailable", "reason": "同 FY2021" },
+        "freeCashFlow": { "value": 650280000000, "unit": "currency", "currency": "CNY", "note": "同 FY2021 口径说明；同比+73.03%主要受保险资金运用与银行同业存款季节性波动影响，非核心承保业务改善的直接反映，需结合寿险及健康险营运利润（1,033亿，+7.5%YoY，来源见 revenueStructure note）综合判断", "source1": { "name": "Tushare cashflow/fina_indicator", "url": "https://tushare.pro", "value": 650280000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
+        "cashReserves": { "value": 745680000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare balancesheet", "url": "https://tushare.pro", "value": 745680000000 }, "source2": { "name": "东方财富 RPT_DMSK_FN_BALANCE", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 745679000000 }, "deviationPct": "0.00%", "flag": "ok" }
+      }
+    ],
+    "supplementalIndicators": {
+      "note": "保险/金融集团估值与经营质量判断依赖行业专用指标，非本模板『毛利率/经营利润率』标准字段可覆盖，列于此供第2步分析引用",
+      "roe": { "FY2021": "12.9%", "FY2022": "10.0%", "FY2023": "9.7%", "FY2024": "13.9%", "FY2025": "14.0%", "source": "Tushare fina_indicator，与cnstock_data.py financials输出一致" },
+      "netMarginNote": "cnstock_data.py 打印的『净利率』列（15.1%/14.3%/12.0%/9.7%/10.3%，对应FY2025→FY2021）分母为狭义『营业收入』(revenue字段)而非本表使用的『营业总收入』(total_revenue)，两者对保险集团差异显著，分析阶段引用时须注明具体分母口径，不可与本表 revenue 直接相除重新计算净利率"
+    }
+  },
+  "competitiveLandscape": {
+    "_dimension": "3. 竞争格局：市场份额、主要竞争对手对比",
+    "lifeInsurance": {
+      "note": "寿险为集团双核心业务之一，对标国寿、太保寿险、太平人寿",
+      "marketConcentration": {
+        "value": "CR3约45.9%，CR5约58.9%（头部效应明显）",
+        "source": { "name": "前瞻产业研究院《2024年中国人寿保险行业竞争格局及市场份额分析》", "url": "https://bg.qianzhan.com/trends/detail/506/240511-4f1ba24b.html" },
+        "asOf": "2024年发布，数据口径为该报告统计期（未标明具体年份，存在滞后风险，仅供量级参考）"
+      },
+      "fy2025Comparison": [
+        { "company": "中国人寿（集团，寿险为主业）", "revenue": "6,156.78亿元", "netProfit": "1,540.78亿元（首次突破1,500亿）", "roe": "27.81%（加权平均ROE，同比+6.22pct）", "source": { "name": "中国人寿2025年年度报告摘要", "url": "https://stockmc.xueqiu.com/202603/601628_20260326_2MWS.pdf" }, "asOf": "FY2025" },
+        { "company": "平安人寿（子公司）", "netProfit": "首次突破1,100亿元（H1净利润506.02亿元，行业寿险公司中排名第一）", "source": { "name": "网易财经《2025年寿险公司利润榜：国寿第一、平安第二》", "url": "https://www.163.com/dy/article/KQ5BP36F05565ZS2.html" }, "asOf": "FY2025" },
+        { "company": "太保寿险（子公司）", "netProfit": "首次突破400亿元（H1净利润206.58亿元）；集团整体归母净利润535.05亿元/ROE 18.0%/营收4,351.56亿元", "source": { "name": "同上 + 新浪财经《东吴非银｜中国太保2025年报点评》", "url": "https://finance.sina.com.cn/wm/2026-03-27/doc-inhsmxri9367771.shtml" }, "asOf": "FY2025" },
+        { "company": "太平人寿", "netProfit": "295.53亿元（同比+147%）", "premiumMarketShare": "4.46%（FY2024口径）", "source": { "name": "新浪财经《中国太平发布2025年全年业绩：归母净利润同比大增220.9%》", "url": "https://finance.sina.com.cn/roll/2026-04-02/doc-inhtaqzu2007667.shtml" }, "asOf": "FY2025" }
+      ],
+      "trend": "中国人寿凭2025年权益市场大涨带来的投资收益暴增（ROE跳升至27.81%），净利润与ROE反超平安；平安寿险以新业务价值(NBV)369亿元(+29.3% YoY，主会话已知数据)和代理人人均产能提升为主要竞争抓手，核心承保端稳健但受权益市场波动的净利润弹性小于国寿；太保、太平体量仍明显小于国寿/平安两大巨头。"
+    },
+    "propertyInsurance": {
+      "note": "财险对标'老三家'：人保财险、平安产险、太保产险",
+      "fy2025Premiums": [
+        { "company": "人保财险", "premium": "5,557.77亿元（+3.3% YoY）", "marketShare": "31.6%（行业第一）", "combinedRatio": "97.6%（近年最好水平）", "underwritingProfit": "124亿元（+75.6% YoY）", "source": { "name": "东方财富《财险一哥人保财险公布2025年成绩单》+ 央广网《中国人保2025年多项指标创新高》", "url": "https://finance.eastmoney.com/a/202603273686765911.html" }, "asOf": "FY2025" },
+        { "company": "平安产险", "premium": "3,431.68亿元（+6.6% YoY）", "underwritingProfit": "超170亿元（知乎《2025年财险公司利润榜》转引数据，单源，Level3量级参考）", "source": { "name": "东方财富《人保财险2025年回顾》+ 知乎《2025年财险公司利润榜&成本率榜》", "url": "https://caifuhao.eastmoney.com/news/20260524233158209794270" }, "asOf": "FY2025" },
+        { "company": "太保产险", "premium": "2,014.99亿元（+3% YoY）", "underwritingProfit": "逼近100亿元（同上单源）", "source": { "name": "同上", "url": "https://zhuanlan.zhihu.com/p/2027702871911675785" }, "asOf": "FY2025" }
+      ],
+      "impliedMarketShareCalc": {
+        "formula": "人保财险市场份额31.6%已知（来源见上）→ 隐含2025年全国财险保费总规模 = 5,557.77亿 ÷ 31.6% ≈ 17,587.9亿元；平安产险市场份额 = 3,431.68亿 ÷ 17,587.9亿 ≈ 19.51%；太保产险市场份额 = 2,014.99亿 ÷ 17,587.9亿 ≈ 11.46%；三家合计 31.6%+19.51%+11.46% = 62.57%",
+        "crossCheck": "与网络报道'人保财险、平安产险、太保产险三大巨头市占率合计超60%'（同上来源）基本吻合，视为交叉验证通过",
+        "conclusion": "平安产险市场份额约19.5%，行业第二，稳定于人保财险（约31.6%，第一）与太保产险（约11.5%，第三）之间"
+      },
+      "priorYearReference": { "value": "2024年平安产险财产险市占率19.0%、车险市占率24.4%；2025年新能源车险市占率27.7%", "source": { "name": "中国平安财产保险股份有限公司2025年度跟踪评级报告", "url": "https://qxb-pdf-osscache.qixin.com/AnBaseinfo/e39d060a2d01daeb919c6f84c9ea6106.pdf" }, "asOf": "2024/2025" },
+      "trend": "平安产险市场份额（19.0%→约19.5%）近1-2年基本稳定、略有提升，主要靠非车险（非车险增速超14%，主会话已知财报数据）及新能源车险（市占率27.7%，行业领先）驱动；人保财险龙头地位稳固（31.6%，第一）且综合成本率大幅改善；太保产险体量最小但增速平稳。"
+    }
+  },
+  "businessModelMoat": {
+    "_dimension": "4. 商业模式与护城河：核心竞争优势来源",
+    "oneLiner": "客户为保障/财富管理需求向平安支付保费和资金管理费（寿险及健康险、财产保险、银行、资产管理四大金融子业务收钱），平安再用保险沉淀的长期资金和客户关系去交叉销售其他金融产品、并通过医疗健康生态圈（平安好医生/智慧医疗）低成本获客和反哺健康险定价——本质是「一次获客、多次变现」的综合金融交叉销售模式，叠加「医疗健康生态圈反哺主业」的第二增长曲线尝试。",
+    "revenueModel": "收入主要来自：(1)保险服务收入（寿险及健康险+财产保险的保费扣除退保/给付后的保险合同服务确认收入，新准则I17口径）；(2)银行净利息收入及中间业务/手续费收入（平安银行）；(3)保险资金与银行/资管业务的投资收益（含权益类资产公允价值变动，随资本市场波动）；(4)科技板块（陆金所/金融壹账通/平安好医生）的独立服务收入，规模远小于前三项，且金融壹账通已更多转为对内部（寿险代理人赋能）及对外授权输出（如南非耆卫保险集团）为主，独立创收为辅。",
+    "moats": [
+      {
+        "type": "牌照稀缺性",
+        "evidence": "同时控股寿险、产险、银行（平安银行）、证券、信托、基金、资产管理全牌照，是国内少数几家『综合金融集团』之一；中国金融监管对新设保险/银行牌照审批极严，新进入者几乎绝迹。",
+        "trend": "稳定——牌照壁垒短期不会削弱，但金融监管趋严也同步压缩了牌照红利的创新空间（如互联网存贷、类信托业务持续收缩）。"
+      },
+      {
+        "type": "转换成本",
+        "evidence": "医疗健康生态圈获客后向综合金融转化占比近3成（雷锋网《详解平安战略模式》），客户一旦在多个金融产品间建立账户关联，迁移成本上升。",
+        "trend": "稳定偏强化，但代理人渠道收缩、代理人绝对规模萎缩（见下）对交叉销售的触达半径构成制约，抵消部分强化效应。"
+      },
+      {
+        "type": "规模效应",
+        "evidence": "代理人数量从历史峰值约139万人收缩至2024年末36.3万人（降幅超70%），但2024年止跌回升+4.6%，人均新业务价值同比+43.3%，人均月收入10,395元(+5.9%)；金融壹账通『全能代理人』AI平台已复制输出海外（南非耆卫保险集团）。来源：新浪财经《截至2024年末平安寿险代理人数量36.3万》(https://finance.sina.com.cn/jjxw/2025-03-19/doc-ineqetkr8712989.shtml)、证券时报《保险代理人生态变局》(https://finance.sina.com.cn/jjxw/2025-04-03/doc-inervqpx8836440.shtml)",
+        "trend": "变窄（绝对规模护城河，vs历史峰值降幅超70%）叠加变宽（AI赋能带来的相对产能效率优势）并存，净效应尚待观察。"
+      },
+      {
+        "type": "技术专利壁垒",
+        "evidence": "『953』科技底座（9大数据库覆盖30万亿字节数据、5大实验室含硅谷实验室、3家科技子公司）、三层大模型体系、专利累计55,080项（截至2024年末，生成式AI专利全球第二）、超2万IT工程师+3000名科学家；AI坐席服务量约4.5亿次/年覆盖80%客服量，93%寿险保单秒级核保。来源：新浪财经《AI浪潮奔涌，中国平安金融智变》(https://finance.sina.com.cn/stock/relnews/hk/2025-03-25/doc-ineqwnhn2480837.shtml)",
+        "trend": "变宽——这是保险集团中同业难以短期复制的技术资产积累，见 technology 维度详述。"
+      }
+    ]
+  },
+  "technology": {
+    "_dimension": "5. 技术能力：核心技术栈、研发投入",
+    "coreTechStack": [
+      "金融壹账通：向平安寿险内部及外部机构（如南非Discovery/耆卫保险集团，自2022年起累计落地7期产品）输出『全能代理人』AI平台，覆盖增员、展业、绩效及客户管理全链条；2024年升级版新增AI增员筛选模型和多功能OCR识别工具",
+      "平安好医生（现『平安健康』）：HMO模式本土化+AI辅助诊疗，复杂疾病MDT治疗方案准确率提升至近90%，家医客均服务成本同比下降约52%，单次问诊成本一年内降45%，AI对毛利贡献占比约4.5%（年报首次单独披露）；2024年扭亏为盈，净利润1.58亿元",
+      "陆金所：财富管理与小微贷款科技平台，已从早期网贷业务转型为持牌消费金融+财富管理科技服务商（注：陆金所近年经营承压，业绩波动较大，需与集团整体科技叙事区分看待）",
+      "集团层面AI应用：截至2025年Q1，AI坐席服务量约4.5亿次，覆盖平安80%客服总量；智能核保实现93%寿险保单秒级核保，智能理赔实现56%寿险保单闪赔",
+      "『953』科技底座：通用模型+垂直领域模型+应用模型三层大模型体系；9大数据库（覆盖30万亿字节数据）；5大实验室（含硅谷实验室）"
+    ],
+    "rdExpense": {
+      "status": "partially unavailable",
+      "reason": "中国平安年报摘要及公开披露材料中未按制造业惯例单列『研发费用/研发支出』具体人民币金额（已核实2024年年报摘要原文，WebFetch确认无该项披露）；仅有媒体转引的历史性表述『自2013年起每年约1%营业收入投入科技研发』（非年报原文数字，属估算口径），故近3年精确研发投入金额（RMB）与占营收比重的逐年数字无法核实，已查范围：2023/2024/2025年年报摘要原文、上海证券报/证券日报转载版本、WebSearch多轮检索均未获得独立披露的『研发费用』科目数字",
+      "qualitativeProxy": {
+        "note": "可作为科技投入强度代理指标的公开数字",
+        "items": [
+          "专利申请数累计55,080项（截至2024年末，较年初新增3,547项，其中发明专利占比近95%，生成式AI专利全球第二）",
+          "科技人才：超2万名IT工程师、超3000名科学家（截至2024年末）",
+          "AI国内外竞赛冠军累计30项（截至2024年末）"
+        ]
+      }
+    },
+    "rdIntensityPct": { "status": "unavailable", "reason": "同上，无年度精确研发费用数字，无法计算研发费用/营业总收入的精确占比；媒体表述的『约1%营收』为历史性笼统口径，非逐年披露数字，不作为精确比率使用" },
+    "rdTrend": "科技战略定位近年发生调整：2024年三季度起原『科技业务』板块更名为『金融赋能业务』，明确科技为服务综合金融+医疗养老主业的内部赋能工具而非独立创收板块；2025年『AI in All』战略进一步强化AI在全业务链条的渗透（董事长年报中『改革创新』为2025年度经营方针重要主题）。",
+    "note": "与传统保险公司（国寿/太保/人保）的差异化体现在三方面：(1) 自建三层大模型体系直接应用于核保理赔全流程自动化（93%秒级核保/56%闪赔），传统同业目前普遍缺乏同等规模的自研大模型能力；(2) 通过金融壹账通对内赋能之外，还对外授权输出保险科技SaaS能力（如南非耆卫保险集团案例），尝试构建科技对外输出的第二收入来源；(3) 医疗健康生态圈（平安好医生）将医疗数据反哺健康险定价，形成HMO模式闭环，这是纯保险公司普遍未布局的领域。但需注明：陆金所、平安好医生历史上都经历过较大业绩波动（陆金所股价大幅缩水、平安好医生多年亏损后2024年才实现净利1.58亿元），科技板块对集团整体利润的直接贡献仍远小于保险和银行主业，『技术属性』目前的核心价值体现在对主业的内部降本增效，而非已经验证的独立外部盈利引擎。"
+  },
+  "management": {
+    "_dimension": "6. 管理层：创始人/CEO履历、持股比例、关键决策记录",
+    "founderCeo": {
+      "name": "马明哲（执行董事、董事长）",
+      "background": "1988年5月创办平安保险（前身，深圳蛇口，央行批准，工商银行51%+招商局蛇口工业区49%出资设立）。职业履历：1988.3–1992.9 董事总经理；1992.9–1994.4 副董事长兼总经理；1994.4–2002.2 董事长兼总经理；2002–2020.7 董事长兼CEO；2020.7至今 董事长（不再兼任CEO）。在其带领下，平安从单一财产险公司发展为中国三大综合金融集团之一，业务覆盖产险、寿险、养老金、健康险、银行、证券、信托、资产管理、基金全金融领域，进入世界500强。",
+      "tenure": "创业至今近38年（1988–2026），现任董事长任期自2002年起（2020年7月起不再兼任CEO），是A股上市公司中在位时间最长的创始人型董事长之一。",
+      "source": [
+        { "name": "百度百科《马明哲》", "url": "https://baike.baidu.com/item/%E9%A9%AC%E6%98%8E%E5%93%B2/6101257" },
+        { "name": "维基百科《马明哲》", "url": "https://zh.wikipedia.org/zh-cn/%E9%A9%AC%E6%98%8E%E5%93%B2" }
+      ]
+    },
+    "coCeoGovernance": {
+      "history": "2018年12月起设立联席CEO制，首批三位联席CEO：李源祥（个人业务群）、谢永林（公司业务群）、陈心颖（科技业务群），三人分管、统一领导、专业分工。2023年4月姚波（时任联席CEO/常务副总经理）因个人及家庭原因辞任；同年陈心颖（原分管科技业务）也因个人及家庭原因辞任联席CEO兼常务副总经理，董事会同期聘任郭晓涛（2019年加入平安，此前为波士顿咨询合伙人兼董事总经理）出任联席CEO。",
+      "currentStructure": "现任联席CEO为谢永林（总经理，历任平安银行、证券、产险、寿险及董事长特别助理，资历覆盖多条核心金融主业条线）与郭晓涛（副总经理，咨询背景，侧重科技与创新/新业务方向）；2024年12月高管职务再调整：副总经理付欣升任首席财务官，张智淳任总经理助理兼首席审计官，蔡方方兼任首席合规官。",
+      "source": [
+        { "name": "手机金融界《核心高管密集变阵，陈心颖辞任平安联席CEO》", "url": "https://m.jrj.com.cn/madapter/finance/2023/09/28134237922098.shtml" },
+        { "name": "知乎《中国平安高管变更历程》", "url": "https://zhuanlan.zhihu.com/p/1950490599431070658" },
+        { "name": "新浪财经《中国平安多名高管职务出现调整》", "url": "https://finance.sina.com.cn/roll/2024-12-25/doc-ineasrzk7336857.shtml" }
+      ],
+      "caveat": "谢永林/郭晓涛的具体职责分工为媒体归纳表述，未见公司发布逐项书面分工文件的公开原文，属Level3定性推断。"
+    },
+    "ownership": {
+      "economicPct": "马明哲个人持股3,404,028股（约0.0019%，占比极低，属专业经理人主导型治理结构，非创始人控股）",
+      "votingPct": "普通股一股一票，无AB股结构；第一大股东为香港中央结算(代理人)有限公司（36.20%，主要为H股及QFII等境外机构持股通道，非单一实际控制人）",
+      "source": { "name": "Tushare top10_holders(period=20260331) + stk_rewards(20251231)", "url": "https://tushare.pro" },
+      "topHoldersDetail": [
+        { "name": "香港中央结算(代理人)有限公司", "pct": "36.20%" },
+        { "name": "深圳市投资控股有限公司", "pct": "5.32%" },
+        { "name": "中国平安保险(集团)股份有限公司长期服务计划", "pct": "3.32%" },
+        { "name": "香港中央结算有限公司", "pct": "2.79%" },
+        { "name": "中央汇金资产管理有限责任公司", "pct": "2.60%" }
+      ],
+      "asOf": "2026-03-31"
+    },
+    "executiveCompensation": {
+      "asOf": "FY2025",
+      "top8": [
+        { "name": "郭晓涛", "title": "副总经理,执行董事,联席首席执行官", "payRMB万元": 771.0, "shares": 170506 },
+        { "name": "付欣", "title": "首席财务官,副总经理,执行董事", "payRMB万元": 477.4, "shares": 137206 },
+        { "name": "谢永林", "title": "联席首席执行官,总经理,执行董事", "payRMB万元": 429.3, "shares": 1781526 },
+        { "name": "孙建一", "title": "监事会主席,职工监事", "payRMB万元": 408.1, "shares": 5048596 },
+        { "name": "蔡方方", "title": "副总经理,执行董事", "payRMB万元": 365.6, "shares": 790124 },
+        { "name": "马明哲", "title": "执行董事,董事长", "payRMB万元": 358.8, "shares": 3404028 },
+        { "name": "郭世邦", "title": "首席风险官,总经理助理", "payRMB万元": 338.3, "shares": 0 },
+        { "name": "黄宝新", "title": "副总经理", "payRMB万元": 322.1, "shares": 169031 }
+      ],
+      "shareholderCount": { "20260331": 685133, "20260228": 623864, "20251231": 558717, "20250930": 696248, "20250630": 720948 },
+      "source": { "name": "Tushare stk_rewards + stk_holdernumber", "url": "https://tushare.pro" }
+    },
+    "keyDecisions": [
+      {
+        "date": "2018-12 ~ 2023",
+        "decision": "联席CEO制建立与迭代（2018年12月三人联席CEO设立；2023年陈心颖/姚波退出、郭晓涛接任）",
+        "outcome": "治理权力从马明哲单一CEO模式过渡到『董事长+双联席CEO』专业经理人集体决策模式，被视为创始人淡出日常经营信号；但2024年2月市场报道马明哲『再出山』深度介入，反映专业经理人治理模式仍在磨合、非线性演进。来源：南方都市报《马明哲再出山背后，透视中国平安的人事棋局》(https://m.mp.oeeee.com/a/BAAFRD000020240205908929.html)"
+      },
+      {
+        "date": "2023",
+        "decision": "起执行新保险合同准则(I17)及新金融工具准则(I9)",
+        "outcome": "2022年及以前财务数据口径不可比（主会话已知事实），利润表列报由『保费收入』改为『保险服务收入』，短期增加分析难度但提升与国际IFRS17准则可比性。"
+      },
+      {
+        "date": "2024-2025",
+        "decision": "地产敞口持续压降",
+        "outcome": "截至2024年末保险资金不动产投资2,025.19亿元，占总投资资产3.5%；2025年中进一步降至3.3%，主要为收租型商业地产/物流园/长租公寓，敞口持续收窄但存量部分仍有减值与流动性风险。来源：新浪财经《观点直击｜不动产投资继续压降 中国平安答疑资产配置和投资策略》(https://finance.sina.com.cn/stock/relnews/cn/2025-03-20/doc-ineqipfa4531970.shtml)"
+      },
+      {
+        "date": "2024-07",
+        "decision": "股份回购与注销、股东回报规划强化",
+        "outcome": "公告注销1.03亿股已回购A股（涉资超42亿元）；同时确立2024-2026年股东回报规划，将年度分红定为上年度审计净利润的20%-50%区间，分红连续多年增长，缓解市场对保险股估值折价的担忧。来源：21经济网《中国平安拟注销1.03亿A股已回购股份》+中证网《积极提升股东回报》(https://www.21jingji.com/article/20240717/herald/992f80e920d384ea34028c63a8216048.html)"
+      },
+      {
+        "date": "2024-12",
+        "decision": "高管职务调整（付欣任CFO、张智淳任首席审计官、蔡方方兼首席合规官）",
+        "outcome": "财务/审计/合规独立条线进一步强化，管理层专业化继续推进。来源：新浪财经《中国平安多名高管职务出现调整》(https://finance.sina.com.cn/roll/2024-12-25/doc-ineasrzk7336857.shtml)"
+      }
+    ]
+  },
+  "industryOutlook": {
+    "_dimension": "7. 行业前景：TAM（总可寻址市场）、增长预测",
+    "tam": {
+      "value": "2025年全年保险公司原保险保费收入6.1万亿元人民币，同比增长7.4%",
+      "currency": "CNY",
+      "definition": "保费口径（原保险保费收入），非保险深度/密度口径",
+      "asOf": "FY2025（2026年2月发布）",
+      "source": { "name": "国家金融监督管理总局数据，证券时报转引", "url": "https://www.stcn.com/article/detail/3641803.html" },
+      "additionalContext": "中国保费收入占全球市场份额约10.2%，稳居全球第二大保险市场（证券时报《中国保险业十四五收官：保费收入稳居世界第二》，https://www.stcn.com/article/detail/3377901.html）；保险资金运用余额（体现行业资产规模而非保费TAM）截至2025年末近38.5万亿元，较年初增长15.70%",
+      "densityDepthBasis": { "status": "unavailable", "reason": "国家『新国十条』历史目标为2020年保险深度达5%/保险密度3500元（旧目标，已过期），本次检索未找到国家金融监督管理总局或中国保险行业协会2026年发布的、针对2025年实绩或『十五五』规划期的官方保险深度/密度最新具体数字原文；已查范围：中国保险行业协会官网新闻发布会栏目（仅查到『保险业2025年度十件大事』新闻稿目录，未展开具体深度/密度数字）、前瞻产业研究院报告目录、多轮WebSearch" }
+    },
+    "growthForecast": {
+      "cagrPct": { "status": "unavailable", "reason": "本次检索未获得瑞士再保险2026年发布的、专门针对2026-2030年中国保险行业最新sigma报告数字，也未找到中国保险行业协会官方发布的统一长期CAGR预测。国家金融监督管理总局披露的是2025年当期实绩同比+7.4%（事后数据），瑞再sigma是2024年发布的前瞻性预测（预测口径为长期趋势6%），两者时点和方法论均不同，不可直接拼接成一条连续增长曲线，故不编造统一的行业CAGR预测" },
+      "swissReSigma": {
+        "value": "瑞再研究院预计2024-2025年全球新增保费的52%来自新兴市场（含中国），高于过去五年45%的比例；中国将占新兴市场未来两年新增保费的68%份额；中国寿险市场受2023年高基数及低利率环境影响，预计2024-2025年增速逐步回归6%的长期趋势水平",
+        "source": { "name": "证券时报《瑞再研究院报告：预计2024-2025年全球保费年均增长2.2% 中国是新兴市场引擎》", "url": "https://www.stcn.com/article/detail/1066156.html" },
+        "asOf": "2024年3月发布（前瞻性预测，非2025年最新一份sigma报告）"
+      },
+      "horizon": "unavailable"
+    }
+  },
+  "riskFactors": {
+    "_dimension": "8. 风险因素：地缘政治、监管、供应链等",
+    "items": [
+      {
+        "category": "监管",
+        "description": "长端市场利率持续超预期下行，导致寿险公司增提准备金、当期承保端财务性亏损扩大（2024年平安寿险利差损压力扩大）；偿付能力方面市场风险与信用风险最低资本要求同步上升，对核心/综合偿付能力充足率构成压力。",
+        "evidence": "外部推断（评级机构）+公司披露结合。来源：中鹏信评《中国平安人寿保险股份有限公司2025年资本补充债券信用评级报告》(https://www.chinamoney.com.cn/dqs/cm-s-notice-query/fileDownLoad.do?contentId=3246376&priority=0&mode=save)"
+      },
+      {
+        "category": "其他",
+        "description": "资本市场波动风险：新金融工具准则(I9)下权益类资产公允价值变动直接进入当期利润表，2025年净利润中即含『股票浮盈超900亿元』的正面贡献，反向若市场下跌，净利润可能大幅回撤；分析师报告将『资本市场波动』列为首要风险提示。",
+        "evidence": "外部推断（分析师）。来源：太平洋证券《中国平安2025年年报点评：价值稳健增长，金融协同深化》，发现报告转载(https://www.fxbaogao.com/detail/5326572)"
+      },
+      {
+        "category": "竞争",
+        "description": "寿险代理人渠道转型压力：代理人数量从历史峰值约139万人持续收缩至2024年末36.3万人（降幅超70%），尽管2024年止跌回升(+4.6%)，但绝对规模仍处历史低位，渠道触达半径和下沉市场覆盖能力受限，转型效果依赖『优才』策略和银保/线上渠道补位的持续验证。",
+        "evidence": "外部报道（行业观察）。来源：证券时报/中证网《保险代理人生态变局：数量腰斩 精英涌入 服务转向全方位》(https://www.cs.com.cn/bx/202504/t20250403_6483204.html)"
+      },
+      {
+        "category": "其他",
+        "description": "地产敞口残余风险：截至2024年末保险资金不动产投资2,025.19亿元(占比3.5%)，2025年中进一步降至3.3%，敞口持续收窄但存量部分（商业地产/物流园/长租公寓）仍面临估值下行和流动性风险，尤其在国内商业地产景气度尚未完全修复的背景下。",
+        "evidence": "公司披露（股东大会问答）+媒体报道。来源：新浪财经《观点直击｜不动产投资继续压降 中国平安答疑资产配置和投资策略》(https://finance.sina.com.cn/stock/relnews/cn/2025-03-20/doc-ineqipfa4531970.shtml)"
+      },
+      {
+        "category": "其他",
+        "description": "（主会话检索清单外的补充风险）专业经理人治理模式下的接班与权责摩擦风险：2023年高管密集变阵（陈心颖、姚波相继辞任，郭晓涛补入），2024年2月市场报道马明哲『再出山』深度介入日常经营，反映联席CEO治理框架下高层权力分配和战略连续性仍在磨合。若谢永林/郭晓涛分管的核心业务线出现业绩压力，可能触发新一轮管理层调整，对市场信心和战略执行连续性构成潜在扰动——这是纯财务指标之外、专业经理人主导型治理结构（无实际控制人，主会话已知事实）特有的治理风险，市场关注度不如利率/资本市场风险高但性质更结构性。",
+        "evidence": "外部媒体推断，非公司官方风险提示。来源：南方都市报《马明哲再出山背后，透视中国平安的人事棋局》(https://m.mp.oeeee.com/a/BAAFRD000020240205908929.html)"
+      }
+    ]
+  },
+  "currentValuation": {
+    "_dimension": "9. 当前估值：市值、PE、PS、PEG、EV/Revenue",
+    "priceAsOf": "2026-08-07",
+    "sharePrice": { "value": 53.38, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare daily(trade_date=20260807)", "url": "https://tushare.pro", "value": 53.38 }, "source2": { "name": "status", "url": "", "value": "unavailable（同日盘口价，未另行核对第二行情源，A股收盘价为公开唯一权威数据，风险极低）" }, "deviationPct": "unavailable", "flag": "ok" },
+    "sharesOutstanding": { "value": 18107641995, "unit": "shares", "source1": { "name": "Tushare daily_basic(total_share，20260807)", "url": "https://tushare.pro", "value": 18107641995 }, "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA(TOTAL_SHARE，2026Q1)", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 18107641995 }, "deviationPct": "0.00%", "flag": "ok" },
+    "marketCap": {
+      "reported": "9,665.9亿 CNY（Tushare daily_basic total_mv，2026-08-07）",
+      "computed": "966,610,231,712.10 CNY = 53.38 × 18,107,641,995股，financial_rigor.py verify-market-cap 偏差0.00%",
+      "flag": "ok",
+      "note": "A股流通市值5,690.3亿（仅计A股流通股本），总市值9,665.9亿含H股及限售股份"
+    },
+    "pe": { "value": "7.17x（静态）/ 7.28x（TTM）", "note": "PE(静)=53.38/EPS(7.45元，FY2025归母净利润1,347.8亿/总股本18.108亿股)，financial_rigor.py verify-valuation 验算；PE(TTM)取自 Tushare daily_basic", "basis": "静态用FY2025年报EPS；TTM为Tushare滚动计算" },
+    "pb": { "value": "0.95x", "note": "53.38 / BVPS 56.24元（financial_rigor.py verify-valuation 验算），保险股估值习惯以PB为核心锚点（受保险合同负债/新准则权益波动影响，PE波动性较大）" },
+    "ps": { "value": "0.93x（TTM）", "note": "Tushare daily_basic ps_ttm，financial_rigor.py calc 交叉核对：市值9,665.9亿/TTM营收(约10,393亿) ≈ 0.93x" },
+    "peg": { "status": "unavailable", "reason": "PEG需要未来3-5年一致的净利润增长预测；保险集团净利润受保险合同准备金折现率假设、资本市场波动（净利润含权益类投资公允价值变动）双重影响，历史5年CAGR(FY2021→FY2025，financial_rigor.py calc：(1347.8/1016.2)^(1/4)-1=7.35%)对未来参考价值有限，且未检索到可靠的分析师一致预测CAGR，故不强行计算PEG，PE(7.17x)与ROE(14.0%)已可反映估值-质量关系" },
+    "evToRevenue": { "status": "unavailable", "reason": "EV/Revenue指标不适用于金融/保险集团——银行子公司的『收入』大量来自利息净收入（本质是资金业务的净利差而非营收），保险子公司的『收入』含保费与投资收益，用整体收入做分母的EV/Revenue会被银行的杠杆经营特性严重扭曲，行业惯例改用PB/PE/内含价值(EV of insurance)倍数（P/EV），P/EV数据未在本次检索范围内取得，需专项检索寿险内含价值披露" },
+    "dividendYieldPct": { "value": "5.06%（TTM）", "note": "Tushare daily_basic dv_ttm；一年分位78%，处于近一年偏高水平", "source": "Tushare daily_basic" }
+  },
+  "bullBearCase": {
+    "_dimension": "10. 多空双方核心论点",
+    "bull": [
+      { "point": "估值处于历史低位但ROE持续修复", "evidence": "PB仅0.95x、PE(静)7.17x（主会话已知数据），而FY2025 ROE已回升至14.0%，较FY2023低点9.7%提升4.3个百分点（计算：14.0%-9.7%=4.3pct），估值与盈利质量出现背离，具备均值回归空间。" },
+      { "point": "寿险新业务价值高增长验证渠道转型成效", "evidence": "2025年寿险及健康险板块新业务价值369亿元(+29.3% YoY，主会话已知数据)，叠加2024年代理人人均新业务价值同比+43.3%，证明『优才』代理人转型策略在渠道大幅缩量情况下仍实现了质的提升，NBV增速优于行业多数同业。" },
+      { "point": "综合金融交叉销售与医疗健康生态构筑差异化护城河", "evidence": "平安好医生AI辅助诊疗使家医服务成本降52%、AI对毛利贡献占比达4.5%（年报首次单独披露），金融壹账通『全能代理人』AI平台已实现海外授权输出（南非耆卫保险集团），这是国寿/太保/人保等同业目前普遍不具备的第二增长曲线尝试。" },
+      { "point": "股东回报持续强化", "evidence": "2024-2026分红规划锁定净利润20%-50%区间，叠加2024年7月注销1.03亿股回购股份，当前股息率(TTM)5.06%（主会话已知数据）在低利率环境下对长期资金具备比较优势，且分红连续多年增长。" }
+    ],
+    "bear": [
+      { "point": "净利润高度依赖资本市场波动，盈利质量存在『投资美化』成分", "evidence": "2025年净利润中含『股票浮盈超900亿元』的非经常性正贡献（新金融工具准则I9下权益类资产公允价值变动直接计入利润表），核心承保端营运利润增速(寿险及健康险营运利润+7.5% YoY，主会话已知数据)明显低于净利润增速(FY2025净利润1,347.8亿，同比+6.5%，对比FY2024净利润1,266.1亿，计算：1347.8/1266.1-1=6.45%)，一旦权益市场逆转，净利润和ROE可能大幅回撤。" },
+      { "point": "代理人渠道规模仍处历史低位，触达能力受限", "evidence": "36.3万代理人相较历史峰值约139万人下降超70%，即便人均产能大幅提升，总体渠道广度和下沉市场覆盖能力仍明显弱于早年，若『优才』策略的边际效果放缓，当前NBV高增长的持续性存疑。" },
+      { "point": "长端利率下行持续压制寿险利差损", "evidence": "2024年平安寿险利差损压力扩大、增提准备金侵蚀当期承保财务表现，在当前中国十年期国债收益率维持低位的宏观环境下，这一结构性压力预计仍将持续，对存量高负债成本保单构成长期拖累（来源：中鹏信评2025年跟踪评级报告）。" },
+      { "point": "治理连续性存在不确定性", "evidence": "联席CEO制近年经历多次人事变动（陈心颖、姚波先后辞任，郭晓涛2023年才补入），叠加2024年市场关于马明哲『再出山』深度介入日常经营的报道，反映专业经理人治理框架下的权责分配和战略连续性仍在磨合，若核心业务线业绩不及预期，可能引发新一轮管理层调整，增加战略执行的不确定性（无实际控制人的治理结构在放大公司治理灵活性的同时，也放大了接班与权责摩擦的风险，见riskFactors第5条）。" }
+    ]
+  },
+  "crossValidationLog": [
+    { "field": "总股本", "source1": { "name": "Tushare daily_basic(total_share)", "value": 18107641995 }, "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA(TOTAL_SHARE)", "value": 18107641995 }, "deviationPct": "0.00%", "flag": "ok", "resolution": "完全一致" },
+    { "field": "市值（股价×总股本 验算）", "source1": { "name": "Tushare daily_basic(total_mv)", "value": 966590000000 }, "source2": { "name": "financial_rigor.py verify-market-cap 计算值", "value": 966610231712.10 }, "deviationPct": "0.00%", "flag": "ok", "resolution": "verify-market-cap 验证通过" },
+    { "field": "FY2025营业总收入", "source1": { "name": "Tushare income", "value": 1050510000000 }, "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA", "value": 1050506000000 }, "deviationPct": "0.00%", "flag": "ok", "resolution": "financial_rigor.py cross-validate 验证通过，一致" },
+    { "field": "FY2025归母净利润", "source1": { "name": "Tushare income(n_income_attr_p)", "value": 134780000000 }, "source2": { "name": "东方财富", "value": 134778000000 }, "deviationPct": "0.00%", "flag": "ok", "resolution": "一致" },
+    { "field": "FY2024营业总收入/归母净利润", "source1": { "name": "Tushare", "value": "1,028.92亿/126.61亿" }, "source2": { "name": "东方财富", "value": "1,028.925亿/126.607亿" }, "deviationPct": "0.00%", "flag": "ok", "resolution": "一致" },
+    { "field": "FY2023营业总收入/归母净利润", "source1": { "name": "Tushare", "value": "913.79亿/85.66亿" }, "source2": { "name": "东方财富", "value": "913.789亿/85.665亿" }, "deviationPct": "0.00%", "flag": "ok", "resolution": "一致" },
+    { "field": "FY2022营业总收入", "source1": { "name": "Tushare income(period=20221231)，与WebSearch核实的官方2022年报『营业收入11,105.68亿元』一致", "value": 1110568000000 }, "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA", "value": 880355000000 }, "deviationPct": "11.56%", "flag": "major-diff", "resolution": "financial_rigor.py cross-validate 判定❌重大差异；经WebSearch核实新浪财经报道的官方年报原文数字（营业收入11,105.68亿元，同比降5.9%）与Tushare/官方一致，判定东方财富该接口对保险类公司FY2022行存在数据异常（可能与该接口对金融类公司的字段映射错误有关），本报告弃用东方财富该值，采用Tushare+官方年报口径" },
+    { "field": "FY2022归母净利润", "source1": { "name": "Tushare income(n_income_attr_p)，与官方年报『837.74亿元，同比降17.56%』一致", "value": 83774000000 }, "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA", "value": 111008000000 }, "deviationPct": "13.98%", "flag": "major-diff", "resolution": "同上，判定东方财富该行异常，弃用" },
+    { "field": "FY2021营业总收入/归母净利润", "source1": { "name": "Tushare", "value": "1,180.44亿/101.62亿" }, "source2": { "name": "东方财富", "value": "1,180.444亿/101.618亿" }, "deviationPct": "0.00%", "flag": "ok", "resolution": "一致" },
+    { "field": "FY2021-2025货币资金（5条）", "source1": { "name": "Tushare balancesheet", "value": "5,350.7/6,125.9/5,772.1/6,834.3/7,456.8（亿元）" }, "source2": { "name": "东方财富 RPT_DMSK_FN_BALANCE(MONETARYFUNDS)", "value": "5,350.67/6,137.37/5,772.12/6,834.33/7,456.79（亿元）" }, "deviationPct": "0.00% / 0.19% / 0.00% / 0.00% / 0.00%", "flag": "ok", "resolution": "financial_rigor.py cross-validate 全部通过（FY2022偏差0.19%在1%以内，属正常数据源微小差异，不判定为异常）" },
+    { "field": "PE(静)/PB 验算", "source1": { "name": "cnstock_data.py quote（PE静7.17/PB0.95）", "value": "7.17x / 0.95x" }, "source2": { "name": "financial_rigor.py verify-valuation（price=53.38, eps=7.45, bvps=56.24）", "value": "7.17x / 0.95x" }, "deviationPct": "0.00%", "flag": "ok", "resolution": "工具独立验算一致" }
+  ]
+}

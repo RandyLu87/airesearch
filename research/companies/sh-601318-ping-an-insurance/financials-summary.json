@@ -1,0 +1,135 @@
+{
+  "meta": {
+    "companyId": "sh-601318-ping-an-insurance",
+    "companyName": "中国平安保险(集团)股份有限公司",
+    "summarizedAt": "2026-08-09",
+    "dataCutoff": "2026-08-07",
+    "basedOnCollection": "research/companies/sh-601318-ping-an-insurance/financials-collection.json",
+    "basedOnAnalysis": "research/companies/sh-601318-ping-an-insurance/financials-analysis.json"
+  },
+  "dimensionSummary": [
+    {
+      "dimensionId": "businessQuality",
+      "title": "生意质量",
+      "mapsTo": "dimensions.businessEssence",
+      "conclusion": "平安靠保费与银行存款沉淀资金、交叉销售多元金融产品并用投资收益放大利润，核心承保端(寿险营运利润+7.5%)相对稳健，但净利润增速(+6.45%)更多依赖投资端波动，ROE近5年呈U型修复，盈利质量对资本市场beta敞口偏大。",
+      "confidence": 6,
+      "scoreBasis": "①dimensions.businessEssence.analysis.revenueBreakdown显示FY2025保险服务收入占38.6%、投资收益占10.5%，资金类收入合计超30%，业务本质是综合金融资金聚合；②dimensions.businessEssence.analysis.operatingLeverage显示FCF+73.03%主要来自保险资金及银行同业存款波动，净利润仅+6.45%，核心承保端相对温和；③dimensions.businessEssence.analysis.grossMarginVsPeers显示平安ROE14.0%低于国寿27.81%、太保18.0%，但5年波动更平滑(9.7%→14.0%)；④dimensions.businessEssence.analysis.stickiness显示代理人规模降超70%但医疗生态转化近3成，交叉销售粘性中等。"
+    },
+    {
+      "dimensionId": "moat",
+      "title": "护城河",
+      "mapsTo": "dimensions.moat",
+      "conclusion": "护城河总体稳定：牌照稀缺性与技术专利壁垒判定为存在且变宽，规模效应存在但代理人绝对规模收缩超70%，网络效应不存在，品牌定价权待验证，综合趋势稳定。",
+      "confidence": 7,
+      "scoreBasis": "①dimensions.moat.analysis.types中「技术/专利壁垒」与「规模效应」均判定「存在」，专利55,080项且AI秒级核保93%，判定趋势「变宽」；②dimensions.moat.analysis.trendPast5y与trendNext5y均判定「稳定」，牌照稀缺性五年内无新进入者获批；③但moat.analysis.types[2]网络效应判定「不存在」，types[0]品牌定价权「待验证」，moat.dataGaps显示转换成本关键证据缺可验证URL；④代理人规模较峰值降超70%(moat.analysis.types[3].evidence)对规模效应触达半径构成结构性侵蚀。"
+    },
+    {
+      "dimensionId": "management",
+      "title": "管理层",
+      "mapsTo": "dimensions.management",
+      "conclusion": "无实际控制人的专业经理人治理框架已建立，资本配置纪律尚可，但2023年联席CEO动荡与2024年马明哲「再出山」报道显示治理磨合未稳，研发/并购/文化多项证据缺失。",
+      "confidence": 5.5,
+      "scoreBasis": "①dimensions.management.analysis.alignment显示马明哲持股仅0.0019%、董事长薪酬358.8万元非管理层最高，无明显自利定薪特征；②dimensions.management.analysis.capitalAllocation显示2024年注销1.03亿股回购+确立20%-50%分红规划，资本配置纪律尚可，但buybackTiming精确时点因数据缺口无法验证；③dimensions.management.analysis.organization.teamStability与keyDecisions[0]显示2023年联席CEO姚波、陈心颖相继辞任，2024年报道马明哲「再出山」深度介入，治理磨合未稳；④management.dataGaps显示研发回报率、并购记录、企业文化均unavailable，证据限制使评分向中性收敛。"
+    },
+    {
+      "dimensionId": "keyRisk",
+      "title": "最大风险",
+      "mapsTo": "dimensions.inversion",
+      "conclusion": "最大风险是长端利率持续下行导致的寿险利差损：它针对存量高负债成本保单，具有不可逆、难以对冲的结构性特征，比同为高概率/高影响的权益市场浮盈波动更致命，因后者可随市场周期均值回归。",
+      "confidence": 3,
+      "scoreBasis": "①dimensions.inversion.analysis.failurePaths[0]「长端利率持续下行导致寿险利差损扩大」标注probability高/impact高，中鹏信评2025年评级报告显示2024年利差损压力已扩大、增提准备金侵蚀存量保单承保利润；②该风险针对存量保单不可逆，区别于failurePaths[1]权益市场浮盈风险(同为高/高但可随周期均值回归)；③dimensions.inversion.inquiry.answer指出这是「缓慢但确定的宏观结构性压力」，较failurePaths[2]代理人萎缩(中/中)、failurePaths[4]治理摩擦(中/中)更难通过管理层行动化解。"
+    },
+    {
+      "dimensionId": "civilizationTrend",
+      "title": "文明趋势",
+      "mapsTo": "dimensions.industryTrend",
+      "conclusion": "行业属渐进式存量竞争转型而非颠覆式范式转移，保费增速已放缓至+7.4%，平安AI渗透领先同业构筑差异化优势，但整体长期趋势对公司仅中性偏有利。",
+      "confidence": 6,
+      "scoreBasis": "①dimensions.industryTrend.analysis.paradigmShift判定「部分」，2025年原保费收入6.1万亿元同比+7.4%，行业渐进转型非颠覆式；②dimensions.industryTrend.analysis.tam.ceiling显示保费增速已从两位数放缓至+7.4%，行业处于「成长阶段后期→成熟阶段前期」过渡带；③dimensions.industryTrend.analysis.techRouteRisk显示平安自建三层大模型技术底座使其AI渗透领先同业，被颠覆风险低；④industryTrend.inquiry.answer判定「介于标准石油与3Com之间」，长期趋势对公司有利但非压倒性优势。"
+    },
+    {
+      "dimensionId": "valuation",
+      "title": "估值",
+      "mapsTo": "dimensions.valuation",
+      "conclusion": "PE(静)7.17x/PB0.95x明显偏低，三情景估值中性及以上收益占优(乐观+66.7%/中性+23.8%)、悲观-28.2%，隐含市场已计入偏悲观增长预期，具备安全边际。",
+      "confidence": 7.5,
+      "scoreBasis": "①dimensions.valuation.analysis.currentMultiples显示PE(静)7.17x/PB0.95x，PB低于1倍账面净资产；②dimensions.valuation.analysis.threeScenario显示乐观89.0元(+66.7%)/中性66.1元(+23.8%)/悲观38.3元(-28.2%)，风险收益比偏正；③dimensions.valuation.analysis.reverseDcf显示当前定价隐含「低速甚至零/负增长」预期，明显低于FY2025 ROE14.0%代表的正常盈利能力；④valuation.dataGaps显示vsPeers与vsOwnHistory历史PE/PB分位数据缺失，证据限制下不作满分处理。"
+    }
+  ],
+  "strategies": {
+    "noPosition": {
+      "title": "空仓者",
+      "advice": "①当前PE(静)7.17x、PB0.95x处于历史低位，具备安全边际，可先纳入观察名单；②净利润含超900亿元股票浮盈，波动性较大，不建议一次性重仓，宜等价格或基本面信号确认后分批建仓；③优先跟踪寿险新业务价值增速与代理人规模变化，作为渠道转型是否兑现的验证信号，再决定加大配置。",
+      "triggers": [
+        {
+          "condition": "股价回落到45元以下（较现价53.38元跌超15%，逼近悲观目标价38.3元与中性目标价66.1元之间下半区）",
+          "action": "分批建仓，首笔投入不超过目标仓位的三分之一",
+          "basis": "①dimensions.valuation.analysis.threeScenario当前价53.38元、悲观目标价38.3元、中性目标价66.1元，45元对应更低隐含估值，安全边际扩大；②dimensions.valuation.analysis.currentMultiples当前PB0.95x已低于1倍账面，价格继续下探将进一步偏离历史修复区间。"
+        },
+        {
+          "condition": "寿险及健康险新业务价值(NBV)同比增速连续两个报告期维持在20%以上，且代理人数量环比企稳或回升",
+          "action": "确认渠道转型效果持续兑现后，分批加大建仓比例",
+          "basis": "①dimensions.inversion.analysis.failurePaths[2]代理人渠道萎缩超70%被列为中概率/中影响风险，NBV持续高增长可部分证伪该风险；②dimensions.moat.analysis.types[2]规模效应evidence中人均新业务价值+43.3%为单一时点数据，需后续报告期多次确认，避免dimensions.inversion.analysis.biasSelfCheck提示的幸存者偏差。"
+        }
+      ]
+    },
+    "holding": {
+      "title": "持仓者",
+      "advice": "①当前估值隐含悲观预期，叠加股息率(TTM)5.06%，建议以持有为主，暂不主动加仓；②因净利润高度依赖资本市场浮盈与长端利率环境，不宜押注单一年度业绩兑现来源，需持续跟踪核心承保端与投资端贡献的拆分；③若股价上行触及中性目标价附近，可考虑分批兑现部分收益，控制组合集中度。",
+      "triggers": [
+        {
+          "condition": "股价上涨突破66元（对应中性目标价66.1元，涨幅+23.8%以上）",
+          "action": "分批兑现部分浮盈，锁定收益并降低单一标的集中度",
+          "basis": "dimensions.valuation.analysis.threeScenario中性情景目标价66.1元(+23.8%)，突破该位置意味着估值修复已基本兑现中性预期，继续持有的边际赔率下降。"
+        },
+        {
+          "condition": "FY2026年报/半年报显示净利润中权益类公允价值变动贡献大幅收窄，且寿险及健康险营运利润增速同步跌破5%",
+          "action": "减持部分仓位，降低对资本市场beta和承保端双重走弱的敞口",
+          "basis": "①dimensions.inversion.analysis.failurePaths[1]权益市场逆转风险标注概率高/影响高，2025年净利润含股票浮盈超900亿元；②dimensions.businessEssence.analysis.operatingLeverage显示核心承保端(寿险营运利润+7.5%)增速本就低于净利润增速(+6.45%)，若两者同步走弱将确认盈利质量恶化而非短期波动。"
+        }
+      ]
+    },
+    "sellSignals": {
+      "title": "卖出信号",
+      "signals": [
+        {
+          "signal": "长端十年期国债收益率持续下探刷新阶段新低，且平安寿险准备金评估利率进一步下调",
+          "observable": "跟踪央行/中国货币网10年期国债收益率走势及平安年报/评级报告披露的准备金评估利率调整",
+          "basis": "dimensions.inversion.analysis.failurePaths[0]标注长端利率下行导致寿险利差损扩大为高概率/高影响风险，且2024年利差损压力已扩大（中鹏信评评级报告）。"
+        },
+        {
+          "signal": "寿险代理人数量连续两个报告期环比再度下滑并跌破30万人，人均新业务价值增速转负",
+          "observable": "跟踪平安年报/半年报披露的代理人数量及人均NBV数据",
+          "basis": "dimensions.inversion.analysis.failurePaths[2]与dimensions.moat.analysis.types[2]规模效应evidence显示代理人规模较峰值已降超70%，若持续下滑且效率指标同步转负，说明渠道触达半径侵蚀已从「量降质升」转为「量质双降」。"
+        },
+        {
+          "signal": "权益市场大幅下跌导致当期净利润中公允价值变动损益由正转负，ROE跌破10%",
+          "observable": "跟踪季报/年报归母净利润构成中的公允价值变动及fina_indicator ROE数据",
+          "basis": "dimensions.inversion.analysis.failurePaths[1]标注权益市场逆转为高概率/高影响风险(FY2025股票浮盈超900亿元)，dimensions.businessEssence.analysis.operatingLeverage显示ROE曾在FY2023低点跌至9.7%，跌破10%意味着回到该低点水平。"
+        }
+      ]
+    },
+    "addSignals": {
+      "title": "加仓信号",
+      "signals": [
+        {
+          "signal": "股价跌至40元附近，PB降至约0.71x，接近悲观情景目标价38.3元",
+          "observable": "跟踪Tushare daily_basic实时PE/PB及股价",
+          "basis": "dimensions.valuation.analysis.threeScenario悲观目标价38.3元(-28.2%)，当前PB0.95x已低于1倍账面，进一步下探至该区间意味着安全边际显著扩大。"
+        },
+        {
+          "signal": "寿险及健康险新业务价值(NBV)同比增速连续两个报告期维持20%以上且代理人规模同步企稳回升",
+          "observable": "跟踪年报/半年报披露的NBV同比增速与代理人数量环比变化",
+          "basis": "①dimensions.management.inquiry.answer与dimensions.valuation.inquiry.answer均引用寿险NBV+29.3%YoY作为渠道转型验证信号，但该数据未附独立字段来源，属单源引用，需连续报告期多次确认后才可作为加仓依据；②dimensions.inversion.analysis.biasSelfCheck提示当前人均产能提升需警惕幸存者偏差。"
+        },
+        {
+          "signal": "年度分红比例延续20%-50%区间且股息率(TTM)维持在5%以上",
+          "observable": "跟踪公司年度分红公告及Tushare daily_basic dv_ttm数据",
+          "basis": "dimensions.management.analysis.capitalAllocation.buybackTiming显示2024-2026年股东回报规划锁定净利润20%-50%分红区间，当前股息率(TTM)5.06%（一年分位78%）验证股东回报持续兑现。"
+        }
+      ]
+    }
+  },
+  "disclaimer": "本总结基于公开信息与数据截止时点的分析生成，仅供研究参考，不构成个性化投资建议。"
+}

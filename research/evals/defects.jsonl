@@ -1,1 +1,2 @@
 {"at": "2026-08-08T11:34:20+08:00", "company": "sh-600392-shenghe-resources", "step": "unspecified", "symptom": "无", "skillCommit": "1592a7b", "model": "sonnet 5", "status": "open"}
+{"at": "2026-08-09T10:58:38+08:00", "company": "sh-601318-ping-an-insurance", "step": "summary", "symptom": "维度总结卡片与策略触发条件的 scoreBasis/basis 字段大量堆砌 dimensions.xxx.yyy 原始字段路径，读起来像内部审计记录而不是给读者的结论，拉低了整体可读性，尤其在管理层与生意质量两个维度最明显。", "skillCommit": "280c597", "model": "claude-sonnet-5", "status": "open"}
