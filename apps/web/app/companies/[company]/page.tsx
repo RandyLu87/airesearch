@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { isValidElement } from "react";
+import { isValidElement, type ReactNode } from "react";
 import { existsSync } from "node:fs";
 import { finalPath, listFinalCompanies, loadFinal } from "../../../lib/final-report";
+import { headline, isUnavailable, stripNote, text, type Json } from "../../../lib/field-text";
 
 /**
  * 公司分析页 — 研究流程第 5 步（docs/research/workflow/05-render-site.md）。
@@ -30,35 +31,30 @@ export function generateStaticParams() {
 
 type AnalysisPageProps = { params: Promise<{ company: string }> };
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-type Json = any;
-
-/** 是否是规范的「取不到」占位对象。 */
-function isUnavailable(value: Json): boolean {
-  return Boolean(value) && typeof value === "object" && !Array.isArray(value)
-    && value.status === "unavailable";
-}
-
-/** 把任意值渲染成文本：校验对象取 value，unavailable 如实给原因，不吞字段。 */
-function text(value: Json): string {
-  if (value === null || value === undefined || value === "") return "—";
-  if (typeof value === "string" || typeof value === "number") return String(value);
-  if (isUnavailable(value)) return `缺失：${value.reason ?? "未说明原因"}`;
-  if (typeof value === "object" && !Array.isArray(value) && "value" in value) {
-    const unit = value.currency ?? "";
-    return `${value.value}${unit ? ` ${unit}` : ""}`;
-  }
-  return "—";
+/**
+ * 摘要条的一格：数值 + 副行说明。取不到数值时正文位给短标签（未取得 / 不适用），
+ * 副行让位给缺失原因——页头的三格是这一页最先被读到的地方，只给一个破折号
+ * 等于既不给数也不给因。
+ */
+function SummaryCell({ label, field, note }: { label: string; field: Json; note?: ReactNode }) {
+  const cell = headline(field);
+  return (
+    <div>
+      <span>{label}</span>
+      <strong title={cell.title}>{cell.value}</strong>
+      {cell.note ?? note ? <small title={cell.title}>{cell.note ?? note}</small> : null}
+    </div>
+  );
 }
 
 /**
  * 百分比字段渲染：value 按规范本身可能已带 `%`（见
  * docs/research/workflow/02-multi-dimension-analysis.md「数字纯净」规则），
- * `unavailable` 缺失说明或 `—` 占位更不该被拼接单位——仅当结果是纯数字结尾时才补 `%`。
+ * 缺失 / 不适用说明或 `—` 占位更不该被拼接单位——仅当结果是纯数字结尾时才补 `%`。
  */
 function pctText(value: Json): string {
   const raw = text(value);
-  if (raw === "—" || raw.startsWith("缺失：") || raw.endsWith("%")) return raw;
+  if (raw === "—" || isUnavailable(value) || raw.endsWith("%")) return raw;
   return `${raw}%`;
 }
 
@@ -283,13 +279,19 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
 
         {/* ① 摘要条：全部是采集与校验得出的事实 */}
         <div className="company-summary">
-          <div><span>市值</span><strong>{text(valuation.marketCap?.reported).split("(")[0].split("（")[0]}</strong><small>{text(final.meta?.dataCutoff).slice(0, 10)} 前双源验证</small></div>
-          <div>
-            <span>股价</span>
-            <strong>{text(valuation.sharePrice)}</strong>
-            {valuation.priceAsOf ? <small>截至 <time>{text(valuation.priceAsOf).split("(")[0].split("（")[0]}</time></small> : null}
-          </div>
-          <div><span>PE</span><strong>{text(valuation.pe).split("(")[0].split("（")[0]}</strong><small>TTM 口径</small></div>
+          <SummaryCell
+            label="市值"
+            field={valuation.marketCap?.reported}
+            note={`${text(final.meta?.dataCutoff).slice(0, 10)} 前双源验证`}
+          />
+          <SummaryCell
+            label="股价"
+            field={valuation.sharePrice}
+            note={valuation.priceAsOf
+              ? <>截至 <time>{stripNote(text(valuation.priceAsOf))}</time></>
+              : undefined}
+          />
+          <SummaryCell label="PE" field={valuation.pe} note="TTM 口径" />
           <div>
             <span>数据完整性</span>
             <strong>{["collection", "analysis", "summary"].map((k) => scores[k] ?? "—").join(" / ")}</strong>
@@ -562,7 +564,7 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
               .filter(([, value]) => Boolean(value))
               .map(([label, value]: Json) => (
                 <div key={label}>
-                  <strong>{text(value.targetPrice).split("(")[0].split("（")[0]}</strong>
+                  <strong>{stripNote(text(value.targetPrice))}</strong>
                   <span>{label}</span>
                   <p>隐含回报 {text(value.impliedReturnPct)}</p>
                 </div>

@@ -83,6 +83,8 @@ python3 docs/research/tools/financial_rigor.py verify-valuation \
 
 **常见错误防范**：
 
+- **双重上市与双币种（港股高发）**：H 股 + 美股 ADS/ADR 的公司有两个股价、两个市值，报告币种（常为 RMB）又不等于交易币种（HKD）。股价与市值仍是**一个字段**，按模板 `_spec.multiListing` 写成 `{ "primary": <校验对象>, "alt": [<校验对象>] }`，primary 取公司目录前缀对应的主上市地。**不要按上市地或币种拆成自定义键**（`{"hk": …, "us_ads": …}`、`{"hk_hkd": 101219774273}`）——页面认不出这种形状，页头会直接空掉，第 4/5 步的首屏闸门会拒绝放行；
+- **亏损公司的 PE 不是缺失，是不适用**：TTM 净利润为负时写 `{ "status": "not-applicable", "reason": "为什么不适用 + 支撑数字" }`，`reason` 第一句先说结论再带括号注释（页头只显示前一小段）。港股新经济公司常年亏损，这条比在美股/A 股上更常撞见；
 - 市值单位：港币亿 vs 人民币亿 vs 美元亿，容易漏写/多写一个零；
 - FCF 口径：不同来源对资本支出的定义可能不同（是否含租赁、收购等）；
 - 债务口径：是否包含经营租赁负债；
@@ -95,9 +97,10 @@ python3 docs/research/tools/financial_rigor.py verify-valuation \
 **分两次写，不要攒到最后一次性落盘**：第 3.1 节取到结构化数据后先写一版（结构化维度填实、其余留 `__TODO__`），第 3.2 节 Agent 返回并完成第 4 节验算后再补齐同一个文件。目录由 Write 自动创建，**不要 `mkdir` 预创建**（总纲第 0 节纪律 1）。
 
 - 关键数值一律用模板定义的校验对象（value + 双源 + 偏差 + flag）；
-- 待填写 `__TODO__`；取不到的字段不删除，写 `status: "unavailable"` 与缺失原因、已查范围；
+- 待填写 `__TODO__`；取不到的字段不删除，写 `status: "unavailable"` 与缺失原因、已查范围；取到了但算不出来的写 `status: "not-applicable"` 与不适用原因；
+- **落盘后先自查首屏四个字段**（`marketCap.reported` / `sharePrice` / `pe` / `meta.dataCutoff`）：它们是页头摘要条与首页卡片直读的位置，形状不对页面就是破折号。跑一次 `data_validator.py check --collection …` 即可看到 `[首屏渲染不出]` 提示；
 - 每条工具验证输出记入 `crossValidationLog`。
 
 ## 完成标准
 
-10 个维度均为「已取得」或「缺失原因 + 已查范围 + 分析影响」；关键数值都有双源记录与误差标记；市值通过 `verify-market-cap` 验算；数据截止时间已声明。
+10 个维度均为「已取得」或「缺失原因 + 已查范围 + 分析影响」；关键数值都有双源记录与误差标记；市值通过 `verify-market-cap` 验算；数据截止时间已声明；首屏四个字段经 `data_validator.py` 解析通过。

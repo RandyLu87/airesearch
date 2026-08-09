@@ -52,19 +52,29 @@ def main():
 
     targets = [("collection", args.collection), ("analysis", args.analysis), ("summary", args.summary)]
 
-    # 1) 复用第 4 步校验，任一低于阈值拒绝合并
+    # 1) 复用第 4 步的两道闸门（完整性分数 + 首屏可渲染性），任一不过拒绝合并
     results = [data_validator.check_file(step, path) for step, path in targets]
-    failing = [r for r in results if r["score"] < args.threshold]
+    failing = [r for r in results if data_validator.blocked(r, args.threshold)]
     for res in results:
-        mark = "✅" if res["score"] >= args.threshold else "❌"
+        mark = "✅" if not data_validator.blocked(res, args.threshold) else "❌"
         print("%s %s  %.1f 分（阈值 %.1f）  %s" % (mark, res["stepLabel"], res["score"], args.threshold, res["file"]))
+        for problem in res["headlineProblems"]:
+            print("   ❌ 首屏渲染不出：%s ← %s：%s"
+                  % (problem["label"], problem["path"], problem["found"]))
     merge_company = evals_log.company_from_paths(*[path for _, path in targets], args.out)
     scores = {r["step"]: r["score"] for r in results}
+    unrenderable = [p for r in results for p in r["headlineProblems"]]
+    if unrenderable:
+        # 数据通常已经采到了，缺的是形状：直接说清楚该写成什么，别把人打发去重新取数。
+        sys.stderr.write("拒绝合并：%d 个首屏字段渲染不出来，页头与首页卡片会是空白。%s\n"
+                         % (len(unrenderable), data_validator.HEADLINE_HINT))
     if failing:
-        sys.stderr.write("拒绝合并：%d 份文件低于阈值。先回到第 4 步跑关键信息补全流程"
-                         "（data_validator.py --gaps-out），达标后再来。\n" % len(failing))
+        if not unrenderable:
+            sys.stderr.write("拒绝合并：%d 份文件低于阈值。先回到第 4 步跑关键信息补全流程"
+                             "（data_validator.py --gaps-out），达标后再来。\n" % len(failing))
         evals_log.log_event("build_final", "merge", company=merge_company, exit_code=1,
-                            threshold=args.threshold, scores=scores, reason="below-threshold")
+                            threshold=args.threshold, scores=scores,
+                            reason="unrenderable-headline" if unrenderable else "below-threshold")
         sys.exit(1)
 
     # 2) 三份文件必须属于同一家公司

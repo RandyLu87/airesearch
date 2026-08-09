@@ -12,14 +12,21 @@
         [--threshold 7] [--json] [--gaps-out gaps.json]
 
 三个文件参数均可省略，只校验给出的文件。
-退出码：0 = 全部达到阈值；1 = 存在低于阈值的文件；2 = 参数或文件错误。
+退出码：0 = 全部放行；1 = 存在未放行的文件；2 = 参数或文件错误。
+
+两道闸门，任一不过都拒绝放行：
+
+    1. 完整性分数 —— 模板槽位的填写率，低于阈值不放行；
+    2. 首屏可渲染性 —— 页头摘要条与首页卡片直读的四个字段（市值 / 股价 / PE /
+       数据截止）必须能解析成一句话。分数只看填没填，看不出「填了但页面显示不出来」，
+       这道闸门专门挡这种：字段写成页面认不出的形状时，读者看到的是破折号。
 
 打分规则（模板驱动）：
     - 「槽位」= 模板中值含 __TODO__ 的叶子字段，或形如 "A | B | C" 的枚举提示字段；
       模板中的固定文本（title、question、免责声明等）不计分。
     - 已填（有实值且不含 __TODO__、不等于枚举提示原文）计 1 分权重；
-    - 规范的 { "status": "unavailable", "reason": "..." } 计 0.5 分权重——
-      「取不到并写明已查范围」是合法结果，但完整性弱于取到；
+    - 规范的 { "status": "unavailable" | "not-applicable", "reason": "..." } 计 0.5 分权重——
+      「取不到并写明已查范围」「算不出并写明为什么」都是合法结果，但完整性弱于取到；
     - 缺键、残留 __TODO__、空值、枚举未选、unavailable 未写 reason 计 0 分并记入缺口清单；
     - 得分 = 10 × (已填 + 0.5 × unavailable) / 槽位总数，四舍五入到 1 位小数。
 
@@ -67,8 +74,136 @@ def is_slot(value):
     return False
 
 
+## 「没有数值」的两种合法占位。unavailable = 查不到（来源没有 / 未披露），
+## not-applicable = 算不出（分母为负、口径不成立，如亏损公司的 PE）。
+## 打分上两者等价（均记 0.5 权重），区别只在页面怎么说这句话。
+ABSENT_STATUSES = {"unavailable": "未取得", "not-applicable": "不适用"}
+
+
+def absent_status(node):
+    if not isinstance(node, dict):
+        return None
+    status = node.get("status")
+    return status if isinstance(status, str) and status in ABSENT_STATUSES else None
+
+
 def is_unavailable(node):
-    return isinstance(node, dict) and node.get("status") == "unavailable"
+    return absent_status(node) is not None
+
+
+# ---------------------------------------------------------------------------
+# 首屏可渲染性闸门
+#
+# 完整性分数只看槽位填没填，看不出「填了但页面显示不出来」。理想汽车
+# （hk-2015，H 股 + 美股 ADS 双重上市）就是这样发出去的：sharePrice 写成
+# {hk: …, us_ads: …}、marketCap.reported 写成 {hk_hkd: …, us_usd: …}，
+# 槽位全满、拿到 9.7 分，页头的市值与股价却是两个破折号
+# （research/evals/defects.jsonl 2026-08-09 那条）。
+#
+# 下面这段解析规则是 apps/web/lib/field-text.ts 的 text() 的 Python 镜像，
+# **两边必须同时改**：解析不出文本的首屏字段一律不放行。
+# ---------------------------------------------------------------------------
+
+# 字段对象里不承载数值的键：判断「这是不是多口径映射」时先剔除，
+# 否则 source / note 之类的注解会被当成一个口径。
+FIELD_ANNOTATION_KEYS = {
+    "source", "source1", "source2", "sources", "url", "note", "notes", "flag",
+    "deviationPct", "unit", "currency", "status", "reason", "method", "toolOutput",
+    "toolVerified", "asOf", "_dimension",
+}
+
+
+def resolve_multi_field(value):
+    """多市场 / 多币种字段：`{primary, alt[]}` 契约优先，其次是每个非注解键都挂着
+    校验对象的映射（如 `{hk: …, us_ads: …}`）。**不认裸标量**——
+    `{hk_hkd: 101219774273}` 把币种编进键名，没有单位可读，页面不替它猜。"""
+    if "primary" in value:
+        head = resolve_field(value["primary"])
+        if head is None:
+            return None
+        raw_alt = value.get("alt")
+        alt_items = raw_alt if isinstance(raw_alt, list) else ([] if raw_alt is None else [raw_alt])
+        legs = [head] + [item for item in (resolve_field(a) for a in alt_items) if item]
+    else:
+        entries = [(k, v) for k, v in value.items() if k not in FIELD_ANNOTATION_KEYS]
+        if not entries:
+            return None
+        if not all(isinstance(v, dict) and "value" in v for _, v in entries):
+            return None
+        legs = [item for item in (resolve_field(v) for _, v in entries) if item]
+        if not legs:
+            return None
+    # 主口径在前，次口径进括号——与 field-text.ts 的 joinLegs() 一致。
+    return "%s（%s）" % (legs[0], " / ".join(legs[1:])) if len(legs) > 1 else legs[0]
+
+
+def resolve_field(value):
+    """把字段解析成页面会显示的文本；页面显示不出来时返回 None。"""
+    if value is None or value == "":
+        return None
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, (str, int, float)):
+        return str(value)
+    if not isinstance(value, dict):
+        return None
+    absent = absent_status(value)
+    if absent:
+        # 缺失必须带原因：只写 status 的字段在页面上和「没这个字段」没有区别。
+        reason = value.get("reason")
+        return "%s：%s" % (ABSENT_STATUSES[absent], reason) if reason else None
+    if "value" in value:
+        unit = value.get("currency") or value.get("unit") or ""
+        return ("%s %s" % (value["value"], unit)).strip()
+    return resolve_multi_field(value)
+
+
+# 页头摘要条与首页卡片直接读的字段：这几格是报告最先被读到的地方。
+HEADLINE_FIELDS = (
+    ("市值", ("currentValuation", "marketCap", "reported")),
+    ("股价", ("currentValuation", "sharePrice")),
+    ("PE", ("currentValuation", "pe")),
+    ("数据截止", ("meta", "dataCutoff")),
+)
+
+HEADLINE_HINT = (
+    "首屏字段必须能解析成一句话：标量（\"190.36B HKD（…）\"）、校验对象"
+    "（{\"value\": 44.18, \"currency\": \"HKD\", …}）、多市场对象"
+    "（{\"primary\": {…}, \"alt\": [{…}]}），或带 reason 的 "
+    "{\"status\": \"unavailable\" | \"not-applicable\", \"reason\": \"…\"}。"
+)
+
+
+def dig(node, path):
+    for key in path:
+        if not isinstance(node, dict):
+            return None
+        node = node.get(key)
+    return node
+
+
+def summarize_node(node):
+    if node is None:
+        return "（字段不存在）"
+    try:
+        raw = json.dumps(node, ensure_ascii=False)
+    except (TypeError, ValueError):
+        raw = repr(node)
+    return raw if len(raw) <= 120 else raw[:117] + "..."
+
+
+def check_headline(instance):
+    """首屏四格逐个解析，解析不出来的返回一条问题。"""
+    problems = []
+    for label, path in HEADLINE_FIELDS:
+        node = dig(instance, path)
+        if resolve_field(node) is None:
+            problems.append({
+                "label": label,
+                "path": ".".join(path),
+                "found": summarize_node(node),
+            })
+    return problems
 
 
 class Tally:
@@ -200,7 +335,14 @@ def check_file(step, instance_path):
         "unavailable": tally.unavailable,
         "gapCount": len(tally.gaps),
         "gaps": tally.gaps,
+        # 首屏字段只存在于采集文件里；它是独立于分数的硬闸门，见 check_headline。
+        "headlineProblems": check_headline(instance) if step == "collection" else [],
     }
+
+
+def blocked(result, threshold):
+    """是否拒绝放行：分数不足，或首屏字段渲染不出来。"""
+    return result["score"] < threshold or bool(result["headlineProblems"])
 
 
 def print_report(results, threshold):
@@ -208,7 +350,7 @@ def print_report(results, threshold):
     print("数据完整性校验（满分 10 分，阈值 %s 分）" % threshold)
     print("=" * 60)
     for res in results:
-        mark = "✅" if res["score"] >= threshold else "❌"
+        mark = "✅" if not blocked(res, threshold) else "❌"
         print("%s %s  %.1f 分  （槽位 %d：已填 %d / unavailable %d / 缺口 %d）"
               % (mark, res["stepLabel"], res["score"], res["requiredSlots"],
                  res["filled"], res["unavailable"], res["gapCount"]))
@@ -217,13 +359,19 @@ def print_report(results, threshold):
             print("   - [%s] %s" % (gap["type"], gap["path"]))
         if res["gapCount"] > 10:
             print("   ... 其余 %d 条缺口见 --gaps-out / --json" % (res["gapCount"] - 10))
+        for problem in res["headlineProblems"]:
+            print("   - [首屏渲染不出] %s ← %s：%s"
+                  % (problem["label"], problem["path"], problem["found"]))
     print("-" * 60)
-    failing = [r for r in results if r["score"] < threshold]
+    failing = [r for r in results if blocked(r, threshold)]
+    unrenderable = [r for r in results if r["headlineProblems"]]
+    if unrenderable:
+        print("❌ 首屏字段渲染不出，页头与首页卡片会是空白。%s" % HEADLINE_HINT)
     if failing:
-        print("❌ %d 份文件低于阈值，进入关键信息补全流程（用 --gaps-out 导出缺口清单）。"
+        print("❌ %d 份文件未放行，进入关键信息补全流程（用 --gaps-out 导出缺口清单）。"
               % len(failing))
     else:
-        print("✅ 全部达到阈值，可进入下一流程。")
+        print("✅ 全部达到阈值且首屏可渲染，可进入下一流程。")
 
 
 def main():
@@ -250,15 +398,18 @@ def main():
         sys.exit(2)
 
     results = [check_file(step, path) for step, path in targets]
-    failing = [r for r in results if r["score"] < args.threshold]
+    failing = [r for r in results if blocked(r, args.threshold)]
 
     if args.gaps_out:
         gaps_payload = {
             "purpose": "关键信息补全清单：按 path 定位缺口，expected 为模板对该字段的填写要求。"
                        "补全须遵守对应步骤正文的规范（采集缺口按第 1 步双源规则，"
                        "分析缺口按第 2 步统一信封，总结缺口按第 3 步评分与策略规则）。"
-                       "确实取不到的信息写 { \"status\": \"unavailable\", \"reason\": \"缺失原因 + 已查范围\" }，不得编造。",
+                       "确实取不到的信息写 { \"status\": \"unavailable\", \"reason\": \"缺失原因 + 已查范围\" }，"
+                       "算不出来的（分母为负等）写 { \"status\": \"not-applicable\", \"reason\": \"…\" }，不得编造。"
+                       "headlineProblems 是首屏字段的形状问题：数据往往已经采到，要改的是写法而不是再去取数。",
             "threshold": args.threshold,
+            "headlineHint": HEADLINE_HINT,
             "files": [
                 {
                     "step": r["step"],
@@ -266,6 +417,7 @@ def main():
                     "file": r["file"],
                     "score": r["score"],
                     "gaps": r["gaps"],
+                    "headlineProblems": r["headlineProblems"],
                 }
                 for r in failing
             ],
@@ -291,6 +443,7 @@ def main():
         threshold=args.threshold,
         scores={r["step"]: r["score"] for r in results},
         gapCounts={r["step"]: r["gapCount"] for r in results},
+        headlineProblems=sum(len(r["headlineProblems"]) for r in results),
     )
     sys.exit(exit_code)
 

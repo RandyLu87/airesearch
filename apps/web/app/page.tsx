@@ -1,4 +1,5 @@
 import { listFinalCompanies, loadFinal, type FinalReport } from "../lib/final-report";
+import { headline, stripNote, text } from "../lib/field-text";
 
 /**
  * Coverage is derived, never curated: a company earns a card by having a
@@ -18,20 +19,6 @@ function researchCoverage(): { companyId: string; final: FinalReport }[] {
     );
 }
 
-/** 值可能是校验对象（取 value）或 unavailable（如实给原因），不吞字段。 */
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-function text(value: any): string {
-  if (value === null || value === undefined || value === "") return "—";
-  if (typeof value === "string" || typeof value === "number") return String(value);
-  if (typeof value === "object" && value.status === "unavailable") {
-    return `缺失：${value.reason ?? "未说明原因"}`;
-  }
-  if (typeof value === "object" && "value" in value) {
-    const unit = value.currency ?? "";
-    return `${value.value}${unit ? ` ${unit}` : ""}`;
-  }
-  return "—";
-}
 
 /** 公司卡片：代码、数据截止、一句话生意本质、股价与市值，指向公司分析页。 */
 function CompanyCard({ companyId, final }: { companyId: string; final: FinalReport }) {
@@ -41,6 +28,9 @@ function CompanyCard({ companyId, final }: { companyId: string; final: FinalRepo
   // 卡片空间小：优先取短的一句话生意本质，长结论留给公司页。
   const oneLiner = collection.businessModelMoat?.oneLiner
     ?? final?.analysis?.dimensions?.businessEssence?.conclusion;
+  // 卡片与公司页头共用同一套取值：取不到时给短标签 + 原因，而不是一个破折号。
+  const sharePrice = headline(valuation.sharePrice);
+  const marketCap = headline(valuation.marketCap?.reported);
   return (
     <a className="report-link" href={`./companies/${companyId}.html`}>
       <div className="company-card-meta">
@@ -53,13 +43,18 @@ function CompanyCard({ companyId, final }: { companyId: string; final: FinalRepo
         <div>
           <dt>股价</dt>
           <dd>
-            {text(valuation.sharePrice)}
-            {valuation.priceAsOf ? <small>截至 <time>{text(valuation.priceAsOf).split("(")[0].split("（")[0]}</time></small> : null}
+            {sharePrice.value}
+            {sharePrice.note
+              ? <small>{sharePrice.note}</small>
+              : valuation.priceAsOf ? <small>截至 <time>{stripNote(text(valuation.priceAsOf))}</time></small> : null}
           </dd>
         </div>
         <div>
           <dt>市值</dt>
-          <dd>{text(valuation.marketCap?.reported).split("(")[0].split("（")[0]}</dd>
+          <dd>
+            {marketCap.value}
+            {marketCap.note ? <small>{marketCap.note}</small> : null}
+          </dd>
         </div>
       </dl>
       <span>查看分析报告 →</span>
