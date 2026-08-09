@@ -71,7 +71,7 @@
 - 渲染网站步骤正文（第 5 步唯一正文）：`docs/research/workflow/05-render-site.md`，合并脚本：`docs/research/tools/build_final.py`
 - 更新首页步骤正文（第 6 步唯一正文）：`docs/research/workflow/06-update-home.md`
 - 评估与反馈步骤正文（第 7 步唯一正文）：`docs/research/workflow/07-evaluation-and-feedback.md`，反馈脚本：`docs/research/tools/research_feedback.py`，记账模块：`docs/research/tools/evals_log.py`
-- 数据源与交叉验证规范：`docs/model/financial-data.md`
+- 数据源与交叉验证规范：`docs/model/financial-data.md`，检索工具：`docs/research/tools/web_search.py`（Tavily，只返回来源原文、不返回 LLM 摘要；用法见 `01-data-collection.md` 3.3 节）
 - 数据采集清单：`docs/model/financial-model.md`
 - 数据采集产出模板：`docs/model/financials—model-template.json`
 - 多维度分析产出模板：`docs/model/financials—analysis-template.json`
