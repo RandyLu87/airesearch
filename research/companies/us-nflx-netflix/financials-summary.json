@@ -1,0 +1,128 @@
+{
+  "_spec": {
+    "purpose": "研究流程第 3 步（分析总结）的产出。由独立评估 Agent 基于第 1 步采集与第 2 步分析的落盘文件生成，不重新采集。步骤正文见 docs/research/workflow/03-analysis-summary.md。"
+  },
+  "meta": {
+    "companyId": "us-nflx-netflix",
+    "companyName": "Netflix, Inc.",
+    "summarizedAt": "2026-08-09",
+    "dataCutoff": "2026-08-09（Asia/Shanghai）",
+    "basedOnCollection": "research/companies/us-nflx-netflix/financials-collection.json",
+    "basedOnAnalysis": "research/companies/us-nflx-netflix/financials-analysis.json"
+  },
+  "dimensionSummary": [
+    {
+      "dimensionId": "businessQuality",
+      "title": "生意质量",
+      "mapsTo": "dimensions.businessEssence",
+      "conclusion": "订阅复购模式叠加规模效应，5年毛利率41.64%升至48.49%、经营利润率20.86%升至29.49%持续扩张，经营杠杆随规模显著放大，生意质量优秀但用户留存硬指标缺失。",
+      "confidence": 8,
+      "scoreBasis": "①dimensions.businessEssence.analysis.profitabilityTrend5y显示毛利率、经营利润率、净利率5年连续提升，FY2025净利率24.30%；②operatingLeverage显示FY2024经营利润+49.81%快于收入+15.65%，规模效应持续兑现；③dataGaps指出churn rate/NPS缺失，仅有密码共享转化、提价未流失等间接证据，故未给满分。"
+    },
+    {
+      "dimensionId": "moat",
+      "title": "护城河",
+      "mapsTo": "dimensions.moat",
+      "conclusion": "规模效应、转换成本、定价权三重护城河扎实且过去5年持续变宽，但网络效应弱、YouTube观看时长份额反超且增速更快，护城河正从扩张期转入防守期。",
+      "confidence": 7,
+      "scoreBasis": "①dimensions.moat.analysis.types中规模效应、转换成本、品牌定价权均判定'存在'，内容投入占营收比降至37.85%；②trendPast5y显示毛利率/经营利润率持续提升印证护城河变宽；③trendNext5y判断仅为'稳定'而非'变宽'，网络效应verdict为'待验证'，且YouTube份额12.7%已超Netflix9.0%增速更快，故未给满分。"
+    },
+    {
+      "dimensionId": "management",
+      "title": "管理层",
+      "mapsTo": "dimensions.management",
+      "conclusion": "联席CEO架构运转平稳、创始人已彻底退出治理，WBD竞购中主动止损体现资本纪律，但回购执行细节与在任高管持股一致性存在数据缺口。",
+      "confidence": 7.5,
+      "scoreBasis": "①dimensions.management.analysis.keyDecisions中2022年战略转向、广告套餐、密码共享收费、WBD分手费决策均评为四星或五星；②capitalAllocation显示FY2025自由现金流94.61亿美元同比增约37%，研发费用率5年稳定于7.5%-8.6%区间体现纪律；③dataGaps指出回购执行进度、联席CEO持股比例、减持记录均未采集，股东利益一致性无法完全验证，故未给满分。"
+    },
+    {
+      "dimensionId": "keyRisk",
+      "title": "最大风险",
+      "mapsTo": "dimensions.inversion",
+      "conclusion": "最大风险是内容/体育成本刚性上升与YouTube式免费注意力分流叠加压缩估值，两条主要路径概率均为'中'、影响均为'高'，属结构性而非致命性风险。",
+      "confidence": 5.5,
+      "scoreBasis": "①dimensions.inversion.analysis.failurePaths中'内容与体育版权成本刚性上升'与'YouTube分流注意力'两条概率均为中、影响均为高，是当前最主要风险；②'体育版权ROI不及预期'与'广告第二曲线不及预期'概率仅为低，可控性相对较高；③'增长指引不及预期触发估值压缩'概率虽低但historicalAnalogies显示2022年曾单日跌35.1%，尾部影响可能极端，整体处于中性偏可控区间。"
+    },
+    {
+      "dimensionId": "civilizationTrend",
+      "title": "文明趋势",
+      "mapsTo": "dimensions.industryTrend",
+      "conclusion": "流媒体观看时长已超线性电视，长期趋势有利，但范式转移受益者高度分散，Netflix份额9%-19%远未垄断，YouTube增速反超，全球OTT增速已放缓至6.1%。",
+      "confidence": 6.5,
+      "scoreBasis": "①dimensions.industryTrend.analysis.paradigmShift显示美国流媒体平台合计观看时长占比47.5%，范式转移判定为'部分'完成；②tam.growthForecast显示2025-2030全球OTT CAGR仅6.1%，成熟市场订阅疲劳已现；③paradigmShift同时指出YouTube以12.7%观看时长份额反超Netflix的9.0%，行业增长红利高度分散而非Netflix独享。"
+    },
+    {
+      "dimensionId": "valuation",
+      "title": "估值",
+      "mapsTo": "dimensions.valuation",
+      "conclusion": "当前PE23.31倍/PS6.38倍隐含接近双位数持续增速，中性情景3年仅涨13.6%、悲观情景跌28.3%，价格已较充分计入'持续跑赢行业'假设，安全边际不厚。",
+      "confidence": 4.5,
+      "scoreBasis": "①dimensions.valuation.analysis.threeScenario中性情景(增速9.8%/PE20倍)3年目标价84.2美元，涨幅仅13.6%，年化回报有限；②悲观情景(增速6.1%/PE14倍)目标价53.2美元，跌幅达28.3%，下行不小；③reverseDcf显示PS6.38倍隐含分析师一致预期CAGR9.83%显著快于行业6.1%，估值对'持续跑赢行业'假设依赖度高，吸引力中性偏低。"
+    }
+  ],
+  "strategies": {
+    "noPosition": {
+      "title": "空仓者",
+      "advice": "生意质量与护城河扎实，但当前估值中性偏贵，不宜追高介入。①可等待价格回调至悲观情景附近再分批建仓；②若广告等第二曲线加速兑现且留存未恶化，可提前小仓位介入。",
+      "triggers": [
+        {
+          "condition": "股价回调至53-60美元区间",
+          "action": "可分批建立试探性仓位",
+          "basis": "对应dimensions.valuation.analysis.threeScenario悲观情景目标价53.2美元(-28.3%)，业务本身经营利润率29.49%未恶化则具备安全边际。"
+        },
+        {
+          "condition": "2026年广告收入如期翻倍至约30亿美元且订阅规模未下滑",
+          "action": "可确认第二增长曲线兑现后半仓介入",
+          "basis": "对应dimensions.management.analysis.keyDecisions中Ads Suite上线决策评级五星，及dimensions.inversion.analysis.failurePaths广告业务路径概率仅为'低'。"
+        }
+      ]
+    },
+    "holding": {
+      "title": "持仓者",
+      "advice": "①业务与管理层质量评分较高，可继续持有核心仓位；②但当前估值吸引力中性偏低，不宜盲目加仓，可逢高分批止盈；③密切关注内容成本与YouTube份额两大风险信号。",
+      "triggers": [
+        {
+          "condition": "股价上探120美元附近且营收增速未同步提速",
+          "action": "分批止盈获利了结部分仓位",
+          "basis": "对应dimensions.valuation.analysis.threeScenario乐观情景目标价120.9美元(+63.1%)对应增速假设15%，assumptionBasis要求增速同步验证。"
+        },
+        {
+          "condition": "2026年内容现金投入实际超200亿美元指引且经营利润率环比转降",
+          "action": "减仓观察，暂停加仓",
+          "basis": "对应dimensions.inversion.analysis.failurePaths'内容与体育版权成本刚性上升'路径，概率中/影响高，且FY2025经营利润率29.49%已处历史高位。"
+        }
+      ]
+    },
+    "sellSignals": {
+      "title": "卖出信号",
+      "signals": [
+        {
+          "signal": "股价大幅超越120.9美元但增速未提速至15%以上",
+          "observable": "对照财报实际营收增速与三情景乐观假设增速的偏离",
+          "basis": "对应dimensions.valuation.analysis.threeScenario乐观情景assumptionBasis，增速假设15%对标2023-2025年实际区间，脱离该锚点即估值透支。"
+        },
+        {
+          "signal": "美国电视观看时长份额被YouTube进一步拉大",
+          "observable": "跟踪Nielsen Gauge季度数据中Netflix与YouTube份额差是否继续扩大",
+          "basis": "①对应dimensions.inversion.analysis.failurePaths'YouTube分流注意力'路径，2025年12月差距已由11.1%对8.5%扩大至12.7%对9.0%；②该数据源为单一(Nielsen经adwave转引)，需持续观察确认趋势而非单季判断。"
+        }
+      ]
+    },
+    "addSignals": {
+      "title": "加仓信号",
+      "signals": [
+        {
+          "signal": "股价跌至50-55美元区间且经营利润率维持29%左右",
+          "observable": "对照悲观情景目标价53.2美元与实际财报经营利润率是否同步恶化",
+          "basis": "对应dimensions.valuation.analysis.threeScenario悲观情景(-28.3%)与dimensions.businessEssence.analysis.profitabilityTrend5y经营利润率数据，若价跌但基本面未恶化即低估。"
+        },
+        {
+          "signal": "YouTube份额扩大态势出现多源确认的停滞或Netflix份额回升",
+          "observable": "需Nielsen Gauge之外至少一个独立数据源交叉验证观看时长份额变化",
+          "basis": "①对应dimensions.moat.dataGaps中'网络效应的可交叉验证数据源'缺口，当前YouTube份额数据仅Nielsen单源；②该护城河风险评分建立在单源数据上，触发加仓前需多源确认而非单一季度波动。"
+        }
+      ]
+    }
+  },
+  "disclaimer": "本总结基于公开信息与数据截止时点的分析生成，仅供研究参考，不构成个性化投资建议。"
+}

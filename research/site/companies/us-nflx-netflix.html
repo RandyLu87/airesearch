@@ -1,0 +1,892 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Netflix, Inc.分析报告</title><meta name="description" content="以商业模式、核心驱动、最新变化和当前价格隐含的假设为主线的上市公司研究。"/><meta name="research-publication-version" content="0.1.0"/><meta name="research-final-version" content="1.0.0"/><style>/* Inter 只覆盖拉丁字形，中文一律走系统字体，所以字体文件按站点实际用到的字符
+   子集化过（48.3 KB → 25.8 KB），可变字重轴保留。重新生成见 fonts/README.md。
+   font-display: swap + 下面的系统字体兜底，保证字体在弱网下取不到时只是字形回退，
+   不影响可读性。 */
+@font-face {
+  font-family: "Inter Local";
+  src: url("../assets/fonts/InterVariable.woff2") format("woff2-variations");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  --paper: #f7f7f2;
+  --ink: #101010;
+  --muted: #686863;
+  --line: #c9c9c2;
+  --line-dark: #93938c;
+  --signal: #ff4d00;
+  --soft: #ecece6;
+  --max: 1440px;
+  color-scheme: light;
+  font-family: "Inter Local", system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--paper); }
+body { margin: 0; color: var(--ink); background: var(--paper); }
+a { color: inherit; text-underline-offset: .2em; }
+p, li { line-height: 1.62; }
+
+.research-report,
+.company-page {
+  width: min(100%, var(--max));
+  margin: 0 auto;
+  padding: 0 36px 80px;
+}
+
+.report-hero {
+  min-height: 78vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 26px 0 34px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.eyebrow-row,
+.metric-meta,
+.company-card-meta,
+.company-eyebrow {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 56px;
+  align-items: end;
+  margin: 10vh 0 8vh;
+}
+
+.kicker,
+.section-kicker {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+h1, h2, h3, p { margin-top: 0; }
+h1 {
+  max-width: 980px;
+  margin-bottom: 24px;
+  font-size: clamp(58px, 10vw, 150px);
+  font-weight: 500;
+  letter-spacing: -.075em;
+  line-height: .82;
+}
+
+.headline {
+  max-width: 840px;
+  margin: 0;
+  font-size: clamp(22px, 3vw, 42px);
+  font-weight: 450;
+  letter-spacing: -.035em;
+  line-height: 1.08;
+}
+
+.stance-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--ink);
+}
+.stance-block .label,
+.hero-facts span,
+.summary-grid span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.stance-block strong { font-size: 42px; font-weight: 520; letter-spacing: -.05em; }
+.stance-block > span:last-child { color: var(--muted); font-size: 13px; }
+
+/* Auto-fit for the same reason as `.company-summary`: the cell count follows the
+   contract, and 1.2.0 trades a fair value for a market capitalisation. */
+.hero-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  border-top: 1px solid var(--line-dark);
+}
+.hero-facts > div { padding: 18px 18px 0 0; }
+.hero-facts span, .hero-facts strong { display: block; }
+.hero-facts strong { margin-top: 8px; font-size: 18px; font-weight: 560; }
+.hero-facts small { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; }
+
+.section-nav {
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 12px 0;
+  background: color-mix(in srgb, var(--paper) 94%, transparent);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(12px);
+}
+.section-nav a,
+.pill-link {
+  flex: 0 0 auto;
+  padding: 8px 14px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 650;
+  text-decoration: none;
+}
+.section-nav a:hover, .pill-link:hover { color: var(--paper); background: var(--ink); }
+
+.report-section {
+  display: grid;
+  grid-template-columns: minmax(72px, 1fr) minmax(0, 10fr);
+  gap: 32px;
+  padding: 76px 0 86px;
+  border-bottom: 1px solid var(--ink);
+}
+.section-number { font-size: 12px; font-variant-numeric: tabular-nums; }
+.section-content { min-width: 0; }
+.section-content h2 {
+  max-width: 980px;
+  margin-bottom: 26px;
+  font-size: clamp(42px, 6vw, 92px);
+  font-weight: 490;
+  letter-spacing: -.065em;
+  line-height: .92;
+}
+.lead {
+  max-width: 960px;
+  margin-bottom: 38px;
+  font-size: clamp(20px, 2.3vw, 32px);
+  letter-spacing: -.025em;
+  line-height: 1.24;
+}
+
+.summary-grid,
+.metric-grid,
+.chart-grid,
+.scenario-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--ink);
+}
+.summary-grid article {
+  min-height: 180px;
+  padding: 20px 28px 26px 0;
+  border-bottom: 1px solid var(--line);
+}
+.summary-grid article:nth-child(odd) { border-right: 1px solid var(--line); }
+.summary-grid article:nth-child(even) { padding-left: 28px; }
+.summary-grid p { max-width: 540px; margin: 24px 0 0; font-size: 18px; }
+
+.change-ledger { margin-top: 54px; }
+.change-ledger h3 { font-size: 14px; letter-spacing: .08em; text-transform: uppercase; }
+.change-ledger dl { border-top: 1px solid var(--line-dark); }
+.change-ledger dl div { display: grid; grid-template-columns: 150px 1fr; gap: 24px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.change-ledger dt { font-weight: 650; }
+.change-ledger dd { margin: 0; color: var(--muted); }
+
+.editorial-list { max-width: 980px; margin: 0; padding: 0; list-style: none; counter-reset: editorial; }
+.editorial-list > li { position: relative; min-height: 72px; padding: 18px 0 18px 56px; border-top: 1px solid var(--line); font-size: 17px; counter-increment: editorial; }
+.editorial-list > li::before { position: absolute; left: 0; content: counter(editorial, decimal-leading-zero); color: var(--muted); font-size: 11px; letter-spacing: .1em; }
+.source-ids { display: inline-flex; gap: 6px; margin-top: 22px; color: var(--muted); font-size: 11px; }
+.source-ids a { color: var(--ink); font-weight: 700; text-decoration: none; }
+
+.metric-grid { margin-top: 36px; }
+.metric-card { min-height: 260px; padding: 20px 28px 28px 0; border-bottom: 1px solid var(--line); }
+.metric-card:nth-child(odd) { border-right: 1px solid var(--line); }
+.metric-card:nth-child(even) { padding-left: 28px; }
+.metric-meta { color: var(--muted); }
+.metric-card h3 { margin: 42px 0 10px; font-size: 17px; font-weight: 580; }
+.metric-card > strong { display: block; font-size: clamp(30px, 4vw, 58px); font-weight: 480; letter-spacing: -.055em; }
+.metric-card p { max-width: 440px; margin: 16px 0; color: var(--muted); }
+.metric-card small { display: block; padding-top: 12px; border-top: 1px solid var(--line); }
+
+.chart-grid { margin-top: 64px; gap: 28px; border-top: 0; }
+.decision-chart { margin: 0; padding: 18px 0 22px; border-top: 1px solid var(--line-dark); }
+.chart-title { margin-bottom: 8px; font-size: 13px; font-weight: 650; letter-spacing: .04em; }
+.decision-chart svg { display: block; width: 100%; height: 180px; }
+.decision-chart figcaption { max-width: 430px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+.chart-axis { stroke: var(--line-dark); stroke-width: 1; }
+.chart-track { fill: var(--soft); }
+.chart-value--ink { fill: var(--ink); }
+.chart-value--signal { fill: var(--signal); }
+.chart-marker { stroke: var(--ink); stroke-width: 1; }
+.chart-label { fill: var(--ink); font-family: "Inter Local", sans-serif; font-size: 11px; font-weight: 650; letter-spacing: .05em; }
+.chart-line { fill: none; stroke-width: 3; vector-effect: non-scaling-stroke; }
+.chart-line--ink { stroke: var(--ink); }
+.chart-line--signal { stroke: var(--signal); }
+.chart-line--muted { stroke: var(--line-dark); stroke-dasharray: 5 4; }
+.chart-legend, .chart-driver-label, .chart-trend { fill: var(--muted); font-family: "Inter Local", "PingFang SC", sans-serif; font-size: 10px; }
+.chart-trend { fill: var(--ink); font-size: 9px; }
+
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 16px 12px; text-align: right; border-bottom: 1px solid var(--line); }
+th:first-child, td:first-child { padding-left: 0; text-align: left; }
+thead th { color: var(--muted); font-size: 11px; font-weight: 650; letter-spacing: .04em; vertical-align: bottom; }
+tbody th { font-weight: 650; }
+
+.scenario-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.scenario-grid article { padding: 24px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.scenario-grid article:last-child { border-right: 0; }
+.scenario-grid article > span { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .12em; }
+.scenario-grid h3 { margin: 42px 0 24px; font-size: 36px; font-weight: 500; letter-spacing: -.04em; }
+.scenario-grid p { min-height: 96px; color: var(--muted); }
+.scenario-grid dl { display: grid; grid-template-columns: 52px 1fr; gap: 8px 16px; font-size: 12px; }
+.scenario-grid dl > div { display: contents; }
+.scenario-grid dt { color: var(--muted); }
+.scenario-grid dd { margin: 0; }
+
+.action-zones { margin-top: 46px; border-top: 1px solid var(--ink); }
+.action-zones > div { display: grid; grid-template-columns: 180px 160px 1fr; gap: 24px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.action-zones strong { font-size: 18px; }
+.action-zones span { font-weight: 650; }
+.action-zones p { margin: 0; color: var(--muted); }
+
+/* Where today's price ranks in its own multiple history. A fact about the
+   market, so it is typeset as one: no colour, no arrow, no verdict word. */
+.multiple-percentile { margin: 18px 0 0; color: var(--muted); font-size: 14px; }
+.multiple-percentile strong { color: var(--ink); font-weight: 650; }
+.multiple-percentile small { display: block; margin-top: 6px; font-size: 11px; }
+.multiple-percentile--unavailable { font-style: italic; }
+
+/* Attributed assumption sets. Every seat is styled identically — an emphasised
+   seat would be the "基准" this contract removed, reintroduced as CSS. */
+.assumption-sets { border-top: 1px solid var(--ink); }
+.assumption-sets-note { margin: 18px 0 28px; max-width: 74ch; color: var(--muted); font-size: 13px; }
+.assumption-set { padding: 26px 0; border-bottom: 1px solid var(--line); }
+.assumption-set-head { display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; }
+.assumption-set-kind { padding: 4px 9px; border: 1px solid var(--ink); border-radius: 999px; font-size: 10px; letter-spacing: .08em; }
+.assumption-set-head strong { font-size: 17px; font-weight: 600; }
+/* The bias sits above the numbers, never in a footnote: a short report and an
+   issuer's guidance render identically otherwise, and that similarity is the lie. */
+.assumption-set-bias { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 14px; margin: 14px 0 0; padding: 12px 14px; border-inline-start: 2px solid var(--signal); background: color-mix(in srgb, var(--signal) 5%, transparent); font-size: 13px; }
+.assumption-set-bias > span { color: var(--muted); font-size: 11px; letter-spacing: .06em; }
+.assumption-set-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin: 20px 0 0; }
+.assumption-set-facts dt { color: var(--muted); font-size: 11px; text-transform: uppercase; }
+.assumption-set-facts dd { margin: 8px 0 0; font-size: 22px; font-weight: 520; }
+.assumption-set-facts dd small { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; font-weight: 400; }
+.assumption-set-assumptions { margin: 18px 0 0; max-width: 78ch; color: var(--muted); }
+.assumption-set-components { margin: 14px 0 0; padding: 0; list-style: none; font-size: 12px; }
+.assumption-set-components li { display: grid; grid-template-columns: 68px minmax(0, 1fr); gap: 14px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.assumption-set-components li > span { color: var(--muted); }
+.assumption-set-missing { margin: 16px 0 0; color: var(--muted); font-style: italic; }
+
+.disagreement-anchor { display: flex; flex-wrap: wrap; gap: 16px; margin: 0 0 18px; color: var(--muted); font-size: 13px; }
+.disagreement-anchor strong { color: var(--ink); }
+.disagreement-converged { margin: 16px 0 0; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+
+.split-section { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px; }
+.split-section h2 { font-size: clamp(36px, 4vw, 62px); }
+.evidence-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--ink); }
+.evidence-list li { padding: 0; border-bottom: 1px solid var(--line); }
+.evidence-list details { padding: 20px 0; }
+.evidence-list summary { display: grid; grid-template-columns: 42px 90px minmax(0, 1fr); gap: 12px; align-items: center; cursor: pointer; font-size: 17px; font-weight: 600; list-style: none; }
+.evidence-list summary::-webkit-details-marker { display: none; }
+.evidence-number { color: var(--muted); font-size: 11px; }
+.evidence-detail { margin: 18px 0 0 144px; padding-top: 14px; border-top: 1px solid var(--line); }
+.evidence-list p, .evidence-list small { display: block; margin: 0 0 8px; color: var(--muted); }
+.external-link { display: inline-block; margin-top: 12px; font-size: 13px; font-weight: 650; overflow-wrap: anywhere; }
+.evidence-kind { align-self: start; width: max-content; padding: 5px 9px; border: 1px solid var(--ink); border-radius: 999px; font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
+.evidence-kind--calculation { border-color: var(--signal); color: var(--signal); }
+.evidence-kind--inference { border-style: dashed; }
+.disclaimer { margin: 48px 0 0; padding-top: 16px; border-top: 1px solid var(--ink); color: var(--muted); font-size: 12px; }
+.back-to-top { position: fixed; right: 24px; bottom: 24px; display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid var(--ink); border-radius: 50%; background: var(--paper); text-decoration: none; }
+
+/* The header is sized against the fold, not against the viewport: the first
+   card (269px) plus a peek of the next one has to fit under it at 375×667, so
+   the whole header block stays inside ~350px. A vh-based margin here spent
+   122px of a 763px-tall laptop viewport on empty space. */
+.company-header { padding: 24px 0 24px; border-bottom: 1px solid var(--ink); }
+/* The air above the title scales with the viewport, because the title itself
+   does: a flat 24px reads right under a 128px heading on a short laptop and
+   cramped under a 150px one on a 27" display. Bounded at 72px so it can never
+   repeat 16vh's 122px, and the tight bottom margin keeps the tagline bound to
+   the title rather than floating between the two. */
+.company-header h1 { margin: clamp(24px, 6vh, 72px) 0 20px; }
+
+/* 中文标题的行距与字距。全局 h1 的 `line-height: .82` / `letter-spacing: -.075em`
+   是给拉丁标题的——字母有升部降部，收紧后行框里仍留得出空隙。汉字字形填满整个
+   em 方框，同样的值一旦折行就是物理重叠、字距为负则直接粘连。
+   这条必须在基础层生效（移动端标题折行更早，同样会叠）。 */
+.company-header h1[data-cjk="true"] { line-height: 1.06; letter-spacing: -.04em; }
+
+/* 字号按标题视觉宽度分档，目标是任何公司名都落在两行以内，而不是让长中文名
+   吃掉整屏。分档由渲染层算好写进 data-title-scale（见 companies/[company]/page.tsx）。
+   只在宽屏生效：≤800px 有自己的一套尺寸，而属性选择器的特异性高于媒体查询里的
+   `.company-header h1`，放到基础层会把移动端一起打挂。 */
+@media (min-width: 801px) {
+  .company-header h1[data-title-scale="md"] { font-size: clamp(52px, 8.5vw, 118px); }
+  .company-header h1[data-title-scale="sm"] { font-size: clamp(44px, 7vw, 96px); }
+}
+/* Only the desktop ceiling comes down — 40px cost two lines and 137px of the
+   fold. The 22px floor stays: narrow screens have budget to spare, and this is
+   also the company page's lead thesis. */
+.company-current { max-width: 840px; font-size: clamp(22px, 1.8vw, 26px); line-height: 1.3; }
+/* Auto-fit rather than a fixed four: how many cells there are depends on which
+   contract the latest snapshot was written under (1.2.0 has no stance and no fair
+   value), and a fixed track would leave a hole where the verdict used to be. */
+.company-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); border-bottom: 1px solid var(--ink); }
+.company-summary > div { padding: 22px 18px 24px 0; }
+.company-summary span { display: block; color: var(--muted); font-size: 11px; text-transform: uppercase; }
+.company-summary strong { display: block; margin-top: 10px; font-size: 24px; font-weight: 520; }
+.company-summary small { display: block; margin-top: 8px; color: var(--muted); font-size: 11px; }
+.company-section { padding: 72px 0; border-bottom: 1px solid var(--ink); }
+/* The coverage list shares the fold with the header above it, so it hugs it.
+   Company pages keep the full 72px rhythm: their summary bar already clears the
+   fold, and tightening one of eight sections would only break the cadence. */
+.coverage-section { padding-top: 28px; }
+.company-section h2 { margin-bottom: 32px; font-size: clamp(36px, 5vw, 72px); font-weight: 490; letter-spacing: -.055em; }
+.snapshot-pair { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+.snapshot-card { padding: 22px 0; border-top: 1px solid var(--ink); }
+.snapshot-card time { color: var(--muted); font-size: 12px; }
+.snapshot-card h3 { margin: 28px 0 12px; font-size: 36px; font-weight: 500; }
+.snapshot-card strong { display: block; margin-bottom: 22px; font-size: 22px; }
+.snapshot-card p { color: var(--muted); }
+.snapshot-card dl { display: grid; grid-template-columns: 120px 1fr; gap: 8px 16px; margin: 24px 0 0; padding-top: 16px; border-top: 1px solid var(--line); font-size: 13px; }
+.snapshot-card dt { color: var(--muted); }
+.snapshot-card dd { margin: 0; }
+.comparison-heading { margin: 54px 0 14px; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; }
+.comparison-status { display: inline-block; padding: 4px 8px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; }
+.comparison-status--no { color: var(--muted); border-style: dashed; }
+.comparison-detail-grid { margin-top: 22px; }
+.comparison-detail { min-height: 240px; padding: 22px 24px 26px 0; border-top: 1px solid var(--ink); }
+.comparison-detail > span { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.comparison-detail > strong { display: block; margin: 36px 0 20px; font-size: clamp(24px, 3vw, 40px); font-weight: 500; letter-spacing: -.04em; }
+.comparison-detail ul, .comparison-detail ol { margin: 28px 0 0; padding-left: 20px; }
+.comparison-detail li { margin-bottom: 8px; color: var(--muted); }
+.report-index { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+.report-link { display: flex; min-height: 220px; flex-direction: column; justify-content: space-between; padding: 20px; border: 1px solid var(--ink); text-decoration: none; }
+.report-link:hover { color: var(--paper); background: var(--ink); }
+.report-link time { font-size: 12px; }
+.report-link strong { font-size: 28px; font-weight: 520; }
+/* Index card text sets no colour of its own so the card inverts cleanly on
+   hover; the hairline stays --line, which reads on both grounds. A stance can
+   run to a full sentence, so it wraps instead of being clipped. */
+.company-card-stance { margin: 14px 0 0; font-size: 15px; }
+.company-card-facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 18px 0 20px; padding-top: 14px; border-top: 1px solid var(--line); }
+.company-card-facts dt { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.company-card-facts dd { margin: 6px 0 0; font-size: 17px; }
+.company-card-facts small { display: block; font-size: 11px; }
+/* Sits under the cards, not above them: it is a caveat about how to read the
+   figures, and below the fold it doubles as the peek that invites scrolling. */
+.coverage-note { max-width: 640px; margin: 24px 0 0; color: var(--muted); font-size: 14px; }
+
+@media (max-width: 800px) {
+  .research-report, .company-page { padding: 0 18px 48px; }
+  .report-hero { min-height: 90svh; }
+  .hero-grid { grid-template-columns: 1fr; gap: 38px; margin: 12vh 0 7vh; }
+  h1 { font-size: clamp(56px, 20vw, 96px); }
+  /* One line for 上市公司研究 at 375px: a wrapped page title costs another 60px
+     of the fold. The report cover keeps the full size. A 46px title needs far
+     less air above it than a 150px one, and 375×667 has no budget to give. */
+  .company-header h1 { margin: 24px 0 16px; font-size: clamp(36px, 11vw, 46px); }
+  .stance-block { width: 65%; }
+  .hero-facts, .company-summary { grid-template-columns: repeat(2, 1fr); }
+  .report-section { grid-template-columns: 1fr; gap: 14px; padding: 52px 0 62px; }
+  .section-number { padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+  .section-content h2 { font-size: clamp(40px, 14vw, 68px); }
+  .summary-grid, .metric-grid, .chart-grid, .scenario-grid, .split-section, .snapshot-pair, .report-index { grid-template-columns: 1fr; }
+  .summary-grid article:nth-child(odd), .metric-card:nth-child(odd) { border-right: 0; }
+  .summary-grid article:nth-child(even), .metric-card:nth-child(even) { padding-left: 0; }
+  .scenario-grid article { padding-left: 0; border-right: 0; }
+  .action-zones > div { grid-template-columns: 1fr; gap: 6px; }
+  .change-ledger dl div { grid-template-columns: 1fr; gap: 8px; }
+  .evidence-list summary { grid-template-columns: 34px 82px minmax(0, 1fr); gap: 8px; font-size: 14px; }
+  .evidence-detail { margin-left: 0; }
+}
+
+@media print {
+  :root { --paper: #fff; }
+  @page { size: A4; margin: 16mm; }
+  .research-report { max-width: none; padding: 0; }
+  .report-hero { min-height: 250mm; break-after: page; }
+  .section-nav, .back-to-top, .company-page link, .company-page script { display: none; }
+  .report-section { display: block; padding: 12mm 0; break-before: page; }
+  .section-number { margin-bottom: 12mm; }
+  .metric-card, .decision-chart, .scenario-grid article, tr, .evidence-list li { break-inside: avoid; }
+  .evidence-list details { display: block; }
+  .evidence-list details > * { display: block; }
+  .section-content h2 { font-size: 48px; }
+  a { text-decoration: none; }
+}
+
+/* ── 通用小件 ─────────────────────────────────────────── */
+.block-heading { margin: 46px 0 16px; font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.company-note { max-width: 900px; margin: 0 0 28px; color: var(--muted); font-size: 16px; }
+.empty-note { margin: 0; padding: 18px 0; color: var(--muted); font-size: 14px; }
+.cell-prose { max-width: 420px; text-align: left; color: var(--muted); font-size: 13px; }
+.cell-change { font-weight: 650; }
+.trend { display: inline-block; padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; font-weight: 650; white-space: nowrap; }
+.trend--改善 { color: var(--signal); border-color: var(--signal); }
+.trend--恶化 { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.trend--待验证 { border-style: dashed; }
+
+/* 首列在横向滚动时钉住，否则宽表一滑就不知道在看哪一行 */
+.table-wrap table th:first-child { position: sticky; left: 0; z-index: 1; background: var(--paper); }
+
+/* ── 指标释义浮层（原生 popover，零 JS） ───────────────── */
+.metric-note-anchor { display: inline; white-space: nowrap; }
+.metric-note-toggle { margin-inline-start: 5px; padding: 0; border: 0; background: none; color: var(--muted); font: inherit; font-size: .8em; line-height: 1; cursor: pointer; }
+.metric-note-toggle:hover, .metric-note-toggle:focus-visible { color: var(--signal); }
+.metric-note-toggle { anchor-name: var(--note-anchor); }
+/* 贴着触发它的那个 ⓘ 弹出。不覆盖定位的话，浏览器默认是 inset:0 + margin:auto，
+   也就是视口正中——那是对话框的位置，不是名词解释该出现的位置。
+   仍然用 popover 而不是内联展开：它在 top layer，不会被财报表的横向滚动容器裁掉，
+   而且自带点击外部关闭与 Esc 关闭。 */
+/* 默认隐藏由这里显式声明，不依赖浏览器 UA 样式表的
+   `[popover]:not(:popover-open){display:none}`。上一版就是漏了这一条：
+   浏览器一旦没把该元素当 popover 处理，它就停在原地永久显示。
+   `:popover-open` 不被支持时整条规则会被丢弃，结果是保持隐藏——
+   失败方向朝「看不见」而不是「糊在页面上」。 */
+.metric-note { display: none; }
+.metric-note[popover] { position: fixed; width: min(380px, calc(100vw - 32px)); margin: 0; padding: 18px 20px; border: 1px solid var(--ink); background: var(--paper); color: var(--ink); font-size: 13px; font-weight: 400; font-style: normal; line-height: 1.58; text-align: left; white-space: normal; letter-spacing: 0; box-shadow: 0 10px 30px rgb(16 16 16 / .16); }
+.metric-note[popover]:popover-open { display: block; }
+/* 浮层内部的排版必须自己定死。它嵌在 <strong>、<h3> 这类容器里，
+   区块级的着色与字号规则会顺着继承进来——SOTP 那一版整段变橙就是这么来的。 */
+.metric-note, .metric-note > * { color: var(--ink); }
+/* 真的没有 popover 支持时，ⓘ 点了不会有反应，那就别给这个假承诺，
+   改为把页尾的指标释义表在屏幕上也显示出来。 */
+@supports not selector(:popover-open) {
+  .metric-note-toggle { display: none; }
+  .metric-glossary { display: block; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--ink); }
+}
+@supports (anchor-name: --a) {
+  .metric-note[popover] { position-anchor: var(--note-anchor); position-area: block-end span-inline-end; position-try-fallbacks: flip-block, flip-inline, block-start span-inline-start; margin-block-start: 8px; inset: auto; }
+}
+/* 不支持锚定定位的浏览器（目前主要是 Firefox）回落到视口居中；
+   不加变暗背景，避免它读起来像一个必须处理的模态。 */
+@supports not (anchor-name: --a) {
+  .metric-note[popover] { inset: 0; margin: auto; height: fit-content; }
+}
+.metric-note > * { display: block; }
+.metric-note-title { margin-bottom: 10px; font-size: 15px; font-weight: 650; }
+.metric-note-formula { margin-bottom: 10px; padding: 8px 10px; background: var(--soft); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+.metric-note-company { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); }
+.metric-note-pitfall { margin-top: 10px; color: var(--signal); }
+
+/* ── 商业模式 ─────────────────────────────────────────── */
+/* 长文本分段：按作者已写下的结构切开——句号分段，(1)(2)(3) 转有序列表。
+   段间距用 margin 而不是空行，且最后一段不带下边距，避免和外层容器的
+   padding 叠出双倍空隙。 */
+.prose-block > p { margin: 0 0 12px; }
+.prose-block > p:last-child { margin-bottom: 0; }
+.prose-enum { margin: 4px 0 12px; padding: 0; list-style: none; counter-reset: prose-enum; }
+.prose-enum:last-child { margin-bottom: 0; }
+.prose-enum li { position: relative; padding-left: 26px; counter-increment: prose-enum; }
+.prose-enum li + li { margin-top: 8px; }
+.prose-enum li::before {
+  content: "(" counter(prose-enum) ")";
+  position: absolute; left: 0; top: 0;
+  color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums;
+}
+/* 在 .editorial-list（章节要点与风险清单）里，分段块继承外层字号与行高 */
+.editorial-list > li .prose-block > p,
+.editorial-list > li .prose-enum li { font-size: inherit; line-height: inherit; }
+.constraint-list .prose-enum li { color: var(--muted); font-size: 14px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.model-prose { margin: 0 0 4px; max-width: 62ch; font-size: 15px; }
+
+/* 因果链：一条连续脊线穿过所有环节。节点标签在各公司间从 4 字到 54 字不等，
+   只有流式文本能自适应换行，因此刻意用 CSS 而非 ADR-0004 的内联 SVG。
+   不用通栏横线分隔——那会让递进关系读成表格行；序号也不用 --signal，
+   它在本设计里是语义色，而序号位置不携带语义。 */
+/* 因果链的飞轮环：卡片装全文，位置在构建期由环节数算出。
+   卡宽 210px、相邻卡中心间距 291px（8 环），几何上不可能碰撞，因此不需要
+   逐公司调参。只在 PC 上出现——打印内容宽仅 673px、手机更窄，两者回落到
+   下面的阶梯流，文字完全相同。 */
+/* 环与阶梯流互斥：宽屏显示环，窄屏与纸上显示阶梯流。另一份是
+   display:none，因此辅助技术与搜索引擎只会看到一份文本。 */
+@media (min-width: 1080px) {
+  .flywheel ~ .causal-flow { display: none; }
+}
+@media (max-width: 1079px) {
+  .flywheel { display: none; }
+}
+.flywheel { position: relative; width: 100%; max-width: 1000px; margin: 18px auto 6px; }
+.flywheel-track { position: absolute; inset: 0; width: 100%; height: 100%; }
+.flywheel-arc { fill: none; stroke: var(--line-dark); stroke-width: 2; vector-effect: non-scaling-stroke; }
+.flywheel-head { fill: var(--line-dark); }
+.flywheel-hub {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  display: flex; flex-direction: column; gap: 8px; align-items: center;
+  max-width: 260px; text-align: center;
+}
+.flywheel-hub { gap: 4px; max-width: 300px; }
+.flywheel-hub strong { font-size: 19px; font-weight: 560; letter-spacing: -.02em; text-wrap: balance; }
+.flywheel-hub em { font-size: 15px; font-style: normal; letter-spacing: .04em; }
+.flywheel-hub span { margin-top: 6px; color: var(--muted); font-size: 12px; }
+.flywheel-cards { margin: 0; padding: 0; list-style: none; }
+.flywheel-cards li {
+  position: absolute; transform: translate(-50%, -50%);
+  /* 宽度用百分比而不是 px：这样卡宽与环半径同比例缩放，间距/卡宽之比恒为
+     0.76，容器变窄也不会碰撞。写死 210px 时容器缩到 900px 以下就会重叠。 */
+  width: 23%; padding: 15px 15px 14px; text-align: center;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 10px;
+}
+.nowrap { white-space: nowrap; }
+.flywheel-cards p { margin: 0; font-size: 13px; line-height: 1.5; text-wrap: pretty; }
+.flywheel-badge {
+  position: absolute; left: 50%; top: 0; transform: translate(-50%, -50%);
+  display: grid; place-items: center; width: 24px; height: 24px;
+  border-radius: 50%; background: var(--ink); color: var(--paper);
+  font-size: 12px; font-weight: 650; font-variant-numeric: tabular-nums;
+}
+
+/* 脊线是正文列的 border-left：相邻环节的边框首尾相接，天然连续，不需要用
+   背景色去打断再拼回来——上一版正是这么做的，结果线看着像虚线。 */
+.causal-flow { --gut: 30px; --lane: 20px; margin: 6px 0 0; }
+.causal-flow ol { margin: 0; padding: 0; list-style: none; }
+.causal-flow li { display: grid; grid-template-columns: var(--gut) minmax(0, 1fr); break-inside: avoid; }
+.causal-step { grid-column: 1; padding: 1px 13px 0 0; text-align: right; color: var(--muted); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.causal-flow li p { grid-column: 2; position: relative; margin: 0; max-width: 58ch; padding: 0 0 21px var(--lane); border-left: 1px solid var(--line); font-size: 15px; line-height: 1.62; }
+/* 节点是脊线上的小空心圆，比在文字里塞符号安静得多 */
+.causal-flow li p::before {
+  content: ""; position: absolute; left: -3.5px; top: .6em;
+  box-sizing: border-box; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--paper); border: 1px solid var(--line-dark);
+}
+/* 回指：同一条脊线转成虚线继续往下，读作「线绕回去了」 */
+.causal-loop { display: grid; grid-template-columns: var(--gut) minmax(0, 1fr); margin: 0; }
+.causal-loop-mark { grid-column: 1; padding: 15px 13px 0 0; text-align: right; color: var(--line-dark); font-size: 12.5px; }
+.causal-loop-note { grid-column: 2; padding: 15px 0 0 var(--lane); border-left: 1px dashed var(--line-dark); color: var(--muted); font-size: 12.5px; line-height: 1.6; }
+
+/* 现金引擎瀑布：走 SVG 与其余决策图表同族——它需要零基线、正负方向与
+   跨条基准线，这三样用 CSS 横条做会很别扭。高度由行数在组件里算出。 */
+.cash-waterfall { padding-top: 14px; }
+.cash-waterfall svg { height: auto; }
+.waterfall-label { fill: var(--ink); font-size: 11px; }
+.waterfall-value { fill: var(--ink); font-size: 11px; font-variant-numeric: tabular-nums; }
+.waterfall-value--total { font-weight: 650; }
+.waterfall-value--cost { fill: var(--signal); }
+.waterfall-bar--segment { fill: var(--ink); }
+.waterfall-bar--total { fill: var(--line-dark); }
+.waterfall-bar--cost { fill: var(--signal); }
+.waterfall-axis { stroke: var(--line-dark); stroke-width: 1; }
+.segment-list { display: grid; gap: 22px; }
+.segment-row { padding: 20px 0; border-top: 1px solid var(--line-dark); }
+.segment-head { display: flex; align-items: baseline; gap: 14px; }
+.segment-head strong { font-size: 20px; font-weight: 560; }
+.segment-head em { margin-left: auto; font-size: 28px; font-style: normal; font-weight: 480; letter-spacing: -.04em; }
+.segment-role { padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; }
+.segment-role--经济核心 { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.segment-role--收缩中 { border-style: dashed; color: var(--muted); }
+.segment-bar { display: block; height: 6px; margin: 12px 0 16px; background: var(--soft); }
+.segment-bar span { display: block; height: 100%; background: var(--ink); }
+.segment-row dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0; font-size: 13px; }
+.segment-row dt { margin-bottom: 4px; color: var(--muted); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+.segment-row dd { margin: 0; }
+
+/* ── 行业地位 ─────────────────────────────────────────── */
+.share-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px; }
+.share-card { padding: 22px 0; border-top: 1px solid var(--ink); }
+.share-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--muted); font-size: 11px; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; }
+.share-card h3 { margin: 24px 0 12px; font-size: 16px; font-weight: 580; }
+.share-card > strong { display: block; font-size: clamp(30px, 4vw, 52px); font-weight: 480; letter-spacing: -.05em; }
+.share-rank { margin: 12px 0 0; color: var(--muted); font-size: 13px; }
+.share-reason { margin: 8px 0 0; color: var(--signal); font-size: 13px; }
+.share-denominator { margin: 18px 0 0; padding: 14px 0 0; border-top: 1px solid var(--line); list-style: none; font-size: 12px; color: var(--muted); }
+.share-denominator li { margin-bottom: 6px; line-height: 1.5; }
+.share-excluded { color: var(--signal); }
+.divergence-callout { max-width: 900px; margin: 34px 0 0; padding: 20px 24px; border-left: 3px solid var(--signal); background: var(--soft); font-size: 15px; }
+.divergence-callout strong { display: block; margin-bottom: 8px; letter-spacing: .04em; }
+.concentration { max-width: 900px; margin: 24px 0 0; color: var(--muted); font-size: 14px; }
+
+/* ── 报告期筛选（纯 CSS） ─────────────────────────────── */
+.cadence-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.cadence-nav { display: flex; gap: 8px; margin-bottom: 20px; }
+.cadence-label { padding: 7px 16px; border: 1px solid var(--ink); border-radius: 999px; font-size: 12px; font-weight: 650; cursor: pointer; }
+.cadence-label:hover { background: var(--soft); }
+.cadence-panel, .cadence-panel-heading { display: none; }
+.cadence-input--1:checked ~ .cadence-panel--1,
+.cadence-input--2:checked ~ .cadence-panel--2,
+.cadence-input--3:checked ~ .cadence-panel--3 { display: block; }
+.cadence-input--1:checked ~ .cadence-nav .cadence-label--1,
+.cadence-input--2:checked ~ .cadence-nav .cadence-label--2,
+.cadence-input--3:checked ~ .cadence-nav .cadence-label--3 { color: var(--paper); background: var(--ink); }
+.cadence-input--1:focus-visible ~ .cadence-nav .cadence-label--1,
+.cadence-input--2:focus-visible ~ .cadence-nav .cadence-label--2,
+.cadence-input--3:focus-visible ~ .cadence-nav .cadence-label--3 { outline: 2px solid var(--signal); outline-offset: 2px; }
+.row-segment th { font-weight: 400; }
+.segment-indent { padding-left: 14px; color: var(--muted); }
+.period-derived { margin-left: 6px; padding: 2px 6px; border: 1px dashed var(--line-dark); border-radius: 999px; font-size: 9px; font-weight: 400; }
+
+/* ── 价值桥 ───────────────────────────────────────────── */
+.value-bridge { margin: 0 0 44px; padding: 20px 0 24px; border-top: 1px solid var(--ink); }
+.value-bridge .chart-title { margin-bottom: 20px; }
+.bridge-rows { margin: 0; padding: 0; list-style: none; }
+.bridge-rows li { display: grid; grid-template-columns: minmax(120px, 200px) minmax(0, 1fr) 78px; gap: 16px; align-items: center; padding: 9px 0; }
+.bridge-label { font-size: 14px; }
+.bridge-track { position: relative; height: 22px; background: var(--soft); }
+.bridge-bar { position: absolute; top: 0; height: 100%; background: var(--ink); }
+.bridge-bar--face-value { background: var(--line-dark); }
+.bridge-bar--cut { background: repeating-linear-gradient(45deg, var(--signal) 0 4px, transparent 4px 8px); }
+.bridge-bar--total { background: var(--signal); }
+.bridge-marker { position: absolute; top: -5px; width: 2px; height: 32px; background: var(--ink); }
+.bridge-value { font-size: 15px; font-variant-numeric: tabular-nums; text-align: right; }
+.bridge-total { border-top: 1px solid var(--ink); font-weight: 650; }
+.bridge-total .bridge-value, .bridge-price .bridge-value { font-size: 18px; font-weight: 650; }
+.bridge-price .bridge-label, .bridge-price .bridge-value { color: var(--muted); }
+.bridge-range { margin: 18px 0 0; color: var(--muted); font-size: 13px; }
+
+/* ── 估值方法与升级提示 ───────────────────────────────── */
+.method-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px; margin-bottom: 30px; }
+.method-pair article { padding: 20px 0; border-top: 1px solid var(--line-dark); }
+.method-pair article > span { display: block; margin-bottom: 12px; color: var(--muted); font-size: 11px; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; }
+.method-pair strong { display: block; margin-bottom: 12px; font-size: 22px; font-weight: 540; }
+.method-pair p { margin: 0; color: var(--muted); font-size: 14px; }
+.method-ideal { border-top-color: var(--signal); }
+.method-ideal > span { color: var(--signal); }
+.implied-line { max-width: 940px; margin: 0 0 30px; padding: 18px 22px; background: var(--soft); font-size: 15px; }
+.implied-line strong { margin-right: 12px; letter-spacing: .04em; }
+.upgrade-hint { margin-bottom: 30px; padding: 22px 24px; border: 1px solid var(--signal); }
+.upgrade-hint h4 { margin: 0 0 16px; font-size: 15px; font-weight: 650; color: var(--signal); }
+.upgrade-hint ol { margin: 0; padding-left: 20px; }
+.upgrade-hint li { margin-bottom: 14px; font-size: 14px; }
+.upgrade-hint li > * { display: block; }
+.upgrade-hint li strong { margin-bottom: 4px; }
+.upgrade-hint li span { color: var(--muted); }
+.upgrade-hint li em { margin-top: 4px; color: var(--muted); font-size: 12px; font-style: normal; }
+.health-check { margin-bottom: 30px; padding: 16px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.health-check summary { font-size: 13px; font-weight: 650; cursor: pointer; }
+.health-check ul { margin: 18px 0 0; padding: 0; list-style: none; }
+.health-check li { margin-bottom: 16px; font-size: 13px; }
+.health-check li > * { display: block; }
+.health-response { width: max-content; margin-bottom: 6px; padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; }
+.health-response--blocked { color: var(--signal); border-color: var(--signal); }
+.health-check li strong { margin-bottom: 4px; }
+.health-check li span:last-child { color: var(--muted); }
+
+/* ── 驱动、约束与「相对上次」 ─────────────────────────── */
+.driver-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--ink); }
+.driver-card { min-height: 230px; padding: 20px 24px 26px 0; border-bottom: 1px solid var(--line); }
+.driver-card:not(:nth-child(3n)) { border-right: 1px solid var(--line); }
+.driver-card:not(:nth-child(3n+1)) { padding-left: 24px; }
+.driver-card h3 { margin: 30px 0 10px; font-size: 15px; font-weight: 580; }
+.driver-card > strong { display: block; font-size: clamp(22px, 2.6vw, 34px); font-weight: 480; letter-spacing: -.04em; }
+.driver-delta { margin: 14px 0; color: var(--muted); font-size: 13px; }
+.driver-card small { display: block; padding-top: 12px; border-top: 1px solid var(--line); font-size: 12px; }
+.constraint-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line-dark); }
+.constraint-list > li { display: grid; grid-template-columns: 90px 260px 1fr; gap: 20px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.constraint-list > li > .prose-block > p, .constraint-list > li > p { margin: 0; color: var(--muted); font-size: 14px; }
+.delta-line { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0 0 26px; border-top: 1px solid var(--ink); }
+.delta-line > div { padding: 18px 18px 20px 0; }
+.delta-line dt { color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.delta-line dd { margin: 10px 0 0; font-size: 17px; font-weight: 520; }
+.driver-change-list { margin: 26px 0 0; padding: 0; list-style: none; }
+.driver-change-list li { padding: 16px 0; border-top: 1px solid var(--line); }
+.driver-change-list p { margin: 8px 0 0; color: var(--muted); font-size: 14px; }
+.driver-change { display: inline-block; margin-right: 12px; padding: 3px 9px; border: 1px solid var(--signal); border-radius: 999px; color: var(--signal); font-size: 10px; text-transform: uppercase; }
+
+/* ── 护城河与转折点 ───────────────────────────────────── */
+.moat-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0 30px; border-top: 1px solid var(--ink); }
+.moat-card { padding: 20px 0 24px; border-bottom: 1px solid var(--line); }
+.moat-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px; }
+.moat-type { font-size: 15px; font-weight: 650; }
+.moat-trend { display: inline-block; margin-left: auto; padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; font-weight: 650; white-space: nowrap; }
+.moat-trend--变宽 { color: var(--signal); border-color: var(--signal); }
+.moat-trend--变窄 { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.moat-trend--待验证 { border-style: dashed; }
+.moat-trend--已撤销 { color: var(--muted); border-style: dotted; }
+.moat-mechanism { margin: 0 0 16px; font-size: 14px; }
+.moat-card dl { display: grid; gap: 12px; margin: 0; }
+.moat-card dt { margin-bottom: 4px; color: var(--muted); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+.moat-card dd { margin: 0; font-size: 13px; }
+.moat-absent { margin: 0; color: var(--muted); font-size: 14px; }
+.moat-trend-list { margin: 26px 0 0; padding: 0; list-style: none; }
+.moat-trend-list li { display: grid; grid-template-columns: 90px 200px 1fr; gap: 20px; align-items: baseline; padding: 14px 0; border-top: 1px solid var(--line); }
+.moat-trend-list p { margin: 0; color: var(--muted); font-size: 14px; }
+.moat-trend-list .moat-trend { margin-left: 0; }
+
+/* ── 分歧点 ───────────────────────────────────────────── */
+.disagreement { margin-bottom: 30px; padding: 22px 24px; border: 1px solid var(--line-dark); }
+.disagreement h4 { display: flex; align-items: baseline; gap: 12px; margin: 0 0 18px; font-size: 15px; font-weight: 650; }
+.disagreement-driver { margin-left: auto; color: var(--muted); font-size: 12px; font-weight: 480; }
+.disagreement dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin: 0; }
+.disagreement dt { margin-bottom: 6px; color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.disagreement dd { margin: 0; }
+/* 重合不是错误，但也不是好消息：虚线边框把它和一条真实分歧区分开。 */
+.disagreement--converged { border-style: dashed; }
+
+/* ── 管理层承诺与资本配置 ─────────────────────────────── */
+.commitment-counts { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0 20px; margin: 0 0 26px; border-top: 1px solid var(--ink); }
+.commitment-counts article { padding: 16px 0 18px; }
+.commitment-counts span { display: block; color: var(--muted); font-size: 11px; letter-spacing: .06em; }
+.commitment-counts strong { display: block; margin-top: 8px; font-size: clamp(24px, 2.6vw, 34px); font-weight: 480; letter-spacing: -.04em; }
+.commitment-outstanding { margin: 0 0 24px; padding: 0; list-style: none; border-top: 1px solid var(--line-dark); }
+.commitment-outstanding li { display: grid; grid-template-columns: 90px 1fr 200px; gap: 16px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.commitment-outstanding em { color: var(--muted); font-size: 12px; font-style: normal; text-align: right; }
+.commitment-status { display: inline-block; padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; font-weight: 650; white-space: nowrap; }
+.commitment-status--未兑现 { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.commitment-status--部分兑现 { border-style: dashed; }
+.commitment-latest { margin: 0 0 24px; color: var(--muted); font-size: 14px; }
+
+/* ── 证据密度 ─────────────────────────────────────────── */
+.density-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 24px; margin: 0 0 24px; border-top: 1px solid var(--ink); }
+.density-grid article { padding: 18px 0 20px; }
+.density-grid span { display: block; color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.density-grid strong { display: block; margin: 10px 0 8px; font-size: clamp(22px, 2.4vw, 30px); font-weight: 480; letter-spacing: -.04em; }
+.density-grid small { display: block; color: var(--muted); font-size: 12px; }
+.density-method { margin: 0 0 20px; color: var(--muted); font-size: 14px; }
+.density-clear { margin: 0; padding: 14px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+.density-responses { margin: 0; padding: 0; list-style: none; }
+.density-responses > li { padding: 16px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.density-responses > li > strong { display: block; margin: 8px 0 4px; }
+.density-responses > li > span:not([class]) { color: var(--muted); }
+.density-blocked { margin: 12px 0 0; padding-left: 20px; }
+.density-blocked li { margin-bottom: 10px; }
+.density-blocked li > * { display: block; }
+.density-blocked li span { color: var(--muted); }
+.density-blocked li em { margin-top: 2px; color: var(--muted); font-size: 12px; font-style: normal; }
+
+/* ── 打印用指标释义表（屏幕隐藏） ─────────────────────── */
+.metric-glossary { display: none; }
+
+@media (max-width: 800px) {
+  .share-grid, .method-pair, .driver-grid, .delta-line, .segment-row dl { grid-template-columns: 1fr; }
+  .causal-flow { --gut: 24px; --lane: 14px; }
+  .causal-step { padding-right: 9px; }
+  .causal-loop-mark { padding-right: 9px; }
+  .driver-card:not(:nth-child(3n)) { border-right: 0; }
+  .driver-card:not(:nth-child(3n+1)) { padding-left: 0; }
+  .constraint-list > li { grid-template-columns: 1fr; gap: 8px; }
+  .moat-trend-list li { grid-template-columns: 1fr; gap: 8px; }
+  .disagreement dl { grid-template-columns: 1fr; }
+  .density-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .commitment-counts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .commitment-outstanding li { grid-template-columns: 1fr; gap: 8px; }
+  .commitment-outstanding em { text-align: left; }
+  .bridge-rows li { grid-template-columns: minmax(96px, 1fr) 64px; }
+  .bridge-track { display: none; }
+  .segment-head { flex-wrap: wrap; }
+  .segment-head em { margin-left: 0; }
+}
+
+@media print {
+  /* 浮层在纸上没有意义：关掉触发器，改用页尾的释义表。 */
+  .metric-note-toggle, .metric-note[popover] { display: none !important; }
+  .metric-glossary { display: block; break-before: page; }
+  .metric-glossary dl { border-top: 1px solid var(--ink); }
+  .metric-glossary div { padding: 10px 0; border-bottom: 1px solid var(--line); break-inside: avoid; }
+  .metric-glossary dt { font-weight: 650; }
+  .metric-glossary dd { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+  /* 筛选页签在纸上同样无效：三档全部展开，各自带标题。 */
+  .cadence-nav { display: none; }
+  .cadence-panel { display: block !important; break-inside: avoid; }
+  .cadence-panel-heading { display: block; margin: 16px 0 8px; font-size: 13px; font-weight: 650; }
+  .table-wrap table th:first-child { position: static; }
+  .segment-row, .share-card, .driver-card, .value-bridge, .upgrade-hint { break-inside: avoid; }
+  /* 节点圆心用纸色填充，打印时纸色是纯白 */
+  .flywheel { display: none !important; }
+  .flywheel ~ .causal-flow { display: block !important; }
+  .causal-flow li p::before { background: #fff; }
+  .causal-flow ol, .cash-waterfall { break-inside: avoid; }
+  .health-check[open] summary ~ * { display: block; }
+}
+.cadence-missing { margin: 0 0 14px; color: var(--muted); font-size: 12px; }
+
+/* ———— 分析页（financials-final 渲染）————
+   原则：结论一眼可读，溯源（打分依据 / 依据字段路径 / 证据 / 缺口）默认折叠。 */
+
+/* 折叠溯源块：摘要行小号大写，与 block-heading 同族 */
+.fold { margin-top: 16px; border-top: 1px solid var(--line); }
+.fold summary { padding: 10px 0 4px; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; list-style: none; user-select: none; }
+.fold summary::-webkit-details-marker { display: none; }
+.fold summary::after { content: "＋"; margin-left: 8px; }
+.fold[open] summary::after { content: "－"; }
+.fold summary:hover { color: var(--ink); }
+.fold p { max-width: 900px; margin: 8px 0 12px; color: var(--muted); font-size: 13px; line-height: 1.65; }
+.fold ul { max-width: 900px; margin: 8px 0 12px; padding-left: 18px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+.fold li { margin-bottom: 8px; }
+td .fold { margin-top: 4px; border-top: 0; }
+td .fold summary { padding: 0; }
+td .fold p, td .fold ul { font-size: 12px; }
+
+/*
+ * 分点叙述：分析文件里长字段按「① ② ③」分点书写（见
+ * docs/research/workflow/02-multi-dimension-analysis.md），渲染层切成 .prose-point，
+ * 每点独占一行；序号悬挂在文字左侧，折行后与首字对齐，长段落才真正可扫读。
+ */
+.prose-point { display: block; padding-left: 1.35em; text-indent: -1.35em; }
+.prose-point + .prose-point { margin-top: 6px; }
+.fold .prose-point + .prose-point, td .prose-point + .prose-point { margin-top: 4px; }
+
+/* 每节开头的一句话结论：正文级可读，不再用 muted 小字 */
+.section-lead { max-width: 900px; margin: 0 0 34px; font-size: clamp(17px, 1.4vw, 20px); line-height: 1.6; }
+
+/* 维度总结卡里的结论段 */
+.driver-card .dim-conclusion { margin: 14px 0 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+/* 策略建议：两列卡片（空仓者/持仓者） */
+.strategy-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 56px; border-top: 1px solid var(--ink); }
+.strategy-grid > article { padding: 26px 0 30px; border-bottom: 1px solid var(--line); }
+.strategy-grid h3 { margin: 0 0 14px; font-size: 22px; font-weight: 560; letter-spacing: -.02em; }
+.strategy-grid .advice { margin: 0 0 18px; font-size: 15px; line-height: 1.65; }
+.trigger-lines { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line-dark); }
+.trigger-lines > li { padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14px; line-height: 1.55; }
+.trigger-lines strong { font-weight: 650; }
+.trigger-lines .then { color: var(--muted); }
+
+/* 卖出/加仓信号：全宽行，信号名一行、观察方式一段 */
+.signal-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line-dark); }
+.signal-list > li { padding: 20px 0 16px; border-bottom: 1px solid var(--line); }
+.signal-list .signal-name { display: block; margin: 0 0 6px; font-size: 17px; font-weight: 620; letter-spacing: -.01em; }
+.signal-list .signal-desc { max-width: 900px; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.6; }
+
+/* 追问：左边框引用卡，问题加粗、回答正文 */
+.inquiry-block { max-width: 940px; margin: 44px 0 6px; padding: 20px 26px 22px; border-left: 3px solid var(--ink); background: color-mix(in srgb, var(--ink) 4%, var(--paper)); }
+.inquiry-block .q { margin: 0 0 10px; font-size: 16px; font-weight: 700; }
+.inquiry-block .a { margin: 0; font-size: 15px; line-height: 1.7; }
+
+/* 键值行：代替 delta-line 承载长文本（四列窄栏放长段会变成高塔） */
+.kv-list { margin: 0 0 8px; border-top: 1px solid var(--line-dark); }
+.kv-list > div { display: grid; grid-template-columns: 170px 1fr; gap: 24px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.kv-list dt { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding-top: 3px; }
+.kv-list dd { max-width: 900px; margin: 0; font-size: 15px; line-height: 1.6; }
+
+/* 含长文本的表格：左对齐、顶对齐 */
+.analysis-table th, .analysis-table td { text-align: left; vertical-align: top; }
+.analysis-table td { font-size: 13px; line-height: 1.55; color: var(--muted); }
+.analysis-table td:first-child { color: var(--ink); font-weight: 600; font-size: 14px; }
+table td { vertical-align: top; }
+
+@media (max-width: 900px) {
+  .strategy-grid { grid-template-columns: 1fr; gap: 0; }
+  .kv-list > div { grid-template-columns: 1fr; gap: 6px; }
+}
+/* 表格与折叠块内的来源标注不需要 22px 顶距（那是给正文段落用的） */
+td .source-ids, .fold .source-ids { margin-top: 0; }
+/* 首页卡片文案兜底：最多三行截断，防止长结论把卡片撑成一屏 */
+.company-card-stance { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+/* 来源胶囊：不显示名称，只留一枚可点击的高亮标记；名称与时点在 title 提示里 */
+.source-pill { display: inline-block; margin-left: 6px; padding: 1px 8px 2px; border: 1px solid var(--line-dark); border-radius: 999px; color: var(--ink); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-decoration: none; vertical-align: middle; white-space: nowrap; }
+.source-pill:hover { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+
+/* 研究评估页（研究流程第 7 步）：复用既有的区块、表格与统计条，只补三处 */
+/* 首页 eyebrow 里的评估页入口：不占额外高度，第一张公司卡片仍不用滚动 */
+.company-eyebrow a { text-decoration: underline; text-underline-offset: .3em; }
+/* 均分走势：纵轴固定 1–5 分，样本量不足时页面根本不渲染它 */
+.evals-trend { margin: 0 0 32px; }
+.evals-trend svg { display: block; width: 100%; height: auto; border: 1px solid var(--line); }
+.evals-trend figcaption { margin-top: 10px; color: var(--muted); font-size: 12px; }
+/* 缺陷清单：元数据一行、症状原文一行，不折叠——它是这一页最该被读到的东西 */
+.evals-defects { margin: 0; padding: 0; list-style: none; }
+.evals-defects li { padding: 18px 0; border-bottom: 1px solid var(--line); }
+.evals-defects li p { max-width: 900px; margin: 10px 0 0; font-size: 16px; }
+.evals-defect-meta { display: flex; flex-wrap: wrap; gap: 16px; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+</style></head><body class="research-shell"><script defer="" src="../assets/research.js"></script><main class="company-page"><header class="company-header"><div class="company-eyebrow"><span>COMPANY ANALYSIS</span><span>NFLX</span></div><h1 data-cjk="false" data-title-scale="lg">Netflix, Inc.</h1><p class="company-current">Netflix卖的本质是一份『可预期的娱乐时间』：以规模化的自制+外购内容库、数据驱动的个性化推荐算法为核心飞轮，把全球观众的日常注意力持续转化为订阅与广告现金流，而不依赖单部爆款的一次性变现。</p></header><div class="company-summary"><div><span>市值</span><strong title="308.71B USD（FMP company.market-cap 与 stockanalysis.com 双源验证：308.71B vs 308.71B，偏差0.00%，2026-08-07）">308.71B USD</strong><small title="308.71B USD（FMP company.market-cap 与 stockanalysis.com 双源验证：308.71B vs 308.71B，偏差0.00%，2026-08-07）">2026-08-09 前双源验证</small></div><div><span>股价</span><strong>74.14 USD</strong><small>截至 <time>2026-08-07 16:00:00 America/New_York</time></small></div><div><span>PE</span><strong title="23.31x（TTM，摊薄）">23.31x</strong><small title="23.31x（TTM，摊薄）">TTM 口径</small></div><div><span>数据完整性</span><strong>8.6 / 9.8 / 10</strong><small>采集 / 分析 / 总结，满分 10</small></div><div><span>数据截止</span><strong>2026-08-09</strong></div></div><section class="company-section" aria-labelledby="dimension-summary"><p class="section-kicker">CONCLUSIONS AND CONFIDENCE</p><h2 id="dimension-summary">维度总结与信心度</h2><div class="driver-grid"><article class="driver-card"><h3>生意质量</h3><strong>8 / 10</strong><p class="dim-conclusion">订阅复购模式叠加规模效应，5年毛利率41.64%升至48.49%、经营利润率20.86%升至29.49%持续扩张，经营杠杆随规模显著放大，生意质量优秀但用户留存硬指标缺失。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">①dimensions.businessEssence.analysis.profitabilityTrend5y显示毛利率、经营利润率、净利率5年连续提升，FY2025净利率24.30%；</span><span class="prose-point">②operatingLeverage显示FY2024经营利润+49.81%快于收入+15.65%，规模效应持续兑现；</span><span class="prose-point">③dataGaps指出churn rate/NPS缺失，仅有密码共享转化、提价未流失等间接证据，故未给满分。</span></p></details></article><article class="driver-card"><h3>护城河</h3><strong>7 / 10</strong><p class="dim-conclusion">规模效应、转换成本、定价权三重护城河扎实且过去5年持续变宽，但网络效应弱、YouTube观看时长份额反超且增速更快，护城河正从扩张期转入防守期。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">①dimensions.moat.analysis.types中规模效应、转换成本、品牌定价权均判定&#x27;存在&#x27;，内容投入占营收比降至37.85%；</span><span class="prose-point">②trendPast5y显示毛利率/经营利润率持续提升印证护城河变宽；</span><span class="prose-point">③trendNext5y判断仅为&#x27;稳定&#x27;而非&#x27;变宽&#x27;，网络效应verdict为&#x27;待验证&#x27;，且YouTube份额12.7%已超Netflix9.0%增速更快，故未给满分。</span></p></details></article><article class="driver-card"><h3>管理层</h3><strong>7.5 / 10</strong><p class="dim-conclusion">联席CEO架构运转平稳、创始人已彻底退出治理，WBD竞购中主动止损体现资本纪律，但回购执行细节与在任高管持股一致性存在数据缺口。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">①dimensions.management.analysis.keyDecisions中2022年战略转向、广告套餐、密码共享收费、WBD分手费决策均评为四星或五星；</span><span class="prose-point">②capitalAllocation显示FY2025自由现金流94.61亿美元同比增约37%，研发费用率5年稳定于7.5%-8.6%区间体现纪律；</span><span class="prose-point">③dataGaps指出回购执行进度、联席CEO持股比例、减持记录均未采集，股东利益一致性无法完全验证，故未给满分。</span></p></details></article><article class="driver-card"><h3>最大风险</h3><strong>5.5 / 10</strong><p class="dim-conclusion">最大风险是内容/体育成本刚性上升与YouTube式免费注意力分流叠加压缩估值，两条主要路径概率均为&#x27;中&#x27;、影响均为&#x27;高&#x27;，属结构性而非致命性风险。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">①dimensions.inversion.analysis.failurePaths中&#x27;内容与体育版权成本刚性上升&#x27;与&#x27;YouTube分流注意力&#x27;两条概率均为中、影响均为高，是当前最主要风险；</span><span class="prose-point">②&#x27;体育版权ROI不及预期&#x27;与&#x27;广告第二曲线不及预期&#x27;概率仅为低，可控性相对较高；</span><span class="prose-point">③&#x27;增长指引不及预期触发估值压缩&#x27;概率虽低但historicalAnalogies显示2022年曾单日跌35.1%，尾部影响可能极端，整体处于中性偏可控区间。</span></p></details></article><article class="driver-card"><h3>文明趋势</h3><strong>6.5 / 10</strong><p class="dim-conclusion">流媒体观看时长已超线性电视，长期趋势有利，但范式转移受益者高度分散，Netflix份额9%-19%远未垄断，YouTube增速反超，全球OTT增速已放缓至6.1%。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">①dimensions.industryTrend.analysis.paradigmShift显示美国流媒体平台合计观看时长占比47.5%，范式转移判定为&#x27;部分&#x27;完成；</span><span class="prose-point">②tam.growthForecast显示2025-2030全球OTT CAGR仅6.1%，成熟市场订阅疲劳已现；</span><span class="prose-point">③paradigmShift同时指出YouTube以12.7%观看时长份额反超Netflix的9.0%，行业增长红利高度分散而非Netflix独享。</span></p></details></article><article class="driver-card"><h3>估值</h3><strong>4.5 / 10</strong><p class="dim-conclusion">当前PE23.31倍/PS6.38倍隐含接近双位数持续增速，中性情景3年仅涨13.6%、悲观情景跌28.3%，价格已较充分计入&#x27;持续跑赢行业&#x27;假设，安全边际不厚。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">①dimensions.valuation.analysis.threeScenario中性情景(增速9.8%/PE20倍)3年目标价84.2美元，涨幅仅13.6%，年化回报有限；</span><span class="prose-point">②悲观情景(增速6.1%/PE14倍)目标价53.2美元，跌幅达28.3%，下行不小；</span><span class="prose-point">③reverseDcf显示PS6.38倍隐含分析师一致预期CAGR9.83%显著快于行业6.1%，估值对&#x27;持续跑赢行业&#x27;假设依赖度高，吸引力中性偏低。</span></p></details></article></div><p class="company-note">信心度为价值投资视角下对该维度的看多程度（0–10，越高越看多）；最大风险按可控程度、估值按价格吸引力打分。</p></section><section class="company-section" aria-labelledby="strategies"><p class="section-kicker">WHAT TO DO ABOUT IT</p><h2 id="strategies">策略建议</h2><div class="strategy-grid"><article><h3>空仓者</h3><p class="advice"><span class="prose-point">生意质量与护城河扎实，但当前估值中性偏贵，不宜追高介入。</span><span class="prose-point">①可等待价格回调至悲观情景附近再分批建仓；</span><span class="prose-point">②若广告等第二曲线加速兑现且留存未恶化，可提前小仓位介入。</span></p><ul class="trigger-lines"><li><strong>股价回调至53-60美元区间</strong><span class="then"> —— 可分批建立试探性仓位</span></li><li><strong>2026年广告收入如期翻倍至约30亿美元且订阅规模未下滑</strong><span class="then"> —— 可确认第二增长曲线兑现后半仓介入</span></li></ul><details class="fold"><summary>各触发条件的依据</summary><ul><li>对应dimensions.valuation.analysis.threeScenario悲观情景目标价53.2美元(-28.3%)，业务本身经营利润率29.49%未恶化则具备安全边际。</li><li>对应dimensions.management.analysis.keyDecisions中Ads Suite上线决策评级五星，及dimensions.inversion.analysis.failurePaths广告业务路径概率仅为&#x27;低&#x27;。</li></ul></details></article><article><h3>持仓者</h3><p class="advice"><span class="prose-point">①业务与管理层质量评分较高，可继续持有核心仓位；</span><span class="prose-point">②但当前估值吸引力中性偏低，不宜盲目加仓，可逢高分批止盈；</span><span class="prose-point">③密切关注内容成本与YouTube份额两大风险信号。</span></p><ul class="trigger-lines"><li><strong>股价上探120美元附近且营收增速未同步提速</strong><span class="then"> —— 分批止盈获利了结部分仓位</span></li><li><strong>2026年内容现金投入实际超200亿美元指引且经营利润率环比转降</strong><span class="then"> —— 减仓观察，暂停加仓</span></li></ul><details class="fold"><summary>各触发条件的依据</summary><ul><li>对应dimensions.valuation.analysis.threeScenario乐观情景目标价120.9美元(+63.1%)对应增速假设15%，assumptionBasis要求增速同步验证。</li><li>对应dimensions.inversion.analysis.failurePaths&#x27;内容与体育版权成本刚性上升&#x27;路径，概率中/影响高，且FY2025经营利润率29.49%已处历史高位。</li></ul></details></article></div><div><h3 class="block-heading">卖出信号</h3><ul class="signal-list"><li><strong class="signal-name">股价大幅超越120.9美元但增速未提速至15%以上</strong><p class="signal-desc">对照财报实际营收增速与三情景乐观假设增速的偏离</p><details class="fold"><summary>依据</summary><p>对应dimensions.valuation.analysis.threeScenario乐观情景assumptionBasis，增速假设15%对标2023-2025年实际区间，脱离该锚点即估值透支。</p></details></li><li><strong class="signal-name">美国电视观看时长份额被YouTube进一步拉大</strong><p class="signal-desc">跟踪Nielsen Gauge季度数据中Netflix与YouTube份额差是否继续扩大</p><details class="fold"><summary>依据</summary><p><span class="prose-point">①对应dimensions.inversion.analysis.failurePaths&#x27;YouTube分流注意力&#x27;路径，2025年12月差距已由11.1%对8.5%扩大至12.7%对9.0%；</span><span class="prose-point">②该数据源为单一(Nielsen经adwave转引)，需持续观察确认趋势而非单季判断。</span></p></details></li></ul></div><div><h3 class="block-heading">加仓信号</h3><ul class="signal-list"><li><strong class="signal-name">股价跌至50-55美元区间且经营利润率维持29%左右</strong><p class="signal-desc">对照悲观情景目标价53.2美元与实际财报经营利润率是否同步恶化</p><details class="fold"><summary>依据</summary><p>对应dimensions.valuation.analysis.threeScenario悲观情景(-28.3%)与dimensions.businessEssence.analysis.profitabilityTrend5y经营利润率数据，若价跌但基本面未恶化即低估。</p></details></li><li><strong class="signal-name">YouTube份额扩大态势出现多源确认的停滞或Netflix份额回升</strong><p class="signal-desc">需Nielsen Gauge之外至少一个独立数据源交叉验证观看时长份额变化</p><details class="fold"><summary>依据</summary><p><span class="prose-point">①对应dimensions.moat.dataGaps中&#x27;网络效应的可交叉验证数据源&#x27;缺口，当前YouTube份额数据仅Nielsen单源；</span><span class="prose-point">②该护城河风险评分建立在单源数据上，触发加仓前需多源确认而非单一季度波动。</span></p></details></li></ul></div></section><section class="company-section" aria-labelledby="business-essence"><p class="section-kicker">WHAT THE BUSINESS IS</p><h2 id="business-essence">生意本质</h2><p class="section-lead">Netflix靠订阅费换取用户可支配娱乐时间，以规模化内容库与算法推荐持续把注意力转化为利润。</p><h3 class="block-heading">收入结构（FY2025（截至2025-12-31））</h3><div class="table-wrap"><table><thead><tr><th>分部</th><th>收入（百万 USD）</th><th>占比（%）</th><th>来源</th></tr></thead><tbody><tr><td>美国与加拿大 (UCAN)</td><td>199.57亿美元</td><td>44.17%</td><td><a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="FMP revenue-geographic-segments">来源</a></td></tr><tr><td>欧洲、中东与非洲 (EMEA)</td><td>145.15亿美元</td><td>32.12%</td><td><a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="FMP revenue-geographic-segments">来源</a></td></tr><tr><td>拉丁美洲 (LATAM)</td><td>53.58亿美元</td><td>11.86%</td><td><a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="FMP revenue-geographic-segments">来源</a></td></tr><tr><td>亚太 (APAC)</td><td>53.54亿美元</td><td>11.85%</td><td><a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="FMP revenue-geographic-segments">来源</a></td></tr></tbody></table></div><h3 class="block-heading">5 年盈利能力趋势</h3><div class="table-wrap"><table><thead><tr><th>财年</th><th>毛利率</th><th>经营利润率</th><th>净利率</th><th>来源</th></tr></thead><tbody><tr><td>2021</td><td>41.64%</td><td>20.86%</td><td>17.23%</td><td><a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="FMP">来源</a></td></tr><tr><td>2022</td><td>39.37%</td><td>17.82%</td><td>14.21%</td><td><a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="FMP">来源</a></td></tr><tr><td>2023</td><td>41.54%</td><td>20.62%</td><td>16.04%</td><td><a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="FMP">来源</a></td></tr><tr><td>2024</td><td>46.06%</td><td>26.71%</td><td>22.34%</td><td><a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="FMP">来源</a></td></tr><tr><td>2025</td><td>48.49%</td><td>29.49%</td><td>24.30%</td><td><a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="FMP income-statement">来源</a></td></tr></tbody></table></div><h3 class="block-heading">商业模式与粘性</h3><dl class="kv-list"><div><dt>商业模式</dt><dd>订阅/复购 · 平台</dd></div><div><dt>粘性 / 锁定 · 强</dt><dd><span class="prose-point">①密码共享收费将约1亿全球蹭号用户转化为付费，锁定强度提升；</span><span class="prose-point">②多次提价未见订阅户显著流失，显示内容库依赖度高；</span><span class="prose-point">③广告层月活跃观看人数持续大幅增长，扩大免费到付费转化漏斗。</span></dd></div><div><dt>毛利率 vs 同行 · 48.49%</dt><dd><span class="prose-point">①Netflix毛利率48.49%为损益表直接科目，Disney/WBD披露的是经营利润率/EBITDA利润率，口径不同不可直接相减比较；</span><span class="prose-point">②即便口径不同，Disney DTC经营利润率5.63%、WBD Streaming EBITDA利润率12.57%均远低于Netflix自身经营利润率29.49%，方向上仍反映规模差距；</span><span class="prose-point">③内容摊销方式、体育版权投入与分部构成差异也会拉大表观数字。</span></dd></div><div><dt>经营杠杆</dt><dd><span class="prose-point">①2023-2025年经营利润增速持续快于收入增速，规模效应对利润的放大效应逐年增强；</span><span class="prose-point">②2022年为例外，收入增6.46%但经营利润降9.06%，源于疫情后内容制作复工推高成本。</span></dd></div></dl><details class="fold"><summary>本节证据 8 条</summary><ul><li>密码共享收费转化用户规模：约1亿全球免费蹭号用户(含美国/加拿大约3000万)（2023-05-23起(美国)，同年内推广全球） <a class="source-pill" href="https://www.tubefilter.com/2016/06/20/netflix-recommendation-engine-algorithm" rel="noreferrer" title="Tubefilter/Motley Fool（2016年推荐算法研究）+ StreamTV Insider/Forbes（密码共享效果）">来源</a></li><li>密码共享推广后订阅户增长：2023下半年约2200万新增，为疫情后最强增长期（2023H2） <a class="source-pill" href="https://www.streamtvinsider.com/video/netflix-password-sharing-crackdown-paying-us-10-still-share" rel="noreferrer" title="StreamTV Insider、Forbes 2023-10-25、Reuters 2024-04-17">来源</a></li><li>广告支持套餐月活跃观看人数：从2025年5月9400万增至2026年5月2.5亿（2026-05） <a class="source-pill" href="https://www.uswitch.com/broadband/studies/online-streaming-statistics" rel="noreferrer" title="Uswitch（品牌知名度）+ Yahoo Finance（提价报道）">来源</a></li><li>品牌知名度(英国消费者调研)：96%，高于Amazon Prime Video 94%、Disney+ 93%（调研年份未明确标注(Uswitch/Statista)） <a class="source-pill" href="https://www.uswitch.com/broadband/studies/online-streaming-statistics" rel="noreferrer" title="Uswitch（品牌知名度）+ Yahoo Finance（提价报道）">来源</a></li><li>经营利润YoY vs 收入YoY：经营利润-9.06% vs 收入+6.46%（FY2022） <a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="FMP">来源</a></li><li>经营利润YoY vs 收入YoY：经营利润+23.43% vs 收入+6.67%（FY2023） <a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="FMP">来源</a></li><li>经营利润YoY vs 收入YoY：经营利润+49.81% vs 收入+15.65%（FY2024） <a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="FMP">来源</a></li><li>经营利润YoY vs 收入YoY：经营利润+27.91% vs 收入+15.85%（FY2025） <a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="FMP income-statement">来源</a></li></ul></details><aside class="inquiry-block"><p class="q">追问 · 这门生意好在哪？如果只能用一句话描述，是什么？</p><p class="a"><span class="prose-point">好在规模效应叠加强用户粘性，让复购型订阅收入随规模扩大自然放大利润率。</span><span class="prose-point">①按月付费订阅+内容库/算法/自建CDN基础设施，形成持续复购而非一次性交易的现金流；</span><span class="prose-point">②密码共享收费、多次提价均未显著流失用户，验证高转换成本与定价权；</span><span class="prose-point">③规模摊薄内容成本使经营利润增速持续快于收入增速，如FY2024收入+15.65%、经营利润+49.81%。</span></p></aside><details class="fold"><summary>数据缺口 1 项</summary><ul><li>———采集文件未披露Netflix具体churn rate或NPS数字，仅能通过密码共享转化、提价后订阅户增长等间接证据推断粘性强度，无法精确量化生态粘性等级</li></ul></details></section><section class="company-section" aria-labelledby="moat"><p class="section-kicker">WHAT PROTECTS IT</p><h2 id="moat">护城河评估</h2><p class="section-lead">规模效应、转换成本与定价权构成核心护城河，网络效应弱，YouTube抢占注意力份额是主要外部压力。</p><div class="table-wrap"><table class="analysis-table"><thead><tr><th>类型</th><th>验证方法</th><th>判定</th><th>证据</th></tr></thead><tbody><tr><td>品牌/定价权</td><td>是否能在不损失销量的情况下提价？</td><td>存在</td><td><details class="fold"><summary>证据 3 条</summary><ul><li>英国消费者品牌知名度调研：Netflix 96%，高于Amazon Prime Video 94%、Disney+ 93%（调研年份未注明（采集于2026-08-09检索的合集数据）） <a class="source-pill" href="https://www.uswitch.com/broadband/studies/online-streaming-statistics" rel="noreferrer" title="Uswitch（品牌知名度）+ Yahoo Finance（提价报道）">来源</a></li><li>Premium套餐提价：上调至27美元/月，为一年多内第二次提价（2026年一季度） <a class="source-pill" href="https://www.uswitch.com/broadband/studies/online-streaming-statistics" rel="noreferrer" title="Uswitch（品牌知名度）+ Yahoo Finance（提价报道）">来源</a></li><li>广告支持层月活跃观看人数：从9,400万增至2.5亿（2025-05至2026-05） <a class="source-pill" href="https://www.uswitch.com/broadband/studies/online-streaming-statistics" rel="noreferrer" title="Uswitch（品牌知名度）+ Yahoo Finance（提价报道）">来源</a></li></ul></details></td></tr><tr><td>转换成本</td><td>客户迁移到竞品的成本有多高？</td><td>存在</td><td><details class="fold"><summary>证据 3 条</summary><ul><li>自建CDN Open Connect：2011年立项自建，缓存服务器部署进全球ISP网络内部就近分发内容（2011年至今） <a class="source-pill" href="https://www.tubefilter.com/2016/06/20/netflix-recommendation-engine-algorithm" rel="noreferrer" title="Tubefilter/Motley Fool（2016年推荐算法研究）+ StreamTV Insider/Forbes（密码共享效果）">来源</a></li><li>推荐算法历史节省成本估计：每年为公司节省超10亿美元流失相关成本（数据年代较早，仅作历史佐证）（2016年） <a class="source-pill" href="https://www.tubefilter.com/2016/06/20/netflix-recommendation-engine-algorithm" rel="noreferrer" title="Tubefilter/Motley Fool（2016年推荐算法研究）+ StreamTV Insider/Forbes（密码共享效果）">来源</a></li><li>密码共享收费转化效果：约1亿全球免费蹭号用户转化，2023下半年为疫情后最强订阅户增长期（2023-05起） <a class="source-pill" href="https://www.tubefilter.com/2016/06/20/netflix-recommendation-engine-algorithm" rel="noreferrer" title="Tubefilter/Motley Fool（2016年推荐算法研究）+ StreamTV Insider/Forbes（密码共享效果）">来源</a></li></ul></details></td></tr><tr><td>网络效应</td><td>用户越多产品越好吗？</td><td>待验证</td><td><details class="fold"><summary>证据 1 条</summary><ul><li>内容爆款社交传播效应：NFL圣诞赛事单场约3,000万观众、WWE Raw周播直播带来讨论度与口碑传播（2024-2026） </li></ul></details></td></tr><tr><td>规模效应</td><td>规模带来的成本优势有多大？</td><td>存在</td><td><details class="fold"><summary>证据 3 条</summary><ul><li>内容现金投入占营收比例：37.85%（经工具验算17.1/45.183×100），显著低于行业估计2019年约65%的水平（FY2025） <a class="source-pill" href="https://ibinterviewquestions.com/guides/tmt-investment-banking/content-economics-amortization" rel="noreferrer" title="ibinterviewquestions.com 内容经济学分析 + 公司自有已验证财务数据">来源</a></li><li>经营利润率：29.49%（FY2025） <a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="FMP income-statement">来源</a></li><li>全球付费订阅户对比：约3.25亿，约为Disney+(1.316亿)、WBD(1.316亿)各自的2.5倍（2026年年初附近） <a class="source-pill" href="https://www.demandsage.com/netflix-subscribers" rel="noreferrer" title="Netflix投资者信（经demandsage.com转引）">来源</a></li></ul></details></td></tr><tr><td>技术/专利壁垒</td><td>技术领先几年？能否被复制？</td><td>存在</td><td><details class="fold"><summary>证据 4 条</summary><ul><li>自建CDN Open Connect：2011年立项、2012年公开，缓存服务器部署进ISP网络内部，降低带宽成本与延迟（2011年至今） <a class="source-pill" href="https://about.netflix.com/news/how-netflix-works-with-isps-around-the-globe-to-deliver-a-great-viewing-experience" rel="noreferrer" title="about.netflix.com 官方说明">来源</a></li><li>个性化推荐算法历史价值：2016年估计每年节省超10亿美元流失相关成本，公司近年未见更新披露（2016年（近年未更新）） <a class="source-pill" href="https://www.tubefilter.com/2016/06/20/netflix-recommendation-engine-algorithm" rel="noreferrer" title="Tubefilter（2016年推荐算法研究）">来源</a></li><li>研发费用率（技术与研发科目）：FY2025为7.51%（33.91亿美元/营收），近5年稳定于7.5%~8.6%区间（FY2025） <a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="FMP income-statement">来源</a></li><li>自研广告技术平台Netflix Ads Suite：2025-04-01美国上线，年内推广至全部广告市场，替代此前依赖微软的第三方广告服务器（2025年） <a class="source-pill" href="https://ppc.land/netflix-set-to-double-ad-revenue-in-2025-after-major-tech-rollout" rel="noreferrer" title="ppc.land时间线整理、Frontiers in Communication期刊论文（引用Netflix官方披露）">来源</a></li></ul></details></td></tr></tbody></table></div><dl class="kv-list"><div><dt>过去 5 年 · 变宽</dt><dd><span class="prose-point">①毛利率5年从41.64%升至48.49%，经营利润率从20.86%升至29.49%，规模效应持续兑现。</span><span class="prose-point">②内容现金投入占营收比例降至37.85%，订阅规模约为Disney+/WBD各自2.5倍，规模优势拉大。</span><span class="prose-point">③但YouTube份额从11.1%升至12.7%，增速快于Netflix的8.5%→9.0%，注意力遭侵蚀。</span></dd></div><div><dt>未来 5 年 · 稳定</dt><dd><span class="prose-point">①分析师预期Netflix未来CAGR约9.83%，快于行业6.1%，份额争夺动能仍在。</span><span class="prose-point">②2026年内容现金投入指引约200亿美元(YoY+10%)，成本刚性侵蚀经营杠杆空间。</span><span class="prose-point">③YouTube/短视频持续分流年轻用户注意力，Disney+/WBD利润率仍远低于Netflix但持续追赶。</span></dd></div></dl><aside class="inquiry-block"><p class="q">追问 · 10年后这条护城河还在吗？什么能摧毁它？</p><p class="a"><span class="prose-point">大概率仍在，但强度将从&#x27;扩张期&#x27;转入&#x27;防守期&#x27;。</span><span class="prose-point">①若YouTube/短视频持续侵蚀注意力份额并反超电视观看时长，护城河根基受损。</span><span class="prose-point">②若内容与体育版权成本刚性上升侵蚀经营杠杆，利润率见顶回落将验证竞争加剧。</span><span class="prose-point">③若Disney+/WBD等通过并购或爆款内容反超盈利能力，现有规模优势将被削弱。</span></p></aside><details class="fold"><summary>数据缺口 3 项</summary><ul><li>———采集文件仅有定性描述（&#x27;未见订阅户显著流失&#x27;），无提价前后churn rate的具体百分比可供验算定价权强度</li><li>———网络效应条目标注为&#x27;定性判断，无可交叉验证的财务数据源&#x27;，缺乏TikTok等短视频平台的观看时长份额数据</li><li>———唯一可用数据为2016年估计（每年节省超10亿美元流失成本），近10年公司未更新披露该指标，无法判断该护城河当前强度是否随内容库/用户规模增长而变化</li></ul></details></section><section class="company-section" aria-labelledby="inversion"><p class="section-kicker">HOW IT COULD FAIL</p><h2 id="inversion">逆向思考与风险清单</h2><p class="section-lead">Netflix最可能的失败路径不是订阅户流失，而是内容/体育成本刚性上升叠加YouTube式免费注意力分流，压缩当前高估值隐含的增长预期。</p><div class="table-wrap"><table class="analysis-table"><thead><tr><th>失败路径</th><th>概率</th><th>影响</th><th>证据</th></tr></thead><tbody><tr><td>内容与体育版权成本刚性上升，侵蚀经营利润率扩张空间</td><td>中</td><td>高</td><td><details class="fold"><summary>证据 2 条</summary><ul><li>2026年内容现金投入指引：约200亿美元，较2025年约180亿美元增长约11.11%（工具验算200/180-1）（2026年指引） <a class="source-pill" href="https://ibinterviewquestions.com/guides/tmt-investment-banking/content-economics-amortization" rel="noreferrer" title="Netflix 10-K + ibinterviewquestions.com内容经济学分析">来源</a></li><li>FY2025经营利润率：29.49%，已处于历史高位，扩张边际收窄（FY2025） <a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="FMP income-statement">来源</a></li></ul></details></td></tr><tr><td>YouTube/短视频持续分流注意力与广告预算，导致增长停滞</td><td>中</td><td>高</td><td><details class="fold"><summary>证据 2 条</summary><ul><li>YouTube 2025全年总营收 vs Netflix FY2025营收差：YouTube超600亿美元，超出Netflix约148.17亿美元（工具验算600-451.83）（2025全年） <a class="source-pill" href="https://www.tubefilter.com/2026/02/05/alphabet-q4-2025-youtube-earnings-revenue-60-billion" rel="noreferrer" title="Alphabet 2025 Q4财报电话会（经Tubefilter转引）">来源</a></li><li>美国电视观看时长份额：YouTube 12.7% vs Netflix 9.0%（2025年12月），差距同比扩大（2025-12） <a class="source-pill" href="https://adwave.com/resources/most-watched-streaming-service-q4-2025" rel="noreferrer" title="Nielsen Gauge（经adwave.com转引）">来源</a></li></ul></details></td></tr><tr><td>体育版权（NFL/WWE）投资回报不及预期，多年期刚性承诺难以退出</td><td>低</td><td>中</td><td><details class="fold"><summary>证据 1 条</summary><ul><li>WWE十年独家协议、NFL三季协议：多年期高价承诺，一旦收视或广告变现不及预期难以中途撤出（2024年签订） <a class="source-pill" href="https://www.dw.com/en/nfl-wwe-streaming-netflix-new-strategy/a-71345322" rel="noreferrer" title="DW.com、Wikipedia &#x27;Sports on Netflix&#x27;">来源</a></li></ul></details></td></tr><tr><td>监管/数字服务税/数据本地化推高EMEA、APAC等高增速市场运营成本</td><td>中</td><td>中</td><td><details class="fold"><summary>证据 1 条</summary><ul><li>EMEA+APAC收入份额：合计43.97%，是增速最快的两大区域，同时面临AVMSD等本地内容配额（FY2025） <a class="source-pill" href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&amp;CIK=0001065280&amp;type=10-K" rel="noreferrer" title="Netflix 10-K风险因素章节">来源</a></li></ul></details></td></tr><tr><td>增长指引不及分析师隐含预期，触发估值倍数压缩（重演2022年式暴跌）</td><td>低</td><td>高</td><td><details class="fold"><summary>证据 2 条</summary><ul><li>历史先例：2022-04-20单日股价跌幅：35.1%，市值蒸发约544亿美元（2022-04-20） <a class="source-pill" href="https://www.cnbc.com/2022/04/20/netflix-plunges-trading-subscriber-loss.html" rel="noreferrer" title="CNBC 2022-04-20">来源</a></li><li>分析师隐含CAGR超出行业CAGR幅度：9.83%对6.1%，差3.73个百分点（工具验算9.83-6.1）（2025-2030预测） <a class="source-pill" href="https://www.pwc.com/gx/en/issues/business-model-reinvention/outlook/insights-and-perspectives.html" rel="noreferrer" title="FMP分析师一致预期 + PwC Global Entertainment &amp; Media Outlook 2026–2030">来源</a></li></ul></details></td></tr><tr><td>广告业务第二曲线不及管理层预期，自研Ads Suite爬坡期出现波折</td><td>低</td><td>中</td><td><details class="fold"><summary>证据 1 条</summary><ul><li>2026年广告收入指引：预计再翻倍至约30亿美元，仍占总营收小部分且依赖新平台稳定性（2026年指引） <a class="source-pill" href="https://ppc.land/netflix-set-to-double-ad-revenue-in-2025-after-major-tech-rollout" rel="noreferrer" title="ppc.land时间线整理">来源</a></li></ul></details></td></tr></tbody></table></div><h3 class="block-heading">历史类比</h3><ul class="signal-list"><li><strong class="signal-name">美国有线电视巨头（如Comcast/Time Warner Cable付费捆绑时代）</strong><p class="signal-desc">曾凭内容捆绑与规模效应建立护城河，订阅费持续上涨后遭遇低成本替代品冲击；结局：有线电视订阅数十年持续下滑，估值倍数长期承压，规模优势未能阻止剪线潮 </p></li><li><strong class="signal-name">AOL（曾经的头部互联网门户/接入服务商）</strong><p class="signal-desc">凭渠道优势与用户习惯锁定形成早期领先地位，商业模式相对封闭；结局：被开放网络与新兴平台边缘化，品牌与规模未能转化为持久护城河 </p></li><li><strong class="signal-name">MySpace（社交网络早期龙头）</strong><p class="signal-desc">曾占据用户基数与话题热度优势，但网络效应相对Facebook更弱、产品迭代更慢；结局：被后发但网络效应更强、产品体验更优的Facebook迅速反超并边缘化 </p></li></ul><h3 class="block-heading">空方论点</h3><ul class="signal-list"><li><strong class="signal-name">内容与体育版权成本刚性上升，挤压利润率扩张空间</strong><p class="signal-desc">持有者：公司自身风险披露/卖方分析师</p><details class="fold"><summary>证据 1 条</summary><ul><li>2026年内容现金投入指引：约200亿美元，较2025年约180亿美元增长约11.11%（工具验算）（2026年指引） <a class="source-pill" href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&amp;CIK=0001065280&amp;type=10-K" rel="noreferrer" title="Netflix 10-K">来源</a></li></ul></details></li><li><strong class="signal-name">订阅户渗透进入成熟阶段，停止披露具体数字本身即为放缓信号</strong><p class="signal-desc">持有者：媒体/卖方分析师</p><details class="fold"><summary>证据 1 条</summary><ul><li>UCAN区域YoY增速：14.96%，为四大区域中最低，低于EMEA17.18%与APAC21.27%（FY2025） <a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="FMP revenue-geographic-segments">来源</a></li></ul></details></li><li><strong class="signal-name">YouTube免费+算法模式持续侵蚀观看时长与广告主预算份额</strong><p class="signal-desc">持有者：媒体/行业数据商</p><details class="fold"><summary>证据 1 条</summary><ul><li>美国电视观看时长份额差距：YouTube12.7% vs Netflix9.0%（2025年12月），差距同比扩大（2025-12） <a class="source-pill" href="https://adwave.com/resources/most-watched-streaming-service-q4-2025" rel="noreferrer" title="Nielsen Gauge（经adwave.com转引）">来源</a></li></ul></details></li><li><strong class="signal-name">监管与地缘政治不确定性限制国际高增速市场的利润率空间</strong><p class="signal-desc">持有者：公司自身风险披露(10-K)</p><details class="fold"><summary>证据 1 条</summary><ul><li>EMEA+APAC收入份额：合计43.97%，面临AVMSD等本地内容配额与数字服务税风险（FY2025） <a class="source-pill" href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&amp;CIK=0001065280&amp;type=10-K" rel="noreferrer" title="Netflix 10-K风险因素章节">来源</a></li></ul></details></li><li><strong class="signal-name">估值隐含较高持续增长预期，增长不及预期存在压缩风险</strong><p class="signal-desc">持有者：卖方分析师</p><details class="fold"><summary>证据 1 条</summary><ul><li>分析师隐含CAGR超行业CAGR幅度：9.83%对6.1%，差3.73个百分点（工具验算）（2025-2030预测） <a class="source-pill" href="https://www.pwc.com/gx/en/issues/business-model-reinvention/outlook/insights-and-perspectives.html" rel="noreferrer" title="FMP分析师一致预期 + PwC Global Entertainment &amp; Media Outlook 2026–2030">来源</a></li></ul></details></li></ul><details class="fold"><summary>跨学科检验 3 项 · 偏误自查 3 项</summary><ul><li><strong>网络效应理论</strong>：<span class="prose-point">①Netflix护城河主要靠规模效应与转换成本，非经典多边网络效应；</span><span class="prose-point">②YouTube兼具UGC创作者生态与算法双重飞轮，理论上韧性更强；</span><span class="prose-point">③内容库优势一旦被削弱，用户缺乏同伴锁定，转换成本可能快速瓦解。</span></li><li><strong>技术采纳曲线</strong>：<span class="prose-point">①全球OTT行业CAGR降至6.1%，成熟市场已现订阅疲劳；</span><span class="prose-point">②Netflix自身隐含CAGR9.83%远快于行业，假设持续抢份额，证伪风险偏高；</span><span class="prose-point">③UCAN份额最大但增速最低(14.96%)，印证成熟市场采纳曲线已进平台期。</span></li><li><strong>竞争博弈</strong>：<span class="prose-point">①YouTube总营收已超Netflix且份额差距扩大，形成免费广告模式对付费订阅模式的非对称竞争；</span><span class="prose-point">②Disney/WBD利润率远低于Netflix，博弈中更可能收缩而非跟进价格战；</span><span class="prose-point">③放弃WBD竞购显示Netflix博弈策略克制，但竞对若整合成功，格局可能对其不利。</span></li><li><strong>叙事偏差</strong>：<span class="prose-point">①是否因&#x27;Netflix是流媒体龙头&#x27;的既有印象低估YouTube威胁；</span><span class="prose-point">②Nielsen Gauge显示YouTube份额(12.7%)已高于并快于Netflix(9.0%)增长，需据此数据而非既有叙事判断。</span></li><li><strong>锚定效应</strong>：<span class="prose-point">①采集文件未提供历史股价高点数字，避免锚定未经验证的历史峰值；</span><span class="prose-point">②应以当前TTM PE23.31、PS6.38及其隐含增长假设做独立评估，而非对比未落盘的历史估值。</span></li><li><strong>幸存者偏差</strong>：<span class="prose-point">①是否只看到Netflix从流媒体大战中胜出，忽视同期Quibi等失败案例；</span><span class="prose-point">②Netflix当前规模优势建立在幸存者位置上，不能简单外推为未来必然继续领先。</span></li></ul></details><aside class="inquiry-block"><p class="q">追问 · 我最可能在哪里犯错？聪明人为什么会不买/做空这家公司？</p><p class="a"><span class="prose-point">最可能错在高估Netflix对YouTube式免费注意力竞争的抵御力，同时低估当前估值对持续超行业增长的依赖。</span><span class="prose-point">①网络效应弱于YouTube的UGC飞轮，内容库护城河可能被更廉价的注意力替代品持续侵蚀；</span><span class="prose-point">②TTM PE23.31/PS6.38隐含增长假设(9.83%)显著快于行业CAGR(6.1%)，一旦增速向行业均值收敛，估值倍数存在系统性压缩空间；</span><span class="prose-point">③内容与体育版权成本刚性(2026年指引约200亿美元)与经营利润率29.49%已处高位并存，利润率进一步扩张的安全边际变薄；</span><span class="prose-point">④聪明的空头会认为当前价格已充分甚至过度定价了&#x27;持续跑赢行业&#x27;这一尚未被验证的假设。</span></p></aside><details class="fold"><summary>数据缺口 4 项</summary><ul><li>采集文件未提供Netflix历史股价高点或长期估值区间数据，无法量化当前锚定效应的具体基准</li><li>TikTok/短视频平台在电视端观看时长份额缺乏权威量化数据源，仅能做定性观察</li><li>体育版权(NFL/WWE)的具体投资金额与直接ROI未见公开披露，无法量化&#x27;投资回报不及预期&#x27;的具体阈值</li><li>2026年广告收入指引(约30亿美元)之外，缺乏更细颗粒度的广告业务盈利能力(毛利率/边际成本)数据</li></ul></details></section><section class="company-section" aria-labelledby="management"><p class="section-kicker">WHO RUNS IT</p><h2 id="management">管理层评估</h2><p class="section-lead">联席CEO架构运转平稳、资本配置纪律良好，但创始人已全面退出治理，需持续观察领导层稳定性与文化传承。</p><h3 class="block-heading">关键决策复盘</h3><div class="table-wrap"><table class="analysis-table"><thead><tr><th>时间</th><th>决策</th><th>结果</th><th>评分</th></tr></thead><tbody><tr><td>2022-04-19/20</td><td>订阅户十年首次净减后转向利润与ARM优先战略</td><td>次日股价暴跌35.1%，市值蒸发约544亿美元，倒逼战略转型 <a class="source-pill" href="https://www.cnbc.com/2022/04/20/netflix-plunges-trading-subscriber-loss.html" rel="noreferrer" title="CNBC 2022-04-19/20、The Guardian 2022-04-20">来源</a></td><td>★★★★</td></tr><tr><td>2022-11-03</td><td>推出广告支持套餐Standard with Ads，首次涉足广告变现</td><td>MAU持续增至2.5亿（2026-05），2025年广告收入同比增约2.5倍 <a class="source-pill" href="https://www.nbcnews.com/business/business-news/netflix-ad-supported-tier-40-million-monthly-users-rcna152463" rel="noreferrer" title="NBC News 2024-05、adwave.com、thewrap.com">来源</a></td><td>★★★★★</td></tr><tr><td>2023-01-19</td><td>创始人卸任CEO，确立Sarandos与Peters联席CEO架构</td><td>治理平稳过渡，联席CEO任期已3年多且业绩持续增长 <a class="source-pill" href="https://www.cnbc.com/2023/01/19/netflixs-reed-hastings-is-giving-up-ceo-role.html" rel="noreferrer" title="CNBC 2023-01-19、The Guardian 2023-01-19">来源</a></td><td>★★★★</td></tr><tr><td>2023-05-23起</td><td>密码共享收费政策Paid Sharing全球推广铺开</td><td>2023下半年新增约2200万用户，Q3营收与利润均超预期 <a class="source-pill" href="https://www.streamtvinsider.com/video/netflix-password-sharing-crackdown-paying-us-10-still-share" rel="noreferrer" title="StreamTV Insider、Forbes 2023-10-25、Reuters 2024-04-17">来源</a></td><td>★★★★★</td></tr><tr><td>2024-01/2024-05</td><td>签订WWE十年协议与NFL三季协议，布局体育直播版权</td><td>NFL圣诞赛单场超3000万观众覆盖218国，收视创纪录 <a class="source-pill" href="https://www.dw.com/en/nfl-wwe-streaming-netflix-new-strategy/a-71345322" rel="noreferrer" title="DW.com、Wikipedia &#x27;Sports on Netflix&#x27;">来源</a></td><td>★★★★</td></tr><tr><td>2025-04-01</td><td>自研广告技术平台Netflix Ads Suite全面上线替代第三方</td><td>2025年广告收入同比增约2.5倍，2026年预计再翻倍至30亿美元 <a class="source-pill" href="https://ppc.land/netflix-set-to-double-ad-revenue-in-2025-after-major-tech-rollout" rel="noreferrer" title="ppc.land、Frontiers in Communication期刊论文">来源</a></td><td>★★★★</td></tr><tr><td>2026-02-27</td><td>WBD竞购战中主动放弃跟价，不为扩大规模支付过高溢价</td><td>依约获28亿美元分手费，2026Q1摊薄EPS同比增约86% <a class="source-pill" href="https://deadline.com/2026/02/netflix-cash-injection-paramount-wbd-termination-fee-1236738911" rel="noreferrer" title="Deadline 2026-02-27、WSJ 2026、kaufcan.com法律分析">来源</a></td><td>★★★★★</td></tr><tr><td>2026-06-04</td><td>创始人Hastings正式卸任董事会成员及董事会主席职务</td><td>独立董事Jay Hoag接任主席，治理过渡平稳完成 <a class="source-pill" href="https://variety.com/2026/tv/news/netflix-board-reed-hastings-jay-hoag-chairman-1236768093" rel="noreferrer" title="Variety 2026-06、Reuters 2026-06-05、SEC DEF 14A">来源</a></td><td>★★★★</td></tr></tbody></table></div><dl class="kv-list"><div><dt>研发回报</dt><dd><span class="prose-point">①FY2025技术研发费用33.91亿美元，占营收7.51%，5年稳定于7.5%-8.6%区间</span><span class="prose-point">②研发费用五年累计增约49%，低于同期营收增速约52%，费用率反降显规模效应</span><span class="prose-point">③自研广告技术Ads Suite带动广告收入提速，但推荐算法等基础研发边际回报难单独量化</span></dd></div><div><dt>并购记录</dt><dd><span class="prose-point">①管理层近年无重大并购整合案例，历史以内容采购与合作协议为主，无可比整合样本</span><span class="prose-point">②2026年2月WBD竞购战中主动放弃跟价，避免为扩大规模支付过高溢价</span><span class="prose-point">③该案例体现的是拒绝溢价的资本纪律，而非并购后整合能力，两者不可混同评价</span></dd></div><div><dt>回购时机</dt><dd><span class="prose-point">①FY2025自由现金流94.61亿美元，同比增约37%，为持续回购提供充足现金支撑</span><span class="prose-point">②2023年9月董事会批准最高100亿美元回购计划，采集文件未见后续执行明细</span><span class="prose-point">③具体回购金额、均价及额度使用进度未采集，回购时机优劣难以评判</span></dd></div><div><dt>管理层持股</dt><dd><span class="prose-point">①创始人Hastings持股仅0.51%（21,164,244股），已于2026-06-04卸任董事会</span><span class="prose-point">②公司为单一普通股结构，一股一票，不存在AB股或创始人超级投票权设计</span><span class="prose-point">③现任联席CEO及高管持股比例采集文件未单列，一致性水平未知计入数据缺口</span></dd></div><div><dt>薪酬结构</dt><dd><span class="prose-point">①FY2025联席CEO Sarandos与Peters薪酬均为1179万美元，具体业绩挂钩条款未采集</span><span class="prose-point">②CFO、CLO薪酬分别为681万、672万美元，管理层薪酬绝对水平处于行业高位</span><span class="prose-point">③Hastings卸任前薪酬仅11.7万美元现金、无新股权激励，反映其已淡出执行角色</span></dd></div><div><dt>减持记录</dt><dd><span class="prose-point">①具体减持金额、频次等交易明细未采集，仅知其持股比例已降至0.51%</span><span class="prose-point">②采集文件未提供联席CEO及其他现任高管的近期增减持记录</span><span class="prose-point">③创始人持股长期偏低且已退出董事会，股东利益一致性主要依赖薪酬与股权激励机制</span></dd></div><div><dt>团队稳定性</dt><dd><span class="prose-point">①Sarandos 1999年结识加入公司，任职近27年，2020年起任联席CEO</span><span class="prose-point">②Peters 2008年加入，历任产品/运营高管，2023年起任联席CEO，任职近18年</span><span class="prose-point">③联席CEO均为内部培养的资深高管而非空降职业经理人，团队稳定性较高</span></dd></div><div><dt>关键人风险</dt><dd><span class="prose-point">①创始人已于2026年6月彻底退出董事会，公司完全进入职业经理人治理阶段</span><span class="prose-point">②联席CEO架构分散决策权，降低单一高管离任冲击，但存在职责边界模糊风险</span><span class="prose-point">③新任独立董事主席Jay Hoag仅负责治理监督不涉日常经营，关键人风险集中于两位联席CEO</span></dd></div><div><dt>企业文化</dt><dd><span class="prose-point">①采集文件未将企业文化列为独立采集维度，缺乏一手文化调研证据</span><span class="prose-point">②可观测治理特征（联席CEO内部提拔、创始人主动让权、无AB股结构）指向分权与绩效导向</span><span class="prose-point">③Netflix对外知名的&#x27;自由与责任&#x27;文化理念未在采集文件中被证实或证伪，具体细节不作展开</span></dd></div></dl><details class="fold"><summary>本节证据 7 条</summary><ul><li>FY2025技术研发费用：33.91亿美元，占营收7.51%（2025-12-31） <a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="FMP income-statement">来源</a></li><li>FY2025自由现金流：94.61亿美元，同比增约36.68%（2025-12-31） <a class="source-pill" href="https://stockanalysis.com/stocks/NFLX/financials/cash-flow-statement/" rel="noreferrer" title="FMP cashflow-statement / stockanalysis.com">来源</a></li><li>股票回购计划批准额度：最高100亿美元（2023年9月批准）（2023-09） <a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="financials-collection.json bullBearCase">来源</a></li><li>WBD竞购分手费收入：28亿美元，计入2026Q1其他收益（2026-02-27） <a class="source-pill" href="https://deadline.com/2026/02/netflix-cash-injection-paramount-wbd-termination-fee-1236738911" rel="noreferrer" title="Deadline 2026-02-27">来源</a></li><li>创始人（Hastings）持股比例：0.51%（21,164,244股/4,163,939,999股）（2026-06-01） <a class="source-pill" href="https://www.secform4.com/insider-trading/1065280.htm" rel="noreferrer" title="SEC Form 4 (Reed Hastings)">来源</a></li><li>联席CEO（Sarandos/Peters）FY2025总薪酬：各1178.89万美元（2025-12-31） <a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="FMP company-executives">来源</a></li><li>Hastings FY2025总薪酬：11.72万美元（仅现金，无新股权激励）（2025-12-31） <a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="FMP company-executives">来源</a></li></ul></details><aside class="inquiry-block"><p class="q">追问 · 如果CEO退休，这家公司还能保持竞争力吗？</p><p class="a"><span class="prose-point">能，公司已完成从创始人到职业经理人治理的平稳过渡。</span><span class="prose-point">①联席CEO架构下Sarandos主内容、Peters主产品运营，分工互补、任一人离任冲击可控</span><span class="prose-point">②两位CEO均为内部培养近18-27年的资深高管，非依赖创始人个人魅力型领导</span><span class="prose-point">③创始人Hastings已于2026年6月彻底退出董事会，公司决策与治理已不依赖其存在</span><span class="prose-point">④核心风险在于若两位联席CEO同时离任，第三梯队候选人资历采集文件未覆盖，需持续关注</span></p></aside><details class="fold"><summary>数据缺口 5 项</summary><ul><li>Hastings及其他高管近年具体减持交易记录（金额、时间点、频次）未采集，仅知当前持股比例</li><li>联席CEO Sarandos、Peters及CFO、CLO当前持股数量/比例未采集</li><li>2023年9月批准的100亿美元回购计划执行进度、已用额度、回购均价未采集</li><li>企业文化未被列为独立采集维度，缺少员工调查、内部访谈等一手证据</li><li>高管薪酬与业绩挂钩的具体考核指标（KPI、股权归属条件）未采集</li></ul></details></section><section class="company-section" aria-labelledby="industry-trend"><p class="section-kicker">WHERE THE WORLD IS GOING</p><h2 id="industry-trend">行业与长期趋势</h2><p class="section-lead">流媒体观看时长已超线性电视，但全球OTT增速放缓、成熟市场订阅疲劳初现，行业正从成长期迈向成熟期前段。</p><dl class="kv-list"><div><dt>范式转移</dt><dd>部分</dd></div><div><dt>历史类比</dt><dd><span class="prose-point">①类比互联网对报纸的替代：分发渠道去中心化后，用户注意力从固定媒介转向按需选择；</span><span class="prose-point">②类比数字音乐对实体唱片的替代：Netflix如流媒体音乐平台般以订阅模式重构内容变现方式；</span><span class="prose-point">③但与报纸/唱片单一赢家不同，流媒体呈现Netflix、YouTube、Disney+多雄并立格局（美国流媒体订阅份额19%对Disney+14%，2025Q3）。</span></dd></div><div><dt>TAM</dt><dd>2266亿 USD；阶段：成长</dd></div><div><dt>价值链位置</dt><dd><span class="prose-point">①Netflix身兼内容生产/采购方与直接面向消费者(D2C)的分发平台双重角色，不依赖电信运营商或有线电视捆绑分发；</span><span class="prose-point">②自建Open Connect CDN（2011年立项）将缓存服务器部署进ISP网络内部，降低带宽成本、减少对第三方CDN商的议价依赖；</span><span class="prose-point">③内容现金投入占营收比例从行业估计2019年约65%降至FY2025的37.85%，规模扩大带来的议价权随之增强。</span></dd></div><div><dt>技术路线风险</dt><dd><span class="prose-point">①核心计算与存储高度依赖单一云服务商AWS，公司10-K自述绝大部分计算基础设施运行在AWS上，构成集中度风险；</span><span class="prose-point">②生成式AI/深度伪造等新技术普及可能带来内容版权归属与真实性方面的新型法律与声誉风险；</span><span class="prose-point">③自建Open Connect仅覆盖内容分发环节，未能对冲底层计算基础设施的单一供应商依赖。</span></dd></div><div><dt>客户集中度</dt><dd>个人消费者(2C订阅模式)高度分散，全球约3.25亿付费订阅户，无单一客户或渠道商依赖，客户集中度风险极低。</dd></div><div><dt>供应商集中度</dt><dd><span class="prose-point">①内容采购依赖好莱坞主要工作室与版权方，续约价格与条款存在不确定性；</span><span class="prose-point">②创作端集中于编剧工会(WGA)与演员工会(SAG-AFTRA)，2023年罢工曾致全行业内容制作中断；</span><span class="prose-point">③计算基础设施集中于单一云服务商AWS，10-K明确列为技术风险来源，供应商集中度整体偏高。</span></dd></div></dl><details class="fold"><summary>范式转移正反方证据与 TAM 天花板检验</summary><p><span class="prose-point">①美国流媒体平台合计观看时长占比47.5%（2025年12月），已从少数替代变为多数分发方式；</span><span class="prose-point">②但Netflix单一平台份额仅9.0%（观看时长）或19%（订阅），远未形成标准石油级垄断；</span><span class="prose-point">③YouTube以12.7%观看时长份额反超Netflix，说明范式转移受益者高度分散，非单一赢家通吃。</span></p><p><span class="prose-point">①天花板口径为全球OTT总收入（消费者订阅+广告+仅流媒体分发的传统广播商收入），分母达2266亿美元（2025年）；</span><span class="prose-point">②明确不含传统线性有线/卫星付费电视收入，也不含院线、直播音乐等其他娱乐品类，是流媒体替代后的子市场天花板；</span><span class="prose-point">③PwC预测2025-2030年CAGR仅6.1%，且澳大利亚/西班牙/韩国等成熟市场已现订阅疲劳，增速较历史峰值明显放缓。</span></p></details><details class="fold"><summary>本节证据 3 条</summary><ul><li>内容现金投入占营收比例：37.85%（约171亿美元/451.83亿美元）（FY2025） <a class="source-pill" href="https://ibinterviewquestions.com/guides/tmt-investment-banking/content-economics-amortization" rel="noreferrer" title="Netflix 10-K + ibinterviewquestions.com内容经济学分析">来源</a></li><li>全球付费订阅户数（客户分散度佐证）：约3.25亿，个人消费者高度分散（2026年年初附近） <a class="source-pill" href="https://www.demandsage.com/netflix-subscribers" rel="noreferrer" title="Netflix投资者信（经demandsage.com转引）">来源</a></li><li>云计算供应商依赖：绝大部分计算基础设施运行在AWS单一供应商上（10-K风险因素章节（长期性表述）） <a class="source-pill" href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&amp;CIK=0001065280&amp;type=10-K" rel="noreferrer" title="Netflix 10-K风险因素章节">来源</a></li></ul></details><aside class="inquiry-block"><p class="q">追问 · 站在20年后回看，这家公司是「这个时代的标准石油」还是「昙花一现的3Com」？</p><p class="a"><span class="prose-point">更像分散竞争格局中的头部玩家，而非某个时代的标准石油式垄断者。</span><span class="prose-point">①范式转移确实发生（流媒体观看时长合计已超线性电视），但受益者高度分散，Netflix份额仅9.0%-19%，未形成垄断定价权；</span><span class="prose-point">②与3Com相比，Netflix已证明持续20余年的内容飞轮与自建CDN护城河，非短暂技术红利，长期存续证据更充分；</span><span class="prose-point">③但云计算单一依赖AWS、内容成本议价力受制于好莱坞工会，若这些环节被颠覆，护城河仍有被绕过的风险。</span></p></aside><details class="fold"><summary>数据缺口 3 项</summary><ul><li>行业TAM(2266亿美元)与Netflix自身营收的精确渗透率缺官方口径，采集文件仅有28.24%的粗略比例（分母为Ampere Analysis估计的全球流媒体订阅收入，未经交叉验证）</li><li>内容供应商集中度缺少量化数据（如前N大工作室/版权方采购金额占内容总支出比例），采集文件仅有定性描述</li><li>AWS云服务采购金额或其占技术/基础设施支出的比例未见具体数字，10-K仅作定性披露，无法量化该项供应商集中度</li></ul></details></section><section class="company-section" aria-labelledby="valuation"><p class="section-kicker">WHAT THE PRICE IMPLIES</p><h2 id="valuation">估值分析</h2><p class="section-lead">当前估值隐含未来数年双位数增速预期，中性情景3年涨13.6%，性价比合理但高度依赖增长持续兑现。</p><h3 class="block-heading">三情景（3 年，工具精确计算）</h3><div class="action-zones"><div><strong>120.9</strong><span>乐观</span><p>隐含回报 +63.1%</p></div><div><strong>84.2</strong><span>中性</span><p>隐含回报 +13.6%</p></div><div><strong>53.2</strong><span>悲观</span><p>隐含回报 -28.3%</p></div></div><details class="fold"><summary>三情景假设依据与工具输出</summary><p><span class="prose-point">①乐观增速15%对标2023-2025年实际营收增速区间(15.85%~17.6%季度YoY)，PE25倍略高于当前23.31倍反映广告/AI增长曲线溢价；</span><span class="prose-point">②中性增速9.8%取分析师一致预期隐含2025-2030 CAGR(9.83%)，PE20倍较当前小幅下修反映增长正常化；</span><span class="prose-point">③悲观增速6.1%取PwC预测行业整体OTT CAGR(增长优势归零)，PE14倍向Disney/WBD等传统媒体同业个位数-十几倍区间收敛。</span></p><p class="tool-output">三情景估值模型 (Three-Scenario Valuation) 当前股价: 74.14 USD 当前EPS: 3.18 预测期: 3年 情景 年增速 目标PE 目标EPS 目标股价 涨跌幅 乐观(Bull) 15% 25x 4.84 120.9 +63.1% 中性(Base) 10% 20x 4.21 84.2 +13.6% 悲观(Bear) 6% 14x 3.80 53.2 -28.3% ✅ 所有计算使用精确十进制, 结果可审计复现（注：命令行显示增速四舍五入为15%/10%/6%，实际输入为0.15/0.098/0.061）</p></details><h3 class="block-heading">当前倍数</h3><div class="table-wrap"><table class="analysis-table"><thead><tr><th>指标</th><th>数值</th><th>来源</th></tr></thead><tbody><tr><td>marketCap</td><td>3087.15亿 USD</td><td><a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="FMP company.market-cap（经financial_rigor.py verify-market-cap验算：74.14×4,163,939,999=3087.15亿，偏差0.00%）">来源</a></td></tr><tr><td>pe</td><td>23.31倍（TTM摊薄口径，TTM摊薄EPS $3.18；TTM基本EPS口径为22.95）</td><td><a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="FMP metrics-ratios-ttm priceToEarningsDilutedRatioTTM，经financial_rigor.py verify-valuation验算74.14/3.18=23.31x">来源</a></td></tr><tr><td>ps</td><td>6.38倍（TTM口径，市值/TTM收入483.7亿）</td><td><a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="FMP metrics-ratios-ttm，经financial_rigor.py calc验算308714511526/48370000000=6.38">来源</a></td></tr><tr><td>peg</td><td>0.67（基于分析师一致预期净利润增速，仅单源）</td><td><a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="FMP metrics-ratios-ttm priceToEarningsGrowthRatioTTM">来源</a></td></tr><tr><td>evToRevenue</td><td>6.49倍（EV 3139.2亿/TTM收入483.7亿）</td><td><a class="source-pill" href="https://financialmodelingprep.com" rel="noreferrer" title="FMP metrics-ratios-ttm evToSalesTTM，经financial_rigor.py calc验算313920000000/48370000000=6.49">来源</a></td></tr></tbody></table></div><dl class="kv-list"><div><dt>反向 DCF</dt><dd>PS6.38倍隐含未来5年营收CAGR接近双位数(一致预期隐含9.83%)且利润率维持高位</dd></div><div><dt>vs 自身历史 · TTM PE（摊薄） 当前 23.31倍</dt><dd>采集文件未含FY2021-2025各年市值/股价，历史PE区间不可得</dd></div><div><dt>或有稀释</dt><dd>—</dd></div></dl><h3 class="block-heading">同行对比</h3><div class="table-wrap"><table><thead><tr><th>公司</th><th>PE（TTM / Fwd）</th><th>PS</th><th>来源</th></tr></thead><tbody><tr><td>Disney（Disney+/Hulu，DTC分部）</td><td>— / —</td><td>不适用（分部未独立披露市值口径）</td><td><a class="source-pill" href="https://thewaltdisneycompany.com/press-releases/the-walt-disney-company-reports-fourth-quarter-and-full-year-earnings-for-fiscal-2025" rel="noreferrer" title="口径差异说明：仅可比经营利润率——Disney DTC分部FY2025 Q4经营利润率5.63%(经financial_rigor.py验算352/6248)，远低于Netflix整体经营利润率29.49%，来自Disney FY2025 Q4财报新闻稿">来源</a></td></tr><tr><td>Warner Bros. Discovery（Max/HBO Max，Streaming分部）</td><td>— / —</td><td>不适用（分部未独立披露市值口径）</td><td><a class="source-pill" href="https://www.wbd.com/news/warner-bros-discovery-reports-fourth-quarter-and-full-year-2025-results" rel="noreferrer" title="口径差异说明：仅可比EBITDA利润率——WBD Streaming分部FY2025 EBITDA利润率12.57%(经financial_rigor.py验算1.37/10.9)，远低于Netflix经营利润率29.49%，来自WBD FY2025 Q4财报新闻稿">来源</a></td></tr></tbody></table></div><aside class="inquiry-block"><p class="q">追问 · 如果股市明天关闭5年，你愿意以这个价格持有吗？</p><p class="a"><span class="prose-point">愿意持有，但需接受高估值对应高增长预期这一前提。</span><span class="prose-point">①当前PE23.31倍/PS6.38倍隐含未来仍维持接近双位数增速，中性情景3年后涨13.6%、乐观情景+63.1%，若增长兑现回报可观；</span><span class="prose-point">②规模效应(内容投入占营收比降至37.85%)、29.49%经营利润率、定价权与广告第二曲线是真实基本面支撑，并非纯粹估值泡沫；</span><span class="prose-point">③但5年封闭期无法应对YouTube观看时长份额持续扩大、内容成本刚性上升等风险，悲观情景下跌幅达28.3%，需能承受该下行并相信管理层能持续跑赢行业6.1%的CAGR。</span></p></aside><details class="fold"><summary>数据缺口 3 项</summary><ul><li>采集文件未提供FY2021-2025各年市值/股价，无法计算历史PE/PS区间，vsOwnHistory.historicalRange标注为不可得而非估算</li><li>Disney/WBD相关分部未独立上市，无标准PE/PS指标，vsPeers改用经营利润率/EBITDA利润率做定性替代比较，两者口径不可直接相加或对比</li><li>反向DCF未能建立含折现率、终值假设的完整模型，仅用分析师一致预期CAGR做近似替代，非精确反向求解</li></ul></details></section><section class="company-section" aria-labelledby="provenance"><p class="section-kicker">PROVENANCE</p><h2 id="provenance">数据与免责声明</h2><p class="company-note">本页由三份经完整性校验（阈值 7 分）的结构化文件合并渲染： 采集 research/companies/us-nflx-netflix/financials-collection.json、分析 research/companies/us-nflx-netflix/financials-analysis.json、总结 research/companies/us-nflx-netflix/financials-summary.json。 生成于 <time>2026-08-09T21:03:23+08:00</time>，数据截止 2026-08-09（Asia/Shanghai）。</p><p class="company-note">本总结基于公开信息与数据截止时点的分析生成，仅供研究参考，不构成个性化投资建议。</p></section></main></body></html>

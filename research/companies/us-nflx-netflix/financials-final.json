@@ -1,0 +1,2816 @@
+{
+  "finalVersion": "1.0.0",
+  "meta": {
+    "companyId": "us-nflx-netflix",
+    "companyName": "Netflix, Inc.",
+    "generatedAt": "2026-08-09T21:03:23+08:00",
+    "dataCutoff": "2026-08-09（Asia/Shanghai）",
+    "validation": {
+      "threshold": 7.0,
+      "scores": {
+        "collection": 8.6,
+        "analysis": 9.8,
+        "summary": 10.0
+      },
+      "validatedAt": "2026-08-09T21:03:23+08:00"
+    },
+    "sources": {
+      "collection": "research/companies/us-nflx-netflix/financials-collection.json",
+      "analysis": "research/companies/us-nflx-netflix/financials-analysis.json",
+      "summary": "research/companies/us-nflx-netflix/financials-summary.json"
+    }
+  },
+  "collection": {
+    "_spec": {
+      "purpose": "公司数据采集产出模板。采集范围以 docs/model/financial-model.md 的 10 个维度为唯一清单，数据源与交叉验证规范以 docs/model/financial-data.md 为唯一正文。",
+      "todoSentinel": "所有待填值写 \"__TODO__\"；取不到的字段不删除，改写 { \"status\": \"unavailable\", \"reason\": \"缺失原因 + 已查范围\" }；取到了但算不出来的（分母为负、口径不成立，如亏损公司的 PE）改写 { \"status\": \"not-applicable\", \"reason\": \"为什么不适用 + 支撑数字\" }。两者都必须带 reason——只写 status 的字段在页面上等于这个字段不存在。",
+      "verifiedValue": "关键数值统一用校验对象：{ value, unit, currency, source1: {name, url, value}, source2: {name, url, value}, deviationPct, flag }。flag 取值：ok（误差≤1%，取 source1 数值）/ minor-diff（1%~5%，注明可能原因如汇率或会计口径）/ major-diff（>5%，必须回原始财报核实后才能使用）。",
+      "estimates": "只有一手来源、无法双源验证的数值（如未上市对手），value 前置 \"[估计]\" 并在 note 说明依据，不执行交叉验证。",
+      "calculation": "一切除法、乘法、增速、估值倍数必须用 docs/research/tools/financial_rigor.py 验算，禁止心算；工具输出记入 crossValidationLog。",
+      "multiListing": "双重上市（H 股 + 美股 ADS / ADR）或交易币种≠报告币种时，股价与市值仍是一个字段，写成 { \"primary\": <校验对象>, \"alt\": [<校验对象>] }：primary 是公司目录前缀对应的主上市地。不适用于本公司（单一上市，NASDAQ）。",
+      "headlineFields": "currentValuation.marketCap.reported、currentValuation.sharePrice、currentValuation.pe、meta.dataCutoff 是页头摘要条与首页卡片直读的四个字段。"
+    },
+    "meta": {
+      "companyId": "us-nflx-netflix",
+      "companyName": "Netflix, Inc.",
+      "ticker": "NFLX",
+      "exchange": "NASDAQ Global Select",
+      "market": "us",
+      "reportingCurrency": "USD",
+      "accountingBasis": "US GAAP",
+      "fiscalYearEnd": "12-31",
+      "dataCutoff": "2026-08-09（Asia/Shanghai）",
+      "collectedAt": "2026-08-09",
+      "sources": {
+        "primary": {
+          "name": "FMP (Financial Modeling Prep)",
+          "url": "https://financialmodelingprep.com"
+        },
+        "secondary": {
+          "name": "stockanalysis.com",
+          "url": "https://stockanalysis.com/stocks/NFLX/"
+        },
+        "originalFilings": [
+          {
+            "type": "10-K",
+            "period": "FY2025 (截至2025-12-31)",
+            "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001065280&type=10-K"
+          },
+          {
+            "type": "DEF 14A",
+            "period": "2026年度股东大会",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065280/000119312526159286/d20613ddef14a.htm"
+          }
+        ]
+      }
+    },
+    "revenueStructure": {
+      "_dimension": "1. 收入结构：最近财年及近4季度分部收入、增速、毛利率",
+      "latestFiscalYear": {
+        "period": "FY2025（截至2025-12-31）",
+        "totalRevenue": {
+          "value": 45183036000,
+          "unit": "currency",
+          "currency": "USD",
+          "source1": {
+            "name": "FMP income-statement",
+            "url": "https://financialmodelingprep.com",
+            "value": 45183036000
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/NFLX/financials/",
+            "value": 45183000000
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "yoyGrowthPct": 15.85,
+        "segments": [
+          {
+            "name": "美国与加拿大 (UCAN)",
+            "revenue": {
+              "value": 19957152000,
+              "unit": "currency",
+              "currency": "USD",
+              "source1": {
+                "name": "FMP revenue-geographic-segments",
+                "url": "https://financialmodelingprep.com",
+                "value": 19957152000
+              },
+              "source2": {
+                "name": "unavailable",
+                "url": "",
+                "value": null
+              },
+              "deviationPct": null,
+              "flag": "仅单源（地区分部为公司10-K原始披露，FMP直接摘录，未做第二源交叉验证）"
+            },
+            "revenueSharePct": 44.17,
+            "yoyGrowthPct": 14.96,
+            "grossMarginPct": {
+              "status": "unavailable",
+              "reason": "Netflix 10-K 不按地区披露分部毛利率，仅披露分部收入与营业利润间接指标；已查 10-K Segment Information 附注与 FMP/stockanalysis，均无地区级毛利率"
+            }
+          },
+          {
+            "name": "欧洲、中东与非洲 (EMEA)",
+            "revenue": {
+              "value": 14514646000,
+              "unit": "currency",
+              "currency": "USD",
+              "source1": {
+                "name": "FMP revenue-geographic-segments",
+                "url": "https://financialmodelingprep.com",
+                "value": 14514646000
+              },
+              "source2": {
+                "name": "unavailable",
+                "url": "",
+                "value": null
+              },
+              "deviationPct": null,
+              "flag": "仅单源"
+            },
+            "revenueSharePct": 32.12,
+            "yoyGrowthPct": 17.18,
+            "grossMarginPct": {
+              "status": "unavailable",
+              "reason": "同上，10-K 不按地区披露毛利率"
+            }
+          },
+          {
+            "name": "拉丁美洲 (LATAM)",
+            "revenue": {
+              "value": 5357521000,
+              "unit": "currency",
+              "currency": "USD",
+              "source1": {
+                "name": "FMP revenue-geographic-segments",
+                "url": "https://financialmodelingprep.com",
+                "value": 5357521000
+              },
+              "source2": {
+                "name": "unavailable",
+                "url": "",
+                "value": null
+              },
+              "deviationPct": null,
+              "flag": "仅单源"
+            },
+            "revenueSharePct": 11.86,
+            "yoyGrowthPct": 10.7,
+            "grossMarginPct": {
+              "status": "unavailable",
+              "reason": "同上，10-K 不按地区披露毛利率"
+            }
+          },
+          {
+            "name": "亚太 (APAC)",
+            "revenue": {
+              "value": 5353717000,
+              "unit": "currency",
+              "currency": "USD",
+              "source1": {
+                "name": "FMP revenue-geographic-segments",
+                "url": "https://financialmodelingprep.com",
+                "value": 5353717000
+              },
+              "source2": {
+                "name": "unavailable",
+                "url": "",
+                "value": null
+              },
+              "deviationPct": null,
+              "flag": "仅单源"
+            },
+            "revenueSharePct": 11.85,
+            "yoyGrowthPct": 21.27,
+            "grossMarginPct": {
+              "status": "unavailable",
+              "reason": "同上，10-K 不按地区披露毛利率"
+            }
+          }
+        ]
+      },
+      "recentQuarters": [
+        {
+          "period": "2025Q3（截至2025-09-30）",
+          "totalRevenue": {
+            "value": 11510307000,
+            "unit": "currency",
+            "currency": "USD",
+            "source1": {
+              "name": "FMP income-statement(quarter)",
+              "url": "https://financialmodelingprep.com",
+              "value": 11510307000
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/stocks/NFLX/financials/?p=quarterly",
+              "value": 11510000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "yoyGrowthPct": 17.15,
+          "segments": []
+        },
+        {
+          "period": "2025Q4（截至2025-12-31）",
+          "totalRevenue": {
+            "value": 12050762000,
+            "unit": "currency",
+            "currency": "USD",
+            "source1": {
+              "name": "FMP income-statement(quarter)",
+              "url": "https://financialmodelingprep.com",
+              "value": 12050762000
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/stocks/NFLX/financials/?p=quarterly",
+              "value": 12051000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "yoyGrowthPct": 17.6,
+          "segments": []
+        },
+        {
+          "period": "2026Q1（截至2026-03-31）",
+          "totalRevenue": {
+            "value": 12249757000,
+            "unit": "currency",
+            "currency": "USD",
+            "source1": {
+              "name": "FMP income-statement(quarter)",
+              "url": "https://financialmodelingprep.com",
+              "value": 12249757000
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/stocks/NFLX/financials/?p=quarterly",
+              "value": 12250000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "yoyGrowthPct": 16.19,
+          "segments": []
+        },
+        {
+          "period": "2026Q2（截至2026-06-30，最新一季）",
+          "totalRevenue": {
+            "value": 12559938000,
+            "unit": "currency",
+            "currency": "USD",
+            "source1": {
+              "name": "FMP income-statement(quarter)",
+              "url": "https://financialmodelingprep.com",
+              "value": 12559938000
+            },
+            "source2": {
+              "name": "unavailable",
+              "url": "",
+              "value": null
+            },
+            "deviationPct": null,
+            "flag": "仅单源（stockanalysis 季度页截至采集时尚未更新到 2026Q2，已查该页面确认最新为 2026Q1）"
+          },
+          "yoyGrowthPct": 13.37,
+          "segments": []
+        }
+      ]
+    },
+    "financialMetrics": {
+      "_dimension": "2. 财务指标：近5年收入、净利润、毛利率、经营利润率、自由现金流、现金储备",
+      "annual": [
+        {
+          "fiscalYear": "2021",
+          "revenue": {
+            "value": 29697844000,
+            "unit": "currency",
+            "currency": "USD",
+            "source1": {
+              "name": "FMP",
+              "url": "https://financialmodelingprep.com",
+              "value": 29697844000
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/stocks/NFLX/financials/",
+              "value": 29698000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": 5116228000,
+            "unit": "currency",
+            "currency": "USD",
+            "note": "GAAP归母净利润",
+            "source1": {
+              "name": "FMP",
+              "url": "https://financialmodelingprep.com",
+              "value": 5116228000
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/stocks/NFLX/financials/",
+              "value": 5116000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "grossMarginPct": 41.64,
+          "operatingMarginPct": 20.86,
+          "freeCashFlow": {
+            "value": -131975000,
+            "unit": "currency",
+            "currency": "USD",
+            "note": "资本支出口径为PP&E购置，不含内容资产投资；2021年为疫情后制作复工年，FCF转负",
+            "source1": {
+              "name": "FMP cashflow-statement",
+              "url": "https://financialmodelingprep.com",
+              "value": -131975000
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/stocks/NFLX/financials/cash-flow-statement/",
+              "value": -131980000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "cashReserves": {
+            "value": 6027804000,
+            "unit": "currency",
+            "currency": "USD",
+            "note": "现金及等价物，不含短期投资(2021年短期投资为0)",
+            "source1": {
+              "name": "FMP balance-sheet-statement",
+              "url": "https://financialmodelingprep.com",
+              "value": 6027804000
+            },
+            "source2": {
+              "name": "unavailable",
+              "url": "",
+              "value": null
+            },
+            "deviationPct": null,
+            "flag": "仅单源"
+          }
+        },
+        {
+          "fiscalYear": "2022",
+          "revenue": {
+            "value": 31615550000,
+            "unit": "currency",
+            "currency": "USD",
+            "source1": {
+              "name": "FMP",
+              "url": "https://financialmodelingprep.com",
+              "value": 31615550000
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/stocks/NFLX/financials/",
+              "value": 31616000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": 4491924000,
+            "unit": "currency",
+            "currency": "USD",
+            "note": "GAAP归母净利润",
+            "source1": {
+              "name": "FMP",
+              "url": "https://financialmodelingprep.com",
+              "value": 4491924000
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/stocks/NFLX/financials/",
+              "value": 4492000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "grossMarginPct": 39.37,
+          "operatingMarginPct": 17.82,
+          "freeCashFlow": {
+            "value": 1618528000,
+            "unit": "currency",
+            "currency": "USD",
+            "note": "资本支出口径为PP&E购置",
+            "source1": {
+              "name": "FMP cashflow-statement",
+              "url": "https://financialmodelingprep.com",
+              "value": 1618528000
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/stocks/NFLX/financials/cash-flow-statement/",
+              "value": 1619000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "cashReserves": {
+            "value": 6058452000,
+            "unit": "currency",
+            "currency": "USD",
+            "note": "现金+短期投资",
+            "source1": {
+              "name": "FMP balance-sheet-statement",
+              "url": "https://financialmodelingprep.com",
+              "value": 6058452000
+            },
+            "source2": {
+              "name": "unavailable",
+              "url": "",
+              "value": null
+            },
+            "deviationPct": null,
+            "flag": "仅单源"
+          }
+        },
+        {
+          "fiscalYear": "2023",
+          "revenue": {
+            "value": 33723297000,
+            "unit": "currency",
+            "currency": "USD",
+            "source1": {
+              "name": "FMP",
+              "url": "https://financialmodelingprep.com",
+              "value": 33723297000
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/stocks/NFLX/financials/",
+              "value": 33723000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": 5407990000,
+            "unit": "currency",
+            "currency": "USD",
+            "note": "GAAP归母净利润",
+            "source1": {
+              "name": "FMP",
+              "url": "https://financialmodelingprep.com",
+              "value": 5407990000
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/stocks/NFLX/financials/",
+              "value": 5408000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "grossMarginPct": 41.54,
+          "operatingMarginPct": 20.62,
+          "freeCashFlow": {
+            "value": 6925749000,
+            "unit": "currency",
+            "currency": "USD",
+            "note": "资本支出口径为PP&E购置",
+            "source1": {
+              "name": "FMP cashflow-statement",
+              "url": "https://financialmodelingprep.com",
+              "value": 6925749000
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/stocks/NFLX/financials/cash-flow-statement/",
+              "value": 6926000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "cashReserves": {
+            "value": 7137886000,
+            "unit": "currency",
+            "currency": "USD",
+            "note": "现金+短期投资",
+            "source1": {
+              "name": "FMP balance-sheet-statement",
+              "url": "https://financialmodelingprep.com",
+              "value": 7137886000
+            },
+            "source2": {
+              "name": "unavailable",
+              "url": "",
+              "value": null
+            },
+            "deviationPct": null,
+            "flag": "仅单源"
+          }
+        },
+        {
+          "fiscalYear": "2024",
+          "revenue": {
+            "value": 39000966000,
+            "unit": "currency",
+            "currency": "USD",
+            "source1": {
+              "name": "FMP",
+              "url": "https://financialmodelingprep.com",
+              "value": 39000966000
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/stocks/NFLX/financials/",
+              "value": 39001000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": 8711631000,
+            "unit": "currency",
+            "currency": "USD",
+            "note": "GAAP归母净利润",
+            "source1": {
+              "name": "FMP",
+              "url": "https://financialmodelingprep.com",
+              "value": 8711631000
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/stocks/NFLX/financials/",
+              "value": 8712000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "grossMarginPct": 46.06,
+          "operatingMarginPct": 26.71,
+          "freeCashFlow": {
+            "value": 6921826000,
+            "unit": "currency",
+            "currency": "USD",
+            "note": "资本支出口径为PP&E购置",
+            "source1": {
+              "name": "FMP cashflow-statement",
+              "url": "https://financialmodelingprep.com",
+              "value": 6921826000
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/stocks/NFLX/financials/cash-flow-statement/",
+              "value": 6922000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "cashReserves": {
+            "value": 9583739000,
+            "unit": "currency",
+            "currency": "USD",
+            "note": "现金+短期投资",
+            "source1": {
+              "name": "FMP balance-sheet-statement",
+              "url": "https://financialmodelingprep.com",
+              "value": 9583739000
+            },
+            "source2": {
+              "name": "unavailable",
+              "url": "",
+              "value": null
+            },
+            "deviationPct": null,
+            "flag": "仅单源"
+          }
+        },
+        {
+          "fiscalYear": "2025",
+          "revenue": {
+            "value": 45183036000,
+            "unit": "currency",
+            "currency": "USD",
+            "source1": {
+              "name": "FMP income-statement",
+              "url": "https://financialmodelingprep.com",
+              "value": 45183036000
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/stocks/NFLX/financials/",
+              "value": 45183000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": 10981201000,
+            "unit": "currency",
+            "currency": "USD",
+            "note": "GAAP归母净利润",
+            "source1": {
+              "name": "FMP income-statement",
+              "url": "https://financialmodelingprep.com",
+              "value": 10981201000
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/stocks/NFLX/financials/",
+              "value": 10981000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "grossMarginPct": 48.49,
+          "operatingMarginPct": 29.49,
+          "freeCashFlow": {
+            "value": 9461053000,
+            "unit": "currency",
+            "currency": "USD",
+            "note": "资本支出口径为PP&E购置",
+            "source1": {
+              "name": "FMP cashflow-statement",
+              "url": "https://financialmodelingprep.com",
+              "value": 9461053000
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/stocks/NFLX/financials/cash-flow-statement/",
+              "value": 9461000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "cashReserves": {
+            "value": 9062359000,
+            "unit": "currency",
+            "currency": "USD",
+            "note": "现金+短期投资",
+            "source1": {
+              "name": "FMP balance-sheet-statement",
+              "url": "https://financialmodelingprep.com",
+              "value": 9062359000
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/stocks/NFLX/financials/balance-sheet/",
+              "value": 9062000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          }
+        }
+      ]
+    },
+    "competitiveLandscape": {
+      "_dimension": "3. 竞争格局：市场份额、主要竞争对手对比",
+      "marketShare": {
+        "note": "不同分母口径下的份额差异很大，以下并列多个口径、分别注明来源与统计时点，不做跨口径加总或直接比较",
+        "byUSViewingTime": {
+          "value": 9.0,
+          "unit": "percent",
+          "period": "2025年12月（美国）",
+          "description": "Netflix占美国电视总观看时长（含线性电视+全部流媒体平台）的份额，同比由2024年12月的8.5%升至9.0%；同期YouTube 12.7%（2024年12月11.1%）、Prime Video 4.3%、Roku Channel约3.0%、全部流媒体平台合计47.5%（2024年12月43.4%）——YouTube份额及增速均领先Netflix",
+          "source": {
+            "name": "Nielsen Gauge（经adwave.com转引）",
+            "url": "https://adwave.com/resources/most-watched-streaming-service-q4-2025"
+          }
+        },
+        "byUSSubscriptionShare": {
+          "value": 19,
+          "unit": "percent",
+          "period": "2025年Q3（美国）",
+          "description": "JustWatch追踪的美国流媒体订阅市场份额：Amazon Prime Video 20%（环比-1pt，同比-2pt）、Netflix 19%（环比-1pt，同比-2pt）、Disney+ 14%（同比+2pt）——两大龙头份额均已见顶回落，Disney+持续追赶",
+          "source": {
+            "name": "JustWatch（经The Point Online转引）",
+            "url": "https://www.thepoint.online/streaming-wars-update-justwatch-data-q3-2025"
+          }
+        },
+        "byGlobalSubscriptionRevenue": {
+          "value": 28.24,
+          "unit": "percent",
+          "period": "2025全年",
+          "note": "经工具验算：Netflix FY2025营收451.83亿美元 / 全球流媒体订阅收入约1,600亿美元 = 28.24%；分母为Ampere Analysis统计的全球流媒体订阅收入（不含广告收入），口径较粗，仅供数量级参考。同一来源另指出Netflix占2025年美国流媒体订阅收入的最大单一份额，约14%",
+          "source": {
+            "name": "Ampere Analysis（经Yahoo Finance转引）",
+            "url": "https://finance.yahoo.com/markets/stocks/articles/global-streaming-revenue-surged-160-182749431.html"
+          }
+        },
+        "byGlobalSubscribers": {
+          "value": 325,
+          "unit": "million",
+          "period": "2026年年初附近（公司2025年起不再按季度披露精确订阅户数）",
+          "description": "Netflix全球付费订阅户约3.25亿；对比Disney+总订阅户1.316亿（截至2025-09-27，国内5,930万+国际7,240万）、WBD（Max/HBO Max）全球流媒体订阅户1.316亿（FY2025）——Netflix订阅规模约为两大竞品各自的2.5倍",
+          "source": {
+            "name": "Netflix投资者信（经demandsage.com转引）",
+            "url": "https://www.demandsage.com/netflix-subscribers"
+          }
+        }
+      },
+      "competitors": [
+        {
+          "name": "Disney（Disney+ / Hulu，Direct-to-Consumer分部）",
+          "metrics": "DTC分部FY2025 Q4（截至2025-09-27）营收62.48亿美元（YoY+8%），经营利润3.52亿美元（YoY+39%），经营利润率5.63%（经工具验算：352/6248）；Disney+订阅户合计1.316亿（国内5,930万+国际7,240万，环比+3%）",
+          "vsNetflix": "Disney以漫威/星战/皮克斯等IP捆绑与Disney+/Hulu联合订阅为核心武器，其DTC经营利润率（个位数）远低于Netflix整体经营利润率29.49%，反映仍处于流媒体盈利爬坡期，尚未享受到Netflix级别的规模效应",
+          "source": {
+            "name": "The Walt Disney Company FY2025 Q4财报新闻稿",
+            "url": "https://thewaltdisneycompany.com/press-releases/the-walt-disney-company-reports-fourth-quarter-and-full-year-earnings-for-fiscal-2025"
+          }
+        },
+        {
+          "name": "Amazon Prime Video",
+          "metrics": "亚马逊未单独披露Prime Video营收/利润；广告支持层月均覆盖观众从2024年4月的2亿人增至2025年11月的3.15亿人(+58%，亚马逊官方披露)；全球Prime会员超2亿；第三方对Prime Video广告收入的估算差异极大（如MoffettNathanson预计2025年超20亿美元），标记为[估计]，无法交叉验证",
+          "vsNetflix": "Prime Video依托亚马逊电商/物流会员体系捆绑获客，边际获客成本低于纯订阅制流媒体，但内容库投入强度与原创内容口碑不及Netflix；因未单独分部披露财务数据，无法直接比较毛利率/经营利润率",
+          "source": {
+            "name": "MediaPost（引用亚马逊官方披露）+ StreamTV Insider（分析师估算，[估计]）",
+            "url": "https://www.mediapost.com/publications/article/410592/amazon-prime-video-ad-reach-jumps-nearly-60-to-31.html"
+          }
+        },
+        {
+          "name": "YouTube（Alphabet）",
+          "metrics": "Alphabet在2025年Q4财报中首次单独披露YouTube全年（广告+订阅）总营收超600亿美元；其中广告收入403.7亿美元（YoY+11.7%），Q4单季广告收入113.8亿美元（YoY+8.7%）；订阅收入（YouTube Premium/Music/TV等）约190-200亿美元（收入总额减广告收入的推算值）",
+          "vsNetflix": "YouTube以UGC+算法推荐+广告为主要商业模式，2025年总收入已超过Netflix同期营收(451.83亿美元)，是Netflix在\"注意力\"与广告主预算上的最直接竞争对手；但两者变现逻辑本质不同（免费UGC广告 vs 付费精品内容订阅），Alphabet未单独披露YouTube的毛利率/经营利润率",
+          "source": {
+            "name": "Alphabet 2025 Q4财报电话会（经Tubefilter/Variety转引）",
+            "url": "https://www.tubefilter.com/2026/02/05/alphabet-q4-2025-youtube-earnings-revenue-60-billion"
+          }
+        },
+        {
+          "name": "Warner Bros. Discovery（Max/HBO Max，Streaming分部）",
+          "metrics": "Streaming分部FY2025营收109亿美元（YoY+5%），调整后EBITDA 13.7亿美元（为上年的两倍以上），经工具验算EBITDA利润率12.57%（1.37/10.9）；全球流媒体订阅户1.316亿，Q4单季净增350万",
+          "vsNetflix": "WBD Streaming分部盈利能力（EBITDA利润率12.57%）远低于Netflix经营利润率29.49%，订阅规模约为Netflix的40%；2026年2月Netflix曾出价约830亿美元竞购WBD但最终放弃，Paramount Skydance以更高报价胜出，Netflix依约获得28亿美元分手费——反映Netflix在并购上的资本纪律，而非靠收购做大规模",
+          "source": {
+            "name": "WBD FY2025 Q4财报新闻稿 + Deadline（分手费报道）",
+            "url": "https://www.wbd.com/news/warner-bros-discovery-reports-fourth-quarter-and-full-year-2025-results"
+          }
+        },
+        {
+          "name": "TikTok / 短视频平台（注意力竞争，非同类订阅竞品）",
+          "metrics": "字节跳动/TikTok不单独披露财务数据，无法与Netflix做收入或利润率的直接比较",
+          "vsNetflix": "作为争夺用户可支配娱乐时间（而非订阅费）的竞争对手，短视频/UGC平台与YouTube一起持续分流年轻用户的注意力份额；Nielsen Gauge统计口径中未单独列出TikTok在电视端的观看时长份额，该维度缺乏权威数据源，标记为定性观察而非量化比较",
+          "source": {
+            "name": "定性推断，无可交叉验证的财务数据源",
+            "url": ""
+          }
+        }
+      ]
+    },
+    "businessModelMoat": {
+      "_dimension": "4. 商业模式与护城河：核心竞争优势来源",
+      "oneLiner": "Netflix卖的本质是一份『可预期的娱乐时间』：以规模化的自制+外购内容库、数据驱动的个性化推荐算法为核心飞轮，把全球观众的日常注意力持续转化为订阅与广告现金流，而不依赖单部爆款的一次性变现。",
+      "revenueModel": "订阅制（含广告支持套餐），用户按月/年付费换取无广告或含广告的流媒体内容库访问权",
+      "moats": [
+        {
+          "type": "规模效应",
+          "evidence": "内容现金投入占营收比例持续下降：FY2025内容现金投入约171亿美元/营收451.83亿美元=37.85%（经工具验算），显著低于行业估计的2019年约65%的水平；同时FY2025经营利润率达29.49%。全球约3.25亿付费订阅户远超Disney+(1.316亿)、WBD Max(1.316亿)，固定内容成本被摊薄到更大的用户基数上，形成'规模越大、单位成本越低'的正反馈",
+          "trend": "变宽",
+          "source": {
+            "name": "ibinterviewquestions.com 内容经济学分析 + 公司自有已验证财务数据",
+            "url": "https://ibinterviewquestions.com/guides/tmt-investment-banking/content-economics-amortization"
+          }
+        },
+        {
+          "type": "转换成本",
+          "evidence": "自建CDN Open Connect（2011年立项自建）+ 超十年积累的用户观看行为数据训练个性化推荐算法；2016年公司公开研究曾估计推荐系统每年为公司节省超10亿美元的流失相关成本（该数据年代较早，仅作技术护城河存在性的历史佐证，非当前数字）。2023年5月起全球推广的密码共享收费政策，在把约1亿此前免费蹭号用户转化为付费用户后，2023下半年出现疫情后最强订阅户增长，显示用户对平台内容库和使用习惯的粘性支撑了商业化转化",
+          "trend": "稳定",
+          "source": {
+            "name": "Tubefilter/Motley Fool（2016年推荐算法研究）+ StreamTV Insider/Forbes（密码共享效果）",
+            "url": "https://www.tubefilter.com/2016/06/20/netflix-recommendation-engine-algorithm"
+          }
+        },
+        {
+          "type": "品牌定价权",
+          "evidence": "英国消费者调研中Netflix品牌知名度96%，高于Amazon Prime Video(94%)、Disney+(93%)等全部竞品(Uswitch/Statista)。公司近年多次提价（如2026年一季度将Premium套餐上调至27美元/月，为一年多内第二次提价）而未见订阅户显著流失；广告支持层月活跃观看人数从2025年5月的9,400万增至2026年5月的2.5亿",
+          "trend": "变宽",
+          "source": {
+            "name": "Uswitch（品牌知名度）+ Yahoo Finance（提价报道）",
+            "url": "https://www.uswitch.com/broadband/studies/online-streaming-statistics"
+          }
+        },
+        {
+          "type": "网络效应（弱/间接）",
+          "evidence": "内容爆款（如NFL圣诞赛事单场约3,000万观众、WWE Raw周播直播）带来的社交讨论度与口碑传播可产生一定自然获客效应，但Netflix本质上是B2C内容分发平台而非多边平台，用户之间不直接产生传统意义上的网络效应，这一条护城河的强度明显弱于规模效应与转换成本，长期有效性有待观察",
+          "trend": "待验证",
+          "source": {
+            "name": "定性判断，基于公司体育/直播内容布局的公开报道",
+            "url": ""
+          }
+        }
+      ]
+    },
+    "technology": {
+      "_dimension": "5. 技术能力：核心技术栈、研发投入",
+      "coreTechStack": [
+        "个性化推荐算法（协同过滤+深度学习模型；2016年公司公开研究估计其为公司节省超10亿美元/年的流失相关成本，该数据年代较早、公司近年未见更新披露，仅作历史参考，来源 tubefilter.com 2016年报道）",
+        "自建CDN——Open Connect（2011年立项、2012年公开，将缓存服务器(OCA)部署进全球ISP网络内部就近分发内容，降低带宽成本与播放延迟；来源 about.netflix.com 官方说明）",
+        "视频编码与流媒体传输技术（持续投入AV1等下一代编码标准以降低带宽成本、支持4K/HDR及低延迟直播场景）",
+        "自研广告技术平台 Netflix Ads Suite（2025年4月1日起在美国上线，2025年内完成向全部广告市场的推广，替代此前依赖微软的第三方广告服务器，实现自主定向、测量与程序化交易能力；来源 ppc.land）",
+        "直播与新业务技术基础设施（支撑WWE Raw每周直播、NFL圣诞赛事等大型低延迟直播事件，以及云游戏/移动游戏业务）"
+      ],
+      "rdExpense": {
+        "value": 3391390000,
+        "unit": "currency",
+        "currency": "USD",
+        "note": "FY2025，Netflix 财报中列为 Technology and Development，含内容以外的产品/工程/推荐算法研发",
+        "source1": {
+          "name": "FMP income-statement",
+          "url": "https://financialmodelingprep.com",
+          "value": 3391390000
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "url": "https://stockanalysis.com/stocks/NFLX/financials/",
+          "value": null
+        },
+        "deviationPct": null,
+        "flag": "仅单源（stockanalysis 未单列该科目，10-K 原文口径与 FMP 一致）"
+      },
+      "rdIntensityPct": 7.51,
+      "rdTrend": "近5年研发费用率（研发/收入）基本稳定在7.5%~8.6%区间：2021年7.66%→2022年8.58%（峰值）→2023年7.93%→2024年7.50%→2025年7.51%；研发费用绝对值持续增长（22.7亿→33.9亿美元）但收入增长更快，费用率反而小幅下降，工具验算见 crossValidationLog",
+      "note": "研发费用在Netflix财报中列示为『技术与研发(Technology and Development)』，FY2025为33.91亿美元（占营收7.51%），主要覆盖产品/工程/推荐算法等费用化研发投入；内容制作与采购成本单独在『内容资产』及其摊销中核算，不计入该研发费用科目，两者口径互不重叠。自建Open Connect CDN是Netflix区别于依赖第三方CDN（如竞品常用Akamai/Cloudflare）的关键技术资产，战略价值在于：(1)降低边际带宽成本；(2)通过在ISP网络内就近缓存提升播放质量与用户体验；(3)减少对外部基础设施提供商的议价依赖，形成成本与体验的双重优势。来源：Netflix FY2025年报费用科目定义（10-K）+ Open Connect官方说明 https://about.netflix.com/news/how-netflix-works-with-isps-around-the-globe-to-deliver-a-great-viewing-experience"
+    },
+    "management": {
+      "_dimension": "6. 管理层：创始人/CEO履历、持股比例、关键决策记录",
+      "founderCeo": {
+        "name": "Wilmot Reed Hastings Jr.（联合创始人）；现任联席CEO为 Theodore A. Sarandos 与 Gregory K. Peters",
+        "importantUpdate": "注意：截至2026-08-09检索，Reed Hastings已不再是现任董事会主席——他已于2026年6月4日年度股东大会正式卸任董事会成员，独立董事Jay Hoag（自1999年起任董事、原首席独立董事）于当日接任董事会主席。这一变化发生在本文件其他既有字段（ownership.note、executiveCompensation.items）标注的'现任董事会主席'表述之后，本次检索未修改那些已落盘字段，仅在此处如实记录最新公开信息，请以此处为准。来源：Variety 2026-06 报道 + Reuters 2026-06-05 + SEC DEF 14A（https://www.sec.gov/Archives/edgar/data/1065280/000119312526159286/d20613ddef14a.htm，原文：'At the 2026 annual meeting, Reed Hastings will not stand for re-election to the Board'）",
+        "background": "Wilmot Reed Hastings Jr.：1997年与Marc Randolph共同创立Netflix（彼时为DVD邮寄租赁业务），2002年推动公司上市。1998年至2023年1月长期担任CEO（其中2020年7月起与Ted Sarandos共同任联席CEO），主导公司从DVD租赁转型为全球流媒体平台——2007年推出流媒体服务，此后将服务扩展至190余个国家/地区。2023年1月19日卸任联席CEO职务，由Ted Sarandos与Greg Peters接任联席CEO，Hastings转任执行董事长（Executive Chairman），此后逐步淡出日常管理（FY2025薪酬仅11.7万美元现金、无新股权激励）。2026年4月Netflix在Q1股东信中披露Hastings将不再寻求董事会连任；2026年6月4日年度股东大会后，Hastings正式卸任董事会成员及董事长职务，独立董事Jay Hoag接任董事会主席，至此Hastings结束其在Netflix近29年的全部正式角色。来源：CNBC 2023-01-19、The Guardian 2023-01-19、Variety 2026、SEC DEF 14A。\n\nTed Sarandos：1999年经引荐结识Hastings，2000年以DVD采购负责人身份加入Netflix，此后近20年主管内容业务，2013年主导公司向自制内容转型（推出《纸牌屋》《发展受阻》《女子监狱》等首批原创剧集），2013年入选《时代》100位最具影响力人物；2020年7月被任命为联席CEO（与Hastings共同任职），同时继续兼任首席内容官至今。来源：Variety 2020-07、ir.netflix.net leadership页。\n\nGreg Peters：2008年11月加入Netflix（此前任职于Macrovision/Rovi、Mediabolic、Red Hat Network等公司），历任国际业务拓展官、首席产品官（2017年7月-2020年7月）、首席运营官（2020年7月-2023年1月），主导公司国际化扩张、产品体验及广告/游戏等新业务的孵化；2023年1月19日于Hastings卸任之际被任命为联席CEO（与Sarandos共同任职）。来源：ir.netflix.net leadership页、Wikipedia 'Greg Peters (businessman)'。",
+        "tenure": "Reed Hastings：1997年联合创立公司；1998年-2023年1月19日担任(联席)CEO（其中2020年7月-2023年1月与Ted Sarandos共同担任联席CEO）；2023年1月19日-2026年6月4日担任执行董事长/董事会主席；2026年6月4日年度股东大会后正式退出董事会，不再担任公司任何职务。现任联席CEO为Ted Sarandos（2020年7月起）与Greg Peters（2023年1月起）；现任董事会主席为独立董事Jay Hoag（2026年6月4日起）。"
+      },
+      "ownership": {
+        "economicPct": 0.51,
+        "votingPct": 0.51,
+        "note": "Netflix 无AB股结构，单一普通股，一股一票，经济权益等于投票权。Reed Hastings（联合创始人；已于2026-06-04卸任董事会成员及董事会主席，现任董事会主席为独立董事Jay Hoag，详见management.founderCeo.importantUpdate）持股21,164,244股，占总股本4,163,939,999股的0.51%——创始人持股比例已很低，公司治理不依赖创始人控制权，卸任董事会后这一点更加明确。",
+        "source": {
+          "name": "SEC Form 4 (Reed Hastings, 2026-06-01申报)",
+          "url": "https://www.secform4.com/insider-trading/1065280.htm"
+        }
+      },
+      "executiveCompensation": {
+        "note": "FY2025 主要高管薪酬（含股权激励），来源 FMP company-executives（摘自公司披露）",
+        "items": [
+          {
+            "name": "Theodore A. Sarandos",
+            "title": "联席CEO、总裁、董事",
+            "totalPay": 11788883,
+            "currency": "USD"
+          },
+          {
+            "name": "Gregory K. Peters",
+            "title": "联席CEO、总裁、董事",
+            "totalPay": 11788883,
+            "currency": "USD"
+          },
+          {
+            "name": "Spencer Adam Neumann",
+            "title": "首席财务官",
+            "totalPay": 6811618,
+            "currency": "USD"
+          },
+          {
+            "name": "David Hyman",
+            "title": "首席法务官",
+            "totalPay": 6719773,
+            "currency": "USD"
+          },
+          {
+            "name": "Wilmot Reed Hastings Jr.",
+            "title": "联合创始人（该笔薪酬对应其FY2025在任期间的董事会主席角色；已于2026-06-04卸任董事会成员及主席职务）",
+            "totalPay": 117178,
+            "currency": "USD",
+            "note": "仅象征性现金薪酬，无新股权激励，反映其已从执行角色淡出；2026-06-04卸任后不再担任公司任何职务"
+          }
+        ],
+        "source": {
+          "name": "FMP company-executives",
+          "url": "https://financialmodelingprep.com"
+        }
+      },
+      "keyDecisions": [
+        {
+          "date": "2022-04-19/20",
+          "decision": "Q1 2022财报披露十年来首次订阅户净减少（-20万），管理层预警二季度将再流失约200万，成为公司战略从'不惜代价换增长'转向'利润与ARM优先'的转折点",
+          "outcome": "财报公布次日（4-20）股价单日暴跌35.1%，创公司历史最大单日跌幅，市值蒸发约544亿美元；管理层随后于同年内先后启动广告支持套餐研发与账户共享收费方案的开发",
+          "source": {
+            "name": "CNBC 2022-04-19/20、The Guardian 2022-04-20",
+            "url": "https://www.cnbc.com/2022/04/20/netflix-plunges-trading-subscriber-loss.html"
+          }
+        },
+        {
+          "date": "2022-11-03",
+          "decision": "广告支持套餐（Standard with Ads）在12个国家以6.99美元/月上线，首次引入广告变现模式",
+          "outcome": "上线首月MAU即超500万，2023年10月达1,500万，2024年5月达4,000万，2025年11月达1.9亿，2026年5月达2.5亿（注：2026年起口径切换为'月活跃观看人数'，与此前的'月活跃用户数'不完全可比）；截至2025年11月美国45%的Netflix家庭已在广告层观看",
+          "source": {
+            "name": "NBC News 2024-05、adwave.com、thewrap.com",
+            "url": "https://www.nbcnews.com/business/business-news/netflix-ad-supported-tier-40-million-monthly-users-rcna152463"
+          }
+        },
+        {
+          "date": "2023-01-19",
+          "decision": "宣布联席CEO架构：Ted Sarandos与Greg Peters共同接任CEO，创始人Reed Hastings卸任CEO转任执行董事长",
+          "outcome": "标志创始人向职业经理人治理结构的过渡；此后Hastings持续淡出执行事务，2026年6月正式退出董事会",
+          "source": {
+            "name": "CNBC 2023-01-19、The Guardian 2023-01-19",
+            "url": "https://www.cnbc.com/2023/01/19/netflixs-reed-hastings-is-giving-up-ceo-role.html"
+          }
+        },
+        {
+          "date": "2023-05-23起（美国），同年内推广至全球所有运营地区",
+          "decision": "密码共享收费政策（Paid Sharing）全球铺开，将公司2022年估计的约1亿全球免费蹭号用户（含美国/加拿大约3,000万）转化为付费或额外成员收入",
+          "outcome": "2023下半年为疫情后最强订阅户增长期（约22百万新增），2023年Q3营收与净利润超预期；据Leichtman Research Group后续调研，仍有约10%美国用户绕过限制继续共享密码，账户共享行为未被完全消除但整体呈下降趋势",
+          "source": {
+            "name": "StreamTV Insider、Forbes 2023-10-25、Reuters 2024-04-17",
+            "url": "https://www.streamtvinsider.com/video/netflix-password-sharing-crackdown-paying-us-10-still-share"
+          }
+        },
+        {
+          "date": "2024年1月宣布WWE十年协议（2025年1月起执行）；2024年5月宣布NFL三季协议（2024-2026年圣诞节比赛，首场2024-12-25）",
+          "decision": "布局体育版权与直播赛事：与WWE签订十年协议独家直播《WWE Raw》周播节目；与NFL签订三个赛季协议独家转播圣诞节比赛（2024年两场、2025-2026年各至少一场）",
+          "outcome": "2024年圣诞节两场NFL比赛合计吸引来自218个国家/地区的观众，单场约3,000万观众，成为当年Netflix平台观看时长最高的两项内容；2025年圣诞节比赛（Lions-Vikings）成为史上观看人数最多的NFL转播场次之一（200个国家/地区观众收看）；标志公司战略性进入体育版权领域，作为差异化内容与广告库存投资方向",
+          "source": {
+            "name": "DW.com、Wikipedia 'Sports on Netflix'、LinkedIn(Jo Redfern)行业分析",
+            "url": "https://www.dw.com/en/nfl-wwe-streaming-netflix-new-strategy/a-71345322"
+          }
+        },
+        {
+          "date": "2025-04-01",
+          "decision": "自研广告技术平台Netflix Ads Suite在美国正式上线，2025年内完成向全部广告市场的推广，替代此前依赖微软的第三方广告服务器",
+          "outcome": "据学术文献引用公司自身披露，广告业务收入2025年较2024年增长约2.5倍；公司预计2026年广告收入将再翻倍至约30亿美元；广告目前仍只占总营收的小部分，但被管理层定位为公司的第二增长曲线",
+          "source": {
+            "name": "ppc.land时间线整理、Frontiers in Communication期刊论文（引用Netflix官方披露）",
+            "url": "https://ppc.land/netflix-set-to-double-ad-revenue-in-2025-after-major-tech-rollout"
+          }
+        },
+        {
+          "date": "2026-02-27",
+          "decision": "在与Paramount Skydance就收购Warner Bros. Discovery的竞价战中，Netflix选择不再加价跟进，正式放弃此前对WBD约830亿美元的收购要约",
+          "outcome": "WBD转而与Paramount Skydance签署合并协议，Netflix依据此前的合并协议条款获得28亿美元分手费（计入2026年Q1其他收益，推动当季摊薄EPS同比增长约86%）；市场解读为公司并购纪律的体现——不为扩大规模而支付过高溢价，优先考虑有机增长与股东回报",
+          "source": {
+            "name": "Deadline 2026-02-27、WSJ 2026、法律分析(kaufcan.com)",
+            "url": "https://deadline.com/2026/02/netflix-cash-injection-paramount-wbd-termination-fee-1236738911"
+          }
+        },
+        {
+          "date": "2026-06-04",
+          "decision": "创始人Reed Hastings正式卸任董事会成员及董事会主席，结束其在公司近29年的全部正式角色；独立董事Jay Hoag（自1999年任董事）接任董事会主席",
+          "outcome": "完成公司治理从创始人主导向独立董事主导的最后一步过渡，自2023年联席CEO架构确立以来的领导层交接周期至此完结",
+          "source": {
+            "name": "Variety 2026-06、Reuters 2026-06-05、SEC DEF 14A",
+            "url": "https://variety.com/2026/tv/news/netflix-board-reed-hastings-jay-hoag-chairman-1236768093"
+          }
+        }
+      ]
+    },
+    "industryOutlook": {
+      "_dimension": "7. 行业前景：TAM（总可寻址市场）、增长预测",
+      "tam": {
+        "value": 226.6,
+        "unit": "billion",
+        "currency": "USD",
+        "definition": "全球OTT（流媒体/数字视频）行业总收入，口径包含消费者订阅支出、广告支出，以及仅通过流媒体分发的传统广播商收入；不包含传统线性有线/卫星付费电视收入，也不包含院线、直播音乐等其他娱乐媒体品类（这些在PwC报告中被计入其他独立细分市场）",
+        "asOf": "2025全年（较2024年的1,990亿美元增长13.9%）",
+        "source": {
+          "name": "PwC Global Entertainment & Media Outlook 2026–2030",
+          "url": "https://www.pwc.com/gx/en/issues/business-model-reinvention/outlook/insights-and-perspectives.html"
+        }
+      },
+      "growthForecast": {
+        "cagrPct": 6.1,
+        "horizon": "2025-2030",
+        "source": {
+          "name": "PwC Global Entertainment & Media Outlook 2026–2030（经BizTechReports转引）",
+          "url": "https://www.biztechreports.com/news-archive/2026/7/1/global-entertainment-and-media-advertising-revenues-to-hit-us14-trillion-in-2030-as-global-box-office-continues-recovery-pwc-july-04-2026"
+        },
+        "note": "PwC预计全球OTT行业2025-2030年CAGR为6.1%（增速较此前几年放缓，'订阅疲劳'在澳大利亚、西班牙、韩国等成熟市场已出现），经工具验算若按此CAGR从2025年2,266亿美元推算，2030年行业规模约3,047亿美元（226.6×1.061^5=304.68，工具验算）。同时OTT广告收入占比预计从当前19.4%升至2030年的22.6%，以9.4%的CAGR快于订阅部分增长。\n对比公司自身增长预期：FMP分析师一致预期（26位分析师）2028E收入625亿、2029E收入671亿、2030E收入722亿美元，经工具验算隐含Netflix自身2025-2030年营收CAGR约9.83%（(72.2/45.183)^(1/5)-1），显著快于行业整体6.1%的CAGR，意味着分析师预期Netflix将持续从竞争对手手中抢占市场份额，而非仅跟随行业均值增长；EPS一致预期2028E $4.57、2029E $5.45、2030E $6.44，来源 mcp__fmp__analyst financial-estimates"
+      }
+    },
+    "riskFactors": {
+      "_dimension": "8. 风险因素：地缘政治、监管、供应链等",
+      "items": [
+        {
+          "category": "竞争",
+          "description": "流媒体市场竞争持续加剧，来自Disney+/Hulu、Amazon Prime Video、YouTube、WBD Max、Apple TV+等平台的内容与价格竞争，以及游戏、社交媒体、短视频、线性电视等对用户娱乐时间与消费支出的广泛竞争",
+          "evidence": "公司自己在10-K风险因素章节长期披露该项为首要风险之一：'we face substantial competition... for the discretionary time and money of consumers'；外部数据佐证：YouTube 2025全年总营收（超600亿美元）已超过Netflix同期营收，Nielsen Gauge显示YouTube占美国电视观看时长份额（12.7%，2025年12月）持续高于Netflix（9.0%）",
+          "source": {
+            "name": "Netflix 10-K风险因素章节 + Tubefilter/adwave.com外部数据",
+            "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001065280&type=10-K"
+          }
+        },
+        {
+          "category": "供应链/内容成本",
+          "description": "内容许可与自制成本高企，部分核心内容依赖第三方工作室/版权方许可及好莱坞创作人员（编剧/演员工会），续约价格、条款与劳资关系存在不确定性",
+          "evidence": "公司自己在10-K披露内容采购与制作成本是最大经营性支出项目之一，FY2025内容现金投入约171亿美元（占营收37.85%，经工具验算），2026年指引进一步增至约200亿美元；外部推断：2023年美国编剧工会(WGA)与演员工会(SAG-AFTRA)罢工曾造成全行业内容制作中断的先例，未来类似劳资纠纷可能重演",
+          "source": {
+            "name": "Netflix 10-K + 公开报道（2023年WGA/SAG-AFTRA罢工）",
+            "url": "https://ibinterviewquestions.com/guides/tmt-investment-banking/content-economics-amortization"
+          }
+        },
+        {
+          "category": "监管",
+          "description": "全球各国对流媒体的本地内容配额、数字服务税、隐私与数据保护、消费者保护（如账户共享/密码共享相关规则）以及潜在反垄断审查存在不确定性",
+          "evidence": "公司自己在10-K披露：欧盟《视听媒体服务指令》(AVMSD)等要求部分市场设定本地内容配额与投资义务，增加合规成本；外部推断：部分国家的数字服务税与数据本地化要求可能进一步提高公司在这些市场的运营成本",
+          "source": {
+            "name": "Netflix 10-K风险因素章节 + 外部推断",
+            "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001065280&type=10-K"
+          }
+        },
+        {
+          "category": "地缘政治/汇率",
+          "description": "国际业务占比高（FY2025 UCAN以外收入占比55.83%），地缘政治冲突、汇率大幅波动、部分市场的运营中断或退出可能影响营收与用户增长",
+          "evidence": "公司自己在10-K披露汇率波动对海外收入折算及经营业绩的影响，以及在特定国家/地区运营面临的政治与监管风险；外部推断：公司曾于2022年因俄乌冲突暂停在俄罗斯的服务，是地缘政治直接影响业务的历史先例",
+          "source": {
+            "name": "Netflix 10-K风险因素章节 + 公开报道（2022年俄罗斯业务暂停）",
+            "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001065280&type=10-K"
+          }
+        },
+        {
+          "category": "技术",
+          "description": "核心计算与存储基础设施依赖公有云服务商（AWS），虽已自建Open Connect CDN负责内容分发，但计算层若发生服务中断、网络安全事件或数据泄露，可能直接影响流媒体服务的可用性",
+          "evidence": "公司自己在10-K披露：'We currently run the vast majority of our computing... on Amazon Web Services'，对单一云服务商的高度依赖构成集中度风险；外部推断：生成式AI/深度伪造等新技术的普及也可能带来内容版权归属与真实性方面的新型法律与声誉风险",
+          "source": {
+            "name": "Netflix 10-K风险因素章节 + 外部推断（生成式AI相关风险）",
+            "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001065280&type=10-K"
+          }
+        },
+        {
+          "category": "其他（资本市场敏感度与并购纪律的另一面）",
+          "description": "股价对订阅户/营收增速及前瞻指引高度敏感，历史上曾出现单日暴跌35%的案例；同时公司近期在大型并购竞价中展现出克制（2026年放弃对WBD约830亿美元的收购要约），若未来管理层改变策略转向大规模并购扩张，可能引入新的整合与估值风险",
+          "evidence": "外部推断：2022年4月Q1财报后股价单日下跌35.1%、市值蒸发约544亿美元，是市场对公司增长指引极端敏感的历史先例；2026年2月WBD竞购事件显示当前管理层的资本配置纪律，但该纪律本身也是一种可能变化的管理层判断，不构成制度性保证",
+          "source": {
+            "name": "外部新闻报道（CNBC、The Guardian、Deadline）",
+            "url": "https://www.cnbc.com/2022/04/20/netflix-plunges-trading-subscriber-loss.html"
+          }
+        }
+      ]
+    },
+    "currentValuation": {
+      "_dimension": "9. 当前估值：市值、PE、PS、PEG、EV/Revenue",
+      "priceAsOf": "2026-08-07 16:00:00 America/New_York（收盘价）",
+      "sharePrice": {
+        "value": 74.14,
+        "unit": "currency",
+        "currency": "USD",
+        "source1": {
+          "name": "FMP quote",
+          "url": "https://financialmodelingprep.com",
+          "value": 74.14
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "url": "https://stockanalysis.com/stocks/NFLX/",
+          "value": 74.14
+        },
+        "deviationPct": 0.0,
+        "flag": "ok"
+      },
+      "sharesOutstanding": {
+        "value": 4163939999,
+        "unit": "shares",
+        "currency": null,
+        "source1": {
+          "name": "FMP shares-float",
+          "url": "https://financialmodelingprep.com",
+          "value": 4163939999
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "url": "https://stockanalysis.com/stocks/NFLX/",
+          "value": 4160000000
+        },
+        "deviationPct": 0.05,
+        "flag": "ok"
+      },
+      "marketCap": {
+        "reported": "308.71B USD（FMP company.market-cap 与 stockanalysis.com 双源验证：308.71B vs 308.71B，偏差0.00%，2026-08-07）",
+        "computed": "308.71B USD = 74.14 × 4,163,939,999股，financial_rigor.py verify-market-cap 偏差0.00%",
+        "flag": "ok",
+        "note": "verify-market-cap 工具验算：74.14 × 4,163,939,999 = 报告市值，偏差0.00%"
+      },
+      "pe": {
+        "value": "23.31x（TTM，摊薄）",
+        "note": "TTM摊薄口径（TTM摊薄EPS=$3.18，由2025Q3+2025Q4+2026Q1+2026Q2四个季度摊薄EPS加总，工具验算）；TTM基本EPS口径为22.95x（FMP priceToEarningsRatioTTM）",
+        "source1": {
+          "name": "FMP metrics-ratios-ttm (priceToEarningsDilutedRatioTTM)",
+          "url": "https://financialmodelingprep.com",
+          "value": "23.31x"
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "url": "https://stockanalysis.com/stocks/NFLX/",
+          "value": "23.36x"
+        },
+        "deviationPct": 0.21,
+        "flag": "ok"
+      },
+      "ps": {
+        "value": "6.38x（TTM）",
+        "note": "TTM口径，市值/TTM收入(483.7亿)",
+        "source1": {
+          "name": "FMP metrics-ratios-ttm",
+          "url": "https://financialmodelingprep.com",
+          "value": "6.38x"
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "url": "https://stockanalysis.com/stocks/NFLX/",
+          "value": "6.38x"
+        },
+        "deviationPct": 0.0,
+        "flag": "ok"
+      },
+      "peg": {
+        "value": "0.67x（仅单源）",
+        "note": "FMP priceToEarningsGrowthRatioTTM，基于分析师一致预期净利润增速；仅单源，Level 2字段按规范允许单源但须注明",
+        "source": {
+          "name": "FMP metrics-ratios-ttm",
+          "url": "https://financialmodelingprep.com"
+        }
+      },
+      "evToRevenue": {
+        "value": "6.49x（TTM，仅单源）",
+        "note": "TTM口径 (EV=3139.2亿 / TTM收入483.7亿)",
+        "source1": {
+          "name": "FMP metrics-ratios-ttm (evToSalesTTM)",
+          "url": "https://financialmodelingprep.com",
+          "value": "6.49x"
+        },
+        "source2": {
+          "name": "unavailable",
+          "url": "",
+          "value": null
+        },
+        "deviationPct": null,
+        "flag": "仅单源"
+      }
+    },
+    "bullBearCase": {
+      "_dimension": "10. 多空双方核心论点",
+      "bull": [
+        {
+          "point": "订阅规模与利润率的双重领先地位，规模效应持续兑现为经营杠杆",
+          "evidence": "FY2025营收451.83亿美元（YoY+15.85%），经营利润率29.49%，远超同业可比指标——Disney DTC分部FY2025 Q4经营利润率5.63%、WBD Streaming分部FY2025 EBITDA利润率12.57%（均经工具验算）；同时内容现金投入占营收比例已降至37.85%（经工具验算），规模效应仍在持续兑现"
+        },
+        {
+          "point": "广告业务成为第二增长曲线，且已实现广告技术的自主可控",
+          "evidence": "广告支持层月活跃观看人数从2025年5月的9,400万增至2026年5月的2.5亿；据学术文献引用公司披露，广告收入2025年同比增长约2.5倍，管理层预计2026年将再翻倍至约30亿美元；2025年4月起自研Netflix Ads Suite全面上线，摆脱了此前对第三方（微软）广告服务器的依赖"
+        },
+        {
+          "point": "定价权持续得到验证，提价未导致订阅户显著流失",
+          "evidence": "2026年一季度上调Premium套餐至27美元/月，为一年多内第二次提价，公司称将'持续以多档价格与套餐满足不同需求'；2023年密码共享收费政策推广后，2023下半年出现疫情后最强订阅户增长（约22百万新增），显示涨价与新增付费转化并未相互抵消"
+        },
+        {
+          "point": "资本配置纪律良好，不为规模扩张支付过高溢价，反而借并购博弈获利",
+          "evidence": "2026年2月在WBD竞购战中主动放弃约830亿美元的收购要约，未跟进Paramount Skydance更高报价，转而依约获得28亿美元分手费，推动2026年Q1摊薄EPS同比增长约86%；FY2025自由现金流94.61亿美元为持续股票回购提供支撑（2023年9月董事会曾批准最高100亿美元回购计划）"
+        },
+        {
+          "point": "内容矩阵向体育直播与游戏拓展，扩大观众触达与广告库存的天花板",
+          "evidence": "NFL圣诞赛事三季协议（2024-2026年）单场吸引约3,000万观众、覆盖218个国家/地区，2025年比赛成为史上观看人数最多的NFL转播场次之一；WWE Raw十年独家直播协议（2025年1月起执行）为广告层提供高粘性的live内容库存，是Netflix区别于纯点播型竞品的差异化布局"
+        }
+      ],
+      "bear": [
+        {
+          "point": "内容与体育版权成本刚性上升，挤压利润率进一步扩张的空间",
+          "evidence": "2026年内容现金投入指引约200亿美元，较2025年约180亿美元增长约10%；体育直播版权（NFL/WWE）通常为高价、多年期承诺型合约，一旦收视或广告变现不及预期难以中途撤出，形成经营杠杆的另一面"
+        },
+        {
+          "point": "订阅户渗透已进入相对成熟阶段，公司不再披露具体数字本身即是增速放缓的信号",
+          "evidence": "公司自2025年起不再按季度披露具体订阅户数字（2024年4月即预告此变化），转而更多依赖ARM（单用户月均收入）与广告驱动的增长叙事；核心区域UCAN虽贡献FY2025收入份额44.17%（最大单一区域），但YoY增速14.96%为四大区域中最低，低于EMEA的17.18%与APAC的21.27%"
+        },
+        {
+          "point": "竞争格局并未缓和，YouTube的免费+算法模式持续侵蚀观看时长与广告主预算份额",
+          "evidence": "YouTube 2025全年总营收（广告+订阅合计）首次由Alphabet披露超600亿美元，已超过Netflix同期营收(451.83亿美元)；Nielsen Gauge数据显示YouTube占美国电视观看时长份额从2024年12月的11.1%升至2025年12月的12.7%，同期Netflix仅从8.5%升至9.0%，差距持续扩大"
+        },
+        {
+          "point": "监管与地缘政治不确定性可能限制国际市场的增长空间与定价灵活性",
+          "evidence": "EMEA与APAC合计贡献FY2025收入43.97%，是公司增速最快的两大区域，但这些市场同时面临本地内容配额（如欧盟AVMSD）、数字服务税、数据本地化等潜在合规成本上升风险（10-K风险因素章节披露），若监管收紧可能压制这两个高增长区域的边际利润率"
+        },
+        {
+          "point": "估值隐含较高的持续增长预期，若增长或利润率不及预期存在估值压缩风险",
+          "evidence": "当前TTM PE（摊薄）23.31倍、PS 6.38倍、EV/Revenue 6.49倍，显著高于Disney、WBD等传统媒体同业；分析师一致预期隐含Netflix 2025-2030年营收CAGR约9.83%（经工具验算），明显快于PwC预测的行业整体OTT市场6.1%的CAGR——若公司实际增长向行业均值收敛而非持续跑赢，当前估值倍数存在压缩空间"
+        }
+      ]
+    },
+    "crossValidationLog": [
+      {
+        "field": "市值验算 verify-market-cap",
+        "source1": {
+          "name": "股价×总股本",
+          "value": "74.14 × 4,163,939,999"
+        },
+        "source2": {
+          "name": "FMP报告市值",
+          "value": 308714511526
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "验证通过"
+      },
+      {
+        "field": "营业收入 FY2025",
+        "source1": {
+          "name": "FMP",
+          "value": 45183036000
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "value": 45183000000
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "一致"
+      },
+      {
+        "field": "净利润 FY2025",
+        "source1": {
+          "name": "FMP",
+          "value": 10981201000
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "value": 10981000000
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "一致"
+      },
+      {
+        "field": "自由现金流 FY2025",
+        "source1": {
+          "name": "FMP",
+          "value": 9461053000
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "value": 9461000000
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "一致"
+      },
+      {
+        "field": "现金储备 FY2025",
+        "source1": {
+          "name": "FMP",
+          "value": 9062359000
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "value": 9062000000
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "一致"
+      },
+      {
+        "field": "总负债 FY2025",
+        "source1": {
+          "name": "FMP",
+          "value": 14462836000
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "value": 14463000000
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "一致"
+      },
+      {
+        "field": "总股本",
+        "source1": {
+          "name": "FMP shares-float",
+          "value": 4163939999
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "value": 4160000000
+        },
+        "deviationPct": 0.05,
+        "flag": "ok",
+        "resolution": "一致（四舍五入差异）"
+      },
+      {
+        "field": "季度营收YoY增速（2026Q2/2025Q2）",
+        "source1": {
+          "name": "financial_rigor.py calc",
+          "value": "13.37%"
+        },
+        "source2": {
+          "name": "—",
+          "value": "—"
+        },
+        "deviationPct": null,
+        "flag": "ok",
+        "resolution": "工具精确计算，非心算"
+      },
+      {
+        "field": "R&D费用率 FY2025",
+        "source1": {
+          "name": "financial_rigor.py calc",
+          "value": "7.51%"
+        },
+        "source2": {
+          "name": "—",
+          "value": "—"
+        },
+        "deviationPct": null,
+        "flag": "ok",
+        "resolution": "工具精确计算"
+      },
+      {
+        "field": "创始人持股比例",
+        "source1": {
+          "name": "SEC Form 4 (2026-06-01)",
+          "value": "21,164,244股/0.51%"
+        },
+        "source2": {
+          "name": "gurufocus.com",
+          "value": "21,163,516股（口径接近，采集时点略早）"
+        },
+        "deviationPct": 0.003,
+        "flag": "ok",
+        "resolution": "一致，采用SEC官方Form 4最新数字"
+      },
+      {
+        "field": "Netflix占全球流媒体订阅收入份额",
+        "source1": {
+          "name": "financial_rigor.py calc",
+          "value": "45183036000/160000000000*100=28.24%"
+        },
+        "source2": {
+          "name": "—",
+          "value": "—"
+        },
+        "deviationPct": null,
+        "flag": "ok",
+        "resolution": "工具精确计算，分母为Ampere Analysis单源估计，口径较粗仅供数量级参考"
+      },
+      {
+        "field": "Disney DTC分部FY2025 Q4经营利润率",
+        "source1": {
+          "name": "financial_rigor.py calc",
+          "value": "352/6248*100=5.63%"
+        },
+        "source2": {
+          "name": "—",
+          "value": "—"
+        },
+        "deviationPct": null,
+        "flag": "ok",
+        "resolution": "工具精确计算，基于Disney官方财报新闻稿数字"
+      },
+      {
+        "field": "WBD Streaming分部FY2025 EBITDA利润率",
+        "source1": {
+          "name": "financial_rigor.py calc",
+          "value": "1.37/10.9*100=12.57%"
+        },
+        "source2": {
+          "name": "—",
+          "value": "—"
+        },
+        "deviationPct": null,
+        "flag": "ok",
+        "resolution": "工具精确计算，基于WBD官方财报新闻稿数字"
+      },
+      {
+        "field": "Netflix FY2025内容现金投入占营收比例",
+        "source1": {
+          "name": "financial_rigor.py calc",
+          "value": "17.1/45.183*100=37.85%"
+        },
+        "source2": {
+          "name": "—",
+          "value": "—"
+        },
+        "deviationPct": null,
+        "flag": "ok",
+        "resolution": "工具精确计算，内容现金投入数字来自第三方(ibinterviewquestions.com)对公司披露的转引，标记为近似值"
+      },
+      {
+        "field": "PwC全球OTT行业2030年规模推算",
+        "source1": {
+          "name": "financial_rigor.py calc",
+          "value": "226.6*(1.061**5)=304.68"
+        },
+        "source2": {
+          "name": "—",
+          "value": "—"
+        },
+        "deviationPct": null,
+        "flag": "ok",
+        "resolution": "工具精确计算，基于PwC披露的2025基数与2025-2030 CAGR推算，PwC原文未直接给出2030年终值"
+      },
+      {
+        "field": "分析师一致预期隐含Netflix 2025-2030营收CAGR",
+        "source1": {
+          "name": "financial_rigor.py calc",
+          "value": "(72.2/45.183)**(1/5)-1=9.83%"
+        },
+        "source2": {
+          "name": "—",
+          "value": "—"
+        },
+        "deviationPct": null,
+        "flag": "ok",
+        "resolution": "工具精确计算，基于FMP分析师一致预期2030E收入722亿美元与公司FY2025实际收入451.83亿美元"
+      }
+    ]
+  },
+  "analysis": {
+    "_spec": {
+      "purpose": "研究流程第 2 步（多维度分析）的产出。六个维度共用统一信封：{ conclusion, analysis, inquiry, dataGaps }。步骤正文见 docs/research/workflow/02-multi-dimension-analysis.md。",
+      "process": "六个维度分别由禁网的独立 Agent 只读 financials-collection.json 完成分析，主会话验收格式合规后原样落盘；涉及计算的数字均已用 docs/research/tools/financial_rigor.py 验算，记入 crossValidationLog。"
+    },
+    "meta": {
+      "companyId": "us-nflx-netflix",
+      "companyName": "Netflix, Inc.",
+      "analyzedAt": "2026-08-09",
+      "dataCutoff": "2026-08-09（Asia/Shanghai）",
+      "basedOnCollection": "research/companies/us-nflx-netflix/financials-collection.json"
+    },
+    "dimensions": {
+      "businessEssence": {
+        "title": "生意本质",
+        "conclusion": "Netflix靠订阅费换取用户可支配娱乐时间，以规模化内容库与算法推荐持续把注意力转化为利润。",
+        "analysis": {
+          "revenueBreakdown": {
+            "period": "FY2025（截至2025-12-31）",
+            "items": [
+              {
+                "segment": "美国与加拿大 (UCAN)",
+                "revenue": "199.57亿美元",
+                "sharePct": "44.17%",
+                "source": {
+                  "name": "FMP revenue-geographic-segments",
+                  "url": "https://financialmodelingprep.com"
+                }
+              },
+              {
+                "segment": "欧洲、中东与非洲 (EMEA)",
+                "revenue": "145.15亿美元",
+                "sharePct": "32.12%",
+                "source": {
+                  "name": "FMP revenue-geographic-segments",
+                  "url": "https://financialmodelingprep.com"
+                }
+              },
+              {
+                "segment": "拉丁美洲 (LATAM)",
+                "revenue": "53.58亿美元",
+                "sharePct": "11.86%",
+                "source": {
+                  "name": "FMP revenue-geographic-segments",
+                  "url": "https://financialmodelingprep.com"
+                }
+              },
+              {
+                "segment": "亚太 (APAC)",
+                "revenue": "53.54亿美元",
+                "sharePct": "11.85%",
+                "source": {
+                  "name": "FMP revenue-geographic-segments",
+                  "url": "https://financialmodelingprep.com"
+                }
+              }
+            ]
+          },
+          "profitabilityTrend5y": {
+            "series": [
+              {
+                "fiscalYear": "2021",
+                "grossMarginPct": "41.64%",
+                "operatingMarginPct": "20.86%",
+                "netMarginPct": "17.23%",
+                "source": {
+                  "name": "FMP",
+                  "url": "https://financialmodelingprep.com"
+                }
+              },
+              {
+                "fiscalYear": "2022",
+                "grossMarginPct": "39.37%",
+                "operatingMarginPct": "17.82%",
+                "netMarginPct": "14.21%",
+                "source": {
+                  "name": "FMP",
+                  "url": "https://financialmodelingprep.com"
+                }
+              },
+              {
+                "fiscalYear": "2023",
+                "grossMarginPct": "41.54%",
+                "operatingMarginPct": "20.62%",
+                "netMarginPct": "16.04%",
+                "source": {
+                  "name": "FMP",
+                  "url": "https://financialmodelingprep.com"
+                }
+              },
+              {
+                "fiscalYear": "2024",
+                "grossMarginPct": "46.06%",
+                "operatingMarginPct": "26.71%",
+                "netMarginPct": "22.34%",
+                "source": {
+                  "name": "FMP",
+                  "url": "https://financialmodelingprep.com"
+                }
+              },
+              {
+                "fiscalYear": "2025",
+                "grossMarginPct": "48.49%",
+                "operatingMarginPct": "29.49%",
+                "netMarginPct": "24.30%",
+                "source": {
+                  "name": "FMP income-statement",
+                  "url": "https://financialmodelingprep.com"
+                }
+              }
+            ]
+          },
+          "businessModelCanvas": {
+            "salesModel": "订阅/复购",
+            "productForm": "平台",
+            "note": "①按月/年付费订阅无广告或含广告套餐，属重复性收费而非一次性销售；②2022年11月起新增广告支持套餐，形成订阅+广告双重变现；③自建Open Connect CDN与推荐算法构成平台型基础设施，而非单纯内容销售。"
+          },
+          "stickiness": {
+            "level": "强",
+            "mechanism": "①密码共享收费将约1亿全球蹭号用户转化为付费，锁定强度提升；②多次提价未见订阅户显著流失，显示内容库依赖度高；③广告层月活跃观看人数持续大幅增长，扩大免费到付费转化漏斗。",
+            "evidence": [
+              {
+                "metric": "密码共享收费转化用户规模",
+                "value": "约1亿全球免费蹭号用户(含美国/加拿大约3000万)",
+                "asOf": "2023-05-23起(美国)，同年内推广全球",
+                "source": {
+                  "name": "Tubefilter/Motley Fool（2016年推荐算法研究）+ StreamTV Insider/Forbes（密码共享效果）",
+                  "url": "https://www.tubefilter.com/2016/06/20/netflix-recommendation-engine-algorithm"
+                }
+              },
+              {
+                "metric": "密码共享推广后订阅户增长",
+                "value": "2023下半年约2200万新增，为疫情后最强增长期",
+                "asOf": "2023H2",
+                "source": {
+                  "name": "StreamTV Insider、Forbes 2023-10-25、Reuters 2024-04-17",
+                  "url": "https://www.streamtvinsider.com/video/netflix-password-sharing-crackdown-paying-us-10-still-share"
+                }
+              },
+              {
+                "metric": "广告支持套餐月活跃观看人数",
+                "value": "从2025年5月9400万增至2026年5月2.5亿",
+                "asOf": "2026-05",
+                "source": {
+                  "name": "Uswitch（品牌知名度）+ Yahoo Finance（提价报道）",
+                  "url": "https://www.uswitch.com/broadband/studies/online-streaming-statistics"
+                }
+              },
+              {
+                "metric": "品牌知名度(英国消费者调研)",
+                "value": "96%，高于Amazon Prime Video 94%、Disney+ 93%",
+                "asOf": "调研年份未明确标注(Uswitch/Statista)",
+                "source": {
+                  "name": "Uswitch（品牌知名度）+ Yahoo Finance（提价报道）",
+                  "url": "https://www.uswitch.com/broadband/studies/online-streaming-statistics"
+                }
+              }
+            ]
+          },
+          "grossMarginVsPeers": {
+            "companyPct": "48.49%",
+            "peers": [
+              {
+                "name": "Disney（Disney+/Hulu，Direct-to-Consumer分部）",
+                "grossMarginPct": "5.63%（经营利润率，非毛利率口径）",
+                "source": {
+                  "name": "The Walt Disney Company FY2025 Q4财报新闻稿",
+                  "url": "https://thewaltdisneycompany.com/press-releases/the-walt-disney-company-reports-fourth-quarter-and-full-year-earnings-for-fiscal-2025"
+                }
+              },
+              {
+                "name": "Warner Bros. Discovery（Max/HBO Max，Streaming分部）",
+                "grossMarginPct": "12.57%（调整后EBITDA利润率，非毛利率口径）",
+                "source": {
+                  "name": "WBD FY2025 Q4财报新闻稿 + Deadline（分手费报道）",
+                  "url": "https://www.wbd.com/news/warner-bros-discovery-reports-fourth-quarter-and-full-year-2025-results"
+                }
+              }
+            ],
+            "whyHigherOrLower": "①Netflix毛利率48.49%为损益表直接科目，Disney/WBD披露的是经营利润率/EBITDA利润率，口径不同不可直接相减比较；②即便口径不同，Disney DTC经营利润率5.63%、WBD Streaming EBITDA利润率12.57%均远低于Netflix自身经营利润率29.49%，方向上仍反映规模差距；③内容摊销方式、体育版权投入与分部构成差异也会拉大表观数字。"
+          },
+          "operatingLeverage": {
+            "observation": "①2023-2025年经营利润增速持续快于收入增速，规模效应对利润的放大效应逐年增强；②2022年为例外，收入增6.46%但经营利润降9.06%，源于疫情后内容制作复工推高成本。",
+            "evidence": [
+              {
+                "metric": "经营利润YoY vs 收入YoY",
+                "value": "经营利润-9.06% vs 收入+6.46%",
+                "asOf": "FY2022",
+                "source": {
+                  "name": "FMP",
+                  "url": "https://financialmodelingprep.com"
+                }
+              },
+              {
+                "metric": "经营利润YoY vs 收入YoY",
+                "value": "经营利润+23.43% vs 收入+6.67%",
+                "asOf": "FY2023",
+                "source": {
+                  "name": "FMP",
+                  "url": "https://financialmodelingprep.com"
+                }
+              },
+              {
+                "metric": "经营利润YoY vs 收入YoY",
+                "value": "经营利润+49.81% vs 收入+15.65%",
+                "asOf": "FY2024",
+                "source": {
+                  "name": "FMP",
+                  "url": "https://financialmodelingprep.com"
+                }
+              },
+              {
+                "metric": "经营利润YoY vs 收入YoY",
+                "value": "经营利润+27.91% vs 收入+15.85%",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "FMP income-statement",
+                  "url": "https://financialmodelingprep.com"
+                }
+              }
+            ]
+          }
+        },
+        "inquiry": {
+          "question": "这门生意好在哪？如果只能用一句话描述，是什么？",
+          "answer": "好在规模效应叠加强用户粘性，让复购型订阅收入随规模扩大自然放大利润率。①按月付费订阅+内容库/算法/自建CDN基础设施，形成持续复购而非一次性交易的现金流；②密码共享收费、多次提价均未显著流失用户，验证高转换成本与定价权；③规模摊薄内容成本使经营利润增速持续快于收入增速，如FY2024收入+15.65%、经营利润+49.81%。"
+        },
+        "dataGaps": [
+          {
+            "metric": "用户月度/年度流失率(churn rate)及NPS",
+            "reason": "采集文件未披露Netflix具体churn rate或NPS数字，仅能通过密码共享转化、提价后订阅户增长等间接证据推断粘性强度，无法精确量化生态粘性等级",
+            "evidenceRequest": {
+              "metric": "churn rate / NPS",
+              "question": "Netflix近1-2年的月度用户流失率及NPS具体数值和趋势是什么？",
+              "whyNeeded": "直接量化stickiness强度，替代当前仅靠密码共享转化与提价未流失的间接证据",
+              "priority": "高"
+            }
+          }
+        ]
+      },
+      "moat": {
+        "title": "护城河评估",
+        "conclusion": "规模效应、转换成本与定价权构成核心护城河，网络效应弱，YouTube抢占注意力份额是主要外部压力。",
+        "analysis": {
+          "types": [
+            {
+              "type": "品牌/定价权",
+              "test": "是否能在不损失销量的情况下提价？",
+              "verdict": "存在",
+              "evidence": [
+                {
+                  "metric": "英国消费者品牌知名度调研",
+                  "value": "Netflix 96%，高于Amazon Prime Video 94%、Disney+ 93%",
+                  "asOf": "调研年份未注明（采集于2026-08-09检索的合集数据）",
+                  "source": {
+                    "name": "Uswitch（品牌知名度）+ Yahoo Finance（提价报道）",
+                    "url": "https://www.uswitch.com/broadband/studies/online-streaming-statistics"
+                  }
+                },
+                {
+                  "metric": "Premium套餐提价",
+                  "value": "上调至27美元/月，为一年多内第二次提价",
+                  "asOf": "2026年一季度",
+                  "source": {
+                    "name": "Uswitch（品牌知名度）+ Yahoo Finance（提价报道）",
+                    "url": "https://www.uswitch.com/broadband/studies/online-streaming-statistics"
+                  }
+                },
+                {
+                  "metric": "广告支持层月活跃观看人数",
+                  "value": "从9,400万增至2.5亿",
+                  "asOf": "2025-05至2026-05",
+                  "source": {
+                    "name": "Uswitch（品牌知名度）+ Yahoo Finance（提价报道）",
+                    "url": "https://www.uswitch.com/broadband/studies/online-streaming-statistics"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "转换成本",
+              "test": "客户迁移到竞品的成本有多高？",
+              "verdict": "存在",
+              "evidence": [
+                {
+                  "metric": "自建CDN Open Connect",
+                  "value": "2011年立项自建，缓存服务器部署进全球ISP网络内部就近分发内容",
+                  "asOf": "2011年至今",
+                  "source": {
+                    "name": "Tubefilter/Motley Fool（2016年推荐算法研究）+ StreamTV Insider/Forbes（密码共享效果）",
+                    "url": "https://www.tubefilter.com/2016/06/20/netflix-recommendation-engine-algorithm"
+                  }
+                },
+                {
+                  "metric": "推荐算法历史节省成本估计",
+                  "value": "每年为公司节省超10亿美元流失相关成本（数据年代较早，仅作历史佐证）",
+                  "asOf": "2016年",
+                  "source": {
+                    "name": "Tubefilter/Motley Fool（2016年推荐算法研究）+ StreamTV Insider/Forbes（密码共享效果）",
+                    "url": "https://www.tubefilter.com/2016/06/20/netflix-recommendation-engine-algorithm"
+                  }
+                },
+                {
+                  "metric": "密码共享收费转化效果",
+                  "value": "约1亿全球免费蹭号用户转化，2023下半年为疫情后最强订阅户增长期",
+                  "asOf": "2023-05起",
+                  "source": {
+                    "name": "Tubefilter/Motley Fool（2016年推荐算法研究）+ StreamTV Insider/Forbes（密码共享效果）",
+                    "url": "https://www.tubefilter.com/2016/06/20/netflix-recommendation-engine-algorithm"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "网络效应",
+              "test": "用户越多产品越好吗？",
+              "verdict": "待验证",
+              "evidence": [
+                {
+                  "metric": "内容爆款社交传播效应",
+                  "value": "NFL圣诞赛事单场约3,000万观众、WWE Raw周播直播带来讨论度与口碑传播",
+                  "asOf": "2024-2026",
+                  "source": {
+                    "name": "定性判断，基于公司体育/直播内容布局的公开报道",
+                    "url": ""
+                  }
+                }
+              ]
+            },
+            {
+              "type": "规模效应",
+              "test": "规模带来的成本优势有多大？",
+              "verdict": "存在",
+              "evidence": [
+                {
+                  "metric": "内容现金投入占营收比例",
+                  "value": "37.85%（经工具验算17.1/45.183×100），显著低于行业估计2019年约65%的水平",
+                  "asOf": "FY2025",
+                  "source": {
+                    "name": "ibinterviewquestions.com 内容经济学分析 + 公司自有已验证财务数据",
+                    "url": "https://ibinterviewquestions.com/guides/tmt-investment-banking/content-economics-amortization"
+                  }
+                },
+                {
+                  "metric": "经营利润率",
+                  "value": "29.49%",
+                  "asOf": "FY2025",
+                  "source": {
+                    "name": "FMP income-statement",
+                    "url": "https://financialmodelingprep.com"
+                  }
+                },
+                {
+                  "metric": "全球付费订阅户对比",
+                  "value": "约3.25亿，约为Disney+(1.316亿)、WBD(1.316亿)各自的2.5倍",
+                  "asOf": "2026年年初附近",
+                  "source": {
+                    "name": "Netflix投资者信（经demandsage.com转引）",
+                    "url": "https://www.demandsage.com/netflix-subscribers"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "技术/专利壁垒",
+              "test": "技术领先几年？能否被复制？",
+              "verdict": "存在",
+              "evidence": [
+                {
+                  "metric": "自建CDN Open Connect",
+                  "value": "2011年立项、2012年公开，缓存服务器部署进ISP网络内部，降低带宽成本与延迟",
+                  "asOf": "2011年至今",
+                  "source": {
+                    "name": "about.netflix.com 官方说明",
+                    "url": "https://about.netflix.com/news/how-netflix-works-with-isps-around-the-globe-to-deliver-a-great-viewing-experience"
+                  }
+                },
+                {
+                  "metric": "个性化推荐算法历史价值",
+                  "value": "2016年估计每年节省超10亿美元流失相关成本，公司近年未见更新披露",
+                  "asOf": "2016年（近年未更新）",
+                  "source": {
+                    "name": "Tubefilter（2016年推荐算法研究）",
+                    "url": "https://www.tubefilter.com/2016/06/20/netflix-recommendation-engine-algorithm"
+                  }
+                },
+                {
+                  "metric": "研发费用率（技术与研发科目）",
+                  "value": "FY2025为7.51%（33.91亿美元/营收），近5年稳定于7.5%~8.6%区间",
+                  "asOf": "FY2025",
+                  "source": {
+                    "name": "FMP income-statement",
+                    "url": "https://financialmodelingprep.com"
+                  }
+                },
+                {
+                  "metric": "自研广告技术平台Netflix Ads Suite",
+                  "value": "2025-04-01美国上线，年内推广至全部广告市场，替代此前依赖微软的第三方广告服务器",
+                  "asOf": "2025年",
+                  "source": {
+                    "name": "ppc.land时间线整理、Frontiers in Communication期刊论文（引用Netflix官方披露）",
+                    "url": "https://ppc.land/netflix-set-to-double-ad-revenue-in-2025-after-major-tech-rollout"
+                  }
+                }
+              ]
+            }
+          ],
+          "trendPast5y": {
+            "direction": "变宽",
+            "basis": "①毛利率5年从41.64%升至48.49%，经营利润率从20.86%升至29.49%，规模效应持续兑现。②内容现金投入占营收比例降至37.85%，订阅规模约为Disney+/WBD各自2.5倍，规模优势拉大。③但YouTube份额从11.1%升至12.7%，增速快于Netflix的8.5%→9.0%，注意力遭侵蚀。"
+          },
+          "trendNext5y": {
+            "direction": "稳定",
+            "basis": "①分析师预期Netflix未来CAGR约9.83%，快于行业6.1%，份额争夺动能仍在。②2026年内容现金投入指引约200亿美元(YoY+10%)，成本刚性侵蚀经营杠杆空间。③YouTube/短视频持续分流年轻用户注意力，Disney+/WBD利润率仍远低于Netflix但持续追赶。"
+          }
+        },
+        "inquiry": {
+          "question": "10年后这条护城河还在吗？什么能摧毁它？",
+          "answer": "大概率仍在，但强度将从'扩张期'转入'防守期'。①若YouTube/短视频持续侵蚀注意力份额并反超电视观看时长，护城河根基受损。②若内容与体育版权成本刚性上升侵蚀经营杠杆，利润率见顶回落将验证竞争加剧。③若Disney+/WBD等通过并购或爆款内容反超盈利能力，现有规模优势将被削弱。"
+        },
+        "dataGaps": [
+          {
+            "metric": "提价后订阅户流失率的精确数据",
+            "reason": "采集文件仅有定性描述（'未见订阅户显著流失'），无提价前后churn rate的具体百分比可供验算定价权强度",
+            "evidenceRequest": {
+              "metric": "提价前后季度churn rate",
+              "question": "2026年一季度提价至27美元/月后，UCAN区域churn rate环比变化是多少？",
+              "whyNeeded": "量化验证定价权是否真的不损失销量，而非仅凭订阅户总数未下滑的间接推断",
+              "priority": "高"
+            }
+          },
+          {
+            "metric": "网络效应的可交叉验证数据源",
+            "reason": "网络效应条目标注为'定性判断，无可交叉验证的财务数据源'，缺乏TikTok等短视频平台的观看时长份额数据",
+            "evidenceRequest": {
+              "metric": "短视频/UGC平台在美国电视观看时长中的份额",
+              "question": "Nielsen Gauge或同类机构是否单独披露TikTok等短视频平台的电视端观看时长份额？",
+              "whyNeeded": "判断内容爆款带来的自然获客效应是否真实存在网络效应特征，而非仅靠体育直播个案佐证",
+              "priority": "中"
+            }
+          },
+          {
+            "metric": "推荐算法当前的量化成本节省数据",
+            "reason": "唯一可用数据为2016年估计（每年节省超10亿美元流失成本），近10年公司未更新披露该指标，无法判断该护城河当前强度是否随内容库/用户规模增长而变化",
+            "evidenceRequest": {
+              "metric": "推荐算法对留存/成本节省的最新量化披露",
+              "question": "Netflix近年财报或技术博客是否有更新版的推荐算法ROI/留存贡献数据？",
+              "whyNeeded": "2016年数据已过时，无法反映当前3.25亿订阅户规模下算法护城河的真实强度",
+              "priority": "中"
+            }
+          }
+        ]
+      },
+      "inversion": {
+        "title": "逆向思考与风险清单",
+        "conclusion": "Netflix最可能的失败路径不是订阅户流失，而是内容/体育成本刚性上升叠加YouTube式免费注意力分流，压缩当前高估值隐含的增长预期。",
+        "analysis": {
+          "failurePaths": [
+            {
+              "path": "内容与体育版权成本刚性上升，侵蚀经营利润率扩张空间",
+              "probability": "中",
+              "impact": "高",
+              "evidence": [
+                {
+                  "metric": "2026年内容现金投入指引",
+                  "value": "约200亿美元，较2025年约180亿美元增长约11.11%（工具验算200/180-1）",
+                  "asOf": "2026年指引",
+                  "source": {
+                    "name": "Netflix 10-K + ibinterviewquestions.com内容经济学分析",
+                    "url": "https://ibinterviewquestions.com/guides/tmt-investment-banking/content-economics-amortization"
+                  }
+                },
+                {
+                  "metric": "FY2025经营利润率",
+                  "value": "29.49%，已处于历史高位，扩张边际收窄",
+                  "asOf": "FY2025",
+                  "source": {
+                    "name": "FMP income-statement",
+                    "url": "https://financialmodelingprep.com"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "YouTube/短视频持续分流注意力与广告预算，导致增长停滞",
+              "probability": "中",
+              "impact": "高",
+              "evidence": [
+                {
+                  "metric": "YouTube 2025全年总营收 vs Netflix FY2025营收差",
+                  "value": "YouTube超600亿美元，超出Netflix约148.17亿美元（工具验算600-451.83）",
+                  "asOf": "2025全年",
+                  "source": {
+                    "name": "Alphabet 2025 Q4财报电话会（经Tubefilter转引）",
+                    "url": "https://www.tubefilter.com/2026/02/05/alphabet-q4-2025-youtube-earnings-revenue-60-billion"
+                  }
+                },
+                {
+                  "metric": "美国电视观看时长份额",
+                  "value": "YouTube 12.7% vs Netflix 9.0%（2025年12月），差距同比扩大",
+                  "asOf": "2025-12",
+                  "source": {
+                    "name": "Nielsen Gauge（经adwave.com转引）",
+                    "url": "https://adwave.com/resources/most-watched-streaming-service-q4-2025"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "体育版权（NFL/WWE）投资回报不及预期，多年期刚性承诺难以退出",
+              "probability": "低",
+              "impact": "中",
+              "evidence": [
+                {
+                  "metric": "WWE十年独家协议、NFL三季协议",
+                  "value": "多年期高价承诺，一旦收视或广告变现不及预期难以中途撤出",
+                  "asOf": "2024年签订",
+                  "source": {
+                    "name": "DW.com、Wikipedia 'Sports on Netflix'",
+                    "url": "https://www.dw.com/en/nfl-wwe-streaming-netflix-new-strategy/a-71345322"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "监管/数字服务税/数据本地化推高EMEA、APAC等高增速市场运营成本",
+              "probability": "中",
+              "impact": "中",
+              "evidence": [
+                {
+                  "metric": "EMEA+APAC收入份额",
+                  "value": "合计43.97%，是增速最快的两大区域，同时面临AVMSD等本地内容配额",
+                  "asOf": "FY2025",
+                  "source": {
+                    "name": "Netflix 10-K风险因素章节",
+                    "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001065280&type=10-K"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "增长指引不及分析师隐含预期，触发估值倍数压缩（重演2022年式暴跌）",
+              "probability": "低",
+              "impact": "高",
+              "evidence": [
+                {
+                  "metric": "历史先例：2022-04-20单日股价跌幅",
+                  "value": "35.1%，市值蒸发约544亿美元",
+                  "asOf": "2022-04-20",
+                  "source": {
+                    "name": "CNBC 2022-04-20",
+                    "url": "https://www.cnbc.com/2022/04/20/netflix-plunges-trading-subscriber-loss.html"
+                  }
+                },
+                {
+                  "metric": "分析师隐含CAGR超出行业CAGR幅度",
+                  "value": "9.83%对6.1%，差3.73个百分点（工具验算9.83-6.1）",
+                  "asOf": "2025-2030预测",
+                  "source": {
+                    "name": "FMP分析师一致预期 + PwC Global Entertainment & Media Outlook 2026–2030",
+                    "url": "https://www.pwc.com/gx/en/issues/business-model-reinvention/outlook/insights-and-perspectives.html"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "广告业务第二曲线不及管理层预期，自研Ads Suite爬坡期出现波折",
+              "probability": "低",
+              "impact": "中",
+              "evidence": [
+                {
+                  "metric": "2026年广告收入指引",
+                  "value": "预计再翻倍至约30亿美元，仍占总营收小部分且依赖新平台稳定性",
+                  "asOf": "2026年指引",
+                  "source": {
+                    "name": "ppc.land时间线整理",
+                    "url": "https://ppc.land/netflix-set-to-double-ad-revenue-in-2025-after-major-tech-rollout"
+                  }
+                }
+              ]
+            }
+          ],
+          "historicalAnalogies": [
+            {
+              "company": "美国有线电视巨头（如Comcast/Time Warner Cable付费捆绑时代）",
+              "similarity": "曾凭内容捆绑与规模效应建立护城河，订阅费持续上涨后遭遇低成本替代品冲击",
+              "outcome": "有线电视订阅数十年持续下滑，估值倍数长期承压，规模优势未能阻止剪线潮",
+              "source": {
+                "name": "分析推断，无直接数据源",
+                "url": ""
+              }
+            },
+            {
+              "company": "AOL（曾经的头部互联网门户/接入服务商）",
+              "similarity": "凭渠道优势与用户习惯锁定形成早期领先地位，商业模式相对封闭",
+              "outcome": "被开放网络与新兴平台边缘化，品牌与规模未能转化为持久护城河",
+              "source": {
+                "name": "分析推断，无直接数据源",
+                "url": ""
+              }
+            },
+            {
+              "company": "MySpace（社交网络早期龙头）",
+              "similarity": "曾占据用户基数与话题热度优势，但网络效应相对Facebook更弱、产品迭代更慢",
+              "outcome": "被后发但网络效应更强、产品体验更优的Facebook迅速反超并边缘化",
+              "source": {
+                "name": "分析推断，无直接数据源",
+                "url": ""
+              }
+            }
+          ],
+          "crossDisciplinaryChecks": [
+            {
+              "model": "网络效应理论",
+              "finding": "①Netflix护城河主要靠规模效应与转换成本，非经典多边网络效应；②YouTube兼具UGC创作者生态与算法双重飞轮，理论上韧性更强；③内容库优势一旦被削弱，用户缺乏同伴锁定，转换成本可能快速瓦解。"
+            },
+            {
+              "model": "技术采纳曲线",
+              "finding": "①全球OTT行业CAGR降至6.1%，成熟市场已现订阅疲劳；②Netflix自身隐含CAGR9.83%远快于行业，假设持续抢份额，证伪风险偏高；③UCAN份额最大但增速最低(14.96%)，印证成熟市场采纳曲线已进平台期。"
+            },
+            {
+              "model": "竞争博弈",
+              "finding": "①YouTube总营收已超Netflix且份额差距扩大，形成免费广告模式对付费订阅模式的非对称竞争；②Disney/WBD利润率远低于Netflix，博弈中更可能收缩而非跟进价格战；③放弃WBD竞购显示Netflix博弈策略克制，但竞对若整合成功，格局可能对其不利。"
+            }
+          ],
+          "biasSelfCheck": [
+            {
+              "bias": "叙事偏差",
+              "check": "①是否因'Netflix是流媒体龙头'的既有印象低估YouTube威胁；②Nielsen Gauge显示YouTube份额(12.7%)已高于并快于Netflix(9.0%)增长，需据此数据而非既有叙事判断。"
+            },
+            {
+              "bias": "锚定效应",
+              "check": "①采集文件未提供历史股价高点数字，避免锚定未经验证的历史峰值；②应以当前TTM PE23.31、PS6.38及其隐含增长假设做独立评估，而非对比未落盘的历史估值。"
+            },
+            {
+              "bias": "幸存者偏差",
+              "check": "①是否只看到Netflix从流媒体大战中胜出，忽视同期Quibi等失败案例；②Netflix当前规模优势建立在幸存者位置上，不能简单外推为未来必然继续领先。"
+            }
+          ],
+          "bearCase": [
+            {
+              "point": "内容与体育版权成本刚性上升，挤压利润率扩张空间",
+              "holder": "公司自身风险披露/卖方分析师",
+              "evidence": [
+                {
+                  "metric": "2026年内容现金投入指引",
+                  "value": "约200亿美元，较2025年约180亿美元增长约11.11%（工具验算）",
+                  "asOf": "2026年指引",
+                  "source": {
+                    "name": "Netflix 10-K",
+                    "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001065280&type=10-K"
+                  }
+                }
+              ]
+            },
+            {
+              "point": "订阅户渗透进入成熟阶段，停止披露具体数字本身即为放缓信号",
+              "holder": "媒体/卖方分析师",
+              "evidence": [
+                {
+                  "metric": "UCAN区域YoY增速",
+                  "value": "14.96%，为四大区域中最低，低于EMEA17.18%与APAC21.27%",
+                  "asOf": "FY2025",
+                  "source": {
+                    "name": "FMP revenue-geographic-segments",
+                    "url": "https://financialmodelingprep.com"
+                  }
+                }
+              ]
+            },
+            {
+              "point": "YouTube免费+算法模式持续侵蚀观看时长与广告主预算份额",
+              "holder": "媒体/行业数据商",
+              "evidence": [
+                {
+                  "metric": "美国电视观看时长份额差距",
+                  "value": "YouTube12.7% vs Netflix9.0%（2025年12月），差距同比扩大",
+                  "asOf": "2025-12",
+                  "source": {
+                    "name": "Nielsen Gauge（经adwave.com转引）",
+                    "url": "https://adwave.com/resources/most-watched-streaming-service-q4-2025"
+                  }
+                }
+              ]
+            },
+            {
+              "point": "监管与地缘政治不确定性限制国际高增速市场的利润率空间",
+              "holder": "公司自身风险披露(10-K)",
+              "evidence": [
+                {
+                  "metric": "EMEA+APAC收入份额",
+                  "value": "合计43.97%，面临AVMSD等本地内容配额与数字服务税风险",
+                  "asOf": "FY2025",
+                  "source": {
+                    "name": "Netflix 10-K风险因素章节",
+                    "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001065280&type=10-K"
+                  }
+                }
+              ]
+            },
+            {
+              "point": "估值隐含较高持续增长预期，增长不及预期存在压缩风险",
+              "holder": "卖方分析师",
+              "evidence": [
+                {
+                  "metric": "分析师隐含CAGR超行业CAGR幅度",
+                  "value": "9.83%对6.1%，差3.73个百分点（工具验算）",
+                  "asOf": "2025-2030预测",
+                  "source": {
+                    "name": "FMP分析师一致预期 + PwC Global Entertainment & Media Outlook 2026–2030",
+                    "url": "https://www.pwc.com/gx/en/issues/business-model-reinvention/outlook/insights-and-perspectives.html"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "inquiry": {
+          "question": "我最可能在哪里犯错？聪明人为什么会不买/做空这家公司？",
+          "answer": "最可能错在高估Netflix对YouTube式免费注意力竞争的抵御力，同时低估当前估值对持续超行业增长的依赖。①网络效应弱于YouTube的UGC飞轮，内容库护城河可能被更廉价的注意力替代品持续侵蚀；②TTM PE23.31/PS6.38隐含增长假设(9.83%)显著快于行业CAGR(6.1%)，一旦增速向行业均值收敛，估值倍数存在系统性压缩空间；③内容与体育版权成本刚性(2026年指引约200亿美元)与经营利润率29.49%已处高位并存，利润率进一步扩张的安全边际变薄；④聪明的空头会认为当前价格已充分甚至过度定价了'持续跑赢行业'这一尚未被验证的假设。"
+        },
+        "dataGaps": [
+          "采集文件未提供Netflix历史股价高点或长期估值区间数据，无法量化当前锚定效应的具体基准",
+          "TikTok/短视频平台在电视端观看时长份额缺乏权威量化数据源，仅能做定性观察",
+          "体育版权(NFL/WWE)的具体投资金额与直接ROI未见公开披露，无法量化'投资回报不及预期'的具体阈值",
+          "2026年广告收入指引(约30亿美元)之外，缺乏更细颗粒度的广告业务盈利能力(毛利率/边际成本)数据"
+        ]
+      },
+      "management": {
+        "title": "管理层评估",
+        "conclusion": "联席CEO架构运转平稳、资本配置纪律良好，但创始人已全面退出治理，需持续观察领导层稳定性与文化传承。",
+        "analysis": {
+          "keyDecisions": [
+            {
+              "date": "2022-04-19/20",
+              "decision": "订阅户十年首次净减后转向利润与ARM优先战略",
+              "outcome": "次日股价暴跌35.1%，市值蒸发约544亿美元，倒逼战略转型",
+              "rating": "★★★★",
+              "source": {
+                "name": "CNBC 2022-04-19/20、The Guardian 2022-04-20",
+                "url": "https://www.cnbc.com/2022/04/20/netflix-plunges-trading-subscriber-loss.html"
+              }
+            },
+            {
+              "date": "2022-11-03",
+              "decision": "推出广告支持套餐Standard with Ads，首次涉足广告变现",
+              "outcome": "MAU持续增至2.5亿（2026-05），2025年广告收入同比增约2.5倍",
+              "rating": "★★★★★",
+              "source": {
+                "name": "NBC News 2024-05、adwave.com、thewrap.com",
+                "url": "https://www.nbcnews.com/business/business-news/netflix-ad-supported-tier-40-million-monthly-users-rcna152463"
+              }
+            },
+            {
+              "date": "2023-01-19",
+              "decision": "创始人卸任CEO，确立Sarandos与Peters联席CEO架构",
+              "outcome": "治理平稳过渡，联席CEO任期已3年多且业绩持续增长",
+              "rating": "★★★★",
+              "source": {
+                "name": "CNBC 2023-01-19、The Guardian 2023-01-19",
+                "url": "https://www.cnbc.com/2023/01/19/netflixs-reed-hastings-is-giving-up-ceo-role.html"
+              }
+            },
+            {
+              "date": "2023-05-23起",
+              "decision": "密码共享收费政策Paid Sharing全球推广铺开",
+              "outcome": "2023下半年新增约2200万用户，Q3营收与利润均超预期",
+              "rating": "★★★★★",
+              "source": {
+                "name": "StreamTV Insider、Forbes 2023-10-25、Reuters 2024-04-17",
+                "url": "https://www.streamtvinsider.com/video/netflix-password-sharing-crackdown-paying-us-10-still-share"
+              }
+            },
+            {
+              "date": "2024-01/2024-05",
+              "decision": "签订WWE十年协议与NFL三季协议，布局体育直播版权",
+              "outcome": "NFL圣诞赛单场超3000万观众覆盖218国，收视创纪录",
+              "rating": "★★★★",
+              "source": {
+                "name": "DW.com、Wikipedia 'Sports on Netflix'",
+                "url": "https://www.dw.com/en/nfl-wwe-streaming-netflix-new-strategy/a-71345322"
+              }
+            },
+            {
+              "date": "2025-04-01",
+              "decision": "自研广告技术平台Netflix Ads Suite全面上线替代第三方",
+              "outcome": "2025年广告收入同比增约2.5倍，2026年预计再翻倍至30亿美元",
+              "rating": "★★★★",
+              "source": {
+                "name": "ppc.land、Frontiers in Communication期刊论文",
+                "url": "https://ppc.land/netflix-set-to-double-ad-revenue-in-2025-after-major-tech-rollout"
+              }
+            },
+            {
+              "date": "2026-02-27",
+              "decision": "WBD竞购战中主动放弃跟价，不为扩大规模支付过高溢价",
+              "outcome": "依约获28亿美元分手费，2026Q1摊薄EPS同比增约86%",
+              "rating": "★★★★★",
+              "source": {
+                "name": "Deadline 2026-02-27、WSJ 2026、kaufcan.com法律分析",
+                "url": "https://deadline.com/2026/02/netflix-cash-injection-paramount-wbd-termination-fee-1236738911"
+              }
+            },
+            {
+              "date": "2026-06-04",
+              "decision": "创始人Hastings正式卸任董事会成员及董事会主席职务",
+              "outcome": "独立董事Jay Hoag接任主席，治理过渡平稳完成",
+              "rating": "★★★★",
+              "source": {
+                "name": "Variety 2026-06、Reuters 2026-06-05、SEC DEF 14A",
+                "url": "https://variety.com/2026/tv/news/netflix-board-reed-hastings-jay-hoag-chairman-1236768093"
+              }
+            }
+          ],
+          "capitalAllocation": {
+            "rdReturn": "①FY2025技术研发费用33.91亿美元，占营收7.51%，5年稳定于7.5%-8.6%区间②研发费用五年累计增约49%，低于同期营收增速约52%，费用率反降显规模效应③自研广告技术Ads Suite带动广告收入提速，但推荐算法等基础研发边际回报难单独量化",
+            "maTrackRecord": "①管理层近年无重大并购整合案例，历史以内容采购与合作协议为主，无可比整合样本②2026年2月WBD竞购战中主动放弃跟价，避免为扩大规模支付过高溢价③该案例体现的是拒绝溢价的资本纪律，而非并购后整合能力，两者不可混同评价",
+            "buybackTiming": "①FY2025自由现金流94.61亿美元，同比增约37%，为持续回购提供充足现金支撑②2023年9月董事会批准最高100亿美元回购计划，采集文件未见后续执行明细③具体回购金额、均价及额度使用进度未采集，回购时机优劣难以评判",
+            "evidence": [
+              {
+                "metric": "FY2025技术研发费用",
+                "value": "33.91亿美元，占营收7.51%",
+                "asOf": "2025-12-31",
+                "source": {
+                  "name": "FMP income-statement",
+                  "url": "https://financialmodelingprep.com"
+                }
+              },
+              {
+                "metric": "FY2025自由现金流",
+                "value": "94.61亿美元，同比增约36.68%",
+                "asOf": "2025-12-31",
+                "source": {
+                  "name": "FMP cashflow-statement / stockanalysis.com",
+                  "url": "https://stockanalysis.com/stocks/NFLX/financials/cash-flow-statement/"
+                }
+              },
+              {
+                "metric": "股票回购计划批准额度",
+                "value": "最高100亿美元（2023年9月批准）",
+                "asOf": "2023-09",
+                "source": {
+                  "name": "financials-collection.json bullBearCase",
+                  "url": "https://financialmodelingprep.com"
+                }
+              },
+              {
+                "metric": "WBD竞购分手费收入",
+                "value": "28亿美元，计入2026Q1其他收益",
+                "asOf": "2026-02-27",
+                "source": {
+                  "name": "Deadline 2026-02-27",
+                  "url": "https://deadline.com/2026/02/netflix-cash-injection-paramount-wbd-termination-fee-1236738911"
+                }
+              }
+            ]
+          },
+          "alignment": {
+            "ownership": "①创始人Hastings持股仅0.51%（21,164,244股），已于2026-06-04卸任董事会②公司为单一普通股结构，一股一票，不存在AB股或创始人超级投票权设计③现任联席CEO及高管持股比例采集文件未单列，一致性水平未知计入数据缺口",
+            "compensation": "①FY2025联席CEO Sarandos与Peters薪酬均为1179万美元，具体业绩挂钩条款未采集②CFO、CLO薪酬分别为681万、672万美元，管理层薪酬绝对水平处于行业高位③Hastings卸任前薪酬仅11.7万美元现金、无新股权激励，反映其已淡出执行角色",
+            "insiderSelling": "①具体减持金额、频次等交易明细未采集，仅知其持股比例已降至0.51%②采集文件未提供联席CEO及其他现任高管的近期增减持记录③创始人持股长期偏低且已退出董事会，股东利益一致性主要依赖薪酬与股权激励机制",
+            "evidence": [
+              {
+                "metric": "创始人（Hastings）持股比例",
+                "value": "0.51%（21,164,244股/4,163,939,999股）",
+                "asOf": "2026-06-01",
+                "source": {
+                  "name": "SEC Form 4 (Reed Hastings)",
+                  "url": "https://www.secform4.com/insider-trading/1065280.htm"
+                }
+              },
+              {
+                "metric": "联席CEO（Sarandos/Peters）FY2025总薪酬",
+                "value": "各1178.89万美元",
+                "asOf": "2025-12-31",
+                "source": {
+                  "name": "FMP company-executives",
+                  "url": "https://financialmodelingprep.com"
+                }
+              },
+              {
+                "metric": "Hastings FY2025总薪酬",
+                "value": "11.72万美元（仅现金，无新股权激励）",
+                "asOf": "2025-12-31",
+                "source": {
+                  "name": "FMP company-executives",
+                  "url": "https://financialmodelingprep.com"
+                }
+              }
+            ]
+          },
+          "organization": {
+            "teamStability": "①Sarandos 1999年结识加入公司，任职近27年，2020年起任联席CEO②Peters 2008年加入，历任产品/运营高管，2023年起任联席CEO，任职近18年③联席CEO均为内部培养的资深高管而非空降职业经理人，团队稳定性较高",
+            "keyPersonRisk": "①创始人已于2026年6月彻底退出董事会，公司完全进入职业经理人治理阶段②联席CEO架构分散决策权，降低单一高管离任冲击，但存在职责边界模糊风险③新任独立董事主席Jay Hoag仅负责治理监督不涉日常经营，关键人风险集中于两位联席CEO"
+          },
+          "culture": "①采集文件未将企业文化列为独立采集维度，缺乏一手文化调研证据②可观测治理特征（联席CEO内部提拔、创始人主动让权、无AB股结构）指向分权与绩效导向③Netflix对外知名的'自由与责任'文化理念未在采集文件中被证实或证伪，具体细节不作展开"
+        },
+        "inquiry": {
+          "question": "如果CEO退休，这家公司还能保持竞争力吗？",
+          "answer": "能，公司已完成从创始人到职业经理人治理的平稳过渡。①联席CEO架构下Sarandos主内容、Peters主产品运营，分工互补、任一人离任冲击可控②两位CEO均为内部培养近18-27年的资深高管，非依赖创始人个人魅力型领导③创始人Hastings已于2026年6月彻底退出董事会，公司决策与治理已不依赖其存在④核心风险在于若两位联席CEO同时离任，第三梯队候选人资历采集文件未覆盖，需持续关注"
+        },
+        "dataGaps": [
+          "Hastings及其他高管近年具体减持交易记录（金额、时间点、频次）未采集，仅知当前持股比例",
+          "联席CEO Sarandos、Peters及CFO、CLO当前持股数量/比例未采集",
+          "2023年9月批准的100亿美元回购计划执行进度、已用额度、回购均价未采集",
+          "企业文化未被列为独立采集维度，缺少员工调查、内部访谈等一手证据",
+          "高管薪酬与业绩挂钩的具体考核指标（KPI、股权归属条件）未采集"
+        ]
+      },
+      "industryTrend": {
+        "title": "行业与长期趋势",
+        "conclusion": "流媒体观看时长已超线性电视，但全球OTT增速放缓、成熟市场订阅疲劳初现，行业正从成长期迈向成熟期前段。",
+        "analysis": {
+          "paradigmShift": {
+            "verdict": "部分",
+            "reasoning": "①美国流媒体平台合计观看时长占比47.5%（2025年12月），已从少数替代变为多数分发方式；②但Netflix单一平台份额仅9.0%（观看时长）或19%（订阅），远未形成标准石油级垄断；③YouTube以12.7%观看时长份额反超Netflix，说明范式转移受益者高度分散，非单一赢家通吃。"
+          },
+          "historicalAnalogy": "①类比互联网对报纸的替代：分发渠道去中心化后，用户注意力从固定媒介转向按需选择；②类比数字音乐对实体唱片的替代：Netflix如流媒体音乐平台般以订阅模式重构内容变现方式；③但与报纸/唱片单一赢家不同，流媒体呈现Netflix、YouTube、Disney+多雄并立格局（美国流媒体订阅份额19%对Disney+14%，2025Q3）。",
+          "tam": {
+            "current": {
+              "value": "2266亿",
+              "currency": "USD",
+              "asOf": "2025全年",
+              "source": {
+                "name": "PwC Global Entertainment & Media Outlook 2026–2030",
+                "url": "https://www.pwc.com/gx/en/issues/business-model-reinvention/outlook/insights-and-perspectives.html"
+              }
+            },
+            "ceiling": "①天花板口径为全球OTT总收入（消费者订阅+广告+仅流媒体分发的传统广播商收入），分母达2266亿美元（2025年）；②明确不含传统线性有线/卫星付费电视收入，也不含院线、直播音乐等其他娱乐品类，是流媒体替代后的子市场天花板；③PwC预测2025-2030年CAGR仅6.1%，且澳大利亚/西班牙/韩国等成熟市场已现订阅疲劳，增速较历史峰值明显放缓。",
+            "growthCurve": "成长"
+          },
+          "valueChainPosition": "①Netflix身兼内容生产/采购方与直接面向消费者(D2C)的分发平台双重角色，不依赖电信运营商或有线电视捆绑分发；②自建Open Connect CDN（2011年立项）将缓存服务器部署进ISP网络内部，降低带宽成本、减少对第三方CDN商的议价依赖；③内容现金投入占营收比例从行业估计2019年约65%降至FY2025的37.85%，规模扩大带来的议价权随之增强。",
+          "techRouteRisk": "①核心计算与存储高度依赖单一云服务商AWS，公司10-K自述绝大部分计算基础设施运行在AWS上，构成集中度风险；②生成式AI/深度伪造等新技术普及可能带来内容版权归属与真实性方面的新型法律与声誉风险；③自建Open Connect仅覆盖内容分发环节，未能对冲底层计算基础设施的单一供应商依赖。",
+          "concentration": {
+            "customers": "个人消费者(2C订阅模式)高度分散，全球约3.25亿付费订阅户，无单一客户或渠道商依赖，客户集中度风险极低。",
+            "suppliers": "①内容采购依赖好莱坞主要工作室与版权方，续约价格与条款存在不确定性；②创作端集中于编剧工会(WGA)与演员工会(SAG-AFTRA)，2023年罢工曾致全行业内容制作中断；③计算基础设施集中于单一云服务商AWS，10-K明确列为技术风险来源，供应商集中度整体偏高。",
+            "evidence": [
+              {
+                "metric": "内容现金投入占营收比例",
+                "value": "37.85%（约171亿美元/451.83亿美元）",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "Netflix 10-K + ibinterviewquestions.com内容经济学分析",
+                  "url": "https://ibinterviewquestions.com/guides/tmt-investment-banking/content-economics-amortization"
+                }
+              },
+              {
+                "metric": "全球付费订阅户数（客户分散度佐证）",
+                "value": "约3.25亿，个人消费者高度分散",
+                "asOf": "2026年年初附近",
+                "source": {
+                  "name": "Netflix投资者信（经demandsage.com转引）",
+                  "url": "https://www.demandsage.com/netflix-subscribers"
+                }
+              },
+              {
+                "metric": "云计算供应商依赖",
+                "value": "绝大部分计算基础设施运行在AWS单一供应商上",
+                "asOf": "10-K风险因素章节（长期性表述）",
+                "source": {
+                  "name": "Netflix 10-K风险因素章节",
+                  "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001065280&type=10-K"
+                }
+              }
+            ]
+          }
+        },
+        "inquiry": {
+          "question": "站在20年后回看，这家公司是「这个时代的标准石油」还是「昙花一现的3Com」？",
+          "answer": "更像分散竞争格局中的头部玩家，而非某个时代的标准石油式垄断者。①范式转移确实发生（流媒体观看时长合计已超线性电视），但受益者高度分散，Netflix份额仅9.0%-19%，未形成垄断定价权；②与3Com相比，Netflix已证明持续20余年的内容飞轮与自建CDN护城河，非短暂技术红利，长期存续证据更充分；③但云计算单一依赖AWS、内容成本议价力受制于好莱坞工会，若这些环节被颠覆，护城河仍有被绕过的风险。"
+        },
+        "dataGaps": [
+          "行业TAM(2266亿美元)与Netflix自身营收的精确渗透率缺官方口径，采集文件仅有28.24%的粗略比例（分母为Ampere Analysis估计的全球流媒体订阅收入，未经交叉验证）",
+          "内容供应商集中度缺少量化数据（如前N大工作室/版权方采购金额占内容总支出比例），采集文件仅有定性描述",
+          "AWS云服务采购金额或其占技术/基础设施支出的比例未见具体数字，10-K仅作定性披露，无法量化该项供应商集中度"
+        ]
+      },
+      "valuation": {
+        "title": "估值分析",
+        "conclusion": "当前估值隐含未来数年双位数增速预期，中性情景3年涨13.6%，性价比合理但高度依赖增长持续兑现。",
+        "analysis": {
+          "currentMultiples": {
+            "_hint": "全部经 financial_rigor.py 验算，与第1步采集值对账",
+            "marketCap": {
+              "value": "3087.15亿",
+              "currency": "USD",
+              "asOf": "2026-08-07",
+              "source": {
+                "name": "FMP company.market-cap（经financial_rigor.py verify-market-cap验算：74.14×4,163,939,999=3087.15亿，偏差0.00%）",
+                "url": "https://financialmodelingprep.com"
+              }
+            },
+            "pe": {
+              "value": "23.31倍（TTM摊薄口径，TTM摊薄EPS $3.18；TTM基本EPS口径为22.95）",
+              "asOf": "2026-08-07",
+              "source": {
+                "name": "FMP metrics-ratios-ttm priceToEarningsDilutedRatioTTM，经financial_rigor.py verify-valuation验算74.14/3.18=23.31x",
+                "url": "https://financialmodelingprep.com"
+              }
+            },
+            "ps": {
+              "value": "6.38倍（TTM口径，市值/TTM收入483.7亿）",
+              "asOf": "2026-08-07",
+              "source": {
+                "name": "FMP metrics-ratios-ttm，经financial_rigor.py calc验算308714511526/48370000000=6.38",
+                "url": "https://financialmodelingprep.com"
+              }
+            },
+            "peg": {
+              "value": "0.67（基于分析师一致预期净利润增速，仅单源）",
+              "asOf": "2026-08-07",
+              "source": {
+                "name": "FMP metrics-ratios-ttm priceToEarningsGrowthRatioTTM",
+                "url": "https://financialmodelingprep.com"
+              }
+            },
+            "evToRevenue": {
+              "value": "6.49倍（EV 3139.2亿/TTM收入483.7亿）",
+              "asOf": "2026-08-07",
+              "source": {
+                "name": "FMP metrics-ratios-ttm evToSalesTTM，经financial_rigor.py calc验算313920000000/48370000000=6.49",
+                "url": "https://financialmodelingprep.com"
+              }
+            }
+          },
+          "reverseDcf": {
+            "impliedGrowth": "PS6.38倍隐含未来5年营收CAGR接近双位数(一致预期隐含9.83%)且利润率维持高位",
+            "assumptions": "①未做精确反向DCF求解，采用近似法：以分析师一致预期2025-2030营收CAGR9.83%作替代锚点，经financial_rigor.py calc验算(72.2/45.183)^(1/5)-1=9.83%；②折现率、永续增长率、终值假设均无法从采集文件反推，本项为定性/半定量判断而非完整DCF模型；③隐含假设Netflix持续跑赢PwC预测的行业6.1%CAGR，从Disney/WBD/YouTube手中抢占份额，而非仅跟随行业均值增长。"
+          },
+          "threeScenario": {
+            "_hint": "必须用 financial_rigor.py three-scenario 精确计算，禁止心算",
+            "inputs": {
+              "price": 74.14,
+              "eps": 3.18,
+              "sharesHundredMillion": 41.64,
+              "growth": [
+                "15%",
+                "9.8%",
+                "6.1%"
+              ],
+              "pe": [
+                25,
+                20,
+                14
+              ],
+              "years": 3,
+              "currency": "USD"
+            },
+            "optimistic": {
+              "targetPrice": "120.9",
+              "impliedReturnPct": "+63.1%"
+            },
+            "neutral": {
+              "targetPrice": "84.2",
+              "impliedReturnPct": "+13.6%"
+            },
+            "pessimistic": {
+              "targetPrice": "53.2",
+              "impliedReturnPct": "-28.3%"
+            },
+            "assumptionBasis": "①乐观增速15%对标2023-2025年实际营收增速区间(15.85%~17.6%季度YoY)，PE25倍略高于当前23.31倍反映广告/AI增长曲线溢价；②中性增速9.8%取分析师一致预期隐含2025-2030 CAGR(9.83%)，PE20倍较当前小幅下修反映增长正常化；③悲观增速6.1%取PwC预测行业整体OTT CAGR(增长优势归零)，PE14倍向Disney/WBD等传统媒体同业个位数-十几倍区间收敛。",
+            "toolOutput": "三情景估值模型 (Three-Scenario Valuation) 当前股价: 74.14 USD 当前EPS: 3.18 预测期: 3年 情景 年增速 目标PE 目标EPS 目标股价 涨跌幅 乐观(Bull) 15% 25x 4.84 120.9 +63.1% 中性(Base) 10% 20x 4.21 84.2 +13.6% 悲观(Bear) 6% 14x 3.80 53.2 -28.3% ✅ 所有计算使用精确十进制, 结果可审计复现（注：命令行显示增速四舍五入为15%/10%/6%，实际输入为0.15/0.098/0.061）"
+          },
+          "vsOwnHistory": {
+            "metric": "TTM PE（摊薄）",
+            "currentValue": "23.31倍",
+            "historicalRange": "采集文件未含FY2021-2025各年市值/股价，历史PE区间不可得",
+            "source": {
+              "name": "financials-collection.json financialMetrics.annual（仅含各年净利润，无各年市值/股价，无法反推历史PE，已如实计入dataGaps而非编造）",
+              "url": ""
+            }
+          },
+          "vsPeers": [
+            {
+              "name": "Disney（Disney+/Hulu，DTC分部）",
+              "pe": "不适用（分部未独立上市，无法计算标准PE）",
+              "ps": "不适用（分部未独立披露市值口径）",
+              "source": {
+                "name": "口径差异说明：仅可比经营利润率——Disney DTC分部FY2025 Q4经营利润率5.63%(经financial_rigor.py验算352/6248)，远低于Netflix整体经营利润率29.49%，来自Disney FY2025 Q4财报新闻稿",
+                "url": "https://thewaltdisneycompany.com/press-releases/the-walt-disney-company-reports-fourth-quarter-and-full-year-earnings-for-fiscal-2025"
+              }
+            },
+            {
+              "name": "Warner Bros. Discovery（Max/HBO Max，Streaming分部）",
+              "pe": "不适用（分部未独立上市，无法计算标准PE）",
+              "ps": "不适用（分部未独立披露市值口径）",
+              "source": {
+                "name": "口径差异说明：仅可比EBITDA利润率——WBD Streaming分部FY2025 EBITDA利润率12.57%(经financial_rigor.py验算1.37/10.9)，远低于Netflix经营利润率29.49%，来自WBD FY2025 Q4财报新闻稿",
+                "url": "https://www.wbd.com/news/warner-bros-discovery-reports-fourth-quarter-and-full-year-2025-results"
+              }
+            }
+          ]
+        },
+        "inquiry": {
+          "question": "如果股市明天关闭5年，你愿意以这个价格持有吗？",
+          "answer": "愿意持有，但需接受高估值对应高增长预期这一前提。①当前PE23.31倍/PS6.38倍隐含未来仍维持接近双位数增速，中性情景3年后涨13.6%、乐观情景+63.1%，若增长兑现回报可观；②规模效应(内容投入占营收比降至37.85%)、29.49%经营利润率、定价权与广告第二曲线是真实基本面支撑，并非纯粹估值泡沫；③但5年封闭期无法应对YouTube观看时长份额持续扩大、内容成本刚性上升等风险，悲观情景下跌幅达28.3%，需能承受该下行并相信管理层能持续跑赢行业6.1%的CAGR。"
+        },
+        "dataGaps": [
+          "采集文件未提供FY2021-2025各年市值/股价，无法计算历史PE/PS区间，vsOwnHistory.historicalRange标注为不可得而非估算",
+          "Disney/WBD相关分部未独立上市，无标准PE/PS指标，vsPeers改用经营利润率/EBITDA利润率做定性替代比较，两者口径不可直接相加或对比",
+          "反向DCF未能建立含折现率、终值假设的完整模型，仅用分析师一致预期CAGR做近似替代，非精确反向求解"
+        ]
+      }
+    },
+    "crossValidationLog": [
+      {
+        "field": "净利率5年序列 (2021-2025)",
+        "source1": {
+          "name": "financial_rigor.py calc (netProfit/revenue)",
+          "value": "17.23%/14.21%/16.04%/22.34%/24.30%"
+        },
+        "source2": {
+          "name": "—",
+          "value": "—"
+        },
+        "deviationPct": null,
+        "flag": "ok",
+        "resolution": "工具精确计算，非心算"
+      },
+      {
+        "field": "经营利润YoY增速 FY2022-2025",
+        "source1": {
+          "name": "financial_rigor.py calc",
+          "value": "-9.06% / +23.43% / +49.81% / +27.91%"
+        },
+        "source2": {
+          "name": "—",
+          "value": "—"
+        },
+        "deviationPct": null,
+        "flag": "ok",
+        "resolution": "工具精确计算，用于经营杠杆判断"
+      },
+      {
+        "field": "2026年内容现金投入YoY",
+        "source1": {
+          "name": "financial_rigor.py calc",
+          "value": "200/180-1=11.11%"
+        },
+        "source2": {
+          "name": "—",
+          "value": "—"
+        },
+        "deviationPct": null,
+        "flag": "ok",
+        "resolution": "工具精确计算，内容投入数字为第三方转引估计"
+      },
+      {
+        "field": "YouTube与Netflix FY2025营收差",
+        "source1": {
+          "name": "financial_rigor.py calc",
+          "value": "600-451.83=148.17亿美元"
+        },
+        "source2": {
+          "name": "—",
+          "value": "—"
+        },
+        "deviationPct": null,
+        "flag": "ok",
+        "resolution": "工具精确计算"
+      },
+      {
+        "field": "分析师隐含CAGR与行业CAGR差",
+        "source1": {
+          "name": "financial_rigor.py calc",
+          "value": "9.83-6.1=3.73个百分点"
+        },
+        "source2": {
+          "name": "—",
+          "value": "—"
+        },
+        "deviationPct": null,
+        "flag": "ok",
+        "resolution": "工具精确计算"
+      },
+      {
+        "field": "TTM PE验算 (74.14/3.18)",
+        "source1": {
+          "name": "financial_rigor.py verify-valuation",
+          "value": "23.31x"
+        },
+        "source2": {
+          "name": "FMP priceToEarningsDilutedRatioTTM",
+          "value": "23.31"
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "一致"
+      },
+      {
+        "field": "TTM PS验算 (市值/TTM收入)",
+        "source1": {
+          "name": "financial_rigor.py calc",
+          "value": "308714511526/48370000000=6.38x"
+        },
+        "source2": {
+          "name": "FMP priceToSalesRatioTTM",
+          "value": "6.38"
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "一致"
+      },
+      {
+        "field": "EV/Revenue验算",
+        "source1": {
+          "name": "financial_rigor.py calc",
+          "value": "313920000000/48370000000=6.49x"
+        },
+        "source2": {
+          "name": "FMP evToSalesTTM",
+          "value": "6.49"
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "一致"
+      },
+      {
+        "field": "三情景估值 (three-scenario)",
+        "source1": {
+          "name": "financial_rigor.py three-scenario",
+          "value": "乐观$120.9(+63.1%) / 中性$84.2(+13.6%) / 悲观$53.2(-28.3%)"
+        },
+        "source2": {
+          "name": "—",
+          "value": "—"
+        },
+        "deviationPct": null,
+        "flag": "ok",
+        "resolution": "工具精确计算，禁止心算；假设依据见valuation.threeScenario.assumptionBasis"
+      },
+      {
+        "field": "Disney DTC分部FY2025 Q4经营利润率",
+        "source1": {
+          "name": "financial_rigor.py calc",
+          "value": "352/6248=5.63%"
+        },
+        "source2": {
+          "name": "—",
+          "value": "—"
+        },
+        "deviationPct": null,
+        "flag": "ok",
+        "resolution": "工具精确计算，用于同业定性对比"
+      },
+      {
+        "field": "WBD Streaming分部FY2025 EBITDA利润率",
+        "source1": {
+          "name": "financial_rigor.py calc",
+          "value": "1.37/10.9=12.57%"
+        },
+        "source2": {
+          "name": "—",
+          "value": "—"
+        },
+        "deviationPct": null,
+        "flag": "ok",
+        "resolution": "工具精确计算，用于同业定性对比"
+      }
+    ]
+  },
+  "summary": {
+    "_spec": {
+      "purpose": "研究流程第 3 步（分析总结）的产出。由独立评估 Agent 基于第 1 步采集与第 2 步分析的落盘文件生成，不重新采集。步骤正文见 docs/research/workflow/03-analysis-summary.md。"
+    },
+    "meta": {
+      "companyId": "us-nflx-netflix",
+      "companyName": "Netflix, Inc.",
+      "summarizedAt": "2026-08-09",
+      "dataCutoff": "2026-08-09（Asia/Shanghai）",
+      "basedOnCollection": "research/companies/us-nflx-netflix/financials-collection.json",
+      "basedOnAnalysis": "research/companies/us-nflx-netflix/financials-analysis.json"
+    },
+    "dimensionSummary": [
+      {
+        "dimensionId": "businessQuality",
+        "title": "生意质量",
+        "mapsTo": "dimensions.businessEssence",
+        "conclusion": "订阅复购模式叠加规模效应，5年毛利率41.64%升至48.49%、经营利润率20.86%升至29.49%持续扩张，经营杠杆随规模显著放大，生意质量优秀但用户留存硬指标缺失。",
+        "confidence": 8,
+        "scoreBasis": "①dimensions.businessEssence.analysis.profitabilityTrend5y显示毛利率、经营利润率、净利率5年连续提升，FY2025净利率24.30%；②operatingLeverage显示FY2024经营利润+49.81%快于收入+15.65%，规模效应持续兑现；③dataGaps指出churn rate/NPS缺失，仅有密码共享转化、提价未流失等间接证据，故未给满分。"
+      },
+      {
+        "dimensionId": "moat",
+        "title": "护城河",
+        "mapsTo": "dimensions.moat",
+        "conclusion": "规模效应、转换成本、定价权三重护城河扎实且过去5年持续变宽，但网络效应弱、YouTube观看时长份额反超且增速更快，护城河正从扩张期转入防守期。",
+        "confidence": 7,
+        "scoreBasis": "①dimensions.moat.analysis.types中规模效应、转换成本、品牌定价权均判定'存在'，内容投入占营收比降至37.85%；②trendPast5y显示毛利率/经营利润率持续提升印证护城河变宽；③trendNext5y判断仅为'稳定'而非'变宽'，网络效应verdict为'待验证'，且YouTube份额12.7%已超Netflix9.0%增速更快，故未给满分。"
+      },
+      {
+        "dimensionId": "management",
+        "title": "管理层",
+        "mapsTo": "dimensions.management",
+        "conclusion": "联席CEO架构运转平稳、创始人已彻底退出治理，WBD竞购中主动止损体现资本纪律，但回购执行细节与在任高管持股一致性存在数据缺口。",
+        "confidence": 7.5,
+        "scoreBasis": "①dimensions.management.analysis.keyDecisions中2022年战略转向、广告套餐、密码共享收费、WBD分手费决策均评为四星或五星；②capitalAllocation显示FY2025自由现金流94.61亿美元同比增约37%，研发费用率5年稳定于7.5%-8.6%区间体现纪律；③dataGaps指出回购执行进度、联席CEO持股比例、减持记录均未采集，股东利益一致性无法完全验证，故未给满分。"
+      },
+      {
+        "dimensionId": "keyRisk",
+        "title": "最大风险",
+        "mapsTo": "dimensions.inversion",
+        "conclusion": "最大风险是内容/体育成本刚性上升与YouTube式免费注意力分流叠加压缩估值，两条主要路径概率均为'中'、影响均为'高'，属结构性而非致命性风险。",
+        "confidence": 5.5,
+        "scoreBasis": "①dimensions.inversion.analysis.failurePaths中'内容与体育版权成本刚性上升'与'YouTube分流注意力'两条概率均为中、影响均为高，是当前最主要风险；②'体育版权ROI不及预期'与'广告第二曲线不及预期'概率仅为低，可控性相对较高；③'增长指引不及预期触发估值压缩'概率虽低但historicalAnalogies显示2022年曾单日跌35.1%，尾部影响可能极端，整体处于中性偏可控区间。"
+      },
+      {
+        "dimensionId": "civilizationTrend",
+        "title": "文明趋势",
+        "mapsTo": "dimensions.industryTrend",
+        "conclusion": "流媒体观看时长已超线性电视，长期趋势有利，但范式转移受益者高度分散，Netflix份额9%-19%远未垄断，YouTube增速反超，全球OTT增速已放缓至6.1%。",
+        "confidence": 6.5,
+        "scoreBasis": "①dimensions.industryTrend.analysis.paradigmShift显示美国流媒体平台合计观看时长占比47.5%，范式转移判定为'部分'完成；②tam.growthForecast显示2025-2030全球OTT CAGR仅6.1%，成熟市场订阅疲劳已现；③paradigmShift同时指出YouTube以12.7%观看时长份额反超Netflix的9.0%，行业增长红利高度分散而非Netflix独享。"
+      },
+      {
+        "dimensionId": "valuation",
+        "title": "估值",
+        "mapsTo": "dimensions.valuation",
+        "conclusion": "当前PE23.31倍/PS6.38倍隐含接近双位数持续增速，中性情景3年仅涨13.6%、悲观情景跌28.3%，价格已较充分计入'持续跑赢行业'假设，安全边际不厚。",
+        "confidence": 4.5,
+        "scoreBasis": "①dimensions.valuation.analysis.threeScenario中性情景(增速9.8%/PE20倍)3年目标价84.2美元，涨幅仅13.6%，年化回报有限；②悲观情景(增速6.1%/PE14倍)目标价53.2美元，跌幅达28.3%，下行不小；③reverseDcf显示PS6.38倍隐含分析师一致预期CAGR9.83%显著快于行业6.1%，估值对'持续跑赢行业'假设依赖度高，吸引力中性偏低。"
+      }
+    ],
+    "strategies": {
+      "noPosition": {
+        "title": "空仓者",
+        "advice": "生意质量与护城河扎实，但当前估值中性偏贵，不宜追高介入。①可等待价格回调至悲观情景附近再分批建仓；②若广告等第二曲线加速兑现且留存未恶化，可提前小仓位介入。",
+        "triggers": [
+          {
+            "condition": "股价回调至53-60美元区间",
+            "action": "可分批建立试探性仓位",
+            "basis": "对应dimensions.valuation.analysis.threeScenario悲观情景目标价53.2美元(-28.3%)，业务本身经营利润率29.49%未恶化则具备安全边际。"
+          },
+          {
+            "condition": "2026年广告收入如期翻倍至约30亿美元且订阅规模未下滑",
+            "action": "可确认第二增长曲线兑现后半仓介入",
+            "basis": "对应dimensions.management.analysis.keyDecisions中Ads Suite上线决策评级五星，及dimensions.inversion.analysis.failurePaths广告业务路径概率仅为'低'。"
+          }
+        ]
+      },
+      "holding": {
+        "title": "持仓者",
+        "advice": "①业务与管理层质量评分较高，可继续持有核心仓位；②但当前估值吸引力中性偏低，不宜盲目加仓，可逢高分批止盈；③密切关注内容成本与YouTube份额两大风险信号。",
+        "triggers": [
+          {
+            "condition": "股价上探120美元附近且营收增速未同步提速",
+            "action": "分批止盈获利了结部分仓位",
+            "basis": "对应dimensions.valuation.analysis.threeScenario乐观情景目标价120.9美元(+63.1%)对应增速假设15%，assumptionBasis要求增速同步验证。"
+          },
+          {
+            "condition": "2026年内容现金投入实际超200亿美元指引且经营利润率环比转降",
+            "action": "减仓观察，暂停加仓",
+            "basis": "对应dimensions.inversion.analysis.failurePaths'内容与体育版权成本刚性上升'路径，概率中/影响高，且FY2025经营利润率29.49%已处历史高位。"
+          }
+        ]
+      },
+      "sellSignals": {
+        "title": "卖出信号",
+        "signals": [
+          {
+            "signal": "股价大幅超越120.9美元但增速未提速至15%以上",
+            "observable": "对照财报实际营收增速与三情景乐观假设增速的偏离",
+            "basis": "对应dimensions.valuation.analysis.threeScenario乐观情景assumptionBasis，增速假设15%对标2023-2025年实际区间，脱离该锚点即估值透支。"
+          },
+          {
+            "signal": "美国电视观看时长份额被YouTube进一步拉大",
+            "observable": "跟踪Nielsen Gauge季度数据中Netflix与YouTube份额差是否继续扩大",
+            "basis": "①对应dimensions.inversion.analysis.failurePaths'YouTube分流注意力'路径，2025年12月差距已由11.1%对8.5%扩大至12.7%对9.0%；②该数据源为单一(Nielsen经adwave转引)，需持续观察确认趋势而非单季判断。"
+          }
+        ]
+      },
+      "addSignals": {
+        "title": "加仓信号",
+        "signals": [
+          {
+            "signal": "股价跌至50-55美元区间且经营利润率维持29%左右",
+            "observable": "对照悲观情景目标价53.2美元与实际财报经营利润率是否同步恶化",
+            "basis": "对应dimensions.valuation.analysis.threeScenario悲观情景(-28.3%)与dimensions.businessEssence.analysis.profitabilityTrend5y经营利润率数据，若价跌但基本面未恶化即低估。"
+          },
+          {
+            "signal": "YouTube份额扩大态势出现多源确认的停滞或Netflix份额回升",
+            "observable": "需Nielsen Gauge之外至少一个独立数据源交叉验证观看时长份额变化",
+            "basis": "①对应dimensions.moat.dataGaps中'网络效应的可交叉验证数据源'缺口，当前YouTube份额数据仅Nielsen单源；②该护城河风险评分建立在单源数据上，触发加仓前需多源确认而非单一季度波动。"
+          }
+        ]
+      }
+    },
+    "disclaimer": "本总结基于公开信息与数据截止时点的分析生成，仅供研究参考，不构成个性化投资建议。"
+  }
+}
