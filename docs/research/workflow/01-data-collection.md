@@ -52,7 +52,35 @@
 
 给 Agent 的指令必须包含：第 1 节确定的数据截止时间、第 2 节的主副来源要求、**已落盘的结构化数据**（避免它重复取数），以及「每个数据点须返回数值、来源名称、URL 与所属报告期，无出处的数字不接受」。
 
+**检索一律先走 `docs/research/tools/web_search.py`**（Tavily，见下节），取不到再降级原生 WebSearch。
+
 **启动后在同一回合内等它返回**（总纲第 0 节纪律 2），把结果合并进已落盘的文件，再进入第 4 节。后台 Agent 只负责检索与出处记录；交叉验证（第 4 节）与落盘（第 5 节）一律在主会话完成。
+
+### 3.3 检索工具：`web_search.py`
+
+```bash
+# 默认检索（8 条来源原文片段 + URL）
+python3 docs/research/tools/web_search.py "快手 2025Q3 收入 同比增速"
+
+# 回一手披露：hk=披露易 / cn=巨潮+沪深交易所 / us=SEC EDGAR / tw=MOPS
+python3 docs/research/tools/web_search.py "理想汽车 2025 车辆毛利率" --official hk
+
+# 限定域名（公司 IR 站、指定数据源）
+python3 docs/research/tools/web_search.py "…" --domains ir.kuaishou.com
+
+# 附正文 markdown，供数字回原文核对口径与时点
+python3 docs/research/tools/web_search.py "…" --full
+```
+
+**三条使用纪律**：
+
+1. **`--official` 用在 Level 1 数据点与 >5% 差异复核上**。实测该参数能把结果直接收敛到 `hkexnews.hk` / `sec.gov` 的报表原文 PDF，比逐层翻页找年报快得多，也正是 `financial-data.md` 里 Official 层的取数方式；
+2. **工具只给来源原文，不给结论**。它按设计不返回任何 LLM 摘要——2026-08-09 实测 Tavily 的 `include_answer` 有 21% 的概率编造或错记数字（把「扣非净利润1437.73亿」当成归母净利润、给出来源里根本不存在的行业 CAGR），而同一次返回的原文片段是对的。**带出处外观的假数字比诚实的 `unavailable` 有害得多**，故该开关在脚本里被硬编码关闭，不提供打开的方式；
+3. **`--cutoff` 不是截止日闸门**。实测它只在 `--news` 模式下真正过滤（普通检索的结果不带发布日期），工具会在不生效时显式提示。截止日纪律仍由你读原文时点把关，不要因为传了参数就认为已经过滤过。
+
+**取不到时**：换一次关键词重试，仍无结果按 `unavailable + reason` 收敛并写明已查范围，不恋战。**工具本身失败（退出码 3，如 key 缺失或配额耗尽）时降级到原生 WebSearch 继续，不因检索后端不可用中断研究。**
+
+配额：advanced 检索 2 credits/次，免费额度 1000 credits/月，约合 8 家公司的研究量。key 存 `~/.config/tavily/token` 或环境变量 `TAVILY_API_KEY`，**严禁提交进仓库**（与 Tushare token 同规矩）。
 
 ## 4. 程序化交叉验证
 

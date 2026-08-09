@@ -120,6 +120,19 @@ python3 docs/research/tools/twstock_data.py search 台積        # 搜索股票�
 
 ---
 
+## 网络检索规范（定性维度与取证）
+
+结构化数据走上面各市场的取数工具；**维度 3/4/5/7/8/10 与 Evidence Agent 取证需要的网络检索，统一走 `docs/research/tools/web_search.py`**（Tavily Search API），失败时降级原生 WebSearch。用法与完整纪律见 `docs/research/workflow/01-data-collection.md` 3.3 节，此处只记规范要点：
+
+1. **回一手披露用 `--official`**：`hk`→披露易、`cn`→巨潮+沪深交易所、`us`→SEC EDGAR、`tw`→MOPS。实测能把结果直接收敛到报表原文 PDF，是本文件「Official 层」在 >5% 重大差异复核与 Level 1 数据点最终核实时的取数方式；
+2. **只取来源原文，不取检索服务的 LLM 摘要**。工具按设计不返回摘要，且该开关被硬编码关闭、不提供打开方式。2026-08-09 用 14 条真实研究查询实测：Tavily 的 `include_answer` 有 3 条（21%）编造或错记数字——把「扣非净利润 1437.73 亿」当成归母净利润并把「亿」错译为 billion、给出 8 条来源里根本不存在的行业 CAGR、凭空添加市场份额百分比——而同一次返回的原文片段全部正确。**带出处外观的假数字比诚实的 `unavailable` 有害得多**，与本文件「无出处的数字不接受」「禁止 LLM 心算」同源；
+3. **`--cutoff` 不构成截止日保证**：实测只在 `--news` 模式下真正过滤（普通检索结果不带发布日期），工具在不生效时会显式提示。数据截止纪律仍靠读原文时点把关；
+4. **key 只存本机**：环境变量 `TAVILY_API_KEY` 或 `~/.config/tavily/token`，与 Tushare / FinMind token 同规矩，不得出现在报告、skill 或 commit 中。配额 advanced 2 credits/次、免费 1000 credits/月（约 8 家公司）。
+
+**检索召回不足会伪装成数据缺失**：`research/evals/defects.jsonl` 已记录一例——快手 2025Q3 收入同比被记为 `unavailable`、理由写「已查两份最新公告未见」，而该数字一直挂在公司 IR 官网的季度新闻稿上。写 `unavailable + reason` 前，先确认已经查过公司 IR 站与对应市场的一手披露源（`--domains <公司IR域名>` 或 `--official <市场>`），不要把「没搜到」直接写成「未披露」。
+
+---
+
 ## Tushare 使用规范
 
 ### 权限与频次（2026-08-08 用本机 token 实测，非官方文档抄录）
@@ -336,3 +349,5 @@ Level 1 与 `docs/research/workflow/01-data-collection.md`「程序化交叉验�
 | 网易 | aastocks（9999.HK） | macrotrends（NTES） |
 | 台积电 | `twstock_data.py`（2330） | goodinfo.tw / macrotrends（TSM，1 ADR=5股） |
 | 联发科 | `twstock_data.py`（2454） | goodinfo.tw |
+| 定性维度检索（竞争/护城河/技术/TAM/风险/多空） | `web_search.py`（Tavily） | 原生 WebSearch（工具退出码 3 时降级） |
+| 回一手披露核实 Level 1 / >5% 差异 | `web_search.py --official hk\|cn\|us\|tw` | 交易所披露站直接访问 |
