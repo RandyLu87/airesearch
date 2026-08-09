@@ -179,9 +179,22 @@ function runPublish(evalsDir) {
   return result;
 }
 
+/**
+ * 页面骨架，剥掉内联的 <style>/<script>。
+ *
+ * 发布时整份 research.css 会内联进 HTML（见 apps/web/scripts/copy-output.mjs），
+ * 于是样式表里的每个类名都字面出现在文件里。断言「某元素没被渲染」必须先剥掉它，
+ * 否则命中的是 CSS 规则而不是标记。
+ */
+function markup(html) {
+  return html
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/g, "")
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, "");
+}
+
 /** The rendered text with markup removed. */
 function pageText(html) {
-  return html
+  return markup(html)
     .replace(/<[^>]+>/g, "")
     .replace(/&nbsp;/g, " ")
     .replace(/&amp;/g, "&")
@@ -190,8 +203,13 @@ function pageText(html) {
 }
 
 function assertLocalReferencesResolve(html, pagePath, label) {
-  const references = [...html.matchAll(/(?:href|src)=["']([^"']+)["']/g)]
-    .map((match) => match[1])
+  const references = [
+    ...[...html.matchAll(/(?:href|src)=["']([^"']+)["']/g)].map((m) => m[1]),
+    // 内联样式里的 url() 同样是这一页要发的请求。它们原本相对 assets/research.css
+    // 解析，内联后改为相对文档解析，由发布脚本按页面层级重写——写错了字体就 404，
+    // 而 href/src 扫描看不见这类引用。
+    ...[...html.matchAll(/url\(["']?([^"')]+)["']?\)/g)].map((m) => m[1]),
+  ]
     // A fragment addresses a position inside the target, not a different file.
     .map((reference) => reference.split("#")[0])
     .filter((reference) => reference !== "")
@@ -355,7 +373,7 @@ test("missing cost metrics render as a dash, never as zero", () => {
 test("the ledger withholds the trend line below the sample threshold", () => {
   const html = readFileSync(path.join(siteRoot, "evals.html"), "utf8");
   // 两条记录远低于阈值：只出台账，不画趋势线。
-  assert.equal(html.includes("evals-trend"), false, "trend line must not appear");
+  assert.equal(markup(html).includes("evals-trend"), false, "trend line must not appear");
   assert.equal(
     pageText(html).includes("样本量为 2 条，不足 10 条"),
     true,

@@ -1,3 +1,7 @@
+/* Inter 只覆盖拉丁字形，中文一律走系统字体，所以字体文件按站点实际用到的字符
+   子集化过（48.3 KB → 25.8 KB），可变字重轴保留。重新生成见 fonts/README.md。
+   font-display: swap + 下面的系统字体兜底，保证字体在弱网下取不到时只是字形回退，
+   不影响可读性。 */
 @font-face {
   font-family: "Inter Local";
   src: url("./fonts/InterVariable.woff2") format("woff2-variations");
@@ -16,7 +20,7 @@
   --soft: #ecece6;
   --max: 1440px;
   color-scheme: light;
-  font-family: "Inter Local", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: "Inter Local", system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
   font-synthesis: none;
 }
 
