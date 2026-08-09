@@ -319,6 +319,21 @@ tbody th { font-weight: 650; }
    repeat 16vh's 122px, and the tight bottom margin keeps the tagline bound to
    the title rather than floating between the two. */
 .company-header h1 { margin: clamp(24px, 6vh, 72px) 0 20px; }
+
+/* 中文标题的行距与字距。全局 h1 的 `line-height: .82` / `letter-spacing: -.075em`
+   是给拉丁标题的——字母有升部降部，收紧后行框里仍留得出空隙。汉字字形填满整个
+   em 方框，同样的值一旦折行就是物理重叠、字距为负则直接粘连。
+   这条必须在基础层生效（移动端标题折行更早，同样会叠）。 */
+.company-header h1[data-cjk="true"] { line-height: 1.06; letter-spacing: -.04em; }
+
+/* 字号按标题视觉宽度分档，目标是任何公司名都落在两行以内，而不是让长中文名
+   吃掉整屏。分档由渲染层算好写进 data-title-scale（见 companies/[company]/page.tsx）。
+   只在宽屏生效：≤800px 有自己的一套尺寸，而属性选择器的特异性高于媒体查询里的
+   `.company-header h1`，放到基础层会把移动端一起打挂。 */
+@media (min-width: 801px) {
+  .company-header h1[data-title-scale="md"] { font-size: clamp(52px, 8.5vw, 118px); }
+  .company-header h1[data-title-scale="sm"] { font-size: clamp(44px, 7vw, 96px); }
+}
 /* Only the desktop ceiling comes down — 40px cost two lines and 137px of the
    fold. The 22px floor stays: narrow screens have budget to spare, and this is
    also the company page's lead thesis. */
