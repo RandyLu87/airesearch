@@ -77,7 +77,18 @@ npm run publish     # 生成 research/site
 npm run verify      # 类型检查、发布契约测试、研究路径校验
 ```
 
-打开 [研究站点](research/site/index.html)。HTML 使用相对资源路径，可以离线打开，也可以原样部署到任意静态托管服务。
+打开 [研究站点](research/site/index.html)。HTML 使用相对资源路径，既可以离线打开，也可以部署在任意路径深度下（根路径或子路径都行），不需要改任何配置。
+
+### 线上地址
+
+同一份 `research/site/` 同时发布到两处，互为备份：
+
+| 地址 | 托管 | 触发方式 |
+| --- | --- | --- |
+| <https://invest.owlltech.com> | Cloudflare Pages（主） | 连接仓库，push 到 `main` 自动部署 |
+| <https://randylu87.github.io/airesearch/> | GitHub Pages（备） | `.github/workflows/pages.yml` |
+
+保留两套是因为单一托管在大陆的可达性不可靠。**样式已在发布时内联进每个 HTML**（见 `apps/web/scripts/copy-output.mjs`），所以只要 HTML 到达就一定能正常显示，不会出现「有内容、没样式」。宿主层的取舍与备选方案记录在 [#11](https://github.com/RandyLu87/airesearch/issues/11)。
 
 ## Skill 参考资料
 
