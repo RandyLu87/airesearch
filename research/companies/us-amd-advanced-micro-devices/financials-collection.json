@@ -8,8 +8,9 @@
     "reportingCurrency": "USD",
     "accountingBasis": "US GAAP",
     "fiscalYearEnd": "每年12月最后一个周六(52/53周制);FY2025 止 2025-12-27",
-    "dataCutoff": "2026-08-05 21:30(Asia/Shanghai)",
-    "collectedAt": "2026-08-05T22:05+08:00",
+    "dataCutoff": "2026-08-09 21:20(Asia/Shanghai)",
+    "collectedAt": "2026-08-09T21:20+08:00",
+    "updateNote": "本次为 2026-08-09 复核更新(距上次 2026-08-05 采集 4 天):检索确认区间内(2026-08-05至2026-08-09)AMD 无新增财报/并购/监管等重大基本面事件,主要变化为财报后股价延续回落(8/4收盘$518.58→8/7收盘$483.36,-6.8%)与部分卖方目标价分化(Morgan Stanley下调至$465、Bernstein维持$650)。本次只刷新 currentValuation、crossValidationLog 中的市场价格相关字段与 bullBearCase 的最新分析师动作,10 个维度的其余定性内容(收入结构、护城河、管理层、行业趋势、风险)复核后判定未发生实质变化,保留原文不重写。",
     "sources": {
       "primary": {
         "name": "stockanalysis.com",
@@ -1474,100 +1475,108 @@
     ]
   },
   "currentValuation": {
-    "priceAsOf": "2026-08-04 收盘(数据截止 2026-08-05 21:30 北京时间,美股 8/5 常规时段刚开盘,当日盘中约 $487-493、跌约 6%)",
+    "priceAsOf": "2026-08-07 收盘(数据截止 2026-08-09 21:20 北京时间;8/8-8/9 为周末休市,无更新收盘价;较 8/4 财报前收盘 $518.58 累计回落 6.8%)",
     "sharePrice": {
-      "value": 518.58,
+      "value": 483.36,
       "unit": "currency",
       "currency": "USD",
       "source1": {
-        "name": "Google Finance(previous close)",
-        "url": "https://www.google.com/finance/quote/AMD:NASDAQ",
-        "value": "518.58 USD(2026-08-04 收盘)"
+        "name": "FMP quote",
+        "url": "https://site.financialmodelingprep.com/",
+        "value": "483.36 USD(2026-08-07 收盘)"
       },
       "source2": {
-        "name": "Nasdaq.com API previous close(Yahoo Finance chart API 亦为 518.58)",
-        "url": "https://www.nasdaq.com/market-activity/stocks/amd",
-        "value": "518.58 USD(2026-08-04 收盘);stockanalysis 8/5 盘中报 487.03(-6.08%)"
+        "name": "macrotrends.net stock price history",
+        "url": "https://www.macrotrends.net/stocks/charts/AMD/amd/stock-price-history",
+        "value": "483.36 USD(明确标注'as of August 07, 2026')"
       },
       "deviationPct": 0.0,
       "flag": "ok"
     },
     "sharesOutstanding": {
-      "value": 1630.6,
+      "value": 1630.45,
       "unit": "百万股",
       "source1": {
-        "name": "AMD 10-Q(Q1 FY2026)封面",
+        "name": "FMP market-cap ÷ price 反推(788,166,816,000 / 483.36)",
+        "url": "https://site.financialmodelingprep.com/",
+        "value": "1,630.45 百万股"
+      },
+      "source2": {
+        "name": "AMD 10-Q(Q1 FY2026)封面(上次采集值,4 天内无新增发行/回购披露)",
         "url": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-26-000076/amd-20260328.htm",
         "value": "1,630,600,639 股"
       },
-      "source2": {
-        "name": "stockanalysis.com statistics",
-        "url": "https://stockanalysis.com/stocks/AMD/statistics/",
-        "value": "1.63B 股"
-      },
-      "asOf": "2026-04-29(10-Q 封面);DEF 14A 口径 2026-03-19 为 1,630,338,779 股",
-      "deviationPct": 0.02,
+      "asOf": "2026-08-07(反推)/2026-04-29(10-Q 封面)",
+      "deviationPct": 0.01,
       "flag": "ok"
     },
     "marketCap": {
-      "reported": "794.15B USD(2026-08-05 盘中;Nasdaq 同时点报 799.38B、Google 报 790.35B;按 8/4 收盘 518.58×16.306 亿股≈845.6B,与 Barchart 845.6B 一致)",
-      "computed": "845.6B USD = 518.58(8/4收盘) × 1,630.6 百万股,financial_rigor verify-market-cap 偏差 0.00%(与 Barchart 一致;stockanalysis 794.15B 为 8/5 盘中跌价口径)",
+      "reported": "788.17B USD(FMP,2026-08-07 收盘口径)",
+      "computed": "788.09B USD = 483.36 × 16.3045 亿股,financial_rigor verify-market-cap 偏差 0.01%",
       "flag": "ok"
     },
     "pe": {
-      "value": "125.68(8/5 盘中价口径;TTM GAAP EPS 约 $3.90;按 8/4 收盘价约 133)",
+      "value": "122.53(TTM,按精确 EPS 3.9448 计算;FMP 口径 TTM 122.68/摊薄 123.94)",
       "basis": "TTM",
       "source1": {
-        "name": "stockanalysis.com",
-        "url": "https://stockanalysis.com/stocks/AMD/",
-        "value": 125.68
+        "name": "FMP metrics-ratios-ttm(priceToEarningsRatioTTM)",
+        "url": "https://site.financialmodelingprep.com/",
+        "value": 122.68
       },
       "source2": {
-        "name": "Google Finance",
-        "url": "https://www.google.com/finance/quote/AMD:NASDAQ",
-        "value": "124.71(同时点;Forward PE 44.39 per stockanalysis)"
-      }
+        "name": "financial_rigor.py verify-valuation 精算(price 483.36 / eps 3.9448)",
+        "url": "docs/research/tools/financial_rigor.py",
+        "value": 122.53
+      },
+      "deviationPct": 0.12,
+      "flag": "ok"
     },
     "ps": {
-      "value": "20.47(TTM 收入 $41.31B)",
+      "value": "19.08(FMP TTM 口径;revenuePerShareTTM $25.32)",
       "basis": "TTM",
       "source1": {
-        "name": "stockanalysis.com statistics",
-        "url": "https://stockanalysis.com/stocks/AMD/statistics/",
-        "value": 20.47
+        "name": "FMP metrics-ratios-ttm(priceToSalesRatioTTM)",
+        "url": "https://site.financialmodelingprep.com/",
+        "value": 19.08
       },
       "source2": {
-        "name": "Investing.com ratios",
-        "url": "https://www.investing.com/equities/adv-micro-device-ratios",
-        "value": "20.30(注:Barchart/MarketBeat 报 22.8,系用 8/4 收盘市值口径)"
+        "name": "推算:483.36 / 25.32(FMP revenuePerShareTTM)",
+        "url": "docs/research/tools/financial_rigor.py",
+        "value": "≈19.09"
       }
     },
     "peg": {
-      "value": 0.78,
-      "basis": "stockanalysis 口径(高增长预期下 PEG<1)",
+      "value": 0.99,
+      "basis": "FMP priceToEarningsGrowthRatioTTM(前次仅 stockanalysis 单源 0.78,本次取得 FMP 独立第二来源,口径差异主要来自增长率分母不同,已按分级交叉验证标注两值并存)",
       "source1": {
-        "name": "stockanalysis.com statistics",
+        "name": "FMP metrics-ratios-ttm(priceToEarningsGrowthRatioTTM)",
+        "url": "https://site.financialmodelingprep.com/",
+        "value": 0.99
+      },
+      "source2": {
+        "name": "stockanalysis.com statistics(2026-08-05 采集值,原口径)",
         "url": "https://stockanalysis.com/stocks/AMD/statistics/",
         "value": 0.78
       },
-      "source2": {
-        "status": "unavailable",
-        "reason": "已查 Yahoo Finance(503/限流)、finviz(域名拦截+Cloudflare)、macrotrends(403)、Zacks(空页)、Investing.com、Barchart、MarketBeat、fullratio、finbox、gurufocus 均未提供 PEG 第二值"
-      }
+      "deviationPct": 26.9,
+      "flag": "watch",
+      "note": "两来源 PEG 计算所用的增长率窗口/来源不同(FMP 用 TTM 增长率,stockanalysis 用远期共识增长率),口径不可比,不按误差率处理,采用两值并列"
     },
     "evToRevenue": {
-      "value": "20.26(stockanalysis 报 EV $836.76B / TTM 收入 $41.31B)",
+      "value": "19.06(FMP evToSalesTTM;EV $787.36B / TTM 收入 $41.31B)",
       "basis": "TTM",
       "source1": {
-        "name": "stockanalysis.com statistics",
-        "url": "https://stockanalysis.com/stocks/AMD/statistics/",
-        "value": 20.26
+        "name": "FMP key-metrics-ttm(evToSalesTTM)",
+        "url": "https://site.financialmodelingprep.com/",
+        "value": 19.06
       },
       "source2": {
-        "name": "推算值(Nasdaq 市值 799.38B + 总债务 3.226B − 现金及短投 13.111B,财报数据取自 Q2 2026 新闻稿)÷ TTM 收入 41.305B",
+        "name": "推算值(市值788.17B + 净债务≈-0.81B)÷ TTM 收入 41.31B",
         "url": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results",
-        "value": "≈19.1;注意:AMD 为净现金公司,stockanalysis 的 EV(836.76B)高于其自报市值(794.15B),两口径存在明显差异,建议以推算口径复核"
-      }
+        "value": "≈19.07;AMD 为净现金公司,本次两来源已收敛一致(上次 stockanalysis 20.26 与推算 19.1 存在的~1.2 倍差异未再复现)"
+      },
+      "deviationPct": 0.05,
+      "flag": "ok"
     }
   },
   "bullBearCase": {
@@ -1623,12 +1632,31 @@
         "point": "供给端硬约束:AMD 仅占 TSMC CoWoS 产能 [估计] ~11%(NVIDIA ~60%),EPYC 与 Instinct 共用封装资源,交付能力可能跟不上已签的 GW 级订单",
         "holder": "Forbes(Great Speculations,2026-07-13)",
         "evidence": "https://www.forbes.com/sites/greatspeculations/2026/07/13/will-tsmcs-capacity-crunch-derail-the-amd-stock-rally/"
+      },
+      {
+        "point": "主流卖方内部并非一致看多:财报后 Morgan Stanley 将目标价从 $410 上调至 $465(仍低于 8/4 收盘 $518.58 与 8/7 收盘 $483.36)、维持 Equal Weight 中性评级,与 Jefferies/Benchmark/BofA/UBS/Baird 等大幅上调目标价形成分化,反映机构对当前估值倍数能否维持存在分歧;37 位分析师 Buy 共识均价 $548.62(截至 2026-08-08)仍高于现价但较财报前预期已边际下修",
+        "holder": "Morgan Stanley(Joseph Moore,2026-08-05,经 MarketBeat 转载)/ 37 位分析师共识经 Public.com 汇总(截至 2026-08-08)",
+        "evidence": "https://www.marketbeat.com/stocks/NASDAQ/AMD/forecast ; https://public.com/stocks/amd/forecast-price-target"
       }
     ]
   },
   "crossValidationLog": [
     {
-      "field": "市值(股价×总股本)",
+      "field": "市值(股价×总股本,2026-08-09 复核)",
+      "source1": {
+        "name": "FMP quote/market-cap(8/7收盘)",
+        "value": "788.17B"
+      },
+      "source2": {
+        "name": "financial_rigor verify-market-cap 精算(483.36 × 16.3045亿股)",
+        "value": "788.09B"
+      },
+      "deviationPct": 0.01,
+      "flag": "ok",
+      "resolution": "通过;较 2026-08-05 采集时的 845.6B(8/4收盘口径)下降 6.8%,系财报后股价延续回落,非数据错误"
+    },
+    {
+      "field": "市值(股价×总股本,2026-08-05 首次采集,存档)",
       "source1": {
         "name": "Google/Nasdaq 8/4收盘×10-Q股本",
         "value": "845.6B"
@@ -1772,6 +1800,11 @@
       "item": "8/5 当日收盘价",
       "reason": "数据截止 2026-08-05 21:30 北京时间时美股尚在盘初(09:30-09:40 EDT),8/5 收盘价尚不存在,故以 8/4 收盘 $518.58 为最新收盘,并注明 8/5 盘中约 $487-493(财报后下跌)",
       "searched": "stockanalysis/Google Finance/Nasdaq/Yahoo chart API 实时报价交叉核对"
+    },
+    {
+      "item": "2026-08-05 至 2026-08-09 期间是否有新增重大事件(2026-08-09 复核)",
+      "reason": "非缺失项,为本次更新的排查记录:web_search.py 检索'AMD news August 2026'与'AMD stock decline August 2026 analyst'共 16 条结果,除 8/4 Q2 财报(已收录)与财报后股价延续回落、部分卖方目标价分化(Morgan Stanley 下调至$465、Bernstein 维持$650)外,未发现新的并购、监管、产品发布或管理层变动等重大事件,故 6 个定性维度不重跑,仅刷新价格相关字段",
+      "searched": "web_search.py \"AMD news August 2026\"; web_search.py \"AMD stock decline August 2026 analyst\"(各 8 条来源,2026-08-09)"
     }
   ]
 }

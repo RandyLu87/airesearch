@@ -3,7 +3,8 @@
     "companyId": "us-amd-advanced-micro-devices",
     "companyName": "AMD (Advanced Micro Devices)",
     "summarizedAt": "2026-08-05T23:55+08:00（按新信心度定义重评：价值投资视角看多程度）",
-    "dataCutoff": "2026-08-05 21:30(Asia/Shanghai)",
+    "updatedAt": "2026-08-09T22:00+08:00(2026-08-05至2026-08-09期间无新增重大基本面事件,仅刷新估值维度的价格相关数字与结论文字;其余维度评分与文字未变)",
+    "dataCutoff": "2026-08-09 21:20(Asia/Shanghai)",
     "basedOnCollection": "research/companies/us-amd-advanced-micro-devices/financials-collection.json",
     "basedOnAnalysis": "research/companies/us-amd-advanced-micro-devices/financials-analysis.json"
   },
@@ -52,20 +53,20 @@
       "dimensionId": "valuation",
       "title": "估值",
       "mapsTo": "dimensions.valuation",
-      "conclusion": "价格已预支大部分乐观情形:TTM PE约126-133为同业组内最高,对FY2026共识EPS $7.46也要65-70倍;工具精算三情景显示中性(35%增长+30x退出)三年目标价$550.6、较$518.58仅+6.2%,悲观$198.6、-61.7%——基准情形几乎无回报而下行深度巨大,赔率严重不对称。分析自问'股市关5年愿否以此价持有'的答案是'不愿意'。",
+      "conclusion": "价格仍预支大部分乐观情形:TTM PE约122.5x(2026-08-09复核,此前8/5为126-133)为同业组内最高,对FY2026共识EPS $7.46也要约64.8倍;工具精算三情景显示中性(35%增长+30x退出)三年目标价$550.6、较现价$483.36为+13.9%(股价较财报前$518.58已回落6.8%,回报率较8/5口径的+6.2%边际改善,但目标价绝对值未变,不构成新的看多证据),悲观$198.6、-58.9%——基准情形回报有限而下行深度巨大,赔率仍不对称。分析自问'股市关5年愿否以此价持有'的答案仍是'不愿意'。",
       "confidence": 2.5,
-      "scoreBasis": "低分依据:dimensions.valuation.analysis.threeScenario(financial_rigor精算,2026-08-05)——中性+6.2%意味着现价≈中性情形的三年终值,零安全边际;reverseDcf显示现价隐含'5-10年净利25-30%复合增长且终局仍享25-30x';vsPeers——P/FY26E约65-70x高于NVDA(21x)/AVGO(27x)/TSM(19x),PS 20.47与NVDA 20.25持平但净利率远低;dilutionNote或有~19.6%权证稀释未计入多数口径;inversion.failurePaths估值压缩'概率高'并有8/5财报双超仍跌7-9%的即时验证。抬分因素:PEG 0.78(单源)、P/FY27E=37.39——若2027年EPS $13.87兑现则回到'贵但可辩护',且反向DCF为自建[估计]框架,存在共识单源限制,故不给0-2最底档,定2.5。"
+      "scoreBasis": "低分依据:dimensions.valuation.analysis.threeScenario(financial_rigor精算,2026-08-09复核price=483.36)——中性情形+13.9%仅略高于零,安全边际依然稀薄;reverseDcf显示现价隐含'5-10年净利25-30%复合增长且终局仍享25-30x';vsPeers——P/FY26E约64.8x高于NVDA(21x)/AVGO(27x)/TSM(19x),PS 19.08与NVDA相近但净利率远低;dilutionNote或有~19.6%权证稀释未计入多数口径;inversion.failurePaths估值压缩'概率高'并有8/5财报双超仍跌、且股价延续回落至8/7的即时验证。抬分因素:PEG 两口径0.99(FMP)/0.78(stockanalysis)、P/FY27E=34.85——若2027年EPS $13.87兑现则回到'贵但可辩护',且反向DCF为自建[估计]框架,存在共识单源限制。股价回落使赔率边际改善但未触及$400等观察触发位,继续定2.5,不上调。"
     }
   ],
   "strategies": {
     "noPosition": {
       "title": "空仓者",
-      "advice": "现价(8/4收盘$518.58、8/5盘中约$487)不宜建仓:按分析师共识2026年每股收益$7.46计算市盈率仍有65-70倍,精算的中性情景三年只有+6.2%回报,悲观情景-61.7%,为一家自己控制不了英伟达定价、云厂预算和对华政策的公司承担这种赔率不划算。正确姿势是'等价格'或'等证据':要么等股价回落到$400以下再分批介入,要么等AI加速器份额突破10%等硬证据被多家独立机构确认后,再用更小的仓位换确定性。在两者都没出现之前,做的唯一动作是跟踪季报里的四个先行指标(云厂capex增速、MI450交付、毛利率、份额剪刀差)。",
+      "advice": "现价(2026-08-07收盘$483.36,较8/4财报前$518.58已回落6.8%)仍不宜建仓:按分析师共识2026年每股收益$7.46计算市盈率仍约64.8倍,精算的中性情景三年只有+13.9%回报,悲观情景-58.9%,为一家自己控制不了英伟达定价、云厂预算和对华政策的公司承担这种赔率不划算。正确姿势是'等价格'或'等证据':要么等股价回落到$400以下再分批介入,要么等AI加速器份额突破10%等硬证据被多家独立机构确认后,再用更小的仓位换确定性。在两者都没出现之前,做的唯一动作是跟踪季报里的四个先行指标(云厂capex增速、MI450交付、毛利率、份额剪刀差)。",
       "triggers": [
         {
           "condition": "股价回落至$400以下(约为2027年共识每股收益$13.87的29倍,也是卖方空头情形的普遍目标价),且当季四大云厂capex指引同比增速仍高于+20%",
           "action": "分批建立不超过目标仓位1/3的底仓,预留向$300以下加码的弹药",
-          "basis": "dimensions.valuation.analysis.threeScenario(悲观$198.6/-61.7%)、dimensions.valuation.analysis.consensus.fy2027Eps=$13.87、dimensions.inversion.failurePaths[1]空方目标$400与$300支撑位、failurePaths[0] capex剪刀差80% vs 15.5%"
+          "basis": "dimensions.valuation.analysis.threeScenario(悲观$198.6/-58.9%,2026-08-09复核price=483.36)、dimensions.valuation.analysis.consensus.fy2027Eps=$13.87、dimensions.inversion.failurePaths[1]空方目标$400与$300支撑位、failurePaths[0] capex剪刀差80% vs 15.5%"
         },
         {
           "condition": "至少两家独立研究机构(Mercury/IDC级别)确认AMD在AI加速器的收入份额突破10%——当前5-7%仅为单源第三方聚合估计,必须多源确认",
@@ -101,7 +102,7 @@
         {
           "condition": "股价上冲至$900-1,100区间(接近乐观情景$1,111.2)而2027年共识EPS未从$13.87同步显著上调",
           "action": "减持至核心底仓(不超过原仓位1/2),把三年乐观情形提前兑现的部分落袋",
-          "basis": "dimensions.valuation.analysis.threeScenario.optimistic($1,111.2=55%增长×40x,+114.3%)、consensus.fy2027Eps=$13.87"
+          "basis": "dimensions.valuation.analysis.threeScenario.optimistic($1,111.2=55%增长×40x,+129.9%,2026-08-09复核price=483.36)、consensus.fy2027Eps=$13.87"
         },
         {
           "condition": "Mercury口径下服务器CPU收入份额与出货份额之差从当前13个百分点收窄到8个百分点以下",
