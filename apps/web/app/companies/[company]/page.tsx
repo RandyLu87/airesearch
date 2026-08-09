@@ -97,6 +97,26 @@ function Prose({ value, className }: { value: Json; className?: string }) {
   return <p className={className}><Points value={value} /></p>;
 }
 
+const CJK = /[　-〿㐀-鿿＀-￯]/;
+
+/**
+ * 页头标题的排版分档。CSS 量不到字符数，只能在渲染时算好交给样式表。
+ *
+ * `cjk`：汉字字形填满整个 em 方框，页头 `line-height: .82` 那种收紧的编辑式行距在
+ * 拉丁标题上成立（字母有升部降部，行框里留得出空隙），中文标题一折行就会物理重叠。
+ *
+ * `scale`：按视觉宽度（汉字记 2、拉丁记 1）分三档，让长短不一的公司名落在相近的
+ * 视觉体量上——目标是最多两行，而不是让「中国平安保险(集团)股份有限公司」这种
+ * 三行标题吃掉整屏。当前五家公司的宽度落在 22–30。
+ */
+function titleTypography(name: string): { cjk: string; scale: string } {
+  const width = [...name].reduce((sum, ch) => sum + (CJK.test(ch) ? 2 : 1), 0);
+  return {
+    cjk: String(CJK.test(name)),
+    scale: width >= 27 ? "sm" : width >= 21 ? "md" : "lg",
+  };
+}
+
 /** 双源校验对象的误差标记。 */
 function flagMark(value: Json): string {
   if (!value || typeof value !== "object" || Array.isArray(value)) return "";
@@ -241,6 +261,8 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
   const peers = (dimValuation.analysis?.vsPeers ?? []) as Json[];
   const peerRows = peers.filter((peer: Json) => peer.name !== "对比结论");
   const peerVerdict = peers.find((peer: Json) => peer.name === "对比结论");
+  const companyName = final.meta?.companyName || route.company;
+  const companyTitle = titleTypography(companyName);
 
   return (
     <>
@@ -253,7 +275,9 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
             <span>COMPANY ANALYSIS</span>
             <span>{collection.meta?.ticker ?? route.company}</span>
           </div>
-          <h1>{final.meta?.companyName || route.company}</h1>
+          <h1 data-cjk={companyTitle.cjk} data-title-scale={companyTitle.scale}>
+            {companyName}
+          </h1>
           <p className="company-current">{text(collection.businessModelMoat?.oneLiner ?? essence.conclusion)}</p>
         </header>
 
