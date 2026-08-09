@@ -1,0 +1,905 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>快手科技 / Kuaishou Technology分析报告</title><meta name="description" content="以商业模式、核心驱动、最新变化和当前价格隐含的假设为主线的上市公司研究。"/><meta name="research-publication-version" content="0.1.0"/><meta name="research-final-version" content="1.0.0"/><style>/* Inter 只覆盖拉丁字形，中文一律走系统字体，所以字体文件按站点实际用到的字符
+   子集化过（48.3 KB → 25.8 KB），可变字重轴保留。重新生成见 fonts/README.md。
+   font-display: swap + 下面的系统字体兜底，保证字体在弱网下取不到时只是字形回退，
+   不影响可读性。 */
+@font-face {
+  font-family: "Inter Local";
+  src: url("../assets/fonts/InterVariable.woff2") format("woff2-variations");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  --paper: #f7f7f2;
+  --ink: #101010;
+  --muted: #686863;
+  --line: #c9c9c2;
+  --line-dark: #93938c;
+  --signal: #ff4d00;
+  --soft: #ecece6;
+  --max: 1440px;
+  color-scheme: light;
+  font-family: "Inter Local", system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--paper); }
+body { margin: 0; color: var(--ink); background: var(--paper); }
+a { color: inherit; text-underline-offset: .2em; }
+p, li { line-height: 1.62; }
+
+.research-report,
+.company-page {
+  width: min(100%, var(--max));
+  margin: 0 auto;
+  padding: 0 36px 80px;
+}
+
+.report-hero {
+  min-height: 78vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 26px 0 34px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.eyebrow-row,
+.metric-meta,
+.company-card-meta,
+.company-eyebrow {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 56px;
+  align-items: end;
+  margin: 10vh 0 8vh;
+}
+
+.kicker,
+.section-kicker {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+h1, h2, h3, p { margin-top: 0; }
+h1 {
+  max-width: 980px;
+  margin-bottom: 24px;
+  font-size: clamp(58px, 10vw, 150px);
+  font-weight: 500;
+  letter-spacing: -.075em;
+  line-height: .82;
+}
+
+.headline {
+  max-width: 840px;
+  margin: 0;
+  font-size: clamp(22px, 3vw, 42px);
+  font-weight: 450;
+  letter-spacing: -.035em;
+  line-height: 1.08;
+}
+
+.stance-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--ink);
+}
+.stance-block .label,
+.hero-facts span,
+.summary-grid span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.stance-block strong { font-size: 42px; font-weight: 520; letter-spacing: -.05em; }
+.stance-block > span:last-child { color: var(--muted); font-size: 13px; }
+
+/* Auto-fit for the same reason as `.company-summary`: the cell count follows the
+   contract, and 1.2.0 trades a fair value for a market capitalisation. */
+.hero-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  border-top: 1px solid var(--line-dark);
+}
+.hero-facts > div { padding: 18px 18px 0 0; }
+.hero-facts span, .hero-facts strong { display: block; }
+.hero-facts strong { margin-top: 8px; font-size: 18px; font-weight: 560; }
+.hero-facts small { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; }
+
+.section-nav {
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 12px 0;
+  background: color-mix(in srgb, var(--paper) 94%, transparent);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(12px);
+}
+.section-nav a,
+.pill-link {
+  flex: 0 0 auto;
+  padding: 8px 14px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 650;
+  text-decoration: none;
+}
+.section-nav a:hover, .pill-link:hover { color: var(--paper); background: var(--ink); }
+
+.report-section {
+  display: grid;
+  grid-template-columns: minmax(72px, 1fr) minmax(0, 10fr);
+  gap: 32px;
+  padding: 76px 0 86px;
+  border-bottom: 1px solid var(--ink);
+}
+.section-number { font-size: 12px; font-variant-numeric: tabular-nums; }
+.section-content { min-width: 0; }
+.section-content h2 {
+  max-width: 980px;
+  margin-bottom: 26px;
+  font-size: clamp(42px, 6vw, 92px);
+  font-weight: 490;
+  letter-spacing: -.065em;
+  line-height: .92;
+}
+.lead {
+  max-width: 960px;
+  margin-bottom: 38px;
+  font-size: clamp(20px, 2.3vw, 32px);
+  letter-spacing: -.025em;
+  line-height: 1.24;
+}
+
+.summary-grid,
+.metric-grid,
+.chart-grid,
+.scenario-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--ink);
+}
+.summary-grid article {
+  min-height: 180px;
+  padding: 20px 28px 26px 0;
+  border-bottom: 1px solid var(--line);
+}
+.summary-grid article:nth-child(odd) { border-right: 1px solid var(--line); }
+.summary-grid article:nth-child(even) { padding-left: 28px; }
+.summary-grid p { max-width: 540px; margin: 24px 0 0; font-size: 18px; }
+
+.change-ledger { margin-top: 54px; }
+.change-ledger h3 { font-size: 14px; letter-spacing: .08em; text-transform: uppercase; }
+.change-ledger dl { border-top: 1px solid var(--line-dark); }
+.change-ledger dl div { display: grid; grid-template-columns: 150px 1fr; gap: 24px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.change-ledger dt { font-weight: 650; }
+.change-ledger dd { margin: 0; color: var(--muted); }
+
+.editorial-list { max-width: 980px; margin: 0; padding: 0; list-style: none; counter-reset: editorial; }
+.editorial-list > li { position: relative; min-height: 72px; padding: 18px 0 18px 56px; border-top: 1px solid var(--line); font-size: 17px; counter-increment: editorial; }
+.editorial-list > li::before { position: absolute; left: 0; content: counter(editorial, decimal-leading-zero); color: var(--muted); font-size: 11px; letter-spacing: .1em; }
+.source-ids { display: inline-flex; gap: 6px; margin-top: 22px; color: var(--muted); font-size: 11px; }
+.source-ids a { color: var(--ink); font-weight: 700; text-decoration: none; }
+
+.metric-grid { margin-top: 36px; }
+.metric-card { min-height: 260px; padding: 20px 28px 28px 0; border-bottom: 1px solid var(--line); }
+.metric-card:nth-child(odd) { border-right: 1px solid var(--line); }
+.metric-card:nth-child(even) { padding-left: 28px; }
+.metric-meta { color: var(--muted); }
+.metric-card h3 { margin: 42px 0 10px; font-size: 17px; font-weight: 580; }
+.metric-card > strong { display: block; font-size: clamp(30px, 4vw, 58px); font-weight: 480; letter-spacing: -.055em; }
+.metric-card p { max-width: 440px; margin: 16px 0; color: var(--muted); }
+.metric-card small { display: block; padding-top: 12px; border-top: 1px solid var(--line); }
+
+.chart-grid { margin-top: 64px; gap: 28px; border-top: 0; }
+.decision-chart { margin: 0; padding: 18px 0 22px; border-top: 1px solid var(--line-dark); }
+.chart-title { margin-bottom: 8px; font-size: 13px; font-weight: 650; letter-spacing: .04em; }
+.decision-chart svg { display: block; width: 100%; height: 180px; }
+.decision-chart figcaption { max-width: 430px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+.chart-axis { stroke: var(--line-dark); stroke-width: 1; }
+.chart-track { fill: var(--soft); }
+.chart-value--ink { fill: var(--ink); }
+.chart-value--signal { fill: var(--signal); }
+.chart-marker { stroke: var(--ink); stroke-width: 1; }
+.chart-label { fill: var(--ink); font-family: "Inter Local", sans-serif; font-size: 11px; font-weight: 650; letter-spacing: .05em; }
+.chart-line { fill: none; stroke-width: 3; vector-effect: non-scaling-stroke; }
+.chart-line--ink { stroke: var(--ink); }
+.chart-line--signal { stroke: var(--signal); }
+.chart-line--muted { stroke: var(--line-dark); stroke-dasharray: 5 4; }
+.chart-legend, .chart-driver-label, .chart-trend { fill: var(--muted); font-family: "Inter Local", "PingFang SC", sans-serif; font-size: 10px; }
+.chart-trend { fill: var(--ink); font-size: 9px; }
+
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 16px 12px; text-align: right; border-bottom: 1px solid var(--line); }
+th:first-child, td:first-child { padding-left: 0; text-align: left; }
+thead th { color: var(--muted); font-size: 11px; font-weight: 650; letter-spacing: .04em; vertical-align: bottom; }
+tbody th { font-weight: 650; }
+
+.scenario-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.scenario-grid article { padding: 24px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.scenario-grid article:last-child { border-right: 0; }
+.scenario-grid article > span { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .12em; }
+.scenario-grid h3 { margin: 42px 0 24px; font-size: 36px; font-weight: 500; letter-spacing: -.04em; }
+.scenario-grid p { min-height: 96px; color: var(--muted); }
+.scenario-grid dl { display: grid; grid-template-columns: 52px 1fr; gap: 8px 16px; font-size: 12px; }
+.scenario-grid dl > div { display: contents; }
+.scenario-grid dt { color: var(--muted); }
+.scenario-grid dd { margin: 0; }
+
+.action-zones { margin-top: 46px; border-top: 1px solid var(--ink); }
+.action-zones > div { display: grid; grid-template-columns: 180px 160px 1fr; gap: 24px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.action-zones strong { font-size: 18px; }
+.action-zones span { font-weight: 650; }
+.action-zones p { margin: 0; color: var(--muted); }
+
+/* Where today's price ranks in its own multiple history. A fact about the
+   market, so it is typeset as one: no colour, no arrow, no verdict word. */
+.multiple-percentile { margin: 18px 0 0; color: var(--muted); font-size: 14px; }
+.multiple-percentile strong { color: var(--ink); font-weight: 650; }
+.multiple-percentile small { display: block; margin-top: 6px; font-size: 11px; }
+.multiple-percentile--unavailable { font-style: italic; }
+
+/* Attributed assumption sets. Every seat is styled identically — an emphasised
+   seat would be the "基准" this contract removed, reintroduced as CSS. */
+.assumption-sets { border-top: 1px solid var(--ink); }
+.assumption-sets-note { margin: 18px 0 28px; max-width: 74ch; color: var(--muted); font-size: 13px; }
+.assumption-set { padding: 26px 0; border-bottom: 1px solid var(--line); }
+.assumption-set-head { display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; }
+.assumption-set-kind { padding: 4px 9px; border: 1px solid var(--ink); border-radius: 999px; font-size: 10px; letter-spacing: .08em; }
+.assumption-set-head strong { font-size: 17px; font-weight: 600; }
+/* The bias sits above the numbers, never in a footnote: a short report and an
+   issuer's guidance render identically otherwise, and that similarity is the lie. */
+.assumption-set-bias { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 14px; margin: 14px 0 0; padding: 12px 14px; border-inline-start: 2px solid var(--signal); background: color-mix(in srgb, var(--signal) 5%, transparent); font-size: 13px; }
+.assumption-set-bias > span { color: var(--muted); font-size: 11px; letter-spacing: .06em; }
+.assumption-set-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin: 20px 0 0; }
+.assumption-set-facts dt { color: var(--muted); font-size: 11px; text-transform: uppercase; }
+.assumption-set-facts dd { margin: 8px 0 0; font-size: 22px; font-weight: 520; }
+.assumption-set-facts dd small { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; font-weight: 400; }
+.assumption-set-assumptions { margin: 18px 0 0; max-width: 78ch; color: var(--muted); }
+.assumption-set-components { margin: 14px 0 0; padding: 0; list-style: none; font-size: 12px; }
+.assumption-set-components li { display: grid; grid-template-columns: 68px minmax(0, 1fr); gap: 14px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.assumption-set-components li > span { color: var(--muted); }
+.assumption-set-missing { margin: 16px 0 0; color: var(--muted); font-style: italic; }
+
+.disagreement-anchor { display: flex; flex-wrap: wrap; gap: 16px; margin: 0 0 18px; color: var(--muted); font-size: 13px; }
+.disagreement-anchor strong { color: var(--ink); }
+.disagreement-converged { margin: 16px 0 0; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+
+.split-section { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px; }
+.split-section h2 { font-size: clamp(36px, 4vw, 62px); }
+.evidence-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--ink); }
+.evidence-list li { padding: 0; border-bottom: 1px solid var(--line); }
+.evidence-list details { padding: 20px 0; }
+.evidence-list summary { display: grid; grid-template-columns: 42px 90px minmax(0, 1fr); gap: 12px; align-items: center; cursor: pointer; font-size: 17px; font-weight: 600; list-style: none; }
+.evidence-list summary::-webkit-details-marker { display: none; }
+.evidence-number { color: var(--muted); font-size: 11px; }
+.evidence-detail { margin: 18px 0 0 144px; padding-top: 14px; border-top: 1px solid var(--line); }
+.evidence-list p, .evidence-list small { display: block; margin: 0 0 8px; color: var(--muted); }
+.external-link { display: inline-block; margin-top: 12px; font-size: 13px; font-weight: 650; overflow-wrap: anywhere; }
+.evidence-kind { align-self: start; width: max-content; padding: 5px 9px; border: 1px solid var(--ink); border-radius: 999px; font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
+.evidence-kind--calculation { border-color: var(--signal); color: var(--signal); }
+.evidence-kind--inference { border-style: dashed; }
+.disclaimer { margin: 48px 0 0; padding-top: 16px; border-top: 1px solid var(--ink); color: var(--muted); font-size: 12px; }
+.back-to-top { position: fixed; right: 24px; bottom: 24px; display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid var(--ink); border-radius: 50%; background: var(--paper); text-decoration: none; }
+
+/* The header is sized against the fold, not against the viewport: the first
+   card (269px) plus a peek of the next one has to fit under it at 375×667, so
+   the whole header block stays inside ~350px. A vh-based margin here spent
+   122px of a 763px-tall laptop viewport on empty space. */
+.company-header { padding: 24px 0 24px; border-bottom: 1px solid var(--ink); }
+/* The air above the title scales with the viewport, because the title itself
+   does: a flat 24px reads right under a 128px heading on a short laptop and
+   cramped under a 150px one on a 27" display. Bounded at 72px so it can never
+   repeat 16vh's 122px, and the tight bottom margin keeps the tagline bound to
+   the title rather than floating between the two. */
+.company-header h1 { margin: clamp(24px, 6vh, 72px) 0 20px; }
+
+/* 中文标题的行距与字距。全局 h1 的 `line-height: .82` / `letter-spacing: -.075em`
+   是给拉丁标题的——字母有升部降部，收紧后行框里仍留得出空隙。汉字字形填满整个
+   em 方框，同样的值一旦折行就是物理重叠、字距为负则直接粘连。
+   这条必须在基础层生效（移动端标题折行更早，同样会叠）。 */
+.company-header h1[data-cjk="true"] { line-height: 1.06; letter-spacing: -.04em; }
+
+/* 字号按标题视觉宽度分档，目标是任何公司名都落在两行以内，而不是让长中文名
+   吃掉整屏。分档由渲染层算好写进 data-title-scale（见 companies/[company]/page.tsx）。
+   只在宽屏生效：≤800px 有自己的一套尺寸，而属性选择器的特异性高于媒体查询里的
+   `.company-header h1`，放到基础层会把移动端一起打挂。 */
+@media (min-width: 801px) {
+  .company-header h1[data-title-scale="md"] { font-size: clamp(52px, 8.5vw, 118px); }
+  .company-header h1[data-title-scale="sm"] { font-size: clamp(44px, 7vw, 96px); }
+}
+/* Only the desktop ceiling comes down — 40px cost two lines and 137px of the
+   fold. The 22px floor stays: narrow screens have budget to spare, and this is
+   also the company page's lead thesis. */
+.company-current { max-width: 840px; font-size: clamp(22px, 1.8vw, 26px); line-height: 1.3; }
+/* Auto-fit rather than a fixed four: how many cells there are depends on which
+   contract the latest snapshot was written under (1.2.0 has no stance and no fair
+   value), and a fixed track would leave a hole where the verdict used to be. */
+.company-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); border-bottom: 1px solid var(--ink); }
+.company-summary > div { padding: 22px 18px 24px 0; }
+.company-summary span { display: block; color: var(--muted); font-size: 11px; text-transform: uppercase; }
+.company-summary strong { display: block; margin-top: 10px; font-size: 24px; font-weight: 520; }
+.company-summary small { display: block; margin-top: 8px; color: var(--muted); font-size: 11px; }
+.company-section { padding: 72px 0; border-bottom: 1px solid var(--ink); }
+/* The coverage list shares the fold with the header above it, so it hugs it.
+   Company pages keep the full 72px rhythm: their summary bar already clears the
+   fold, and tightening one of eight sections would only break the cadence. */
+.coverage-section { padding-top: 28px; }
+.company-section h2 { margin-bottom: 32px; font-size: clamp(36px, 5vw, 72px); font-weight: 490; letter-spacing: -.055em; }
+.snapshot-pair { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+.snapshot-card { padding: 22px 0; border-top: 1px solid var(--ink); }
+.snapshot-card time { color: var(--muted); font-size: 12px; }
+.snapshot-card h3 { margin: 28px 0 12px; font-size: 36px; font-weight: 500; }
+.snapshot-card strong { display: block; margin-bottom: 22px; font-size: 22px; }
+.snapshot-card p { color: var(--muted); }
+.snapshot-card dl { display: grid; grid-template-columns: 120px 1fr; gap: 8px 16px; margin: 24px 0 0; padding-top: 16px; border-top: 1px solid var(--line); font-size: 13px; }
+.snapshot-card dt { color: var(--muted); }
+.snapshot-card dd { margin: 0; }
+.comparison-heading { margin: 54px 0 14px; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; }
+.comparison-status { display: inline-block; padding: 4px 8px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; }
+.comparison-status--no { color: var(--muted); border-style: dashed; }
+.comparison-detail-grid { margin-top: 22px; }
+.comparison-detail { min-height: 240px; padding: 22px 24px 26px 0; border-top: 1px solid var(--ink); }
+.comparison-detail > span { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.comparison-detail > strong { display: block; margin: 36px 0 20px; font-size: clamp(24px, 3vw, 40px); font-weight: 500; letter-spacing: -.04em; }
+.comparison-detail ul, .comparison-detail ol { margin: 28px 0 0; padding-left: 20px; }
+.comparison-detail li { margin-bottom: 8px; color: var(--muted); }
+.report-index { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+.report-link { display: flex; min-height: 220px; flex-direction: column; justify-content: space-between; padding: 20px; border: 1px solid var(--ink); text-decoration: none; }
+.report-link:hover { color: var(--paper); background: var(--ink); }
+.report-link time { font-size: 12px; }
+.report-link strong { font-size: 28px; font-weight: 520; }
+/* Index card text sets no colour of its own so the card inverts cleanly on
+   hover; the hairline stays --line, which reads on both grounds. A stance can
+   run to a full sentence, so it wraps instead of being clipped. */
+.company-card-stance { margin: 14px 0 0; font-size: 15px; }
+.company-card-facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 18px 0 20px; padding-top: 14px; border-top: 1px solid var(--line); }
+.company-card-facts dt { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.company-card-facts dd { margin: 6px 0 0; font-size: 17px; }
+.company-card-facts small { display: block; font-size: 11px; }
+/* Sits under the cards, not above them: it is a caveat about how to read the
+   figures, and below the fold it doubles as the peek that invites scrolling. */
+.coverage-note { max-width: 640px; margin: 24px 0 0; color: var(--muted); font-size: 14px; }
+
+@media (max-width: 800px) {
+  .research-report, .company-page { padding: 0 18px 48px; }
+  .report-hero { min-height: 90svh; }
+  .hero-grid { grid-template-columns: 1fr; gap: 38px; margin: 12vh 0 7vh; }
+  h1 { font-size: clamp(56px, 20vw, 96px); }
+  /* One line for 上市公司研究 at 375px: a wrapped page title costs another 60px
+     of the fold. The report cover keeps the full size. A 46px title needs far
+     less air above it than a 150px one, and 375×667 has no budget to give. */
+  .company-header h1 { margin: 24px 0 16px; font-size: clamp(36px, 11vw, 46px); }
+  .stance-block { width: 65%; }
+  .hero-facts, .company-summary { grid-template-columns: repeat(2, 1fr); }
+  .report-section { grid-template-columns: 1fr; gap: 14px; padding: 52px 0 62px; }
+  .section-number { padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+  .section-content h2 { font-size: clamp(40px, 14vw, 68px); }
+  .summary-grid, .metric-grid, .chart-grid, .scenario-grid, .split-section, .snapshot-pair, .report-index { grid-template-columns: 1fr; }
+  .summary-grid article:nth-child(odd), .metric-card:nth-child(odd) { border-right: 0; }
+  .summary-grid article:nth-child(even), .metric-card:nth-child(even) { padding-left: 0; }
+  .scenario-grid article { padding-left: 0; border-right: 0; }
+  .action-zones > div { grid-template-columns: 1fr; gap: 6px; }
+  .change-ledger dl div { grid-template-columns: 1fr; gap: 8px; }
+  .evidence-list summary { grid-template-columns: 34px 82px minmax(0, 1fr); gap: 8px; font-size: 14px; }
+  .evidence-detail { margin-left: 0; }
+}
+
+@media print {
+  :root { --paper: #fff; }
+  @page { size: A4; margin: 16mm; }
+  .research-report { max-width: none; padding: 0; }
+  .report-hero { min-height: 250mm; break-after: page; }
+  .section-nav, .back-to-top, .company-page link, .company-page script { display: none; }
+  .report-section { display: block; padding: 12mm 0; break-before: page; }
+  .section-number { margin-bottom: 12mm; }
+  .metric-card, .decision-chart, .scenario-grid article, tr, .evidence-list li { break-inside: avoid; }
+  .evidence-list details { display: block; }
+  .evidence-list details > * { display: block; }
+  .section-content h2 { font-size: 48px; }
+  a { text-decoration: none; }
+}
+
+/* ── 通用小件 ─────────────────────────────────────────── */
+.block-heading { margin: 46px 0 16px; font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.company-note { max-width: 900px; margin: 0 0 28px; color: var(--muted); font-size: 16px; }
+.empty-note { margin: 0; padding: 18px 0; color: var(--muted); font-size: 14px; }
+.cell-prose { max-width: 420px; text-align: left; color: var(--muted); font-size: 13px; }
+.cell-change { font-weight: 650; }
+.trend { display: inline-block; padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; font-weight: 650; white-space: nowrap; }
+.trend--改善 { color: var(--signal); border-color: var(--signal); }
+.trend--恶化 { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.trend--待验证 { border-style: dashed; }
+
+/* 首列在横向滚动时钉住，否则宽表一滑就不知道在看哪一行 */
+.table-wrap table th:first-child { position: sticky; left: 0; z-index: 1; background: var(--paper); }
+
+/* ── 指标释义浮层（原生 popover，零 JS） ───────────────── */
+.metric-note-anchor { display: inline; white-space: nowrap; }
+.metric-note-toggle { margin-inline-start: 5px; padding: 0; border: 0; background: none; color: var(--muted); font: inherit; font-size: .8em; line-height: 1; cursor: pointer; }
+.metric-note-toggle:hover, .metric-note-toggle:focus-visible { color: var(--signal); }
+.metric-note-toggle { anchor-name: var(--note-anchor); }
+/* 贴着触发它的那个 ⓘ 弹出。不覆盖定位的话，浏览器默认是 inset:0 + margin:auto，
+   也就是视口正中——那是对话框的位置，不是名词解释该出现的位置。
+   仍然用 popover 而不是内联展开：它在 top layer，不会被财报表的横向滚动容器裁掉，
+   而且自带点击外部关闭与 Esc 关闭。 */
+/* 默认隐藏由这里显式声明，不依赖浏览器 UA 样式表的
+   `[popover]:not(:popover-open){display:none}`。上一版就是漏了这一条：
+   浏览器一旦没把该元素当 popover 处理，它就停在原地永久显示。
+   `:popover-open` 不被支持时整条规则会被丢弃，结果是保持隐藏——
+   失败方向朝「看不见」而不是「糊在页面上」。 */
+.metric-note { display: none; }
+.metric-note[popover] { position: fixed; width: min(380px, calc(100vw - 32px)); margin: 0; padding: 18px 20px; border: 1px solid var(--ink); background: var(--paper); color: var(--ink); font-size: 13px; font-weight: 400; font-style: normal; line-height: 1.58; text-align: left; white-space: normal; letter-spacing: 0; box-shadow: 0 10px 30px rgb(16 16 16 / .16); }
+.metric-note[popover]:popover-open { display: block; }
+/* 浮层内部的排版必须自己定死。它嵌在 <strong>、<h3> 这类容器里，
+   区块级的着色与字号规则会顺着继承进来——SOTP 那一版整段变橙就是这么来的。 */
+.metric-note, .metric-note > * { color: var(--ink); }
+/* 真的没有 popover 支持时，ⓘ 点了不会有反应，那就别给这个假承诺，
+   改为把页尾的指标释义表在屏幕上也显示出来。 */
+@supports not selector(:popover-open) {
+  .metric-note-toggle { display: none; }
+  .metric-glossary { display: block; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--ink); }
+}
+@supports (anchor-name: --a) {
+  .metric-note[popover] { position-anchor: var(--note-anchor); position-area: block-end span-inline-end; position-try-fallbacks: flip-block, flip-inline, block-start span-inline-start; margin-block-start: 8px; inset: auto; }
+}
+/* 不支持锚定定位的浏览器（目前主要是 Firefox）回落到视口居中；
+   不加变暗背景，避免它读起来像一个必须处理的模态。 */
+@supports not (anchor-name: --a) {
+  .metric-note[popover] { inset: 0; margin: auto; height: fit-content; }
+}
+.metric-note > * { display: block; }
+.metric-note-title { margin-bottom: 10px; font-size: 15px; font-weight: 650; }
+.metric-note-formula { margin-bottom: 10px; padding: 8px 10px; background: var(--soft); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+.metric-note-company { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); }
+.metric-note-pitfall { margin-top: 10px; color: var(--signal); }
+
+/* ── 商业模式 ─────────────────────────────────────────── */
+/* 长文本分段：按作者已写下的结构切开——句号分段，(1)(2)(3) 转有序列表。
+   段间距用 margin 而不是空行，且最后一段不带下边距，避免和外层容器的
+   padding 叠出双倍空隙。 */
+.prose-block > p { margin: 0 0 12px; }
+.prose-block > p:last-child { margin-bottom: 0; }
+.prose-enum { margin: 4px 0 12px; padding: 0; list-style: none; counter-reset: prose-enum; }
+.prose-enum:last-child { margin-bottom: 0; }
+.prose-enum li { position: relative; padding-left: 26px; counter-increment: prose-enum; }
+.prose-enum li + li { margin-top: 8px; }
+.prose-enum li::before {
+  content: "(" counter(prose-enum) ")";
+  position: absolute; left: 0; top: 0;
+  color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums;
+}
+/* 在 .editorial-list（章节要点与风险清单）里，分段块继承外层字号与行高 */
+.editorial-list > li .prose-block > p,
+.editorial-list > li .prose-enum li { font-size: inherit; line-height: inherit; }
+.constraint-list .prose-enum li { color: var(--muted); font-size: 14px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.model-prose { margin: 0 0 4px; max-width: 62ch; font-size: 15px; }
+
+/* 因果链：一条连续脊线穿过所有环节。节点标签在各公司间从 4 字到 54 字不等，
+   只有流式文本能自适应换行，因此刻意用 CSS 而非 ADR-0004 的内联 SVG。
+   不用通栏横线分隔——那会让递进关系读成表格行；序号也不用 --signal，
+   它在本设计里是语义色，而序号位置不携带语义。 */
+/* 因果链的飞轮环：卡片装全文，位置在构建期由环节数算出。
+   卡宽 210px、相邻卡中心间距 291px（8 环），几何上不可能碰撞，因此不需要
+   逐公司调参。只在 PC 上出现——打印内容宽仅 673px、手机更窄，两者回落到
+   下面的阶梯流，文字完全相同。 */
+/* 环与阶梯流互斥：宽屏显示环，窄屏与纸上显示阶梯流。另一份是
+   display:none，因此辅助技术与搜索引擎只会看到一份文本。 */
+@media (min-width: 1080px) {
+  .flywheel ~ .causal-flow { display: none; }
+}
+@media (max-width: 1079px) {
+  .flywheel { display: none; }
+}
+.flywheel { position: relative; width: 100%; max-width: 1000px; margin: 18px auto 6px; }
+.flywheel-track { position: absolute; inset: 0; width: 100%; height: 100%; }
+.flywheel-arc { fill: none; stroke: var(--line-dark); stroke-width: 2; vector-effect: non-scaling-stroke; }
+.flywheel-head { fill: var(--line-dark); }
+.flywheel-hub {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  display: flex; flex-direction: column; gap: 8px; align-items: center;
+  max-width: 260px; text-align: center;
+}
+.flywheel-hub { gap: 4px; max-width: 300px; }
+.flywheel-hub strong { font-size: 19px; font-weight: 560; letter-spacing: -.02em; text-wrap: balance; }
+.flywheel-hub em { font-size: 15px; font-style: normal; letter-spacing: .04em; }
+.flywheel-hub span { margin-top: 6px; color: var(--muted); font-size: 12px; }
+.flywheel-cards { margin: 0; padding: 0; list-style: none; }
+.flywheel-cards li {
+  position: absolute; transform: translate(-50%, -50%);
+  /* 宽度用百分比而不是 px：这样卡宽与环半径同比例缩放，间距/卡宽之比恒为
+     0.76，容器变窄也不会碰撞。写死 210px 时容器缩到 900px 以下就会重叠。 */
+  width: 23%; padding: 15px 15px 14px; text-align: center;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 10px;
+}
+.nowrap { white-space: nowrap; }
+.flywheel-cards p { margin: 0; font-size: 13px; line-height: 1.5; text-wrap: pretty; }
+.flywheel-badge {
+  position: absolute; left: 50%; top: 0; transform: translate(-50%, -50%);
+  display: grid; place-items: center; width: 24px; height: 24px;
+  border-radius: 50%; background: var(--ink); color: var(--paper);
+  font-size: 12px; font-weight: 650; font-variant-numeric: tabular-nums;
+}
+
+/* 脊线是正文列的 border-left：相邻环节的边框首尾相接，天然连续，不需要用
+   背景色去打断再拼回来——上一版正是这么做的，结果线看着像虚线。 */
+.causal-flow { --gut: 30px; --lane: 20px; margin: 6px 0 0; }
+.causal-flow ol { margin: 0; padding: 0; list-style: none; }
+.causal-flow li { display: grid; grid-template-columns: var(--gut) minmax(0, 1fr); break-inside: avoid; }
+.causal-step { grid-column: 1; padding: 1px 13px 0 0; text-align: right; color: var(--muted); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.causal-flow li p { grid-column: 2; position: relative; margin: 0; max-width: 58ch; padding: 0 0 21px var(--lane); border-left: 1px solid var(--line); font-size: 15px; line-height: 1.62; }
+/* 节点是脊线上的小空心圆，比在文字里塞符号安静得多 */
+.causal-flow li p::before {
+  content: ""; position: absolute; left: -3.5px; top: .6em;
+  box-sizing: border-box; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--paper); border: 1px solid var(--line-dark);
+}
+/* 回指：同一条脊线转成虚线继续往下，读作「线绕回去了」 */
+.causal-loop { display: grid; grid-template-columns: var(--gut) minmax(0, 1fr); margin: 0; }
+.causal-loop-mark { grid-column: 1; padding: 15px 13px 0 0; text-align: right; color: var(--line-dark); font-size: 12.5px; }
+.causal-loop-note { grid-column: 2; padding: 15px 0 0 var(--lane); border-left: 1px dashed var(--line-dark); color: var(--muted); font-size: 12.5px; line-height: 1.6; }
+
+/* 现金引擎瀑布：走 SVG 与其余决策图表同族——它需要零基线、正负方向与
+   跨条基准线，这三样用 CSS 横条做会很别扭。高度由行数在组件里算出。 */
+.cash-waterfall { padding-top: 14px; }
+.cash-waterfall svg { height: auto; }
+.waterfall-label { fill: var(--ink); font-size: 11px; }
+.waterfall-value { fill: var(--ink); font-size: 11px; font-variant-numeric: tabular-nums; }
+.waterfall-value--total { font-weight: 650; }
+.waterfall-value--cost { fill: var(--signal); }
+.waterfall-bar--segment { fill: var(--ink); }
+.waterfall-bar--total { fill: var(--line-dark); }
+.waterfall-bar--cost { fill: var(--signal); }
+.waterfall-axis { stroke: var(--line-dark); stroke-width: 1; }
+.segment-list { display: grid; gap: 22px; }
+.segment-row { padding: 20px 0; border-top: 1px solid var(--line-dark); }
+.segment-head { display: flex; align-items: baseline; gap: 14px; }
+.segment-head strong { font-size: 20px; font-weight: 560; }
+.segment-head em { margin-left: auto; font-size: 28px; font-style: normal; font-weight: 480; letter-spacing: -.04em; }
+.segment-role { padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; }
+.segment-role--经济核心 { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.segment-role--收缩中 { border-style: dashed; color: var(--muted); }
+.segment-bar { display: block; height: 6px; margin: 12px 0 16px; background: var(--soft); }
+.segment-bar span { display: block; height: 100%; background: var(--ink); }
+.segment-row dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0; font-size: 13px; }
+.segment-row dt { margin-bottom: 4px; color: var(--muted); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+.segment-row dd { margin: 0; }
+
+/* ── 行业地位 ─────────────────────────────────────────── */
+.share-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px; }
+.share-card { padding: 22px 0; border-top: 1px solid var(--ink); }
+.share-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--muted); font-size: 11px; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; }
+.share-card h3 { margin: 24px 0 12px; font-size: 16px; font-weight: 580; }
+.share-card > strong { display: block; font-size: clamp(30px, 4vw, 52px); font-weight: 480; letter-spacing: -.05em; }
+.share-rank { margin: 12px 0 0; color: var(--muted); font-size: 13px; }
+.share-reason { margin: 8px 0 0; color: var(--signal); font-size: 13px; }
+.share-denominator { margin: 18px 0 0; padding: 14px 0 0; border-top: 1px solid var(--line); list-style: none; font-size: 12px; color: var(--muted); }
+.share-denominator li { margin-bottom: 6px; line-height: 1.5; }
+.share-excluded { color: var(--signal); }
+.divergence-callout { max-width: 900px; margin: 34px 0 0; padding: 20px 24px; border-left: 3px solid var(--signal); background: var(--soft); font-size: 15px; }
+.divergence-callout strong { display: block; margin-bottom: 8px; letter-spacing: .04em; }
+.concentration { max-width: 900px; margin: 24px 0 0; color: var(--muted); font-size: 14px; }
+
+/* ── 报告期筛选（纯 CSS） ─────────────────────────────── */
+.cadence-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.cadence-nav { display: flex; gap: 8px; margin-bottom: 20px; }
+.cadence-label { padding: 7px 16px; border: 1px solid var(--ink); border-radius: 999px; font-size: 12px; font-weight: 650; cursor: pointer; }
+.cadence-label:hover { background: var(--soft); }
+.cadence-panel, .cadence-panel-heading { display: none; }
+.cadence-input--1:checked ~ .cadence-panel--1,
+.cadence-input--2:checked ~ .cadence-panel--2,
+.cadence-input--3:checked ~ .cadence-panel--3 { display: block; }
+.cadence-input--1:checked ~ .cadence-nav .cadence-label--1,
+.cadence-input--2:checked ~ .cadence-nav .cadence-label--2,
+.cadence-input--3:checked ~ .cadence-nav .cadence-label--3 { color: var(--paper); background: var(--ink); }
+.cadence-input--1:focus-visible ~ .cadence-nav .cadence-label--1,
+.cadence-input--2:focus-visible ~ .cadence-nav .cadence-label--2,
+.cadence-input--3:focus-visible ~ .cadence-nav .cadence-label--3 { outline: 2px solid var(--signal); outline-offset: 2px; }
+.row-segment th { font-weight: 400; }
+.segment-indent { padding-left: 14px; color: var(--muted); }
+.period-derived { margin-left: 6px; padding: 2px 6px; border: 1px dashed var(--line-dark); border-radius: 999px; font-size: 9px; font-weight: 400; }
+
+/* ── 价值桥 ───────────────────────────────────────────── */
+.value-bridge { margin: 0 0 44px; padding: 20px 0 24px; border-top: 1px solid var(--ink); }
+.value-bridge .chart-title { margin-bottom: 20px; }
+.bridge-rows { margin: 0; padding: 0; list-style: none; }
+.bridge-rows li { display: grid; grid-template-columns: minmax(120px, 200px) minmax(0, 1fr) 78px; gap: 16px; align-items: center; padding: 9px 0; }
+.bridge-label { font-size: 14px; }
+.bridge-track { position: relative; height: 22px; background: var(--soft); }
+.bridge-bar { position: absolute; top: 0; height: 100%; background: var(--ink); }
+.bridge-bar--face-value { background: var(--line-dark); }
+.bridge-bar--cut { background: repeating-linear-gradient(45deg, var(--signal) 0 4px, transparent 4px 8px); }
+.bridge-bar--total { background: var(--signal); }
+.bridge-marker { position: absolute; top: -5px; width: 2px; height: 32px; background: var(--ink); }
+.bridge-value { font-size: 15px; font-variant-numeric: tabular-nums; text-align: right; }
+.bridge-total { border-top: 1px solid var(--ink); font-weight: 650; }
+.bridge-total .bridge-value, .bridge-price .bridge-value { font-size: 18px; font-weight: 650; }
+.bridge-price .bridge-label, .bridge-price .bridge-value { color: var(--muted); }
+.bridge-range { margin: 18px 0 0; color: var(--muted); font-size: 13px; }
+
+/* ── 估值方法与升级提示 ───────────────────────────────── */
+.method-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px; margin-bottom: 30px; }
+.method-pair article { padding: 20px 0; border-top: 1px solid var(--line-dark); }
+.method-pair article > span { display: block; margin-bottom: 12px; color: var(--muted); font-size: 11px; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; }
+.method-pair strong { display: block; margin-bottom: 12px; font-size: 22px; font-weight: 540; }
+.method-pair p { margin: 0; color: var(--muted); font-size: 14px; }
+.method-ideal { border-top-color: var(--signal); }
+.method-ideal > span { color: var(--signal); }
+.implied-line { max-width: 940px; margin: 0 0 30px; padding: 18px 22px; background: var(--soft); font-size: 15px; }
+.implied-line strong { margin-right: 12px; letter-spacing: .04em; }
+.upgrade-hint { margin-bottom: 30px; padding: 22px 24px; border: 1px solid var(--signal); }
+.upgrade-hint h4 { margin: 0 0 16px; font-size: 15px; font-weight: 650; color: var(--signal); }
+.upgrade-hint ol { margin: 0; padding-left: 20px; }
+.upgrade-hint li { margin-bottom: 14px; font-size: 14px; }
+.upgrade-hint li > * { display: block; }
+.upgrade-hint li strong { margin-bottom: 4px; }
+.upgrade-hint li span { color: var(--muted); }
+.upgrade-hint li em { margin-top: 4px; color: var(--muted); font-size: 12px; font-style: normal; }
+.health-check { margin-bottom: 30px; padding: 16px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.health-check summary { font-size: 13px; font-weight: 650; cursor: pointer; }
+.health-check ul { margin: 18px 0 0; padding: 0; list-style: none; }
+.health-check li { margin-bottom: 16px; font-size: 13px; }
+.health-check li > * { display: block; }
+.health-response { width: max-content; margin-bottom: 6px; padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; }
+.health-response--blocked { color: var(--signal); border-color: var(--signal); }
+.health-check li strong { margin-bottom: 4px; }
+.health-check li span:last-child { color: var(--muted); }
+
+/* ── 驱动、约束与「相对上次」 ─────────────────────────── */
+.driver-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--ink); }
+.driver-card { min-height: 230px; padding: 20px 24px 26px 0; border-bottom: 1px solid var(--line); }
+.driver-card:not(:nth-child(3n)) { border-right: 1px solid var(--line); }
+.driver-card:not(:nth-child(3n+1)) { padding-left: 24px; }
+.driver-card h3 { margin: 30px 0 10px; font-size: 15px; font-weight: 580; }
+.driver-card > strong { display: block; font-size: clamp(22px, 2.6vw, 34px); font-weight: 480; letter-spacing: -.04em; }
+.driver-delta { margin: 14px 0; color: var(--muted); font-size: 13px; }
+.driver-card small { display: block; padding-top: 12px; border-top: 1px solid var(--line); font-size: 12px; }
+.constraint-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line-dark); }
+.constraint-list > li { display: grid; grid-template-columns: 90px 260px 1fr; gap: 20px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.constraint-list > li > .prose-block > p, .constraint-list > li > p { margin: 0; color: var(--muted); font-size: 14px; }
+.delta-line { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0 0 26px; border-top: 1px solid var(--ink); }
+.delta-line > div { padding: 18px 18px 20px 0; }
+.delta-line dt { color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.delta-line dd { margin: 10px 0 0; font-size: 17px; font-weight: 520; }
+.driver-change-list { margin: 26px 0 0; padding: 0; list-style: none; }
+.driver-change-list li { padding: 16px 0; border-top: 1px solid var(--line); }
+.driver-change-list p { margin: 8px 0 0; color: var(--muted); font-size: 14px; }
+.driver-change { display: inline-block; margin-right: 12px; padding: 3px 9px; border: 1px solid var(--signal); border-radius: 999px; color: var(--signal); font-size: 10px; text-transform: uppercase; }
+
+/* ── 护城河与转折点 ───────────────────────────────────── */
+.moat-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0 30px; border-top: 1px solid var(--ink); }
+.moat-card { padding: 20px 0 24px; border-bottom: 1px solid var(--line); }
+.moat-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px; }
+.moat-type { font-size: 15px; font-weight: 650; }
+.moat-trend { display: inline-block; margin-left: auto; padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; font-weight: 650; white-space: nowrap; }
+.moat-trend--变宽 { color: var(--signal); border-color: var(--signal); }
+.moat-trend--变窄 { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.moat-trend--待验证 { border-style: dashed; }
+.moat-trend--已撤销 { color: var(--muted); border-style: dotted; }
+.moat-mechanism { margin: 0 0 16px; font-size: 14px; }
+.moat-card dl { display: grid; gap: 12px; margin: 0; }
+.moat-card dt { margin-bottom: 4px; color: var(--muted); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+.moat-card dd { margin: 0; font-size: 13px; }
+.moat-absent { margin: 0; color: var(--muted); font-size: 14px; }
+.moat-trend-list { margin: 26px 0 0; padding: 0; list-style: none; }
+.moat-trend-list li { display: grid; grid-template-columns: 90px 200px 1fr; gap: 20px; align-items: baseline; padding: 14px 0; border-top: 1px solid var(--line); }
+.moat-trend-list p { margin: 0; color: var(--muted); font-size: 14px; }
+.moat-trend-list .moat-trend { margin-left: 0; }
+
+/* ── 分歧点 ───────────────────────────────────────────── */
+.disagreement { margin-bottom: 30px; padding: 22px 24px; border: 1px solid var(--line-dark); }
+.disagreement h4 { display: flex; align-items: baseline; gap: 12px; margin: 0 0 18px; font-size: 15px; font-weight: 650; }
+.disagreement-driver { margin-left: auto; color: var(--muted); font-size: 12px; font-weight: 480; }
+.disagreement dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin: 0; }
+.disagreement dt { margin-bottom: 6px; color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.disagreement dd { margin: 0; }
+/* 重合不是错误，但也不是好消息：虚线边框把它和一条真实分歧区分开。 */
+.disagreement--converged { border-style: dashed; }
+
+/* ── 管理层承诺与资本配置 ─────────────────────────────── */
+.commitment-counts { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0 20px; margin: 0 0 26px; border-top: 1px solid var(--ink); }
+.commitment-counts article { padding: 16px 0 18px; }
+.commitment-counts span { display: block; color: var(--muted); font-size: 11px; letter-spacing: .06em; }
+.commitment-counts strong { display: block; margin-top: 8px; font-size: clamp(24px, 2.6vw, 34px); font-weight: 480; letter-spacing: -.04em; }
+.commitment-outstanding { margin: 0 0 24px; padding: 0; list-style: none; border-top: 1px solid var(--line-dark); }
+.commitment-outstanding li { display: grid; grid-template-columns: 90px 1fr 200px; gap: 16px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.commitment-outstanding em { color: var(--muted); font-size: 12px; font-style: normal; text-align: right; }
+.commitment-status { display: inline-block; padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; font-weight: 650; white-space: nowrap; }
+.commitment-status--未兑现 { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.commitment-status--部分兑现 { border-style: dashed; }
+.commitment-latest { margin: 0 0 24px; color: var(--muted); font-size: 14px; }
+
+/* ── 证据密度 ─────────────────────────────────────────── */
+.density-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 24px; margin: 0 0 24px; border-top: 1px solid var(--ink); }
+.density-grid article { padding: 18px 0 20px; }
+.density-grid span { display: block; color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.density-grid strong { display: block; margin: 10px 0 8px; font-size: clamp(22px, 2.4vw, 30px); font-weight: 480; letter-spacing: -.04em; }
+.density-grid small { display: block; color: var(--muted); font-size: 12px; }
+.density-method { margin: 0 0 20px; color: var(--muted); font-size: 14px; }
+.density-clear { margin: 0; padding: 14px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+.density-responses { margin: 0; padding: 0; list-style: none; }
+.density-responses > li { padding: 16px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.density-responses > li > strong { display: block; margin: 8px 0 4px; }
+.density-responses > li > span:not([class]) { color: var(--muted); }
+.density-blocked { margin: 12px 0 0; padding-left: 20px; }
+.density-blocked li { margin-bottom: 10px; }
+.density-blocked li > * { display: block; }
+.density-blocked li span { color: var(--muted); }
+.density-blocked li em { margin-top: 2px; color: var(--muted); font-size: 12px; font-style: normal; }
+
+/* ── 打印用指标释义表（屏幕隐藏） ─────────────────────── */
+.metric-glossary { display: none; }
+
+@media (max-width: 800px) {
+  .share-grid, .method-pair, .driver-grid, .delta-line, .segment-row dl { grid-template-columns: 1fr; }
+  .causal-flow { --gut: 24px; --lane: 14px; }
+  .causal-step { padding-right: 9px; }
+  .causal-loop-mark { padding-right: 9px; }
+  .driver-card:not(:nth-child(3n)) { border-right: 0; }
+  .driver-card:not(:nth-child(3n+1)) { padding-left: 0; }
+  .constraint-list > li { grid-template-columns: 1fr; gap: 8px; }
+  .moat-trend-list li { grid-template-columns: 1fr; gap: 8px; }
+  .disagreement dl { grid-template-columns: 1fr; }
+  .density-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .commitment-counts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .commitment-outstanding li { grid-template-columns: 1fr; gap: 8px; }
+  .commitment-outstanding em { text-align: left; }
+  .bridge-rows li { grid-template-columns: minmax(96px, 1fr) 64px; }
+  .bridge-track { display: none; }
+  .segment-head { flex-wrap: wrap; }
+  .segment-head em { margin-left: 0; }
+}
+
+@media print {
+  /* 浮层在纸上没有意义：关掉触发器，改用页尾的释义表。 */
+  .metric-note-toggle, .metric-note[popover] { display: none !important; }
+  .metric-glossary { display: block; break-before: page; }
+  .metric-glossary dl { border-top: 1px solid var(--ink); }
+  .metric-glossary div { padding: 10px 0; border-bottom: 1px solid var(--line); break-inside: avoid; }
+  .metric-glossary dt { font-weight: 650; }
+  .metric-glossary dd { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+  /* 筛选页签在纸上同样无效：三档全部展开，各自带标题。 */
+  .cadence-nav { display: none; }
+  .cadence-panel { display: block !important; break-inside: avoid; }
+  .cadence-panel-heading { display: block; margin: 16px 0 8px; font-size: 13px; font-weight: 650; }
+  .table-wrap table th:first-child { position: static; }
+  .segment-row, .share-card, .driver-card, .value-bridge, .upgrade-hint { break-inside: avoid; }
+  /* 节点圆心用纸色填充，打印时纸色是纯白 */
+  .flywheel { display: none !important; }
+  .flywheel ~ .causal-flow { display: block !important; }
+  .causal-flow li p::before { background: #fff; }
+  .causal-flow ol, .cash-waterfall { break-inside: avoid; }
+  .health-check[open] summary ~ * { display: block; }
+}
+.cadence-missing { margin: 0 0 14px; color: var(--muted); font-size: 12px; }
+
+/* ———— 分析页（financials-final 渲染）————
+   原则：结论一眼可读，溯源（打分依据 / 依据字段路径 / 证据 / 缺口）默认折叠。 */
+
+/* 折叠溯源块：摘要行小号大写，与 block-heading 同族 */
+.fold { margin-top: 16px; border-top: 1px solid var(--line); }
+.fold summary { padding: 10px 0 4px; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; list-style: none; user-select: none; }
+.fold summary::-webkit-details-marker { display: none; }
+.fold summary::after { content: "＋"; margin-left: 8px; }
+.fold[open] summary::after { content: "－"; }
+.fold summary:hover { color: var(--ink); }
+.fold p { max-width: 900px; margin: 8px 0 12px; color: var(--muted); font-size: 13px; line-height: 1.65; }
+.fold ul { max-width: 900px; margin: 8px 0 12px; padding-left: 18px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+.fold li { margin-bottom: 8px; }
+td .fold { margin-top: 4px; border-top: 0; }
+td .fold summary { padding: 0; }
+td .fold p, td .fold ul { font-size: 12px; }
+
+/*
+ * 分点叙述：分析文件里长字段按「① ② ③」分点书写（见
+ * docs/research/workflow/02-multi-dimension-analysis.md），渲染层切成 .prose-point，
+ * 每点独占一行；序号悬挂在文字左侧，折行后与首字对齐，长段落才真正可扫读。
+ */
+.prose-point { display: block; padding-left: 1.35em; text-indent: -1.35em; }
+.prose-point + .prose-point { margin-top: 6px; }
+.fold .prose-point + .prose-point, td .prose-point + .prose-point { margin-top: 4px; }
+
+/* 每节开头的一句话结论：正文级可读，不再用 muted 小字 */
+.section-lead { max-width: 900px; margin: 0 0 34px; font-size: clamp(17px, 1.4vw, 20px); line-height: 1.6; }
+
+/* 维度总结卡里的结论段 */
+.driver-card .dim-conclusion { margin: 14px 0 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+/* 策略建议：两列卡片（空仓者/持仓者） */
+.strategy-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 56px; border-top: 1px solid var(--ink); }
+.strategy-grid > article { padding: 26px 0 30px; border-bottom: 1px solid var(--line); }
+.strategy-grid h3 { margin: 0 0 14px; font-size: 22px; font-weight: 560; letter-spacing: -.02em; }
+.strategy-grid .advice { margin: 0 0 18px; font-size: 15px; line-height: 1.65; }
+.trigger-lines { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line-dark); }
+.trigger-lines > li { padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14px; line-height: 1.55; }
+.trigger-lines strong { font-weight: 650; }
+.trigger-lines .then { color: var(--muted); }
+
+/* 卖出/加仓信号：全宽行，信号名一行、观察方式一段 */
+.signal-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line-dark); }
+.signal-list > li { padding: 20px 0 16px; border-bottom: 1px solid var(--line); }
+.signal-list .signal-name { display: block; margin: 0 0 6px; font-size: 17px; font-weight: 620; letter-spacing: -.01em; }
+.signal-list .signal-desc { max-width: 900px; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.6; }
+
+/* 追问：左边框引用卡，问题加粗、回答正文 */
+.inquiry-block { max-width: 940px; margin: 44px 0 6px; padding: 20px 26px 22px; border-left: 3px solid var(--ink); background: color-mix(in srgb, var(--ink) 4%, var(--paper)); }
+.inquiry-block .q { margin: 0 0 10px; font-size: 16px; font-weight: 700; }
+.inquiry-block .a { margin: 0; font-size: 15px; line-height: 1.7; }
+
+/* 键值行：代替 delta-line 承载长文本（四列窄栏放长段会变成高塔） */
+.kv-list { margin: 0 0 8px; border-top: 1px solid var(--line-dark); }
+.kv-list > div { display: grid; grid-template-columns: 170px 1fr; gap: 24px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.kv-list dt { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding-top: 3px; }
+.kv-list dd { max-width: 900px; margin: 0; font-size: 15px; line-height: 1.6; }
+
+/* 含长文本的表格：左对齐、顶对齐 */
+.analysis-table th, .analysis-table td { text-align: left; vertical-align: top; }
+.analysis-table td { font-size: 13px; line-height: 1.55; color: var(--muted); }
+.analysis-table td:first-child { color: var(--ink); font-weight: 600; font-size: 14px; }
+table td { vertical-align: top; }
+
+@media (max-width: 900px) {
+  .strategy-grid { grid-template-columns: 1fr; gap: 0; }
+  .kv-list > div { grid-template-columns: 1fr; gap: 6px; }
+}
+/* 表格与折叠块内的来源标注不需要 22px 顶距（那是给正文段落用的） */
+td .source-ids, .fold .source-ids { margin-top: 0; }
+/* 首页卡片文案兜底：最多三行截断，防止长结论把卡片撑成一屏 */
+.company-card-stance { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+/* 来源胶囊：不显示名称，只留一枚可点击的高亮标记；名称与时点在 title 提示里 */
+.source-pill { display: inline-block; margin-left: 6px; padding: 1px 8px 2px; border: 1px solid var(--line-dark); border-radius: 999px; color: var(--ink); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-decoration: none; vertical-align: middle; white-space: nowrap; }
+.source-pill:hover { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+
+/* 研究评估页（研究流程第 7 步）：复用既有的区块、表格与统计条，只补三处 */
+/* 首页 eyebrow 里的评估页入口：不占额外高度，第一张公司卡片仍不用滚动 */
+.company-eyebrow a { text-decoration: underline; text-underline-offset: .3em; }
+/* 均分走势：纵轴固定 1–5 分，样本量不足时页面根本不渲染它 */
+.evals-trend { margin: 0 0 32px; }
+.evals-trend svg { display: block; width: 100%; height: auto; border: 1px solid var(--line); }
+.evals-trend figcaption { margin-top: 10px; color: var(--muted); font-size: 12px; }
+/* 缺陷清单：元数据一行、症状原文一行，不折叠——它是这一页最该被读到的东西 */
+.evals-defects { margin: 0; padding: 0; list-style: none; }
+.evals-defects li { padding: 18px 0; border-bottom: 1px solid var(--line); }
+.evals-defects li p { max-width: 900px; margin: 10px 0 0; font-size: 16px; }
+.evals-defect-meta { display: flex; flex-wrap: wrap; gap: 16px; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+</style></head><body class="research-shell"><script defer="" src="../assets/research.js"></script><main class="company-page"><header class="company-header"><div class="company-eyebrow"><span>COMPANY ANALYSIS</span><span>1024.HK（HKD柜台）/ 81024.HK（RMB柜台）</span></div><h1 data-cjk="true" data-title-scale="sm">快手科技 / Kuaishou Technology</h1><p class="company-current">快手是把老铁社区沉淀的下沉用户注意力，转卖给广告主、商家与打赏用户的注意力经济平台。</p></header><div class="company-summary"><div><span>市值</span><strong>190.36B HKD</strong><small>2026-08-09 前双源验证</small></div><div><span>股价</span><strong>44.18 HKD</strong><small>截至 <time>2026-08-07 16:08 HKT</time></small></div><div><span>PE</span><strong>9.77x</strong><small>TTM 口径</small></div><div><span>数据完整性</span><strong>8.7 / 9.7 / 10</strong><small>采集 / 分析 / 总结，满分 10</small></div><div><span>数据截止</span><strong>2026-08-09</strong></div></div><section class="company-section" aria-labelledby="dimension-summary"><p class="section-kicker">CONCLUSIONS AND CONFIDENCE</p><h2 id="dimension-summary">维度总结与信心度</h2><div class="driver-grid"><article class="driver-card"><h3>生意质量</h3><strong>7.5 / 10</strong><p class="dim-conclusion">快手把老铁社区沉淀的下沉流量转卖给广告主、商家与打赏用户，FY2025毛利率55.02%、经营利润增速35%远超营收12.5%增速，经营杠杆强劲，但AI资本开支翻倍已使自由现金流同比下滑45.8%。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">①官方口径FY2025毛利率55.02%、经营利润率14.45%，经营利润同比+35.0%远超营收+12.5%，经营杠杆显著为正（dimensions.businessEssence.analysis.operatingLeverage）；</span><span class="prose-point">②DAU/MAU比约53.5%显示强用户粘性，磁力引擎UAX渗透率近60%降低获客成本（dimensions.businessEssence.analysis.stickiness）；</span><span class="prose-point">③FY2025自由现金流同比-45.8%至RMB117.74亿，因AI资本开支翻倍，短期现金创造能力承压（同上operatingLeverage.evidence）；</span><span class="prose-point">④分部毛利率、用户留存率等关键数据缺失，限制对单位经济更精细的判断（dimensions.businessEssence.dataGaps）。</span></p></details></article><article class="driver-card"><h3>护城河</h3><strong>5.5 / 10</strong><p class="dim-conclusion">快手护城河呈网络效应变窄、规模效应稳定、AI技术壁垒变宽的三力抵消格局，品牌定价权不存在、转换成本证据不足，长期存续高度取决于Kling AI能否独立商业化成功。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">①MAU增速3.4%对比抖音14.7%，网络效应边际收窄（dimensions.moat.analysis.types[2]）；</span><span class="prose-point">②研发强度稳定10.15%支撑规模效应，但直播收入连续两季下滑（-1.0%、-13.5%）显示定价权不存在（dimensions.moat.analysis.types[0]、[3]）；</span><span class="prose-point">③OneRec/Kling AI技术壁垒判定为&quot;变宽&quot;，但关键证据（观看时长+1.6%、ARR翻倍、180-200亿美元估值传闻）均单源且分拆&quot;仍处初步阶段&quot;未签约（dimensions.moat.analysis.types[4]）；</span><span class="prose-point">④转换成本（UAX渗透率60%）与提价弹性均缺乏第三方验证（dimensions.moat.dataGaps）。</span></p></details></article><article class="driver-card"><h3>管理层</h3><strong>6.5 / 10</strong><p class="dim-conclusion">创始人以约66%投票权掌控公司，宿华已完成CEO到战略角色的平稳交接，资本配置转向常态化分红回购且AI研发转化力强，但薪酬考核披露缺失、回购均价高于现价、高管梯队信息空白。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">①程一笑、宿华合计经济权益约18.6%、投票权约66%（WVR架构），宿华已有CEO转战略角色先例，继任缓冲较好（dimensions.management.analysis.alignment、organization.keyPersonRisk）；</span><span class="prose-point">②FY2025首次特别股息+常态化末期股息+持续回购，资本配置转向股东回报，Kling AI/OneRec研发已转化为收入与效率提升（dimensions.management.analysis.keyDecisions、capitalAllocation.rdReturn）；</span><span class="prose-point">③两次回购测算均价（HK$54.9、HK$47.6）均高于现价HK$44.18，择时非精准抄底（dimensions.management.analysis.capitalAllocation.buybackTiming）；</span><span class="prose-point">④管理层薪酬结构、CFO/COO等高管梯队信息均缺失，治理透明度证据不足（dimensions.management.dataGaps）。</span></p></details></article><article class="driver-card"><h3>最大风险</h3><strong>4 / 10</strong><p class="dim-conclusion">最大风险是抖音持续虹吸用户时长（MAU增速3.4%对比14.7%），带动直播收入结构性萎缩（2026Q1同比-13.5%）并与AI高资本开支能否兑现回报叠加，是公司难以单方面对冲的竞争格局层面风险。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">①快手/抖音MAU增速差距3.4%对14.7%且持续扩大，被列为&quot;中概率、高影响&quot;失败路径（dimensions.inversion.analysis.failurePaths[0]）；</span><span class="prose-point">②直播收入连续两季走弱（2025Q4-1.0%、2026Q1-13.5%），与MAU差距互为印证，指向结构性而非周期性（同上evidence）；</span><span class="prose-point">③Kling AI分拆&quot;仍处初步阶段未签约&quot;，叠加FY2025资本开支翻倍、FCF-45.8%，若分拆或商业化落空将侵蚀现金储备，同为&quot;中概率、高影响&quot;（dimensions.inversion.analysis.failurePaths[2]）；</span><span class="prose-point">④监管处罚（2026年1-2月合计超RMB1.45亿）与腾讯减持为中概率、中影响的叠加风险（同上failurePaths[1]、[4]）。</span></p></details></article><article class="driver-card"><h3>文明趋势</h3><strong>5.5 / 10</strong><p class="dim-conclusion">短视频用户渗透率已达95.4%接近天花板，广告与直播电商增速降至10-12%/约18%的中速区间，AI内容生成处于范式转移早期；快手是短视频&quot;老二&quot;兼AI应用探索者，长期定位取决于Kling AI能否升级为基础设施供应商。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">①短视频用户渗透率95.4%见顶，在线营销TAM预测CAGR10-12%、直播电商CAGR降至约18%，行业转入中速增长（dimensions.industryTrend.analysis.tam）；</span><span class="prose-point">②议价权因MAU落后抖音（458.16百万vs936.41百万）总体偏弱势，电商GMV份额约20%出头且较2024年持平略降（dimensions.industryTrend.analysis.valueChainPosition）；</span><span class="prose-point">③OneRec/Kling AI代表的AI范式转移仍处早期，判定为&quot;部分&quot;范式转移，20年维度更接近&quot;区域性寡头&quot;而非&quot;标准石油&quot;（dimensions.industryTrend.analysis.paradigmShift、inquiry.answer）；</span><span class="prose-point">④广告主/供应商集中度数据缺失，行业TAM各口径差异达一倍以上未调和（dimensions.industryTrend.dataGaps）。</span></p></details></article><article class="driver-card"><h3>估值</h3><strong>7 / 10</strong><p class="dim-conclusion">9.77倍trailing PE已隐含近零增长预期，三情景测算显示悲观情景仅跌7.9%、中性涨36.2%、乐观涨118.5%，风险收益明显正偏，估值端具备安全边际但上行高度依赖尚未签约的Kling AI分拆兑现。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">①trailing PE9.77x／forward PE10.10x隐含市场预期未来12个月EPS小幅下滑而非增长，估值未计入AI新业务溢价（dimensions.valuation.analysis.reverseDcf）；</span><span class="prose-point">②三情景测算：乐观HKD96.5(+118.5%)、中性HKD60.2(+36.2%)、悲观HKD40.7(-7.9%)，下行有限、上行空间大（dimensions.valuation.analysis.threeScenario）；</span><span class="prose-point">③EV/Revenue0.96x低于PS1.17x，反映净现金约RMB918亿的安全垫（dimensions.valuation.analysis.currentMultiples）；</span><span class="prose-point">④历史PE分位数与Bilibili等可比公司估值倍数缺失，且乐观/中性情景部分依赖分拆预期兑现，估值判断存在证据限制（dimensions.valuation.dataGaps）。</span></p></details></article></div><p class="company-note">信心度为价值投资视角下对该维度的看多程度（0–10，越高越看多）；最大风险按可控程度、估值按价格吸引力打分。</p></section><section class="company-section" aria-labelledby="strategies"><p class="section-kicker">WHAT TO DO ABOUT IT</p><h2 id="strategies">策略建议</h2><div class="strategy-grid"><article><h3>空仓者</h3><p class="advice"><span class="prose-point">①9.77x PE与三情景悲观仅-7.9%下行空间提供一定安全边际，可考虑分批小仓位试探性建仓而非重仓；</span><span class="prose-point">②竞争劣势（MAU差距3.4%对14.7%）与直播收入连续下滑尚未见拐点，不建议在企稳确认前满仓；</span><span class="prose-point">③优先等待Kling AI分拆签署最终协议等实质性催化剂后再加大仓位。</span></p><ul class="trigger-lines"><li><strong>股价回落至HKD40.7附近且核心商业化收入增速仍维持10%以上</strong><span class="then"> —— 可分批小仓位建仓，博弈估值修复</span></li><li><strong>Kling AI分拆签署最终协议且披露确定性估值</strong><span class="then"> —— 确认AI第二曲线兑现，可加仓至中性仓位</span></li><li><strong>快手主APP MAU同比增速回升、缩小与抖音14.7%的差距</strong><span class="then"> —— 视为网络效应企稳信号，可提升至标准仓位</span></li></ul><details class="fold"><summary>各触发条件的依据</summary><ul><li><span class="prose-point">①对应悲观情景目标价HKD40.7，跌幅仅7.9%（dimensions.valuation.analysis.threeScenario.pessimistic）；</span><span class="prose-point">②若核心广告+其他服务增速未跌破10%（2026Q1为10.7%），说明基本面未同步恶化，仅估值下探（dimensions.businessEssence.analysis相关revenueStructure数据）。</span></li><li><span class="prose-point">①当前投行SOTP目标价隐含37%-68%空间建立在&quot;仍处初步阶段未签约&quot;的传闻上（dimensions.moat.analysis.types[4]、dimensions.inversion.analysis.failurePaths[2]）；</span><span class="prose-point">②签约落地将消除该项最大不确定性来源。</span></li><li><span class="prose-point">①MAU差距3.4%对14.7%是最大失败路径的核心证据（dimensions.inversion.analysis.failurePaths[0]）；</span><span class="prose-point">②差距收窄将直接改善businessQuality与moat两维度的负面判断依据。</span></li></ul></details></article><article><h3>持仓者</h3><p class="advice"><span class="prose-point">①净现金约RMB918亿与9.77x低估值提供安全垫，核心仓位可继续持有，无需因短期波动恐慌卖出；</span><span class="prose-point">②密切跟踪直播收入与Kling AI分拆进展两条主线，恶化信号出现即减仓而非死扛；</span><span class="prose-point">③若股价大幅冲高至乐观情景附近而基本面未同步验证，应逢高兑现部分仓位。</span></p><ul class="trigger-lines"><li><strong>直播收入连续两季度同比降幅超过10%（当前2026Q1已-13.5%）</strong><span class="then"> —— 减持部分仓位，视为结构性而非周期性下滑</span></li><li><strong>股价上探至HKD90附近接近乐观情景目标价HKD96.5</strong><span class="then"> —— 分批卖出兑现部分收益，降低仓位集中度</span></li><li><strong>资本开支维持高位但Kling AI ARR增速环比转为放缓</strong><span class="then"> —— 重新评估AI资本开支回报节奏，考虑减仓</span></li></ul><details class="fold"><summary>各触发条件的依据</summary><ul><li><span class="prose-point">①直播收入2025Q4-1.0%、2026Q1-13.5%已被列为高概率高影响失败路径的核心证据（dimensions.inversion.analysis.failurePaths[0]）；</span><span class="prose-point">②延续验证竞争劣势不可逆时应下修businessQuality判断。</span></li><li><span class="prose-point">①乐观情景+118.5%建立在增速18%、PE13x假设上，尚未被Kling AI分拆签约验证（dimensions.valuation.analysis.threeScenario.optimistic）；</span><span class="prose-point">②卖方SOTP目标价63-74港元区间也低于该乐观终点，提示上方存在获利区间。</span></li><li><span class="prose-point">①FY2025资本开支同比翻倍、FCF同比-45.8%，回报兑现节奏是核心不确定性（dimensions.inversion.analysis.failurePaths[2]）；</span><span class="prose-point">②ARR增速若从翻倍转为放缓，将动摇moat中&quot;技术壁垒变宽&quot;的判断依据。</span></li></ul></details></article></div><div><h3 class="block-heading">卖出信号</h3><ul class="signal-list"><li><strong class="signal-name">MAU增速差距进一步扩大且直播收入跌幅继续扩大</strong><p class="signal-desc">快手MAU同比增速跌破3%或直播收入同比跌幅超过15%</p><details class="fold"><summary>依据</summary><p><span class="prose-point">①对应最大失败路径&quot;中概率高影响&quot;的持续验证（dimensions.inversion.analysis.failurePaths[0]）；</span><span class="prose-point">②businessQuality与moat正面判断均建立在当前粘性数据上，恶化将同步失效。</span></p></details></li><li><strong class="signal-name">Kling AI分拆计划被官方公告终止或无限期搁置</strong><p class="signal-desc">公司发布公告确认不再推进分拆或撤回融资安排</p><details class="fold"><summary>依据</summary><p><span class="prose-point">①分拆是moat技术壁垒&quot;变宽&quot;及valuation乐观/中性情景的核心支撑（dimensions.moat.analysis.types[4]、dimensions.valuation.analysis.threeScenario）；</span><span class="prose-point">②若终止，AI第二曲线期权价值归零，估值将向悲观情景收敛。</span></p></details></li><li><strong class="signal-name">监管处罚再次发生且金额或频次超过2026年1-2月水平</strong><p class="signal-desc">半年内再度出现单笔超RMB1亿元的行政处罚</p><details class="fold"><summary>依据</summary><p><span class="prose-point">①2026年1-2月已合计罚没超RMB1.45亿元，被列为中概率中影响失败路径（dimensions.inversion.analysis.failurePaths[1]）；</span><span class="prose-point">②重复处罚将证实内容审核系统性漏洞而非一次性事件，抬高长期合规成本。</span></p></details></li><li><strong class="signal-name">股价上涨至乐观情景目标价HKD96.5附近但基本面未同步改善</strong><p class="signal-desc">股价触及HKD90以上且MAU/直播收入未见企稳</p><details class="fold"><summary>依据</summary><p><span class="prose-point">①乐观情景+118.5%依赖增速18%与PE13x的重估假设（dimensions.valuation.analysis.threeScenario.optimistic）；</span><span class="prose-point">②若keyRisk相关指标未验证改善，纯情绪推升的估值透支应止盈离场。</span></p></details></li></ul></div><div><h3 class="block-heading">加仓信号</h3><ul class="signal-list"><li><strong class="signal-name">股价跌至悲观情景目标价HKD40.7附近但核心商业化收入未恶化</strong><p class="signal-desc">股价触及HKD40-41区间且在线营销+其他服务收入增速仍≥10%</p><details class="fold"><summary>依据</summary><p><span class="prose-point">①悲观情景对应跌幅仅-7.9%，假设建立在总收入增速降至3.4%延续的情形（dimensions.valuation.analysis.threeScenario.pessimistic）；</span><span class="prose-point">②若核心商业化收入未跟随恶化，说明市场过度定价悲观情景，存在错杀机会。</span></p></details></li><li><strong class="signal-name">Kling AI分拆签署最终协议并确认估值区间</strong><p class="signal-desc">公司公告披露具体分拆交易条款及确定性估值（如落在180-200亿美元区间）</p><details class="fold"><summary>依据</summary><p><span class="prose-point">①当前投行目标价（摩根大通71港元等）均建立在分拆传闻之上，签约将把不确定性转为确定性（dimensions.moat.analysis.types[4]、dimensions.inversion.analysis.failurePaths[2]）；</span><span class="prose-point">②确定性提升应推动中性/乐观情景概率权重上调。</span></p></details></li><li><strong class="signal-name">快手MAU同比增速明显回升，与抖音差距收窄至个位数百分点以内</strong><p class="signal-desc">快手主APP MAU同比增速回升至8%以上（当前3.4%对比抖音14.7%）</p><details class="fold"><summary>依据</summary><p><span class="prose-point">①MAU差距是keyRisk与moat网络效应&quot;变窄&quot;判断的核心依据（dimensions.inversion.analysis.failurePaths[0]、dimensions.moat.analysis.types[2]）；</span><span class="prose-point">②差距收窄将系统性上修businessQuality、moat、keyRisk三个维度评分。</span></p></details></li><li><strong class="signal-name">直播收入同比增速转正并维持两个季度以上</strong><p class="signal-desc">直播收入连续两季度同比增速为正（当前2026Q1为-13.5%）</p><details class="fold"><summary>依据</summary><p><span class="prose-point">①直播收入连续下滑是最大失败路径的核心证据（dimensions.inversion.analysis.failurePaths[0]）；</span><span class="prose-point">②企稳将直接反驳&quot;结构性萎缩恶性循环&quot;的风险判断，支持加仓。</span></p></details></li></ul></div></section><section class="company-section" aria-labelledby="business-essence"><p class="section-kicker">WHAT THE BUSINESS IS</p><h2 id="business-essence">生意本质</h2><p class="section-lead">快手是把老铁社区沉淀的下沉用户注意力，转卖给广告主、商家与打赏用户的注意力经济平台。</p><h3 class="block-heading">收入结构（FY2025（2025-01-01至2025-12-31））</h3><div class="table-wrap"><table><thead><tr><th>分部</th><th>收入（百万 RMB（财报口径）；交易货币 HKD）</th><th>占比（%）</th><th>来源</th></tr></thead><tbody><tr><td>在线营销服务 Online Marketing Services</td><td>RMB815亿</td><td>57.1%</td><td><a class="source-pill" href="https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-fourth-quarter-and-full-year-2025" rel="noreferrer" title="Kuaishou IR FY2025全年业绩公告">来源</a></td></tr><tr><td>直播 Live Streaming</td><td>RMB391亿</td><td>27.4%</td><td><a class="source-pill" href="https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-fourth-quarter-and-full-year-2025" rel="noreferrer" title="Kuaishou IR FY2025全年业绩公告">来源</a></td></tr><tr><td>其他服务（含电商佣金/技术服务费、Kling AI）Other Services</td><td>RMB222亿</td><td>15.5%</td><td><a class="source-pill" href="https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-fourth-quarter-and-full-year-2025" rel="noreferrer" title="Kuaishou IR FY2025全年业绩公告">来源</a></td></tr></tbody></table></div><h3 class="block-heading">5 年盈利能力趋势</h3><div class="table-wrap"><table><thead><tr><th>财年</th><th>毛利率</th><th>经营利润率</th><th>净利率</th><th>来源</th></tr></thead><tbody><tr><td>FY2021</td><td>41.97%</td><td>-34.15%</td><td>-96.29%（计算值：归母净利润/营业收入）%</td><td><a class="source-pill" href="https://stockanalysis.com/quote/hkg/1024/financials/" rel="noreferrer" title="stockanalysis.com">来源</a></td></tr><tr><td>FY2022</td><td>44.73%</td><td>-11.87%</td><td>-14.54%（计算值：归母净利润/营业收入）%</td><td><a class="source-pill" href="https://stockanalysis.com/quote/hkg/1024/financials/" rel="noreferrer" title="stockanalysis.com">来源</a></td></tr><tr><td>FY2023</td><td>50.58%</td><td>5.24%</td><td>5.64%（计算值：归母净利润/营业收入）%</td><td><a class="source-pill" href="https://stockanalysis.com/quote/hkg/1024/financials/" rel="noreferrer" title="stockanalysis.com">来源</a></td></tr><tr><td>FY2024</td><td>54.60%</td><td>12.05%（官方口径，经营利润/收入）%</td><td>12.08%（计算值：归母净利润/营业收入）%</td><td><a class="source-pill" href="https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-fourth-quarter-and-full-year-2025" rel="noreferrer" title="Kuaishou IR FY2025年报对比列（官方）">来源</a></td></tr><tr><td>FY2025</td><td>55.02%</td><td>14.45%（官方口径，经营利润/收入）%</td><td>13.04%（计算值：归母净利润/营业收入）%</td><td><a class="source-pill" href="https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-fourth-quarter-and-full-year-2025" rel="noreferrer" title="Kuaishou IR FY2025全年业绩公告">来源</a></td></tr></tbody></table></div><h3 class="block-heading">商业模式与粘性</h3><dl class="kv-list"><div><dt>商业模式</dt><dd>订阅/复购 · 混合</dd></div><div><dt>粘性 / 锁定 · 强</dt><dd><span class="prose-point">①老铁社交关系链沉淀高频关注与私域互动，2026Q1 DAU/MAU比约53.5%（413/772百万）显著高于纯公域算法分发平台</span><span class="prose-point">②磁力引擎UAX自动化投放渗透商家近60%，商家迁移平台需重新积累账号数据与投放模型冷启动成本</span><span class="prose-point">③Kling AI订阅制/按调用量收费的产品化能力将粘性延伸至ToB场景</span></dd></div><div><dt>毛利率 vs 同行 · 55.02%（FY2025）%</dt><dd><span class="prose-point">①在线营销(占57.1%)与直播打赏(27.4%)均为轻资产、无实物库存的内容变现，边际履约成本低于Bilibili内容采购/版权成本结构</span><span class="prose-point">②磁力引擎UAX自动化投放降低获客与内容生产成本，规模效应下算法/服务器成本被MAU超7亿的用户盘摊薄</span><span class="prose-point">③电商技术服务费/佣金模式毛利率高于自营电商，FY2025毛利率55.02%（较FY2024再升0.42个百分点）明显高于Bilibili的36.6%</span></dd></div><div><dt>经营杠杆</dt><dd><span class="prose-point">①FY2025营收同比+12.5%，官方口径经营利润同比+35.0%(RMB152.87亿→206.37亿)，经营杠杆显著为正</span><span class="prose-point">②研发费用同比+18.8%快于营收增速，反映AI投入拉动的费用结构调整</span><span class="prose-point">③其他运营费用增速慢于营收，经营利润率仍从12.05%升至14.45%</span><span class="prose-point">④资本开支同比翻倍推高AI基建投入，自由现金流同比-45.8%至RMB117.74亿，现金端杠杆短期转负</span></dd></div></dl><details class="fold"><summary>本节证据 7 条</summary><ul><li>DAU/MAU比例：413百万/772百万≈53.5%（2026Q1） <a class="source-pill" href="（采集文件内部数据，无外部URL）" rel="noreferrer" title="Kuaishou IR（官方口径数据）">来源</a></li><li>磁力引擎UAX智能投放系统商家渗透率：约60%，广告冷启动成功率+25%（2024年初上线后（2025年数据）） <a class="source-pill" href="https://www.geekpark.net/news/347925" rel="noreferrer" title="极客公园《AI正在重塑快手商业化体系》">来源</a></li><li>Kling AI月度ARR：约2.4亿美元（2025年末）→约5亿美元（2026年3-4月），环比翻倍（2026年3-4月） <a class="source-pill" href="https://finance.sina.com.cn/stock/usstock/c/2026-05-11/doc-inhxptri0413534.shtml" rel="noreferrer" title="新浪财经（Kling AI分拆融资进展）">来源</a></li><li>营业收入同比增速：+12.5%（FY2025） <a class="source-pill" href="https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-fourth-quarter-and-full-year-2025" rel="noreferrer" title="Kuaishou IR FY2025全年业绩公告">来源</a></li><li>经营利润同比增速（官方口径）：+35.0%（RMB152.87亿→206.37亿）（FY2025） <a class="source-pill" href="https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-fourth-quarter-and-full-year-2025" rel="noreferrer" title="Kuaishou IR FY2025全年业绩公告">来源</a></li><li>研发费用同比增速：+18.8%（RMB121.99亿→144.91亿）（FY2025） <a class="source-pill" href="（采集文件内部数据，无外部URL）" rel="noreferrer" title="Kuaishou IR官方披露">来源</a></li><li>自由现金流同比增速：-45.8%（RMB217.24亿→117.74亿）（FY2025） <a class="source-pill" href="https://stockanalysis.com/quote/hkg/1024/financials/" rel="noreferrer" title="stockanalysis.com 现金流量表">来源</a></li></ul></details><aside class="inquiry-block"><p class="q">追问 · 这门生意好在哪？如果只能用一句话描述，是什么？</p><p class="a"><span class="prose-point">快手好在把高粘性下沉流量转化为三重可持续现金流的注意力变现引擎。</span><span class="prose-point">①老铁社交关系链带来同行少见的私域复购型打赏收入，FY2025直播收入RMB391亿仍是稳定现金流（占27.4%）</span><span class="prose-point">②效果广告（磁力引擎UAX渗透率近60%）与电商技术服务费构成轻资产、高毛利（55.02%）的核心变现组合，边际成本低</span><span class="prose-point">③Kling AI正从内部工具进化为独立第二增长曲线，2026Q1单季收入超RMB6.5亿(+300%+)，为公司估值提供新的期权价值</span></p></aside><details class="fold"><summary>数据缺口 3 项</summary><ul><li>———公司仅披露集团整体毛利率，未按分部单独披露毛利率</li><li>———采集文件未覆盖具体的次日/次月留存率、创作者账号复访率等留存类KPI</li><li>———字节跳动与腾讯视频号均未单独披露毛利率或相关分部财务数据</li></ul></details></section><section class="company-section" aria-labelledby="moat"><p class="section-kicker">WHAT PROTECTS IT</p><h2 id="moat">护城河评估</h2><p class="section-lead">护城河集中于AI技术与规模效应，网络效应基本盘正被抖音蚕食，转换成本与定价权证据不足。</p><div class="table-wrap"><table class="analysis-table"><thead><tr><th>类型</th><th>验证方法</th><th>判定</th><th>证据</th></tr></thead><tbody><tr><td>品牌/定价权</td><td>是否能在不损失销量的情况下提价？</td><td>不存在</td><td><details class="fold"><summary>证据 3 条</summary><ul><li>直播收入同比增速(2026Q1对比2025Q4)：-13.5%（前值-1.0%）（2026Q1（截至2026-03-31）） <a class="source-pill" href="https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-first-quarter-2026-unaudited" rel="noreferrer" title="Kuaishou IR官方公告（2026Q1季报）">来源</a></li><li>短视频MAU同比增速对比（快手vs抖音）：快手+3.4% vs 抖音+14.7%，差距持续扩大（2025年9月） <a class="source-pill" href="https://finance.sina.com.cn/tech/roll/2025-11-07/doc-infwqvpr0815507.shtml" rel="noreferrer" title="QuestMobile（新浪财经转引）">来源</a></li><li>直播打赏平台抽成比例：官方未披露具体比例，行业惯例约50%（非官方数字，为合理推断）（FY2025） <a class="source-pill" href="（采集文件内部数据，无外部URL）" rel="noreferrer" title="采集文件businessModelMoat推断">来源</a></li></ul></details></td></tr><tr><td>转换成本</td><td>客户迁移到竞品的成本有多高？</td><td>待验证</td><td><details class="fold"><summary>证据 2 条</summary><ul><li>磁力引擎UAX智能投放系统客户渗透率：接近60%（2024年初上线后）（2025年（报道时点）） <a class="source-pill" href="https://www.geekpark.net/news/347925" rel="noreferrer" title="极客公园《AI正在重塑快手商业化体系》">来源</a></li><li>广告冷启动成功率提升：+25%（2025年（报道时点）） <a class="source-pill" href="https://www.geekpark.net/news/347925" rel="noreferrer" title="极客公园《AI正在重塑快手商业化体系》">来源</a></li></ul></details></td></tr><tr><td>网络效应</td><td>用户越多产品越好吗？</td><td>存在</td><td><details class="fold"><summary>证据 2 条</summary><ul><li>MAU/DAU规模：MAU 772百万 / DAU 413百万，均创历史新高（2026Q1） <a class="source-pill" href="（采集文件内部数据，无外部URL）" rel="noreferrer" title="Kuaishou IR官方公告">来源</a></li><li>短视频APP MAU对比（快手vs抖音）：458.16百万 vs 936.41百万，快手约为抖音一半（2025年9月） <a class="source-pill" href="https://finance.sina.com.cn/tech/roll/2025-11-07/doc-infwqvpr0815507.shtml" rel="noreferrer" title="QuestMobile（新浪财经转引）">来源</a></li></ul></details></td></tr><tr><td>规模效应</td><td>规模带来的成本优势有多大？</td><td>存在</td><td><details class="fold"><summary>证据 2 条</summary><ul><li>研发费用规模及增速：RMB144.91亿，同比+18.8%（FY2025） <a class="source-pill" href="（采集文件内部数据，无外部URL）" rel="noreferrer" title="Kuaishou IR官方披露">来源</a></li><li>研发强度（R&amp;D/营收）：10.15%（FY2025） <a class="source-pill" href="（采集文件内部数据，无外部URL）" rel="noreferrer" title="Kuaishou IR官方披露">来源</a></li></ul></details></td></tr><tr><td>技术/专利壁垒</td><td>技术领先几年？能否被复制？</td><td>存在</td><td><details class="fold"><summary>证据 3 条</summary><ul><li>OneRec端到端生成式推荐模型主站落地效果：观看时长+1.6%，公开报道中首个工业场景超越传统推荐系统的端到端生成式模型（2025年（技术分享时点）） <a class="source-pill" href="https://zhuanlan.zhihu.com/p/1927386141486735715" rel="noreferrer" title="知乎技术解读《细读快手推荐OneRec-V1技术报告》">来源</a></li><li>Kling AI ARR增速：从2025年末约2.4亿美元环比翻倍至约5亿美元（2026年3-4月） <a class="source-pill" href="https://finance.sina.com.cn/stock/usstock/c/2026-05-11/doc-inhxptri0413534.shtml" rel="noreferrer" title="新浪财经（Kling AI分拆融资进展）">来源</a></li><li>Kling AI分拆估值传闻及投行SOTP定价：估值传闻180-200亿美元，摩根大通/大摩/中金等给予正面分部估值（2026年5月） <a class="source-pill" href="https://finance.sina.com.cn/stock/usstock/c/2026-05-11/doc-inhxptri0413534.shtml" rel="noreferrer" title="新浪财经">来源</a></li></ul></details></td></tr></tbody></table></div><dl class="kv-list"><div><dt>过去 5 年 · 稳定</dt><dd><span class="prose-point">①网络效应因MAU增速落后抖音(3.4%对14.7%)持续收窄；</span><span class="prose-point">②规模/研发效应维持稳定，研发强度长期保持10%+；</span><span class="prose-point">③技术壁垒因OneRec落地与Kling AI商业化提速快速拓宽，三力大致抵消。</span></dd></div><div><dt>未来 5 年 · 稳定</dt><dd><span class="prose-point">①若Kling AI分拆成功并保持技术代际领先，AI资产壁垒有望进一步拓宽；</span><span class="prose-point">②短视频用户时长份额若继续被抖音蚕食，网络效应基本盘将持续收窄；</span><span class="prose-point">③监管趋严抬高全行业合规成本，对新进入者构成额外规模壁垒，三力预计延续抵消格局。</span></dd></div></dl><aside class="inquiry-block"><p class="q">追问 · 10年后这条护城河还在吗？什么能摧毁它？</p><p class="a"><span class="prose-point">部分留存：AI技术壁垒或能存活，但短视频网络效应基本盘可能已不可逆转弱化。</span><span class="prose-point">①若Kling AI/OneRec保持技术代际领先且分拆商业化成功，AI资产壁垒可独立于短视频主业存续；</span><span class="prose-point">②若MAU增速持续落后抖音(现3.4%对14.7%)，&quot;老铁&quot;网络效应基本盘可能被结构性摧毁；</span><span class="prose-point">③监管趋严(2026年1-2月罚没超1.45亿元)与VIE/港股折价等政策性风险若恶化，可能从合规与资本两端侵蚀护城河基础。</span></p></aside><details class="fold"><summary>数据缺口 3 项</summary><ul><li>———官方未披露具体分成比例</li><li>———缺乏独立第三方对技术代际差距的评估</li><li>———缺乏历史提价记录及对应广告主流失率数据</li></ul></details></section><section class="company-section" aria-labelledby="inversion"><p class="section-kicker">HOW IT COULD FAIL</p><h2 id="inversion">逆向思考与风险清单</h2><p class="section-lead">快手正处于抖音时长虹吸、直播收入下滑与AI高投入未兑现三重压力叠加期，低估值未必是安全边际。</p><div class="table-wrap"><table class="analysis-table"><thead><tr><th>失败路径</th><th>概率</th><th>影响</th><th>证据</th></tr></thead><tbody><tr><td>抖音持续虹吸用户时长与MAU增速，快手核心直播打赏收入结构性萎缩形成恶性循环。</td><td>中</td><td>高</td><td><details class="fold"><summary>证据 2 条</summary><ul><li>快手/抖音主APP MAU同比增速：3.4% vs 14.7%（2025年9月） <a class="source-pill" href="https://finance.sina.com.cn/tech/roll/2025-11-07/doc-infwqvpr0815507.shtml" rel="noreferrer" title="QuestMobile（新浪财经转引）">来源</a></li><li>直播收入同比增速：2025Q4 -1.0%，2026Q1 -13.5%（2026Q1） <a class="source-pill" href="（采集文件内部数据，无外部URL）" rel="noreferrer" title="主会话已采集revenueStructure（源自Kuaishou IR官方财报）">来源</a></li></ul></details></td></tr><tr><td>内容审核系统性漏洞持续暴露，监管处罚常态化推高合规成本并损害广告主品牌安全信任。</td><td>中</td><td>中</td><td><details class="fold"><summary>证据 1 条</summary><ul><li>2026年1-2月合计罚没金额：超RMB1.45亿元（含单笔RMB1.191亿元近年短视频行业最大罚单）（2026-01-30/2026-02-06） <a class="source-pill" href="https://www.sohu.com/a/984733825_100050143" rel="noreferrer" title="新浪财经/搜狐/DoNews">来源</a></li></ul></details></td></tr><tr><td>Kling AI分拆未能如期落地或商业化不及预期，前期高资本开支难以兑现回报并侵蚀现金储备。</td><td>中</td><td>高</td><td><details class="fold"><summary>证据 2 条</summary><ul><li>FY2025资本开支/自由现金流变化：资本开支同比翻倍至RMB149.42亿，FCF同比-45.8%至RMB117.74亿（FY2025） <a class="source-pill" href="（采集文件内部数据，无外部URL）" rel="noreferrer" title="主会话已采集financialMetrics">来源</a></li><li>Kling AI分拆进展：&quot;仍处于初步阶段，公司尚未就此签署任何最终协议&quot;（2026年5月） <a class="source-pill" href="https://finance.sina.com.cn/stock/usstock/c/2026-05-11/doc-inhxptri0413534.shtml" rel="noreferrer" title="新浪财经">来源</a></li></ul></details></td></tr><tr><td>VIE结构性风险与港股/中概股流动性折价长期压制估值，基本面改善也难以兑现重估。</td><td>低</td><td>高</td><td><details class="fold"><summary>证据 2 条</summary><ul><li>trailing PE：9.77倍（2026-08-07） <a class="source-pill" href="（采集文件内部数据，无外部URL）" rel="noreferrer" title="主会话已采集currentValuation（stockanalysis口径）">来源</a></li><li>VIE通用行业风险表述：协议控制架构存在监管认定不确定性（行业通用） <a class="source-pill" href="https://www.acga-asia.org/blog-detail.php?id=48" rel="noreferrer" title="ACGA公司治理研究机构">来源</a></li></ul></details></td></tr><tr><td>腾讯持续减持强化&quot;腾讯系协同弱化&quot;负面叙事，加剧股价抛压与估值折价螺旋。</td><td>中</td><td>中</td><td><details class="fold"><summary>证据 1 条</summary><ul><li>腾讯持股比例变化：约15.68%降至约9.37%，套现约USD1.505bn，跌破10%&quot;主要股东&quot;门槛（2026-07-06） <a class="source-pill" href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0706/2026070602205.pdf" rel="noreferrer" title="HKEX公告">来源</a></li></ul></details></td></tr></tbody></table></div><h3 class="block-heading">历史类比</h3><ul class="signal-list"><li><strong class="signal-name">MySpace（对比Facebook）</strong><p class="signal-desc">曾为社交网络行业第一，后被网络效应更强、产品迭代更快的对手反超。；结局：用户与广告主持续流失，最终边缘化并以远低于峰值估值出售。 <a class="source-pill" href="（无）" rel="noreferrer" title="行业公开认知，非采集文件数据点">来源</a></p></li><li><strong class="signal-name">Yahoo（对比Google）</strong><p class="signal-desc">早期门户/搜索领先者，后期创新放缓被算法更优的对手系统性反超份额。；结局：核心业务持续萎缩多年，最终核心资产被收购、公司解体式退场。 <a class="source-pill" href="（无）" rel="noreferrer" title="行业公开认知，非采集文件数据点">来源</a></p></li><li><strong class="signal-name">人人网 Renren（对比微信/微博）</strong><p class="signal-desc">中国早期社交网络头部玩家，用户与商业化能力被后起社交产品持续反超。；结局：用户与营收长期萎缩，主业名存实亡，转型为投资壳公司。 <a class="source-pill" href="（无）" rel="noreferrer" title="行业公开认知，非采集文件数据点">来源</a></p></li><li><strong class="signal-name">Groupon</strong><p class="signal-desc">高增长期后遇流量成本上升与竞争加剧，新业务故事支撑高估值但兑现不足。；结局：盈利能力持续承压，估值大幅缩水，沦为边缘化平台。 <a class="source-pill" href="（无）" rel="noreferrer" title="行业公开认知，非采集文件数据点">来源</a></p></li></ul><h3 class="block-heading">空方论点</h3><ul class="signal-list"><li><strong class="signal-name">核心用户增长与竞争地位持续落后于抖音，用户基本盘正被系统性分流</strong><p class="signal-desc">持有者：QuestMobile数据引用方（新浪财经/36氪等财经媒体分析师）</p><details class="fold"><summary>证据 2 条</summary><ul><li>主APP MAU同比增速：快手3.4% vs 抖音14.7%（2025年9月） <a class="source-pill" href="https://finance.sina.com.cn/tech/roll/2025-11-07/doc-infwqvpr0815507.shtml" rel="noreferrer" title="QuestMobile（新浪财经转引）">来源</a></li><li>直播收入同比增速：2026Q1 -13.5%（2026Q1） <a class="source-pill" href="（采集文件内部数据，无外部URL）" rel="noreferrer" title="主会话已采集revenueStructure">来源</a></li></ul></details></li><li><strong class="signal-name">监管处罚频发，合规成本上升且声誉受损，反映平台内容审核体系存在系统性漏洞</strong><p class="signal-desc">持有者：关注ESG与内容安全合规的监管机构及机构投资者</p><details class="fold"><summary>证据 1 条</summary><ul><li>2026年1-2月合计罚没金额：超RMB1.45亿元（2026-01-30/2026-02-06） <a class="source-pill" href="https://finance.sina.com.cn/roll/2026-01-31/doc-inhkepei6138166.shtml" rel="noreferrer" title="新浪财经/搜狐/DoNews">来源</a></li></ul></details></li><li><strong class="signal-name">Kling AI分拆存在不确定性，同时自由现金流已明显承压</strong><p class="signal-desc">持有者：关注现金流质量与分拆落地风险的基本面型空方投资者</p><details class="fold"><summary>证据 2 条</summary><ul><li>分拆进展表述：&quot;仍处于初步阶段，尚未签署任何最终协议&quot;（2026年5月） <a class="source-pill" href="https://finance.sina.com.cn/stock/usstock/c/2026-05-11/doc-inhxptri0413534.shtml" rel="noreferrer" title="新浪财经">来源</a></li><li>自由现金流同比变化：-45.8%至RMB117.74亿（FY2025） <a class="source-pill" href="（采集文件内部数据，无外部URL）" rel="noreferrer" title="主会话已采集financialMetrics">来源</a></li></ul></details></li><li><strong class="signal-name">腾讯减持并跌破主要股东门槛，削弱腾讯系流量/资源协同的想象空间</strong><p class="signal-desc">持有者：关注股东结构变化的套利型/事件驱动型空方投资者</p><details class="fold"><summary>证据 1 条</summary><ul><li>腾讯持股比例变化：约15.68%→约9.37%，套现约USD1.505bn（2026-07-06） <a class="source-pill" href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0706/2026070602205.pdf" rel="noreferrer" title="HKEX公告">来源</a></li></ul></details></li></ul><details class="fold"><summary>跨学科检验 3 项 · 偏误自查 3 项</summary><ul><li><strong>网络效应理论</strong>：<span class="prose-point">①快手UGC主播-观众的双边网络效应本质弱于抖音中心化算法分发的单边效率优势，MAU增速差距（3.4% vs 14.7%）验证&quot;赢者通吃&quot;动态已形成；</span><span class="prose-point">②直播打赏依赖主播个人IP粘性而非平台网络效应，用户可无缝迁移至抖音/视频号；</span><span class="prose-point">③电商私域复购场景仍具一定用户粘性护城河，网络效应尚未完全瓦解，是相对优势的残余部分。</span></li><li><strong>技术采纳曲线</strong>：<span class="prose-point">①短视频行业已进入成熟期，总时长增速放缓使份额此消彼长的零和博弈特征加强，快手处于劣势位置；</span><span class="prose-point">②Kling AI处于早期采纳曲线阶段，ARR环比翻倍符合S曲线早期爆发特征，但能否跨越鸿沟进入大众商业化市场仍不确定；</span><span class="prose-point">③若Kling AI未能跨越鸿沟，将陷入多数早期AI应用常见的&quot;高投入-低转化&quot;陷阱，与FY2025资本开支翻倍、FCF下滑45.8%的现状呼应。</span></li><li><strong>竞争博弈</strong>：<span class="prose-point">①快手与抖音陷入内容审核、算法研发、内容采购的&quot;军备竞赛&quot;式博弈，任何一方放缓即被反超，压制行业整体利润率；</span><span class="prose-point">②监管作为第三方博弈参与者的重罚介入，边际上更利好资金实力更强的头部平台，对快手是相对劣势；</span><span class="prose-point">③腾讯减持并转向自研混元AI，反映其在AI赛道资源的重新博弈配置，削弱快手潜在流量/资金协同筹码。</span></li><li><strong>叙事偏差</strong>：&quot;AI第二曲线&quot;叙事由投行SOTP目标价（隐含37%-68%上行空间）驱动，但分拆&quot;仍处初步阶段&quot;未签任何最终协议，需警惕把尚未落地的传闻当作确定性事件定价，而忽视直播收入连续下滑、MAU增速差距扩大的既有基本面趋势。</li><li><strong>锚定效应</strong>：trailing PE 9.77倍处于历史低位容易被锚定为&quot;便宜&quot;，但若竞争劣势与直播下滑是结构性而非周期性，低PE可能是价值陷阱而非低估，应以基本面趋势而非历史价格/估值锚点判断。</li><li><strong>幸存者偏差</strong>：采集文件bull case多援引摩根大通/中金/东方证券等卖方看多目标价，卖方研报存在&quot;唱空报告较少发布&quot;的生存偏差；历史类比也应纳入Yahoo/MySpace/Renren等&quot;老二最终没落&quot;的案例，而非仅关注逆袭成功的幸存者叙事。</li></ul></details><aside class="inquiry-block"><p class="q">追问 · 我最可能在哪里犯错？聪明人为什么会不买/做空这家公司？</p><p class="a"><span class="prose-point">我最可能把&quot;低PE+AI故事&quot;误判为确定性错误定价机会，而非价值陷阱。</span><span class="prose-point">①锚定同行历史估值，忽视MAU增速差距扩大（3.4% vs 14.7%）反映的用户基本盘流失是结构性而非周期性；</span><span class="prose-point">②把投行基于未签约分拆传闻给出的SOTP目标价当作确定性上行空间，而分拆&quot;仍处初步阶段&quot;意味着这部分溢价可能落空；</span><span class="prose-point">③低估监管趋严对UGC平台边际合规成本的持续冲击，误把2026年两次重罚当一次性事件。聪明人不买/做空的理由：抖音军备竞赛下快手长期处于资源劣势、腾讯减持削弱协同想象空间、AI资本开支回报节奏不确定叠加FCF已降45.8%。</span></p></aside><details class="fold"><summary>数据缺口 2 项</summary><ul><li>———采集文件已标注本轮研究未逐一核实HKEX是否就2026年两次行政处罚发布过对应公告</li><li>———采集文件基于行业通用VIE风险表述推断，未逐字核实快手年报&quot;风险因素&quot;章节原文</li></ul></details></section><section class="company-section" aria-labelledby="management"><p class="section-kicker">WHO RUNS IT</p><h2 id="management">管理层评估</h2><p class="section-lead">创始人双人掌权、逐步转向股东回报，AI研发转化力强，但继任安排透明度不足。</p><h3 class="block-heading">关键决策复盘</h3><div class="table-wrap"><table class="analysis-table"><thead><tr><th>时间</th><th>决策</th><th>结果</th><th>评分</th></tr></thead><tbody><tr><td>2025-08-21</td><td>宣派上市以来首度特别股息HK$0.46/股</td><td>资本配置转向增长与股东回报并重 <a class="source-pill" href="https://ir.kuaishou.com/news-releases" rel="noreferrer" title="Kuaishou IR官方公告">来源</a></td><td>★★★★</td></tr><tr><td>2025年内</td><td>全年回购5,678万股耗资约HK$31.2亿</td><td>测算均价约HK$54.9元，高于当前股价HK$44.18 <a class="source-pill" href="https://ir.kuaishou.com/news-releases" rel="noreferrer" title="Kuaishou IR官方公告">来源</a></td><td>★★★</td></tr><tr><td>2026-03-25</td><td>建议派发FY2025末期股息每股HK$0.69</td><td>常规化分红机制初步建立 <a class="source-pill" href="https://ir.kuaishou.com/news-releases" rel="noreferrer" title="Kuaishou IR官方公告">来源</a></td><td>★★★★</td></tr><tr><td>2025年9月末</td><td>整合电商与在线营销服务强化全域协同</td><td>Q4全域营销方案占比升至75% <a class="source-pill" href="https://ir.kuaishou.com/news-releases" rel="noreferrer" title="Kuaishou IR官方公告">来源</a></td><td>★★★★</td></tr><tr><td>2026-02</td><td>发布Kling AI 3.0系列模型</td><td>26Q1收入超6.5亿元，同比增超300% <a class="source-pill" href="https://finance.sina.com.cn/stock/usstock/c/2026-05-11/doc-inhxptri0413534.shtml" rel="noreferrer" title="C114通信网/新浪财经">来源</a></td><td>★★★★★</td></tr></tbody></table></div><dl class="kv-list"><div><dt>研发回报</dt><dd><span class="prose-point">①研发强度10.15%（FY25研发费用RMB144.91亿，YoY+18.8%），投入持续加码AI；</span><span class="prose-point">②Kling AI商业化验证成功，26Q1收入超6.5亿元/YoY+300%，3月ARR约5亿美元环比翻倍；</span><span class="prose-point">③OneRec推荐大模型上线主站使观看时长+1.6%，UAX广告工具渗透率近60%、冷启动成功率+25%，研发已转化为多条业务线增量。</span></dd></div><div><dt>并购记录</dt><dd>未采集到重大并购交易记录，公司增长以内生研发与内部孵化（如Kling AI、OneRec）为主，暂无并购整合能力可评价。</dd></div><div><dt>回购时机</dt><dd><span class="prose-point">①FY2025全年回购5,678万股耗资HK$31.2亿，测算均价约HK$54.9/股；</span><span class="prose-point">②2026年至5/27回购1,796万股耗资HK$8.54亿，测算均价约HK$47.6/股；</span><span class="prose-point">③两次均价均高于2026-08-07收盘价HK$44.18，回购发生在trailing PE不足10倍的低估区间，方向正确但未能进一步压低成本，属低估值区间买入而非精准抄底。</span></dd></div><div><dt>管理层持股</dt><dd><span class="prose-point">①经济权益：程一笑约8.80%、宿华约9.83%，FY2025年报口径合计约18.6%；</span><span class="prose-point">②投票权：AB股不同投票权架构（WVR）下二人合计控制约66%投票权，经济权益与控制权显著分离；</span><span class="prose-point">③该结构下管理层与中小股东利益存在潜在错位空间，但创始人经济权益比例仍处科技公司合理区间，具备一定利益绑定。</span></dd></div><div><dt>薪酬结构</dt><dd>缺失：采集文件management/financialMetrics字段均未披露管理层薪酬结构或KPI考核挂钩机制，已查全部顶层维度无相关数据</dd></div><div><dt>减持记录</dt><dd>未采集到程一笑、宿华等管理层个人减持记录；2026-07-06腾讯减持系第三方股东（非管理层）行为，持股从约15.68%降至约9.37%，不计入管理层减持范畴。</dd></div><div><dt>团队稳定性</dt><dd><span class="prose-point">①程一笑自2011年创立公司起持续任CEO/董事会主席逾14年；</span><span class="prose-point">②宿华2013年加入，曾任CEO/董事长，现转任执行董事聚焦战略层，核心创始团队未见出走；</span><span class="prose-point">③采集文件未披露CFO/COO等其他高管任期信息。</span></dd></div><div><dt>关键人风险</dt><dd><span class="prose-point">①程一笑与宿华通过WVR架构合计控制约66%投票权，双创始人高度集中治理，任一人退出对战略连续性影响较大；</span><span class="prose-point">②宿华已完成从CEO/董事长到战略/董事角色的平稳交接，为潜在CEO继任提供实践先例；</span><span class="prose-point">③采集文件未披露CFO、COO等其他高管人选与梯队深度，团队后备力量无法充分评估，属数据缺口。</span></dd></div><div><dt>企业文化</dt><dd><span class="prose-point">①资本配置文化从纯增长导向转为增长与股东回报并重，2025年首次派发特别股息并建立常态化回购/分红机制；</span><span class="prose-point">②工程师文化突出，OneRec等核心技术团队公开发表论文并快速商业化，2026Q1 Kling AI收入同比增超300%；</span><span class="prose-point">③但2026年1月内因内容审核与网络安全问题连续被处罚合计超RMB1.45亿元，反映长尾UGC内容治理执行与增长速度间存在张力。</span></dd></div></dl><details class="fold"><summary>本节证据 8 条</summary><ul><li>研发费用(R&amp;D Expense)：RMB14,491百万，YoY+18.8%（FY2025） <a class="source-pill" href="https://ir.kuaishou.com/news-releases" rel="noreferrer" title="Kuaishou IR官方披露">来源</a></li><li>FY2025全年回购：5,678万股，耗资约HK$31.2亿，测算均价约HK$54.95/股（2025年内） <a class="source-pill" href="（采集文件内部数据，无外部URL）" rel="noreferrer" title="Kuaishou IR官方公告（均价为本次分析测算）">来源</a></li><li>2026年内回购(至5/27)：1,796万股，耗资HK$854百万，测算均价约HK$47.55/股（2026-05-27） <a class="source-pill" href="（采集文件内部数据，无外部URL）" rel="noreferrer" title="Kuaishou IR官方公告（均价为本次分析测算）">来源</a></li><li>trailing PE(回购期估值参照)：9.77倍（2026-08-07） <a class="source-pill" href="https://stockanalysis.com/quote/hkg/1024/" rel="noreferrer" title="stockanalysis.com">来源</a></li><li>程一笑经济权益：约8.80%（FY2025年报） <a class="source-pill" href="https://ir.kuaishou.com" rel="noreferrer" title="网络检索汇总（快手2025年报披露）">来源</a></li><li>宿华经济权益：约9.83%（FY2025年报） <a class="source-pill" href="https://ir.kuaishou.com" rel="noreferrer" title="网络检索汇总（快手2025年报披露）">来源</a></li><li>程一笑+宿华合计投票权：约66%（AB股WVR架构）（FY2025年报） <a class="source-pill" href="https://ir.kuaishou.com" rel="noreferrer" title="网络检索汇总（快手2025年报披露）">来源</a></li><li>腾讯持股变动（第三方股东，非管理层）：从约15.68%降至约9.37%，出售约2.729亿股，套现约HKD11.8bn（2026-07-06） <a class="source-pill" href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0706/2026070602205.pdf" rel="noreferrer" title="HKEX公告">来源</a></li></ul></details><aside class="inquiry-block"><p class="q">追问 · 如果CEO退休，这家公司还能保持竞争力吗？</p><p class="a"><span class="prose-point">大概率能保持，但决策集中度将上升，短期存在治理与战略连续性风险。</span><span class="prose-point">①程一笑与宿华通过WVR合计控制约66%投票权，且已有宿华从CEO转向战略角色的平稳交接先例，制度上具备继任缓冲；</span><span class="prose-point">②核心壁垒（推荐算法OneRec、Kling AI大模型、内容生态）已沉淀为组织能力而非纯粹依赖创始人个人IP，技术已规模化商业落地，创始人离场不会立即瓦解护城河；</span><span class="prose-point">③但双创始人高度集中的表决权意味着CEO退休仍是重大治理事件，若继任者在Kling AI商业化、电商增长放缓、监管趋严三线压力下战略定力不足，竞争力可能边际弱化，需观察继任安排是否提前明确。</span></p></aside><details class="fold"><summary>数据缺口 4 项</summary><ul><li>———采集文件未披露管理层薪酬结构与KPI考核挂钩机制</li><li>———缺少项目层面研发投入产出量化数据，仅有公司层面研发费用与产品商业化结果</li><li>———采集文件仅披露CEO与联合创始人履历，未披露CFO/COO/CTO等其他高管任期与流动情况</li><li>———缺少员工NPS、离职率等量化文化指标，仅能用资本配置与合规事件做定性推断</li></ul></details></section><section class="company-section" aria-labelledby="industry-trend"><p class="section-kicker">WHERE THE WORLD IS GOING</p><h2 id="industry-trend">行业与长期趋势</h2><p class="section-lead">短视频主业已近成熟期天花板，AI内容生成处于范式转移早期，快手是行业老二兼AI新业务的探索者。</p><dl class="kv-list"><div><dt>范式转移</dt><dd>部分</dd></div><div><dt>历史类比</dt><dd><span class="prose-point">①对比互联网/移动互联网范式（约2000-2015年扩张期），短视频平台本质是注意力经济在移动端的延续，快手所在赛道已步入该轮范式的存量竞争成熟阶段；</span><span class="prose-point">②对比AI这一潜在文明级范式（类比电力从单一照明场景扩散为通用工业动力的历程），Kling AI等生成式视频模型仍处于&quot;电灯泡刚发明、尚未通用化&quot;的早期阶段，技术可用但商业模式与规模效应未定型；</span><span class="prose-point">③在此类比中快手更接近电力早期应用于单一场景的地方性电力公司，而非已建立全产业链垄断地位的标准石油，处于变革窗口期而非确立护城河的阶段。</span></dd></div><div><dt>TAM</dt><dd>在线营销服务(广告)约7257亿元(2025年数字广告口径)；直播电商约6.9461万亿元(2025年预测)。两者统计口径不同，不做跨源加总 RMB；阶段：短视频用户渗透率(95.4%)已进入成熟甚至饱和阶段；在线营销服务市场增速降至10-12%区间，处于成长期向成熟期过渡；直播电商增速从早期30%+降至2024-2026年CAGR预测约18%，处于高速成长向中速成长过渡阶段；AI内容生成业务(Kling AI)处于导入期，月度ARR数月内环比翻倍显示早期爆发式增长特征但商业模式尚未成熟。综合判断：快手核心变现业务处于&quot;成熟期&quot;，AI新业务处于&quot;导入期&quot;，呈现新老业务增长曲线并存的哑铃结构。</dd></div><div><dt>价值链位置</dt><dd><span class="prose-point">①在广告/营销服务价值链中，快手是流量入口与推荐分发方，向品牌及中小广告主收费，议价权取决于用户时长份额；因短视频MAU落后抖音(458.16百万 vs 936.41百万)且增速差距拉大(3.4% vs 14.7% yoy)，议价权总体偏弱势；</span><span class="prose-point">②在直播电商价值链中快手兼具流量分发与交易撮合双重角色，GMV份额约20%出头且较2024年基本持平略降，对商家/主播议价权中等，但需与抖音电商(体量约2倍以上)争夺头部主播与品牌资源；</span><span class="prose-point">③在AI技术价值链中，Kling AI若成功分拆并引入外部融资(市场传闻估值180-200亿美元)，快手将从&quot;应用层使用者&quot;升级为&quot;底层模型供应商&quot;，有望提升在AI生态中的议价权，但方案仍处初步阶段、尚未签署最终协议。</span></dd></div><div><dt>技术路线风险</dt><dd><span class="prose-point">①Kling AI所在的文生视频生成式大模型赛道技术迭代极快，行业内多家厂商模型持续升级，护城河尚未经过长期验证，存在被更优模型颠覆或客户切换成本极低的风险；</span><span class="prose-point">②OneRec将推荐系统从传统检索排序架构切换为生成式Encoder-Decoder+MoE架构，技术路线较新，其相对传统推荐系统的长期稳定优势(目前公开数据仅为+1.6%观看时长)仍需更长周期验证；</span><span class="prose-point">③AI基础设施依赖自建算力(内蒙古乌兰察布数据中心)，FY2025资本开支同比大幅提升至RMB149.42亿元，直接导致自由现金流同比下降45.8%，若AI技术方向出现路线错误或被竞争对手赶超，前期重资产算力投入将面临减值与沉没成本风险。</span></dd></div><div><dt>客户集中度</dt><dd>缺失：采集文件competitiveLandscape/industryOutlook/technology均未披露快手广告主集中度(如前五大广告主收入占比)数据</dd></div><div><dt>供应商集中度</dt><dd>缺失：采集文件未披露云服务器/AI芯片等供应商集中度数据，仅提及&quot;自建数据中心(内蒙古乌兰察布)&quot;及资本开支金额</dd></div></dl><details class="fold"><summary>范式转移正反方证据与 TAM 天花板检验</summary><p><span class="prose-point">①短视频/内容社区行业用户渗透率已达95.4%接近天花板，本质是移动互联网既有范式在存量阶段的延续，而非独立新范式；</span><span class="prose-point">②自研OneRec将推荐系统从传统&quot;召回-排序&quot;两阶段架构重构为生成式端到端架构，在主站实测观看时长提升1.6%，属于底层技术的范式性升级；</span><span class="prose-point">③Kling AI所代表的文生视频生成式大模型正处于AI内容生成这一新兴范式的早期爆发阶段（月度ARR数月内环比翻倍），但长期护城河与商业闭环尚未验证，综合判定行业整体处于&quot;部分&quot;范式转移而非全面颠覆。</span></p><p><span class="prose-point">①在线营销服务市场2025年数字广告口径约7257亿元，多机构预测2025-2030年CAGR中枢10-12%，2030年或达1.4万亿元，天花板受限于中国网络广告总盘子及快手份额提升空间；</span><span class="prose-point">②直播电商市场2024年5.8万亿元、2025年预测6.9461万亿元，但2024-2026年CAGR预测已降至约18%，天花板取决于社零线上渗透率及快手约20%出头份额能否守住；</span><span class="prose-point">③短视频用户时长渗透率已达95.4%，增量空间极小，两大变现引擎的增长已从&quot;用户数×时长&quot;驱动转为&quot;变现效率×份额&quot;驱动。</span></p></details><aside class="inquiry-block"><p class="q">追问 · 站在20年后回看，这家公司是「这个时代的标准石油」还是「昙花一现的3Com」？</p><p class="a"><span class="prose-point">更接近区域性寡头而非标准石油或转瞬即逝的3Com，处于两者之间偏防守一侧。</span><span class="prose-point">①标准石油式判断要求接近垄断的定价权与不可替代的基础设施地位，但快手短视频用户时长与MAU均落后抖音近一倍且差距扩大(3.4% vs 14.7% yoy)，广告与电商两大变现引擎份额均为&quot;老二&quot;，不具备定价权层面的垄断特征；</span><span class="prose-point">②3Com式判断要求技术路线被颠覆后迅速边缘化，但快手已建立稳定现金流(FY2025研发投入RMB144.91亿、持续正向自由现金流)与十亿级用户基本盘，短期内不会消失；</span><span class="prose-point">③真正的胜负手在于Kling AI能否从应用层升级为AI基础设施层的供应商——若分拆成功且商业化持续翻倍，快手有望复制&quot;电力公司&quot;式的时代地位；若被更强模型颠覆，则大概率退化为区域性内容平台，长期估值上限有限。</span></p></aside><details class="fold"><summary>数据缺口 3 项</summary><ul><li>———缺失快手广告主集中度数据(如前五大客户收入占比)，采集文件三个核心字段均未涉及</li><li>———缺失云服务器/AI芯片等核心供应商集中度数据，采集文件仅披露自建数据中心地点与资本开支金额</li><li>———各研究机构口径差异极大（同为相近年份数字相差近一倍），未做跨源调和</li></ul></details></section><section class="company-section" aria-labelledby="valuation"><p class="section-kicker">WHAT THE PRICE IMPLIES</p><h2 id="valuation">估值分析</h2><p class="section-lead">9.77x trailing PE已隐含近零增长预期，估值不贵但需AI分拆等催化剂验证上行空间。</p><h3 class="block-heading">三情景（3 年，工具精确计算）</h3><div class="action-zones"><div><strong>96.5 HKD</strong><span>乐观</span><p>隐含回报 +118.5%</p></div><div><strong>60.2 HKD</strong><span>中性</span><p>隐含回报 +36.2%</p></div><div><strong>40.7 HKD</strong><span>悲观</span><p>隐含回报 -7.9%</p></div></div><details class="fold"><summary>三情景假设依据与工具输出</summary><p><span class="prose-point">①乐观：增速18%取FY2025归母净利润增速21.4%与2026Q1核心商业化收入增速10.7%之间的折中，反映Kling AI贡献加速但不外推最高历史值；PE给13x，温和重估但远低于投行SOTP目标价(63-74港元)隐含倍数，避免押注未落地分拆。</span><span class="prose-point">②中性：增速10%对标2026Q1核心商业化(在线营销+其他服务)实际增速10.7%，假设直播企稳、无AI额外贡献；PE维持现价隐含的10x，即不重估不折价。</span><span class="prose-point">③悲观：增速4%贴近2026Q1总收入增速3.4%的延续，反映直播持续下滑叠加监管罚款(合计超RMB1.45亿)与竞争加剧侵蚀信心；PE压缩至8x，较现价隐含估值折价约18%。</span></p><p class="tool-output">============================================================
+三情景估值模型 (Three-Scenario Valuation)
+============================================================
+  当前股价: 44.18 HKD
+  当前EPS:  4.52
+  预测期:   3年
+
+  情景                年增速     目标PE      目标EPS       目标股价      涨跌幅
+  ------------ -------- -------- ---------- ---------- --------
+  乐观 (Bull)         18%      13x       7.43      96.5  +118.5%
+  中性 (Base)         10%      10x       6.02      60.2   +36.2%
+  悲观 (Bear)          4%       8x       5.08      40.7    -7.9%
+
+  ✅ 所有计算使用精确十进制, 结果可审计复现</p></details><h3 class="block-heading">当前倍数</h3><div class="table-wrap"><table class="analysis-table"><thead><tr><th>指标</th><th>数值</th><th>来源</th></tr></thead><tbody><tr><td>marketCap</td><td>190.36bn HKD</td><td><a class="source-pill" href="（采集文件内部数据，无外部URL）" rel="noreferrer" title="financial_rigor.py cross-validate（FMP+stockanalysis中位数）">来源</a></td></tr><tr><td>pe</td><td>9.77x（TTM/trailing，基于最近12个月归母净利润；forward PE 10.10x）</td><td><a class="source-pill" href="https://stockanalysis.com/quote/hkg/1024/" rel="noreferrer" title="stockanalysis.com">来源</a></td></tr><tr><td>ps</td><td>1.17x</td><td><a class="source-pill" href="https://stockanalysis.com/quote/hkg/1024/" rel="noreferrer" title="stockanalysis.com">来源</a></td></tr><tr><td>peg</td><td>1.19x</td><td><a class="source-pill" href="https://stockanalysis.com/quote/hkg/1024/" rel="noreferrer" title="stockanalysis.com">来源</a></td></tr><tr><td>evToRevenue</td><td>0.96x（低于PS的1.17x，因公司持有大额净现金约RMB918亿，EV显著小于市值）</td><td><a class="source-pill" href="https://stockanalysis.com/quote/hkg/1024/" rel="noreferrer" title="stockanalysis.com">来源</a></td></tr></tbody></table></div><dl class="kv-list"><div><dt>反向 DCF</dt><dd><span class="prose-point">①forward EPS(44.18/10.10≈4.37)较trailing EPS(44.18/9.77≈4.52)低约3.3%，反向验算显示市场并未定价未来12个月盈利增长，反隐含小幅EPS衰退。</span><span class="prose-point">②9.77x trailing PE已逼近&quot;零增长&quot;估值基准，说明现价基本未计入Kling AI等新业务的长期增长溢价，主要反映存量广告+直播业务的稳态定价。</span><span class="prose-point">③股价上行更依赖分拆等催化剂兑现，而非核心业务内生增长预期改善。</span></dd></div><div><dt>vs 自身历史 · trailing PE 当前 9.77x</dt><dd>缺失：采集文件financials-collection.json未收录快手上市以来或近3-5年的历史PE区间/时间序列数据，仅有当前单点估值，无法计算当前分位数</dd></div><div><dt>或有稀释</dt><dd>—</dd></div></dl><h3 class="block-heading">同行对比</h3><div class="table-wrap"><table><thead><tr><th>公司</th><th>PE（TTM / Fwd）</th><th>PS</th><th>来源</th></tr></thead><tbody><tr><td>抖音（字节跳动）</td><td>— / —</td><td>缺失：未上市，无公开PE/PS数据</td><td><a class="source-pill" href="（采集文件内部数据，无外部URL）" rel="noreferrer" title="financials-collection.json competitiveLandscape.competitors">来源</a></td></tr><tr><td>微信视频号（腾讯）</td><td>— / —</td><td>缺失：同上</td><td><a class="source-pill" href="（采集文件内部数据，无外部URL）" rel="noreferrer" title="financials-collection.json competitiveLandscape.competitors">来源</a></td></tr><tr><td>哔哩哔哩 Bilibili (9626.HK/BILI)</td><td>— / —</td><td>缺失：同上</td><td><a class="source-pill" href="https://xueqiu.com/7954303002/378569790" rel="noreferrer" title="Bilibili官方2025年报（雪球转引）">来源</a></td></tr><tr><td>小红书 Xiaohongshu</td><td>— / —</td><td>缺失：同上</td><td><a class="source-pill" href="https://finance.sina.com.cn/roll/2025-09-05/doc-infpmkhh5984541.shtml" rel="noreferrer" title="新浪财经转引彭博社">来源</a></td></tr></tbody></table></div><aside class="inquiry-block"><p class="q">追问 · 如果股市明天关闭5年，你愿意以这个价格持有吗？</p><p class="a"><span class="prose-point">愿意，但仅作组合中的谨慎仓位持有，非重仓押注。</span><span class="prose-point">①9.77x trailing PE已隐含悲观预期，估值不贵；FY2025归母净利润+21.4%、净现金约RMB918亿，安全垫充足，能承受5年波动而不担心流动性问题。</span><span class="prose-point">②Kling AI ARR环比翻倍、分拆获多家投行正面定价，是5年维度的第二增长曲线期权，即便分拆不成，AI技术资产本身仍具独立价值。</span><span class="prose-point">③但MAU增速远落后抖音(3.4%对比14.7%)、直播已连续两季下滑，若竞争地位5年内未能企稳，便宜估值可能沦为价值陷阱，故不应重仓。</span></p></aside><details class="fold"><summary>数据缺口 2 项</summary><ul><li>———缺快手上市以来的历史PE区间/时间序列数据，无法判断当前9.77x的历史分位</li><li>———采集文件competitiveLandscape仅收录哔哩哔哩营收与毛利率，未收录其PE/PS等估值倍数</li></ul></details></section><section class="company-section" aria-labelledby="provenance"><p class="section-kicker">PROVENANCE</p><h2 id="provenance">数据与免责声明</h2><p class="company-note">本页由三份经完整性校验（阈值 7 分）的结构化文件合并渲染： 采集 research/companies/hk-1024-kuaishou/financials-collection.json、分析 research/companies/hk-1024-kuaishou/financials-analysis.json、总结 research/companies/hk-1024-kuaishou/financials-summary.json。 生成于 <time>2026-08-09T16:10:20+08:00</time>，数据截止 2026-08-09（Asia/Shanghai）。最新已披露季度为2026Q1（截至2026-03-31，2026-05-27发布）；2026Q2/中期业绩定于2026-08-19发布，本次采集时尚未公布。。</p><p class="company-note">本总结基于公开信息与数据截止时点的分析生成，仅供研究参考，不构成个性化投资建议。</p></section></main></body></html>
