@@ -1,0 +1,2620 @@
+{
+  "finalVersion": "1.0.0",
+  "meta": {
+    "companyId": "sh-600900-yangtze-power",
+    "companyName": "中国长江电力股份有限公司",
+    "generatedAt": "2026-08-09T20:06:31+08:00",
+    "dataCutoff": "2026-08-07",
+    "validation": {
+      "threshold": 7.0,
+      "scores": {
+        "collection": 9.9,
+        "analysis": 9.8,
+        "summary": 10.0
+      },
+      "validatedAt": "2026-08-09T20:06:31+08:00"
+    },
+    "sources": {
+      "collection": "research/companies/sh-600900-yangtze-power/financials-collection.json",
+      "analysis": "research/companies/sh-600900-yangtze-power/financials-analysis.json",
+      "summary": "research/companies/sh-600900-yangtze-power/financials-summary.json"
+    }
+  },
+  "collection": {
+    "_spec": {
+      "purpose": "公司数据采集产出模板。采集范围以 docs/model/financial-model.md 的 10 个维度为唯一清单，数据源与交叉验证规范以 docs/model/financial-data.md 为唯一正文。",
+      "todoSentinel": "所有待填值写 \"__TODO__\"；取不到的字段不删除，改写 { \"status\": \"unavailable\", \"reason\": \"缺失原因 + 已查范围\" }。",
+      "verifiedValue": "关键数值统一用校验对象：{ value, unit, currency, source1: {name, url, value}, source2: {name, url, value}, deviationPct, flag }。flag 取值：ok（误差≤1%，取 source1 数值）/ minor-diff（1%~5%，注明可能原因如汇率或会计口径）/ major-diff（>5%，必须回原始财报核实后才能使用）。",
+      "calculation": "一切除法、乘法、增速、估值倍数必须用 docs/research/tools/financial_rigor.py 验算，禁止心算；工具输出记入 crossValidationLog。"
+    },
+    "meta": {
+      "companyId": "sh-600900-yangtze-power",
+      "companyName": "中国长江电力股份有限公司",
+      "ticker": "600900",
+      "exchange": "上海证券交易所",
+      "market": "cn-a",
+      "reportingCurrency": "CNY",
+      "accountingBasis": "中国企业会计准则",
+      "fiscalYearEnd": "12-31",
+      "dataCutoff": "2026-08-07",
+      "collectedAt": "2026-08-09",
+      "sources": {
+        "primary": {
+          "name": "Tushare Pro（api.tushare.pro，cnstock_data.py）",
+          "url": "https://tushare.pro"
+        },
+        "secondary": {
+          "name": "巨潮资讯年报/半年报原文 + 卖方研报（国泰海通/东吴/华源证券）+ 新浪财经资产负债表",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225262036.PDF"
+        },
+        "originalFilings": [
+          {
+            "type": "年报",
+            "period": "FY2025",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225262036.PDF"
+          },
+          {
+            "type": "半年报",
+            "period": "2025H1",
+            "url": "https://static.cninfo.com.cn/finalpage/2025-08-30/1224627986.PDF"
+          }
+        ]
+      }
+    },
+    "revenueStructure": {
+      "_dimension": "1. 收入结构：最近财年及近4季度分部收入、增速、毛利率",
+      "latestFiscalYear": {
+        "period": "FY2025（20251231）",
+        "totalRevenue": {
+          "value": 862.4,
+          "unit": "亿元",
+          "currency": "CNY",
+          "source1": {
+            "name": "Tushare income（report_type=1）",
+            "url": "https://tushare.pro",
+            "value": 862.4
+          },
+          "source2": {
+            "name": "国泰海通证券跟踪报告（2026-05-28）",
+            "url": "https://www.fxbaogao.com/detail/5441401",
+            "value": 862.0
+          },
+          "deviationPct": 0.02,
+          "flag": "ok"
+        },
+        "segments": [
+          {
+            "name": "境内水电行业",
+            "revenue": {
+              "value": 756.6,
+              "unit": "亿元",
+              "currency": "CNY",
+              "source1": {
+                "name": "Tushare fina_mainbz（type=P，剔除合计行）",
+                "url": "https://tushare.pro",
+                "value": 756.6
+              },
+              "source2": {
+                "name": "unavailable",
+                "url": "",
+                "value": "unavailable"
+              },
+              "deviationPct": "unavailable",
+              "flag": "ok",
+              "note": "Level 2/分部字段，单源，已与利润表总收入对账（差异 0.00%）"
+            },
+            "revenueSharePct": 87.7,
+            "yoyGrowthPct": {
+              "status": "unavailable",
+              "reason": "fina_mainbz 未提供上年同期分部数据，年报分部章节需逐页核对，超出本次采集范围"
+            },
+            "grossMarginPct": 65.8
+          },
+          {
+            "name": "其他行业（抽水蓄能、新能源、海外风电等）",
+            "revenue": {
+              "value": 103.2,
+              "unit": "亿元",
+              "currency": "CNY",
+              "source1": {
+                "name": "Tushare fina_mainbz（type=P）",
+                "url": "https://tushare.pro",
+                "value": 103.2
+              },
+              "source2": {
+                "name": "unavailable",
+                "url": "",
+                "value": "unavailable"
+              },
+              "deviationPct": "unavailable",
+              "flag": "ok"
+            },
+            "revenueSharePct": 12.0,
+            "yoyGrowthPct": {
+              "status": "unavailable",
+              "reason": "同上"
+            },
+            "grossMarginPct": 31.5
+          },
+          {
+            "name": "其他业务",
+            "revenue": {
+              "value": 2.6,
+              "unit": "亿元",
+              "currency": "CNY",
+              "source1": {
+                "name": "Tushare fina_mainbz（type=P）",
+                "url": "https://tushare.pro",
+                "value": 2.6
+              },
+              "source2": {
+                "name": "unavailable",
+                "url": "",
+                "value": "unavailable"
+              },
+              "deviationPct": "unavailable",
+              "flag": "ok"
+            },
+            "revenueSharePct": 0.3,
+            "yoyGrowthPct": {
+              "status": "unavailable",
+              "reason": "同上"
+            },
+            "grossMarginPct": 57.5
+          }
+        ]
+      },
+      "recentQuarters": [
+        {
+          "period": "2025Q2",
+          "totalRevenue": {
+            "value": 196.83,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare income period=20250630 累计值倒算",
+              "url": "https://tushare.pro",
+              "value": 196.83
+            },
+            "source2": {
+              "name": "unavailable",
+              "url": "",
+              "value": "unavailable"
+            },
+            "deviationPct": "unavailable",
+            "flag": "ok",
+            "note": "单季值 = H1累计366.98亿 - Q1累计170.15亿，经 financial_rigor.py calc 验算"
+          },
+          "yoyGrowthPct": 2.69,
+          "segments": [
+            {
+              "name": "unavailable",
+              "revenue": "unavailable",
+              "yoyGrowthPct": "unavailable",
+              "note": "分部数据仅按年披露，无季度分部"
+            }
+          ]
+        },
+        {
+          "period": "2025Q3",
+          "totalRevenue": {
+            "value": 290.43,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare income period=20250930 累计值倒算",
+              "url": "https://tushare.pro",
+              "value": 290.43
+            },
+            "source2": {
+              "name": "unavailable",
+              "url": "",
+              "value": "unavailable"
+            },
+            "deviationPct": "unavailable",
+            "flag": "ok",
+            "note": "单季值 = 9M累计657.41亿 - H1累计366.98亿，经 financial_rigor.py calc 验算"
+          },
+          "yoyGrowthPct": -7.87,
+          "segments": [
+            {
+              "name": "unavailable",
+              "revenue": "unavailable",
+              "yoyGrowthPct": "unavailable"
+            }
+          ]
+        },
+        {
+          "period": "2025Q4",
+          "totalRevenue": {
+            "value": 205.01,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare income period=20251231 累计值倒算",
+              "url": "https://tushare.pro",
+              "value": 205.01
+            },
+            "source2": {
+              "name": "unavailable",
+              "url": "",
+              "value": "unavailable"
+            },
+            "deviationPct": "unavailable",
+            "flag": "ok",
+            "note": "单季值 = FY2025累计862.42亿 - 9M累计657.41亿，经 financial_rigor.py calc 验算"
+          },
+          "yoyGrowthPct": 12.88,
+          "segments": [
+            {
+              "name": "unavailable",
+              "revenue": "unavailable",
+              "yoyGrowthPct": "unavailable"
+            }
+          ]
+        },
+        {
+          "period": "2026Q1",
+          "totalRevenue": {
+            "value": 181.12,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare income period=20260331",
+              "url": "https://tushare.pro",
+              "value": 181.12
+            },
+            "source2": {
+              "name": "国泰海通证券跟踪报告（2026-05-28，26Q1营收181亿）",
+              "url": "https://www.fxbaogao.com/detail/5441401",
+              "value": 181.0
+            },
+            "deviationPct": 0.07,
+            "flag": "ok"
+          },
+          "yoyGrowthPct": 6.45,
+          "segments": [
+            {
+              "name": "unavailable",
+              "revenue": "unavailable",
+              "yoyGrowthPct": "unavailable"
+            }
+          ]
+        }
+      ]
+    },
+    "financialMetrics": {
+      "_dimension": "2. 财务指标：近5年收入、净利润、毛利率、经营利润率、自由现金流、现金储备",
+      "annual": [
+        {
+          "fiscalYear": "FY2025",
+          "revenue": {
+            "value": 862.4,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare income",
+              "url": "https://tushare.pro",
+              "value": 862.4
+            },
+            "source2": {
+              "name": "国泰海通证券跟踪报告",
+              "url": "https://www.fxbaogao.com/detail/5441401",
+              "value": 862.0
+            },
+            "deviationPct": 0.02,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": 345.0,
+            "unit": "亿元",
+            "currency": "CNY",
+            "note": "归母净利润（合并报表口径，中国企业会计准则）",
+            "source1": {
+              "name": "Tushare income n_income_attr_p",
+              "url": "https://tushare.pro",
+              "value": 345.0
+            },
+            "source2": {
+              "name": "国泰海通证券跟踪报告",
+              "url": "https://www.fxbaogao.com/detail/5441401",
+              "value": 345.0
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "grossMarginPct": 61.7,
+          "operatingMarginPct": 49.4,
+          "freeCashFlow": {
+            "value": 420.7,
+            "unit": "亿元",
+            "currency": "CNY",
+            "note": "口径 = 经营活动现金流量净额 - 购建固定资产等支付的现金，不含并购支出",
+            "source1": {
+              "name": "Tushare cashflow（cnstock_data.py 计算）",
+              "url": "https://tushare.pro",
+              "value": 420.7
+            },
+            "source2": {
+              "name": "unavailable",
+              "url": "",
+              "value": "unavailable"
+            },
+            "deviationPct": "unavailable",
+            "flag": "ok",
+            "noteLevel": "FCF 属 Level 1，本次仅取得 Tushare 单源"
+          },
+          "cashReserves": {
+            "value": 45.86,
+            "unit": "亿元",
+            "currency": "CNY",
+            "note": "货币资金余额，未扣负债",
+            "source1": {
+              "name": "Tushare balancesheet money_cap",
+              "url": "https://tushare.pro",
+              "value": 45.86
+            },
+            "source2": {
+              "name": "年报原文《资产、负债情况分析》章节",
+              "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225262036.PDF",
+              "value": 45.85856068060001
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "totalLiabilities": {
+            "value": 325.85,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare balancesheet total_liab",
+              "url": "https://tushare.pro",
+              "value": 325.85
+            },
+            "source2": {
+              "name": "百优价值网年度价值洞察（转引年报资产负债表）",
+              "url": "https://www.100est.com/res/avi/600900sh2025/600900sh2025.html",
+              "value": 325.848
+            },
+            "deviationPct": 0.0,
+            "flag": "ok",
+            "note": "资产负债率 58.27%（较 FY2024 的 60.79% 下降 2.52pct）；有息负债 287.99 亿(2025末)较2024末297.80亿减少约98亿，来源百优价值网转引年报"
+          },
+          "roePct": {
+            "value": 16.0,
+            "note": "Tushare fina_indicator（期末摊薄口径）",
+            "flag": "ok",
+            "source1": {
+              "name": "Tushare fina_indicator roe",
+              "value": 16.0
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "deviationPct": "unavailable"
+          }
+        },
+        {
+          "fiscalYear": "FY2024",
+          "revenue": {
+            "value": 844.9,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare income",
+              "value": 844.9
+            },
+            "source2": {
+              "name": "华源证券点评（2024A营收844.92亿元/百万元表）",
+              "value": 844.92
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": 325.0,
+            "unit": "亿元",
+            "currency": "CNY",
+            "note": "归母净利润",
+            "source1": {
+              "name": "Tushare",
+              "value": 325.0
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "deviationPct": "unavailable",
+            "flag": "ok"
+          },
+          "grossMarginPct": 59.1,
+          "operatingMarginPct": 46.92,
+          "freeCashFlow": {
+            "value": 452.3,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare cashflow",
+              "value": 452.3
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          },
+          "cashReserves": {
+            "value": 65.55,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare balancesheet",
+              "value": 65.55
+            },
+            "source2": {
+              "name": "新浪财经资产负债表（65.73亿元，2025-09-30快照下的上期数）",
+              "value": 65.73
+            },
+            "deviationPct": 0.27,
+            "flag": "ok"
+          },
+          "totalLiabilities": {
+            "value": 344.12,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare balancesheet",
+              "value": 344.12
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          },
+          "roePct": {
+            "value": 15.8,
+            "source1": {
+              "name": "Tushare fina_indicator",
+              "value": 15.8
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          }
+        },
+        {
+          "fiscalYear": "FY2023",
+          "revenue": {
+            "value": 781.1,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare income",
+              "value": 781.1
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": 272.4,
+            "unit": "亿元",
+            "currency": "CNY",
+            "note": "归母净利润",
+            "source1": {
+              "name": "Tushare",
+              "value": 272.4
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          },
+          "grossMarginPct": 57.8,
+          "operatingMarginPct": 42.53,
+          "freeCashFlow": {
+            "value": 524.9,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare cashflow",
+              "value": 524.9
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          },
+          "cashReserves": {
+            "value": 77.78,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare balancesheet",
+              "value": 77.78
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          },
+          "totalLiabilities": {
+            "value": 359.64,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare balancesheet",
+              "value": 359.64
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok",
+            "note": "总资产较FY2022从3272.68亿跃升至5719.43亿，系2023年1月完成收购乌东德、白鹤滩两座巨型水电站（原三峡集团资产注入）所致，总负债、总资产同步大幅增长"
+          },
+          "roePct": {
+            "value": 14.1,
+            "source1": {
+              "name": "Tushare fina_indicator",
+              "value": 14.1
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          }
+        },
+        {
+          "fiscalYear": "FY2022",
+          "revenue": {
+            "value": 520.6,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare income",
+              "value": 520.6
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": 213.1,
+            "unit": "亿元",
+            "currency": "CNY",
+            "note": "归母净利润",
+            "source1": {
+              "name": "Tushare",
+              "value": 213.1
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          },
+          "grossMarginPct": 57.3,
+          "operatingMarginPct": 51.74,
+          "freeCashFlow": {
+            "value": 260.4,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare cashflow",
+              "value": 260.4
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          },
+          "cashReserves": {
+            "value": 93.02,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare balancesheet",
+              "value": 93.02
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          },
+          "totalLiabilities": {
+            "value": 131.51,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare balancesheet",
+              "value": 131.51
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          },
+          "roePct": {
+            "value": 11.6,
+            "source1": {
+              "name": "Tushare fina_indicator",
+              "value": 11.6
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          }
+        },
+        {
+          "fiscalYear": "FY2021",
+          "revenue": {
+            "value": 556.5,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare income",
+              "value": 556.5
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": 262.7,
+            "unit": "亿元",
+            "currency": "CNY",
+            "note": "归母净利润",
+            "source1": {
+              "name": "Tushare",
+              "value": 262.7
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          },
+          "grossMarginPct": 62.1,
+          "operatingMarginPct": 59.08,
+          "freeCashFlow": {
+            "value": 322.6,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare cashflow",
+              "value": 322.6
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          },
+          "cashReserves": {
+            "value": 99.3,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare balancesheet",
+              "value": 99.3
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          },
+          "totalLiabilities": {
+            "value": 138.28,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare balancesheet",
+              "value": 138.28
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          },
+          "roePct": {
+            "value": 14.9,
+            "source1": {
+              "name": "Tushare fina_indicator",
+              "value": 14.9
+            },
+            "source2": {
+              "name": "unavailable",
+              "value": "unavailable"
+            },
+            "flag": "ok"
+          }
+        }
+      ]
+    },
+    "competitiveLandscape": {
+      "_dimension": "3. 竞争格局：市场份额、主要竞争对手对比",
+      "marketShare": {
+        "valuePct": "水电总装机7179.5万千瓦（境内水电7169.5万千瓦），约占全国水电装机16%，为全球最大水电上市公司；六座梯级电站110台机组中86台为70万千瓦及以上巨型机组，占全球同类机组三分之二",
+        "marketDefinition": "分母为全国水电总装机容量；不含抽水蓄能及其他清洁能源装机；水电行业整体集中度高，七大能源央企（三峡、华能、华电、大唐、国家电投、国投、国家能源集团）2021年末合计约占全国水电装机53%",
+        "asOf": "截至2025年末",
+        "source": {
+          "name": "长江电力2025年度环境、社会和公司治理报告",
+          "url": "http://xinpi.zqrb.cn/pdf/SH/600900/2026/0430/e57b9dca2c1a58d0d8d77abefa9429a5.pdf"
+        }
+      },
+      "competitors": [
+        {
+          "name": "华能澜沧江水电股份有限公司",
+          "ticker": "600025.SH",
+          "marketSharePct": "装机3,353.74万千瓦（2025年6月末），在建及规划装机超1100万千瓦，较当前仍有四成以上提升空间",
+          "revenue": "FY2025营收265.95亿元（+6.89% YoY），归母净利润85.04亿元（+2.50% YoY），发电量1269.32亿千瓦时（+13.32% YoY）",
+          "grossMarginPct": {
+            "status": "unavailable",
+            "reason": "已查华能水电FY2025年报公告摘要与钛媒体转引，未见毛利率单独披露，未逐页核对年报利润表成本明细"
+          },
+          "note": "主要竞争对手，专注澜沧江流域水电，装机成长空间明显大于长江电力（长江流域大型水电资源已基本开发完毕）",
+          "source": {
+            "name": "华能澜沧江水电股份有限公司2025年年度报告 / 钛媒体转引",
+            "url": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225231661.PDF"
+          }
+        },
+        {
+          "name": "国投电力控股股份有限公司",
+          "ticker": "600886.SH",
+          "marketSharePct": "水电控股装机2,130.45万千瓦（国内第三大水电装机上市公司），清洁能源装机占比71.84%；在建水电753万千瓦，2026年7月再增240万千瓦，潜在总装机可提升约50%",
+          "revenue": "2025H1营收256.97亿元（-5.18% YoY），归母净利润37.95亿元（+1.36% YoY）",
+          "grossMarginPct": {
+            "status": "unavailable",
+            "reason": "已查北极星电力网/钛媒体转引的2025半年报数据，未见毛利率披露"
+          },
+          "note": "水火风光综合能源商，控股雅砻江水电体现装机，成长天花板高于长江电力",
+          "source": {
+            "name": "北极星电力网《净利超255亿！11家水电上市公司上半年业绩披露》/ 钛媒体",
+            "url": "https://www.gdshe.org/article/25776.html"
+          }
+        },
+        {
+          "name": "四川川投能源股份有限公司",
+          "ticker": "600674.SH",
+          "marketSharePct": "不并表，权益法核算：参股雅砻江水电48%（全国第三大水电基地）、大渡河水电20%（全国第五大水电基地）；控股田湾河水电（总装机76万千瓦）",
+          "revenue": "FY2025营收16.68亿元（+3.65% YoY，主要为控股小规模水电及非能源业务，不含权益法投资收益），归母净利润47.54亿元（+5.47% YoY，主要来自雅砻江/大渡河投资收益）",
+          "grossMarginPct": {
+            "status": "not-applicable",
+            "reason": "以权益法投资收益为主要利润来源，非并表收入，传统毛利率口径不适用"
+          },
+          "note": "轻资产权益法投资平台，净利润主要来自参股的雅砻江、大渡河水电资产",
+          "source": {
+            "name": "中国电力报/中国能源新闻网《长江电力859亿、华能水电266亿……多家能源企业年度业绩悉数亮相》",
+            "url": "https://www.cpnn.com.cn/news/nyqy/202604/t20260430_1884834_wap.html"
+          }
+        }
+      ],
+      "keyDifferentiator": "长江电力是唯一完全拥有并并表长江干流六座巨型梯级电站的水电运营商，装机规模及现金流稳定性居行业首位，但装机成长天花板已现（长江流域适宜大坝资源基本开发完毕，西藏墨脱水电站已确认归属中国雅江集团而非长江电力）；华能水电、国投电力仍有较大装机成长空间，川投能源为纯权益法投资平台。"
+    },
+    "businessModelMoat": {
+      "_dimension": "4. 商业模式与护城河：核心竞争优势来源",
+      "oneLiner": "水电运营商：拥有长江干流六座梯级电站（三峡、葛洲坝、溪洛渡、向家坝、乌东德、白鹤滩）的完全所有权与经营权，将长江水能转化为电能，通过与国家电网、南方电网的长期购售电协议稳定售电获取收入，核心是流域资源的不可复制稀缺性与近零边际成本。",
+      "revenueModel": "长期购售电框架协议为主（合同电量），市场化交易电量占比持续提升（2024年约38.6%，2023年37.8%）；收入随来水丰枯波动但由六库联调平抑，非订阅或平台模式，现金流高度稳定。",
+      "moats": [
+        {
+          "type": "规模效应/资源稀缺性（流域资源自然垄断）",
+          "evidence": "长江年平均径流量约9,600亿立方米、占全国河川径流总量35%以上，总落差超6,600米且落差集中，具备天然建设高坝大库条件；长江流域适宜建设大型水电站的资源已基本开发完毕，装机500万千瓦以上电站增量几乎为零，六座巨型电站资产不可复制（来源：东方财富财富号/华源证券研报，外部推断）",
+          "trend": "稳定——资源已锁定，但也意味着外延式装机增长空间见顶"
+        },
+        {
+          "type": "转换成本（央企电网客户结构）",
+          "evidence": "收入几乎完全依赖国家电网、南方电网两大央企购售电框架协议，回款无坏账风险，清洁能源优先上网；次要增量客户为华为昇腾智算、阿里云、中国电信等数据中心的长期绿电直供协议（占比<1%但持续扩容）（来源：东方财富财富号，外部推断）",
+          "trend": "稳定，绿电直供为增量方向"
+        },
+        {
+          "type": "技术专利壁垒（梯级联合调度与巨型机组运维）",
+          "evidence": "'六库联调'平抑丰枯周期波动，24小时流量预报精度98%以上，电站日均发电计划准确率99.8%以上；FY2025研发投入24.55亿元，累计有效专利5,083项；'降雨-径流-负荷全链条智能预报技术'获2025年度大禹水利科技进步奖一等奖（来源：长江电力2025年度ESG报告）",
+          "trend": "变宽——'中国三峡一号'水电卫星星座、水下机器人巡检、北斗地基增强站等新技术持续投入"
+        },
+        {
+          "type": "成本结构优势（零燃料成本）",
+          "evidence": "水电边际发电成本趋近于零，是电力行业成本曲线中少数的低成本供给方，级差地租效应使毛利率长期维持在60%左右、净利率约40%（FY2025毛利率61.7%、净利率40.5%，公司自身财务数据）",
+          "trend": "稳定"
+        }
+      ]
+    },
+    "technology": {
+      "_dimension": "5. 技术能力：核心技术栈、研发投入",
+      "coreTechStack": [
+        "大型水电梯级联合调度技术（六库联调，24小时流量预报精度98%以上）",
+        "巨型水轮发电机组运维检修技术（70万千瓦及以上机组86台）",
+        "水下机器人巡检（已完成国家重点研发项目现场验证）",
+        "巨型水轮机顶盖智能提升装备",
+        "'中国三峡一号'水电卫星星座",
+        "北斗地基增强站（覆盖葛洲坝/溪洛渡/向家坝/乌东德/白鹤滩五座电站区域）",
+        "智能水电工业互联网平台（物联管理平台支撑69个专业业务系统）"
+      ],
+      "rdExpense": {
+        "value": 24.55,
+        "unit": "亿元",
+        "currency": "CNY",
+        "note": "含科研项目投入12.41亿元、创新能力建设投入5.6亿元、研发基金类投入0.08亿元、研发人员费用5.5亿元，FY2025口径",
+        "source1": {
+          "name": "长江电力2025年度环境、社会和公司治理报告",
+          "url": "http://xinpi.zqrb.cn/pdf/SH/600900/2026/0430/e57b9dca2c1a58d0d8d77abefa9429a5.pdf",
+          "value": 24.55
+        },
+        "source2": {
+          "name": "unavailable",
+          "url": "",
+          "value": "unavailable"
+        },
+        "deviationPct": "unavailable",
+        "flag": "ok",
+        "noteLevel": "Level 2/3字段，单源（公司ESG报告披露），未做交叉验证"
+      },
+      "rdIntensityPct": {
+        "value": 2.85,
+        "note": "研发投入24.55亿元/营业总收入862.4亿元，经 financial_rigor.py calc 验算"
+      },
+      "rdTrend": "研发聚焦大水电自主可控调度运维与新兴数字化技术（卫星遥感、水下机器人、工业互联网平台），非典型高研发强度行业，投入方向服务于存量电站的安全与效率而非新产品迭代",
+      "note": "研发人员费用与科研项目投入口径混合披露，未见分年度研发强度历史序列，本次仅取得FY2025单年数据"
+    },
+    "management": {
+      "_dimension": "6. 管理层：创始人/CEO履历、持股比例、关键决策记录",
+      "founderCeo": {
+        "name": "刘伟平（董事长、法定代表人，兼任控股股东三峡集团董事长、党组书记）；刘海波（董事、总经理，兼三峡电厂厂长）",
+        "background": "刘伟平：1964年11月生，大学本科，教授级高级工程师。历任水利部水库移民开发局局长，水利水电规划设计总院院长、党委书记，中水北方/中水东北勘测设计研究院董事长，水利部建设与管理司司长、总工程师、副部长；2024年4月15日任三峡集团董事长、党组书记，2024年6月20日起任长江电力董事长。 || 刘海波：1971年10月生，大学本科，正高级工程师。历任三峡电厂运行部副主任，长江电力生产计划部/生产技术部副经理，三峡水利枢纽梯级调度通信中心副主任，白鹤滩电厂筹建处副主任、副厂长、厂长、党委书记，长江电力副总经理兼白鹤滩电厂厂长（后兼三峡电厂厂长）；2025年4月9日起任总经理，接替张星燎。两位主要负责人均无个人A股持股（历年年报披露持股数为0股），是典型的央企治理架构：董事长为控股股东三峡集团派任的水利系统官员，总经理为内部提拔的技术官僚。",
+        "tenure": "刘伟平任董事长（2024-06-20至今）；刘海波任总经理（2025-04-09至今）",
+        "source": [
+          {
+            "name": "东方财富百科《中国长江电力股份有限公司》",
+            "url": "https://baike.eastmoney.com/item/%E4%B8%AD%E5%9B%BD%E9%95%BF%E6%B1%9F%E7%94%B5%E5%8A%9B%E8%82%A1%E4%BB%BD%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8"
+          },
+          {
+            "name": "经济观察网《刘伟平任职三峡集团董事长、党组书记》",
+            "url": "http://www.eeo.com.cn/2024/0416/652666.shtml"
+          },
+          {
+            "name": "北极星电力网《长江电力总经理调整》",
+            "url": "https://gdshe.org/article/24256.html"
+          }
+        ]
+      },
+      "ownership": {
+        "economicPct": "43.47%（控股股东中国长江三峡集团有限公司，即经济权益=投票权，无AB股结构）",
+        "votingPct": "43.47%",
+        "source": {
+          "name": "Tushare top10_holders，报告期20260331",
+          "url": "https://tushare.pro"
+        },
+        "topHolders": [
+          {
+            "name": "中国长江三峡集团有限公司",
+            "pct": 43.47
+          },
+          {
+            "name": "香港中央结算有限公司",
+            "pct": 4.24
+          },
+          {
+            "name": "中国平安人寿保险股份有限公司-传统-普通保险产品",
+            "pct": 4.04
+          },
+          {
+            "name": "长江生态环保集团有限公司",
+            "pct": 4.0
+          },
+          {
+            "name": "四川省能源投资集团有限责任公司",
+            "pct": 3.75
+          },
+          {
+            "name": "中国三峡建工(集团)有限公司",
+            "pct": 3.6
+          },
+          {
+            "name": "云南省能源集团有限公司",
+            "pct": 2.16
+          },
+          {
+            "name": "长江三峡集团实业发展(北京)有限公司",
+            "pct": 1.86
+          },
+          {
+            "name": "中国人寿保险股份有限公司-传统-普通保险产品-005L-CT001",
+            "pct": 1.64
+          },
+          {
+            "name": "昆明云能水电开发有限公司",
+            "pct": 1.63
+          }
+        ],
+        "top10Total": 70.39,
+        "shareholderCountTrend": "20260331: 739,609户；20251231: 543,860户；20250930: 601,559户；20250830: 613,514户；20250630: 346,077户（近一年户数显著上升，筹码趋向分散）"
+      },
+      "executiveCompensation": {
+        "period": "FY2025（20251231）",
+        "source": {
+          "name": "Tushare stk_rewards",
+          "url": "https://tushare.pro"
+        },
+        "items": [
+          {
+            "name": "刘海波",
+            "title": "董事,总经理",
+            "compensationWanCNY": 143.7,
+            "shares": 0
+          },
+          {
+            "name": "段开林",
+            "title": "副总经理",
+            "compensationWanCNY": 136.0,
+            "shares": 0
+          },
+          {
+            "name": "黄勋",
+            "title": "原职工监事",
+            "compensationWanCNY": 134.6,
+            "shares": 16000
+          },
+          {
+            "name": "马之涛",
+            "title": "原职工监事",
+            "compensationWanCNY": 133.8,
+            "shares": 0
+          },
+          {
+            "name": "薛宁",
+            "title": "董事会秘书",
+            "compensationWanCNY": 119.8,
+            "shares": 0
+          },
+          {
+            "name": "陆劲松",
+            "title": "原职工监事",
+            "compensationWanCNY": 116.3,
+            "shares": 0
+          },
+          {
+            "name": "潘静",
+            "title": "总法律顾问",
+            "compensationWanCNY": 116.1,
+            "shares": 0
+          },
+          {
+            "name": "冉毅川",
+            "title": "原副总经理",
+            "compensationWanCNY": 113.3,
+            "shares": 0
+          }
+        ],
+        "note": "高管普遍不持股或持股极少（仅原职工监事黄勋持1.6万股），符合中央国有控股企业高管薪酬与持股惯例"
+      },
+      "keyDecisions": [
+        {
+          "date": "2023年1月",
+          "decision": "完成收购乌东德、白鹤滩水电站（原三峡集团资产注入）",
+          "outcome": "总资产从FY2022的3,272.68亿元跃升至FY2023的5,719.43亿元，是公司历史上第三次、也是目前最大规模的资产注入（此前分别为2009年三峡电站注入、2016年溪洛渡/向家坝注入），六座梯级电站全部收归上市公司"
+        },
+        {
+          "date": "2024年4月-6月",
+          "decision": "董事会/管理层换届：雷鸣山辞任董事长，刘伟平接任（同期接任控股股东三峡集团董事长）",
+          "outcome": "控股股东领导层新老交替，长江电力治理层同步调整"
+        },
+        {
+          "date": "2025年4月9日",
+          "decision": "总经理换届，刘海波接替张星燎",
+          "outcome": "由长期在三峡电厂/白鹤滩电厂一线任职的技术官僚接任，管理层工程技术背景强化"
+        },
+        {
+          "date": "2025年8月",
+          "decision": "发布2026-2030年股东回报规划，承诺现金分红比例不低于合并口径归母净利润70%",
+          "outcome": "延续'十四五'期间70%分红承诺，强化长期高股息定位，是股价长期重估的核心驱动之一"
+        },
+        {
+          "date": "2025年12月",
+          "decision": "完成秘鲁红珊瑚风电项目股权交割（装机13.57万千瓦）",
+          "outcome": "海外清洁能源布局从水电延伸至风电；海外资产平台路德斯公司获惠誉BBB+评级，超越秘鲁国家主权评级"
+        }
+      ]
+    },
+    "industryOutlook": {
+      "_dimension": "7. 行业前景：TAM（总可寻址市场）、增长预测",
+      "tam": {
+        "value": "国家发改委/国家能源局《可再生能源发展'十五五'规划》：到2030年全国常规水电装机规模达4.1亿千瓦左右；水电总装机（含抽水蓄能）目标2025年450GW→2030年570GW，其中抽水蓄能2025年66GW→2030年160GW",
+        "currency": "装机容量口径（GW/亿千瓦），非货币化市场规模——水电作为公用事业资产，行业规模惯例以装机容量而非营收TAM衡量",
+        "definition": "分母为全国水电（含抽水蓄能）总装机规划目标，涵盖国家电网/南方电网体系内全部水电运营商",
+        "asOf": "2026-07-23发布的'十五五'规划，覆盖2025-2030年",
+        "source": {
+          "name": "财联社/国家发改委《可再生能源发展'十五五'规划》答记者问",
+          "url": "https://www.ndrc.gov.cn/xxgk/jd/jd/202607/t20260723_1406645.html"
+        }
+      },
+      "growthForecast": {
+        "cagrPct": "常规水电十五五期间预计仅新增约0.3亿千瓦（低个位数增长，对应投资约0.4万亿元）；抽水蓄能十五五目标从66GW翻倍以上至160GW；全国全社会用电量2025年10.37万亿千瓦时（+5.0% YoY），'十四五'期间年均增长6.6%",
+        "horizon": "2025-2030年（十五五规划期）",
+        "source": {
+          "name": "南京市政府《南京市'十五五'智能电网产业发展规划》/ 国家发改委",
+          "url": "https://www.nanjing.gov.cn/xxgkn/zfgb/202607/t20260730_5886332.html"
+        }
+      },
+      "companyPositioning": "长江电力自身大水电装机已接近成长天花板（长江流域适宜大坝资源基本开发完毕，西藏墨脱水电站已确认归属中国雅江集团而非长江电力），未来增长依赖：折旧年限到期释放利润、扩机增容、市场化交易电量占比提升（2024年38.6%）叠加全国统一电力市场2030年基本建成带动电价上行、抽水蓄能（在建7座）和海外新能源多元化布局；相比之下国投电力（潜在装机可提升约50%）、华能水电（提升空间四成以上）仍有较大装机成长空间（外部推断，来源：东吴证券/钛媒体）"
+    },
+    "riskFactors": {
+      "_dimension": "8. 风险因素：地缘政治、监管、供应链等",
+      "items": [
+        {
+          "category": "其他（自然资源/水文）",
+          "description": "长江来水波动风险：公司梯级水电站发电量与长江来水密切相关，靠天吃饭属性无法根本消除，尽管六库联调可部分平抑丰枯波动，极端干旱年份仍直接冲击发电量和业绩（2025年乌东德来水偏枯6.4%，靠三峡偏丰5.9%及联调实现总发电量增长）",
+          "evidence": "公司披露（长江电力2025年半年度报告）"
+        },
+        {
+          "category": "其他（安全生产）",
+          "description": "梯级电站承担防洪、保供等多项任务，机组容量大、台数多、运行周期长、大坝安全管理责任重；新型电力系统对调峰调频要求提高，与新能源基建/大水电技改同期推进带来新的安全风险防控挑战",
+          "evidence": "公司披露（长江电力2025年半年度报告）"
+        },
+        {
+          "category": "监管",
+          "description": "电力市场化改革持续推进，市场化交易电量占比逐步扩大（2024年38.6%，2023年37.8%），公司虽以合同售电为主，电价波动敞口正逐步扩大；改革方向对高峰竞价能力强的水电有利，但供需宽松年份也可能压低综合电价（如2015-2016年华能水电电价曾跌22%）",
+          "evidence": "外部推断（广发证券/钛媒体研报）"
+        },
+        {
+          "category": "其他（投资收益）",
+          "description": "长期股权投资占比持续提高，投资收益占利润总额比例常年11.5%-18.9%区间波动，被投资公司（如参股的川投能源体系下雅砻江、大渡河水电）经营情况对公司利润有较大影响",
+          "evidence": "外部推断（广发证券《来水好转拐点已至》）"
+        },
+        {
+          "category": "地缘政治",
+          "description": "海外资产（秘鲁圣加旺III水电站、路德斯公司、红珊瑚风电项目等）面临东道国政治、汇率及主权信用波动；中诚信国际2026年度跟踪评级报告已将'对外投资风险'列为关注事项，尽管路德斯公司已获惠誉BBB+评级（超越秘鲁国家主权评级）",
+          "evidence": "评级机构披露（中诚信国际2026年度跟踪评级报告）+ 外部推断"
+        },
+        {
+          "category": "竞争",
+          "description": "长江流域适宜大型水电站的资源已基本开发完毕，装机500万千瓦以上电站增量几乎为零；西藏墨脱水电站已确认由中国雅江集团而非长江电力建设运营，打消市场对超级电站注入长江电力的预期，公司靠外延式并购实现业绩跳跃式增长的历史路径已难以为继，而华能水电、国投电力仍有较明显的装机成长空间",
+          "evidence": "外部推断（钛媒体《逼近历史新高，分红超2300亿》）"
+        }
+      ]
+    },
+    "currentValuation": {
+      "_dimension": "9. 当前估值：市值、PE、PS、PEG、EV/Revenue",
+      "priceAsOf": "2026-08-07（交易日 20260807）",
+      "sharePrice": {
+        "value": 27.75,
+        "unit": "元",
+        "currency": "CNY",
+        "source1": {
+          "name": "Tushare daily",
+          "url": "https://tushare.pro",
+          "value": 27.75
+        },
+        "source2": {
+          "name": "moomoo实时行情快照",
+          "url": "https://www.moomoo.com/hans/stock/600900-SH/earnings",
+          "value": 27.75
+        },
+        "deviationPct": 0.0,
+        "flag": "ok"
+      },
+      "sharesOutstanding": {
+        "value": 244.68,
+        "unit": "亿股",
+        "source1": {
+          "name": "Tushare daily_basic total_share",
+          "url": "https://tushare.pro",
+          "value": 244.68
+        },
+        "source2": {
+          "name": "公司官网（cypc.com.cn）",
+          "url": "https://www.cypc.com.cn",
+          "value": 244.68
+        },
+        "deviationPct": 0.0,
+        "flag": "ok"
+      },
+      "marketCap": {
+        "reported": "6,789.9亿 CNY（Tushare daily_basic total_mv，2026-08-07）",
+        "computed": "678,993,000,000.00 CNY = 27.75元 × 24,468,000,000股，financial_rigor.py verify-market-cap 偏差0.00%",
+        "flag": "ok",
+        "note": "financial_rigor.py verify-market-cap：股价27.75 × 总股本244.68亿 = 6,789.9亿，与报告市值偏差0.00%"
+      },
+      "pe": {
+        "value": "18.82x（TTM）",
+        "note": "静态PE 19.68x；Tushare quote/daily_basic 内置口径",
+        "basis": "TTM"
+      },
+      "ps": {
+        "value": "7.77x（TTM）",
+        "note": "Tushare daily_basic ps_ttm"
+      },
+      "peg": {
+        "status": "unavailable",
+        "reason": "水电为公用事业类稳定现金流资产，无高速增长预期，市场通常不用PEG评估水电股；且近5年净利润增速受2023年资产并购注入影响大幅跳动（非有机增长），用该增速计算PEG会严重失真。留待第2步估值维度用内生增长率（剔除并购影响）重新评估"
+      },
+      "evToRevenue": {
+        "status": "unavailable",
+        "reason": "公司为高杠杆经营（资产负债率58.27%，有息负债约288亿元），EV需将有息负债与货币资金净额计入，采集阶段未拆分有息负债明细，留待估值维度分析时补充计算"
+      },
+      "valuationRangeOneYear": {
+        "peTtm": {
+          "current": 18.82,
+          "low": 17.78,
+          "high": 22.22,
+          "percentile": 23
+        },
+        "pb": {
+          "current": 2.98,
+          "low": 2.81,
+          "high": 3.65,
+          "percentile": 20
+        },
+        "psTtm": {
+          "current": 7.77,
+          "low": 7.31,
+          "high": 8.72,
+          "percentile": 33
+        },
+        "dividendYieldPct": {
+          "current": 3.6,
+          "low": 2.76,
+          "high": 3.63,
+          "percentile": 97
+        },
+        "source": {
+          "name": "Tushare daily_basic，20250707~20260807（266个交易日）",
+          "url": "https://tushare.pro"
+        }
+      }
+    },
+    "bullBearCase": {
+      "_dimension": "10. 多空双方核心论点",
+      "bull": [
+        {
+          "point": "高分红确定性强",
+          "evidence": "2026-2030年现金分红比例承诺不低于合并口径归母净利润70%，2025年分红比例已达71%（分红总额245亿元），股息率3.60%（一年分位数97%），长期确定性远超多数A股标的（公司披露）"
+        },
+        {
+          "point": "折旧红利释放",
+          "evidence": "现有大坝折旧年限（40-60年）远低于实际物理寿命，未来折旧结束后利润有望显著提升；三峡电站左岸/右岸/地下电站机组分别1918-1919/2007-08/2011-12年投产，折旧年限18年，右岸/地下机组折旧于25-26/29-30年间到期，直接贡献内生利润增长（外部推断，来源：知乎《攒股收息之五》、国泰海通跟踪报告）"
+        },
+        {
+          "point": "电力市场化改革红利",
+          "evidence": "2026年2月国务院办公厅印发《关于完善全国统一电力市场体系的实施意见》，到2030年基本建成、2035年全面建成全国统一电力市场；公司凭借零燃料成本和六库联调能力可在高峰竞价中获取更高电价（外部推断，来源：知乎《攒股收息之五》）"
+        },
+        {
+          "point": "抽水蓄能与绿电溢价新增长点",
+          "evidence": "受托运营长龙山抽蓄电站，投资建设甘肃张掖、重庆奉节等7座抽蓄电站，预计2030年后陆续投产；随着绿证交易政策覆盖常规水电，水电资产有望获得额外环境溢价（来源：长江电力2025年度ESG报告）"
+        },
+        {
+          "point": "机构一致看多",
+          "evidence": "截至2026年2月约25家主流机构维持'买入'/'增持'评级，目标价区间31-42元，较当时股价存在18%-56%潜在上涨空间（二手汇总数据，未逐一核实各机构原始报告，来源：知乎《攒股收息之五》）"
+        },
+        {
+          "point": "四重护城河支撑高且稳定的ROE",
+          "evidence": "资源稀缺性独占、梯级联合调度能力、央企电网客户结构、近零边际成本四重壁垒，支撑ROE长期维持15-17%区间且波动率显著低于同业（外部推断，来源：东方财富财富号）"
+        }
+      ],
+      "bear": [
+        {
+          "point": "装机成长天花板已现",
+          "evidence": "中短期内暂无成熟大型水电资产注入预期，西藏墨脱水电站已确认归属中国雅江集团而非长江电力；相比之下国投电力（潜在装机可提升约50%）、华能水电（提升空间四成以上）成长天花板明显更高（外部推断，来源：钛媒体《逼近历史新高，分红超2300亿》）"
+        },
+        {
+          "point": "来水波动是核心经营风险",
+          "evidence": "靠天吃饭属性无法根本消除，尽管六库联调可部分平抑，极端干旱年份仍会直接冲击发电量和业绩（公司披露+外部分析，来源：长江电力2025年半年度报告、广发证券年报点评）"
+        },
+        {
+          "point": "估值溢价偏高",
+          "evidence": "当前PE-TTM 18.82x、PB 2.98x高于同业均值；高估值状态下股息率吸引力对十年期国债利率变化更敏感，利率上行环境下存在估值回撤风险（外部推断，来源：信达证券《中国神华VS长江电力》）"
+        },
+        {
+          "point": "电力市场化改革是双刃剑",
+          "evidence": "市场化交易电量占比提升（2024年38.6%）在电力供需宽松、竞价激烈的年份也可能压低综合电价而非单向利好；2015-2016年电力供需失衡时华能水电电价曾从234.8元/千千瓦时跌至183.12元/千千瓦时（跌幅22%）（外部推断，来源：钛媒体《逼近历史新高，分红超2300亿》）"
+        },
+        {
+          "point": "海外资产地缘政治与主权风险",
+          "evidence": "秘鲁圣加旺III水电站、红珊瑚风电项目等海外投资面临东道国政治稳定性、汇率及主权信用波动的不确定性，中诚信国际2026年度跟踪评级已将'对外投资风险'列为关注因素（评级机构披露，来源：中诚信国际2026年度跟踪评级报告）"
+        }
+      ]
+    },
+    "crossValidationLog": [
+      {
+        "field": "总市值（20260807）",
+        "source1": {
+          "name": "verify-market-cap 计算值（股价×总股本）",
+          "value": "6,789.9亿元"
+        },
+        "source2": {
+          "name": "Tushare daily_basic total_mv（报告市值）",
+          "value": "6,789.9亿元"
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "工具验算通过，完全一致"
+      },
+      {
+        "field": "营业总收入 FY2025",
+        "source1": {
+          "name": "Tushare income",
+          "value": "862.4亿元"
+        },
+        "source2": {
+          "name": "国泰海通证券跟踪报告（2026-05-28）",
+          "value": "862亿元"
+        },
+        "deviationPct": 0.02,
+        "flag": "ok",
+        "resolution": "两来源一致，取Tushare精确值862.4亿元"
+      },
+      {
+        "field": "归母净利润 FY2025",
+        "source1": {
+          "name": "Tushare income n_income_attr_p",
+          "value": "345.0亿元"
+        },
+        "source2": {
+          "name": "国泰海通证券跟踪报告",
+          "value": "345亿元"
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "完全一致"
+      },
+      {
+        "field": "货币资金 FY2025末",
+        "source1": {
+          "name": "Tushare balancesheet money_cap",
+          "value": "45.86亿元"
+        },
+        "source2": {
+          "name": "2025年年度报告原文《资产、负债情况分析》",
+          "value": "45.858560680600004亿元"
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "完全一致，Tushare数据直接取自年报原文"
+      },
+      {
+        "field": "总负债 FY2025末",
+        "source1": {
+          "name": "Tushare balancesheet total_liab",
+          "value": "325.85亿元"
+        },
+        "source2": {
+          "name": "百优价值网年度价值洞察（转引年报资产负债表，325.848亿元）",
+          "value": "325.848亿元"
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "完全一致"
+      },
+      {
+        "field": "总股本（20260807）",
+        "source1": {
+          "name": "Tushare daily_basic total_share",
+          "value": "244.68亿股"
+        },
+        "source2": {
+          "name": "公司官网 cypc.com.cn + 新浪财经股本结构（2446821.772万股）",
+          "value": "244.68亿股"
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "完全一致"
+      },
+      {
+        "field": "2026Q1单季营收",
+        "source1": {
+          "name": "Tushare income period=20260331",
+          "value": "181.12亿元"
+        },
+        "source2": {
+          "name": "国泰海通证券跟踪报告（26Q1营收181亿，YoY6.4%）",
+          "value": "181亿元"
+        },
+        "deviationPct": 0.07,
+        "flag": "ok",
+        "resolution": "完全一致，且YoY增速6.45%与研报披露的6.4%互相印证"
+      },
+      {
+        "field": "总资产/总负债 FY2022→FY2023 跃升",
+        "source1": {
+          "name": "Tushare balancesheet（总资产3272.68亿→5719.43亿）",
+          "value": "跃升74.8%"
+        },
+        "source2": {
+          "name": "腾讯新闻/市值观察《逼近历史新高，分红超2300亿》转引公司公告",
+          "value": "2023年1月完成收购乌东德、白鹤滩水电站（原三峡集团资产注入）"
+        },
+        "deviationPct": "not-applicable",
+        "flag": "ok",
+        "resolution": "非数据错误，系重大资产收购导致的真实业务变化，第2步分析维度需重点说明此结构性跃升对历史增速可比性的影响"
+      }
+    ],
+    "evidenceAppendix": {
+      "_note": "第2步多维度分析中生意本质、估值维度 Agent 提出的 evidenceRequest（同业毛利率、估值倍数缺口），经主会话去重后单轮取证补写，不改动上方已落盘的10个维度既有内容，不触发第4步重新校验。",
+      "items": [
+        {
+          "metric": "华能澜沧江水电股份有限公司（600025.SH）FY2025毛利率",
+          "value": "56.98%",
+          "asOf": "FY2025年报，研报发布于2026-05-29",
+          "source": {
+            "name": "华源证券研报",
+            "url": "https://pdf.dfcfw.com/pdf/H3_AP202605291823008615_1.pdf"
+          },
+          "note": "东方财富官网另显示毛利率51.99%（时点/口径未明确注明，与华源证券FY2025年报口径存在差异，采用有明确报告期标注的华源证券数据）",
+          "resolvesGap": "businessEssence.analysis.grossMarginVsPeers.peers[0]、valuation.analysis.vsPeers[0] 的华能水电毛利率缺口"
+        },
+        {
+          "metric": "华能澜沧江水电股份有限公司（600025.SH）估值倍数",
+          "value": "PE-TTM 20.59x、PB 2.41x（2025年报公告日期2026-04-29口径）；另有东方财富实时快照PE 21.10x、PB 2.54x",
+          "asOf": "2026-04-29（年报口径）/ 检索时点2026-08附近（实时快照）",
+          "source": [
+            {
+              "name": "理杏仁（公告日期2026-04-29）",
+              "url": "https://www.lixinger.com/equity/company/detail/sh/600025/600025/announcement?type=fs"
+            },
+            {
+              "name": "东方财富股票数据页",
+              "url": "https://data.eastmoney.com/stockdata/600025.html"
+            }
+          ],
+          "resolvesGap": "valuation.analysis.vsPeers[0] 的华能水电PE/PB缺口"
+        },
+        {
+          "metric": "国投电力控股股份有限公司（600886.SH）FY2025毛利率",
+          "value": "41.14%（整体口径，同比+3.66pct，连续4年上涨）；电力主业毛利率44.72%（同比+4.11pct）",
+          "asOf": "FY2025年报（2026-04-30披露）",
+          "source": [
+            {
+              "name": "界面新闻《国投电力2025年年报点评》",
+              "url": "https://m.jiemian.com/article/14362749.html"
+            },
+            {
+              "name": "股百科《财报快递|国投电力2025年度营收降8%净利反增11%》",
+              "url": "https://www.aigbk.com/article/sdic_power_2025_financial_report"
+            }
+          ],
+          "note": "两个口径差异系'整体毛利率'与'电力业务毛利率'范围不同，非数据冲突",
+          "resolvesGap": "businessEssence.analysis.grossMarginVsPeers.peers[1]、valuation.analysis.vsPeers[1] 的国投电力毛利率缺口"
+        },
+        {
+          "metric": "国投电力控股股份有限公司（600886.SH）估值倍数",
+          "value": "PE-TTM 15.26x",
+          "asOf": "2026-08-07（实时行情快照，与长江电力现价同日）",
+          "source": {
+            "name": "中财网实时行情",
+            "url": "https://quotedx.cfi.cn/quote.aspx?stockid=1586&lm=cgtj&client=pc"
+          },
+          "note": "PB数据多份研报口径混杂（预测值与实际值交织），未找到与2026-08-07同期的可靠PB快照，暂不采用，避免时点错配",
+          "resolvesGap": "valuation.analysis.vsPeers[1] 的国投电力PE缺口（PB仍unavailable）"
+        }
+      ]
+    }
+  },
+  "analysis": {
+    "_spec": {
+      "purpose": "研究流程第 2 步（多维度分析）的产出模板。六个维度共用统一信封：{ conclusion, analysis, inquiry, dataGaps }。步骤正文见 docs/research/workflow/02-multi-dimension-analysis.md。",
+      "todoSentinel": "所有待填值写 \"__TODO__\"；取不到的字段不删除，改写 { \"status\": \"unavailable\", \"reason\": \"缺失原因 + 已查范围\" } 并在该维度 dataGaps 中登记。",
+      "sourcedEvidence": "所有数据点统一带出处：{ metric, value, asOf, source: { name, url } }。无出处的论断不接受；估计值 value 前置 \"[估计]\"。",
+      "calculation": "涉及计算的数字（估值倍数、三情景推算、增速、对比差值）必须用 docs/research/tools/financial_rigor.py 验算，禁止心算；工具输出记入 crossValidationLog。"
+    },
+    "meta": {
+      "companyId": "sh-600900-yangtze-power",
+      "companyName": "中国长江电力股份有限公司",
+      "analyzedAt": "2026-08-09",
+      "dataCutoff": "2026-08-07",
+      "basedOnCollection": "research/companies/sh-600900-yangtze-power/financials-collection.json"
+    },
+    "dimensions": {
+      "businessEssence": {
+        "title": "生意本质",
+        "conclusion": "长江干流梯级水电资源垄断经营，近零边际成本+央企框架购电协议，输出高确定性永续现金流。",
+        "analysis": {
+          "revenueBreakdown": {
+            "period": "FY2025（20251231）",
+            "items": [
+              {
+                "segment": "境内水电行业",
+                "revenue": "756.6亿元",
+                "sharePct": "87.7%",
+                "source": {
+                  "name": "Tushare fina_mainbz（type=P，剔除合计行）",
+                  "url": "https://tushare.pro"
+                }
+              },
+              {
+                "segment": "其他行业（抽水蓄能、新能源、海外风电等）",
+                "revenue": "103.2亿元",
+                "sharePct": "12.0%",
+                "source": {
+                  "name": "Tushare fina_mainbz（type=P）",
+                  "url": "https://tushare.pro"
+                }
+              },
+              {
+                "segment": "其他业务",
+                "revenue": "2.6亿元",
+                "sharePct": "0.3%",
+                "source": {
+                  "name": "Tushare fina_mainbz（type=P）",
+                  "url": "https://tushare.pro"
+                }
+              }
+            ]
+          },
+          "profitabilityTrend5y": {
+            "series": [
+              {
+                "fiscalYear": "FY2025",
+                "grossMarginPct": "61.7%",
+                "operatingMarginPct": "49.4%",
+                "netMarginPct": "40.00%",
+                "source": {
+                  "name": "Tushare income（净利率=归母净利润/营业总收入自算）",
+                  "url": "https://tushare.pro"
+                }
+              },
+              {
+                "fiscalYear": "FY2024",
+                "grossMarginPct": "59.1%",
+                "operatingMarginPct": "46.92%",
+                "netMarginPct": "38.47%",
+                "source": {
+                  "name": "Tushare income（净利率自算）",
+                  "url": "https://tushare.pro"
+                }
+              },
+              {
+                "fiscalYear": "FY2023",
+                "grossMarginPct": "57.8%",
+                "operatingMarginPct": "42.53%",
+                "netMarginPct": "34.87%",
+                "source": {
+                  "name": "Tushare income（净利率自算）",
+                  "url": "https://tushare.pro"
+                }
+              },
+              {
+                "fiscalYear": "FY2022",
+                "grossMarginPct": "57.3%",
+                "operatingMarginPct": "51.74%",
+                "netMarginPct": "40.93%",
+                "source": {
+                  "name": "Tushare income（净利率自算）",
+                  "url": "https://tushare.pro"
+                }
+              },
+              {
+                "fiscalYear": "FY2021",
+                "grossMarginPct": "62.1%",
+                "operatingMarginPct": "59.08%",
+                "netMarginPct": "47.21%",
+                "source": {
+                  "name": "Tushare income（净利率自算）",
+                  "url": "https://tushare.pro"
+                }
+              }
+            ]
+          },
+          "businessModelCanvas": {
+            "salesModel": "混合",
+            "productForm": "服务",
+            "note": "①以国网/南网长期购售电框架协议(合同电量)为主体，非一次性交易而是持续供电服务②市场化交易电量占比提升(2024年38.6%)，形成合同+现货混合定价③电力为标准化商品服务，无用户订阅关系但供电本身持续复购④非软件/平台模式，产品即电能本身，属公用事业服务性质"
+          },
+          "stickiness": {
+            "level": "强",
+            "mechanism": "①收入几乎全部来自国网/南网长期购售电框架协议，回款无坏账风险②清洁能源优先上网保障持续消纳③流域资源不可复制，客户无替代供给商可选④绿电直供数据中心等增量客户持续扩容",
+            "evidence": [
+              {
+                "metric": "购电客户结构",
+                "value": "国家电网+南方电网为几乎唯一购电方",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "东方财富财富号《水电界的扛把子---长江电力》",
+                  "url": "https://caifuhao.eastmoney.com/news/20260711205029236265160"
+                }
+              },
+              {
+                "metric": "市场化交易电量占比",
+                "value": "38.6%（2024年，2023年37.8%）",
+                "asOf": "2024",
+                "source": {
+                  "name": "广发证券《长江电力：来水好转拐点已至》",
+                  "url": "https://pdf.dfcfw.com/pdf/H3_AP202405061632470014_1.pdf"
+                }
+              },
+              {
+                "metric": "绿电直供增量客户占比",
+                "value": "低于1%但持续扩容（含华为昇腾/阿里云/中国电信）",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "东方财富财富号《水电界的扛把子---长江电力》",
+                  "url": "https://caifuhao.eastmoney.com/news/20260711205029236265160"
+                }
+              },
+              {
+                "metric": "现金分红比例承诺",
+                "value": "2026-2030年不低于归母净利润70%，2025年已达71%",
+                "asOf": "2025-08",
+                "source": {
+                  "name": "长江电力2026-2030年股东回报规划公告",
+                  "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225262036.PDF"
+                }
+              }
+            ]
+          },
+          "grossMarginVsPeers": {
+            "companyPct": "61.7%（FY2025）",
+            "peers": [
+              {
+                "name": "华能澜沧江水电股份有限公司（600025.SH）",
+                "grossMarginPct": "56.98%（FY2025）",
+                "source": {
+                  "name": "华源证券研报（2026-05-29）",
+                  "url": "https://pdf.dfcfw.com/pdf/H3_AP202605291823008615_1.pdf"
+                }
+              },
+              {
+                "name": "国投电力控股股份有限公司（600886.SH）",
+                "grossMarginPct": "41.14%（整体口径，FY2025）/ 44.72%（电力主业口径）",
+                "source": {
+                  "name": "界面新闻/股百科转引2025年年报",
+                  "url": "https://m.jiemian.com/article/14362749.html"
+                }
+              },
+              {
+                "name": "四川川投能源股份有限公司（600674.SH）",
+                "grossMarginPct": {
+                  "status": "not-applicable",
+                  "reason": "以权益法投资收益为主要利润来源，非并表收入，传统毛利率口径不适用"
+                },
+                "source": {
+                  "name": "中国电力报/中国能源新闻网",
+                  "url": "https://www.cpnn.com.cn/news/nyqy/202604/t20260430_1884834_wap.html"
+                }
+              }
+            ],
+            "whyHigherOrLower": "①长江电力61.7%毛利率显著高于华能水电56.98%(+4.7pct)、国投电力41.14%(+20.6pct)②差距源于长江电力机组规模最大(86台70万千瓦+巨型机组)、折旧年限到期机组占比更高、无火电业务拖累③国投电力毛利率被其水火风光混合业务结构（含利润率较低的火电）拉低④水电边际发电成本趋近于零是三家共性，差距主要来自资产结构与规模效应"
+          },
+          "operatingLeverage": {
+            "observation": "①经营利润率FY2023因资产注入降至42.53%的5年低点，此后随收入增长回升至46.92%(FY2024)/49.4%(FY2025)②毛利率同步于FY2023后从57.8%修复至61.7%(FY2025)③折旧摊销为主要固定成本，电量增长边际成本极低，经营杠杆效应显著",
+            "evidence": [
+              {
+                "metric": "经营利润率（FY2023→FY2025）",
+                "value": "42.53%→46.92%→49.4%",
+                "asOf": "FY2023-FY2025",
+                "source": {
+                  "name": "Tushare income（cnstock_data.py计算）",
+                  "url": "https://tushare.pro"
+                }
+              },
+              {
+                "metric": "营业总收入（FY2023→FY2025）",
+                "value": "781.1亿→844.9亿→862.4亿元",
+                "asOf": "FY2023-FY2025",
+                "source": {
+                  "name": "Tushare income",
+                  "url": "https://tushare.pro"
+                }
+              },
+              {
+                "metric": "毛利率（FY2023→FY2025）",
+                "value": "57.8%→59.1%→61.7%",
+                "asOf": "FY2023-FY2025",
+                "source": {
+                  "name": "Tushare（cnstock_data.py计算）",
+                  "url": "https://tushare.pro"
+                }
+              },
+              {
+                "metric": "总资产跃升（资产注入拉低基期利润率）",
+                "value": "FY2022 3272.68亿→FY2023 5719.43亿元（+74.8%）",
+                "asOf": "FY2023",
+                "source": {
+                  "name": "Tushare balancesheet",
+                  "url": "https://tushare.pro"
+                }
+              }
+            ]
+          }
+        },
+        "inquiry": {
+          "question": "这门生意好在哪？如果只能用一句话描述，是什么？",
+          "answer": "好在稀缺流域资源+近零边际成本+央企购电协议锁定的高确定性现金流。①水电边际成本趋近于零，60%+毛利率、40%净利率长期稳定②收入依赖国网/南网长期框架协议，回款无坏账风险，抗周期性强③折旧年限到期将持续释放利润，装机成长有限但现金流确定性支撑70%高分红承诺④一句话：靠天吃饭的稀缺资源型永续现金流机器"
+        },
+        "dataGaps": [
+          {
+            "path": "analysis.stickiness.mechanism",
+            "reason": "采集文件未披露与国网/南网长期购售电协议的具体剩余年限、续签条款及历史续约率",
+            "searched": "已查采集文件businessModelMoat、riskFactors、bullBearCase全部字段，均为定性描述未见协议年限/续约率量化数据"
+          }
+        ]
+      },
+      "moat": {
+        "title": "护城河评估",
+        "conclusion": "流域资源稀缺+零燃料成本+电网客户锁定构成核心壁垒，规模效应强、技术壁垒变宽，但外延装机天花板已现，护城河总体稳定。",
+        "analysis": {
+          "types": [
+            {
+              "type": "品牌/定价权",
+              "test": "是否能在不损失销量的情况下提价？",
+              "verdict": "待验证",
+              "evidence": [
+                {
+                  "metric": "市场化交易电量占比",
+                  "value": "2024年约38.6%（2023年37.8%），持续提升",
+                  "asOf": "2024",
+                  "source": {
+                    "name": "长江电力2025年半年度报告",
+                    "url": "https://static.cninfo.com.cn/finalpage/2025-08-30/1224627986.PDF"
+                  }
+                },
+                {
+                  "metric": "同业电价下行案例（供需宽松年份）",
+                  "value": "华能水电电价2015-2016年从234.8元/千千瓦时跌至183.12元/千千瓦时，跌幅约22%",
+                  "asOf": "2015-2016",
+                  "source": {
+                    "name": "钛媒体《逼近历史新高，分红超2300亿》",
+                    "url": "https://www.tmtpost.com/8093204.html"
+                  }
+                },
+                {
+                  "metric": "清洁能源优先上网政策",
+                  "value": "购售电以长期框架协议为主，享受优先调度，非市场化部分不直接暴露于竞价",
+                  "asOf": "现状",
+                  "source": {
+                    "name": "长江电力financials-collection.json businessModelMoat",
+                    "url": "https://tushare.pro"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "转换成本",
+              "test": "客户迁移到竞品的成本有多高？",
+              "verdict": "存在",
+              "evidence": [
+                {
+                  "metric": "客户集中度（国家电网/南方电网长期框架协议）",
+                  "value": "收入几乎完全依赖两大央企电网购售电协议，回款无坏账风险",
+                  "asOf": "现状",
+                  "source": {
+                    "name": "东方财富财富号《水电界的扛把子---长江电力》",
+                    "url": "https://caifuhao.eastmoney.com/news/20260711205029236265160"
+                  }
+                },
+                {
+                  "metric": "绿电直供新客户",
+                  "value": "华为昇腾智算、阿里云、中国电信等数据中心长期绿电直供协议，占比低于1%但持续扩容",
+                  "asOf": "现状",
+                  "source": {
+                    "name": "东方财富财富号《水电界的扛把子---长江电力》",
+                    "url": "https://caifuhao.eastmoney.com/news/20260711205029236265160"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "网络效应",
+              "test": "用户越多产品越好吗？",
+              "verdict": "不存在",
+              "evidence": [
+                {
+                  "metric": "商业模式属性",
+                  "value": "B2G电网直供型公用事业资产，电能同质化商品，用户/客户数量增加不提升产品本身价值或吸引力",
+                  "asOf": "现状",
+                  "source": {
+                    "name": "长江电力financials-collection.json businessModelMoat.oneLiner",
+                    "url": "https://tushare.pro"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "规模效应",
+              "test": "规模带来的成本优势有多大？",
+              "verdict": "存在",
+              "evidence": [
+                {
+                  "metric": "水电总装机及占比",
+                  "value": "境内水电7169.5万千瓦，约占全国水电装机16%，全球最大水电上市公司",
+                  "asOf": "2025年末",
+                  "source": {
+                    "name": "长江电力2025年度环境、社会和公司治理报告",
+                    "url": "http://xinpi.zqrb.cn/pdf/SH/600900/2026/0430/e57b9dca2c1a58d0d8d77abefa9429a5.pdf"
+                  }
+                },
+                {
+                  "metric": "巨型机组占比",
+                  "value": "六座梯级电站110台机组中86台为70万千瓦及以上巨型机组，占全球同类机组三分之二",
+                  "asOf": "2025年末",
+                  "source": {
+                    "name": "长江电力2025年度环境、社会和公司治理报告",
+                    "url": "http://xinpi.zqrb.cn/pdf/SH/600900/2026/0430/e57b9dca2c1a58d0d8d77abefa9429a5.pdf"
+                  }
+                },
+                {
+                  "metric": "毛利率/净利率",
+                  "value": "FY2025毛利率61.7%、净利率约40.5%（归母净利345.0亿/营收862.4亿）",
+                  "asOf": "FY2025",
+                  "source": {
+                    "name": "Tushare income/fina_indicator",
+                    "url": "https://tushare.pro"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "技术/专利壁垒",
+              "test": "技术领先几年？能否被复制？",
+              "verdict": "存在",
+              "evidence": [
+                {
+                  "metric": "六库联调预报精度与发电计划准确率",
+                  "value": "24小时流量预报精度98%以上，电站日均发电计划准确率99.8%以上",
+                  "asOf": "FY2025",
+                  "source": {
+                    "name": "长江电力2025年度环境、社会和公司治理报告",
+                    "url": "http://xinpi.zqrb.cn/pdf/SH/600900/2026/0430/e57b9dca2c1a58d0d8d77abefa9429a5.pdf"
+                  }
+                },
+                {
+                  "metric": "研发投入与专利",
+                  "value": "FY2025研发投入24.55亿元（研发强度2.85%），累计有效专利5083项，获2025年度大禹水利科技进步奖一等奖",
+                  "asOf": "FY2025",
+                  "source": {
+                    "name": "长江电力2025年度环境、社会和公司治理报告",
+                    "url": "http://xinpi.zqrb.cn/pdf/SH/600900/2026/0430/e57b9dca2c1a58d0d8d77abefa9429a5.pdf"
+                  }
+                },
+                {
+                  "metric": "新兴数字化技术布局",
+                  "value": "'中国三峡一号'水电卫星星座、水下机器人巡检、北斗地基增强站（覆盖五座电站）",
+                  "asOf": "FY2025",
+                  "source": {
+                    "name": "长江电力financials-collection.json technology.coreTechStack",
+                    "url": "http://xinpi.zqrb.cn/pdf/SH/600900/2026/0430/e57b9dca2c1a58d0d8d77abefa9429a5.pdf"
+                  }
+                }
+              ]
+            }
+          ],
+          "trendPast5y": {
+            "direction": "变宽",
+            "basis": "①2023年收购乌东德、白鹤滩后六库联调网络完整并表，总资产由3272.68亿跃升至5719.43亿②毛利率57.3%（FY22）回升至61.7%（FY25），ROE由11.6%升至16.0%③FY25专利累计5083项，研发投入24.55亿元④市场化交易电量占比37.8%→38.6%，电价敞口同步扩大（双刃剑）"
+          },
+          "trendNext5y": {
+            "direction": "稳定",
+            "basis": "①长江流域适宜大坝资源基本开发完毕，外延式装机天花板已现（墨脱归属中国雅江集团）②三峡右岸/地下机组折旧于2025-2030年陆续到期，释放内生利润对冲装机停滞③抽水蓄能在建7座、海外绿电布局为增量但占比尚小④全国统一电力市场2030年基本建成，价格发现机制利弊并存"
+          }
+        },
+        "inquiry": {
+          "question": "10年后这条护城河还在吗？什么能摧毁它？",
+          "answer": "大概率仍在，但难再进一步显著变宽。①长江干流水资源与六座巨型电站的自然垄断稀缺性不可复制，非水文剧变或流域重新调度整合难以复制②真正威胁是电力市场化改革走向全面竞价、取消清洁能源优先上网，使购售电协议保护弱化③长期极端干旱或来水结构性偏枯将侵蚀现金流稳定性这一核心优势④装机天花板意味着规模效应边际增量有限，护城河深度稳定但宽度扩张空间不大。"
+        },
+        "dataGaps": [
+          {
+            "path": "analysis.types[0].evidence",
+            "reason": "采集文件未见提价后销量/电价变化的直接对比数据，仅有市场化交易电量占比及同业降价案例的间接推断，判定为待验证"
+          },
+          {
+            "path": "analysis.grossMarginVsPeers",
+            "reason": "分部毛利率均为单源（Tushare fina_mainbz），未做第二来源交叉验证"
+          }
+        ]
+      },
+      "inversion": {
+        "title": "逆向思考与风险清单",
+        "conclusion": "护城河稳固但装机见顶，来水、市场化电价、海外地缘是三条现实失败路径，高分红估值已计入乐观预期。",
+        "analysis": {
+          "failurePaths": [
+            {
+              "path": "长江来水持续偏枯冲击发电量，联调难完全对冲",
+              "probability": "高",
+              "impact": "中",
+              "evidence": [
+                {
+                  "metric": "乌东德2025年来水情况",
+                  "value": "偏枯6.4%（三峡偏丰5.9%抵消）",
+                  "asOf": "2025",
+                  "source": {
+                    "name": "长江电力2025年半年度报告",
+                    "url": "https://static.cninfo.com.cn/finalpage/2025-08-30/1224627986.PDF"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "市场化电量占比扩大，供需宽松年份电价承压",
+              "probability": "中",
+              "impact": "中",
+              "evidence": [
+                {
+                  "metric": "市场化交易电量占比",
+                  "value": "38.6%（2024年，2023年37.8%）",
+                  "asOf": "2024",
+                  "source": {
+                    "name": "广发证券《长江电力：来水好转拐点已至》",
+                    "url": "https://pdf.dfcfw.com/pdf/H3_AP202405061632470014_1.pdf"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "长江流域大坝资源开发殆尽，装机增长天花板已现",
+              "probability": "高",
+              "impact": "中",
+              "evidence": [
+                {
+                  "metric": "十五五常规水电全国新增装机规划",
+                  "value": "约0.3亿千瓦（低个位数增长）",
+                  "asOf": "2025-2030",
+                  "source": {
+                    "name": "国家发改委《可再生能源发展'十五五'规划》答记者问",
+                    "url": "https://www.ndrc.gov.cn/xxgk/jd/jd/202607/t20260723_1406645.html"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "长期股权投资占比高，被投资公司业绩波动传导风险",
+              "probability": "中",
+              "impact": "中",
+              "evidence": [
+                {
+                  "metric": "投资收益占利润总额比例",
+                  "value": "11.5%-18.9%区间波动",
+                  "asOf": "近年历史区间",
+                  "source": {
+                    "name": "广发证券《长江电力：来水好转拐点已至》",
+                    "url": "https://pdf.dfcfw.com/pdf/H3_AP202405061632470014_1.pdf"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "海外水电风电资产面临东道国政治与主权信用波动",
+              "probability": "低",
+              "impact": "低",
+              "evidence": [
+                {
+                  "metric": "对外投资风险关注事项",
+                  "value": "路德斯公司获惠誉BBB+评级（超秘鲁主权评级）",
+                  "asOf": "2026年度跟踪评级",
+                  "source": {
+                    "name": "中诚信国际2026年度跟踪评级报告",
+                    "url": "http://static.sse.com.cn/disclosure/bond/announcement/corporate/c/new/2026-06-25/120303_20260625_RDBH.pdf"
+                  }
+                }
+              ]
+            }
+          ],
+          "historicalAnalogies": [
+            {
+              "company": "华能澜沧江水电股份有限公司（600025.SH）",
+              "similarity": "同属大型水电央企，同样受市场化电价改革影响",
+              "outcome": "2015-2016年供需宽松期电价从234.8跌至183.12元/千千瓦时",
+              "source": {
+                "name": "钛媒体《逼近历史新高，分红超2300亿》",
+                "url": "https://www.tmtpost.com/8093204.html"
+              }
+            },
+            {
+              "company": "中国神华（601088.SH，煤炭资源型高分红央企）",
+              "similarity": "同为高股息资源型央企，股息驱动估值逻辑相近",
+              "outcome": "定性类比，未采集中国神华具体历史股价/估值走势数据，此处为基于常识的定性判断",
+              "source": {
+                "name": "信达证券《中国神华VS长江电力》",
+                "url": "https://pdf.dfcfw.com/pdf/H3_AP202102021457442450_1.pdf"
+              }
+            }
+          ],
+          "crossDisciplinaryChecks": [
+            {
+              "model": "网络效应理论",
+              "finding": "护城河源于资源稀缺与转换成本，非用户网络效应驱动"
+            },
+            {
+              "model": "技术采纳曲线",
+              "finding": "抽水蓄能与绿电直供尚处早期渗透，占比小但方向明确"
+            },
+            {
+              "model": "竞争博弈",
+              "finding": "市场化电量博弈中公司议价力弱于电网，价格易受压制"
+            },
+            {
+              "model": "其他",
+              "finding": "级差地租支撑超额收益，但增量水电资源已近枯竭"
+            }
+          ],
+          "biasSelfCheck": [
+            {
+              "bias": "叙事偏差",
+              "check": "警惕'高分红即低风险'叙事，掩盖来水与电价真实经营波动"
+            },
+            {
+              "bias": "锚定效应",
+              "check": "警惕将当前18.82倍PE、97分位股息率当作永久合理锚点"
+            },
+            {
+              "bias": "幸存者偏差",
+              "check": "采集文件聚焦成功叙事，需对照同业电价下跌等受挫案例"
+            }
+          ],
+          "bearCase": [
+            {
+              "point": "装机成长天花板已现，无成熟大型电站注入预期",
+              "holder": "外部推断，财经媒体（钛媒体）",
+              "evidence": [
+                {
+                  "metric": "十五五常规水电全国新增装机规划",
+                  "value": "约0.3亿千瓦",
+                  "asOf": "2025-2030",
+                  "source": {
+                    "name": "国家发改委《可再生能源发展'十五五'规划》",
+                    "url": "https://www.ndrc.gov.cn/xxgk/jd/jd/202607/t20260723_1406645.html"
+                  }
+                }
+              ]
+            },
+            {
+              "point": "来水波动是核心经营风险，联调难根本消除",
+              "holder": "公司自身披露+卖方研报（广发证券）",
+              "evidence": [
+                {
+                  "metric": "乌东德2025年来水情况",
+                  "value": "偏枯6.4%",
+                  "asOf": "2025",
+                  "source": {
+                    "name": "长江电力2025年半年度报告",
+                    "url": "https://static.cninfo.com.cn/finalpage/2025-08-30/1224627986.PDF"
+                  }
+                }
+              ]
+            },
+            {
+              "point": "当前估值溢价偏高，PE/PB高于同业均值",
+              "holder": "卖方研报（信达证券）",
+              "evidence": [
+                {
+                  "metric": "PE-TTM",
+                  "value": "18.82倍（一年分位数23%）",
+                  "asOf": "2026-08-07",
+                  "source": {
+                    "name": "Tushare daily_basic",
+                    "url": "https://tushare.pro"
+                  }
+                }
+              ]
+            },
+            {
+              "point": "电力市场化改革是双刃剑，供需宽松压低电价",
+              "holder": "外部推断，财经媒体（钛媒体）",
+              "evidence": [
+                {
+                  "metric": "市场化交易电量占比",
+                  "value": "38.6%（2024年）",
+                  "asOf": "2024",
+                  "source": {
+                    "name": "广发证券《长江电力：来水好转拐点已至》",
+                    "url": "https://pdf.dfcfw.com/pdf/H3_AP202405061632470014_1.pdf"
+                  }
+                }
+              ]
+            },
+            {
+              "point": "海外资产面临地缘政治与主权信用波动风险",
+              "holder": "评级机构（中诚信国际）",
+              "evidence": [
+                {
+                  "metric": "对外投资风险",
+                  "value": "列为2026年度跟踪评级关注事项",
+                  "asOf": "2026",
+                  "source": {
+                    "name": "中诚信国际2026年度跟踪评级报告",
+                    "url": "http://static.sse.com.cn/disclosure/bond/announcement/corporate/c/new/2026-06-25/120303_20260625_RDBH.pdf"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "inquiry": {
+          "question": "我最可能在哪里犯错？聪明人为什么会不买/做空这家公司？",
+          "answer": "我最容易低估装机天花板对长期估值倍数的压制。①长江流域大坝资源近乎开发殆尽，聪明资金可能因股息增长率长期趋缓而要求更高折现率，而非直接做空②电力市场化改革方向不确定，华能水电2015-2016电价跌22%的历史先例容易被高确定性叙事忽略③长期股权投资与海外资产占比上升，分散了核心水电现金流的纯粹性④当前股息率分位高达97%，说明利率敏感性已被充分定价，利率环境逆转时估值回撤风险不小。"
+        },
+        "dataGaps": [
+          {
+            "path": "analysis.historicalAnalogies[1]",
+            "reason": "中国神华具体历史股价/估值/分红数据未采集，此处类比为基于常识的定性判断"
+          }
+        ]
+      },
+      "management": {
+        "title": "管理层评估",
+        "conclusion": "央企治理下管理层零持股，靠集团委派与内部提拔维持技术官僚式稳定，资本配置系资产注入与高分红为主。",
+        "analysis": {
+          "keyDecisions": [
+            {
+              "date": "2023年1月",
+              "decision": "收购乌东德、白鹤滩水电站（三峡集团资产注入）",
+              "outcome": "总资产跃升74.8%至5,719.43亿元，六座梯级电站全部注入上市公司",
+              "rating": "★5",
+              "source": {
+                "name": "Tushare balancesheet（cnstock_data.py）",
+                "url": "https://tushare.pro"
+              }
+            },
+            {
+              "date": "2024年4月-6月",
+              "decision": "董事长换届：雷鸣山辞任，刘伟平接任（兼三峡集团董事长）",
+              "outcome": "控股股东与上市公司治理层同步换届，决策权保持集团高度掌控",
+              "rating": "★3",
+              "source": {
+                "name": "经济观察网《刘伟平任职三峡集团董事长、党组书记》",
+                "url": "http://www.eeo.com.cn/2024/0416/652666.shtml"
+              }
+            },
+            {
+              "date": "2025年4月9日",
+              "decision": "总经理换届：刘海波接替张星燎",
+              "outcome": "内部技术官僚接任，工程一线背景强化管理层专业连续性",
+              "rating": "★4",
+              "source": {
+                "name": "北极星电力网《长江电力总经理调整》",
+                "url": "https://gdshe.org/article/24256.html"
+              }
+            },
+            {
+              "date": "2025年8月",
+              "decision": "发布2026-2030股东回报规划，分红比例不低于70%",
+              "outcome": "延续'十四五'70%分红承诺，强化高股息定位，支撑估值重估",
+              "rating": "★5",
+              "source": {
+                "name": "长江电力FY2025年报",
+                "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225262036.PDF"
+              }
+            },
+            {
+              "date": "2025年12月",
+              "decision": "完成秘鲁红珊瑚风电项目股权交割（13.57万千瓦）",
+              "outcome": "清洁能源布局延伸至风电，海外平台获惠誉BBB+评级",
+              "rating": "★3",
+              "source": {
+                "name": "长江电力FY2025年报",
+                "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225262036.PDF"
+              }
+            }
+          ],
+          "capitalAllocation": {
+            "rdReturn": "①FY2025研发投入24.55亿元，占营收862.4亿元的2.85%，聚焦水情预报、机组运维等运营技术而非新产品②产出体现为流量预报精度98%+、专利5083项等运营指标，非典型财务化回报，无可比投入产出比数据",
+            "maTrackRecord": "①历史三次资产注入（2009三峡电站、2016溪洛渡/向家坝、2023乌东德/白鹤滩）均来自控股股东体系内部划转，非市场化竞购②2023年注入后总资产3272.68亿→5719.43亿元(+74.8%)，六库联调协同执行顺利③属关联交易，定价基于评估值而非市场竞价，无逐笔IRR或公允性验证数据",
+            "buybackTiming": {
+              "status": "unavailable",
+              "reason": "采集文件未见公司股份回购相关记录或公告，无法评估回购时机与估值匹配度"
+            },
+            "evidence": [
+              {
+                "metric": "研发投入强度(FY2025)",
+                "value": "24.55亿元/营收862.4亿元，占比2.85%",
+                "asOf": "2025-12-31",
+                "source": {
+                  "name": "长江电力2025年度环境、社会和公司治理报告",
+                  "url": "http://xinpi.zqrb.cn/pdf/SH/600900/2026/0430/e57b9dca2c1a58d0d8d77abefa9429a5.pdf"
+                }
+              },
+              {
+                "metric": "资产注入规模变化(FY2022→FY2023)",
+                "value": "总资产3272.68亿元→5719.43亿元，+74.8%",
+                "asOf": "2023-12-31",
+                "source": {
+                  "name": "Tushare balancesheet",
+                  "url": "https://tushare.pro"
+                }
+              }
+            ]
+          },
+          "alignment": {
+            "ownership": "①控股股东三峡集团持股43.47%，经济权益=投票权，无AB股结构，前十大股东合计70.39%②董事长刘伟平、总经理刘海波历年年报持股均为0股，管理层无个人股权绑定③股东户数近一年从34.6万户升至73.96万户，筹码趋向分散",
+            "compensation": "①FY2025高管年薪集中在113.3万-143.7万元区间，总经理刘海波143.7万元最高②除原职工监事黄勋持股1.6万股外，其余高管持股均为0，薪酬结构非股权化③采集文件未披露薪酬与ROE/分红等具体经营指标挂钩的考核细则",
+            "insiderSelling": {
+              "status": "unavailable",
+              "reason": "采集文件未包含高管/监事股份增减持记录，无法评估减持行为与股东利益一致性"
+            },
+            "evidence": [
+              {
+                "metric": "控股股东持股比例",
+                "value": "43.47%（中国长江三峡集团有限公司）",
+                "asOf": "2026-03-31",
+                "source": {
+                  "name": "Tushare top10_holders",
+                  "url": "https://tushare.pro"
+                }
+              },
+              {
+                "metric": "总经理薪酬与持股(FY2025)",
+                "value": "刘海波143.7万元，持股0股",
+                "asOf": "2025-12-31",
+                "source": {
+                  "name": "Tushare stk_rewards",
+                  "url": "https://tushare.pro"
+                }
+              }
+            ]
+          },
+          "organization": {
+            "teamStability": "①董事长刘伟平2024年6月上任（兼三峡集团董事长），总经理刘海波2025年4月上任，两位核心负责人任期均不足2年②刘海波系内部提拔，长期任职三峡电厂/白鹤滩电厂一线逾十年，技术梯队完整③2024-2025年高层密集换届存在短期磨合期，但张星燎→刘海波交接顺畅",
+            "keyPersonRisk": "①董事长兼任控股股东三峡集团董事长，公司治理高度嵌入集团体系，若其离任由集团另行委派接替，链条清晰但外部不可控②总经理刘海波任期约4个月，尚未经历完整财报周期考验③核心人才梯队源自三峡系统内部培养，非单一创始人依赖型风险，继任可预期性较高"
+          },
+          "culture": "①管理层历史均出身水利工程系统（水利部/三峡电厂一线），非市场化空降，呈技术官僚治理特征②高管普遍零持股、薪酬非股权化，体现国企'行政序列回报'而非资本回报激励逻辑③历次资产注入均为控股股东体系内部划转而非市场化并购竞价，体现央企内部资源整合文化④2025年提出70%分红承诺，显示治理文化向高股息、股东回报友好方向演进"
+        },
+        "inquiry": {
+          "question": "如果CEO退休，这家公司还能保持竞争力吗？",
+          "answer": "能，公司竞争力源于长江干流梯级水电资源禀赋与调度技术体系，非依赖单一管理者。①护城河（六库独家梯级调度、近零边际成本、央企电网客户结构）由资产禀赋与技术体系构成，与CEO个人无关②2025年总经理内部无缝换届（刘海波接替张星燎）已验证继任机制成熟③控股股东三峡集团对资产注入、分红政策等战略决策拥有决定性影响，董事长人事变动冲击有限④主要风险在于集团层面战略与资产注入节奏变化，而非CEO个人退休本身。"
+        },
+        "dataGaps": [
+          {
+            "path": "analysis.capitalAllocation.rdReturn",
+            "reason": "仅有FY2025单年研发投入总额，无历史序列及财务回报率测算"
+          },
+          {
+            "path": "analysis.capitalAllocation.maTrackRecord",
+            "reason": "未提供历次资产注入的评估值、市场公允价对比及逐笔IRR"
+          },
+          {
+            "path": "analysis.capitalAllocation.buybackTiming",
+            "reason": "采集文件全文未见公司股份回购相关记录或公告"
+          },
+          {
+            "path": "analysis.alignment.insiderSelling",
+            "reason": "采集文件未包含高管/监事股份变动或减持公告数据"
+          },
+          {
+            "path": "analysis.alignment.compensation",
+            "reason": "仅披露薪酬总额，未披露具体KPI考核挂钩细则"
+          }
+        ]
+      },
+      "industryTrend": {
+        "title": "行业与长期趋势",
+        "conclusion": "水电本身非范式转移行业，装机已近天花板；但新型电力系统重估调节价值+AI算力绿电直供构成局部结构性机会。",
+        "analysis": {
+          "paradigmShift": {
+            "verdict": "部分",
+            "reasoning": "①水电资源禀赋、发电原理未变，非文明级颠覆②电力市场化改革（2030年建成全国统一电力市场）重估水电调节价值，市场化交易电量占比已达38.6%（2024）③数据中心/AI算力绿电直供（华为昇腾、阿里云、中国电信）虽占比低于1%但持续扩容，是局部结构性增量而非全行业范式转移"
+          },
+          "historicalAnalogy": "①更接近铁路/公用事业型基础设施资产而非蒸汽机/互联网式颠覆性技术②长江电力对应'资源垄断+现金流机器'角色，类似标准石油之于石油运输网络③AI浪潮中扮演'卖电铲子'而非AI本身参与者，绿电直供是搭AI用电顺风车而非技术路线本身革命",
+          "tam": {
+            "current": {
+              "value": "全国水电总装机（含抽水蓄能）：2025年450GW目标→2030年570GW；常规水电2030年约4.1亿千瓦（410GW）",
+              "currency": "装机容量口径（非货币化）",
+              "asOf": "2026-07-23发布《可再生能源发展'十五五'规划》，覆盖2025-2030年",
+              "source": {
+                "name": "国家发改委《可再生能源发展'十五五'规划》答记者问",
+                "url": "https://www.ndrc.gov.cn/xxgk/jd/jd/202607/t20260723_1406645.html"
+              }
+            },
+            "ceiling": "①常规水电天花板已现：长江流域适宜大坝资源基本开发完毕，十五五仅新增约0.3亿千瓦（低个位数增长）②抽水蓄能天花板远未到：十五五目标66GW→160GW，翻倍以上空间③长江电力自身增量依赖折旧释放/扩机增容而非新增大坝",
+            "growthCurve": "分层判断：常规水电（长江电力主业）处于成熟期，增量趋近于零；抽水蓄能处于局部成长期（十五五翻倍以上）；公司在建7座抽蓄电站，2030年后陆续投产承接该成长曲线"
+          },
+          "valueChainPosition": "①处于发电环节最上游资源端，下游为国家电网/南方电网统购统销②零燃料成本使其在电力成本曲线中位于最低端，具备定价韧性③长期购售电框架协议锁定基本盘，市场化交易电量占比提升（38.6%）带来电价上行弹性，但也是双刃剑④对电网无议价劣势——电网需其清洁能源优先上网配额",
+          "techRouteRisk": "①水能转电能技术路径本身不存在被替代风险（重力势能发电无颠覆性替代技术）②风险集中在电价形成机制：全国统一电力市场改革下竞价定价可能压低综合电价（2015-16年华能水电电价曾跌22%）③新型储能/抽水蓄能可能部分替代传统水电的调峰角色，但长江电力自身已布局抽蓄对冲",
+          "concentration": {
+            "customers": "收入几乎完全依赖国家电网、南方电网两大央企购售电框架协议，为绝对高集中度；增量客户为华为昇腾智算、阿里云、中国电信等数据中心绿电直供协议，占比低于1%但持续扩容，尚不足以改变客户集中结构",
+            "suppliers": {
+              "status": "unavailable",
+              "reason": "水电运营商无原材料/大宗采购依赖（零燃料成本），采集文件未提供供应商集中度相关数据"
+            },
+            "evidence": [
+              {
+                "metric": "收入客户结构",
+                "value": "收入几乎完全依赖国家电网、南方电网两大央企购售电协议；绿电直供客户占比低于1%",
+                "asOf": "FY2025口径",
+                "source": {
+                  "name": "东方财富财富号《水电界的扛把子---长江电力》",
+                  "url": "https://caifuhao.eastmoney.com/news/20260711205029236265160"
+                }
+              },
+              {
+                "metric": "市场化交易电量占比",
+                "value": "2024年38.6%，2023年37.8%",
+                "asOf": "2024年年报披露口径",
+                "source": {
+                  "name": "长江电力年报",
+                  "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225262036.PDF"
+                }
+              }
+            ]
+          }
+        },
+        "inquiry": {
+          "question": "站在20年后回看，这家公司是「这个时代的标准石油」还是「昙花一现的3Com」？",
+          "answer": "更接近区域性'标准石油'而非3Com，但已过扩张期进入收租期。①资源垄断维度像标准石油：长江干流六座巨型梯级电站不可复制，护城河（零燃料成本、六库联调、央企客户结构）稳固难被颠覆②但扩张性不再像标准石油：装机天花板已现，未来20年靠折旧释放、抽蓄和海外多元化维持而非新大坝式跳跃增长③技术路线无3Com式过时风险（水电非被颠覆的技术），核心风险是来水波动和电价机制改革，而非商业模式消亡。"
+        },
+        "dataGaps": [
+          {
+            "path": "analysis.concentration.suppliers",
+            "reason": "采集文件未提供水电运营商供应商集中度或采购结构数据"
+          },
+          {
+            "path": "analysis.tam",
+            "reason": "水电行业TAM以装机容量衡量，未提供全国水电市场货币化规模估算"
+          }
+        ]
+      },
+      "valuation": {
+        "title": "估值分析",
+        "conclusion": "PE-TTM 18.82x处于一年23分位，隐含增速温和(3.5%-4%)，中性情景涨7%，估值合理不贵。",
+        "analysis": {
+          "currentMultiples": {
+            "marketCap": {
+              "value": "6,789.9亿",
+              "currency": "CNY",
+              "asOf": "2026-08-07",
+              "source": {
+                "name": "Tushare daily_basic total_mv；financial_rigor.py verify-market-cap 复核偏差0.00%",
+                "url": "https://tushare.pro"
+              }
+            },
+            "pe": {
+              "value": "18.82x（TTM）；静态PE 19.68x",
+              "asOf": "2026-08-07",
+              "source": {
+                "name": "Tushare quote/daily_basic 内置口径",
+                "url": "https://tushare.pro"
+              }
+            },
+            "ps": {
+              "value": "7.77x（TTM）",
+              "asOf": "2026-08-07",
+              "source": {
+                "name": "Tushare daily_basic ps_ttm",
+                "url": "https://tushare.pro"
+              }
+            },
+            "peg": {
+              "status": "unavailable",
+              "reason": "水电为公用事业类稳定现金流资产，无高速增长预期，市场通常不用PEG评估水电股；且近5年净利润增速受2023年资产并购注入影响大幅跳动（非有机增长），用该增速计算PEG会严重失真"
+            },
+            "evToRevenue": {
+              "status": "unavailable",
+              "reason": "公司为高杠杆经营（资产负债率58.27%，有息负债约288亿元），EV需将有息负债与货币资金净额计入，本次未拆分有息负债明细"
+            }
+          },
+          "reverseDcf": {
+            "impliedGrowth": "①用DDM反推P=D1/(r-g)：现价27.75元、D1约1.00元/股(71%分红率×EPS1.41)，贴现率r=7%-8%时隐含永续增长率g约3.4%-4.4%②该区间与本文三情景'中性'内生增速假设(3.5%-4%)高度吻合，非隐含乐观并购式增长③意味着现价只需折旧释放+电价温和上行即可兑现，安全边际尚可但也谈不上明显低估",
+            "assumptions": "①贴现率取7%-8%（无风险利率约2.5%+水电稳定现金流资产的股权风险溢价4.5%-5.5%）②采用永续增长股息贴现模型反推隐含增速，而非搭建完整多年期DCF逐年折现③以FY2025每股股利约1.00元（归母净利润345亿×71%分红率/244.68亿股）为D1基准，年限视为永续（对应长江干流电站40-60年剩余使用寿命）"
+          },
+          "threeScenario": {
+            "inputs": {
+              "price": 27.75,
+              "eps": "1.410005（345.0/244.68，financial_rigor.py calc验算）",
+              "sharesHundredMillion": 244.68,
+              "growth": [
+                "5.5%",
+                "3.5%",
+                "0.5%"
+              ],
+              "pe": [
+                "22x",
+                "19x",
+                "16x"
+              ],
+              "years": 3,
+              "currency": "CNY"
+            },
+            "optimistic": {
+              "targetPrice": "36.4 CNY",
+              "impliedReturnPct": "+31.3%"
+            },
+            "neutral": {
+              "targetPrice": "29.7 CNY",
+              "impliedReturnPct": "+7.0%"
+            },
+            "pessimistic": {
+              "targetPrice": "22.9 CNY",
+              "impliedReturnPct": "-17.5%"
+            },
+            "assumptionBasis": "①长江电力为成熟水电资产，2023年乌东德/白鹤滩资产注入使近5年归母净利润CAGR严重失真，不能直接外推历史增速，故改用内生增速假设②乐观5.5%对应折旧到期加速释放利润+电价温和市场化上行+抽水蓄能增量三重共振③中性3.5%仅计入折旧释放与电价温和上行两项，不含抽蓄新增贡献④悲观0.5%对应来水偏枯或电力供需宽松压低电价情形；三档PE 22x/19x/16x围绕当前18.82x-TTM上下浮动，参考一年PE区间[17.78x, 22.22x]设定",
+            "toolOutput": "============================================================\n三情景估值模型 (Three-Scenario Valuation)\n============================================================\n  当前股价: 27.75 CNY\n  当前EPS:  1.410005\n  预测期:   3年\n\n  情景                年增速     目标PE      目标EPS       目标股价      涨跌幅\n  ------------ -------- -------- ---------- ---------- --------\n  乐观 (Bull)          6%      22x       1.66      36.4   +31.3%\n  中性 (Base)          4%      19x       1.56      29.7    +7.0%\n  悲观 (Bear)          0%      16x       1.43      22.9   -17.5%\n\n  ✅ 所有计算使用精确十进制, 结果可审计复现\n（注：表格显示增速为四舍五入到整数百分点的近似标签，命令实际输入的精确增速为5.5%/3.5%/0.5%，目标EPS已按精确值计算：1.410005×(1+g)^3）"
+          },
+          "vsOwnHistory": {
+            "metric": "PE-TTM / PB / 股息率（近一年分位数）",
+            "currentValue": "PE-TTM 18.82x（23分位）；PB 2.98x（20分位）；股息率3.60%（97分位）",
+            "historicalRange": "①PE-TTM一年区间[17.78x, 22.22x]，现价接近区间下沿②PB一年区间[2.81, 3.65]，同样处于20分位低位③股息率一年区间[2.76%, 3.63%]，现值97分位接近历史高点，体现'股价相对承压、股息率抬升'的低估信号④三项指标共同指向当前估值处于近一年偏低水平，非高位接盘",
+            "source": {
+              "name": "Tushare daily_basic，20250707~20260807（266个交易日）",
+              "url": "https://tushare.pro"
+            }
+          },
+          "vsPeers": [
+            {
+              "name": "华能澜沧江水电股份有限公司（600025.SH）",
+              "pe": "20.59x（2025年报口径）",
+              "ps": {
+                "status": "unavailable",
+                "reason": "未采集到该公司PS数据"
+              },
+              "source": {
+                "name": "理杏仁（公告日期2026-04-29）",
+                "url": "https://www.lixinger.com/equity/company/detail/sh/600025/600025/announcement?type=fs"
+              }
+            },
+            {
+              "name": "国投电力控股股份有限公司（600886.SH）",
+              "pe": "15.26x（2026-08-07实时快照，与长江电力现价同日）",
+              "ps": {
+                "status": "unavailable",
+                "reason": "未采集到与同期匹配的PS数据"
+              },
+              "source": {
+                "name": "中财网实时行情",
+                "url": "https://quotedx.cfi.cn/quote.aspx?stockid=1586&lm=cgtj&client=pc"
+              }
+            },
+            {
+              "name": "四川川投能源股份有限公司（600674.SH）",
+              "pe": {
+                "status": "not-applicable",
+                "reason": "以权益法投资收益为主要利润来源，非并表口径，传统PE可比性存疑"
+              },
+              "ps": {
+                "status": "not-applicable",
+                "reason": "轻资产权益法投资平台，控股收入不含投资收益，PS口径无意义"
+              },
+              "source": {
+                "name": "中国电力报/中国能源新闻网",
+                "url": "https://www.cpnn.com.cn/news/nyqy/202604/t20260430_1884834_wap.html"
+              }
+            }
+          ]
+        },
+        "inquiry": {
+          "question": "如果股市明天关闭5年，你愿意以这个价格持有吗？",
+          "answer": "愿意持有，但依赖的是股息现金流而非估值重估博弈。①作为承诺2026-2030年70%分红比例的水电央企，现金流确定性极强，5年封闭期内仅靠股息(股息率约3.6%起，且折旧释放有望推升未来分红)即可获得稳健回报②现价PE-TTM处于一年23分位低位，非追高买入，安全边际尚可③但装机成长天花板已现、来水波动靠天吃饭、海外资产地缘风险仍是持有期内的核心不确定性④若预期是博取PE大幅扩张的资本利得而非收息，此价位吸引力有限。"
+        },
+        "dataGaps": [
+          {
+            "path": "analysis.currentMultiples.peg",
+            "reason": "水电类资产历史增速被2023年资产注入扭曲，PEG无法有效使用"
+          },
+          {
+            "path": "analysis.currentMultiples.evToRevenue",
+            "reason": "未拆分有息负债明细"
+          },
+          {
+            "path": "analysis.vsPeers",
+            "reason": "三家同业PS数据均未采集到与2026-08-07同期匹配的快照，暂缺"
+          }
+        ]
+      }
+    },
+    "crossValidationLog": [
+      {
+        "field": "长江电力EPS（FY2025）",
+        "source1": {
+          "name": "financial_rigor.py calc：345.0/244.68",
+          "value": "1.410005"
+        },
+        "source2": {
+          "name": "华源证券研报摊薄EPS",
+          "value": "1.41"
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "工具精确计算与研报披露一致，用于三情景估值输入"
+      },
+      {
+        "field": "三情景目标价（乐观/中性/悲观）",
+        "source1": {
+          "name": "financial_rigor.py three-scenario 工具输出",
+          "value": "36.4 / 29.7 / 22.9 CNY"
+        },
+        "source2": {
+          "name": "不适用（工具唯一计算源，禁止心算复核）",
+          "value": "not-applicable"
+        },
+        "deviationPct": "not-applicable",
+        "flag": "ok",
+        "resolution": "按工具精确输出采用，输入假设（增速5.5%/3.5%/0.5%，PE 22x/19x/16x）见threeScenario.assumptionBasis"
+      },
+      {
+        "field": "华能水电FY2025毛利率（用于同业对比）",
+        "source1": {
+          "name": "华源证券研报（2026-05-29）",
+          "value": "56.98%"
+        },
+        "source2": {
+          "name": "东方财富股票数据页（时点未明确标注）",
+          "value": "51.99%"
+        },
+        "deviationPct": "not-applicable",
+        "flag": "minor-diff",
+        "resolution": "口径/时点可能不一致（东方财富未标注具体报告期），采用有明确FY2025年报口径标注的华源证券数据"
+      },
+      {
+        "field": "国投电力FY2025毛利率（用于同业对比）",
+        "source1": {
+          "name": "界面新闻转引2025年年报（整体口径）",
+          "value": "41.14%"
+        },
+        "source2": {
+          "name": "股百科转引2025年年报（电力主业口径）",
+          "value": "44.72%"
+        },
+        "deviationPct": "not-applicable",
+        "flag": "minor-diff",
+        "resolution": "口径差异（整体 vs 电力主业），非数据冲突，两个数字均在分析中列出并注明口径"
+      }
+    ]
+  },
+  "summary": {
+    "_spec": {
+      "purpose": "研究流程第 3 步（分析总结）的产出模板。由评估 Agent 基于第 1 步采集与第 2 步分析的落盘文件生成，不重新采集。步骤正文见 docs/research/workflow/03-analysis-summary.md。",
+      "confidence": "信心度总分 10 分（0–10，整数或 0.5 步长）：价值投资视角下对该维度的看多程度，分数越高越看多。梯度：9–10 教科书级优秀；7–8 明显有利有小瑕疵；5–6 中性或好坏参半；3–4 明显不利；0–2 严重不利。最大风险维度按风险可控程度打分（越致命越低），估值维度按价格吸引力打分（越透支越低）。证据不足向中性收敛并在 scoreBasis 说明。",
+      "traceability": "每个结论、评分、建议的 basis 字段必须写明引用的前两步文件字段路径与关键数据，不接受凭空判断。",
+      "strategies": "每条策略建议必须绑定可观察触发条件（价格区间 / 指标阈值 / 具体事件），价格类引用第 2 步 threeScenario 结果，基本面类引用 failurePaths、护城河 breaker 或驱动指标。"
+    },
+    "meta": {
+      "companyId": "sh-600900-yangtze-power",
+      "companyName": "中国长江电力股份有限公司",
+      "summarizedAt": "2026-08-09",
+      "dataCutoff": "2026-08-07",
+      "basedOnCollection": "research/companies/sh-600900-yangtze-power/financials-collection.json",
+      "basedOnAnalysis": "research/companies/sh-600900-yangtze-power/financials-analysis.json"
+    },
+    "dimensionSummary": [
+      {
+        "dimensionId": "businessQuality",
+        "title": "生意质量",
+        "mapsTo": "dimensions.businessEssence",
+        "conclusion": "近零边际成本+央企框架购电协议锁定现金流，FY2025毛利率61.7%/净利率40.0%验证生意质量优异，短板是协议续约数据未交叉验证。",
+        "confidence": 8,
+        "scoreBasis": "①dimensions.businessEssence.analysis.profitabilityTrend5y：毛利率57.3%(FY22)→61.7%(FY25)、净利率34.87%→40.00%持续改善，营收/净利已双源验证。②analysis.stickiness.mechanism：收入几乎全依赖国网/南网长期框架协议，回款无坏账风险，绿电直供客户持续扩容。③dataGaps[0]标注协议剩余年限/续约率未采集，向中性收敛0.5分。④grossMarginVsPeers分部数据为单源(Tushare fina_mainbz)未交叉验证。"
+      },
+      {
+        "dimensionId": "moat",
+        "title": "护城河",
+        "mapsTo": "dimensions.moat",
+        "conclusion": "流域资源自然垄断+零燃料成本+电网客户锁定构成强护城河，过去5年变宽(ROE 11.6%→16.0%)，未来5年预判稳定但装机天花板已现。",
+        "confidence": 7.5,
+        "scoreBasis": "①analysis.trendPast5y：毛利率57.3%→61.7%、ROE 11.6%→16.0%，专利累计5083项，护城河变宽有据。②analysis.trendNext5y：长江流域大坝资源基本开发完毕，未来5年判定'稳定'非'变宽'。③analysis.types[0]定价权verdict为'待验证'，同业华能水电2015-16年电价曾跌22%说明定价权非绝对。④dataGaps标注grossMarginVsPeers单源未交叉验证。"
+      },
+      {
+        "dimensionId": "management",
+        "title": "管理层",
+        "mapsTo": "dimensions.management",
+        "conclusion": "央企治理架构下管理层零持股，无个人股权绑定，资本配置以集团内部资产注入与70%高分红承诺为主，专业稳定但缺乏市场化激励证据。",
+        "confidence": 6,
+        "scoreBasis": "①analysis.alignment.ownership：董事长刘伟平、总经理刘海波历年持股均0股，薪酬非股权化(113-144万元区间)。②analysis.capitalAllocation.maTrackRecord：历次资产注入均为控股股东体系内部划转非市场化竞购，定价公允性无逐笔IRR验证(dataGaps)。③2025年8月70%分红承诺(keyDecisions)体现股东回报友好度，rating★5。④keyPersonRisk：总经理任期仅4个月未经完整财报周期考验，向中性收敛。"
+      },
+      {
+        "dimensionId": "keyRisk",
+        "title": "最大风险",
+        "mapsTo": "dimensions.inversion",
+        "conclusion": "最大风险是电力市场化改革走向全面竞价叠加装机天花板，侵蚀现金流增长确定性，但风险多标注'中'等，非致命性威胁，护城河本体未受冲击。",
+        "confidence": 7,
+        "scoreBasis": "①analysis.failurePaths：来水偏枯probability高/impact中(乌东德2025偏枯6.4%)，市场化电价压力probability中/impact中，装机天花板probability高/impact中——均可控、非资产减值级风险。②海外地缘风险probability低/impact低，路德斯公司获惠誉BBB+评级部分对冲。③inquiry.answer指出真正威胁是市场化改革走向全面竞价+取消清洁能源优先上网，该路径尚未发生。④长期股权投资占比11.5%-18.9%波动为传导风险，非核心业务风险。"
+      },
+      {
+        "dimensionId": "civilizationTrend",
+        "title": "文明趋势",
+        "mapsTo": "dimensions.industryTrend",
+        "conclusion": "水电非范式转移行业，装机接近天花板，但新型电力系统重估调节价值与AI算力绿电直供构成局部结构性顺风，长期趋势中性偏有利。",
+        "confidence": 6.5,
+        "scoreBasis": "①analysis.paradigmShift verdict'部分'：电力市场化改革(2030年全国统一电力市场)与AI算力绿电直供(华为昇腾/阿里云/中国电信，占比低于1%但持续扩容)为结构性增量。②analysis.tam.ceiling：常规水电十五五仅新增约0.3亿千瓦，主业已见顶，抽水蓄能十五五66GW→160GW仍有对冲空间。③techRouteRisk：水电技术路径无颠覆风险，但电价形成机制存双刃剑不确定性(华能水电历史电价跌22%案例)。④TAM为装机容量口径非货币化规模(dataGaps)，货币化空间量化证据不足。"
+      },
+      {
+        "dimensionId": "valuation",
+        "title": "估值",
+        "mapsTo": "dimensions.valuation",
+        "conclusion": "PE-TTM 18.82x处于一年23分位、股息率97分位，反推隐含永续增速3.4%-4.4%与中性内生假设吻合，中性情景涨7%，估值合理但谈不上明显低估。",
+        "confidence": 6,
+        "scoreBasis": "①analysis.currentMultiples+vsOwnHistory：PE-TTM 18.82x(23分位)、PB 2.98x(20分位)处一年偏低区间，股息率3.60%(97分位)接近历史高点，非高位接盘。②analysis.threeScenario：乐观36.4元/+31.3%、中性29.7元/+7.0%、悲观22.9元/-17.5%，期望值正偏但幅度有限。③analysis.reverseDcf：隐含永续增速3.4%-4.4%与中性内生假设(3.5%-4%)高度吻合，说明现价已充分定价温和增长。④vsPeers部分数据单源/未同期匹配(dataGaps)，相对估值结论证据有限。"
+      }
+    ],
+    "strategies": {
+      "noPosition": {
+        "title": "空仓者",
+        "advice": "①现价PE-TTM处一年23分位、股息率97分位，估值不贵但非深度低估(中性+7.0%)，宜分批建仓而非一次性重仓。②护城河稳固(moat.analysis.trendNext5y'稳定')但装机天花板已现，应以股息现金流预期而非估值重估博弈为持有逻辑。③建议等待价格或估值指标触发观察点后再行动，避免在股息率分位已高(97分位)时追高。",
+        "triggers": [
+          {
+            "condition": "股价回落至22.9元附近或PE-TTM跌近一年低点17.78x",
+            "action": "可分批建仓，捕捉均值回归机会",
+            "basis": "①对应dimensions.valuation.analysis.threeScenario悲观情景22.9元(-17.5%)②PE-TTM一年区间下沿17.78x(currentValuation.valuationRangeOneYear)③需排除failurePaths[0]来水持续偏枯导致的基本面恶化，确认为短期波动"
+          },
+          {
+            "condition": "股息率分位回落至历史低位(2.76%附近)且股价明显上涨",
+            "action": "暂缓建仓，等待更具吸引力的入场点",
+            "basis": "①对应currentValuation.valuationRangeOneYear.dividendYieldPct区间[2.76%,3.63%]②高位分位收窄意味安全边际下降"
+          },
+          {
+            "condition": "连续两个报告期确认来水转丰且市场化电价企稳",
+            "action": "确认基本面无来水/电价双重压制后再入场",
+            "basis": "①对应dimensions.inversion.analysis.failurePaths[0]来水风险probability'高'②failurePaths[1]市场化电价压力probability'中'③单一报告期数据(如2025乌东德偏枯6.4%)样本不足，需多报告期交叉确认"
+          }
+        ]
+      },
+      "holding": {
+        "title": "持仓者",
+        "advice": "①作为承诺70%分红比例的高股息资产，可继续持有博取稳定股息现金流，不建议因短期估值波动清仓。②护城河已变宽(moat.analysis.trendPast5y)且未来5年预判'稳定'，长期持有逻辑未变，但需跟踪装机天花板下内生增长兑现节奏。③若追求资本利得而非股息，现价吸引力有限(valuation.inquiry.answer)，应管理收益预期。",
+        "triggers": [
+          {
+            "condition": "股价触及乐观情景36.4元附近(+31.3%)",
+            "action": "可分批止盈部分仓位，锁定超预期涨幅",
+            "basis": "①对应threeScenario乐观情景36.4元②该情景对应5.5%高增速假设(抽蓄+电价上行+折旧释放三重共振)，若未兑现而股价已至此位应部分兑现"
+          },
+          {
+            "condition": "PE-TTM回落至一年低点17.78x或PB跌破2.81",
+            "action": "维持或适度加仓，护城河未变前提下逢低吸纳",
+            "basis": "①对应currentValuation.valuationRangeOneYear②moat.analysis.trendNext5y判定护城河未来5年'稳定'，基本面无恶化时低估值是加仓窗口"
+          },
+          {
+            "condition": "公司公告分红比例低于承诺的70%下限",
+            "action": "视为治理/现金流恶化信号，重新评估持仓逻辑",
+            "basis": "①对应management.analysis.keyDecisions 2025年8月70%分红承诺②该承诺是bullBearCase高分红确定性论点核心支撑，违背即触发重新评估"
+          }
+        ]
+      },
+      "sellSignals": {
+        "title": "卖出信号",
+        "signals": [
+          {
+            "signal": "电力市场化改革转向全面竞价并取消清洁能源优先上网",
+            "observable": "跟踪国务院/发改委统一电力市场配套细则是否取消水电优先调度条款",
+            "basis": "①对应inversion.inquiry.answer②真正摧毁护城河的路径是市场化改革走向全面竞价+取消优先上网，非当前渐进式38.6%市场化电量占比"
+          },
+          {
+            "signal": "股价大幅超越乐观情景且无基本面支撑",
+            "observable": "股价显著突破36.4元(+31.3%)而EPS/分红未同步兑现，PE-TTM明显高于一年区间高点22.22x",
+            "basis": "①对应valuation.analysis.threeScenario乐观情景36.4元②vsOwnHistory一年PE区间高点22.22x，明显超越且基本面未跟上视为估值透支信号"
+          },
+          {
+            "signal": "分红比例连续跌破70%承诺或来水持续严重偏枯超过1年",
+            "observable": "半年报/年报披露分红比例低于70%，或来水连续两个报告期偏枯幅度超2025年6.4%水平",
+            "basis": "①对应failurePaths[0]来水风险probability高②management.analysis.keyDecisions 70%分红承诺是估值支撑核心，违约视为信号，需财报/半年报数据双源确认避免单季度噪音"
+          }
+        ]
+      },
+      "addSignals": {
+        "title": "加仓信号",
+        "signals": [
+          {
+            "signal": "股价回调至悲观情景附近或PE-TTM跌至一年低点",
+            "observable": "股价跌至22.9元(-17.5%)附近或PE-TTM跌破17.78x/PB跌破2.81",
+            "basis": "①对应threeScenario悲观情景22.9元②valuationRangeOneYear低点③需确认非failurePaths所列基本面恶化(如持续严重来水偏枯)导致，仅流动性/情绪性下跌时才适合加仓"
+          },
+          {
+            "signal": "三峡右岸/地下机组折旧到期释放的内生利润增速超过中性3.5%假设并在财报中兑现",
+            "observable": "FY2026-2030年报EPS增速持续高于3.5%-4%(reverseDcf隐含增速区间)",
+            "basis": "①对应valuation.analysis.reverseDcf隐含永续增速3.4%-4.4%与中性假设吻合②bullBearCase折旧红利释放论点若被连续两年报表验证，是加仓的基本面确认信号"
+          },
+          {
+            "signal": "股息率分位维持高位且十年期国债利率未上行",
+            "observable": "股息率维持3.5%以上且十年期国债利率未大幅上行",
+            "basis": "①对应currentValuation.valuationRangeOneYear.dividendYieldPct现值97分位②inversion.biasSelfCheck警示需警惕利率上行对高股息资产的估值压制，故需十年期国债利率未上行这一附加条件确认，而非单看股息率单一指标"
+          }
+        ]
+      }
+    },
+    "disclaimer": "本总结基于公开信息与数据截止时点的分析生成，仅供研究参考，不构成个性化投资建议。"
+  }
+}

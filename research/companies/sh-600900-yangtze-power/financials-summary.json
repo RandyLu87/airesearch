@@ -1,0 +1,151 @@
+{
+  "_spec": {
+    "purpose": "研究流程第 3 步（分析总结）的产出模板。由评估 Agent 基于第 1 步采集与第 2 步分析的落盘文件生成，不重新采集。步骤正文见 docs/research/workflow/03-analysis-summary.md。",
+    "confidence": "信心度总分 10 分（0–10，整数或 0.5 步长）：价值投资视角下对该维度的看多程度，分数越高越看多。梯度：9–10 教科书级优秀；7–8 明显有利有小瑕疵；5–6 中性或好坏参半；3–4 明显不利；0–2 严重不利。最大风险维度按风险可控程度打分（越致命越低），估值维度按价格吸引力打分（越透支越低）。证据不足向中性收敛并在 scoreBasis 说明。",
+    "traceability": "每个结论、评分、建议的 basis 字段必须写明引用的前两步文件字段路径与关键数据，不接受凭空判断。",
+    "strategies": "每条策略建议必须绑定可观察触发条件（价格区间 / 指标阈值 / 具体事件），价格类引用第 2 步 threeScenario 结果，基本面类引用 failurePaths、护城河 breaker 或驱动指标。"
+  },
+  "meta": {
+    "companyId": "sh-600900-yangtze-power",
+    "companyName": "中国长江电力股份有限公司",
+    "summarizedAt": "2026-08-09",
+    "dataCutoff": "2026-08-07",
+    "basedOnCollection": "research/companies/sh-600900-yangtze-power/financials-collection.json",
+    "basedOnAnalysis": "research/companies/sh-600900-yangtze-power/financials-analysis.json"
+  },
+  "dimensionSummary": [
+    {
+      "dimensionId": "businessQuality",
+      "title": "生意质量",
+      "mapsTo": "dimensions.businessEssence",
+      "conclusion": "近零边际成本+央企框架购电协议锁定现金流，FY2025毛利率61.7%/净利率40.0%验证生意质量优异，短板是协议续约数据未交叉验证。",
+      "confidence": 8,
+      "scoreBasis": "①dimensions.businessEssence.analysis.profitabilityTrend5y：毛利率57.3%(FY22)→61.7%(FY25)、净利率34.87%→40.00%持续改善，营收/净利已双源验证。②analysis.stickiness.mechanism：收入几乎全依赖国网/南网长期框架协议，回款无坏账风险，绿电直供客户持续扩容。③dataGaps[0]标注协议剩余年限/续约率未采集，向中性收敛0.5分。④grossMarginVsPeers分部数据为单源(Tushare fina_mainbz)未交叉验证。"
+    },
+    {
+      "dimensionId": "moat",
+      "title": "护城河",
+      "mapsTo": "dimensions.moat",
+      "conclusion": "流域资源自然垄断+零燃料成本+电网客户锁定构成强护城河，过去5年变宽(ROE 11.6%→16.0%)，未来5年预判稳定但装机天花板已现。",
+      "confidence": 7.5,
+      "scoreBasis": "①analysis.trendPast5y：毛利率57.3%→61.7%、ROE 11.6%→16.0%，专利累计5083项，护城河变宽有据。②analysis.trendNext5y：长江流域大坝资源基本开发完毕，未来5年判定'稳定'非'变宽'。③analysis.types[0]定价权verdict为'待验证'，同业华能水电2015-16年电价曾跌22%说明定价权非绝对。④dataGaps标注grossMarginVsPeers单源未交叉验证。"
+    },
+    {
+      "dimensionId": "management",
+      "title": "管理层",
+      "mapsTo": "dimensions.management",
+      "conclusion": "央企治理架构下管理层零持股，无个人股权绑定，资本配置以集团内部资产注入与70%高分红承诺为主，专业稳定但缺乏市场化激励证据。",
+      "confidence": 6,
+      "scoreBasis": "①analysis.alignment.ownership：董事长刘伟平、总经理刘海波历年持股均0股，薪酬非股权化(113-144万元区间)。②analysis.capitalAllocation.maTrackRecord：历次资产注入均为控股股东体系内部划转非市场化竞购，定价公允性无逐笔IRR验证(dataGaps)。③2025年8月70%分红承诺(keyDecisions)体现股东回报友好度，rating★5。④keyPersonRisk：总经理任期仅4个月未经完整财报周期考验，向中性收敛。"
+    },
+    {
+      "dimensionId": "keyRisk",
+      "title": "最大风险",
+      "mapsTo": "dimensions.inversion",
+      "conclusion": "最大风险是电力市场化改革走向全面竞价叠加装机天花板，侵蚀现金流增长确定性，但风险多标注'中'等，非致命性威胁，护城河本体未受冲击。",
+      "confidence": 7,
+      "scoreBasis": "①analysis.failurePaths：来水偏枯probability高/impact中(乌东德2025偏枯6.4%)，市场化电价压力probability中/impact中，装机天花板probability高/impact中——均可控、非资产减值级风险。②海外地缘风险probability低/impact低，路德斯公司获惠誉BBB+评级部分对冲。③inquiry.answer指出真正威胁是市场化改革走向全面竞价+取消清洁能源优先上网，该路径尚未发生。④长期股权投资占比11.5%-18.9%波动为传导风险，非核心业务风险。"
+    },
+    {
+      "dimensionId": "civilizationTrend",
+      "title": "文明趋势",
+      "mapsTo": "dimensions.industryTrend",
+      "conclusion": "水电非范式转移行业，装机接近天花板，但新型电力系统重估调节价值与AI算力绿电直供构成局部结构性顺风，长期趋势中性偏有利。",
+      "confidence": 6.5,
+      "scoreBasis": "①analysis.paradigmShift verdict'部分'：电力市场化改革(2030年全国统一电力市场)与AI算力绿电直供(华为昇腾/阿里云/中国电信，占比低于1%但持续扩容)为结构性增量。②analysis.tam.ceiling：常规水电十五五仅新增约0.3亿千瓦，主业已见顶，抽水蓄能十五五66GW→160GW仍有对冲空间。③techRouteRisk：水电技术路径无颠覆风险，但电价形成机制存双刃剑不确定性(华能水电历史电价跌22%案例)。④TAM为装机容量口径非货币化规模(dataGaps)，货币化空间量化证据不足。"
+    },
+    {
+      "dimensionId": "valuation",
+      "title": "估值",
+      "mapsTo": "dimensions.valuation",
+      "conclusion": "PE-TTM 18.82x处于一年23分位、股息率97分位，反推隐含永续增速3.4%-4.4%与中性内生假设吻合，中性情景涨7%，估值合理但谈不上明显低估。",
+      "confidence": 6,
+      "scoreBasis": "①analysis.currentMultiples+vsOwnHistory：PE-TTM 18.82x(23分位)、PB 2.98x(20分位)处一年偏低区间，股息率3.60%(97分位)接近历史高点，非高位接盘。②analysis.threeScenario：乐观36.4元/+31.3%、中性29.7元/+7.0%、悲观22.9元/-17.5%，期望值正偏但幅度有限。③analysis.reverseDcf：隐含永续增速3.4%-4.4%与中性内生假设(3.5%-4%)高度吻合，说明现价已充分定价温和增长。④vsPeers部分数据单源/未同期匹配(dataGaps)，相对估值结论证据有限。"
+    }
+  ],
+  "strategies": {
+    "noPosition": {
+      "title": "空仓者",
+      "advice": "①现价PE-TTM处一年23分位、股息率97分位，估值不贵但非深度低估(中性+7.0%)，宜分批建仓而非一次性重仓。②护城河稳固(moat.analysis.trendNext5y'稳定')但装机天花板已现，应以股息现金流预期而非估值重估博弈为持有逻辑。③建议等待价格或估值指标触发观察点后再行动，避免在股息率分位已高(97分位)时追高。",
+      "triggers": [
+        {
+          "condition": "股价回落至22.9元附近或PE-TTM跌近一年低点17.78x",
+          "action": "可分批建仓，捕捉均值回归机会",
+          "basis": "①对应dimensions.valuation.analysis.threeScenario悲观情景22.9元(-17.5%)②PE-TTM一年区间下沿17.78x(currentValuation.valuationRangeOneYear)③需排除failurePaths[0]来水持续偏枯导致的基本面恶化，确认为短期波动"
+        },
+        {
+          "condition": "股息率分位回落至历史低位(2.76%附近)且股价明显上涨",
+          "action": "暂缓建仓，等待更具吸引力的入场点",
+          "basis": "①对应currentValuation.valuationRangeOneYear.dividendYieldPct区间[2.76%,3.63%]②高位分位收窄意味安全边际下降"
+        },
+        {
+          "condition": "连续两个报告期确认来水转丰且市场化电价企稳",
+          "action": "确认基本面无来水/电价双重压制后再入场",
+          "basis": "①对应dimensions.inversion.analysis.failurePaths[0]来水风险probability'高'②failurePaths[1]市场化电价压力probability'中'③单一报告期数据(如2025乌东德偏枯6.4%)样本不足，需多报告期交叉确认"
+        }
+      ]
+    },
+    "holding": {
+      "title": "持仓者",
+      "advice": "①作为承诺70%分红比例的高股息资产，可继续持有博取稳定股息现金流，不建议因短期估值波动清仓。②护城河已变宽(moat.analysis.trendPast5y)且未来5年预判'稳定'，长期持有逻辑未变，但需跟踪装机天花板下内生增长兑现节奏。③若追求资本利得而非股息，现价吸引力有限(valuation.inquiry.answer)，应管理收益预期。",
+      "triggers": [
+        {
+          "condition": "股价触及乐观情景36.4元附近(+31.3%)",
+          "action": "可分批止盈部分仓位，锁定超预期涨幅",
+          "basis": "①对应threeScenario乐观情景36.4元②该情景对应5.5%高增速假设(抽蓄+电价上行+折旧释放三重共振)，若未兑现而股价已至此位应部分兑现"
+        },
+        {
+          "condition": "PE-TTM回落至一年低点17.78x或PB跌破2.81",
+          "action": "维持或适度加仓，护城河未变前提下逢低吸纳",
+          "basis": "①对应currentValuation.valuationRangeOneYear②moat.analysis.trendNext5y判定护城河未来5年'稳定'，基本面无恶化时低估值是加仓窗口"
+        },
+        {
+          "condition": "公司公告分红比例低于承诺的70%下限",
+          "action": "视为治理/现金流恶化信号，重新评估持仓逻辑",
+          "basis": "①对应management.analysis.keyDecisions 2025年8月70%分红承诺②该承诺是bullBearCase高分红确定性论点核心支撑，违背即触发重新评估"
+        }
+      ]
+    },
+    "sellSignals": {
+      "title": "卖出信号",
+      "signals": [
+        {
+          "signal": "电力市场化改革转向全面竞价并取消清洁能源优先上网",
+          "observable": "跟踪国务院/发改委统一电力市场配套细则是否取消水电优先调度条款",
+          "basis": "①对应inversion.inquiry.answer②真正摧毁护城河的路径是市场化改革走向全面竞价+取消优先上网，非当前渐进式38.6%市场化电量占比"
+        },
+        {
+          "signal": "股价大幅超越乐观情景且无基本面支撑",
+          "observable": "股价显著突破36.4元(+31.3%)而EPS/分红未同步兑现，PE-TTM明显高于一年区间高点22.22x",
+          "basis": "①对应valuation.analysis.threeScenario乐观情景36.4元②vsOwnHistory一年PE区间高点22.22x，明显超越且基本面未跟上视为估值透支信号"
+        },
+        {
+          "signal": "分红比例连续跌破70%承诺或来水持续严重偏枯超过1年",
+          "observable": "半年报/年报披露分红比例低于70%，或来水连续两个报告期偏枯幅度超2025年6.4%水平",
+          "basis": "①对应failurePaths[0]来水风险probability高②management.analysis.keyDecisions 70%分红承诺是估值支撑核心，违约视为信号，需财报/半年报数据双源确认避免单季度噪音"
+        }
+      ]
+    },
+    "addSignals": {
+      "title": "加仓信号",
+      "signals": [
+        {
+          "signal": "股价回调至悲观情景附近或PE-TTM跌至一年低点",
+          "observable": "股价跌至22.9元(-17.5%)附近或PE-TTM跌破17.78x/PB跌破2.81",
+          "basis": "①对应threeScenario悲观情景22.9元②valuationRangeOneYear低点③需确认非failurePaths所列基本面恶化(如持续严重来水偏枯)导致，仅流动性/情绪性下跌时才适合加仓"
+        },
+        {
+          "signal": "三峡右岸/地下机组折旧到期释放的内生利润增速超过中性3.5%假设并在财报中兑现",
+          "observable": "FY2026-2030年报EPS增速持续高于3.5%-4%(reverseDcf隐含增速区间)",
+          "basis": "①对应valuation.analysis.reverseDcf隐含永续增速3.4%-4.4%与中性假设吻合②bullBearCase折旧红利释放论点若被连续两年报表验证，是加仓的基本面确认信号"
+        },
+        {
+          "signal": "股息率分位维持高位且十年期国债利率未上行",
+          "observable": "股息率维持3.5%以上且十年期国债利率未大幅上行",
+          "basis": "①对应currentValuation.valuationRangeOneYear.dividendYieldPct现值97分位②inversion.biasSelfCheck警示需警惕利率上行对高股息资产的估值压制，故需十年期国债利率未上行这一附加条件确认，而非单看股息率单一指标"
+        }
+      ]
+    }
+  },
+  "disclaimer": "本总结基于公开信息与数据截止时点的分析生成，仅供研究参考，不构成个性化投资建议。"
+}
