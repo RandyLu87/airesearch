@@ -1,0 +1,523 @@
+{
+  "meta": {
+    "companyId": "hk-0100-minimax",
+    "companyName": "MiniMax Group Inc.（稀宇科技）",
+    "analyzedAt": "2026-08-09",
+    "dataCutoff": "2026-08-09（Asia/Shanghai）；行情数据截至最近交易日2026-08-07收盘",
+    "basedOnCollection": "research/companies/hk-0100-minimax/financials-collection.json"
+  },
+  "dimensions": {
+    "businessEssence": {
+      "title": "生意本质",
+      "conclusion": "MiniMax是靠持续融资维持技术军备竞赛、C端订阅与B端API双轮变现的多模态大模型生意，尚未证明自我造血能力",
+      "analysis": {
+        "revenueBreakdown": {
+          "period": "FY2025（2025-01-01至2025-12-31）",
+          "items": [
+            {
+              "segment": "AI原生产品（C端：海螺AI/Hailuo、星野/Talkie、MiniMax Audio等）",
+              "revenue": "53,075千美元（同比+143.4%）",
+              "sharePct": 67.15,
+              "source": { "name": "MiniMax 2025年度业绩公告附注3", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf" }
+            },
+            {
+              "segment": "开放平台及其他基于AI的企业服务（B端：API/MaaS按Token计费+定制化方案）",
+              "revenue": "25,963千美元（同比+197.8%）",
+              "sharePct": 32.85,
+              "source": { "name": "MiniMax 2025年度业绩公告附注3", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf" }
+            }
+          ]
+        },
+        "profitabilityTrend5y": {
+          "series": [
+            {
+              "fiscalYear": "FY2025",
+              "grossMarginPct": 25.4,
+              "operatingMarginPct": { "status": "unavailable", "reason": "公司未单列经营利润科目，报表按收入-销售成本-费用-金融负债公允价值亏损等合并列示" },
+              "netMarginPct": "-2368.0%（IFRS口径，含优先股公允价值非现金亏损约15.899亿美元）；经调整净亏损口径-317.4%",
+              "source": { "name": "2025年度业绩公告", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf" }
+            },
+            {
+              "fiscalYear": "FY2024",
+              "grossMarginPct": 12.25,
+              "operatingMarginPct": { "status": "unavailable", "reason": "同FY2025，公司未单列经营利润科目" },
+              "netMarginPct": "-1524.2%（IFRS口径）；经调整净亏损口径-800.2%",
+              "source": { "name": "2025年度业绩公告（比较数字）", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf" }
+            },
+            {
+              "fiscalYear": "FY2023",
+              "grossMarginPct": { "status": "not-applicable", "reason": "毛利为负(-854千美元)，收入基数过小(3,460千美元)，标注不适用而非负数百分比" },
+              "operatingMarginPct": { "status": "unavailable", "reason": "同上，未单列经营利润科目" },
+              "netMarginPct": "-7781.7%（IFRS口径，收入基数极小使比率失真）；经调整净亏损口径-2574.4%",
+              "source": { "name": "2025年度报告《财务摘要》四年对比表", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0422/2026042202119_c.pdf" }
+            },
+            {
+              "fiscalYear": "FY2022",
+              "grossMarginPct": { "status": "not-applicable", "reason": "FY2022无收入，毛利率无分母" },
+              "operatingMarginPct": { "status": "not-applicable", "reason": "同上，无收入分母" },
+              "netMarginPct": { "status": "not-applicable", "reason": "FY2022收入为0，净利率无分母" },
+              "source": { "name": "2025年度报告《财务摘要》四年对比表", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0422/2026042202119_c.pdf" }
+            }
+          ]
+        },
+        "businessModelCanvas": {
+          "salesModel": "混合",
+          "productForm": "混合",
+          "note": "C端(海螺AI/Hailuo、星野/Talkie等)为订阅/内购模式软件产品；B端开放平台为按Token计费的API/MaaS服务，属平台形态；FY2025两者收入占比67%/33%，形成混合商业模式"
+        },
+        "stickiness": {
+          "level": "弱",
+          "mechanism": "C端订阅缺数据/习惯壁垒，模型被超越即流失，已现C端用户下滑；B端曾因改按Token计费引发开发者退订潮，粘性亦有限；开放平台调用量全球领先反映技术热度而非合约锁定",
+          "evidence": [
+            { "metric": "AI原生产品(C端)毛利率", "value": "4.7%（微利，2025年前9个月）", "asOf": "2025-09-30", "source": { "name": "全球发售招股书", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/1231/2025123100026_c.pdf" } },
+            { "metric": "C端付费转化率", "value": "[估计]约6.4%（177万付费用户/2,760万月活，2025年前9个月）", "asOf": "2025-09-30", "source": { "name": "虎嗅网转引招股书数据", "url": "https://huxiu.com/article/4820128.html" } },
+            { "metric": "API计费模式变更后开发者退订情况", "value": "M3改按Token计费后出现开发者退订投诉潮", "asOf": "2026-07-23", "source": { "name": "腾讯新闻《智谱向左，MiniMax向右》", "url": "https://news.qq.com/rain/a/20260723A04PN400" } }
+          ]
+        },
+        "grossMarginVsPeers": {
+          "companyPct": 25.4,
+          "peers": [
+            {
+              "name": "智谱AI（Z.ai，02513.HK）",
+              "grossMarginPct": { "status": "unavailable", "reason": "采集文件仅有二手转引区间'约41%-50%'，口径不一(智谱年度业绩公告约41% vs 老虎社区报道约50%)，且无可直接核验的完整来源URL" },
+              "source": { "status": "unavailable", "reason": "采集文件未记录该数字的完整可访问URL" }
+            },
+            {
+              "name": "DeepSeek/字节跳动豆包/阿里千问/OpenAI/Anthropic/Google Gemini",
+              "grossMarginPct": { "status": "unavailable", "reason": "均未上市或未拆分披露毛利率，采集文件competitiveLandscape逐条标注unavailable" },
+              "source": { "status": "unavailable", "reason": "未上市或未单列该业务线财报科目，无公开可引用来源" }
+            }
+          ],
+          "whyHigherOrLower": "MiniMax整体毛利率25.4%主要被C端拖累，AI原生产品该指标虽转正但仅约4.7%；B端开放平台毛利率达69.4%（2025年前9个月），结构上B端更优；行业内智谱号称41%-50%但口径不一无法核验，其余同行毛利率均未查得，无法严格同业对比"
+        },
+        "operatingLeverage": {
+          "observation": "FY2025收入同比+158.9%，远超研发费用增速+33.8%，显示显著正向经营杠杆；但经调整净亏损同比仅+2.7%，销售/管理等其他费用未同步收窄；IFRS净亏损主要因优先股公允价值非现金损失放大，不能反映真实经营杠杆",
+          "evidence": [
+            { "metric": "收入同比增速", "value": "+158.9%（30,523→79,038千美元）", "asOf": "FY2025", "source": { "name": "2025年度业绩公告", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf" } },
+            { "metric": "研发费用同比增速", "value": "+33.8%（188,979→252,771千美元）", "asOf": "FY2025", "source": { "name": "2025年度业绩公告附注9", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf" } },
+            { "metric": "经调整净亏损同比增速", "value": "+2.7%（244,243→250,856千美元）", "asOf": "FY2025", "source": { "name": "2025年度业绩公告财务摘要", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf" } }
+          ]
+        }
+      },
+      "inquiry": {
+        "question": "这门生意好在哪？如果只能用一句话描述，是什么？",
+        "answer": "这门生意是靠融资续命的高投入AI基建生意，尚未证明可持续盈利。①B端开放平台毛利率69.4%且随Token量增长具规模效应，是当前最优质的收入引擎；②C端订阅规模大(67%收入)但护城河浅、微利(4.7%)，靠融资和补贴维持增长；③FY2025收入增158.9%远超研发费用增速33.8%，经营杠杆方向正向但绝对亏损仍大；④若不能把B端优势复制到C端定价权，这门生意本质仍是烧钱换份额的军备竞赛"
+      },
+      "dataGaps": [
+        {
+          "path": "businessEssence.analysis.profitabilityTrend5y.series",
+          "reason": "模板要求近5年趋势，但公司2021-06成立、2026-01-09才上市，仅披露FY2022-FY2025共4个完整财政年度数据",
+          "searched": "financials-collection.json financialMetrics.note 已明确说明该限制"
+        },
+        {
+          "path": "businessEssence.analysis.profitabilityTrend5y.series[].operatingMarginPct",
+          "reason": "公司利润表未单列经营利润/经营利润率科目，重新分类涉及主观判断，采集文件已标注unavailable/not-applicable",
+          "searched": "financials-collection.json financialMetrics.annual FY2022-FY2025各年operatingMarginPct字段"
+        },
+        {
+          "path": "businessEssence.analysis.grossMarginVsPeers.peers",
+          "reason": "智谱等同行毛利率口径不一致且无可核验主源URL，DeepSeek/字节/阿里/OpenAI/Anthropic/Google均未上市或未拆分披露毛利率",
+          "searched": "financials-collection.json competitiveLandscape.competitors 各条目grossMarginPct字段均为unavailable或二手转引"
+        },
+        {
+          "path": "businessEssence.analysis.stickiness.evidence",
+          "reason": "采集文件未披露C端用户留存率/复购率/流失率/DAU等生态粘性关键指标，仅有MAU与付费用户数",
+          "searched": "financials-collection.json businessModelMoat与competitiveLandscape全文未见留存率/复购率/DAU字段",
+          "evidenceRequest": {
+            "metric": "C端月度/次月留存率、订阅复购率、DAU/MAU比值",
+            "question": "MiniMax旗下海螺AI/Hailuo、星野/Talkie等C端产品的用户留存率、订阅到期复购率、DAU/MAU比值分别是多少（近1-2个报告期）？",
+            "whyNeeded": "生态粘性判断目前只能依赖定性报道（护城河偏浅），缺乏定量留存数据会导致stickiness.level证据不足",
+            "priority": "high"
+          }
+        },
+        {
+          "path": "businessEssence.analysis.stickiness.evidence",
+          "reason": "采集文件未披露开放平台(B端)客户续约率/净收入留存率(NRR)/客户流失率",
+          "searched": "financials-collection.json businessModelMoat及competitiveLandscape全文未见NRR/续约率字段",
+          "evidenceRequest": {
+            "metric": "B端开放平台客户续约率/净收入留存率(NRR)",
+            "question": "MiniMax开放平台(API/MaaS)企业客户的年度续约率或净收入留存率(NRR)是多少？",
+            "whyNeeded": "B端毛利率虽高(69.4%)，但缺乏续约率数据无法判断API客户粘性是真实锁定还是仅按量付费的低摩擦关系",
+            "priority": "medium"
+          }
+        }
+      ]
+    },
+    "moat": {
+      "title": "护城河评估",
+      "conclusion": "MiniMax护城河整体偏弱且分化：B端规模效应初现但C端定价权与转换成本薄弱，核心技术路线仍在自我否定中反复。",
+      "analysis": {
+        "types": [
+          {
+            "type": "品牌/定价权",
+            "test": "是否能在不损失销量的情况下提价？",
+            "verdict": "不存在",
+            "evidence": [
+              { "metric": "API计费模式变更引发退订", "value": "MiniMax把API计费从按次改按Token，被指'隐性涨价'，引发开发者投诉与退订潮", "asOf": "2026年（M3发布后）", "source": { "name": "腾讯新闻《智谱向左，MiniMax向右》", "url": "https://news.qq.com/rain/a/20260723A04PN400" } },
+              { "metric": "AI原生产品毛利率", "value": "从2023年-380.2%提升至2025年前9个月4.7%，仍处微利水平，未见明显提价空间", "asOf": "2025年前9个月", "source": { "name": "老虎社区综合招股书数据", "url": "https://laohu8.com/post/517935828103336" } },
+              { "metric": "行业提价即遭反噬", "value": "智谱GLM Coding Plan一度提价30%起随即又被免费策略挤压", "asOf": "2026年2月", "source": { "name": "36氪《智谱：近6000亿市值支撑点揭秘》", "url": "https://eu.36kr.com/zh/p/3854393625220352" } }
+            ]
+          },
+          {
+            "type": "转换成本",
+            "test": "客户迁移到竞品的成本有多高？",
+            "verdict": "不存在",
+            "evidence": [
+              { "metric": "用户迁移成本评估", "value": "'一旦模型能力被赶上甚至超越，用户迁移成本几乎为零'，C端护城河远比看起来更浅", "asOf": "2026-07-23", "source": { "name": "腾讯新闻《智谱向左，MiniMax向右》", "url": "https://news.qq.com/rain/a/20260723A04PN400" } },
+              { "metric": "C端竞争态势恶化", "value": "M3评测不佳、C端用户下滑、海螺被多个模型超越，指向C端护城河变浅", "asOf": "2026年", "source": { "name": "腾讯新闻《智谱向左，MiniMax向右》", "url": "https://news.qq.com/rain/a/20260723A04PN400" } }
+            ]
+          },
+          {
+            "type": "网络效应",
+            "test": "用户越多产品越好吗？",
+            "verdict": "待验证",
+            "evidence": [
+              { "metric": "OpenRouter调用量周榜排名", "value": "M2.5发布7天调用量破3.07万亿Token；2026-03-09当周1.75万亿Token登顶全球周榜第一", "asOf": "2026-03-16", "source": { "name": "第一财经", "url": "https://www.yicai.com/news/103088126.html" } },
+              { "metric": "全球月度调用量排名", "value": "2026年7月MiniMax M3位列全球第4（前六名全部为中国模型）", "asOf": "2026-08-04", "source": { "name": "国际科技创新中心网站", "url": "https://www.ncsti.gov.cn" } },
+              { "metric": "海螺视频访问量排名", "value": "海螺AI视频网站2025年1月全球AI视频产品访问量排名第一", "asOf": "2025-08-01", "source": { "name": "新华丝路", "url": "https://www.imsilkroad.com/p/540506.html" } }
+            ]
+          },
+          {
+            "type": "规模效应",
+            "test": "规模带来的成本优势有多大？",
+            "verdict": "存在",
+            "evidence": [
+              { "metric": "单位Token能耗", "value": "MiniMax-M2.5每百万词元49.2瓦时，较Llama2-70B基准80.7瓦时低约39%", "asOf": "2025年度", "source": { "name": "招股书引用MiniMax数据（转引自北京硅基流动招股书）", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0630/2026063002927_c.pdf" } },
+              { "metric": "开放平台毛利率", "value": "69.4%", "asOf": "截至2025年9月止9个月", "source": { "name": "全球发售招股书", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/1231/2025123100026_c.pdf" } },
+              { "metric": "应收账款周转天数", "value": "38天，低于AI/SaaS行业60-90天平均水平", "asOf": "FY2025", "source": { "name": "damodev.csdn.net转引招股书数据", "url": "https://damodev.csdn.net" } }
+            ]
+          },
+          {
+            "type": "技术/专利壁垒",
+            "test": "技术领先几年？能否被复制？",
+            "verdict": "待验证",
+            "evidence": [
+              { "metric": "全球首个商用级线性注意力大模型", "value": "MiniMax-01，456B总参数/45.9B激活参数，训练上下文扩展至100万Token", "asOf": "2025-01", "source": { "name": "论文arXiv:2501.08313", "url": "https://arxiv.org/abs/2501.08313" } },
+              { "metric": "技术路线自我反转", "value": "2025年11月M2系列放弃闪电注意力，转向传统Full Attention", "asOf": "2025-11-01", "source": { "name": "新浪财经", "url": "https://finance.sina.com.cn/stock/t/2025-11-01/doc-infvxpfm2780863.shtml" } },
+              { "metric": "CISPO强化学习训练成本", "value": "RL训练成本约53.5万美元（512张H800、耗时3周）", "asOf": "2025-06", "source": { "name": "科学网", "url": "https://news.sciencenet.cn/htmlnews/2025/6/546409.shtm" } }
+            ]
+          }
+        ],
+        "trendPast5y": {
+          "direction": "变窄",
+          "basis": "①开放平台毛利率达69.4%、调用量份额攀升，规模与网络效应变宽；②C端订阅退订潮、迁移成本趋近于零，转换成本变窄；③M2放弃闪电注意力，技术壁垒被自我证伪；综合偏向变窄。"
+        },
+        "trendNext5y": {
+          "direction": "变窄",
+          "basis": "①模型能力持续收敛、开源模型价格战常态化，压制品牌溢价与技术差异化；②B端规模效应存在但同样面临智谱等价格战考验；③若成功转型企业级平台建立真实转换成本，护城河或企稳，否则继续变窄。"
+        }
+      },
+      "inquiry": {
+        "question": "10年后这条护城河还在吗？什么能摧毁它？",
+        "answer": "十年后该护城河大概率大幅弱化，除非转型为具真实转换成本的企业平台。①C端迁移成本趋近于零，模型能力被追平即流失用户；②闪电注意力等核心技术路线被自我放弃，证明当前技术优势不可持续；③规模效应目前仅体现在B端且公司历史不足4年，未经完整价格战周期检验；④WVR架构下创始人高度集中决策权，战略摇摆可能放大护城河流失风险。"
+      },
+      "dataGaps": [
+        {
+          "path": "moat.analysis.types[0]品牌/定价权.evidence",
+          "reason": "采集文件未见对MiniMax产品提价后销量/留存变化的直接量化数据，仅有API计费方式变更引发退订潮的定性报道，无法精确测算提价弹性",
+          "searched": "financials-collection.json 的 riskFactors、businessModelMoat 均未见提价前后销量对比数字",
+          "evidenceRequest": { "metric": "提价后用户流失率/留存率变化", "question": "MiniMax API从按次计费改为按Token计费后，付费用户数或API调用量具体下降多少（有无官方或第三方统计）？", "whyNeeded": "用于精确判断品牌定价权强弱，而非仅凭定性报道推断", "priority": "medium" }
+        },
+        {
+          "path": "moat.analysis.types[2]网络效应.evidence",
+          "reason": "采集文件只有OpenRouter调用量排名等使用规模数据，未见公司披露用户数据反哺模型训练/产品改进的具体因果证据，无法验证经典网络效应机制是否成立",
+          "searched": "financials-collection.json 的 businessModelMoat.moats 网络效应条目及 technology 维度均未见相关披露",
+          "evidenceRequest": { "metric": "用户数据反馈闭环对模型迭代的贡献度", "question": "MiniMax是否披露过用户交互数据用于模型微调/RLHF从而形成正反馈的具体机制或效果数据？", "whyNeeded": "区分'调用量大'与'真正的网络效应护城河'，避免把使用规模等同于护城河", "priority": "medium" }
+        }
+      ]
+    },
+    "inversion": {
+      "title": "逆向思考与风险清单",
+      "conclusion": "多重风险叠加：C端护城河浅、亏损未收窄、WVR治理失衡、解禁抛压与估值透支ARR预期，失败路径清晰但概率分布不均。",
+      "analysis": {
+        "failurePaths": [
+          {
+            "path": "算力供应链断裂：出口管制升级导致云算力获取受限或成本飙升，冲击训练与推理能力",
+            "probability": "中",
+            "impact": "高",
+            "evidence": [
+              { "metric": "前5大供应商采购占比", "value": "62.5%（全部为云计算服务，2025年前9个月）", "asOf": "2025-09-30", "source": { "name": "MiniMax全球发售招股书", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/1231/2025123100026_c.pdf" } },
+              { "metric": "《远程访问安全法案》立法进展", "value": "已获美国众议院外交事务委员会两党议员一致支持", "asOf": "2025-04", "source": { "name": "万商天勤律所解析", "url": "https://vtlaw.cn/news/6594.html" } }
+            ]
+          },
+          {
+            "path": "监管收紧：AIGC内容安全事件触发备案吊销或整改，冲击C端产品运营连续性",
+            "probability": "低",
+            "impact": "中",
+            "evidence": [
+              { "metric": "生成式AI双备案完成情况", "value": "已完成模型登记备案与算法备案，但公司自认无法控制用户使用方式", "asOf": "2025-12-31", "source": { "name": "邦信阳律师事务所招股书风险章节整理", "url": "https://boss-young.com/newsDetail" } }
+            ]
+          },
+          {
+            "path": "同质化价格战：模型能力被追平后C端护城河消失+B端隐性涨价引发退订，收入增速骤降",
+            "probability": "高",
+            "impact": "高",
+            "evidence": [
+              { "metric": "C端护城河评价", "value": "「M3评测不佳、C端用户下滑、海螺被多个模型超越」", "asOf": "2026-07-23", "source": { "name": "腾讯新闻《智谱向左，MiniMax向右》", "url": "https://news.qq.com/rain/a/20260723A04PN400" } },
+              { "metric": "AI原生产品毛利率", "value": "4.7%（远低于开放平台69.4%）", "asOf": "2025年前9个月", "source": { "name": "36氪《智谱：近6000亿市值支撑点揭秘》", "url": "https://eu.36kr.com/zh/p/3854393625220352" } }
+            ]
+          },
+          {
+            "path": "持续烧钱不止：经调整净亏损同比几无收窄，若ARR不及预期将被迫持续外部融资摊薄股权",
+            "probability": "中",
+            "impact": "高",
+            "evidence": [
+              { "metric": "FY2025非IFRS经调整净亏损", "value": "-250,856千美元，同比+2.7%", "asOf": "FY2025", "source": { "name": "HKEXnews年度业绩公告", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf" } },
+              { "metric": "研发强度（研发/收入）", "value": "319.81%", "asOf": "FY2025", "source": { "name": "虎嗅网行业烧钱模式分析", "url": "https://huxiu.com/article/4820128.html" } }
+            ]
+          },
+          {
+            "path": "WVR治理失衡：创始人投票权远超经济权益，若决策失误中小股东难以有效制衡",
+            "probability": "中",
+            "impact": "中",
+            "evidence": [
+              { "metric": "闫俊杰+贠烨祎合计投票权 vs 经济权益", "value": "投票权约78.56% vs 经济权益约28.67%", "asOf": "2026-05-19", "source": { "name": "HKEXnews股东权益披露文件", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0519/2026051901411.pdf" } }
+            ]
+          },
+          {
+            "path": "解禁抛压持续：员工持股平台提前解禁叠加后续禁售到期，长期压制股价与融资能力",
+            "probability": "高",
+            "impact": "中",
+            "evidence": [
+              { "metric": "2026-07-09解禁占比及当日跌幅", "value": "约48.9%解禁，当日暴跌17.98%", "asOf": "2026-07-09", "source": { "name": "36氪解禁报道", "url": "https://eu.36kr.com/zh/p/3889531573680902" } }
+            ]
+          },
+          {
+            "path": "估值预期差兑现：定价高度依赖非审计ARR前瞻指标，中报或ARR不及预期触发剧烈重定价",
+            "probability": "高",
+            "impact": "高",
+            "evidence": [
+              { "metric": "PS倍数（TTM≈FY2025）", "value": "183.86倍", "asOf": "2026-08-07", "source": { "name": "Tushare hk_daily收盘价+FY2025收入测算", "url": "https://tushare.pro" } },
+              { "metric": "股价自历史高点最大回撤", "value": "从1,330港元跌至209.2港元，回撤超84%", "asOf": "2026-07-14", "source": { "name": "Yahoo Finance行情", "url": "https://hk.finance.yahoo.com/quote/0100.HK" } }
+            ]
+          }
+        ],
+        "historicalAnalogies": [
+          {
+            "company": "WeWork",
+            "similarity": "①WVR超级投票权集中于创始人；②叙事驱动估值远超基本面；③巨额持续烧钱扩张",
+            "outcome": "估值从470亿美元崩塌，2023年申请破产保护，成为叙事泡沫破裂的典型案例",
+            "source": { "name": "常识类比，非采集文件数据", "url": "not-applicable（基于公开历史常识的类比判断，非采集文件中的具体网页来源）" }
+          },
+          {
+            "company": "Snap Inc.",
+            "similarity": "C端消费应用为主，核心功能易被巨头（Instagram）复制，用户迁移成本低",
+            "outcome": "上市后长期股价低迷，多年后才勉强实现盈利，估值远低于IPO预期",
+            "source": { "name": "常识类比，非采集文件数据", "url": "not-applicable（基于公开历史常识的类比判断，非采集文件中的具体网页来源）" }
+          },
+          {
+            "company": "亚马逊（1997-2001年代早期）",
+            "similarity": "长期巨额亏损换增长，市场持续质疑盈利路径，研发/扩张强度极高",
+            "outcome": "最终依靠规模效应与AWS建立护城河，成长为全球市值最高公司之一",
+            "source": { "name": "常识类比，非采集文件数据", "url": "not-applicable（基于公开历史常识的类比判断，非采集文件中的具体网页来源）" }
+          },
+          {
+            "company": "滴滴出行",
+            "similarity": "中国科技公司跨境上市，叠加地缘政治与数据安全监管不确定性",
+            "outcome": "上市后因监管审查股价暴跌超90%并从纽交所退市，多年后才转道港股",
+            "source": { "name": "常识类比，非采集文件数据", "url": "not-applicable（基于公开历史常识的类比判断，非采集文件中的具体网页来源）" }
+          }
+        ],
+        "crossDisciplinaryChecks": [
+          { "model": "网络效应理论", "finding": "OpenRouter调用量登顶显示B端开发者生态网络效应初现，但C端消费应用（海螺/星野）用户间无相互增强效应，整体网络效应偏弱，尚不足以构成防御壁垒" },
+          { "model": "技术采纳曲线", "finding": "全球生成式AI处于早期高速导入期（TAM五年CAGR 56.3%），正值「跨越鸿沟」阶段的份额混战，历史上此阶段淘汰率高，行业格局远未收敛" },
+          { "model": "竞争博弈", "finding": "C端与B端均呈囚徒困境式价格战（智谱提价又降价、MiniMax计费方式调整引发退订），纳什均衡或是全行业维持低毛利，仅少数头部厂商能存活" }
+        ],
+        "biasSelfCheck": [
+          { "bias": "叙事偏差", "check": "「中国版OpenAI」标签强化技术叙事，掩盖了AI原生产品毛利率仅4.7%、C端护城河浅的商业化短板" },
+          { "bias": "锚定效应", "check": "165港元发行价与1,330港元历史高点是极端参照点，326.4港元看似「打折」，实际PS仍高达183.86倍" },
+          { "bias": "幸存者偏差", "check": "市场聚焦MiniMax/DeepSeek/智谱等跑出来的大模型公司，易忽略同期大量倒闭或被并购的中小模型创业公司" }
+        ],
+        "bearCase": [
+          { "point": "C端护城河浅，模型能力一旦被超越用户迁移成本趋近于零", "holder": "媒体（腾讯新闻）", "evidence": [ { "metric": "C端产品评价", "value": "M3评测不佳、C端用户下滑、海螺被多个模型超越", "asOf": "2026-07-23", "source": { "name": "腾讯新闻", "url": "https://news.qq.com/rain/a/20260723A04PN400" } } ] },
+          { "point": "限售股解禁与WVR治理结构对中小股东不利", "holder": "本文推断（基于官方披露权益数据计算）", "evidence": [ { "metric": "投票权与经济权益落差", "value": "投票权约78.56% vs 经济权益约28.67%", "asOf": "2026-05-19", "source": { "name": "HKEXnews股东权益披露文件", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0519/2026051901411.pdf" } } ] },
+          { "point": "持续巨额亏损与极高研发强度，盈利路径仍不清晰", "holder": "媒体/行业分析（虎嗅网）", "evidence": [ { "metric": "非IFRS经调整净亏损同比", "value": "+2.7%（未见实质收窄）", "asOf": "FY2025", "source": { "name": "虎嗅网", "url": "https://huxiu.com/article/4820128.html" } } ] },
+          { "point": "地缘政治与监管的双重不确定性", "holder": "律所分析/媒体", "evidence": [ { "metric": "供应商集中度", "value": "前5大供应商占采购额62.5%，全部为云服务", "asOf": "2025-09-30", "source": { "name": "万商天勤律所", "url": "https://vtlaw.cn/news/6594.html" } } ] },
+          { "point": "当前估值仍处于极高倍数，对ARR等非审计指标的定价存在预期差风险", "holder": "本文推断（基于估值倍数计算）", "evidence": [ { "metric": "PS倍数", "value": "183.86倍（TTM≈FY2025）", "asOf": "2026-08-07", "source": { "name": "本文测算（股价×股本÷汇率÷FY2025收入）", "url": "https://tushare.pro" } } ] }
+        ]
+      },
+      "inquiry": {
+        "question": "我最可能在哪里犯错？聪明人为什么会不买/做空这家公司？",
+        "answer": "最可能的错误是把叙事驱动的高PS倍数误当合理定价。①C端毛利率仅4.7%显示护城河比「中国版OpenAI」叙事暗示的浅得多；②WVR架构下投票权78.56%远超经济权益28.67%，中小股东制衡力弱；③经调整净亏损同比仅+2.7%，烧钱未止，若ARR不及预期需持续融资摊薄；④锚定1,330港元历史高点易低估当前183.86倍PS已属极端，聪明资金更愿等中报审计数据验证ARR后再定价。"
+      },
+      "dataGaps": [
+        {
+          "path": "analysis.bearCase.holder的机构信源",
+          "reason": "缺少专业做空机构（如国际知名沽空机构）针对MiniMax的公开做空研究报告，仅有媒体评论与自媒体分析可引用",
+          "searched": "financials-collection.json 的 riskFactors 与 bullBearCase.bear 全文未见「做空报告」「沽空」等对应具体机构名称的表述",
+          "evidenceRequest": { "metric": "专业机构做空/沽空报告", "question": "是否存在专业沽空机构针对MiniMax（00100.HK）发布的公开做空研究报告，其核心论点与目标价是什么？", "whyNeeded": "缺失专业机构做空论点会削弱对空方观点权威性与传播力的判断，可能低估或高估市场分歧程度", "priority": "medium" }
+        }
+      ]
+    },
+    "management": {
+      "title": "管理层评估",
+      "conclusion": "闫俊杰以71.49%投票权主导决策，2026年7月让渡薪酬与股权稳定团队，但WVR架构下关键人才风险显著。",
+      "analysis": {
+        "keyDecisions": [
+          { "date": "2021-06-30", "decision": "2021年6月30日于开曼群岛注册成立公司", "outcome": "确立WVR架构与港股18C章上市法律主体基础", "rating": "★★★☆☆", "source": { "name": "全球发售招股书「释义」章节", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/1231/2025123100026_c.pdf" } },
+          { "date": "2023-06立项/2024-03完成", "decision": "完成A轮6亿美元融资（2023立项/2024完成）", "outcome": "阿里、红杉、高瓴等机构入股，估值25亿美元", "rating": "★★★★☆", "source": { "name": "东方财富研报PDF", "url": "https://pdf.dfcfw.com/pdf/H3_AP202410071640177318_1.pdf" } },
+          { "date": "2025-12-12", "decision": "取得中国证监会境外发行上市备案通知书", "outcome": "扫清赴港上市监管障碍，须12个月内完成上市", "rating": "★★★★☆", "source": { "name": "中国证监会官网", "url": "https://www.csrc.gov.cn/csrc/c105984/c7603849/content.shtml" } },
+          { "date": "2026-01-09", "decision": "香港联交所主板挂牌，发行价165港元", "outcome": "首日大涨109%，收报345港元，市值破千亿", "rating": "★★★★★", "source": { "name": "时代财经", "url": "https://static.time-weekly.com" } },
+          { "date": "2026-05-29", "decision": "与中信证券签署A股上市辅导协议", "outcome": "启动A+H两地上市，据报道拟登陆科创板", "rating": "★★★★☆", "source": { "name": "中证网", "url": "https://jnzstatic.cs.com.cn/zzb/htmlInfo/123967.html" } },
+          { "date": "2026-07-10", "decision": "完成160亿港元融资，闫俊杰宣布不领薪酬+让渡5%股份激励团队", "outcome": "认购覆盖率7倍，但股价仍探至217.8港元未止跌", "rating": "★★★★★", "source": { "name": "观察者网", "url": "https://www.guancha.cn/economy/2026_07_10_823282.shtml" } },
+          { "date": "2026-08-03", "decision": "开源第三代视频生成模型H3", "outcome": "视频编辑能力登顶全球榜单第1，当日股价涨超7%", "rating": "★★★★☆", "source": { "name": "南方都市报", "url": "https://wap.eastmoney.com/a/202608033829888273.html" } }
+        ],
+        "capitalAllocation": {
+          "rdReturn": "①研发强度约319.8%（研发开支2.528亿美元/收入7,904万美元），远高于同业普遍投入水平；②对应收入同比增速158.9%（FY2024的3,052万美元增至FY2025的7,904万美元），研发投入与商业化扩张同步加速；③但非IFRS经调整净亏损同比仅+2.7%（2.442亿→2.509亿美元），基本持平，研发尚未转化为盈利改善，回报兑现仍处早期。",
+          "maTrackRecord": { "status": "unavailable", "reason": "financials-collection.json 全文（含management.keyDecisions 11条时间线）未提及任何并购交易记录" },
+          "buybackTiming": { "status": "not-applicable", "reason": "公司2026-01-09刚上市，上市迄今约7个月，采集文件未见任何股份回购公告或计划，早期高研发投入阶段回购不适用于当前发展阶段" },
+          "evidence": [
+            { "metric": "研发强度（研发开支/收入）", "value": "319.8%（约320%）", "asOf": "FY2025（2025-12-31）", "source": { "name": "2025年度业绩公告附注9", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf" } },
+            { "metric": "收入同比增速", "value": "158.9%（3,052.3万美元→7,903.8万美元）", "asOf": "FY2024→FY2025", "source": { "name": "年度业绩公告财务摘要", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf" } },
+            { "metric": "非IFRS经调整净亏损同比变化", "value": "+2.7%（2.442亿美元→2.509亿美元）", "asOf": "FY2024→FY2025", "source": { "name": "年度业绩公告财务摘要", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf" } }
+          ]
+        },
+        "alignment": {
+          "ownership": "①闫俊杰博士经济权益约25.22%（2026-07-14配售后摊薄至22.65%），单独投票权约71.49%；②贠烨祎女士经济权益约3.45%，投票权约7.07%；③两人合计经济权益仅约28.67%，合计投票权却高达78.56%，权益与投票权落差巨大，决策权高度集中于创始人。",
+          "compensation": "闫俊杰2026-07-10内部信宣布：实现AGI前不再领取薪酬，并让渡个人名下相当于总股本4%股份用于团队激励、1%股份设立开源社区专项基金；薪酬安排与「实现AGI」这一长期技术使命挂钩，而非短期财务考核，采集文件未见其他高管薪酬结构披露。",
+          "insiderSelling": { "status": "unavailable", "reason": "financials-collection.json 全文（含keyDecisions时间线与riskFactors解禁章节）未见创始人或联合创始人减持股份的记录，仅披露创始团队自愿设定禁售期至2028-01-08、未参与2026-07-09公司层面解禁" },
+          "evidence": [
+            { "metric": "闫俊杰博士经济权益占比", "value": "25.22%（2026-07-14配售后摊薄至22.65%）", "asOf": "2026-05-19（配售后2026-07-10）", "source": { "name": "HKEXnews股东权益披露文件/配售公告", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0519/2026051901411.pdf" } },
+            { "metric": "贠烨祎女士经济权益占比", "value": "3.45%", "asOf": "2026-05-19", "source": { "name": "HKEXnews股东权益披露文件", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0519/2026051901411.pdf" } },
+            { "metric": "闫俊杰博士+贠烨祎女士合计投票权", "value": "78.56%", "asOf": "2026-05-19", "source": { "name": "HKEXnews股东权益披露文件", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0519/2026051901411.pdf" } }
+          ]
+        },
+        "organization": {
+          "teamStability": "①闫俊杰与贠烨祎均出身商汤集团，2021年底共同创业至今近5年未间断；②贠烨祎职务由COO（2022-2026年3月）调整为总裁，核心团队角色随发展演进但未见流失；③采集文件未见其他核心高管变动或离职记录。",
+          "keyPersonRisk": "WVR架构下闫俊杰个人经济权益仅25.22%却掌握71.49%投票权，技术路线（如M2放弃Lightning Attention）、融资与上市等重大决策高度依赖其个人判断，一旦其发生变故或离职，公司治理与技术方向存在高度不确定性。"
+        },
+        "culture": "①「不领薪酬+让渡个人股份做团队激励与开源基金」（2026-07-10）体现使命优先于个人财务利益；②M2模型放弃自研Lightning Attention转向全量注意力（2025-11），显示技术路线愿自我否定、以效果为先；③研发强度长期约320%高位、H3模型开源且定价仅为同类旗舰1/3，体现技术驱动与开放共享的工程文化。"
+      },
+      "inquiry": {
+        "question": "如果CEO退休，这家公司还能保持竞争力吗？",
+        "answer": "若闫俊杰退休，公司竞争力将明显承压，短期内难以完全替代。①WVR架构下其个人投票权达71.49%，技术路线（如M2转向）与融资等重大决策高度依赖个人判断而非制度化决策；②公司仍处商业化早期，研发强度约320%尚未转化为盈利，路线容错度低，核心决策者缺位将冲击转型节奏与外部信任；③联合创始人贠烨祎与商汤系核心团队自2021年至今保持稳定，可缓冲短期冲击，但难以替代创始人的技术权威与投票权集中度。"
+      },
+      "dataGaps": [
+        { "path": "management.analysis.capitalAllocation.maTrackRecord", "reason": "采集文件financials-collection.json 全文未提及任何并购交易记录", "searched": "financials-collection.json 未见相关字段", "evidenceRequest": { "metric": "并购交易清单及整合效果", "question": "MiniMax上市以来是否有对外并购或收购，交易规模与整合效果如何？", "whyNeeded": "评估管理层资本配置能力中的并购成功率维度", "priority": "low" } },
+        { "path": "management.analysis.alignment.insiderSelling", "reason": "采集文件未见创始人或联合创始人减持股份的公开记录", "searched": "financials-collection.json 全文（含keyDecisions与riskFactors解禁章节）未见相关字段", "evidenceRequest": { "metric": "创始人/高管减持记录", "question": "闫俊杰、贠烨祎及其他高管自IPO以来是否有场内减持或权益变动申报？", "whyNeeded": "判断管理层与股东利益是否持续一致，是否存在套现信号", "priority": "medium" } }
+      ]
+    },
+    "industryTrend": {
+      "title": "行业与长期趋势",
+      "conclusion": "生成式AI处于范式转移成长期，MiniMax身处模型层红海、全球份额仅0.3%，长期地位取决于技术路线能否稳定。",
+      "analysis": {
+        "paradigmShift": {
+          "verdict": "部分",
+          "reasoning": "①生成式AI具通用目的技术特征，正重塑内容生产、软件开发等环节，类比互联网早期扩散阶段；②但技术路线仍剧烈迭代（MiniMax自身Lightning Attention转向Full Attention），未形成稳定范式；③IDC预测2029年全球生成式AI规模6,071亿美元、CAGR56.3%，增速虽高但长期渗透天花板未验证，故判定「部分」范式转移而非确定性文明级跃迁。"
+        },
+        "historicalAnalogy": "①对比蒸汽机（动力革命）、电力（能源网络化）、互联网（信息连接层），大模型对应「智能生产要素」通用层革命，类似1995年前后互联网早期阶段；②MiniMax同时布局模型层（自研abab/MiniMax-01/M系列）与应用层（海螺AI、星野等C端产品），类比互联网时代「既做基础设备商又做门户网站」的双重定位；③模型层全球份额仅0.3%排名第10，C端护城河公司自评「用户迁移成本几乎为零」，两端均未形成垄断地位，更接近技术扩散期众多参与者之一。",
+        "tam": {
+          "current": { "value": "6,071亿美元（2029年，全球生成式AI市场规模预测）", "currency": "USD", "asOf": "2029年预测，2025-09-25发布", "source": { "name": "IDC《全球人工智能和生成式人工智能支出指南》", "url": "https://my.idc.com/getdoc.jsp?containerId=prCHC53829925" } },
+          "ceiling": "①IDC口径为AI全产业链总投资（硬件+软件+服务），生成式AI细分6,071亿美元并非专指模型层或应用层，与MiniMax实际业务口径不完全对应；②MiniMax模型层全球份额仅0.3%，若份额不变，可分享的模型层收入天花板极小，应用层C端订阅收入公司未披露独立TAM；③行业增速已从2024年同比110%-120%回落至2025年85%-90%（第三方汇总口径），显示爆发式增长已过峰值。",
+          "growthCurve": "成长期（导入期向成长期过渡）：①IDC官方口径2024-2029五年CAGR56.3%仍属高速增长；②第三方多机构汇总口径显示同比增速已从110%-120%（2024）降至85%-90%（2025），预测2027年进一步降至60%-65%，增速逐年回落但尚未进入成熟期个位数增长区间。"
+        },
+        "valueChainPosition": "①MiniMax模型层全球份额仅0.3%、排名第10（纯大模型公司中排第4），前5名均为美国公司合计份额超60%，议价权明显弱于头部厂商；②B端开放平台毛利率9M2025达69.4%，但2026年出现「按次计费改按Token计费」引发开发者「隐性涨价」投诉与退订，反映B端客户对涨价敏感、议价权博弈激烈；③C端护城河偏弱、用户迁移成本低，公司在产业链中更接近「可替代供应商之一」而非核心枢纽。",
+        "techRouteRisk": "①MiniMax-01/M1采用自研线性注意力（Lightning Attention）作为核心技术卖点，宣称训练成本大幅低于传统架构；②2025年11月发布的M2系列转向传统全量注意力（Full Attention），暂时放弃此前路线，第三方分析M2.5或为「7层Lightning配1层Softmax」混合方案，来源可信度较低；③技术路线摇摆说明公司自认此前方案生产环境性价比未达预期，不应假设任何当前技术方案会长期锁定竞争优势。",
+        "concentration": {
+          "customers": { "status": "unavailable", "reason": "financials-collection.json 未披露MiniMax自身客户集中度（如前五大客户收入占比），仅有同业智谱AI的客户集中度数据（前五大客户占比近50%），不可替代作为MiniMax本身数据" },
+          "suppliers": "前五大算力/云服务供应商合计采购1.436亿美元，占采购总额62.5%，且全部为云计算服务，高度依赖第三方云算力供应商（截至2025年9月30日止9个月，招股书自行披露）。",
+          "evidence": [
+            { "metric": "前五大供应商采购集中度", "value": "62.5%（合计1.436亿美元，全部为云计算服务）", "asOf": "2025年1-9月", "source": { "name": "MiniMax全球发售招股书", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/1231/2025123100026_c.pdf" } }
+          ]
+        }
+      },
+      "inquiry": {
+        "question": "站在20年后回看，这家公司是「这个时代的标准石油」还是「昙花一现的3Com」？",
+        "answer": "更偏向「3Com」而非「标准石油」，但尚未完全盖棺定论。①模型层全球份额仅0.3%排名第10，技术路线出现Lightning Attention→Full Attention反复，尚未建立不可复制的技术护城河；②C端迁移成本低、竞争同质化，公司内部评价「护城河远比看起来更浅」，FY2025调整后净亏损同比未实质收窄；③若网络效应持续（OpenRouter调用量多次登顶、H3视频模型全球第1）叠加成本效率优势（单位能耗低39%）转化为规模壁垒，不排除演变为区域性基础设施型公司；④转向「标准石油」的触发条件是模型层份额数量级跃升、B端客户粘性显著提升、供应商集中度（62.5%）实质下降——目前均未观察到，故当前判断更接近3Com一端。"
+      },
+      "dataGaps": [
+        { "path": "dimensions.industryTrend.analysis.concentration.customers", "reason": "采集文件未见MiniMax自身客户集中度（如前五大/前十大客户收入占比）披露，仅有同业智谱AI的客户集中度数据，无法替代", "searched": "financials-collection.json 的 riskFactors、businessModelMoat、revenueStructure 字段均未见相关字段", "evidenceRequest": { "metric": "MiniMax前五大/前十大客户收入占比", "question": "MiniMax招股书或年报是否披露其B端开放平台客户集中度（前五大客户合计收入占比）？", "whyNeeded": "客户集中度是判断B端业务议价权与收入稳定性的关键指标，缺失该数据无法完整评估价值链议价权", "priority": "medium" } }
+      ]
+    },
+    "valuation": {
+      "title": "估值分析",
+      "conclusion": "183.86倍PS隐含极端乐观增长预期，三情景法下中性/悲观目标价远低于现价，安全边际薄弱。",
+      "analysis": {
+        "currentMultiples": {
+          "_hint": "全部经 docs/research/tools/financial_rigor.py 验算，与第 1 步采集值对账",
+          "marketCap": { "value": "113.99B", "currency": "HKD", "asOf": "2026-08-07", "source": { "name": "financials-collection.json currentValuation.marketCap（Yahoo Finance，financial_rigor.py verify-market-cap 验算偏差0.00%）", "url": "https://hk.finance.yahoo.com/quote/0100.HK" } },
+          "pe": { "status": "not-applicable", "reason": "FY2025 IFRS净亏损18.716亿美元、非IFRS经调整净亏损2.509亿美元，公司持续亏损无正EPS，PE不适用；复用financials-collection.json currentValuation.pe判断" },
+          "ps": { "value": 183.86, "asOf": "2026-08-07（TTM≈FY2025，无更新中期收入数据）", "source": { "name": "financials-collection.json currentValuation.ps（市值÷汇率7.8443÷FY2025收入7,903.8万美元，已用financial_rigor.py验算）", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf" } },
+          "peg": { "status": "not-applicable", "reason": "公司持续亏损，无正的净利润增长率可用于PEG计算；复用financials-collection.json currentValuation.peg判断" },
+          "evToRevenue": { "status": "unavailable", "reason": "2025-12-31后发生IPO筹资、超额配股权行使、2026-07配售等多笔未反映在已发布资产负债表的资本变动，用旧净现金倒算EV会系统性高估EV；复用financials-collection.json currentValuation.evToRevenue判断，待2026-09-30前首份中期报告披露后更新" }
+        },
+        "reverseDcf": {
+          "impliedGrowth": "①183.86倍PS远超同业可比（OpenAI约40倍、Anthropic约27倍、Google Gemini约10倍，均为未上市估值口径）；②隐含市场对收入维持数年超高速复合增长及商业化持续兑现的极端乐观预期；③数据不足以做精确反向DCF贴现测算，仅能给方向性定性判断。",
+          "assumptions": "未采用具体贴现率/年限/终值假设做精确反推：公司FY2025经营活动所用现金流净额为-2.796亿美元，尚无正自由现金流，缺乏DCF所需现金流基础，如实标注为数据不足场景，只做定性判断。"
+        },
+        "threeScenario": {
+          "_hint": "必须用 docs/research/tools/financial_rigor.py three-scenario 精确计算，禁止心算",
+          "inputs": {
+            "price": "326.4（HKD，2026-08-07收盘）",
+            "eps": "not-applicable（FY2025 IFRS净亏损、非IFRS经调整净亏损2.509亿美元，无正EPS；本情景改用PS倍数法替代EPS×PE法，起点用ARR/收入，见assumptionBasis）",
+            "sharesHundredMillion": "3.4924亿股（349,235,308股÷1e8，calc验算）",
+            "growth": ["乐观：Y1+200%/Y2+60%/Y3+35%（起点ARR3亿美元→3年后19.44亿美元）", "中性：Y1+100%/Y2+50%/Y3+30%（起点ARR3亿美元→3年后11.70亿美元）", "悲观：Y1+50%/Y2+20%/Y3+10%（起点ARR3亿美元→3年后5.94亿美元）"],
+            "pe": ["20x（目标PS，非PE，乐观情景，介于OpenAI40x与Google10x之间）", "10x（目标PS，中性情景，贴近Google Gemini约10x）", "5x（目标PS，悲观情景，向成熟SaaS/智谱压缩）"],
+            "years": 3,
+            "currency": "USD计算收入，HKD计算目标股价（汇率7.8443港元/美元，取自financials-collection.json currentValuation.ps口径）"
+          },
+          "optimistic": { "targetPrice": "873.30 HKD", "impliedReturnPct": "+167.55%" },
+          "neutral": { "targetPrice": "262.80 HKD", "impliedReturnPct": "-19.49%" },
+          "pessimistic": { "targetPrice": "66.71 HKD", "impliedReturnPct": "-79.56%" },
+          "assumptionBasis": "①因公司持续亏损无正EPS，标准EPS×(1+增速)^N×目标PE法不适用，改用PS倍数法：起点收入×复合增速×目标PS÷总股本=目标价；②起点取管理层非审计披露的当前ARR约3亿美元（较FY2025收入7,904万美元更贴近当前经营节奏）；③乐观情景参考东方证券2026年ARR指引8-10亿美元（3年后19.44亿美元），目标PS 20倍取OpenAI40倍与Google10倍中间值；④中性情景增速逐步收敛至30%，目标PS 10倍贴近Google Gemini；⑤悲观情景增速大幅放缓且PS压缩至5倍（向成熟SaaS/智谱靠拢）；⑥全部步骤用calc逐项验算，见toolOutput。",
+          "toolOutput": "乐观：calc '300*3'=900.00；calc '900*1.6'=1,440.00；calc '1440*1.35'=1,944.00（精确值1944.0000000000002）；calc '1944*20'=38,880.00；calc '38880*1e6*7.8443'=304.99B（精确值304986384000.0）；calc '(38880*1e6*7.8443)/349235308'=873.30（精确值873.2976792827602）；calc '(873.2976792827602-326.4)/326.4*100'=167.55（精确值167.55443605476722）。\n中性：calc '300*2'=600.00；calc '600*1.5'=900.00；calc '900*1.3'=1,170.00；calc '1170*10'=11,700.00；calc '(11700*1e6*7.8443)/349235308'=262.80（精确值262.79791274712693）；calc '(262.79791274712693-326.4)/326.4*100'=-19.49（精确值-19.485933594630225）。\n悲观：calc '300*1.5'=450.00；calc '450*1.2'=540.00；calc '540*1.1'=594.00；calc '594*5'=2,970.00；calc '(2970*1e6*7.8443)/349235308'=66.71（精确值66.7102393896553）；calc '(66.7102393896553-326.4)/326.4*100'=-79.56（精确值-79.56181391248307）。\n分位数辅助：calc '(326.4-1330)/1330*100'=-75.46（精确值-75.45864661654136）。\n股本换算：calc '349235308/1e8'=3.49（精确值3.49235308）。"
+        },
+        "vsOwnHistory": {
+          "metric": "股价（港元，非前复权，因数据限制用价格本身对比，非PE/PS倍数）",
+          "currentValue": "326.4 HKD（2026-08-07收盘）",
+          "historicalRange": "①52周高点1,330港元（2026年3月），当前较高点回撤约75.46%（calc验算，与采集文件75.5%口径一致）；②52周最低点数据未采集到，精确历史分位unavailable；③定性看当前价格处于上市以来价格区间的低位。",
+          "source": { "name": "financials-collection.json currentValuation.sharePrice.note（Tushare hk_daily / Longbridge）", "url": "https://longbridge.com/quote/00100.HK" }
+        },
+        "vsPeers": [
+          { "name": "OpenAI", "pe": "not-applicable（未上市，无公开EPS/PE数据）", "ps": "约40倍（估值约1万亿美元对应，2026年口径）", "source": { "name": "financials-collection.json competitiveLandscape.competitors（鉅亨网）", "url": "https://hao.cnyes.com/post/247204" } },
+          { "name": "Anthropic", "pe": "not-applicable（未上市，无公开EPS/PE数据）", "ps": "约27倍（估值约1.2万亿美元对应，2026年口径）", "source": { "name": "financials-collection.json competitiveLandscape.competitors（鉅亨网）", "url": "https://hao.cnyes.com/post/247204" } },
+          { "name": "Google（Gemini）", "pe": "not-applicable（Gemini为Alphabet产品线，非独立上市实体，无单独EPS/PE）", "ps": "约10倍（Gemini业务线隐含估值约1,500亿美元拆分估算，可比性存疑）", "source": { "name": "financials-collection.json competitiveLandscape.competitors（鉅亨网）", "url": "https://hao.cnyes.com/post/247204" } },
+          { "name": "智谱AI（Zhipu AI / Z.ai）", "pe": "not-applicable（02513.HK，无正EPS披露）", "ps": { "status": "unavailable", "reason": "已查招股书及financials-collection.json competitiveLandscape，未见智谱单独市值/PS数据，仅有FY2025收入约7.24亿元人民币，无法计算可比PS" }, "source": { "name": "financials-collection.json competitiveLandscape.competitors", "url": "https://www.hkexnews.hk" } }
+        ]
+      },
+      "inquiry": {
+        "question": "如果股市明天关闭5年，你愿意以这个价格持有吗？",
+        "answer": "不愿意，估值倍数极端且商业化拐点未经审计确认。①183.86倍PS处于历史与同行罕见的极端区间，安全边际极薄；②管理层披露的3亿美元ARR为非审计口径，拐点尚待中期/年度报告证实；③三情景法下仅乐观情景（目标价873.3港元）支持现价，中性（262.8港元）与悲观（66.71港元）均大幅低于现价326.4港元；④5年封闭期内WVR治理、解禁抛压、地缘政治等风险持续存在，缺乏流动性缓冲会放大不确定性。"
+      },
+      "dataGaps": [
+        { "path": "dimensions.valuation.analysis.currentMultiples.evToRevenue", "reason": "2025-12-31后IPO筹资、超额配股权行使、2026-07配售等未反映在最新经审计资产负债表，无法准确计算当前净现金与EV", "searched": "financials-collection.json currentValuation.evToRevenue 已标注unavailable，未见更新数字", "evidenceRequest": { "metric": "2026-06-30中期净现金/净负债", "question": "IPO及后续配售后的合并净现金余额是多少", "whyNeeded": "计算准确的EV/Revenue以补全估值倍数体系", "priority": "medium" } },
+        { "path": "dimensions.valuation.analysis.vsOwnHistory.historicalRange", "reason": "缺52周最低点具体数字，无法计算精确历史分位，只能定性描述回撤幅度", "searched": "financials-collection.json currentValuation.sharePrice.note 只披露52周高点1,330港元及当日振幅，未见52周最低点", "evidenceRequest": { "metric": "52周最低股价", "question": "MiniMax（00100.HK）上市以来52周区间最低收盘价及日期", "whyNeeded": "精确计算当前价格在历史区间的分位数", "priority": "low" } },
+        { "path": "dimensions.valuation.analysis.threeScenario.inputs", "reason": "三情景起点ARR约3亿美元为管理层2026年3-5月业绩电话会非经审计口径，缺经审计的最新收入/ARR数字校验起点准确性", "searched": "financials-collection.json bullBearCase 与 currentValuation.ps.note 均标注该ARR数字为非经审计口径，公司首份中期报告尚未刊发", "evidenceRequest": { "metric": "2026年上半年经审计收入/ARR", "question": "公司2026-09-30前刊发的首份中期报告披露的经审计收入或年化收入是多少", "whyNeeded": "校验三情景估值起点是否合理，避免基于非审计口径的系统性偏差", "priority": "high" } }
+      ]
+    }
+  },
+  "crossValidationLog": [
+    {
+      "field": "三情景估值-乐观情景目标价",
+      "source1": { "name": "financial_rigor.py calc 逐步验算", "value": "873.30 HKD" },
+      "source2": { "name": "不适用（方法论适配计算，非多源交叉验证）", "value": "n/a" },
+      "deviationPct": "不适用",
+      "flag": "ok",
+      "resolution": "因公司持续亏损无正EPS，标准three-scenario(EPS×PE)命令不适用，改用financial_rigor.py calc逐步验算PS倍数法：起点ARR3亿美元×三年复合增速×目标PS20倍÷总股本÷汇率=873.30港元，较现价326.4港元+167.55%；计算过程全部记录于dimensions.valuation.analysis.threeScenario.toolOutput"
+    },
+    {
+      "field": "三情景估值-中性情景目标价",
+      "source1": { "name": "financial_rigor.py calc 逐步验算", "value": "262.80 HKD" },
+      "source2": { "name": "不适用", "value": "n/a" },
+      "deviationPct": "不适用",
+      "flag": "ok",
+      "resolution": "起点ARR3亿美元×三年复合增速(100%/50%/30%)×目标PS10倍÷总股本÷汇率=262.80港元，较现价-19.49%，计算过程见toolOutput"
+    },
+    {
+      "field": "三情景估值-悲观情景目标价",
+      "source1": { "name": "financial_rigor.py calc 逐步验算", "value": "66.71 HKD" },
+      "source2": { "name": "不适用", "value": "n/a" },
+      "deviationPct": "不适用",
+      "flag": "ok",
+      "resolution": "起点ARR3亿美元×三年复合增速(50%/20%/10%)×目标PS5倍÷总股本÷汇率=66.71港元，较现价-79.56%，计算过程见toolOutput"
+    },
+    {
+      "field": "股价距52周高点回撤幅度",
+      "source1": { "name": "financial_rigor.py calc 验算", "value": "-75.46%" },
+      "source2": { "name": "financials-collection.json 采集时口径", "value": "约-75.5%" },
+      "deviationPct": 0.05,
+      "flag": "ok",
+      "resolution": "(326.4-1330)/1330×100=-75.46%，与第1步采集口径的-75.5%一致（四舍五入差异），采用calc精确值"
+    }
+  ]
+}

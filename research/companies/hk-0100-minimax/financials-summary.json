@@ -1,0 +1,130 @@
+{
+  "meta": {
+    "companyId": "hk-0100-minimax",
+    "companyName": "MiniMax Group Inc.（稀宇科技）",
+    "summarizedAt": "2026-08-09",
+    "dataCutoff": "2026-08-09（Asia/Shanghai）；行情数据截至最近交易日2026-08-07收盘",
+    "basedOnCollection": "research/companies/hk-0100-minimax/financials-collection.json",
+    "basedOnAnalysis": "research/companies/hk-0100-minimax/financials-analysis.json"
+  },
+  "dimensionSummary": [
+    {
+      "dimensionId": "businessQuality",
+      "title": "生意质量",
+      "mapsTo": "dimensions.businessEssence",
+      "conclusion": "C端订阅占比67%但毛利仅4.7%、护城河浅，B端占33%毛利69.4%具规模效应；FY2025收入+158.9%超研发+33.8%，经营杠杆转正，但经调整净亏损仅收窄2.7%，尚未证明自我造血能力。",
+      "confidence": 4,
+      "scoreBasis": "①dimensions.businessEssence.analysis.revenueBreakdown显示C端占67.15%但毛利仅4.7%(stickiness.evidence)，B端占32.85%毛利69.4%(grossMarginVsPeers)，结构性依赖低毛利端；②profitabilityTrend5y显示FY2025净利率IFRS-2368%/经调整-317.4%，持续巨亏；③operatingLeverage显示收入+158.9%远超研发+33.8%，经营杠杆方向正向，但经调整净亏损仅+2.7%未实质收窄；④stickiness与businessModelMoat中C端留存率、B端NRR均缺失(dataGaps)，证据不足向中性收敛。"
+    },
+    {
+      "dimensionId": "moat",
+      "title": "护城河",
+      "mapsTo": "dimensions.moat",
+      "conclusion": "护城河整体偏弱且分化：品牌定价权与转换成本均'不存在'，规模效应仅B端验证，技术路线曾自我否定(Lightning Attention转向Full Attention)，过去与未来5年趋势均判断为'变窄'。",
+      "confidence": 3,
+      "scoreBasis": "①moat.analysis.types中品牌/定价权与转换成本verdict均为'不存在'，API改按Token计费引发退订潮；②规模效应verdict'存在'，开放平台毛利率69.4%、单位能耗低39%；③网络效应与技术壁垒均'待验证'，M2放弃Lightning Attention证明技术路线不可持续；④trendPast5y与trendNext5y均判定'变窄'，仅B端转型出真实转换成本才可能企稳。"
+    },
+    {
+      "dimensionId": "management",
+      "title": "管理层",
+      "mapsTo": "dimensions.management",
+      "conclusion": "闫俊杰投票权71.49%远超经济权益25.22%，WVR治理集中度高，但2026-07主动让渡薪酬股权、团队稳定、无减持记录，管理层意愿与股东一致但外部制衡薄弱。",
+      "confidence": 6,
+      "scoreBasis": "①management.analysis.alignment显示闫俊杰+贠烨祎合计投票权78.56% vs 经济权益28.67%，落差大；②2026-07-10闫俊杰宣布不领薪酬并让渡5%股份(keyDecisions)，insiderSelling无减持记录，正向对齐信号；③capitalAllocation显示研发强度319.8%但经调整净亏损仅收窄2.7%，资本配置回报兑现尚早；④organization.teamStability显示2021年至今未见核心流失，但keyPersonRisk指出重大决策高度依赖闫俊杰个人判断。"
+    },
+    {
+      "dimensionId": "keyRisk",
+      "title": "最大风险",
+      "mapsTo": "dimensions.inversion",
+      "conclusion": "最大风险是同质化价格战叠加估值预期差兑现：C端护城河持续变浅、B端隐性涨价引发退订，同时183.86倍PS高度依赖非审计ARR，中报不及预期或触发剧烈重定价。",
+      "confidence": 3,
+      "scoreBasis": "①failurePaths中'同质化价格战'与'估值预期差兑现'均标注probability高/impact高，为清单中最严重组合；②C端毛利率仅4.7%且'M3评测不佳、C端用户下滑'佐证价格战风险已现实兑现迹象；③PS倍数183.86倍、股价历史最大回撤超84%(自1330跌至209.2港元)显示估值风险已部分释放但未消除；④WVR投票权78.56%与解禁单日跌17.98%等风险叠加，可对冲手段有限，风险可控程度评分偏低。"
+    },
+    {
+      "dimensionId": "civilizationTrend",
+      "title": "文明趋势",
+      "mapsTo": "dimensions.industryTrend",
+      "conclusion": "生成式AI处于范式转移成长期但增速已从110-120%回落至85-90%，MiniMax模型层全球份额仅0.3%排第10，价值链议价权弱，更接近'3Com'而非'标准石油'。",
+      "confidence": 4.5,
+      "scoreBasis": "①paradigmShift verdict为'部分'，tam.growthCurve显示增速从2024年110-120%降至2025年85-90%，行业增速已过峰值；②valueChainPosition显示MiniMax模型层份额仅0.3%排名第10，前5名合计超60%份额，议价权弱；③techRouteRisk指出Lightning Attention转向Full Attention，不应假设当前技术方案长期锁定优势；④inquiry.answer明确判断'更偏向3Com而非标准石油'，供应商集中度62.5%等指标均未观察到反转迹象。"
+    },
+    {
+      "dimensionId": "valuation",
+      "title": "估值",
+      "mapsTo": "dimensions.valuation",
+      "conclusion": "183.86倍PS隐含极端乐观预期，三情景法下仅乐观情景(873.30港元)支持现价326.4港元，中性(262.80港元)与悲观(66.71港元)均大幅低于现价，安全边际薄弱。",
+      "confidence": 2.5,
+      "scoreBasis": "①currentMultiples.ps=183.86倍(2026-08-07)，远超OpenAI约40倍、Anthropic约27倍、Google Gemini约10倍(vsPeers)；②threeScenario三情景中性262.80港元(-19.49%)、悲观66.71港元(-79.56%)均低于现价326.4港元，仅乐观873.30港元(+167.55%)支持现价；③三情景起点ARR3亿美元为非审计口径(assumptionBasis与dataGaps)，估值假设本身待验证；④vsOwnHistory显示股价距52周高点回撤75.46%，看似'打折'但绝对倍数仍处极端区间。"
+    }
+  ],
+  "strategies": {
+    "noPosition": {
+      "title": "空仓者",
+      "advice": "①现价326.4港元对应183.86倍PS，仅优于悲观情景，不建议现价新建仓位；②生意质量与护城河评分均偏低(4分/3分)，商业化拐点未经审计确认，宜观望；③如需参与应等价格回落至中性目标价附近或经审计ARR数据落地后再评估。",
+      "triggers": [
+        {
+          "condition": "股价回落至262.80港元(中性情景目标价)附近或以下",
+          "action": "可考虑小仓位试探性建仓，但需同步确认ARR数据未恶化",
+          "basis": "dimensions.valuation.analysis.threeScenario.neutral目标价262.80港元(-19.49%)"
+        },
+        {
+          "condition": "公司刊发2026年中期报告且经审计收入/ARR不低于非审计披露的3亿美元口径",
+          "action": "结合届时估值水平评估建仓时点",
+          "basis": "dimensions.valuation.analysis.threeScenario.assumptionBasis与dataGaps中ARR审计缺口"
+        }
+      ]
+    },
+    "holding": {
+      "title": "持仓者",
+      "advice": "①C端护城河浅、经调整净亏损未实质收窄，不宜以长期逻辑死扛；②建议设置止损位并降低仓位集中度，密切跟踪季度ARR与解禁节奏；③若已有浮盈，可逢反弹分批减仓，控制WVR治理与解禁抛压的尾部风险。",
+      "triggers": [
+        {
+          "condition": "股价跌破66.71港元(悲观情景目标价)",
+          "action": "执行止损，退出持仓",
+          "basis": "dimensions.valuation.analysis.threeScenario.pessimistic目标价66.71港元(-79.56%)"
+        },
+        {
+          "condition": "出现新一轮限售股解禁且比例接近或超过2026-07-09的48.9%",
+          "action": "提前逢高减仓规避抛压冲击",
+          "basis": "dimensions.inversion.analysis.failurePaths解禁抛压持续条目，2026-07-09解禁48.9%当日暴跌17.98%"
+        }
+      ]
+    },
+    "sellSignals": {
+      "title": "卖出信号",
+      "signals": [
+        {
+          "signal": "中期审计数据证伪当前估值假设",
+          "observable": "2026年中期报告披露收入/ARR增速明显低于非审计口径的3亿美元起点",
+          "basis": "dimensions.valuation.analysis.threeScenario.assumptionBasis与dataGaps中ARR审计缺口"
+        },
+        {
+          "signal": "C端同质化竞争进一步兑现",
+          "observable": "海螺AI/星野等C端产品收入增速较FY2025的143.4%大幅下滑或用户数持续下滑",
+          "basis": "dimensions.inversion.analysis.failurePaths同质化价格战条目；C端毛利率仅4.7%"
+        },
+        {
+          "signal": "股价跌破中性目标价且无基本面改善",
+          "observable": "收盘价持续低于262.80港元且未见ARR或毛利率同步改善",
+          "basis": "dimensions.valuation.analysis.threeScenario.neutral目标价262.80港元"
+        }
+      ]
+    },
+    "addSignals": {
+      "title": "加仓信号",
+      "signals": [
+        {
+          "signal": "价格跌至深度折价区间但基本面未进一步恶化",
+          "observable": "股价跌至66.71至100港元区间附近，同时未出现新的高概率失败路径实质兑现",
+          "basis": "dimensions.valuation.analysis.threeScenario.pessimistic目标价66.71港元；dimensions.inversion.analysis.failurePaths未新增高概率事件"
+        },
+        {
+          "signal": "B端客户粘性获得实质验证",
+          "observable": "公司披露开放平台客户续约率或净收入留存率(NRR)且显著高于按量付费基准",
+          "basis": "dimensions.businessEssence.dataGaps中B端NRR缺口条目；dimensions.moat.analysis.types规模效应verdict存在"
+        }
+      ]
+    }
+  },
+  "disclaimer": "本总结基于公开信息与数据截止时点的分析生成，仅供研究参考，不构成个性化投资建议。"
+}

@@ -1,0 +1,522 @@
+{
+  "meta": {
+    "companyId": "hk-0100-minimax",
+    "companyName": "MiniMax Group Inc.（稀宇科技，同股不同权，A/B 双层股权架构）",
+    "ticker": "00100.HK（MINIMAX-W / 0100.HK）",
+    "exchange": "香港联交所主板（依据《上市规则》第18C章「特专科技公司」上市，股份简称后缀 -W 表示未商业化认证）",
+    "market": "hk",
+    "reportingCurrency": "USD（年报/年度业绩公告）；交易货币为 HKD",
+    "accountingBasis": "IFRS（国际财务报告准则）",
+    "fiscalYearEnd": "12-31",
+    "dataCutoff": "2026-08-09（Asia/Shanghai）；行情数据截至最近交易日 2026-08-07 收盘",
+    "collectedAt": "2026-08-09",
+    "sources": {
+      "primary": { "name": "HKEXnews 披露易（公司公告、招股书、年报原文）", "url": "https://www.hkexnews.hk" },
+      "secondary": { "name": "财联社 / Yahoo Finance / Longbridge（独立复核价格与财务口径）", "url": "https://www.cls.cn" },
+      "originalFilings": [
+        { "type": "招股书", "period": "截至2025-09-30九个月及历史三年", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/1231/2025123100026_c.pdf" },
+        { "type": "年度业绩公告（FY2025）", "period": "2025-01-01至2025-12-31", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf" },
+        { "type": "2025年度报告（完整年报，含审计财务报表）", "period": "2025-01-01至2025-12-31", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0422/2026042202119_c.pdf" },
+        { "type": "证券变动月报表", "period": "截至2026-07-31", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0806/2026080601089_c.pdf" },
+        { "type": "翌日披露报表（配售新股）", "period": "2026-07-14", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0714/2026071400332_c.pdf" }
+      ]
+    },
+    "companyNote": "MiniMax 于 2026-01-09 在港交所主板挂牌（发行价 165.00 港元），采用同股不同权架构：A 类普通股（每股1票，上市流通）+ B 类普通股（每股10票，创始人及核心团队持有，不上市流通）。上市前的可转换可赎回优先股在 IPO 时自动转换为普通股，这是理解 2025 财年资产负债表「负债净额」的关键背景（见 financialMetrics 备注）。2026-07-09 迎来上市满六个月的首次大规模解禁（约占已发行股本63%），2026-08-06 起纳入港股通。"
+  },
+
+  "revenueStructure": {
+    "_dimension": "1. 收入结构：最近财年及近4季度分部收入、增速、毛利率",
+    "latestFiscalYear": {
+      "period": "FY2025（2025-01-01至2025-12-31）",
+      "totalRevenue": {
+        "value": 79038,
+        "unit": "千美元",
+        "currency": "USD",
+        "source1": { "name": "HKEXnews《截至2025年12月31日止年度的年度业绩公告》", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf", "value": 79038 },
+        "source2": { "name": "财联社快讯 2026-03-02", "url": "https://www.cls.cn/detail/2300002", "value": 79038 },
+        "deviationPct": 0,
+        "flag": "ok"
+      },
+      "segments": [
+        {
+          "name": "AI原生产品（MiniMax Agent、海螺AI/Hailuo AI、MiniMax Audio、Talkie/星野等消费端产品）",
+          "revenue": {
+            "value": 53075, "unit": "千美元", "currency": "USD",
+            "source1": { "name": "2025年度业绩公告附注3", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf", "value": 53075 },
+            "source2": { "name": "同一份经审计财务报表（2025年度报告重述一致）", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0422/2026042202119_c.pdf", "value": 53075 },
+            "deviationPct": 0, "flag": "ok"
+          },
+          "revenueSharePct": 67.15,
+          "yoyGrowthPct": 143.41,
+          "grossMarginPct": { "status": "unavailable", "reason": "公司仅披露合并毛利率，未按分部拆分毛利率；已查年度业绩公告与年报附注均无分部毛利率" }
+        },
+        {
+          "name": "开放平台及其他基于AI的企业服务（API开放平台、企业定制服务）",
+          "revenue": {
+            "value": 25963, "unit": "千美元", "currency": "USD",
+            "source1": { "name": "2025年度业绩公告附注3", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf", "value": 25963 },
+            "source2": { "name": "2025年度报告（重述一致）", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0422/2026042202119_c.pdf", "value": 25963 },
+            "deviationPct": 0, "flag": "ok"
+          },
+          "revenueSharePct": 32.85,
+          "yoyGrowthPct": 197.81,
+          "grossMarginPct": { "status": "unavailable", "reason": "同上，公司未按分部拆分毛利率" }
+        }
+      ]
+    },
+    "recentQuarters": [
+      {
+        "period": { "status": "unavailable", "reason": "MiniMax 于2026-01-09首次上市，尚未发布任何中期/季度财务报告；截至2025-06-30止六个月的首份中期业绩根据港交所主板规则须于期后3个月内（即2026-09-30前）刊发，已查 HKEXnews 与公司官网 (minimaxi.com) 投资者关系栏目均无中期业绩公告" },
+        "totalRevenue": { "status": "unavailable", "reason": "同上，无季度/中期财务报表可用" },
+        "yoyGrowthPct": { "status": "unavailable", "reason": "同上，无季度/中期财务报表可用" },
+        "segments": [
+          {
+            "name": { "status": "unavailable", "reason": "无季度分部数据" },
+            "revenue": { "status": "unavailable", "reason": "管理层在2026-03-02年度业绩电话会上披露过经营性KPI（如ARR、日均Token消耗量），但均非季度财务报表口径，已作为定性信息留给第7/10维度处理，不计入本维度的分部收入结构" },
+            "yoyGrowthPct": { "status": "unavailable", "reason": "同上" }
+          }
+        ]
+      }
+    ]
+  },
+
+  "financialMetrics": {
+    "_dimension": "2. 财务指标：近5年收入、净利润、毛利率、经营利润率、自由现金流、现金储备",
+    "note": "公司2021-06成立，2022年为首个有收入前的早期年份；仅披露2022-2025共4个完整财政年度数据（不足5年，按仓库规范采集全部已披露年度）。2025年12月31日资产负债表显示权益总额为负（-26.48亿美元），主因是上市前的可转换可赎回优先股按IFRS须分类为金融负债并按公允价值计量，公司估值越涨该负债账面亏损越大（2025年度公允价值亏损15.899亿美元，占当年年内亏损18.716亿美元的85%）；该优先股已于2026-01-09 IPO时按招股章程条款自动转换为普通股结算，2026年起资产负债表结构将根本改变，负债净额不代表公司当前偿付能力，详见 crossValidationLog 与 note。",
+    "annual": [
+      {
+        "fiscalYear": "FY2025",
+        "revenue": { "value": 79038, "unit": "千美元", "currency": "USD", "source1": { "name": "年度业绩公告", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf", "value": 79038 }, "source2": { "name": "财联社", "url": "https://www.cls.cn/detail/2300002", "value": 79038 }, "deviationPct": 0, "flag": "ok" },
+        "netProfit": {
+          "value": -1871617, "unit": "千美元", "currency": "USD", "basis": "IFRS 净亏损（含金融负债公允价值亏损15.899亿美元等非现金项目）",
+          "adjustedNetLoss": { "value": -250856, "unit": "千美元", "currency": "USD", "basis": "非IFRS「经调整净亏损」= 净亏损加回股份支付费用、金融负债公允价值亏损、上市开支" },
+          "source1": { "name": "年度业绩公告财务摘要", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf", "value": -1871617 },
+          "source2": { "name": "财联社2026-03-02快讯", "url": "https://www.cls.cn/detail/2300002", "value": -1871617 },
+          "deviationPct": 0, "flag": "ok"
+        },
+        "grossMarginPct": 25.4,
+        "operatingMarginPct": { "status": "unavailable", "reason": "公司未单列「经营利润」科目（列报为收入-销售成本-其他收入及收益净额-销售费用-管理费用-研发费用-金融负债公允价值亏损-财务开支-减值），经营利润率若以「除金融负债公允价值变动前的经营亏损」估算需重新分类科目、涉及主观判断，留待第2步分析维度用工具验算后处理，本维度不做心算填充" },
+        "freeCashFlow": {
+          "value": -280829, "unit": "千美元", "currency": "USD",
+          "basis": "经营活动所用现金流量净额(-279,641) + 购买物业厂房及设备(-920) + 购买非流动资产项目(-268)，工具验算见 crossValidationLog",
+          "source1": { "name": "2025年度报告综合现金流量表", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0422/2026042202119_c.pdf", "value": -280829 },
+          "source2": { "name": "unavailable", "url": "", "value": "unavailable" },
+          "deviationPct": "unavailable",
+          "flag": "minor-diff",
+          "note": "仅单源（公司经审计现金流量表），FCF 非交易所强制第三方复核指标，未找到独立来源逐项复核；Level 1 字段按规范应双源，此处标注仅单源"
+        },
+        "cashReserves": {
+          "value": 980310, "unit": "千美元", "currency": "USD",
+          "basis": "现金及现金等价物507,621 + 定期存款13,787 + 受限制现金（流动）20,377 + 以公允价值计量且其变动计入损益的流动金融资产438,525，工具验算见 crossValidationLog",
+          "source1": { "name": "2025年度报告综合财务状况表", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0422/2026042202119_c.pdf", "value": 980310 },
+          "source2": { "name": "36氪《MiniMax暴跌65%》文章独立引述「截至2025年9月底手握约11亿美元现金储备」（不同时点，量级互相印证）", "url": "https://eu.36kr.com/zh/p/3850027312698628", "value": "约1,100,000（2025-09-30，非同一时点，仅作量级交叉验证）" },
+          "deviationPct": "口径不可比（不同报告期末，2025-09-30 vs 2025-12-31，且36氪数字为约数）",
+          "flag": "minor-diff",
+          "note": "2026-01-09 IPO净筹资约46.4亿港元（约5.91亿美元）及2026-07-14配售3,560万股A类普通股（约合9.55亿港元/1.22亿美元，具体净额未披露）均发生在2025-12-31资产负债表日之后，尚未反映在此现金储备数字中；公司首份中期报告（截至2026-06-30）须于2026-09-30前刊发，届时可取得IPO后现金储备的官方数字，当前只能确认现金储备的历史基数与方向（大幅增厚），不做当前时点估算"
+        }
+      },
+      {
+        "fiscalYear": "FY2024",
+        "revenue": { "value": 30523, "unit": "千美元", "currency": "USD", "source1": { "name": "年度业绩公告（比较数字）", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf", "value": 30523 }, "source2": { "name": "招股书历史财务数据", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/1231/2025123100026_c.pdf", "value": 30523 }, "deviationPct": 0, "flag": "ok" },
+        "netProfit": {
+          "value": -465238, "unit": "千美元", "currency": "USD", "basis": "IFRS 净亏损",
+          "adjustedNetLoss": { "value": -244243, "unit": "千美元", "currency": "USD", "basis": "非IFRS经调整净亏损" },
+          "source1": { "name": "年度业绩公告", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf", "value": -465238 },
+          "source2": { "name": "招股书", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/1231/2025123100026_c.pdf", "value": -465238 },
+          "deviationPct": 0, "flag": "ok"
+        },
+        "grossMarginPct": 12.25,
+        "operatingMarginPct": { "status": "unavailable", "reason": "同FY2025，公司未单列经营利润科目" },
+        "freeCashFlow": {
+          "value": -259242, "unit": "千美元", "currency": "USD",
+          "basis": "经营活动所用现金流量净额(-258,483) + 购买物业厂房及设备(-759)",
+          "source1": { "name": "2025年度报告综合现金流量表（比较列）", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0422/2026042202119_c.pdf", "value": -259242 },
+          "source2": { "name": "unavailable", "url": "", "value": "unavailable" },
+          "deviationPct": "unavailable", "flag": "minor-diff", "note": "仅单源，理由同FY2025"
+        },
+        "cashReserves": {
+          "value": 288912, "unit": "千美元", "currency": "USD",
+          "basis": "年末现金及现金等价物（2024年度报告未单列定期存款/受限制现金/流动金融资产的2023年比较数，此处仅取现金及等价物一项，口径窄于FY2025的980,310）",
+          "source1": { "name": "2025年度报告综合现金流量表", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0422/2026042202119_c.pdf", "value": 288912 },
+          "source2": { "name": "招股书历史财务数据", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/1231/2025123100026_c.pdf", "value": 288912 },
+          "deviationPct": 0, "flag": "ok",
+          "note": "本行口径为现金及现金等价物，与FY2025行「现金储备」口径（含定期存款/受限流动现金/流动金融资产）不同，逐年比较增速时须先按 financial-data.md 的 Metadata 闸门核对口径，不可直接算同比"
+        }
+      },
+      {
+        "fiscalYear": "FY2023",
+        "revenue": { "value": 3460, "unit": "千美元", "currency": "USD", "source1": { "name": "2025年度报告《财务摘要》四年对比表", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0422/2026042202119_c.pdf", "value": 3460 }, "source2": { "name": "招股书历史财务数据", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/1231/2025123100026_c.pdf", "value": 3460 }, "deviationPct": 0, "flag": "ok" },
+        "netProfit": {
+          "value": -269246, "unit": "千美元", "currency": "USD", "basis": "IFRS 净亏损",
+          "adjustedNetLoss": { "value": -89074, "unit": "千美元", "currency": "USD", "basis": "非IFRS经调整净亏损" },
+          "source1": { "name": "2025年度报告《财务摘要》", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0422/2026042202119_c.pdf", "value": -269246 },
+          "source2": { "name": "招股书", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/1231/2025123100026_c.pdf", "value": -269246 },
+          "deviationPct": 0, "flag": "ok"
+        },
+        "grossMarginPct": { "status": "not-applicable", "reason": "FY2023毛利为负（毛利-854千美元，收入3,460千美元），毛利率为负值-24.68%，早期收入基数过小不具参考意义，标注不适用而非按负数呈现误导性百分比" },
+        "operatingMarginPct": { "status": "unavailable", "reason": "同上，未单列经营利润科目" },
+        "freeCashFlow": { "status": "unavailable", "reason": "已查2025年度报告仅列示FY2024/FY2025两年完整现金流量表，FY2023现金流量数据未在已取得的公开文件中找到，招股书历史财务数据章节篇幅巨大，主会话未做逐页穷举" },
+        "cashReserves": { "status": "unavailable", "reason": "同上，仅查得资产负债表口径的流动资产总值319,511千美元，未拆分出现金及等价物具体数字" }
+      },
+      {
+        "fiscalYear": "FY2022",
+        "revenue": { "value": 0, "unit": "千美元", "currency": "USD", "note": "招股书与年报均列示为「–」，代表报告期内无外部客户收入", "source1": { "name": "2025年度报告《财务摘要》", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0422/2026042202119_c.pdf", "value": 0 }, "source2": { "name": "招股书历史财务数据", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/1231/2025123100026_c.pdf", "value": 0 }, "deviationPct": 0, "flag": "ok" },
+        "netProfit": {
+          "value": -73728, "unit": "千美元", "currency": "USD", "basis": "IFRS 净亏损",
+          "adjustedNetLoss": { "value": -12150, "unit": "千美元", "currency": "USD", "basis": "非IFRS经调整净亏损" },
+          "source1": { "name": "2025年度报告《财务摘要》", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0422/2026042202119_c.pdf", "value": -73728 },
+          "source2": { "name": "招股书", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/1231/2025123100026_c.pdf", "value": -73728 },
+          "deviationPct": 0, "flag": "ok"
+        },
+        "grossMarginPct": { "status": "not-applicable", "reason": "FY2022无收入，毛利率无分母，不适用" },
+        "operatingMarginPct": { "status": "not-applicable", "reason": "同上" },
+        "freeCashFlow": { "status": "unavailable", "reason": "已查公开文件未见FY2022现金流量表拆分数字" },
+        "cashReserves": { "status": "unavailable", "reason": "仅查得资产负债表口径流动资产总值73,272千美元，未拆分现金及等价物具体数字" }
+      }
+    ]
+  },
+
+  "competitiveLandscape": {
+    "_dimension": "3. 竞争格局：市场份额、主要竞争对手对比",
+    "marketShare": {
+      "valuePct": 0.3,
+      "marketDefinition": "灼识咨询（CIC）按2024年全球「基于模型的收入」（model-based revenue）统计的大模型技术公司市场份额，为MiniMax招股书引用口径；该口径下MiniMax全球排名第10、在「纯大模型技术公司」（pure-play，即以大模型为核心主业、非大型科技公司多元化业务线之一）中排名第4；全球前5名均为美国公司，市场份额分别为30.1%/16.9%/8.2%/3.7%/2.8%，第8名为一家中国公司（市场份额0.5%）",
+      "asOf": "2024年度（招股书刊发于2025-12-31，最后实际可行日期2025-12-21）",
+      "source": { "name": "灼识咨询（CIC）数据，转引自MiniMax全球发售招股书，经腾讯新闻《亏损超90亿，流动负债超百亿！MiniMax\"命悬一线\"》转载（2026-01-01）", "url": "https://news.qq.com/rain/a/20260101A02U1900" }
+    },
+    "competitors": [
+      {
+        "name": "智谱AI（Zhipu AI / Z.ai）",
+        "ticker": "02513.HK",
+        "marketSharePct": "unavailable（已查招股书及多篇研报，未见灼识咨询对智谱的单独份额数字）",
+        "revenue": "FY2025收入约7.24亿元人民币（智谱2025年度业绩公告，据akspace.xyz研究笔记转引）",
+        "grossMarginPct": "约41%-50%（口径不一：智谱2025年度业绩公告约41%；老虎社区综合报道称长期稳定在50%左右）",
+        "note": "以B端政企市场为主，商业模式与MiniMax的C端路线形成鲜明对照：企业客户超1.2万家，前五大客户收入占比近50%；2025年11月日均Token消耗量4.2万亿；2025-01-15/16被美国商务部BIS列入出口管制实体清单（智谱声明称不依赖美国大模型技术、影响不大）；2026-07-08解禁仅占总股本5.76%（以国资背景基石为主），解禁当日股价涨13.35%，与MiniMax同期解禁当日暴跌17.98%形成鲜明对比（来源：新浪财经finance.sina.com.cn/roll/2025-12-24/doc-inhcxizc9649528.shtml；腾讯新闻view.inews.qq.com/a/20260622A0BR4E00；鉅亨網hk.finance.yahoo.com 2026-07-09报道）"
+      },
+      {
+        "name": "DeepSeek（深度求索）",
+        "ticker": "未上市 [估计]",
+        "marketSharePct": "unavailable",
+        "revenue": "unavailable（未上市，未查到官方收入披露）",
+        "grossMarginPct": "unavailable",
+        "note": "以极致性价比与开源策略著称；DeepSeek-V4-Flash在OpenRouter平台2026年8月初连续三周位居全球调用量榜首（周调用量3.69万亿Token，环比+19%），是当前全球调用量最大的开源模型之一（来源：证券时报stcn.com/article/detail/3948206.html 2026年8月报道）；市场传闻其融资'获国家队加持'（binance.com转载，未经证实，标注为传闻）"
+      },
+      {
+        "name": "字节跳动豆包（Doubao）",
+        "ticker": "字节跳动未上市，豆包为其大模型产品线非独立上市实体",
+        "marketSharePct": "unavailable",
+        "revenue": "unavailable（未拆分披露）",
+        "grossMarginPct": "unavailable",
+        "note": "背靠字节跳动全平台流量，月活用户约1.72亿（QuestMobile 2025年三季度报告，另一篇博客综合报道称1.59亿，口径/时点不同）；2025年11月日均Token调用量50万亿，约为智谱同期4.2万亿的12倍（来源：新浪财经finance.sina.com.cn/roll/2025-12-24/doc-inhcxizc9649528.shtml）"
+      },
+      {
+        "name": "阿里巴巴千问（Qwen）",
+        "ticker": "9988.HK（阿里巴巴集团，千问为其大模型产品线非独立上市实体）",
+        "marketSharePct": "unavailable",
+        "revenue": "unavailable（未拆分披露）",
+        "grossMarginPct": "unavailable",
+        "note": "千问App月活约3,000万（新浪财经2025-12-24报道口径）；阿里云另披露超200万企业用户通过阿里云调用/部署大模型（口径不同：前者为C端App MAU，后者为B端云上调用企业数，不可直接比较）"
+      },
+      {
+        "name": "OpenAI",
+        "ticker": "未上市 [估计]",
+        "marketSharePct": "unavailable（招股书CIC口径下全球前5名均为美国公司，OpenAI大概率位列其中，但招股书未点名具体对应哪一档份额）",
+        "revenue": "ARR约250亿美元（鉅亨网2026年报道口径，具体统计截止时点未详细注明）",
+        "grossMarginPct": "unavailable",
+        "note": "估值约1万亿美元，对应PS约40倍（鉅亨网hao.cnyes.com/post/247204口径）；企业编码（coding）市场份额约21%，落后于Anthropic的54%（Menlo Ventures估算，经36氪m.36kr.com/p/3756715657507333转引）"
+      },
+      {
+        "name": "Anthropic",
+        "ticker": "未上市 [估计]",
+        "marketSharePct": "unavailable",
+        "revenue": "ARR约440亿美元（鉅亨网2026年报道口径）；另一篇报道称同期ARR经历约90亿→470亿美元的跃升区间（雷峰网leiphone.com转述，与鉅亨网数字量级一致但非同一时点，互相印证但不可精确对齐）",
+        "grossMarginPct": "unavailable",
+        "note": "估值约1.2万亿美元，对应PS约27倍（鉅亨网口径）；企业编码市场份额约54%（Menlo Ventures估算）；Claude Code单产品线2026年2月ARR即达25亿美元；2026-06-12曾因美国政府出口管制指令一度暂停非美籍用户对Claude Fable/Mythos模型的访问，7月1日恢复（来源：techflowpost.com/article/32560）——此事件亦说明海外头部模型厂商同样受出口管制/合规约束，并非中国厂商独有风险"
+      },
+      {
+        "name": "Google（Gemini）",
+        "ticker": "GOOG/GOOGL（Alphabet，Gemini为其产品线非独立上市实体）",
+        "marketSharePct": "unavailable",
+        "revenue": "ARR约150亿美元（鉅亨网口径）",
+        "grossMarginPct": "unavailable",
+        "note": "估值约1,500亿美元系市场对Gemini业务线的隐含估值拆分估算（非独立上市公司，实际市值被Alphabet其他成熟业务稀释，可比性存疑），对应PS约10倍（鉅亨网hao.cnyes.com/post/247204口径）"
+      }
+    ],
+    "note": "MiniMax管理层于2026年国新办发布会披露，截至上市时已服务全球200多个国家/地区超2亿用户（时代财经static.time-weekly.com PDF转引闫俊杰讲话）；2026-05-29公司披露显示全球企业和开发者客户数已超百万（较半年前增长5倍），全球用户规模约3亿（中证网jnzstatic.cs.com.cn报道）——该用户数为公司口径，未经第三方独立核实，仅供参考"
+  },
+  "businessModelMoat": {
+    "_dimension": "4. 商业模式与护城河：核心竞争优势来源",
+    "oneLiner": "面向全球消费者与企业开发者提供多模态大模型的「模型即产品」（C端App订阅/内购）与「模型即服务」（B端API/MaaS按Token计费）双轮商业模式：C端由海螺AI/Hailuo、星野/Talkie、MiniMax Audio等AI原生应用直接向终端用户收费；B端开放平台向企业与开发者按Token调用量计费，并叠加企业定制解决方案与私有化部署。",
+    "revenueModel": "两条腿走路：①AI原生产品（C端，FY2025占收入67.2%）——面向全球消费者的订阅制会员费+按次/按量内购（生成次数、算力积分等），2025年前9个月平均月活2,760万人、付费用户177万人（虎嗅网huxiu.com/article/4820128.html转引招股书数据）；②开放平台及企业AI服务（B端，FY2025占收入32.8%）——以按Token调用量的API计费（pay-as-you-go）为主，辅以面向大客户的定制化解决方案与私有化部署合同，开放平台日均处理超万亿Token请求（damodev.csdn.net转引招股书数据）。2026年3月美银报告披露公司收入结构正从消费端产品占比约70%向企业端与云API业务占比提升方向变化，管理层已将企业/云API列为更高战略优先级（36氪eu.36kr.com/zh/p/3889531573680902转引）。",
+    "moats": [
+      {
+        "type": "技术专利壁垒",
+        "evidence": "自研「闪电注意力」（Lightning Attention）线性注意力机制：2025-01发布的MiniMax-01是全球首个商用级线性注意力大模型（论文arXiv:2501.08313），456B总参数/45.9B激活参数，训练上下文扩展至100万Token；自研CISPO强化学习算法（MiniMax-M1论文arXiv:2506.13585）将RL训练成本降至约53.5万美元（512张英伟达H800、耗时3周），据公司披露比最初预期少一个数量级（科学网news.sciencenet.cn/htmlnews/2025/6/546409.shtm 2025-06-17报道）",
+        "trend": "待验证——2025年11月起M2系列转向传统全量注意力（Full Attention），放弃了此前的Lightning Attention技术路线（新浪财经finance.sina.com.cn/stock/t/2025-11-01/doc-infvxpfm2780863.shtml：《线性注意力回归！Kimi新模型引爆，MiniMax却悄悄换回传统架构》），说明公司自身认为该技术路线在生产环境的性价比未达预期，技术壁垒的可持续性有待观察"
+      },
+      {
+        "type": "网络效应",
+        "evidence": "开发者生态聚合效应：在全球最大模型聚合平台OpenRouter上，MiniMax M2.5发布7天内调用量突破3.07万亿Token（财联社cls.cn/detail/2293160 2026-02报道），2026年3月9日当周以1.75万亿Token调用量登顶全球周榜第一（第一财经yicai.com/news/103088126.html 2026-03-16）；2026年7月月度榜单MiniMax M3位列全球第4（前六名全部为中国模型，国际科技创新中心网站ncsti.gov.cn 2026-08-04报道）；海螺AI视频网站2025年1月全球AI视频产品访问量排名第一（新华丝路imsilkroad.com/p/540506.html 2025-08-01）",
+        "trend": "变宽——调用量份额持续提升，且与国内同行一起持续挤压Claude等海外模型在OpenRouter榜单的排名（2026年8月数据显示Claude Sonnet 4.6/Opus 4.7双双跌出全球前五，证券时报stcn.com/article/detail/3948206.html 2026-08报道）"
+      },
+      {
+        "type": "规模效应",
+        "evidence": "成本与效率优势：MiniMax-M2.5单位词元能耗为每百万词元49.2瓦时（数据中心层面、PUE=1.3），较MLPerf Inference v4.1审计的Llama2-70B基准（80.7瓦时/百万词元）低约39%（北京硅基流动招股书引用MiniMax数据，hkexnews sehk26063002927_c.pdf）；应收账款周转天数仅38天，远低于AI/SaaS行业60-90天平均水平（damodev.csdn.net转引招股书数据）；开放平台业务毛利率截至2025年9月止9个月达69.4%（全球发售招股书原文数据）",
+        "trend": "变宽——随Token处理量增长单位成本持续下降，B端毛利率维持高位"
+      },
+      {
+        "type": "转换成本",
+        "evidence": "C端产品护城河偏弱：据腾讯新闻2026-07-23《智谱向左，MiniMax向右》报道，「一旦模型能力被赶上甚至超越，用户迁移成本几乎为零」「M3评测不佳、C端用户下滑、海螺被多个模型超越，指向同一事实：C端的护城河远比看起来更浅」；AI原生产品毛利率虽从2023年-380.2%提升至2025年前9个月的4.7%，但仍处微利水平（老虎社区laohu8.com/post/517935828103336综合招股书数据）",
+        "trend": "变窄——C端为主的商业模式面临同质化竞争与免费/低价策略挤压（如智谱GLM Coding Plan、字节豆包等的价格战），是当前市场对MiniMax商业模式可持续性的核心担忧之一"
+      }
+    ]
+  },
+  "technology": {
+    "_dimension": "5. 技术能力：核心技术栈、研发投入",
+    "rdExpense": {
+      "value": 252771, "unit": "千美元", "currency": "USD",
+      "source1": { "name": "2025年度业绩公告附注9", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf", "value": 252771 },
+      "source2": { "name": "2025年度报告（重述一致）", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0422/2026042202119_c.pdf", "value": 252771 },
+      "deviationPct": 0, "flag": "ok"
+    },
+    "rdIntensityPct": 319.81,
+    "rdTrend": {
+      "value": "FY2022: unavailable（未拆分); FY2023: unavailable（未拆分）; FY2024: 188,979千美元; FY2025: 252,771千美元，同比+33.8%",
+      "source": { "name": "2025年度业绩公告/年度报告附注9", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf" }
+    },
+    "coreTechStack": [
+      "闪电注意力（Lightning Attention）：MiniMax自研线性注意力机制，2025-01发布的MiniMax-01采用「Lightning Attention + Softmax Attention + MoE」混合架构，456B总参数/45.9B激活参数，配合LASP+（Linear Attention Sequence Parallelism Plus）、变长环注意力（varlen ring attention）、专家张量并行（ETP）等并行策略，训练上下文长度扩展至100万Token（来源：论文arXiv:2501.08313；HuggingFace模型卡huggingface.co/docs/transformers/model_doc/minimax）",
+      "MoE混合专家架构迭代：MiniMax-M1为4560亿总参数/460亿激活参数的MoE模型（2025-06发布）；M2.5为2300亿总参数MoE模型，约100亿激活参数，每次推理选择8个专家（来源：Oflight Inc. 2026年报告 oflight.co.jp/en/columns/minimax-m2-5-swebench-80-lightning-attention-2026）",
+      "CISPO强化学习算法（Clipped Importance Sampling Policy Optimization）：MiniMax-M1论文提出，通过裁剪「重要性采样权重」本身（区别于GRPO裁剪策略比率/token本身），缓解长推理链条中关键低概率token（如「However」「Wait」）梯度被抑制的问题；M1整个RL训练阶段仅使用512块英伟达H800 GPU、耗时3周，成本约53.5万美元（来源：论文arXiv:2506.13585；科学网news.sciencenet.cn/htmlnews/2025/6/546409.shtm 2025-06-17）",
+      "技术路线自我修正：2025年11月发布的M2系列转向传统全量注意力（Full Attention），暂时放弃此前的Lightning Attention路线（新浪财经finance.sina.com.cn/stock/t/2025-11-01/doc-infvxpfm2780863.shtml 2025-11-01）；第三方分析称M2.5可能采用「7层Lightning Attention配1层Softmax Attention」的混合比例（trapilot.ai/claws/maxclaw/minimax-m25-model，来源可信度较低，标注为第三方推测非公司官方口径）",
+      "Hailuo/海螺视频生成模型：Hailuo 02采用「噪声感知计算重分配架构」（NCR），参数量为上代3倍、训练数据量4倍，训练推理效率提升2.5倍，2025-06发布即在Artificial Analysis视频竞技场排名全球第2（来源：MiniMax官网minimaxi.com/news/minimax-hailuo-02；科学网2025-06-17）；2026-08-03开源第三代视频模型H3，采用全新H3-Context-IR架构，统一理解文本/图像/音频/参考视频间的多模态上下文关系，支持2K分辨率直出、最长15秒音画生成，视频编辑能力在Artificial Analysis榜单排名全球第1，定价0.8元/秒（2K分辨率），约为同类旗舰模型的1/3（来源：新浪财经finance.sina.com.cn/stock/t/2026-08-03/doc-inikzuyp2731525.shtml；南方都市报wap.eastmoney.com/a/202608033829888273.html）",
+      "截至2025年8月，海螺视频（Hailuo Video）产品已为全球约200个国家的创作者生成超过3.7亿个视频（来源：新华丝路imsilkroad.com/p/540506.html 2025-08-01）"
+    ],
+    "note": "以上技术特点均为公司官方博客/学术论文/第三方评测机构公开披露，均属Level 3单源可接受范畴；未见公司拆分披露资本化研发支出（研发开支252,771千美元全部计入当期费用，未见单独的资本化开发成本科目）。需特别提示：模型架构存在自我迭代甚至路线反转（MiniMax-01/M1的Lightning Attention线性注意力 → M2的Full Attention全量注意力），说明公司自身技术路线选择并非一成不变，投资时不应假设某一具体技术方案会长期锁定竞争优势。"
+  },
+  "management": {
+    "_dimension": "6. 管理层：创始人/CEO履历、持股比例、关键决策记录",
+    "founderCeo": {
+      "name": "闫俊杰博士（Dr. Yan Junjie），董事会主席、执行董事、首席执行官兼首席技术官",
+      "background": "1989年生于河南商丘。2010年6月于中国东南大学取得数学学士学位；2015年7月于中国科学院自动化研究所取得人工智能领域博士学位，随后在清华大学计算机系从事博士后研究（2018年3月结束）。在创立MiniMax前，曾于商汤集团股份有限公司（联交所股份代号：0020）任职超过6年（2014年11月-2021年，从实习生做起，历任研究总监、研究院副院长、智慧城市事业群CTO等职务），主导构建商汤通用计算机视觉技术体系、深度学习工具链与人脸识别相关技术体系，并创立商汤规模最大的研究团队「视频智能部门」及「基础研究部门」。已在CVPR/ICCV/ECCV等国际顶级会议及期刊发表约200篇学术论文，被引用超过30,000次；曾获2020年2月广东省技术发明奖一等奖、2019年10月吴文俊人工智能自然科学奖及科技进步奖、2024年12月入选上海市东方英才计划、2025年2月获上海市职称评审委员会授予正高级职称等多项荣誉（来源：MiniMax投资者关系官网「管理团队」页 ir.minimaxi.com/corporate-information/management；2025年度报告 hkexnews sehk/2026/0422/2026042202119_c.pdf；维基百科「闫俊杰」词条）。",
+      "tenure": "自2021年6月30日公司于开曼群岛注册成立起即为创始人、董事会主席、执行董事，现任首席执行官兼首席技术官（CEO兼CTO），任职至今未间断"
+    },
+    "coFounderCoo": {
+      "name": "贠烨祎女士（Ms. Yun Yeyi），执行董事、总裁（2022年12月-2026年3月任首席运营官COO）",
+      "background": "2017年获美国约翰·霍普金斯大学电子工程理学学士学位，辅修经济学和数学。加入MiniMax前曾在商汤集团股份有限公司任职：2017年9月-2018年8月任融资与战略投资经理，2018年8月-2021年1月晋升为首席执行官行政助理兼战略部总监（服务时任商汤联合创始人兼CEO徐立），2021年1月-2022年1月任创新业务部总监（正值商汤冲刺港股上市阶段，2021年6月递交招股书、12月挂牌）。2021年底与闫俊杰共同创立MiniMax，主要负责集团整体管理、产品与商业化方向的战略及运营计划制定（来源：MiniMax投资者关系官网「管理团队」页 ir.minimaxi.com/corporate-information/management；2025年度报告）",
+      "note": "与闫俊杰同为商汤出身，被媒体称为MiniMax的「左膀右臂」，负责产品与商业化落地（来源：量子位qbitai.com/2026/01/369227.html 2026-01-12）"
+    },
+    "ownership": {
+      "note": "公司为A/B双层股权架构（WVR）：A类普通股每股1票，B类普通股每股10票，B类股全部由不同投票权受益人闫俊杰博士与贠烨祎女士通过多层持股实体（Local Linearity/Scaling EXP/MiniMax Awakening/Floating Sky/Floating Cloud等，多数由恒泰信托（香港）有限公司代持）控制。2025年度报告披露的B类股内部持股比例片段（Scaling EXP Limited 77.18%、MiniMax Awakening/Local Linearity各14.19%、Floating Sky/Floating Cloud各8.63%）为B类股内部占比且存在实体嵌套关系（如Alpha EXP由Scaling EXP持有99%+Local Linearity持有1%），不可直接相加、不等于公司整体经济权益——已按要求打开2025年度报告原文（hkexnews sehk/2026/0422/2026042202119_c.pdf 及镜像 stockn.xueqiu.com/00100/20260422347783.pdf）核实「董事及主要股东权益」章节完整表格，并进一步找到2026-05-19香港联交所披露文件（因超额配股权行使及股权变动触发的权益披露）给出的两位创始人「按一股一票基准占已发行股本总额」的整体经济权益百分比，具体见下。",
+      "economicPct": "闫俊杰博士约25.22%（5,000,000股A类+74,102,534股B类，占2026-05-19披露时点已发行股本总额313,635,308股的25.22%，「按一股一票基准」即为纯股份数量占比，等同于经济权益口径）；贠烨祎女士约3.45%（3,814,065股A类+7,000,000股B类，本文用financial_rigor.py验算：(3,814,065+7,000,000)/(232,532,774+81,102,534)×100=3.45%）；两人合计经济权益约28.67%。另有量子位2026-01-12报道称贠烨祎「合计持股3.93%（不同统计口径有差异，原文自行注明）」，与本文2026-05-19口径计算的3.45%存在约0.5个百分点差异，推测因统计时点（IPO时点vs 5月后）或纳入期权与否不同所致，两个数字互相印证量级一致（均约3%-4%区间），但未能完全对齐，如实列出两个数字与差异原因。",
+      "votingPct": {
+        "value": "IPO招股书口径（2025-12-31，超额配股权行使前）：两位不同投票权受益人合计约72.05%的股东大会一般决议投票权、25.90%的保留事项投票权；2026-05-19香港联交所披露文件口径（超额配股权已行使后、2026-07-14配售前，A类232,532,774股+B类81,102,534股，按A类1票/股、B类10票/股加权计算）：闫俊杰博士单独约71.49%投票权，贠烨祎女士单独约7.07%投票权，两人合计约78.56%投票权",
+        "source": { "name": "全球发售招股书 + 2026-05-19 HKEXnews股东权益披露文件（Form 2/3权益披露）", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0519/2026051901411.pdf" },
+        "note": "2026-07-14配售3,560万股A类新股后，闫俊杰博士按股份数量口径的经济权益由25.22%摊薄至22.65%（2026-07-10配售公告直接披露：闫俊杰博士79,102,534股，配售前占已发行股本总额25.22%，配售后占22.65%，来源：hkexnews sehk/2026/0710/2026071000028_c.pdf），但公司尚未发布配售后重新计算的投票权百分比官方数字，本文不做心算填补"
+      },
+      "source": { "name": "2025年度报告「董事及主要股东权益」章节 + 2026-05-19 HKEXnews股东权益披露文件", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0422/2026042202119_c.pdf" }
+    },
+    "keyDecisions": [
+      { "date": "2021-06-30", "decision": "MiniMax Group Inc.在开曼群岛注册成立", "outcome": "公司主体设立，为后续WVR架构与港股18C章上市奠定法律基础（来源：全球发售招股书「释义」章节 hkexnews sehk/2025/1231/2025123100026_c.pdf）" },
+      { "date": "2022年上半年", "decision": "明势资本领投天使轮融资", "outcome": "MiniMax获得首轮外部融资，正式启动商业化探索（来源：东方财富研报PDF pdf.dfcfw.com/pdf/H3_AP202302191583374634_1.pdf）" },
+      { "date": "2023-06立项/2024-03完成", "decision": "完成A轮6亿美元融资，投后估值25亿美元，阿里巴巴、红杉中国、高瓴投资、经纬创投等参投", "outcome": "确立头部机构股东阵容，为后续多轮融资与IPO铺路（来源：东方财富研报PDF pdf.dfcfw.com/pdf/H3_AP202410071640177318_1.pdf）" },
+      { "date": "2025-08", "decision": "完成3.9亿美元融资", "outcome": "投后估值超过42亿美元（来源：时代财经2026-01-12，static.time-weekly.com PDF转引）" },
+      { "date": "2025-12-12", "decision": "中国证监会出具境外发行上市备案通知书", "outcome": "MiniMax取得赴港上市的境内监管备案，12个月内须完成境外发行上市（来源：中国证监会官网 csrc.gov.cn/csrc/c105984/c7603849/content.shtml）" },
+      { "date": "2025-12-31", "decision": "刊发全球发售招股章程（最后实际可行日期2025-12-21）", "outcome": "启动港交所18C章上市流程，披露WVR架构及72.05%/25.90%投票权安排（来源：全球发售招股书）" },
+      { "date": "2026-01-09", "decision": "香港联交所主板挂牌上市，发行价165.00港元", "outcome": "上市首日大涨109%，收报345港元，市值突破1,000亿港元（来源：时代财经static.time-weekly.com PDF）" },
+      { "date": "2026-01-14", "decision": "超额配股权悉数行使", "outcome": "进一步扩大A类股基数（来源：HKEXnews证券变动月报表等披露）" },
+      { "date": "2026-05-29", "decision": "与中信证券签署A股上市辅导协议并完成上海证监局辅导备案", "outcome": "正式启动「A+H」两地上市进程；据报道相关人士透露拟登陆科创板（来源：中证网jnzstatic.cs.com.cn/zzb/htmlInfo/123967.html；中信证券官网辅导公告cs.ecitic.com/newsite/tzgg/ipoqyfdgg/202606/t20260601_1212646.html）" },
+      { "date": "2026-07-09", "decision": "上市满六个月后首次大规模限售股解禁", "outcome": "解禁股份占总股本约48.9%（不同机构解禁前预测口径差异较大，中金公司此前预测约63%，实际落地口径以36氪/鉅亨網等解禁后报道的48.9%为准），当日股价暴跌17.98%至297.4港元，总市值跌破1,000亿港元（约691.55-932.75亿港元，不同时点报价略有差异）；创始团队与员工持股不在本次解禁范围内，创始团队自愿设定12个月禁售期（来源：鉅亨網hk.finance.yahoo.com 2026-07-09；36氪eu.36kr.com/zh/p/3889531573680902 2026-07-10）" },
+      { "date": "2026-07-10", "decision": "完成新一轮160亿港元融资（配售+可转债），闫俊杰发内部信宣布实现AGI前不再领取薪酬，并拿出个人名下相当于总股本4%的股份用于团队激励、1%股份设立开源社区专项基金", "outcome": "认购覆盖率达7倍，规模从初始约18亿美元扩大至20亿美元以上；但未能扭转股价跌势，7月13日盘中一度跌至217.8港元（来源：观察者网guancha.cn/economy/2026_07_10_823282.shtml；36氪m.36kr.com/p/3895497119253632）" },
+      { "date": "2026-08-03", "decision": "开源第三代视频生成模型H3", "outcome": "视频编辑能力登顶Artificial Analysis全球榜单第1，当日股价涨超7%报246.8港元（来源：南方都市报wap.eastmoney.com/a/202608033829888273.html）" },
+      { "date": "2026-08-06", "decision": "纳入港股通标的", "outcome": "引入南向资金增量买盘，当日股价盘中一度涨近23%（背景信息，另见currentValuation维度2026-08-07收盘涨9.83%的后续走势）" }
+    ]
+  },
+  "industryOutlook": {
+    "_dimension": "7. 行业前景：TAM（总可寻址市场）、增长预测",
+    "tam": {
+      "value": "2024年全球AI IT总投资规模3,159亿美元，预计2029年增至12,619亿美元（五年CAGR 31.9%）；其中生成式AI（Generative AI）细分市场预测五年CAGR达56.3%，到2029年全球生成式AI市场规模将达6,071亿美元，占AI市场投资总规模的48.1%",
+      "currency": "USD",
+      "definition": "IDC《全球人工智能和生成式人工智能支出指南》（Worldwide AI and Generative AI Spending Guide）口径，覆盖全球AI相关IT总投资（硬件+软件+服务），生成式AI为其中的子集统计，非专指大模型层或应用层单一环节，与MiniMax所处的模型层+应用层业务不完全等同，属于产业链总量口径",
+      "asOf": "2025-09-25发布（IDC 2025年V2版《支出指南》）",
+      "source": { "name": "IDC", "url": "https://my.idc.com/getdoc.jsp?containerId=prCHC53829925" }
+    },
+    "growthForecast": {
+      "cagrPct": "56.3%（全球生成式AI市场2024-2029五年CAGR，IDC口径）；另有网络公开整理文档综合Bloomberg Intelligence/高盛/大摩/IDC等机构数据，给出全球AI大模型市场规模2023年180-220亿美元→2024年400-480亿美元（同比+110%~120%）→2025年750-900亿美元（+85%~90%）→2027年预测2,200-2,600亿美元的区间估算，年增速逐年从三位数回落至60%-65%（该整理文档为第三方汇总而非机构官方原始报告，可信度弱于IDC官方口径，仅作为补充参考）",
+      "horizon": "2024-2029（IDC口径）；2023-2027（多机构综合整理口径）",
+      "source": { "name": "IDC（主）+ 多机构综合整理文档（Bloomberg Intelligence/Goldman Sachs/Morgan Stanley/McKinsey，经第三方汇总，非原始一手报告）", "url": "https://gist.github.com/itsRay2014/86bcac5fa9f7b662627952436da751ec" }
+    },
+    "chinaMarketNote": "另有财联社2025年报道援引机构预测，2030年中国AI市场规模将增至9,930亿元人民币（约合1,400亿美元，按当前汇率粗略换算，未做精确折算）；该数字为中国大陆市场单一口径，与上述IDC全球口径不可直接比较（来源：财联社cls.cn/detail/2254858）"
+  },
+  "riskFactors": {
+    "_dimension": "8. 风险因素：地缘政治、监管、供应链等",
+    "items": [
+      {
+        "category": "地缘政治",
+        "description": "算力/GPU获取受美国出口管制约束：招股书披露截至2025年9月30日前9个月，公司向五大供应商合计采购1.436亿美元、占采购总额62.5%，且全部为云计算服务支出，高度依赖英博数科等第三方算力供应商，公司在招股书中坦承「服务中断可能对我们业务造成重大不利影响」；美国2025年4月提出的《远程访问安全法案》（Remote Access Security Act）拟封堵「允许与中国共产党有关联的公司通过云服务访问受限美国技术」的漏洞，已获美国众议院外交事务委员会两党议员一致支持，若最终立法可能对中国AI公司的云计算资源获取产生重大影响。同业对照：智谱AI（02513.HK）已于2025-01-15/16被美国商务部BIS列入出口管制实体清单，MiniMax本身截至数据截止日未查到被列入BIS实体清单的记录。",
+        "evidence": "算力供应商集中度、云服务依赖为公司招股书自行披露；《远程访问安全法案》及智谱BIS清单事件为外部法律/媒体分析（万商天勤律所vtlaw.cn/news/6594.html；腾讯新闻view.inews.qq.com/a/20260622A0BR4E00）——前者属公司自行披露，后两者属外部推断/事实报道"
+      },
+      {
+        "category": "监管",
+        "description": "生成式AI服务「双备案」合规要求：MiniMax已就其专有模型（abab系列、abab多模态系列、MiniMax模型系列）按中国生成式人工智能法规向上海市互联网信息办公室完成必要的模型登记备案，并通过互联网信息服务算法备案系统完成算法备案程序；AI生成内容存在深度伪造用于欺诈、生成虚假信息、隐私侵犯、网络安全威胁、安全对齐失控等五类滥用场景的监管高压线，公司披露已对AI生成内容进行标注但坦承「无法控制用户对我们大模型及AI原生产品的使用方式」；作为港股18C章特专科技公司，上市后仍需持续满足商业化进展、研发里程碑等额外持续披露要求。",
+        "evidence": "模型/算法备案完成情况、内容标注要求、开源技术双重风险（第三方主张开源许可条款、公司自身开源模型被竞争对手使用）均为公司招股书自行披露（邦信阳律师事务所boss-young.com/newsDetail对招股书「牌照与资质风险」章节的整理；万商天勤律所vtlaw.cn/news/6594.html对招股书「暗雷」风险的解析）——属于公司自行披露范畴"
+      },
+      {
+        "category": "竞争",
+        "description": "同质化模型竞争与价格战风险：2026年2月大模型行业出现「春节档」密集发布潮（智谱GLM-5、MiniMax M2.5、字节豆包2.0等同期上线），智谱GLM Coding Plan一度提价30%起随即又面临免费策略挤压；据腾讯新闻报道，MiniMax在M3模型上「悄悄把API付费模式从直观的按次计费切成复杂的按Token消耗」，引发开发者「隐性涨价」投诉与退订潮，反映B端定价权博弈激烈；C端赛道用户迁移成本低，一旦模型能力被赶上甚至超越，护城河可持续性即受质疑。",
+        "evidence": "外部媒体/研报推断，非公司招股书自行披露：36氪《智谱：近6000亿市值支撑点揭秘》eu.36kr.com/zh/p/3854393625220352；腾讯新闻《智谱向左，MiniMax向右》news.qq.com/rain/a/20260723A04PN400"
+      },
+      {
+        "category": "其他",
+        "description": "现金消耗与持续亏损：FY2025 IFRS净亏损18.716亿美元（其中约15.899亿美元为上市前可转换可赎回优先股公允价值变动的非现金损失），非IFRS经调整净亏损2.509亿美元（同比仅+2.7%，与FY2024基本持平，未见实质性收窄）；FY2025经营活动所用现金流量净额约2.796亿美元，研发强度高达约320%（研发开支/收入）；据虎嗅网转引招股书，智谱和MiniMax均以每年10-20亿人民币规模投入研发，其中超70%是算力成本，且用户规模增长与推理算力成本同步增加，「这与互联网时代用户规模摊薄边际成本的逻辑完全相反」。",
+        "evidence": "公司年度业绩公告/年度报告自行披露的财务数字（已落盘于本文financialMetrics维度）+ 虎嗅网对行业烧钱模式的分析（huxiu.com/article/4820128.html，外部推断）"
+      },
+      {
+        "category": "其他",
+        "description": "WVR架构下中小股东治理风险：同股不同权架构下，B类股（每股10票）全部由创始人闫俊杰博士与贠烨祎女士通过多层持股实体控制；截至2026-05-19披露，两人合计控制约78.56%的股东大会投票权，但合计经济权益仅约28.67%（按纯股份数量口径，见本文management维度），投票权与经济利益的巨大落差意味着A类流通股中小股东对公司重大决策（尤其是保留事项）的实际影响力有限；招股书亦披露闫博士、贠女士及其紧密联系人受《上市规则》第18C.14条项下的特别禁售规定约束。",
+        "evidence": "基于本文management维度已核实的官方披露数字（2026-05-19 HKEXnews权益披露文件）计算得出的结构性风险判断，属于本仓库对WVR架构的常规风险提示，非公司招股书自行以「风险因素」形式列示的条目"
+      },
+      {
+        "category": "其他",
+        "description": "限售股解禁与流通盘结构：2026-07-09已完成上市满六个月后的首次大规模解禁，占总股本约48.9%（解禁前中金公司预测约63%，实际落地口径以解禁后报道48.9%为准），解禁当日股价暴跌17.98%；创始团队及员工持股未涉及本次解禁——据招股书18C.14条禁售规定及第三方股权结构梳理，创始团队相关实体（Alpha EXP/MiniMax Awakening/MiniMax Matrix）的禁售期至2028年1月8日，而MiniMax Gene员工持股平台（持有20,890,736股A类普通股，约占6.76%）的禁售期为「港股通纳入后第20个交易日与2026年10月8日两者中较早者」；MiniMax已于2026-08-06纳入港股通，据此推算该批员工股份或于2026年9月上旬即可解禁，早于原定的2026年10月8日，构成后续潜在解禁抛压事件。",
+        "evidence": "解禁比例与股价影响为公司公告与多方财经媒体报道（鉅亨網hk.finance.yahoo.com/news/...-minimax解禁陷暴跌困境-060137781.html；36氪eu.36kr.com/zh/p/3889531573680902；招股书18C.14条禁售规定原文hkexnews sehk/2025/1231/2025123100026_c.pdf）；MiniMax Gene具体解禁日期条款来自第三方股权结构梳理网站minichart.com/2026/01/11/minimax-group-inc-hong-kong-ipo-allotment-results-shareholder-analysis-listing-details-2026（二手信息源，未在HKEXnews原文中独立复核到该具体条款的对应表述，建议后续以公司公告实际解禁日期为准）"
+      },
+      {
+        "category": "其他",
+        "description": "股价极端波动对再融资/员工激励的影响：MiniMax股价自2026年1月上市以来经历剧烈波动——上市首日大涨109%，3月18日盘中触及1,330港元历史高点（市值一度近3,900亿港元），7月14日盘中最低跌至209.2港元（较高点跌超84%），8月6日纳入港股通当日又大涨近23%；剧烈波动一方面使公司能在7月10日解禁当周迅速完成160亿港元再融资（认购覆盖率7倍），另一方面也直接促使创始人闫俊杰宣布「实现AGI前不再领取薪酬」并拿出5%个人股份用于团队激励与开源基金，反映股价波动已实质性影响管理层薪酬安排与员工股权激励的锚定基础；36氪报道指出「MiniMax启动再融资时，股价较高点回撤幅度已超76%，处于上市以来极弱势的估值区间」。",
+        "evidence": "外部媒体报道综合，部分为外部推断（股价波动对员工激励锚定基础的影响）：36氪eu.36kr.com/zh/p/3889531573680902、新浪财经finance.sina.com.cn/stock/observe/2026-07-29/doc-inikmytp5910003.shtml；部分为公司公告事实（闫俊杰内部信、160亿港元融资完成，观察者网guancha.cn/economy/2026_07_10_823282.shtml）"
+      }
+    ]
+  },
+
+  "currentValuation": {
+    "_dimension": "9. 当前估值：市值、PE、PS、PEG、EV/Revenue",
+    "priceAsOf": "2026-08-07 16:08 收盘（Longbridge/Tushare hk_daily 一致）",
+    "sharePrice": {
+      "value": 326.4, "unit": "价格", "currency": "HKD",
+      "source1": { "name": "Tushare hk_daily", "url": "https://tushare.pro", "value": 326.4 },
+      "source2": { "name": "Longbridge 行情页", "url": "https://longbridge.com/quote/00100.HK", "value": 326.4 },
+      "deviationPct": 0, "flag": "ok",
+      "note": "当日涨9.83%（+29.2），振幅29.41%（低287.0/高374.4），52周高点1,330.0港元（2026年3月，距今回撤约75.5%）——该股自上市以来波动率极端，日内20%+涨跌属常态，估值截面对时点极度敏感"
+    },
+    "sharesOutstanding": {
+      "value": 349235308, "unit": "股（A类268,132,774 + B类81,102,534，不含库存股）",
+      "source1": { "name": "HKEXnews《证券变动月报表》截至2026-07-31", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0806/2026080601089_c.pdf", "value": 349235308 },
+      "source2": { "name": "Yahoo Finance 市值反推（113.99B港元 ÷ 326.4港元）", "url": "https://hk.finance.yahoo.com/quote/0100.HK", "value": 349234432 },
+      "deviationPct": 0.0003, "flag": "ok",
+      "note": "仅A类股在联交所上市交易，B类股不流通；市值按惯例用A+B总股本乘以A类现价计算（与Yahoo/Longbridge口径一致）"
+    },
+    "marketCap": {
+      "reported": { "value": "113.99B", "unit": "市值", "currency": "HKD", "source": { "name": "Yahoo Finance 2026-08-07", "url": "https://hk.finance.yahoo.com/quote/0100.HK" } },
+      "computed": { "value": "113.99B", "unit": "市值", "currency": "HKD", "formula": "326.4 × 349,235,308 = 113,990,132,870.5（精确值）", "tool": "financial_rigor.py verify-market-cap，偏差0.00%" },
+      "flag": "ok"
+    },
+    "pe": { "status": "not-applicable", "reason": "FY2025 IFRS净亏损18.716亿美元（TTM口径下仍为亏损），PE不适用；即便改用非IFRS经调整净亏损2.509亿美元，公司仍为净亏损状态，PE同样不适用" },
+    "ps": {
+      "value": 183.86,
+      "basis": "市值(HKD) ÷ 汇率7.8443 ÷ FY2025收入7,903.8万美元，工具验算见 crossValidationLog",
+      "period": "TTM≈FY2025（无更新的中期收入数据）",
+      "note": "该倍数极高且对时点极敏感：一是分子市值当日振幅近30%，二是分母用的是滞后的FY2025全年收入，而管理层2026-03-02电话会披露2026年2月ARR已超1.5亿美元、其后60天翻倍至3亿美元以上（详见第10维度多空论点，非经审计口径），若改用最新ARR年化，PS会大幅低于183.86倍；Yahoo Finance口径给出的PS为160.81倍（用其自有TTM窗口与汇率，与本文183.86倍口径不同不可直接对比，差异来自TTM统计窗口而非计算错误）"
+    },
+    "peg": { "status": "not-applicable", "reason": "公司持续亏损，无正的净利润增长率可用于PEG计算" },
+    "evToRevenue": {
+      "status": "unavailable",
+      "reason": "计算EV需要当前净现金（现金及等价物+短期投资-有息负债），但2025-12-31资产负债表（最新经审计数字）之后公司发生多笔重大资本变动且均未反映在任何已发布的资产负债表中：①2026-01-09 IPO净筹资约46.4亿港元；②2026-01-14超额配股权行使净筹资约6.97亿港元；③2026-07-14配售3,560万股A类新股（对价约9.55亿港元，净额未披露）；④与③同步公告拟发行65亿港元零息可换股债券（完成情况未查到确认公告）。首份中期报告（截至2026-06-30）须于2026-09-30前刊发，届时才有官方净现金数字；用2025-12-31的净现金（约9.45亿美元）倒算EV会系统性高估当前EV（低估净现金），故此处不做误导性估算，标注unavailable并列明已查范围"
+    }
+  },
+
+  "bullBearCase": {
+    "_dimension": "10. 多空双方核心论点",
+    "bull": [
+      {
+        "point": "C端全球化用户与B端Agent生态两条增长曲线兼备，商业化拐点已现",
+        "evidence": "2026年2月ARR突破1.5亿美元，此后60天翻倍至3亿美元以上（管理层2026-03-02业绩电话会披露，非经审计口径）；东方证券研报预计2026全年ARR有望达8-10亿美元；FY2025收入同比+158.9%至7,903.8万美元，非IFRS经调整净亏损同比仅+2.7%，经营层面已趋于稳定；开放平台毛利率达69.4%（2025年前9个月，招股书数据），显示B端业务具备良好盈利能力"
+      },
+      {
+        "point": "模型调用量在全球开发者生态中持续攀升，验证技术竞争力",
+        "evidence": "MiniMax M2.5发布7天内OpenRouter调用量突破3.07万亿Token，2026年3月9日当周登顶全球周榜第一（1.75万亿Token，第一财经2026-03-16）；2026年7月月度榜单M3位列全球第4，中国模型包揽OpenRouter前六名（国际科技创新中心网站2026-08-04）；2026年8月H3视频模型开源当日，在Artificial Analysis视频编辑能力榜单登顶全球第1，定价仅为同类旗舰模型的1/3（新浪财经2026-08-03）"
+      },
+      {
+        "point": "机构与产业资本以真金白银投票，看好长期前景",
+        "evidence": "高盛、美银、花旗2026年7月同步给予「买入」评级（目标价分别860/500/533港元，来源：腾讯新闻news.qq.com/rain/a/20260710A00FA200）；阿里巴巴、米哈游合计持股约20%并公开表示无短期减持计划；2026-07-10完成160亿港元融资，吸引20余家长线及主权基金、逾百家机构参与，认购覆盖率达7倍；2026-08-06纳入港股通引入南向资金增量买盘，当日盘中涨幅一度近23%"
+      },
+      {
+        "point": "A+H两地上市推进，若成功登陆科创板将打开境内融资与估值锚定新渠道",
+        "evidence": "2026-05-29与中信证券签署A股上市辅导协议并完成辅导备案，据报道拟目标为科创板（中证网jnzstatic.cs.com.cn/zzb/htmlInfo/123967.html）；另据钛媒体2026年报道，公司2025年按人民币口径披露收入10.346亿元、同比增长207.2%，毛利率53.8%（该口径与本文美元口径的年度业绩公告数字7,903.8万美元/25.4%毛利率不完全一致，可能涉及币种换算与统计口径差异，未做交叉验证，仅作为多空论点的原始引用，不代表本文认定的口径）"
+      }
+    ],
+    "bear": [
+      {
+        "point": "C端护城河浅，模型能力一旦被超越用户迁移成本趋近于零",
+        "evidence": "腾讯新闻2026-07-23报道「M3评测不佳、C端用户下滑、海螺被多个模型超越」；AI原生产品毛利率虽转正但仅4.7%（2025年前9个月），远低于开放平台的69.4%；公司近期将API计费方式从「按次计费」改为「按Token计费」，被指「隐性涨价」引发开发者投诉与退订潮（36氪eu.36kr.com/zh/p/3854393625220352）"
+      },
+      {
+        "point": "限售股解禁与WVR治理结构对中小股东不利",
+        "evidence": "2026-07-09解禁占总股本约48.9%，当日股价暴跌17.98%；创始人闫俊杰与贠烨祎合计控制约78.56%投票权但合计经济权益仅约28.67%（本文2026-05-19披露数字计算，见management维度）；MiniMax Gene员工持股平台（占6.76%）或于纳入港股通后第20个交易日（约2026年9月上旬）即解禁，早于原定2026年10月8日，构成后续潜在抛压（二手信源，见riskFactors维度说明）"
+      },
+      {
+        "point": "持续巨额亏损与极高研发强度，盈利路径仍不清晰",
+        "evidence": "FY2025非IFRS经调整净亏损2.509亿美元，同比仅+2.7%未见实质改善；研发强度高达约320%（研发开支/收入）；行业整体呈现「用户规模增长与推理算力成本同步增加，与互联网时代边际成本递减逻辑相反」的特征（虎嗅网huxiu.com/article/4820128.html）"
+      },
+      {
+        "point": "地缘政治与监管的双重不确定性",
+        "evidence": "美国《远程访问安全法案》若立法可能限制中国AI公司获取云计算资源；同业智谱AI已于2025年1月被美国商务部列入出口管制实体清单；公司算力采购高度集中于少数供应商（前5大供应商占采购额62.5%，全部为云计算服务），供应链脆弱性较高（万商天勤律所vtlaw.cn/news/6594.html）"
+      },
+      {
+        "point": "当前估值仍处于极高倍数，对ARR等非审计指标的定价存在预期差风险",
+        "evidence": "按FY2025收入计算PS高达183.86倍（2026-08-07收盘价口径，见currentValuation维度）；即使假设管理层披露的ARR已年化至3亿美元以上，隐含PS仍达数十倍量级；股价自3月高点1,330港元最大回撤曾超84%（7月14日盘中低点209.2港元），显示市场对ARR等非审计口径指标的定价存在剧烈的预期修正风险"
+      }
+    ]
+  },
+
+  "crossValidationLog": [
+    {
+      "field": "总市值 marketCap (2026-08-07)",
+      "source1": { "name": "股价×总股本手算", "value": "326.4 HKD × 349,235,308股" },
+      "source2": { "name": "Yahoo Finance 报告市值", "value": "113.99B HKD" },
+      "deviationPct": 0.00,
+      "flag": "ok",
+      "resolution": "financial_rigor.py verify-market-cap 验算通过，偏差0.00%，工具原始输出：计算市值113.99B HKD，报告市值113.99B HKD"
+    },
+    {
+      "field": "总股本 sharesOutstanding",
+      "source1": { "name": "HKEXnews月报表(截至2026-07-31)", "value": 349235308 },
+      "source2": { "name": "Yahoo Finance市值反推", "value": 349234432 },
+      "deviationPct": 0.0003,
+      "flag": "ok",
+      "resolution": "financial_rigor.py cross-validate 通过，偏差0.0003%远低于1%阈值，采用HKEXnews官方披露数字349,235,308（A类268,132,774+B类81,102,534）"
+    },
+    {
+      "field": "FY2025收入 revenue",
+      "source1": { "name": "HKEXnews年度业绩公告", "value": 79038 },
+      "source2": { "name": "财联社2026-03-02快讯", "value": 79038 },
+      "deviationPct": 0,
+      "flag": "ok",
+      "resolution": "financial_rigor.py cross-validate 通过，偏差0%，两源完全一致"
+    },
+    {
+      "field": "FY2025净亏损 netProfit(IFRS)",
+      "source1": { "name": "HKEXnews年度业绩公告", "value": -1871617 },
+      "source2": { "name": "财联社2026-03-02快讯", "value": -1871617 },
+      "deviationPct": 0,
+      "flag": "ok",
+      "resolution": "financial_rigor.py cross-validate 通过，偏差0%"
+    },
+    {
+      "field": "FY2025自由现金流 freeCashFlow（工具验算过程）",
+      "source1": { "name": "2025年度报告综合现金流量表：经营活动所用现金流量净额", "value": -279641 },
+      "source2": { "name": "同表：购买物业厂房及设备(-920)+购买非流动资产项目(-268)", "value": -1188 },
+      "deviationPct": "不适用（同一张现金流量表内部加总，非交叉验证）",
+      "flag": "ok",
+      "resolution": "financial_rigor.py calc --expr '-279641 + (-920) + (-268)' = -280,829千美元；仅单源（公司经审计现金流量表），未找到第三方独立复核FCF明细的公开来源，Level 1字段规范要求双源，此处如实标注仅单源"
+    },
+    {
+      "field": "PS倍数（TTM≈FY2025）",
+      "source1": { "name": "本文计算：市值/汇率/FY2025收入", "value": 183.86 },
+      "source2": { "name": "Yahoo Finance 自有TTM口径", "value": 160.81 },
+      "deviationPct": "口径不可比（TTM统计窗口不同，Yahoo口径未披露具体计算细节）",
+      "flag": "minor-diff",
+      "resolution": "两者量级一致（均为百倍以上的极端估值），差异判定为TTM窗口/汇率取值时点不同所致而非数据错误；financial_rigor.py calc验算本文183.86倍的计算过程无误"
+    }
+  ]
+}
