@@ -158,6 +158,9 @@ const fixtureFinal = {
         conclusion: "当前价格隐含的增长假设偏乐观。",
         analysis: {
           currentMultiples: {
+            // 裸数字（不是约定的缩写字符串）：渲染层必须自己补千分位，
+            // 不能把 1234000000 原样拼进页面（research/evals/defects.jsonl 2026-08-10）。
+            marketCap: { value: 1234000000, currency: "USD" },
             ps: { value: "4.2x", source: { name: "工具验算", url: "https://example.com/ps" } },
             // 查不到与算不出是两回事：这一格必须说「未取得」。
             peg: { status: "unavailable", reason: "卖方一致预期未覆盖，无增速可用" },
@@ -340,6 +343,19 @@ test("a dual-listed price renders every leg instead of a dash", () => {
   }
   // 页头三格不该出现「有数据却只给破折号」：市值与股价都必须是实值。
   assert.equal(pageText(html).includes("1234 百万 USD"), true, "market cap must render");
+});
+
+test("a bare numeric value gets thousand separators instead of a raw digit blob", () => {
+  const html = readFileSync(path.join(siteRoot, "companies", `${fixtureCompany}.html`), "utf8");
+  const text = pageText(html);
+  // 采集/分析文件里理应先把大数字写成缩写字符串（"113.99B" 这类），但漏写时
+  // 渲染层必须兜底加千分位，而不是把裸 JS number 原样拼进页面。
+  assert.equal(
+    text.includes("1,234,000,000 USD"),
+    true,
+    `a bare number must render with thousand separators, got: ${text.includes("1234000000") ? "raw digits" : "neither form found"}`,
+  );
+  assert.equal(text.includes("1234000000"), false, "the unformatted digit blob must not reach the page");
 });
 
 test("the site index derives exactly one card per financials-final.json", () => {

@@ -82,10 +82,31 @@ function multiListingText(value: Json): string | null {
   return legs ? joinLegs(legs) : null;
 }
 
+/**
+ * 数值兜底格式化：采集/分析文件的约定是大数字自己先写成缩写字符串
+ * （`"113.99B"`、`"4.31B"`），渲染层原样输出。但约定不是校验规则，漏写会让原始
+ * JS number（如 113990000000）直接拼进页面变成一串连续数字。这里只给整数部分
+ * 加千分位，**不改动小数部分的精度**——`toLocaleString` 默认会把小数截到 3 位
+ * 甚至更少，49.92 这类已经是合理精度的小数（如双币种换算价）会被它悄悄削掉
+ * 尾数，那是比原始 bug 更隐蔽的数据失真。这里不猜测单位量级（不会自作主张缩成
+ * "114B"）——缩写依赖 unit/currency 语境，只有写数据的人知道，渲染层不猜。
+ * 只对裸数字生效：字符串数值（已经是 "113.99B" 这种约定格式）原样通过。
+ */
+function formatNumeric(value: number): string {
+  if (!Number.isFinite(value)) return String(value);
+  const raw = Math.abs(value).toString();
+  if (raw.includes("e") || raw.includes("E")) return String(value); // 科学计数法：不猜测展开方式，原样返回
+  const [intPart, fracPart] = raw.split(".");
+  const withSeparators = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  const sign = value < 0 ? "-" : "";
+  return fracPart ? `${sign}${withSeparators}.${fracPart}` : `${sign}${withSeparators}`;
+}
+
 /** 把任意值渲染成文本：校验对象取 value，缺失 / 不适用如实给原因，不吞字段。 */
 export function text(value: Json): string {
   if (value === null || value === undefined || value === "") return "—";
-  if (typeof value === "string" || typeof value === "number") return String(value);
+  if (typeof value === "number") return formatNumeric(value);
+  if (typeof value === "string") return value;
   const absent = absentStatus(value);
   if (absent) return `${ABSENT_LABELS[absent]}：${value.reason ?? "未说明原因"}`;
   if (typeof value === "object" && !Array.isArray(value)) {
@@ -93,7 +114,8 @@ export function text(value: Json): string {
       // 单位优先取 currency；只写了 unit 的字段（双重上市的分支里很常见）同样要带上，
       // 否则 49.92 与 12.90 会并排出现而看不出一个是港元一个是美元。
       const unit = value.currency ?? value.unit ?? "";
-      return `${value.value}${unit ? ` ${unit}` : ""}`;
+      const rendered = typeof value.value === "number" ? formatNumeric(value.value) : String(value.value);
+      return `${rendered}${unit ? ` ${unit}` : ""}`;
     }
     const multi = multiListingText(value);
     if (multi) return multi;
