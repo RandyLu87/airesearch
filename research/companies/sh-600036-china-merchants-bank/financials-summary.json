@@ -1,0 +1,175 @@
+{
+  "meta": {
+    "companyId": "sh-600036-china-merchants-bank",
+    "companyName": "招商银行股份有限公司 (China Merchants Bank)",
+    "summarizedAt": "2026-08-10T23:59:00+08:00",
+    "dataCutoff": "2026-08-10（Asia/Shanghai）；最新定期报告为 2026 年一季报，2026 年中报未披露",
+    "basedOnCollection": "research/companies/sh-600036-china-merchants-bank/financials-collection.json",
+    "basedOnAnalysis": "research/companies/sh-600036-china-merchants-bank/financials-analysis.json"
+  },
+  "dimensionSummary": [
+    {
+      "dimensionId": "businessQuality",
+      "title": "生意质量",
+      "mapsTo": "dimensions.businessEssence",
+      "conclusion": "① 本质是低成本存款特许经营：计息负债成本率 1.26%，兴业 1.74%、平安 1.67%、中信 1.61%。② 净息差 1.87% 高出行业均值 1.42% 共 45bp，ROAE 13.44%、ROAA 1.19% 均居对比行首位。③ 但变现在退坡：FY2025 营收 3375.32 亿元仅 +0.01%，零售分部营收 -2.96%。",
+      "confidence": 7,
+      "scoreBasis": "① 加分项：businessEssence.analysis.grossMarginVsPeers 显示 1.87% 息差居八家对比行首位，且来自负债端而非省费用（成本收入比 31.98% 反高于工行 28.05%）。② 减分项：operatingLeverage 显示利润杠杆来自信用成本 0.74%→0.60% 与拨备释放，2026Q1 已反转为营收 +3.81%、净利 +1.52%。③ 缺口影响：dataGaps 的毛利率、分层 AUM、单季分部收入均属银行口径固有缺失，已用净息差与 ROA 替代，不额外扣分。"
+    },
+    {
+      "dimensionId": "moat",
+      "title": "护城河",
+      "mapsTo": "dimensions.moat",
+      "conclusion": "① 护城河真实但只剩负债成本一根柱：品牌定价权与转换成本成立，网络效应与技术壁垒判定不存在。② 过去五年与未来五年方向均为变窄：净息差三年削 32bp 至 1.83%，存款成本已 0.99%、弹药耗尽。③ 唯一变宽项是零售 AUM 17.86 万亿元、较上年末 +4.52%。",
+      "confidence": 6,
+      "scoreBasis": "① moat.analysis.trendPast5y 与 trendNext5y 双双判「变窄」，是压低分数的主因。② 反向证据密集：基金销售费率新规 2026-01-01 实施、年让利约 300 亿元降幅约 34%；蚂蚁非货保有 1.81 万亿元对招行 1.25 万亿元，差距由 4996 亿元扩至 5614 亿元。③ 支撑项：私行客户 207,492 户、活期日均占比 49.51%、零售客户 2.24 亿户仍在增长，故不低于中性。④ dataGaps 缺客户流失率与分层 AUM，转换成本只能间接验证，向中性收敛。"
+    },
+    {
+      "dimensionId": "management",
+      "title": "管理层",
+      "mapsTo": "dimensions.management",
+      "conclusion": "① 制度驱动而非个人驱动：两次换帅业绩未断档，风控优先有 0.94% 不良率与 31.98% 成本收入比为载体。② 股权绑定近乎为零：时任行长持股 30 万股约占 0.0012%，薪酬 297.1 万元且同比下行。③ 新行长王小青 2026-07-28 获核准，截至数据截止日仅 13 天。",
+      "confidence": 6.5,
+      "scoreBasis": "① 加分项：management.analysis.keyDecisions 中 2025 年确立中期分红、FY2025 派现 508.43 亿元分红率 35.34%，同期核心一级资本充足率仍 14.13%（高级法）。② 减分项：alignment.ownership 显示高管财富与股价脱钩；capitalAllocation.rdReturn 显示科技投入 141.26→133.50→129.01 亿元连降两年。③ 扣分项：王良公开承诺 ROE 以 10% 为底线，等于承认续降，rating 仅 ★3。④ dataGaps 缺并购记录、增减持明细与新行长任内决策，管理层维度证据不完整，向中性收敛。"
+    },
+    {
+      "dimensionId": "keyRisk",
+      "title": "最大风险",
+      "mapsTo": "dimensions.inversion",
+      "conclusion": "① 最大风险是息差与费率双压下 ROE 缓慢滑向同业、质量溢价被抹平，不是暴雷。② 它排第一是因为直接决定估值：ROE 16.22%→14.49%→13.44%，PB 0.87 对兴业与平安的 0.47。③ 次级风险是零售信贷：关注类占比升至 1.48%，小微不良 0.79%→1.22%。",
+      "confidence": 5.5,
+      "scoreBasis": "① inversion.analysis.failurePaths 中「净息差跌破盈亏平衡线」与「零售引擎让位对公」均为概率中、影响高，且 2026Q1 已现征兆：新增贷款零售贡献 -21%、对公贷款 +12.29%。② 缓冲仍在：不良率 0.94% 属同业最低一档，拨备覆盖率 387.76%，核心一级资本充足率 14.13%，尾部风险不致命。③ 但缓冲在快速消耗：拨备覆盖率两年降 49.94pct，2026Q1 贷款减值损失同比 +9.01%，反哺已逆转。④ 房地产敞口只能定性判低（融资平台数据停披于 2023-06-30），风险可控程度证据不足，取中性偏下。"
+    },
+    {
+      "dimensionId": "civilizationTrend",
+      "title": "文明趋势",
+      "mapsTo": "dimensions.industryTrend",
+      "conclusion": "① 中国银行业已是成熟存量市场：行业净息差 2026Q1 降至 1.40% 历史低点，股份行资产增速仅 5.4%。② 招行是技术采用者与存量分发者，AI 只压成本、不造收入，信息科技投入 129.01 亿元连降两年。③ 唯一上移空间在财富端，但代销费率由监管定价。",
+      "confidence": 4.5,
+      "scoreBasis": "① industryTrend.analysis.tam.growthCurve 判定成熟期存量博弈：信用卡在用发卡量 6.96 亿张连续四年下降，2025 年住户贷款仅增 4417 亿元。② paradigmShift 判「部分」，真正的转移是从息差银行转向资产管理银行，而招行在该侧被两头挤压：费率新规年让利约 300 亿元、蚂蚁非货领先 5614 亿元。③ 有利面仅剩份额溢价：以 2.72% 资产份额赚商业银行 5.99% 净利润。④ 趋势是逆风而非顺风，故低于中性；因份额溢价与牌照壁垒仍在，不给更低。"
+    },
+    {
+      "dimensionId": "valuation",
+      "title": "估值",
+      "mapsTo": "dimensions.valuation",
+      "conclusion": "① PB 0.87（一年 22% 分位）隐含可持续 ROE 仅 9.07%，低于管理层 10% 底线，也远低于实际 13.44%。② ROE 守住 10% 对应理论 PB 1.00、守住 13.44% 对应 1.49，当前价已含较厚安全边际。③ 但赔率不对称有限：中性 40.5 元仅 +4.0%，悲观 28.5 元 -26.8%。",
+      "confidence": 7,
+      "scoreBasis": "① valuation.analysis.reverseDcf：戈登模型 r=10%、g=3% 反推隐含 ROE 9.07%，比实际低 4.37pct、比承诺下限低 0.93pct，是主要加分依据。② 三口径同向低位：PB 22% 分位、PE(TTM) 6.51 处 25% 分位、股息率 5.18% 处 25% 分位；隐含总回报 5.18%+8.69%=13.87%。③ 扣分项：vsPeers 显示招行 PB 0.87 仍是股份行最贵一档，股息率 5.18% 反低于兴业 5.81%、平安 5.28%，无高股息保护垫；threeScenario 中性仅 +4.0%。④ dataGaps 缺 5 年以上 PB 分位序列，无法判定是否历史极值，未给更高分。"
+    }
+  ],
+  "strategies": {
+    "noPosition": {
+      "title": "空仓者",
+      "advice": "① 不必急于满仓：中性情景 40.5 元仅 +4.0%，而悲观 28.5 元 -26.8%，赔率不支持一次性买入。② 把 2026 年 8 月下旬的中报当作第一道闸门，先看息差与关注类，再决定首笔仓位。③ 建仓逻辑应是收息加净资产增厚（股息率 5.18%、隐含总回报 13.87%），不是赌估值修复。",
+      "triggers": [
+        {
+          "condition": "2026 年中报（预计 2026 年 8 月下旬）披露的净息差 ≥1.83%，即较 2026Q1 不再下行",
+          "action": "建立首笔仓位，不超过目标仓位的三分之一",
+          "basis": "dimensions.inversion.analysis.failurePaths[净息差跌破盈亏平衡线]：NIM 1.83%（2026-03-31），FY2023 2.15%→2026Q1 1.83% 三年 -32bp"
+        },
+        {
+          "condition": "股价跌破 35.47 元，即 PB 跌破一年下沿 0.79（BVPS 44.8998）",
+          "action": "在 35.47 元下方分两批把仓位补至目标的三分之二",
+          "basis": "dimensions.valuation.analysis.vsOwnHistory：一年 PB 区间 0.79–1.14 对应价格 35.47–51.19 元，当前 0.87 处 22% 分位"
+        },
+        {
+          "condition": "中报年化加权 ROE 低于 10%，或关注类贷款占比高于 1.48% 且为连续第三个季度上升",
+          "action": "取消建仓计划，等下一份定期报告重新验证",
+          "basis": "dimensions.valuation.analysis.reverseDcf：PB 0.87 隐含 ROE 9.07%，管理层底线 10%；dimensions.inversion 关注类占比 1.29%→1.43%→1.48%"
+        },
+        {
+          "condition": "中报零售分部营业收入同比转正（FY2025 为 -2.96%）",
+          "action": "把首笔仓位一次性提到目标仓位的二分之一",
+          "basis": "dimensions.inversion.analysis.failurePaths[零售引擎让位对公]：FY2025 零售分部营收 1910.17 亿元、同比 -2.96%，2026Q1 新增贷款零售贡献 -21%"
+        }
+      ]
+    },
+    "holding": {
+      "title": "持仓者",
+      "advice": "① 继续持有的理由是现金回报而非成长：股息率 5.18%、分红率 35.34%、核心一级资本充足率 14.13%，分红能力不依赖股价。② 2026 年中报是新行长王小青任内第一份完整报告，须逐项核对息差、关注类、非息收入三条线。③ 上沿 51.19 元（PB 1.14）与乐观 54.3 元是减仓区，不是加仓区。",
+      "triggers": [
+        {
+          "condition": "中报净息差 ≥1.83% 且计息负债成本率不高于 1.26%",
+          "action": "维持原仓位不动，不加不减",
+          "basis": "dimensions.moat.analysis.types[品牌/定价权]：计息负债成本率 1.26% vs 兴业 1.74%、平安 1.67%、中信 1.61%；2026Q1 NIM 1.83%"
+        },
+        {
+          "condition": "股价升至 51.19 元（PB 一年上沿 1.14）或触及乐观情景 54.3 元",
+          "action": "分两批减持三分之一至二分之一仓位",
+          "basis": "dimensions.valuation.analysis.threeScenario：乐观 54.3 元 +39.6%；vsOwnHistory 一年 PB 区间对应 35.47–51.19 元"
+        },
+        {
+          "condition": "中报拨备覆盖率跌破 387.76% 且贷款减值损失同比增幅高于 9.01%",
+          "action": "减持三分之一，保留底仓等下一季确认",
+          "basis": "dimensions.inversion.analysis.failurePaths[拨备缓冲耗尽]：拨备覆盖率 387.76%（2026-03-31，两年降 49.94pct），2026Q1 贷款减值损失同比 +9.01%"
+        },
+        {
+          "condition": "中期分红方案对应的分红率低于 35.34%",
+          "action": "重估持有逻辑，按收息定位下调仓位上限",
+          "basis": "dimensions.management.analysis.keyDecisions（2026-03-27 每股派现 2.016 元、分红率 35.34%、派现 508.43 亿元；股息率 5.18%）"
+        }
+      ]
+    },
+    "sellSignals": {
+      "title": "卖出信号",
+      "signals": [
+        {
+          "signal": "ROE 击穿管理层承诺的 10% 底线，质量溢价失去支点",
+          "observable": "2026 年中报及其后任一定期报告的年化加权 ROE 连续两个季度低于 10%（2026Q1 年化为 13.48%）",
+          "basis": "dimensions.valuation.analysis.reverseDcf：ROE 10% 对应理论 PB 1.00、13.44% 对应 1.49；dimensions.management.analysis.keyDecisions（2026-03 王良承诺 ROE 以 10% 为底线）"
+        },
+        {
+          "signal": "零售信贷风险失控，不良生成超出拨备计提能力",
+          "observable": "中报关注类贷款占比高于 1.48% 且为连续第三个季度上升，同时零售贷款不良率高于 1.08%、小微不良率高于 1.22%",
+          "basis": "dimensions.inversion.analysis.failurePaths[零售信贷风险失控]：零售不良率 1.08%、小微 0.79%→1.22%、不含信用卡零售不良生成同比 +65.22 亿元"
+        },
+        {
+          "signal": "负债成本优势被抹平，护城河唯一主柱失守",
+          "observable": "中报计息负债成本率高于 1.26%（即由降转升），或客户存款成本率高于 0.99% 且同业差距收窄",
+          "basis": "dimensions.moat.analysis.types[品牌/定价权] 与 crossDisciplinaryChecks[竞争博弈]：兴业、平安、中信分别还有 33/42/37bp 下行空间"
+        },
+        {
+          "signal": "AUM 飞轮彻底不再变现，代销费率改革吃掉量增",
+          "observable": "中报非利息净收入同比负增长，且增速继续低于零售 AUM 增速（2026Q1 为 +1.77% 对 +4.5%）",
+          "basis": "dimensions.inversion.analysis.failurePaths[基金费率改革让代销价跌吃掉 AUM 量增]：费率新规 2026-01-01 实施、年让利约 300 亿元、降幅约 34%"
+        },
+        {
+          "signal": "估值向普通股份行收敛的路径被基本面确认",
+          "observable": "中报零售分部营收同比降幅大于 FY2025 的 -2.96%，且新增贷款零售贡献仍为负（2026Q1 为 -21%）",
+          "basis": "dimensions.inversion.analysis.failurePaths[零售引擎让位对公]：同业 PB 兴业 0.47、平安 0.47、中信 0.56 对招行 0.87；悲观情景 28.5 元 -26.8%"
+        }
+      ]
+    },
+    "addSignals": {
+      "title": "加仓信号",
+      "signals": [
+        {
+          "signal": "息差确认见底，2026Q1 的企稳被中报延续",
+          "observable": "2026 年中报净息差 ≥1.83% 且环比不再下行，同时营业收入与净利息收入同比继续双正（2026Q1 营收 +3.81%）",
+          "basis": "dimensions.inversion.analysis.failurePaths[净息差跌破盈亏平衡线]：NIM 1.83%（2026-03-31）；行业 2026Q1 为 1.40% 历史低点"
+        },
+        {
+          "signal": "零售引擎重启，AUM 量增开始转化为收入",
+          "observable": "中报零售分部营收同比转正（FY2025 -2.96%），且新增贷款中零售贡献回正（2026Q1 -21%）",
+          "basis": "dimensions.businessEssence.analysis.revenueBreakdown（零售分部 1910.17 亿元、占 56.59%）与 inversion.failurePaths[零售引擎让位对公]"
+        },
+        {
+          "signal": "资产质量前瞻指标改善，拨备不再被动消耗",
+          "observable": "中报关注类贷款占比自 1.48% 回落，且拨备覆盖率维持在 387.76% 之上、不良率不高于 0.94%",
+          "basis": "dimensions.inversion.analysis.failurePaths[拨备缓冲耗尽]：关注类 1.29%→1.43%→1.48%，拨备覆盖率 387.76%，拨备率每降 10pct 对应少提 68.21 亿元"
+        },
+        {
+          "signal": "价格给出与基本面背离的错杀",
+          "observable": "股价跌破 35.47 元（PB 一年下沿 0.79），而中报年化 ROE 仍不低于 13%、不良率不高于 0.94%",
+          "basis": "dimensions.valuation.analysis.vsOwnHistory（PB 0.79–1.14 对应 35.47–51.19 元）与 reverseDcf（ROE 10% 对应理论 PB 1.00）"
+        },
+        {
+          "signal": "新行长任内首份完整报告确认战略延续",
+          "observable": "中报零售 AUM 较上年末增幅不低于 4.52%、私行客户较 207,492 户继续增长，且信息科技投入同比由 -3.36% 转正",
+          "basis": "dimensions.management.analysis.organization.keyPersonRisk（王小青 2026-07-28 核准、就任 13 天）与 capitalAllocation.rdReturn（科技投入 141.26→133.50→129.01 亿元）"
+        }
+      ]
+    }
+  },
+  "disclaimer": "本总结基于公开信息与数据截止时点的分析生成，仅供研究参考，不构成个性化投资建议。"
+}

@@ -1,0 +1,3037 @@
+{
+  "meta": {
+    "companyId": "sh-600036-china-merchants-bank",
+    "companyName": "招商银行股份有限公司 (China Merchants Bank)",
+    "ticker": "600036.SH / 03968.HK",
+    "exchange": "上海证券交易所（A 股主上市）+ 香港联合交易所（H 股）",
+    "market": "cn-a",
+    "reportingCurrency": "CNY",
+    "accountingBasis": "中国企业会计准则（A 股）/ 国际财务报告准则（H 股），两套报表净利润差异极小",
+    "fiscalYearEnd": "12-31",
+    "dataCutoff": "2026-08-10（Asia/Shanghai）；最新定期报告为 2026 年一季报（2026-03-31），2026 年中报尚未披露",
+    "collectedAt": "2026-08-10T22:40:00+08:00",
+    "sources": {
+      "primary": {
+        "name": "Tushare Pro（沪深报表/行情/估值，合并报表 report_type=1，按 update_flag 去重）",
+        "url": "https://tushare.pro"
+      },
+      "secondary": {
+        "name": "东方财富 datacenter RPT_F10_FINANCE_MAINFINADATA",
+        "url": "https://data.eastmoney.com/bbsj/600036.html"
+      },
+      "originalFilings": [
+        {
+          "type": "年报",
+          "period": "FY2025",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-03-28/1225047590.PDF",
+          "note": "2026-03-28 披露，安永华明标准无保留意见"
+        },
+        {
+          "type": "年报",
+          "period": "FY2025（摘要，补充财务比率表）",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-03-28/1225047778.PDF"
+        },
+        {
+          "type": "季报",
+          "period": "2026Q1",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225231394.PDF",
+          "note": "2026-04-29 披露，未经审计"
+        },
+        {
+          "type": "公告",
+          "period": "FY2025 利润分配方案",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-03-28/1225047465.PDF"
+        },
+        {
+          "type": "公告",
+          "period": "FY2025 末期分红实施（2026-07-04）",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-07-04/1225409111.PDF"
+        },
+        {
+          "type": "公告",
+          "period": "FY2025 中期分红实施（2026-01-10）",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-01-10/1224927640.PDF"
+        },
+        {
+          "type": "公告",
+          "period": "优先股全部赎回及摘牌完成（2026-04-17）",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-04-17/1225111786.PDF"
+        }
+      ]
+    }
+  },
+  "revenueStructure": {
+    "_dimension": "1. 收入结构：最近财年及近4季度分部收入、增速、毛利率",
+    "_note": "银行没有毛利率口径（无营业成本概念），分部毛利率一律 not-applicable；收入结构按「净利息收入 / 净手续费及佣金收入 / 其他净收入」三分法，与银行业通行口径一致。地区分部来自 Tushare fina_mainbz（已剔除合计行，与利润表营业收入对账偏差 0.00%）。",
+    "latestFiscalYear": {
+      "period": "FY2025（2025-01-01 至 2025-12-31）",
+      "totalRevenue": {
+        "value": 3375.32,
+        "unit": "亿元",
+        "currency": "CNY",
+        "source1": {
+          "name": "Tushare Pro income（600036.SH, end_date=20251231, report_type=1）",
+          "url": "https://tushare.pro",
+          "value": 3375.32
+        },
+        "source2": {
+          "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA TOTALOPERATEREVE（另经年报原文核对一致）",
+          "url": "https://data.eastmoney.com/bbsj/600036.html",
+          "value": 3375.32
+        },
+        "deviationPct": 0.0,
+        "flag": "ok"
+      },
+      "segments": [
+        {
+          "name": "净利息收入（利息收入 3513.51 亿 − 利息支出 1357.58 亿）",
+          "revenue": {
+            "value": 2155.93,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare Pro income（int_income 351351 百万 − int_exp 135758 百万）",
+              "url": "https://tushare.pro",
+              "value": 2155.93
+            },
+            "source2": {
+              "name": "招商银行 2025 年度报告 3.2.5 净利息收入",
+              "url": "http://static.cninfo.com.cn/finalpage/2026-03-28/1225047590.PDF",
+              "value": 2155.93
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "revenueSharePct": 63.87,
+          "yoyGrowthPct": 2.04,
+          "grossMarginPct": {
+            "status": "not-applicable",
+            "reason": "银行业无营业成本/毛利率口径（利息支出属收入抵减项而非成本），对应的效率指标是净息差与成本收入比，见 financialMetrics.bankKpis"
+          }
+        },
+        {
+          "name": "净手续费及佣金收入（财富管理、资产管理、托管、银行卡、结算等）",
+          "revenue": {
+            "value": 752.58,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare Pro income（n_commis_income, end_date=20251231）",
+              "url": "https://tushare.pro",
+              "value": 752.58
+            },
+            "source2": {
+              "name": "招商银行 2025 年度报告 3.2.6 净手续费及佣金收入",
+              "url": "http://static.cninfo.com.cn/finalpage/2026-03-28/1225047590.PDF",
+              "value": 752.58
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "revenueSharePct": 22.3,
+          "yoyGrowthPct": 4.39,
+          "grossMarginPct": {
+            "status": "not-applicable",
+            "reason": "同上，银行分部不披露毛利率"
+          }
+        },
+        {
+          "name": "其他净收入（投资收益 368.37 亿、公允价值变动 −81.6 亿、汇兑净收益 32.3 亿、其他业务收入 147.8 亿等）",
+          "revenue": {
+            "value": 466.81,
+            "unit": "亿元",
+            "currency": "CNY",
+            "source1": {
+              "name": "Tushare Pro income（营业收入 3375.32 − 净利息收入 2155.93 − 净手续费 752.58，financial_rigor.py calc 验算）",
+              "url": "https://tushare.pro",
+              "value": 466.81
+            },
+            "source2": {
+              "name": "招商银行 2025 年度报告 3.1（其他净收入倒算）",
+              "url": "http://static.cninfo.com.cn/finalpage/2026-03-28/1225047590.PDF",
+              "value": 466.81
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "revenueSharePct": 13.83,
+          "yoyGrowthPct": {
+            "status": "unavailable",
+            "reason": "年报未单列「其他净收入」合计的同比，其内部各项（投资收益、公允价值变动、汇兑）方向相反；已查 2025 年报 3.1/3.2.7 与东方财富利润表"
+          },
+          "grossMarginPct": {
+            "status": "not-applicable",
+            "reason": "同上"
+          }
+        }
+      ],
+      "segmentsByRegion": [
+        {
+          "name": "总行",
+          "revenue": 1244.2,
+          "unit": "亿元",
+          "revenueSharePct": 36.9
+        },
+        {
+          "name": "长江三角洲地区",
+          "revenue": 467.8,
+          "unit": "亿元",
+          "revenueSharePct": 13.9
+        },
+        {
+          "name": "附属机构",
+          "revenue": 411.9,
+          "unit": "亿元",
+          "revenueSharePct": 12.2
+        },
+        {
+          "name": "珠江三角洲及海西地区",
+          "revenue": 371.4,
+          "unit": "亿元",
+          "revenueSharePct": 11.0
+        },
+        {
+          "name": "环渤海地区",
+          "revenue": 358.0,
+          "unit": "亿元",
+          "revenueSharePct": 10.6
+        },
+        {
+          "name": "西部地区",
+          "revenue": 205.9,
+          "unit": "亿元",
+          "revenueSharePct": 6.1
+        },
+        {
+          "name": "中部地区",
+          "revenue": 203.5,
+          "unit": "亿元",
+          "revenueSharePct": 6.0
+        },
+        {
+          "name": "东北地区",
+          "revenue": 67.1,
+          "unit": "亿元",
+          "revenueSharePct": 2.0
+        },
+        {
+          "name": "境外",
+          "revenue": 45.5,
+          "unit": "亿元",
+          "revenueSharePct": 1.3
+        }
+      ],
+      "_regionSource": {
+        "name": "Tushare Pro fina_mainbz（type=地区，已剔除合计行；分部合计 3375.3 亿与利润表营业收入偏差 0.00%）",
+        "url": "https://tushare.pro"
+      }
+    },
+    "recentQuarters": [
+      {
+        "period": "2025Q2（单季，由半年报累计数减一季报累计数得出，financial_rigor.py 验算）",
+        "totalRevenue": {
+          "value": 862.18,
+          "unit": "亿元",
+          "currency": "CNY",
+          "source1": {
+            "name": "Tushare Pro income（1699.69 − 837.51）",
+            "url": "https://tushare.pro",
+            "value": 862.18
+          },
+          "source2": {
+            "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA（累计数相减，口径同 Tushare）",
+            "url": "https://data.eastmoney.com/bbsj/600036.html",
+            "value": 862.18
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "yoyGrowthPct": -0.36,
+        "netProfitAttrP": {
+          "value": 376.44,
+          "unit": "亿元",
+          "yoyGrowthPct": 2.67
+        },
+        "segments": [
+          {
+            "name": "单季不披露分部明细",
+            "revenue": {
+              "status": "unavailable",
+              "reason": "A 股季报仅披露利息净收入、手续费净收入等利润表大项，不披露完整分部；已查 Tushare fina_mainbz 仅有年度与半年度地区分部"
+            },
+            "yoyGrowthPct": {
+              "status": "unavailable",
+              "reason": "A 股季报为简式报告，不披露分部明细，无法计算单季分部同比；已查 2025 年三季报、2026 年一季报全文与 Tushare fina_mainbz（仅有年度与半年度分部）"
+            }
+          }
+        ]
+      },
+      {
+        "period": "2025Q3（单季）",
+        "totalRevenue": {
+          "value": 814.51,
+          "unit": "亿元",
+          "currency": "CNY",
+          "source1": {
+            "name": "Tushare Pro income（2514.20 − 1699.69）",
+            "url": "https://tushare.pro",
+            "value": 814.51
+          },
+          "source2": {
+            "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA（累计数相减，口径同 Tushare）",
+            "url": "https://data.eastmoney.com/bbsj/600036.html",
+            "value": 814.51
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "yoyGrowthPct": 2.11,
+        "netProfitAttrP": {
+          "value": 388.42,
+          "unit": "亿元",
+          "yoyGrowthPct": 1.04
+        },
+        "segments": [
+          {
+            "name": "单季不披露分部明细",
+            "revenue": {
+              "status": "unavailable",
+              "reason": "同上"
+            },
+            "yoyGrowthPct": {
+              "status": "unavailable",
+              "reason": "A 股季报为简式报告，不披露分部明细，无法计算单季分部同比；已查 2025 年三季报、2026 年一季报全文与 Tushare fina_mainbz（仅有年度与半年度分部）"
+            }
+          }
+        ]
+      },
+      {
+        "period": "2025Q4（单季）",
+        "totalRevenue": {
+          "value": 861.12,
+          "unit": "亿元",
+          "currency": "CNY",
+          "source1": {
+            "name": "Tushare Pro income（3375.32 − 2514.20）",
+            "url": "https://tushare.pro",
+            "value": 861.12
+          },
+          "source2": {
+            "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA（累计数相减，口径同 Tushare）",
+            "url": "https://data.eastmoney.com/bbsj/600036.html",
+            "value": 861.12
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "yoyGrowthPct": 1.57,
+        "netProfitAttrP": {
+          "value": 364.09,
+          "unit": "亿元",
+          "yoyGrowthPct": 3.41
+        },
+        "segments": [
+          {
+            "name": "单季不披露分部明细",
+            "revenue": {
+              "status": "unavailable",
+              "reason": "同上"
+            },
+            "yoyGrowthPct": {
+              "status": "unavailable",
+              "reason": "A 股季报为简式报告，不披露分部明细，无法计算单季分部同比；已查 2025 年三季报、2026 年一季报全文与 Tushare fina_mainbz（仅有年度与半年度分部）"
+            }
+          }
+        ]
+      },
+      {
+        "period": "2026Q1（单季=累计）",
+        "totalRevenue": {
+          "value": 869.4,
+          "unit": "亿元",
+          "currency": "CNY",
+          "source1": {
+            "name": "Tushare Pro income（end_date=20260331）",
+            "url": "https://tushare.pro",
+            "value": 869.4
+          },
+          "source2": {
+            "name": "招商银行 2026 年第一季度报告 4.2（另与东方财富一致）",
+            "url": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225231394.PDF",
+            "value": 869.4
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "yoyGrowthPct": 3.81,
+        "netProfitAttrP": {
+          "value": 378.52,
+          "unit": "亿元",
+          "yoyGrowthPct": 1.52
+        },
+        "segments": [
+          {
+            "name": "净利息收入 556.42 亿元（同比 +4.99%）；净手续费及佣金收入 206.56 亿元（同比 +4.87%）",
+            "revenue": {
+              "value": 556.42,
+              "unit": "亿元"
+            },
+            "yoyGrowthPct": 4.99
+          }
+        ]
+      }
+    ]
+  },
+  "financialMetrics": {
+    "_dimension": "2. 财务指标：近5年收入、净利润、毛利率、经营利润率、自由现金流、现金储备",
+    "_note": "银行不适用毛利率；经营利润率以「营业利润/营业收入」记录，另附银行业专用指标（净息差、不良率、拨备覆盖率、资本充足率、成本收入比）于 bankKpis。自由现金流对银行不具备非金融企业含义（经营现金流由存贷款与同业头寸波动主导），按 not-applicable 处理并记录经营活动现金流净额供参考。",
+    "annual": [
+      {
+        "fiscalYear": "2026Q1（累计，未经审计，供最新趋势参考）",
+        "revenue": {
+          "value": 869.4,
+          "unit": "亿元",
+          "currency": "CNY",
+          "source1": {
+            "name": "Tushare Pro income（end_date=20260331）",
+            "url": "https://tushare.pro",
+            "value": 869.4
+          },
+          "source2": {
+            "name": "招商银行 2026 年第一季度报告 4.2",
+            "url": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225231394.PDF",
+            "value": 869.4
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "netProfit": {
+          "value": 378.52,
+          "unit": "亿元",
+          "currency": "CNY",
+          "note": "归母，同比 +1.52%",
+          "source1": {
+            "name": "Tushare Pro income",
+            "url": "https://tushare.pro",
+            "value": 378.52
+          },
+          "source2": {
+            "name": "招商银行 2026 年第一季度报告",
+            "url": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225231394.PDF",
+            "value": 378.52
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "grossMarginPct": {
+          "status": "not-applicable",
+          "reason": "银行业无营业成本科目"
+        },
+        "operatingMarginPct": 51.37,
+        "netMarginPct": 43.76,
+        "freeCashFlow": {
+          "status": "not-applicable",
+          "reason": "同年度口径，银行不适用"
+        },
+        "cashReserves": {
+          "status": "not-applicable",
+          "reason": "同年度口径，银行不适用"
+        },
+        "eps": 1.49,
+        "bvps": 44.8998,
+        "roeWeightedPct": 13.48,
+        "roaPct": 1.14,
+        "_note": "2026Q1 是近两年首次营业收入（+3.81%）与净利息收入（+4.99%）同步正增长；但 NIM 仍环比降 3bp，增长来自规模扩张与负债成本下行而非息差改善"
+      },
+      {
+        "fiscalYear": "FY2025",
+        "revenue": {
+          "value": 3375.32,
+          "unit": "亿元",
+          "currency": "CNY",
+          "source1": {
+            "name": "Tushare Pro income",
+            "url": "https://tushare.pro",
+            "value": 3375.32
+          },
+          "source2": {
+            "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA（TOTALOPERATEREVE / PARENTNETPROFIT）",
+            "url": "https://data.eastmoney.com/bbsj/600036.html",
+            "value": 3375.32
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "netProfit": {
+          "value": 1501.81,
+          "unit": "亿元",
+          "currency": "CNY",
+          "note": "归属于本行股东净利润（n_income_attr_p），中国企业会计准则；含少数股东为 1511.26 亿",
+          "source1": {
+            "name": "Tushare Pro income",
+            "url": "https://tushare.pro",
+            "value": 1501.81
+          },
+          "source2": {
+            "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA（TOTALOPERATEREVE / PARENTNETPROFIT）",
+            "url": "https://data.eastmoney.com/bbsj/600036.html",
+            "value": 1501.81
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "grossMarginPct": {
+          "status": "not-applicable",
+          "reason": "银行业无营业成本科目，毛利率口径不成立"
+        },
+        "operatingMarginPct": 53.11,
+        "netMarginPct": 44.77,
+        "freeCashFlow": {
+          "status": "not-applicable",
+          "reason": "银行的经营活动现金流由客户存款、同业拆借与金融投资头寸变动主导，与非金融企业的 FCF 含义不可比；Tushare 口径下 FY2025 经营现金流净额减资本开支为 4233.2 亿，该数字不应作为股东可分配现金理解",
+          "referenceValue": 4233.2,
+          "unit": "亿元"
+        },
+        "cashReserves": {
+          "status": "not-applicable",
+          "reason": "银行不适用「现金储备」概念，对应指标为存放中央银行款项与流动性覆盖率；2025 年末客户存款余额 99245.58 亿元，总资产 130705.23 亿元"
+        },
+        "eps": 5.7,
+        "bvps": 43.4348,
+        "roeWeightedPct": 13.44,
+        "roaPct": 1.19,
+        "_officialCheck": "年报 3.1 披露 ROAA 1.19%、ROAE（归属普通股股东加权平均 ROE）13.44%，与 Tushare 一致"
+      },
+      {
+        "fiscalYear": "FY2024",
+        "revenue": {
+          "value": 3374.88,
+          "unit": "亿元",
+          "currency": "CNY",
+          "source1": {
+            "name": "Tushare Pro income",
+            "url": "https://tushare.pro",
+            "value": 3374.88
+          },
+          "source2": {
+            "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA（TOTALOPERATEREVE / PARENTNETPROFIT）",
+            "url": "https://data.eastmoney.com/bbsj/600036.html",
+            "value": 3374.88
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "netProfit": {
+          "value": 1483.91,
+          "unit": "亿元",
+          "currency": "CNY",
+          "note": "归母",
+          "source1": {
+            "name": "Tushare Pro income",
+            "url": "https://tushare.pro",
+            "value": 1483.91
+          },
+          "source2": {
+            "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA（TOTALOPERATEREVE / PARENTNETPROFIT）",
+            "url": "https://data.eastmoney.com/bbsj/600036.html",
+            "value": 1483.91
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "grossMarginPct": {
+          "status": "not-applicable",
+          "reason": "同上"
+        },
+        "operatingMarginPct": 53.04,
+        "netMarginPct": 44.32,
+        "freeCashFlow": {
+          "status": "not-applicable",
+          "reason": "同上",
+          "referenceValue": 4120.9,
+          "unit": "亿元"
+        },
+        "cashReserves": {
+          "status": "not-applicable",
+          "reason": "同上；2024 年末客户存款 91953.29 亿元，总资产 121520.36 亿元"
+        },
+        "eps": 5.66,
+        "bvps": 41.4581,
+        "roeWeightedPct": 14.49,
+        "roaPct": 1.29
+      },
+      {
+        "fiscalYear": "FY2023",
+        "revenue": {
+          "value": 3391.23,
+          "unit": "亿元",
+          "currency": "CNY",
+          "source1": {
+            "name": "Tushare Pro income",
+            "url": "https://tushare.pro",
+            "value": 3391.23
+          },
+          "source2": {
+            "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA（TOTALOPERATEREVE / PARENTNETPROFIT）",
+            "url": "https://data.eastmoney.com/bbsj/600036.html",
+            "value": 3391.23
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "netProfit": {
+          "value": 1466.02,
+          "unit": "亿元",
+          "currency": "CNY",
+          "note": "归母",
+          "source1": {
+            "name": "Tushare Pro income",
+            "url": "https://tushare.pro",
+            "value": 1466.02
+          },
+          "source2": {
+            "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA（TOTALOPERATEREVE / PARENTNETPROFIT）",
+            "url": "https://data.eastmoney.com/bbsj/600036.html",
+            "value": 1466.02
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "grossMarginPct": {
+          "status": "not-applicable",
+          "reason": "同上"
+        },
+        "operatingMarginPct": 52.1,
+        "netMarginPct": 43.64,
+        "freeCashFlow": {
+          "status": "not-applicable",
+          "reason": "同上",
+          "referenceValue": 3275.9,
+          "unit": "亿元"
+        },
+        "cashReserves": {
+          "status": "not-applicable",
+          "reason": "同上；2023 年末客户存款 82404.98 亿元，总资产 110284.83 亿元"
+        },
+        "eps": 5.63,
+        "bvps": 36.7141,
+        "roeWeightedPct": 16.22,
+        "roaPct": 1.4
+      },
+      {
+        "fiscalYear": "FY2022",
+        "revenue": {
+          "value": 3447.83,
+          "unit": "亿元",
+          "currency": "CNY",
+          "source1": {
+            "name": "Tushare Pro income",
+            "url": "https://tushare.pro",
+            "value": 3447.83
+          },
+          "source2": {
+            "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA（TOTALOPERATEREVE / PARENTNETPROFIT）",
+            "url": "https://data.eastmoney.com/bbsj/600036.html",
+            "value": 3447.83
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "netProfit": {
+          "value": 1380.12,
+          "unit": "亿元",
+          "currency": "CNY",
+          "note": "归母",
+          "source1": {
+            "name": "Tushare Pro income",
+            "url": "https://tushare.pro",
+            "value": 1380.12
+          },
+          "source2": {
+            "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA（TOTALOPERATEREVE / PARENTNETPROFIT）",
+            "url": "https://data.eastmoney.com/bbsj/600036.html",
+            "value": 1380.12
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "grossMarginPct": {
+          "status": "not-applicable",
+          "reason": "同上"
+        },
+        "operatingMarginPct": 47.9,
+        "netMarginPct": 40.4,
+        "freeCashFlow": {
+          "status": "not-applicable",
+          "reason": "同上",
+          "referenceValue": 5352.5,
+          "unit": "亿元"
+        },
+        "cashReserves": {
+          "status": "not-applicable",
+          "reason": "同上"
+        },
+        "eps": 5.26,
+        "bvps": 32.7146,
+        "roeWeightedPct": 17.06,
+        "roaPct": 1.44,
+        "_operatingMarginNote": "营业利润 / 营业总收入，financial_rigor.py 验算（Tushare operate_profit）"
+      },
+      {
+        "fiscalYear": "FY2021",
+        "revenue": {
+          "value": 3312.53,
+          "unit": "亿元",
+          "currency": "CNY",
+          "source1": {
+            "name": "Tushare Pro income",
+            "url": "https://tushare.pro",
+            "value": 3312.53
+          },
+          "source2": {
+            "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA（TOTALOPERATEREVE / PARENTNETPROFIT）",
+            "url": "https://data.eastmoney.com/bbsj/600036.html",
+            "value": 3312.53
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "netProfit": {
+          "value": 1199.22,
+          "unit": "亿元",
+          "currency": "CNY",
+          "note": "归母",
+          "source1": {
+            "name": "Tushare Pro income",
+            "url": "https://tushare.pro",
+            "value": 1199.22
+          },
+          "source2": {
+            "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA（TOTALOPERATEREVE / PARENTNETPROFIT）",
+            "url": "https://data.eastmoney.com/bbsj/600036.html",
+            "value": 1199.22
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "grossMarginPct": {
+          "status": "not-applicable",
+          "reason": "同上"
+        },
+        "operatingMarginPct": 44.68,
+        "netMarginPct": 36.5,
+        "freeCashFlow": {
+          "status": "not-applicable",
+          "reason": "同上",
+          "referenceValue": 1578.9,
+          "unit": "亿元"
+        },
+        "cashReserves": {
+          "status": "not-applicable",
+          "reason": "同上"
+        },
+        "eps": "__TODO__",
+        "bvps": "__TODO__",
+        "roeWeightedPct": "__TODO__",
+        "roaPct": "__TODO__",
+        "_operatingMarginNote": "营业利润 / 营业总收入，financial_rigor.py 验算（Tushare operate_profit）"
+      },
+      {
+        "fiscalYear": "FY2020（供 5 年 CAGR 基期）",
+        "revenue": {
+          "value": 2904.82,
+          "unit": "亿元",
+          "currency": "CNY",
+          "source1": {
+            "name": "Tushare Pro income",
+            "url": "https://tushare.pro",
+            "value": 2904.82
+          },
+          "source2": {
+            "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA（TOTALOPERATEREVE / PARENTNETPROFIT）",
+            "url": "https://data.eastmoney.com/bbsj/600036.html",
+            "value": 2904.82
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "netProfit": {
+          "value": 973.42,
+          "unit": "亿元",
+          "currency": "CNY",
+          "note": "归母",
+          "source1": {
+            "name": "Tushare Pro income",
+            "url": "https://tushare.pro",
+            "value": 973.42
+          },
+          "source2": {
+            "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA（TOTALOPERATEREVE / PARENTNETPROFIT）",
+            "url": "https://data.eastmoney.com/bbsj/600036.html",
+            "value": 973.42
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "grossMarginPct": {
+          "status": "not-applicable",
+          "reason": "同上"
+        },
+        "operatingMarginPct": 42.22,
+        "netMarginPct": 33.7,
+        "freeCashFlow": {
+          "status": "not-applicable",
+          "reason": "同上",
+          "referenceValue": 4022.0,
+          "unit": "亿元"
+        },
+        "cashReserves": {
+          "status": "not-applicable",
+          "reason": "同上"
+        },
+        "_operatingMarginNote": "营业利润 / 营业总收入，financial_rigor.py 验算（Tushare operate_profit）"
+      }
+    ],
+    "cagr": {
+      "revenue5yPct": 3.05,
+      "netProfit5yPct": 9.06,
+      "period": "FY2020 → FY2025",
+      "note": "financial_rigor.py calc 验算：收入 (3375.32/2904.82)^(1/5)−1=3.05%；归母净利 (1501.81/973.42)^(1/5)−1=9.06%"
+    },
+    "balanceSheet": [
+      {
+        "period": "2026Q1",
+        "totalAssets": 134848.82,
+        "totalLiabilities": 121942.97,
+        "equityAttrP": 12823.55,
+        "customerDeposits": 100421.23,
+        "unit": "亿元",
+        "source": "Tushare Pro balancesheet（report_type=1）"
+      },
+      {
+        "period": "FY2025",
+        "totalAssets": 130705.23,
+        "totalLiabilities": 117896.24,
+        "equityAttrP": 12728.75,
+        "customerDeposits": 99245.58,
+        "unit": "亿元",
+        "source": "Tushare Pro balancesheet"
+      },
+      {
+        "period": "FY2024",
+        "totalAssets": 121520.36,
+        "totalLiabilities": 109185.61,
+        "equityAttrP": 12260.14,
+        "customerDeposits": 91953.29,
+        "unit": "亿元",
+        "source": "Tushare Pro balancesheet"
+      },
+      {
+        "period": "FY2023",
+        "totalAssets": 110284.83,
+        "totalLiabilities": 99427.54,
+        "equityAttrP": 10763.7,
+        "customerDeposits": 82404.98,
+        "unit": "亿元",
+        "source": "Tushare Pro balancesheet"
+      }
+    ],
+    "bankKpis": {
+      "_note": "银行的真实经营指标不在通用报表字段里，全部回年报/季报原文取得；口径已逐项注明。集团口径与本公司（母行）口径已分别标注——AUM 与客户数为本公司口径。",
+      "_sources": {
+        "annualReport": "http://static.cninfo.com.cn/finalpage/2026-03-28/1225047590.PDF",
+        "annualReportSummary": "http://static.cninfo.com.cn/finalpage/2026-03-28/1225047778.PDF",
+        "q1Report": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225231394.PDF",
+        "reference": "https://data.eastmoney.com/bbsj/600036.html"
+      },
+      "netInterestMarginPct": {
+        "series": [
+          {
+            "period": "FY2023",
+            "value": 2.15
+          },
+          {
+            "period": "FY2024",
+            "value": 1.98
+          },
+          {
+            "period": "FY2025",
+            "value": 1.87
+          },
+          {
+            "period": "2025Q4（单季）",
+            "value": 1.86
+          },
+          {
+            "period": "2026Q1（年化）",
+            "value": 1.83
+          }
+        ],
+        "unit": "%",
+        "definition": "净利息收益率 = 净利息收入 / 总生息资产平均余额",
+        "note": "三年累计下行 32bp；2025Q4 单季环比回升 3bp 一度指向见底，2026Q1 又回落 3bp，回升未延续",
+        "source1": {
+          "name": "招商银行 2025 年度报告摘要 3.2 补充财务比率 / 2026 年一季报 4.2",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-03-28/1225047778.PDF",
+          "value": 1.87
+        },
+        "source2": {
+          "name": "东方财富 NET_INTEREST_MARGIN 字段（FY2025 1.87 / 2026Q1 1.83）",
+          "url": "https://data.eastmoney.com/bbsj/600036.html",
+          "value": 1.87
+        },
+        "deviationPct": 0.0,
+        "flag": "ok"
+      },
+      "netInterestSpreadPct": {
+        "series": [
+          {
+            "period": "FY2023",
+            "value": 2.03
+          },
+          {
+            "period": "FY2024",
+            "value": 1.86
+          },
+          {
+            "period": "FY2025",
+            "value": 1.78
+          },
+          {
+            "period": "2026Q1",
+            "value": 1.77
+          }
+        ],
+        "unit": "%",
+        "source": {
+          "name": "招商银行 2025 年度报告摘要 3.2 / 2026 年一季报 4.2",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-03-28/1225047778.PDF"
+        }
+      },
+      "nplRatioPct": {
+        "value": 0.94,
+        "period": "2026-03-31（与 2025-12-31 持平）",
+        "unit": "%",
+        "nplBalance": "698.58 亿元（2026-03-31）/ 682.06 亿元（2025-12-31）",
+        "note": "长期处于上市股份行最低一档",
+        "source1": {
+          "name": "招商银行 2026 年第一季度报告 4.1/4.5",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225231394.PDF",
+          "value": 0.94
+        },
+        "source2": {
+          "name": "东方财富 NONPERLOAN",
+          "url": "https://data.eastmoney.com/bbsj/600036.html",
+          "value": 0.94
+        },
+        "deviationPct": 0.0,
+        "flag": "ok"
+      },
+      "specialMentionRatioPct": {
+        "value": 1.48,
+        "period": "2026-03-31",
+        "unit": "%",
+        "trend": "2024-12-31 1.29% → 2025-12-31 1.43% → 2026-03-31 1.48%，18 个月累计上升 0.19pct",
+        "note": "关注类是不良的前瞻指标，其上行与不良率的表面稳定并存，是本次研究中资产质量的主要观察点",
+        "source": {
+          "name": "招商银行 2025 年度报告 3.4.1 五级分类 / 2026 年一季报 4.5",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225231394.PDF"
+        }
+      },
+      "overdueLoanRatioPct": {
+        "value": 1.29,
+        "period": "2026-03-31",
+        "unit": "%",
+        "trend": "2024-12-31 1.33% → 2025-12-31 1.25% → 2026-03-31 1.29%",
+        "note": "不良/逾期 90 天以上 = 1.24 倍，认定审慎",
+        "source": {
+          "name": "招商银行 2026 年第一季度报告 4.5",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225231394.PDF"
+        }
+      },
+      "provisionCoverageRatioPct": {
+        "value": 387.76,
+        "period": "2026-03-31",
+        "unit": "%",
+        "trend": "FY2023 437.70% → FY2024 411.98% → FY2025 391.79% → 2026Q1 387.76%，两年累计下降 49.94pct",
+        "note": "拨备覆盖率下行意味着利润增长中含拨备释放成分；按 2026Q1 不良余额 698.58 亿元计，覆盖率每降 10pct 约相当于少提 68.21 亿元拨备（financial_rigor.py 验算）",
+        "source1": {
+          "name": "招商银行 2026 年第一季度报告 4.1",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225231394.PDF",
+          "value": 387.76
+        },
+        "source2": {
+          "name": "东方财富 BLDKBBL",
+          "url": "https://data.eastmoney.com/bbsj/600036.html",
+          "value": 387.76
+        },
+        "deviationPct": 0.0,
+        "flag": "ok"
+      },
+      "loanProvisionRatioPct": {
+        "value": 3.63,
+        "period": "2026-03-31",
+        "unit": "%",
+        "trend": "FY2023 4.14% → FY2024 3.92% → FY2025 3.68% → 2026Q1 3.63%",
+        "source": {
+          "name": "招商银行 2026 年第一季度报告 4.1",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225231394.PDF"
+        }
+      },
+      "creditCostPct": {
+        "value": 0.6,
+        "period": "FY2025",
+        "unit": "%",
+        "trend": "FY2023 0.74% → FY2024 0.65% → FY2025 0.60%",
+        "source": {
+          "name": "招商银行 2025 年度报告摘要",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-03-28/1225047778.PDF"
+        }
+      },
+      "cet1RatioPct": {
+        "value": 14.13,
+        "period": "2026-03-31（集团口径，高级法）",
+        "unit": "%",
+        "weightedApproach": 11.88,
+        "series": [
+          {
+            "period": "FY2024",
+            "value": 14.86
+          },
+          {
+            "period": "FY2025",
+            "value": 14.16
+          },
+          {
+            "period": "2026Q1",
+            "value": 14.13
+          }
+        ],
+        "otherTiers": {
+          "tier1Pct": 16.05,
+          "totalCarPct": 17.76,
+          "leverageRatioPct": 7.84,
+          "period": "2026-03-31 高级法"
+        },
+        "note": "招行同时披露高级法与权重法，差距很大（2026-03-31 高级法 14.13% vs 权重法 11.88%），跨行比较必须锁定同一口径；高级法 CET1 一年下降 0.73pct，与新《商业银行资本管理办法》实施及资产扩张有关。绝对水平仍显著高于监管要求，是维持 35% 分红率的资本基础",
+        "source1": {
+          "name": "招商银行 2026 年第一季度报告 4.6",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225231394.PDF",
+          "value": 14.13
+        },
+        "source2": {
+          "name": "东方财富 HXYJBCZL",
+          "url": "https://data.eastmoney.com/bbsj/600036.html",
+          "value": 14.13
+        },
+        "deviationPct": 0.0,
+        "flag": "ok"
+      },
+      "costIncomeRatioPct": {
+        "value": 31.98,
+        "period": "FY2025",
+        "unit": "%",
+        "q1_2026": 28.47,
+        "trend": "FY2023 32.96% → FY2024 31.89% → FY2025 31.98%；2026Q1 28.47%（同比 -0.17pct）",
+        "definition": "业务及管理费 / 营业收入",
+        "source1": {
+          "name": "招商银行 2025 年度报告摘要 3.2",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-03-28/1225047778.PDF",
+          "value": 31.98
+        },
+        "source2": {
+          "name": "东方财富 REVENUE_RATIO",
+          "url": "https://data.eastmoney.com/bbsj/600036.html",
+          "value": 31.98
+        },
+        "deviationPct": 0.0,
+        "flag": "ok"
+      },
+      "retailAum": {
+        "value": 178551.65,
+        "period": "2026-03-31（本公司口径）",
+        "unit": "亿元",
+        "series": [
+          {
+            "period": "FY2025",
+            "value": 170825.19,
+            "yoyPct": 14.44
+          },
+          {
+            "period": "2026Q1",
+            "value": 178551.65,
+            "vsPriorYearEndPct": 4.52
+          }
+        ],
+        "note": "AUM 增速（FY2025 +14.44%）远高于营业收入增速（+0.01%），是招行零售飞轮仍在运转、但尚未转化为收入的直接证据；口径为本公司（母行），不含招银永隆（另 6537.93 亿港元，+22.14%）",
+        "source": {
+          "name": "招商银行 2025 年度报告 3.10 / 2026 年一季报 4.7",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225231394.PDF"
+        }
+      },
+      "privateBankingClients": {
+        "value": 207492,
+        "period": "2026-03-31",
+        "unit": "户",
+        "definition": "月日均全折人民币总资产 1000 万元及以上零售客户",
+        "series": [
+          {
+            "period": "FY2025",
+            "value": 199326,
+            "yoyPct": 17.87
+          },
+          {
+            "period": "2026Q1",
+            "value": 207492,
+            "vsPriorYearEndPct": 4.1
+          }
+        ],
+        "note": "私行客户数增速（+17.87%）高于金葵花及以上客户（+13.29%），高净值端更快",
+        "source": {
+          "name": "招商银行 2025 年度报告 3.10 / 2026 年一季报 4.7",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225231394.PDF"
+        }
+      },
+      "sunflowerClients": {
+        "value": 6216100,
+        "period": "2026-03-31",
+        "unit": "户",
+        "definition": "月日均总资产 50 万元及以上零售客户（金葵花及以上）",
+        "series": [
+          {
+            "period": "FY2025",
+            "value": 5931500,
+            "yoyPct": 13.29
+          },
+          {
+            "period": "2026Q1",
+            "value": 6216100,
+            "vsPriorYearEndPct": 4.8
+          }
+        ],
+        "source": {
+          "name": "招商银行 2025 年度报告 / 2026 年一季报 4.7",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225231394.PDF"
+        }
+      },
+      "privateBankingAum": {
+        "status": "unavailable",
+        "reason": "招行自 2025 年半年报起不再披露金葵花及以上客户与私人银行客户对应的 AUM 余额，只披露户数。已查范围：FY2025 年报全文（「私人银行」9 处命中逐条阅读、「金葵花」2 处）、2026Q1 报告 4.7、2025 年半年报与三季报、cmbchina.com 与巨潮定向检索、卖方研报引用；判定为公司未披露而非未搜到。可用替代口径：本公司 AUM 总额、零售理财产品余额 44127.83 亿元、TREE 体系配置客户 1175.68 万户"
+      },
+      "demandDepositRatioPct": {
+        "value": 49.51,
+        "period": "2026Q1（日均余额口径）",
+        "unit": "%",
+        "eopValue": 50.4,
+        "eopPeriod": "2026-03-31（时点口径）",
+        "series": [
+          {
+            "period": "FY2025 日均",
+            "value": 49.4,
+            "yoyPct": -0.94
+          },
+          {
+            "period": "2026Q1 日均",
+            "value": 49.51
+          }
+        ],
+        "note": "活期存款占比是招行低负债成本的直接来源；日均口径 FY2025 同比降 0.94pct 后，2026Q1 回升 0.11pct，是负债端边际改善的信号",
+        "source": {
+          "name": "招商银行 2025 年度报告 3.3 / 2026 年一季报 4.3",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225231394.PDF"
+        }
+      },
+      "depositCostRatePct": {
+        "value": 0.99,
+        "period": "2026Q1（年化平均成本率）",
+        "unit": "%",
+        "series": [
+          {
+            "period": "FY2024",
+            "value": 1.54
+          },
+          {
+            "period": "FY2025",
+            "value": 1.17
+          },
+          {
+            "period": "2025Q1",
+            "value": 1.29
+          },
+          {
+            "period": "2026Q1",
+            "value": 0.99
+          }
+        ],
+        "breakdownFY2025": {
+          "公司活期": 0.52,
+          "公司定期": 1.95,
+          "零售活期": 0.07,
+          "零售定期": 2.05
+        },
+        "note": "客户存款成本率一年下降 37bp、2026Q1 同比再降 30bp，是 2026Q1 净利息收入转正（+4.99%）的主因；FY2025 客户存款利息支出 1078.69 亿元，同比 -17.55%。计息负债合计成本率 2026Q1 为 1.07%（2025Q1 为 1.39%）",
+        "source": {
+          "name": "招商银行 2025 年度报告 3.2.4 / 2026 年一季报 4.2",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225231394.PDF"
+        }
+      },
+      "roaaPct": {
+        "value": 1.19,
+        "period": "FY2025",
+        "unit": "%",
+        "series": [
+          {
+            "period": "FY2023",
+            "value": 1.39
+          },
+          {
+            "period": "FY2024",
+            "value": 1.28
+          },
+          {
+            "period": "FY2025",
+            "value": 1.19
+          },
+          {
+            "period": "2026Q1（年化）",
+            "value": 1.14
+          }
+        ],
+        "definition": "归属于本行股东的平均总资产收益率",
+        "source": {
+          "name": "招商银行 2025 年度报告 3.1 / 2026 年一季报 4.1",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-03-28/1225047590.PDF"
+        }
+      },
+      "roaePct": {
+        "value": 13.44,
+        "period": "FY2025",
+        "unit": "%",
+        "series": [
+          {
+            "period": "FY2023",
+            "value": 16.22
+          },
+          {
+            "period": "FY2024",
+            "value": 14.49
+          },
+          {
+            "period": "FY2025",
+            "value": 13.44
+          },
+          {
+            "period": "2026Q1（年化）",
+            "value": 13.48
+          }
+        ],
+        "definition": "归属于本行普通股股东的平均净资产收益率，与加权平均 ROE 同值（分子已扣永续债/优先股分派，分母已扣其他权益工具）",
+        "note": "2026Q1 年化 13.48% 同比降 0.65pct，但环比 FY2025 全年基本持平，三年下行斜率放缓",
+        "source": {
+          "name": "招商银行 2025 年度报告 3.1 / 2026 年一季报 4.1",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-03-28/1225047590.PDF"
+        }
+      },
+      "segmentProfitFY2025": {
+        "_definition": "集团口径分部经营业绩（年报 3.6），单位亿元",
+        "retail": {
+          "revenue": 1910.17,
+          "revenueSharePct": 56.59,
+          "pretaxProfit": 906.76,
+          "pretaxProfitSharePct": 50.66,
+          "revenueYoyPct": -2.96,
+          "costToIncomePct": 33.39,
+          "nonInterestIncome": 506.24,
+          "nonInterestYoyPct": 4.21
+        },
+        "wholesale": {
+          "revenue": 1380.73,
+          "revenueSharePct": 40.91,
+          "pretaxProfit": 854.12,
+          "pretaxProfitSharePct": 47.72,
+          "nonInterestIncome": 541.2,
+          "nonInterestYoyPct": -14.75
+        },
+        "other": {
+          "revenue": 84.42,
+          "revenueSharePct": 2.5,
+          "pretaxProfit": 29.05,
+          "pretaxProfitSharePct": 1.62
+        },
+        "note": "零售贡献 56.59% 营收与 50.66% 税前利润，但 FY2025 零售营收同比 -2.96%、占比降 1.73pct——零售引擎在缩速，是与「零售之王」叙事最相抵触的一组数字。批发口径占比为按分部表计算值（年报未直接给该百分比）",
+        "source": {
+          "name": "招商银行 2025 年度报告 3.6 分部经营业绩",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-03-28/1225047590.PDF"
+        }
+      },
+      "wealthManagementFeeIncome": {
+        "value": 267.11,
+        "period": "FY2025",
+        "unit": "亿元",
+        "yoyPct": 21.39,
+        "q1_2026": {
+          "value": 85.07,
+          "yoyPct": 25.42,
+          "breakdown": {
+            "代销理财": {
+              "value": 25.4,
+              "yoyPct": 7.13
+            },
+            "代理保险": {
+              "value": 21.31,
+              "yoyPct": 16.7
+            },
+            "代理基金": {
+              "value": 20.32,
+              "yoyPct": 55.11
+            },
+            "代理信托": {
+              "value": 11.0,
+              "yoyPct": 42.67
+            },
+            "代理证券": {
+              "value": 5.4,
+              "yoyPct": 28.27
+            }
+          }
+        },
+        "note": "财富管理手续费在经历费率改革冲击后重回高增长（FY2025 +21.39%、2026Q1 +25.42%），是非息收入的主要拉动；同期银行卡手续费 136.43 亿元同比 -18.60%，结构此消彼长",
+        "source": {
+          "name": "招商银行 2025 年度报告 3.2.6 / 2026 年一季报 4.2",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-03-28/1225047590.PDF"
+        }
+      },
+      "loanBook2026Q1": {
+        "total": 74643.73,
+        "unit": "亿元",
+        "vsPriorYearEndPct": 2.84,
+        "retail": {
+          "value": 36830.4,
+          "vsPriorYearEndPct": -1.0
+        },
+        "corporate": {
+          "value": 34401.73,
+          "vsPriorYearEndPct": 6.98
+        },
+        "note": "口径不含应计利息；2026Q1 零售贷款负增长、对公贷款高增长，资产投放结构明显向对公倾斜——对高收益零售资产依赖的息差模型是负面信号",
+        "source": {
+          "name": "招商银行 2026 年第一季度报告 4.3",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225231394.PDF"
+        }
+      },
+      "realEstateExposure2026Q1": {
+        "onBalanceSheetRiskBearing": {
+          "value": 3479.35,
+          "unit": "亿元",
+          "vsPriorYearEndPct": -1.7
+        },
+        "nonRiskBearing": {
+          "value": 1677.52,
+          "unit": "亿元",
+          "vsPriorYearEndPct": -5.92
+        },
+        "corporateRealEstateLoans": {
+          "value": 2837.08,
+          "unit": "亿元",
+          "shareOfBankLoansPct": 4.0
+        },
+        "realEstateNplRatioPct": {
+          "value": 4.44,
+          "note": "较上年末下降 0.20pct"
+        },
+        "source": {
+          "name": "招商银行 2026 年第一季度报告 4.4",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225231394.PDF"
+        }
+      }
+    }
+  },
+  "competitiveLandscape": {
+    "_dimension": "3. 竞争格局：市场份额、主要竞争对手对比",
+    "marketShare": {
+      "valuePct": 2.72,
+      "marketDefinition": "总资产份额：分子为招行集团总资产 130705.23 亿元（2025-12-31），分母为银行业金融机构本外币资产总额 480 万亿元（含政策性银行、6 家国有大行、12 家股份行、城农商行、外资行、非银存款类机构；不含保险与金融控股公司）。2026-03-31 口径同为 2.72%（13.48 万亿 / 494.7 万亿）",
+      "asOf": "2025-12-31",
+      "source": {
+        "name": "国家金融监督管理总局《2025 年四季度银行业保险业主要监管指标数据情况》+ 招商银行 2025 年度报告摘要",
+        "url": "http://www.xtxh.net/xtyxh/contents/2026/2/13-a6d1039607fd43c39946ce59fc193bd0.html"
+      },
+      "note": "招行用 2.72% 的资产份额赚取商业银行 5.99% 的净利润（2026Q1 招行归母净利 378.52 亿 / 商业银行单季净利润 6323 亿元）——这是其超额盈利能力最直观的比值，也是理解 PB 溢价的起点",
+      "byMetric": [
+        {
+          "metric": "股份制银行内资产份额",
+          "valuePct": 16.8,
+          "definition": "分母为股份制商业银行本外币资产总额 77.8 万亿元（12 家全国性股份行）",
+          "asOf": "2025-12-31",
+          "note": "股份行整体 2026Q1 资产增速 5.4%，低于行业 8.0% 与大行 10.6%——招行所在赛道整体在丢份额"
+        },
+        {
+          "metric": "存款份额",
+          "valuePct": 2.99,
+          "definition": "分子为客户存款总额 98361.30 亿元（不含应计利息），分母为金融机构人民币存款余额 328.64 万亿元",
+          "asOf": "2025-12-31"
+        },
+        {
+          "metric": "贷款份额",
+          "valuePct": 2.67,
+          "definition": "分子为贷款和垫款总额 72580.58 亿元，分母为金融机构人民币贷款余额 271.91 万亿元",
+          "asOf": "2025-12-31",
+          "note": "存款份额 2.99% > 总资产份额 2.72% > 贷款份额 2.67%：招行是净存款输出行，负债端的相对优势强于资产端"
+        },
+        {
+          "metric": "个人存款份额",
+          "valuePct": 2.62,
+          "definition": "分子为零售存款 42522.25 亿元，分母为住户存款余额 162.03 万亿元",
+          "asOf": "2025-06-30",
+          "note": "口径统一到 2025 年中，因央行未在 2025 年末单独披露住户存款余额。个人存款份额低于总存款份额——零售端真正的优势不在存款规模，而在 AUM 与存款成本"
+        },
+        {
+          "metric": "信用卡发卡量份额",
+          "valuePct": 14.0,
+          "definition": "分子为流通卡数 9745.1 万张，分母为全国信用卡和借贷合一卡在用发卡量 6.96 亿张",
+          "asOf": "2025-12-31",
+          "note": "行业连续四年缩量（较 2022 年峰值 8.07 亿张减少 1.11 亿张），招行份额在升但绝对盘子在缩"
+        },
+        {
+          "metric": "非货币公募基金保有量份额",
+          "valuePct": 10.67,
+          "definition": "分子 12484 亿元（行业第二），分母为中基协前 100 家基金销售机构非货保有合计 11.70 万亿元",
+          "asOf": "2025-12-31",
+          "note": "蚂蚁基金 18098 亿元、份额 15.47% 居首；招行与第一名的绝对差距由 2024H2 的 4996 亿元扩大到 5614 亿元"
+        },
+        {
+          "metric": "权益基金保有量份额",
+          "valuePct": 10.17,
+          "definition": "分子 6105 亿元（行业第二），分母为前 100 家权益保有合计 6.0 万亿元",
+          "asOf": "2025-12-31",
+          "note": "蚂蚁 10178 亿元（16.98%）首破万亿；银行渠道整体非货/权益份额分别为 41.66%/40.20%，较 2025 年中各降 1.44/1.59pct"
+        },
+        {
+          "metric": "银行理财子公司规模份额",
+          "valuePct": 7.93,
+          "definition": "分子为招银理财 2.64 万亿元（理财子公司行业第一），分母为全市场银行理财存续规模 33.29 万亿元",
+          "asOf": "2025-12-31",
+          "note": "第二名兴银理财 2.43 万亿、第三名信银理财"
+        },
+        {
+          "metric": "零售 AUM 绝对规模（无行业分母）",
+          "value": "17.08 万亿元（2025-12-31）/ 17.86 万亿元（2026-03-31）",
+          "note": "是平安银行 4.24 万亿的 4 倍、中信 5.26 万亿的 3.2 倍，股份行内没有第二名——护城河最硬的一个量化事实"
+        }
+      ]
+    },
+    "competitors": [
+      {
+        "name": "工商银行",
+        "ticker": "601398.SH",
+        "marketSharePct": 11.14,
+        "revenue": "8382.70 亿元（FY2025）",
+        "netProfitAttr": "3685.62 亿元",
+        "totalAssets": "534777.73 亿元",
+        "roeWeightedPct": 9.45,
+        "nplRatioPct": 1.31,
+        "nimPct": 1.28,
+        "pb": 0.68,
+        "dividendYieldTtmPct": 4.12,
+        "grossMarginPct": {
+          "status": "not-applicable",
+          "reason": "银行业无毛利率口径"
+        },
+        "note": "规模是招行的 4.1 倍，但净息差低 59bp、ROE 低 4.0pct。成本收入比 28.05% 优于招行 31.98%——说明招行的高 ROE 不靠费用效率而靠定价能力",
+        "_marketShareNote": "总资产 / 银行业金融机构本外币资产总额 480 万亿元（2025-12-31），financial_rigor.py 验算；口径与招行 2.72% 一致"
+      },
+      {
+        "name": "建设银行",
+        "ticker": "601939.SH",
+        "revenue": "7610.49 亿元（FY2025，+1.88%）",
+        "netProfitAttr": "3389.06 亿元",
+        "totalAssets": "456318.18 亿元",
+        "roeWeightedPct": 10.04,
+        "nplRatioPct": 1.31,
+        "nimPct": 1.34,
+        "pb": 0.75,
+        "dividendYieldTtmPct": 2.0,
+        "grossMarginPct": {
+          "status": "not-applicable",
+          "reason": "同上"
+        },
+        "note": "六大行中息差最高（除邮储），管理层归因于存量贷款重定价完成 + 高息定期存款集中到期——这正是 2026 年行业息差企稳的共同逻辑，也意味着招行的负债成本优势在被追赶。TTM 股息率 2.00% 受中期分红节奏影响，与年化口径有差",
+        "marketSharePct": 9.51,
+        "_marketShareNote": "总资产 / 银行业金融机构本外币资产总额 480 万亿元（2025-12-31），financial_rigor.py 验算；口径与招行 2.72% 一致"
+      },
+      {
+        "name": "农业银行",
+        "ticker": "601288.SH",
+        "revenue": "7253.06 亿元（FY2025，+2.1%）",
+        "netProfitAttr": "2910.41 亿元",
+        "totalAssets": "487846.74 亿元",
+        "roeWeightedPct": 10.16,
+        "nplRatioPct": 1.27,
+        "nimPct": 1.28,
+        "pb": 0.8,
+        "dividendYieldTtmPct": 3.86,
+        "grossMarginPct": {
+          "status": "not-applicable",
+          "reason": "同上"
+        },
+        "note": "六大行中资产扩张最快（+12.8%）、拨备覆盖率最高（292.55%），县域存款 14.38 万亿贡献存款增量 52% 以上。用「县域低成本存款」打的是与招行「高端零售低成本存款」同一场负债成本战；PB 0.80 已逼近招行 0.87",
+        "marketSharePct": 10.16,
+        "_marketShareNote": "总资产 / 银行业金融机构本外币资产总额 480 万亿元（2025-12-31），financial_rigor.py 验算；口径与招行 2.72% 一致"
+      },
+      {
+        "name": "中国银行",
+        "ticker": "601988.SH",
+        "revenue": "6583.10 亿元（FY2025，+4.28%）",
+        "netProfitAttr": "2430.21 亿元",
+        "totalAssets": "383580.76 亿元",
+        "roeWeightedPct": 8.94,
+        "nplRatioPct": 1.23,
+        "nimPct": 1.26,
+        "pb": 0.69,
+        "dividendYieldTtmPct": 3.89,
+        "grossMarginPct": {
+          "status": "not-applicable",
+          "reason": "同上"
+        },
+        "note": "净息差全行业最低档，靠非息（+19.21%，占营收 33.21%）撑住营收增速。ROE 比招行低 4.5pct——同样的资产规模，招行创造的股东回报高出一半",
+        "marketSharePct": 7.99,
+        "_marketShareNote": "总资产 / 银行业金融机构本外币资产总额 480 万亿元（2025-12-31），financial_rigor.py 验算；口径与招行 2.72% 一致"
+      },
+      {
+        "name": "兴业银行",
+        "ticker": "601166.SH",
+        "revenue": "2127.41 亿元（FY2025，+0.24%）",
+        "netProfitAttr": "774.69 亿元",
+        "totalAssets": "110942.56 亿元",
+        "roeWeightedPct": 9.15,
+        "nplRatioPct": 1.08,
+        "nimPct": 1.71,
+        "pb": 0.47,
+        "dividendYieldTtmPct": 5.81,
+        "grossMarginPct": {
+          "status": "not-applicable",
+          "reason": "同上"
+        },
+        "note": "总资产仅比招行低 15%，归母净利润却只有招行的 52%、ROE 低 4.3pct。差距核心在负债成本：计息负债成本率 1.74% vs 招行 1.26%，48bp 差距按招行约 11.4 万亿计息负债估算约合每年 540 亿元税前利润。PB 0.47 只有招行一半多，股息率 5.81% 反高于招行",
+        "marketSharePct": 2.31,
+        "_marketShareNote": "总资产 / 银行业金融机构本外币资产总额 480 万亿元（2025-12-31），financial_rigor.py 验算；口径与招行 2.72% 一致"
+      },
+      {
+        "name": "平安银行",
+        "ticker": "000001.SZ",
+        "revenue": "1314.42 亿元（FY2025，-10.4%）",
+        "netProfitAttr": "426.33 亿元（-4.2%）",
+        "totalAssets": "59257.77 亿元",
+        "roeWeightedPct": 9.15,
+        "nplRatioPct": 1.05,
+        "nimPct": 1.78,
+        "pb": 0.47,
+        "dividendYieldTtmPct": 5.28,
+        "grossMarginPct": {
+          "status": "not-applicable",
+          "reason": "同上"
+        },
+        "note": "唯一营收与净利双降的对比对象。同为「零售银行」标签，零售 AUM 4.24 万亿仅为招行的 25% 且几乎零增长（+1.1%）——最直接的反例：零售转型不等于零售护城河",
+        "marketSharePct": 1.23,
+        "_marketShareNote": "总资产 / 银行业金融机构本外币资产总额 480 万亿元（2025-12-31），financial_rigor.py 验算；口径与招行 2.72% 一致"
+      },
+      {
+        "name": "宁波银行",
+        "ticker": "002142.SZ",
+        "revenue": "719.69 亿元（FY2025，+8.13%）",
+        "netProfitAttr": "293.33 亿元",
+        "totalAssets": "36286.71 亿元",
+        "roeWeightedPct": 13.11,
+        "nplRatioPct": 0.76,
+        "nimPct": 1.74,
+        "pb": 0.91,
+        "dividendYieldTtmPct": 3.75,
+        "grossMarginPct": {
+          "status": "not-applicable",
+          "reason": "同上"
+        },
+        "note": "唯一在 ROE 与 PB 上同时逼近甚至超过招行的对手，且成长性远好（营收 +8.13%、手续费净收入 +30.72%、AUM +13.07%）。差异在体量与客群：AUM 1.28 万亿仅为招行 7.5%。是「下一个招行」叙事的承载者，也是招行成长性溢价的直接挑战者",
+        "marketSharePct": 0.76,
+        "_marketShareNote": "总资产 / 银行业金融机构本外币资产总额 480 万亿元（2025-12-31），financial_rigor.py 验算；口径与招行 2.72% 一致"
+      },
+      {
+        "name": "中信银行",
+        "ticker": "601998.SH",
+        "revenue": "2124.75 亿元（FY2025，-0.55%）",
+        "netProfitAttr": "706.18 亿元（+2.98%）",
+        "totalAssets": "101310.28 亿元",
+        "roeWeightedPct": 9.39,
+        "nplRatioPct": 1.15,
+        "nimPct": 1.63,
+        "pb": 0.56,
+        "dividendYieldTtmPct": 5.07,
+        "grossMarginPct": {
+          "status": "not-applicable",
+          "reason": "同上"
+        },
+        "note": "总资产已达招行的 78%，零售 AUM 5.26 万亿（2025Q3）为招行的 31%，是股份行中零售追赶最快的一家。付息负债成本率 1.61% vs 招行 1.26%",
+        "marketSharePct": 2.11,
+        "_marketShareNote": "总资产 / 银行业金融机构本外币资产总额 480 万亿元（2025-12-31），financial_rigor.py 验算；口径与招行 2.72% 一致"
+      }
+    ],
+    "peerRanking": {
+      "nimFY2025": "招行 1.87% > 平安 1.78% > 宁波 1.74% > 兴业 1.71% > 中信 1.63% > 建行 1.34% > 工行=农行 1.28% > 中行 1.26%（商业银行行业均值 1.42%）",
+      "nplFY2025": "宁波 0.76% < 招行 0.94% < 平安 1.05% < 兴业 1.08% < 中信 1.15% < 中行 1.23% < 农行 1.27% < 工行=建行 1.31%（商业银行行业 1.50%，2026Q1 末 1.51%）",
+      "roeFY2025": "招行 13.44% > 宁波 13.11% > 农行 10.16% > 建行 10.04% > 工行 9.45% > 中信 9.39% > 兴业=平安 9.15% > 中行 8.94%",
+      "fundingCost": "计息负债成本率：招行 1.26% < 中信 1.61% < 平安 1.67% < 兴业 1.74%。这是全部对比项里差距最大、最难被短期抹平的一项",
+      "valuation": "PB：宁波 0.91 > 招行 0.87 > 农行 0.80 > 建行 0.75 > 中行 0.69 > 工行 0.68 > 中信 0.56 > 兴业=平安 0.47。招行是股份行中最贵的一档，且股息率（5.18%）低于兴业 5.81%、平安 5.28%、中信 5.07%——市场已为质量付了溢价，招行不再有「高股息保护」",
+      "_source": {
+        "name": "各行 2025 年年度报告/摘要 + Tushare Pro（2026-08-10 收盘估值，同一取数口径）",
+        "url": "https://tushare.pro"
+      }
+    },
+    "platformCompetition": [
+      {
+        "name": "蚂蚁（杭州）基金销售",
+        "nonMoneyAum": "18098 亿元（2025-12-31，+15.46%）",
+        "equityAum": "10178 亿元（+23.68%，行业首个权益保有破万亿的销售机构）",
+        "financials": "FY2025 营业收入 202.34 亿元（+24.20%）、净利润 10.85 亿元（+141.11%）",
+        "verdict": "非货、权益、指数三榜全部登顶。与招行的非货差距由 2024H2 的约 4996 亿元扩大到 2025 年末的 5614 亿元——绝对差距在扩大，招行在流量端的结构性劣势未被扭转",
+        "source": {
+          "name": "中基协 2025 年下半年基金销售保有规模百强 / 恒生电子 2025 年报",
+          "url": "https://www.amac.org.cn/sjtj/datastatistics/fundsalesindustrydata"
+        }
+      },
+      {
+        "name": "天天基金（东方财富）",
+        "nonMoneyAum": "7242 亿元（行业第三）",
+        "equityAum": "4002 亿元（+14.5%）",
+        "verdict": "与前两名差距进一步拉开，头部三强分化格局形成",
+        "source": {
+          "name": "中基协百强榜",
+          "url": "https://www.amac.org.cn/sjtj/datastatistics/fundsalesindustrydata"
+        }
+      },
+      {
+        "name": "腾安基金（腾讯理财通）",
+        "nonMoneyAum": {
+          "status": "unavailable",
+          "reason": "中基协百强榜第 6–10 名（中国银行、建设银行、腾安基金、中信证券、基煜基金）在媒体转载中只给区间「3054 亿元至 4389 亿元」，未逐家点名；已查中基协官网数据页（表格需交互加载）、中新经纬/澎湃/21 世纪经济报道/证券时报的百强榜解读"
+        },
+        "verdict": "背靠微信流量但保有规模仅为招行非货的 1/4 量级，固收类相对占优、权益类偏弱；真正的竞争压力来自蚂蚁而非腾讯",
+        "source": {
+          "name": "中基协百强榜（区间披露）",
+          "url": "https://www.amac.org.cn/sjtj/datastatistics/fundsalesindustrydata"
+        }
+      },
+      {
+        "name": "银行渠道整体（含招行）",
+        "channelShare": "非货保有份额 41.66%（较 2025 年中 -1.44pct）、权益 40.20%（-1.59pct）、指数基金 14.82%（+1.11pct）",
+        "verdict": "银行仍是第一大渠道但非货与权益份额同步下滑；费率战已下沉到 0.1 折申购（部分中小银行）与 0 费率（京东金融指数基金）——渠道议价权正在被侵蚀",
+        "source": {
+          "name": "证券时报引中基协百强榜",
+          "url": "https://www.stcn.com/article/detail/3681801.html"
+        }
+      }
+    ]
+  },
+  "businessModelMoat": {
+    "_dimension": "4. 商业模式与护城河：核心竞争优势来源",
+    "oneLiner": "以远低于同业的价格拿到别人的钱（FY2025 计息负债成本率 1.26%，同业 1.61%–1.74%），再按市场价借出或投出，赚 1.87% 的净息差（同业 1.26%–1.78%，行业均值 1.42%）；同时把已在手的 17.08 万亿零售客户资产二次变现，收取代销、资管、托管手续费 752.58 亿元（占营收 22.30%）。付钱的是两类人：借款人付利息，买理财/基金/保险的储户付手续费。",
+    "revenueModel": "FY2025 营业收入 3375.32 亿元三分：① 净利息收入 2155.93 亿元（63.87%）= 生息资产规模（+7.6%）× 净息差 1.87%；息差再拆为生息资产收益率 3.04%（同比 -46bp，LPR 下调 + 存量房贷利率调整 + 有效信贷需求不足）减计息负债成本率 1.26%（同比 -38bp，存款挂牌利率下调 + 高息定期到期重定价）——负债端降幅吃掉资产端降幅的八成，是净利息收入在息差收窄 11bp 下仍 +2.04% 的唯一原因。② 净手续费及佣金收入 752.58 亿元（22.30%，+4.39%，2022 年以来首次转正）= AUM 规模 × 费率 × 交易活跃度；其中财富管理手续费 267.11 亿元（+21.39%）、大财富管理收入合计 440.13 亿元（+16.91%，占营收 13.04%）；银行卡手续费 -18.60% 为主要拖累。③ 其他净收入 466.81 亿元（13.83%，-13.74%）= 投资收益 368.37 亿元 + 公允价值变动 -81.60 亿元，完全由债市与股市行情决定，不构成可持续能力。",
+    "moats": [
+      {
+        "type": "转换成本",
+        "name": "低成本负债（结算账户黏性带来的活期沉淀）",
+        "evidence": "① FY2025 计息负债成本率 1.26%（同比 -38bp），同业为兴业 1.74%、平安 1.67%、中信 1.61%。② 2025Q4 单季存款利率已降至 1.05%、单季付息负债成本率 1.13%。③ 活期存款日均余额占比 49.40%（FY2025，同比 -0.94pct），2026Q1 回升 0.11pct。④ 48bp 的成本优势（vs 兴业）按招行约 11.4 万亿计息负债估算约合每年 540 亿元税前——这一项就足以解释招行 1501.81 亿 vs 兴业 774.69 亿归母净利润的差距。来源：招商银行 FY2025 年报 3.2.4、各行年报与券商点评",
+        "trend": "变窄",
+        "trendReason": "相对优势仍在但绝对领先幅度正被行业性存款降息抹平：兴业存款付息率降 33bp、平安降 42bp、中信降 37bp，而招行存款成本已在 1.05%–1.26%，继续下降的空间小于同业"
+      },
+      {
+        "type": "规模效应",
+        "name": "零售客户基础与 AUM 飞轮",
+        "evidence": "① 零售客户 2.24 亿户（2025-12-31，+6.67%）、AUM 17.08 万亿元（+14.44%，全年新增超 2 万亿创历史新高）。② 分层向上迁移在加速：金葵花及以上 593.15 万户（+13.29%）、私行客户 199,326 户（+17.87%）——增速逐层递增。③ AUM 里程碑节奏加快：第一个 5 万亿用 9 年、第二个 5 年、第三个仅 3 年多。④ 2026Q1 延续：AUM 17.86 万亿（较上年末 +4.52%）、私行客户 207,492 户首破 20 万户。⑤ 飞轮机制：低成本存款 → 高息差 → 有钱补贴渠道与服务 → 客户资产迁入 → 更多活期沉淀 + 更多手续费。来源：招商银行 FY2025 年报 3.10 / 2026 年一季报 4.7",
+        "trend": "变宽"
+      },
+      {
+        "type": "网络效应",
+        "name": "招商银行 App + 掌上生活 App 数字渠道",
+        "evidence": "① 两大 App 月活合计 1.29 亿户（2025-12-31），批发线上渠道月活 220.85 万户。② 双卡客户占信用卡客户 68.37%（+1.12pct）。③ 但对比蚂蚁/微信的 10 亿级用户盘，1.29 亿 MAU 在银行业内顶级、在互联网语境下不构成网络效应——它更像是把线下服务能力平移到线上的成本优势。④ 招行未单独披露「招商银行 App」的 MAU/DAU，只给合计值，披露颗粒度在下降。来源：招商银行 FY2025 年报摘要",
+        "trend": "稳定"
+      },
+      {
+        "type": "规模效应",
+        "name": "财富管理与资产管理的产品与渠道能力",
+        "evidence": "① 招银理财 2.64 万亿元，银行理财子公司行业第一（占全市场 33.29 万亿的 7.93%）；四家资管子公司合计 4.71 万亿元。② 代销端非货保有 12484 亿元（第二，份额 10.67%）、权益保有 6105 亿元（第二，+24.09%）。③ FY2025 大财富管理收入 440.13 亿元（+16.91%），2026Q1 财富管理手续费 +25.42%、代理基金 +55.11%。④ 长盈计划客户超 1000 万户（首次披露）。来源：中国理财网 / 中基协百强榜 / 招商银行 FY2025 年报",
+        "trend": "待验证",
+        "trendReason": "产品端与渠道端都在头部且 2025 年是三年来首次回暖，但费率端完全由监管定价——公募基金销售费率新规 2026-01-01 才实施，完整年度影响要到 2026 年报才看得到"
+      },
+      {
+        "type": "品牌定价权",
+        "name": "风控文化与资产质量长期领先（实为组织能力，非结构性壁垒）",
+        "evidence": "① 不良率 0.94%（2025-12-31 与 2026-03-31），9 家对比行中仅次于宁波 0.76%，远低于商业银行行业 1.50%。② 拨备覆盖率 391.79%（2026Q1 387.76%），信用成本 0.60%（-0.05pct）。③ 每释放 1pct 拨备约合利润 6.82 亿元（按 2026Q1 不良余额 698.58 亿元，financial_rigor.py 验算）。④ 反向信号：贷款损失准备余额由 2703.01 亿元降至 2672.22 亿元（-1.14%），而不良余额由 656.10 亿升至 682.06 亿（+3.96%）——招行已在动用拨备平滑利润。来源：招商银行 FY2025 年报 / 金融监管总局监管指标",
+        "trend": "稳定",
+        "trendReason": "对公端稳、零售端在恶化，靠对公对冲；拨备水平仍是全行业最高档但方向已掉头"
+      }
+    ],
+    "erodingMoats": [
+      {
+        "name": "净息差下行：护城河最粗的柱子在被利率环境削",
+        "detail": "招行 NIM 从 FY2024 1.98% → FY2025 1.87% → 2026Q1 1.83%；行业 2026Q1 降至 1.40% 历史低点。关键机制是不对称伤害：同业靠「存款成本从 1.7% 降到 1.5%」还能对冲，招行存款成本已在 1.05%–1.26%，几乎没有对冲弹药。这是最应跟踪的单一指标",
+        "source": {
+          "name": "招商银行年报/一季报 + 金融监管总局监管指标",
+          "url": "http://www.xtxh.net/xtyxh/contents/2026/5/22-85adef20c6fb4d01b0204421c75493cb.html"
+        }
+      },
+      {
+        "name": "财富管理费率被监管强制下调：规模在涨、单位价格在跌",
+        "detail": "公募基金三阶段费率改革累计每年让利超 510 亿元、行业综合费率下降约 20%；第三阶段《公开募集证券投资基金销售费用管理规定》2025-12-31 发布、2026-01-01 实施，年让利约 300 亿元、降幅约 34%（股票型申购费率上限 1.5%→0.8%，销售服务费率股混 0.6%/年→0.4%/年，持有超 1 年的非货基不再计提销售服务费，设尾佣比例上限）。2025 年财富管理收入 +21.39% 是市场回暖的量增掩盖了价跌；2026 年若代销收入增速显著低于保有量增速，说明费率侵蚀已吃掉量增——这是 2026 年最需要盯的验证点",
+        "source": {
+          "name": "证监会《公开募集证券投资基金销售费用管理规定》（人民网/中国证券报）",
+          "url": "http://finance.people.com.cn/n1/2026/0101/c1004-40637249.html"
+        }
+      },
+      {
+        "name": "互联网平台在代销端分流：绝对差距还在扩大",
+        "detail": "非货保有：2024H2 蚂蚁 1.45 万亿 vs 招行 9504 亿（差 4996 亿）→ 2025 年末 蚂蚁 1.81 万亿 vs 招行 1.25 万亿（差 5614 亿）。权益榜 2024H1 起被蚂蚁反超（2023 年末招行 5028 亿曾长期居首）。银行渠道非货/权益份额同步下滑 1.44/1.59pct。招行相对排名稳住（均第二），但与第一名的绝对差距在扩大",
+        "source": {
+          "name": "中基协 2025 年下半年基金销售保有规模百强",
+          "url": "https://www.amac.org.cn/sjtj/datastatistics/fundsalesindustrydata"
+        }
+      },
+      {
+        "name": "信用卡业务持续萎缩：曾经的高收益零售资产在消失",
+        "detail": "流通卡数 2022 年峰值 1.03 亿张 → 2025 年末 9745.1 万张；交易额 2023 年 4.81 万亿 → 2024 年 4.42 万亿 → 2025 年 4.08 万亿（-7.62%）；信用卡利息收入 596.60 亿元（-7.30%）；2025 年是零售贷款中唯一规模下滑的品种。这意味着招行零售资产收益率结构性下移，是净息差承压的内生原因而非仅仅 LPR 的外生冲击。行业同步收缩：全国在用发卡量 6.96 亿张，首次跌破 7 亿、连续四年下降",
+        "source": {
+          "name": "中国人民银行《2025 年支付体系运行总体情况》+ 招商银行 FY2025 年报",
+          "url": "https://www.stcn.com/article/detail/3655282.html"
+        }
+      },
+      {
+        "name": "拨备缓冲在被消耗",
+        "detail": "拨备覆盖率 411.98%（2024）→ 391.79%（2025，-20.19pct）→ 387.76%（2026Q1）；贷款损失准备余额 -1.14% 而不良余额 +3.96%；拨贷比 3.92%→3.68%。1.21% 的净利润增长里有一部分靠少提拨备实现。招行拨备水平仍是全行业最高档（行业 2026Q1 末 203.14%），缓冲空间还大，但方向已掉头",
+        "source": {
+          "name": "招商银行 FY2025 年报 / 2026 年一季报",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-03-28/1225047778.PDF"
+        }
+      }
+    ]
+  },
+  "technology": {
+    "_dimension": "5. 技术能力：核心技术栈、研发投入",
+    "coreTechStack": [
+      "全面上云 + 分布式核心系统（「系统全面上云工程」「金融系统分布式架构转型及应用可用性提升工程」等 7 个项目获中国人民银行金融科技发展奖，「系统全面上云工程」获一等奖）",
+      "「云 + AI + 中台」数智化底座；2025 年提出「AI First」战略（优先 / 领先 / 率先）",
+      "大模型体系：183 个领域专精模型、856 个大模型场景应用（2025-12-31）；日均 Tokens 吞吐较 2024 年增长 10.1 倍",
+      "智能客服「小招」（由财富场景拓展至存贷汇全场景）与「小助」系列智能助手（对公客户经理、信贷、运营人员覆盖率 100% 或超 80%）",
+      "招商银行 App + 掌上生活 App 双 App 零售入口；批发线上渠道",
+      "零售信贷数智化风控：涵盖数据、模型、策略的量化风控体系",
+      "开源：2024 年发布国内银行业首个开源百亿参数金融大模型；为两大主流开源项目维护者中唯一国内银行机构"
+    ],
+    "rdExpense": {
+      "value": 129.01,
+      "unit": "亿元",
+      "currency": "CNY",
+      "period": "FY2025（本公司口径信息科技投入）",
+      "note": "银行披露的是「信息科技投入」（费用化的科技预算总额，含人力、外包、硬件、软件与云资源），不设研发费用资本化科目，与制造业/科技公司的研发费用口径不可比",
+      "source1": {
+        "name": "招商银行 2025 年度报告摘要",
+        "url": "https://s3gw.cmbimg.com/lb5001-cmbweb-prd-1255000097/cmbir/20260330/19d0dfa2-e517-48db-ac75-fe89db17cbb7.pdf",
+        "value": 129.01
+      },
+      "source2": {
+        "name": "证券时报《1800 亿元加码金融科技》上市银行统计（招行居股份行第一）",
+        "url": "https://www.stcn.com/article/detail/3749323.html",
+        "value": 129.01
+      },
+      "deviationPct": 0.0,
+      "flag": "ok"
+    },
+    "rdIntensityPct": {
+      "value": 4.31,
+      "period": "FY2025",
+      "unit": "%",
+      "definition": "信息科技投入 / 本公司（母行）营业收入",
+      "series": [
+        {
+          "period": "FY2023",
+          "value": 4.59
+        },
+        {
+          "period": "FY2024",
+          "value": 4.37
+        },
+        {
+          "period": "FY2025",
+          "value": 4.31
+        }
+      ],
+      "note": "招行承诺「每年金融科技整体预算原则上不低于上一年度集团口径经审计营业收入的 3.5%」。按 FY2024 集团营收 3374.88 亿 × 3.5% = 118.12 亿元，FY2025 实际投入 129.01 亿元，承诺仍在执行，但安全垫由约 12.5% 收窄至约 9.2%",
+      "source": {
+        "name": "招商银行 2025 年度报告摘要 / 2024 年度可持续发展报告",
+        "url": "https://s3gw.cmbimg.com/lb5001-cmbweb-prd-1255000097/cmbir/20260330/19d0dfa2-e517-48db-ac75-fe89db17cbb7.pdf"
+      }
+    },
+    "rdTrend": {
+      "series": [
+        {
+          "period": "FY2023",
+          "value": 141.26,
+          "unit": "亿元",
+          "intensityPct": 4.59,
+          "sourceTier": "Reference（新浪财经引招行披露序列，未取到年报原文页）"
+        },
+        {
+          "period": "FY2024",
+          "value": 133.5,
+          "unit": "亿元",
+          "intensityPct": 4.37,
+          "yoyPct": -5.49,
+          "sourceTier": "一手（2024 年度可持续发展报告，HKEXnews）"
+        },
+        {
+          "period": "FY2025",
+          "value": 129.01,
+          "unit": "亿元",
+          "intensityPct": 4.31,
+          "yoyPct": -3.36,
+          "sourceTier": "一手（2025 年度报告摘要）"
+        }
+      ],
+      "finding": "信息科技投入连续两年绝对额下降（-5.49%、-3.36%），投入强度同步从 4.59% 降至 4.31%；与同期高调宣示的「AI First」战略形成张力——是效率提升还是投入退坡，需后续观察",
+      "source": {
+        "name": "招商银行 2024 年可持续发展报告 / 2025 年度报告摘要 / 新浪财经统计",
+        "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/0325/2025032501168_c.pdf"
+      }
+    },
+    "rdHeadcount": {
+      "value": 11051,
+      "unit": "人",
+      "period": "2025-12-31（本集团研发人员）",
+      "shareOfEmployeesPct": 9.09,
+      "series": [
+        {
+          "period": "2024-06-30",
+          "value": 10653,
+          "pct": 9.23
+        },
+        {
+          "period": "2025-06-30",
+          "value": 10782,
+          "pct": 9.13
+        },
+        {
+          "period": "2025-12-31",
+          "value": 11051,
+          "pct": 9.09
+        }
+      ],
+      "note": "人数增长但占员工总数比例连续下降，科技人才密度在同业中排第三（中信 13.88%、交行 9.99%、招行 9.09%，均为 2025 年末）",
+      "source": {
+        "name": "招商银行 2025 年度报告摘要",
+        "url": "https://s3gw.cmbimg.com/lb5001-cmbweb-prd-1255000097/cmbir/20260330/19d0dfa2-e517-48db-ac75-fe89db17cbb7.pdf"
+      }
+    },
+    "aiDeployment": {
+      "scenarios": {
+        "value": 856,
+        "unit": "个大模型场景应用",
+        "period": "2025-12-31"
+      },
+      "domainModels": {
+        "value": 183,
+        "unit": "个领域专精模型",
+        "period": "2025-12-31"
+      },
+      "tokenThroughput": {
+        "value": "日均 Tokens 吞吐较 2024 年增长 10.1 倍",
+        "period": "FY2025",
+        "note": "被媒体认定为中国银行业年报首次直接披露 Tokens 口径"
+      },
+      "landingRate": {
+        "value": "全行梳理 1558 项可与 AI 结合的工作，按高/中/低价值分类；截至 2025 年末高价值落地率 69%、低价值 39%；大模型应用迭代周期由 2024 年平均 32 天缩短至 8 天",
+        "period": "2025 年报业绩会（2026-03-30，首席信息官周天虹）"
+      },
+      "laborSaving": {
+        "value": 1556,
+        "unit": "万小时",
+        "period": "FY2025 AI 应用节约人工"
+      },
+      "innovationProjects": {
+        "value": "报告期内新立项金融科技创新项目 684 个、新增上线 545 个；累计立项 5094 个、累计上线 4338 个",
+        "period": "FY2025"
+      },
+      "source": {
+        "name": "招商银行 2025 年度报告（H 股）/ 2025 年度报告摘要 / 业绩会实录",
+        "url": "https://vpr.hkma.gov.hk/statics/assets/doc/100255/ar_25/ar_25_chi.pdf"
+      }
+    },
+    "userScale": {
+      "appMau": {
+        "value": 1.29,
+        "unit": "亿户",
+        "period": "2025-12-31",
+        "definition": "招商银行 App 与掌上生活 App 月活跃用户合计",
+        "series": [
+          {
+            "period": "2024-12-31",
+            "value": 1.23
+          },
+          {
+            "period": "2025-06-30",
+            "value": 1.21
+          },
+          {
+            "period": "2025-12-31",
+            "value": 1.29
+          }
+        ],
+        "note": "MAU 自 2015 年「一体两翼」战略起被定为零售「北极星」指标"
+      },
+      "retailCustomers": {
+        "value": 2.24,
+        "unit": "亿户",
+        "period": "2025-12-31",
+        "yoyPct": 6.67
+      },
+      "wholesaleOnlineMau": {
+        "value": 220.85,
+        "unit": "万户",
+        "period": "2025-12-31"
+      },
+      "source": {
+        "name": "招商银行 2025 年度报告摘要 / 21 世纪经济报道 / 国信证券年报点评",
+        "url": "https://s3gw.cmbimg.com/lb5001-cmbweb-prd-1255000097/cmbir/20260330/19d0dfa2-e517-48db-ac75-fe89db17cbb7.pdf"
+      }
+    },
+    "note": "口径说明：招行不披露专利数量，也不披露研发费用资本化率——银行业的科技投入基本全额进入业务及管理费，不构成可比的「研发资本化」口径，因此不能与制造业/科技公司横向比较。绝对额上仍远低于六大行（工行 285.88 亿、建行 267.22 亿、农行 256.47 亿、中行 250.01 亿，FY2025），招行的相对优势在投入强度（4.31% vs 大行 3.5% 上下）与人才密度，而非绝对规模"
+  },
+  "management": {
+    "_dimension": "6. 管理层：创始人/CEO履历、持股比例、关键决策记录",
+    "founderCeo": {
+      "name": "王小青（行长、党委书记；非创始人——招商银行 1987 年由招商局创办，无个人创始人）",
+      "background": "① 1971 年 10 月生，复旦大学政治经济学博士研究生学历，经济师。② 履历横跨银行、券商、监管、保险、基金、金控：1992 年农业银行江苏海安支行入职；1997–1998 海通证券基金管理部；1998–2004 中国证监会上海专员办；2004 天一证券；2007–2020 中国人保资产管理，历任风险管理部副总经理至副总裁兼财务负责人。③ 2020 年 3 月进入招商局体系，任招商基金党委书记、总经理、董事长，2021 年起兼招商信诺人寿董事长；2021 年 10 月任招行行长助理兼深圳分行行长，后任副行长。④ 2025 年 8 月辞任招行副行长外调招商局金融控股任党委书记、总经理，2026 年 4 月回任。",
+      "tenure": "2026-04-30 起代为履行行长职务；2026-07-28 经国家金融监督管理总局核准（金复〔2026〕390 号）正式出任行长，任期至第十三届董事会届满之日止。为招行 1987 年成立以来第五任行长，截至数据截止日（2026-08-10）就任仅 13 天",
+      "firstPublicStance": "2026-06-25 股东会首次公开表态：「招行必须在能力边界范围内做事，并及时补充能力；在能力不足的领域需慎之又慎，绝不能用明天的不良垒今天的营收」",
+      "source": {
+        "name": "经济参考报《招商银行新任行长王小青任职资格获批》（主会话独立复核：东方财富、新浪财经、中新经纬、华尔街见闻四源一致）",
+        "url": "http://jjckb.xinhuanet.com/20260729/0436cbe2f9c949318006557a117a1834/c.html"
+      }
+    },
+    "ownership": {
+      "economicPct": {
+        "status": "not-applicable",
+        "reason": "招商银行无创始人个人持股，实际控制方为招商局集团；管理层持股为象征性数量——时任行长王良持股 30 万股，占总股本约 0.0012%，全部高管持股合计不足总股本的 0.01%，不构成有意义的利益绑定。这与创始人控股型公司有本质差异"
+      },
+      "votingPct": {
+        "status": "not-applicable",
+        "reason": "单一股权结构（A+H 同股同权），无 AB 股，经济权益=投票权"
+      },
+      "topShareholders": [
+        {
+          "name": "香港中央结算(代理人)有限公司（H 股名义持有人）",
+          "pct": 18.06
+        },
+        {
+          "name": "招商局轮船有限公司",
+          "pct": 13.04
+        },
+        {
+          "name": "中国远洋运输有限公司",
+          "pct": 6.24
+        },
+        {
+          "name": "深圳市晏清投资发展有限公司",
+          "pct": 4.99
+        },
+        {
+          "name": "香港中央结算有限公司（陆股通）",
+          "pct": 4.75
+        },
+        {
+          "name": "招商局金融控股有限公司",
+          "pct": 4.55
+        },
+        {
+          "name": "和谐健康保险股份有限公司-传统-普通保险产品",
+          "pct": 4.48
+        },
+        {
+          "name": "深圳市楚源投资发展有限公司",
+          "pct": 3.74
+        },
+        {
+          "name": "中远海运(广州)有限公司",
+          "pct": 2.76
+        },
+        {
+          "name": "上海汽车集团股份有限公司",
+          "pct": 1.23
+        }
+      ],
+      "_shareholderNote": "前十大合计 63.86%；招商局系（招商局轮船 + 招商局金融控股 + 晏清投资 + 楚源投资等）为实际控制方，报告期 2026-03-31",
+      "executiveCompensation": [
+        {
+          "name": "王良",
+          "title": "行长、执行董事、首席执行官",
+          "compensationWan": 297.1,
+          "shares": 300000
+        },
+        {
+          "name": "雷财华",
+          "title": "副行长",
+          "compensationWan": 284.7,
+          "shares": 264400
+        },
+        {
+          "name": "钟德胜",
+          "title": "执行董事、原首席风险官",
+          "compensationWan": 282.6,
+          "shares": 177300
+        },
+        {
+          "name": "王颖",
+          "title": "副行长",
+          "compensationWan": 282.6,
+          "shares": 230000
+        },
+        {
+          "name": "彭家文",
+          "title": "副行长、财务负责人、董事会秘书",
+          "compensationWan": 282.6,
+          "shares": 221900
+        },
+        {
+          "name": "徐明杰",
+          "title": "副行长、首席风险官",
+          "compensationWan": 281.2,
+          "shares": 200000
+        },
+        {
+          "name": "周天虹",
+          "title": "首席信息官",
+          "compensationWan": 251.0,
+          "shares": 204300
+        }
+      ],
+      "source": {
+        "name": "Tushare Pro top10_holders / stk_managers_rewards（报告期 2026-03-31 / 2025-12-31）",
+        "url": "https://tushare.pro"
+      },
+      "_executiveNote": "executiveCompensation 为 FY2025 年报（2025-12-31）时点数据：王良为时任行长，已于 2026-04-30 退休；徐明杰自 2025-10-31 起任首席风险官，原首席风险官钟德胜转任执行董事"
+    },
+    "keyDecisions": [
+      {
+        "date": "2014",
+        "decision": "提出并实施「轻型银行」战略转型",
+        "outcome": "至 2021 年末零售 AUM 突破 10 万亿元，零售金融营收 1790 亿元、税前利润 777 亿元，占总盘约一半",
+        "source": {
+          "name": "招商银行 2021 年度报告摘要 / 21 世纪经济报道",
+          "url": "https://s3gw.cmbimg.com/lb5001-cmbweb-prd-1255000097/cmbir/20220318/5bc8935d-18c6-4ca6-9c49-c3e08927112a.pdf"
+        }
+      },
+      {
+        "date": "2015",
+        "decision": "确立「一体两翼」战略（零售为主体、对公与同业为两翼），并以 MAU 为零售「北极星」指标",
+        "outcome": "2020 年报正式确认该定位；2025 年末双 App 合计 MAU 1.29 亿户",
+        "source": {
+          "name": "招商银行 2020 年度报告 / 21 世纪经济报道",
+          "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2021/0319/2021031901238_c.pdf"
+        }
+      },
+      {
+        "date": "2020 年末",
+        "decision": "提出「大财富管理价值循环链」，作为「十四五」战略支点",
+        "outcome": "2021 年手续费及佣金净收入 944.5 亿元（+18.82%）；但 2022–2024 连续三年下滑，直至 FY2025 才重回增长（752.58 亿元，+4.39%）——战略方向被验证，但兑现被费率改革与市场周期推迟了三年",
+        "source": {
+          "name": "招商银行 2020 年度报告 / 21 世纪经济报道",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-03-28/1225047590.PDF"
+        }
+      },
+      {
+        "date": "2021-03",
+        "decision": "组织改革：零售金融总部大部分团队与原财富管理部合并组建财富平台部",
+        "outcome": "伴随多名高管离任；同期提出零售客群每年新增约 1500 万户、五年 AUM 复合两位数增长目标。2025 年末零售客户 2.24 亿户（+6.67%）、AUM 17.08 万亿元（+14.44%），AUM 目标达成",
+        "source": {
+          "name": "21 世纪经济报道 / 国信证券年报点评",
+          "url": "http://www.21jingji.com/article/20220418/herald/12afc1056be6042930cb47025db00c1b.html"
+        }
+      },
+      {
+        "date": "2024",
+        "decision": "代销基金费率「全面一折起」，以量换价",
+        "outcome": "FY2025 代理基金收入 58.46 亿元（+40.36%），2026Q1 同比 +55.11%——量增成功覆盖价降，是费率改革冲击下少见的正面案例",
+        "source": {
+          "name": "新浪财经（引年报）",
+          "url": "https://finance.sina.com.cn/stock/relnews/cn/2026-04-02/doc-inhtazrx7821835.shtml"
+        }
+      },
+      {
+        "date": "2025-03-25",
+        "decision": "确立中期分红机制（2007 年以来首次），中期分红比例定为半年度归属普通股股东净利润的 35%",
+        "outcome": "FY2024 每股派息 2.00 元、分红比例 35.32%；FY2025 中期每股 1.013 元（占半年度归属普通股股东净利润 729.55 亿元的 35.02%），2026-01-16 派发",
+        "source": {
+          "name": "招商银行 2025 年半年度利润分配方案公告",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-01-10/1224927640.PDF"
+        }
+      },
+      {
+        "date": "2026-03-27",
+        "decision": "FY2025 利润分配方案：全年每股现金分红 2.016 元（含税），末期 1.003 元",
+        "outcome": "派现 508.43 亿元，占归属普通股股东净利润 1438.74 亿元的 35.34%（占归母净利润 33.85%）；按 2026-08-10 收盘价对应股息率 5.18%",
+        "source": {
+          "name": "招商银行 2025 年度利润分配方案公告",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-03-28/1225047465.PDF"
+        }
+      },
+      {
+        "date": "2026-03（2025 年报业绩会）",
+        "decision": "王良明确「未来 ROE 将以 10% 作为底线进行严格管控」；缪建民提出 2026 年锻造四大核心动能（保持净息差优势、提升大财富管理能力、筑牢资产质量底线、抢占智能化转型高地）",
+        "outcome": "管理层首次公开承认 ROE 仍将下行并给出下限——这是前瞻承诺而非已兑现结果，属可观察的验证点",
+        "source": {
+          "name": "中国证券报业绩发布会实录",
+          "url": "https://jnzstatic.cs.com.cn/zzb/htmlInfo/118312.html"
+        }
+      },
+      {
+        "date": "2026-04-30 / 2026-07-28",
+        "decision": "行长交接：王良到龄退休，王小青接任并于 7 月 28 日获监管核准",
+        "outcome": "截至数据截止日新行长就任 13 天，战略是否延续尚无可观察证据；首份完整体现新行长任期的定期报告（2026 年中报）预计 2026 年 8 月下旬披露",
+        "source": {
+          "name": "经济参考报 / 招商银行公告",
+          "url": "http://jjckb.xinhuanet.com/20260729/0436cbe2f9c949318006557a117a1834/c.html"
+        }
+      }
+    ],
+    "chairman": {
+      "name": "缪建民",
+      "title": "董事长、非执行董事（同时任招商局集团有限公司董事长）",
+      "background": "① 1965 年 1 月生，中央财经大学经济学博士，高级经济师，中共第十九届、二十届中央候补委员。② 曾任中国人寿保险（集团）副董事长、总裁（2013.10–2017.04），中国人民保险集团董事长（2017–2020.07）。③ 2020 年 7 月起任招商局集团董事长并兼任招商银行董事长。",
+      "tenure": "2020-09-10 由董事会选举为董事长，至今近 6 年；现任期为第十三届董事会 2025-06-25 至 2028-06-24",
+      "note": "缪建民与新任行长王小青有人保系共事经历（缪 2017–2020 任人保集团总裁/董事长，王小青 2007–2020 在人保资管任职至副总裁）",
+      "source": {
+        "name": "招商银行 2025 年 6 月 25 日董事会决议公告附件（简历）",
+        "url": "https://s3gw.cmbchina.com/lb5001-cmbweb-prd-1255000097/cmbir/20250626/aba48f58-fa3f-4b3f-8d2f-243de9518013.pdf"
+      }
+    },
+    "formerCeo": {
+      "name": "王良",
+      "title": "原执行董事、行长兼首席执行官（2022-06-15 至 2026-04-30）",
+      "background": "1965 年 12 月生，中国人民大学货币银行学硕士。1995 年加入招行北京分行，历任北京分行行长、总行行长助理、副行长、董事会秘书、财务负责人、常务副行长；2022 年 4 月田惠宇被免职后主持工作，2022 年 6 月正式出任行长。在招行任职近 31 年",
+      "departure": "2026-04-30 因年龄原因（到龄退休）辞去执行董事、行长等全部职务，属正常交接而非非正常离任",
+      "note": "已落盘的高管薪酬与持股（薪酬 297.1 万元、持股 30 万股）为 FY2025 年报时点数据，其身份应记为「时任行长」"
+    },
+    "currentSeniorTeam": {
+      "asOf": "2026-08-10",
+      "members": "董事长缪建民；副董事长石岱；行长/党委书记王小青；执行董事钟德胜（党委副书记）；副行长王颖、彭家文（兼财务负责人、董事会秘书）、雷财华、徐明杰（兼首席风险官）；首席信息官周天虹；行长助理崔家鲲、王兴海；纪委书记赵卫朋",
+      "note": "2026-07-03 海外监管公告显示该时点执行董事仅钟德胜一人——王良已离任、王小青董事任职资格尚未核准；王小青已由 2026-06-25 股东会选举为执行董事，董事资格待核准",
+      "source": {
+        "name": "招商银行 2026-07-03 H 股海外监管公告 / 2025-10-31 董事会决议公告",
+        "url": "https://s3gw.cmbimg.com/lb5001-cmbweb-prd-1255000097/CIOAMananger/20260703/439e75fe-1146-4bed-a593-1c0170f782b8.pdf"
+      }
+    },
+    "stability": {
+      "summary": "近 5 年董事长 1 次更替（2020 年缪建民接任后稳定近 6 年）、行长 2 次更替（2022 年田惠宇被查免职→王良；2026 年王良到龄退休→王小青）。但近 12 个月内高层变动密集：2025-06 董事会整体换届并撤销监事会、2025-08 副行长王小青外调、2025-10 首席风险官更换、2026-04 行长更替、2026-07 新行长资格核准",
+      "timeline": [
+        {
+          "date": "2013-09",
+          "event": "田惠宇自建设银行调入任第三任行长（前两任王世祯、马蔚华分别任职 12 年、14 年）"
+        },
+        {
+          "date": "2020-09-10",
+          "event": "缪建民接任董事长（李建红 2020-07 卸任招商局集团董事长）"
+        },
+        {
+          "date": "2022-04-18",
+          "event": "公告免去田惠宇行长、董事职务「另有任用」（被查），当日 A 股收跌 7.35% 至 43.39 元，盘中一度跌超 8%——市场对招行行长人事高度敏感的历史标尺"
+        },
+        {
+          "date": "2022-06-15",
+          "event": "王良正式出任第四任行长"
+        },
+        {
+          "date": "2025-06-25",
+          "event": "第十三届董事会换届，不再设置监事会，审计委员会承接相关职能"
+        },
+        {
+          "date": "2025-08-04",
+          "event": "副行长王小青辞任，调任招商局金融控股党委书记、总经理"
+        },
+        {
+          "date": "2025-10-31",
+          "event": "董事会聘任徐明杰为首席风险官，原首席风险官钟德胜转任执行董事"
+        },
+        {
+          "date": "2026-04-30",
+          "event": "王良到龄退休辞任；王小青任党委书记并代为履行行长职务"
+        },
+        {
+          "date": "2026-07-28",
+          "event": "王小青行长任职资格获金融监管总局核准（金复〔2026〕390 号），正式成为第五任行长"
+        }
+      ],
+      "source": {
+        "name": "招商银行历次董事会决议公告与人事公告（巨潮资讯）/ 21 世纪经济报道 / 经济参考报",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-06-26/1223981944.PDF"
+      }
+    },
+    "compensationContext": {
+      "trend": "王良 FY2024 税前薪酬同比下降 14.23%、跌破 300 万元；FY2025 为 297.1 万元",
+      "policyContext": "2022 年财政部《关于进一步加强国有金融企业财务管理的通知》要求严格控制岗位薪酬级差；招行董事会每年对绩效薪酬追索扣回情况进行回检",
+      "caveat": "媒体报道的「中央金融企业员工年薪上限 100 万元」针对 27 家金融央企，招行为股份制银行、不在该名单内；未见招行或监管公开确认适用，不应据此推断",
+      "source": {
+        "name": "新京报贝壳财经 / 招商银行 2024 年度股东大会议案",
+        "url": "https://m.bjnews.com.cn/detail/1744284421129798.html"
+      }
+    }
+  },
+  "industryOutlook": {
+    "_dimension": "7. 行业前景：TAM（总可寻址市场）、增长预测",
+    "tam": {
+      "value": 494.7,
+      "unit": "万亿元",
+      "currency": "CNY",
+      "definition": "中国银行业金融机构本外币资产总额（含政策性银行、6 家国有大行、12 家股份行、城农商行、外资行、非银存款类机构；不含保险与金控）。招行占 2.72%",
+      "asOf": "2026-03-31（同比 +8.0%）",
+      "source": {
+        "name": "国家金融监督管理总局《2026 年一季度银行业保险业主要监管指标数据情况》",
+        "url": "http://www.xtxh.net/xtyxh/contents/2026/5/22-85adef20c6fb4d01b0204421c75493cb.html"
+      },
+      "structuralNote": "大行增速 10.6% > 行业 8.0% > 股份行 5.4%——招行所处的股份行赛道在系统性丢份额",
+      "relatedMarkets": [
+        {
+          "market": "商业银行净利润（法人口径）",
+          "value": "6323 亿元（2026Q1 单季）",
+          "note": "招行 2026Q1 归母净利 378.52 亿元占 5.99%——用 2.72% 的资产赚了 5.99% 的利润"
+        },
+        {
+          "market": "居民存款（住户存款余额）",
+          "value": "162.03 万亿元（2025-06-30，+10.8%）",
+          "note": "2025 全年住户存款增加 14.64 万亿元；人民币存款总余额 2025 年末 328.64 万亿（+8.7%）、2026 年 6 月末 346.44 万亿（+8.2%）"
+        },
+        {
+          "market": "银行理财市场存续规模",
+          "value": "33.66 万亿元（2026-06-30，同比 +9.75%，较年初仅 +1.11%）",
+          "note": "轨迹 30.67 万亿（2025-06）→ 33.29 万亿（2025-12，+11.16%）→ 33.66 万亿（2026-06）；固定收益类占 97.09%，权益类仅 800 亿元占 0.24%。增速已从两位数放缓到个位数，存款搬家的第一波红利在退潮"
+        },
+        {
+          "market": "公募基金代销（中基协前 100 家保有合计）",
+          "value": "11.70 万亿元（2025-12-31 非货口径，环比 +14.72%）",
+          "note": "权益 6 万亿（+16.69%）、股票型指数基金 2.42 万亿（+24.11%，增速最快）"
+        },
+        {
+          "market": "社会融资规模存量",
+          "value": "456.46 万亿元（2026-03-31，+7.9%）",
+          "note": "其中对实体经济发放的人民币贷款余额 277.3 万亿（+5.8%）"
+        },
+        {
+          "market": "中国私人银行/高净值市场",
+          "value": "[估计] 30 万亿元（2025）",
+          "note": "第三方研报口径（《中国私人银行业 2025 发展报告》转述招行-贝恩报告），同一份报告内另有「2030 年市场规模突破 3.5 万亿元」的表述，两个口径明显冲突（疑为不同口径混用），故仅作方向性参考，不用于任何测算"
+        },
+        {
+          "market": "居民总资产与配置结构",
+          "value": "[估计] 730 万亿元（2026Q1）",
+          "note": "第三方（高盛）测算经媒体转述，未见原始报告：2026Q1 房地产 52%、现金存款 25%、金融资产 20%；2021 年高点为 67%/16%/15%。方向可信、数字仅供量级参考，可信度低-中"
+        }
+      ]
+    },
+    "growthForecast": {
+      "cagrPct": {
+        "status": "not-applicable",
+        "reason": "银行业没有单一的 TAM CAGR 口径可用于估值输入：资产端增速（行业 +8.0%）、理财规模增速（+9.75% 且在快速放缓）、代销保有增速（+14.72%）三者方向与斜率各异，强行合成一个 CAGR 会掩盖结构分化。下方按驱动因子分别记录预测，不合成单一增速"
+      },
+      "horizon": "2026–2027（政策与息差）/ 至 2035（居民资产配置迁移）",
+      "byDriver": [
+        {
+          "driver": "银行业净息差",
+          "forecast": "商业银行 2024 年 1.52% → 2025 年 1.42%（降幅收窄）→ 2026Q1 1.40% 历史低点，二季度或将小幅下滑。国信证券测算大行净息差底线约 1.2%–1.3%，判断「相机抉择地保持净息差稳定」将成为 2026 年央行政策目标之一，净息差与存款利率已进入以稳为主的阶段",
+          "source": {
+            "name": "国家金融监督管理总局监管指标 / 国信证券《银行业 2026 年经营展望：价格篇》",
+            "url": "http://www.xtxh.net/xtyxh/contents/2026/5/22-85adef20c6fb4d01b0204421c75493cb.html"
+          }
+        },
+        {
+          "driver": "利率与货币政策",
+          "forecast": "现行 LPR 1 年期 3.00%、5 年期以上 3.50%（2025-05-20 各降 10bp）。央行副行长邹澜（2026-01）称降准降息「今年还有一定的空间」，理由是净息差连续两个季度稳在 1.42%、2026 年有规模较大的三年期与五年期长期存款到期重定价。董希淼预测 2026 下半年 LPR 下降空间不大（约 5–10bp）、降准先于降息，制约在于息差已达 1.40% 历史低点与中美利差",
+          "source": {
+            "name": "国新办发布会 / 董希淼专栏（新浪财经 2026-08-07）",
+            "url": "http://finance.sina.com.cn/wm/2026-08-07/doc-inimnvkh9963052.shtml"
+          },
+          "implicationForCmb": "净影响为负但边际改善：LPR 再降 5–10bp 直接压缩资产端，而招行负债端已无多少下降空间对冲；反过来降准与长期存款重定价对存款成本高的同业帮助更大——政策方向在缩小招行与同业的息差差距"
+        },
+        {
+          "driver": "社融与信贷需求",
+          "forecast": "社融存量 2025 年末 442.12 万亿（+8.3%）→ 2026Q1 456.46 万亿（+7.9%）；人民币贷款 2025 年末 271.91 万亿（+6.4%，全年少增约 1.82 万亿）。居民端极度低迷：2025 年住户贷款仅增 4417 亿元（短期贷款减少 8351 亿元），约为 2021 年峰值近 8 万亿的 5%；居民杠杆率由 2024Q1 的 62.3% 降至 2026Q1 的 59.0%。存贷剪刀差扩大：2025 年住户存款增 14.64 万亿、贷款增 4417 亿，多增 14.20 万亿",
+          "source": {
+            "name": "中国人民银行金融统计数据报告 / 人民日报",
+            "url": "https://www.cnafc.org/cnafc/front/detail.action?id=1A2EEA7DAB8D451B9D00A25342D07B4F&tag="
+          },
+          "implicationForCmb": "这是对招行最不利的宏观事实：居民在存钱、还贷、不借钱。招行的高息差依赖零售信贷（信用卡 + 消费贷），而零售信贷需求连续多年低迷（FY2025 零售贷款 +2.07%、对公 +12.29%），被迫「对公化」会稀释其零售高息差的资产结构"
+        },
+        {
+          "driver": "居民财富从存款/地产向金融资产迁移",
+          "forecast": "[估计] 已发生（2021→2026Q1）：房地产占比 67%→52%、现金存款 16%→25%、金融资产 15%→20%。预测至 2035 年：房地产降至约 42%、股票 6%→11%、保险 6%→10%，每年约 6 万亿元从不动产流向金融资产（高盛测算，媒体转述，可信度低-中）。招商证券预计到 2030 年居民持有股票与股权资产规模较 2025 年增长 43%，但占金融资产比重仍仅约 17.5%",
+          "source": {
+            "name": "高盛测算（腾讯新闻转述）/ 招商证券 / 国泰海通",
+            "url": "https://view.inews.qq.com/a/20260727A04L0400"
+          },
+          "implicationForCmb": "所有机构方向一致（居民金融资产占比上升）但速度分歧大，且 2026H1 理财规模较年初仅 +1.11% 显示迁移在放缓。招行 FY2025 AUM +14.44% 显著跑赢行业理财规模 +11.16%，说明份额提升，这部分是能力而非风口"
+        }
+      ],
+      "source": {
+        "name": "按驱动因子分列，逐条来源见 byDriver[].source：国家金融监督管理总局监管指标、中国人民银行金融统计数据报告与货币政策执行报告、国信证券《银行业 2026 年经营展望：价格篇》、银行业理财登记托管中心、中基协",
+        "url": "http://www.xtxh.net/xtyxh/contents/2026/5/22-85adef20c6fb4d01b0204421c75493cb.html"
+      }
+    },
+    "structuralChanges": [
+      {
+        "change": "公募基金费率改革收官",
+        "risk": "high",
+        "detail": "三阶段累计每年让利超 510 亿元、行业综合费率下降约 20%。第三阶段《公开募集证券投资基金销售费用管理规定》2026-01-01 实施：股票型认申购费率上限 1.2%/1.5%→0.8%，混合型→0.5%，债券型→0.3%；销售服务费率股混 0.6%/年→0.4%/年，指数/债券 0.4%→0.2%；持有超 1 年的非货基不再计提销售服务费；设差异化尾佣比例上限；赎回费全额计入基金财产；搭建 FISP 直销平台「发展壮大直销渠道」",
+        "impactOnCmb": "招行 1.25 万亿非货保有量对应的销售服务费与尾佣是财富管理收入核心来源。「持有超 1 年不再计提销售服务费」与「尾佣上限」两条直接削减存量保有收入，2026 年报才会体现完整年度影响——这是 2026 年招行财富管理收入最大的单一不确定性；监管做大直销平台意味着在主动削弱代销渠道的中介地位",
+        "source": {
+          "name": "证监会规定（人民网/中国证券报）",
+          "url": "http://finance.people.com.cn/n1/2026/0101/c1004-40637249.html"
+        }
+      },
+      {
+        "change": "银行业零售资产质量未见拐点",
+        "risk": "high",
+        "detail": "商业银行不良率 2025 年末 1.50%、2026Q1 末 1.51%，拨备覆盖率降至 203.14%。2025 年上市银行零售贷款不良率同比大幅上升 22bp 至 1.38%，处 2020 年以来高位；对公房地产不良率较 1H25 上升 20bp 至 4.37%",
+        "impactOnCmb": "招行零售贷款占比 51.26%，对零售风险恶化的敞口大于以对公为主的同业——这是招行「资产质量领先」这条护城河最可能被证伪的方向",
+        "source": {
+          "name": "中信建投《银行业 2025 年报综述》/ 金融监管总局 2026Q1 监管指标",
+          "url": "http://www.xtxh.net/xtyxh/contents/2026/5/22-85adef20c6fb4d01b0204421c75493cb.html"
+        }
+      },
+      {
+        "change": "银行理财净值化后规模见顶与结构固化",
+        "risk": "medium",
+        "detail": "全市场规模增速由 +11.16%（2025）降至 2026H1 较年初 +1.11%；理财公司占全市场 92.63%；产品结构极度固化——固收类占 97.09%，权益类仅 800 亿元占 0.24%。27 家披露净利润的理财公司 2025 年合计 326.53 亿元（+14.81%）",
+        "impactOnCmb": "招银理财 2.64 万亿规模行业第一，但规模红利见顶且 97% 是低费率固收类——规模第一不等于利润第一（2025 年净利润最高的是农银理财 37.54 亿元，招银理财在「超 20 亿元」梯队），理财规模优势的变现能力被产品结构锁死",
+        "source": {
+          "name": "银行业理财登记托管中心半年报 / 中新经纬",
+          "url": "http://paper.ce.cn/pc/content/202607/30/content_336489.html"
+        }
+      },
+      {
+        "change": "全行业战略重心向财富管理迁移，竞争加剧",
+        "risk": "medium",
+        "detail": "2025 年三家国有大行在总行层面设置财富管理部门或调整战略；19 家上市银行加码财富管理赛道。招行 2025 年新设总行一级部门科技金融部，年报出现「零售再出发、对公再超越」新提法",
+        "impactOnCmb": "招行的核心差异化正在被全行业模仿；大行拥有更大客户基础与网点（交行 2800 余个网点、零售客户 2.02 亿户、AUM 5.79 万亿），一旦组织问题解决，规模优势可能压过招行的能力优势。招行战略表述从「大财富管理」转向「零售再出发、对公再超越」，某种程度上承认了纯零售路径的天花板",
+        "source": {
+          "name": "第一财经《19 家上市银行加码财富管理赛道》",
+          "url": "https://www.yicai.com/news/102988098.html"
+        }
+      },
+      {
+        "change": "分红率竞争与高股息定价",
+        "risk": "medium",
+        "detail": "招行 FY2025 分红率 33.85%（归母口径）/ 35.34%（普通股股东口径），继续领跑全行业（六大行保持 30%，兴业 2025 年首破 30% 至 31.02%）。但招行 TTM 股息率 5.18% 低于兴业 5.81%、平安 5.28%、中信 5.07%",
+        "impactOnCmb": "市场已为招行的质量支付了 PB 溢价（0.87 vs 兴业/平安 0.47、中信 0.56），这意味着招行的估值不再有「高股息保护」，超额收益必须靠 ROE 与 AUM 增长兑现",
+        "source": {
+          "name": "中信建投《银行业 2025 年报综述》+ Tushare Pro（2026-08-10）",
+          "url": "https://tushare.pro"
+        }
+      },
+      {
+        "change": "个人养老金制度全面实施",
+        "risk": "low",
+        "detail": "2024-12-15 由 36 城试点推开至全国；截至 2025-11-23 产品目录 1245 只（储蓄 466、保险 437、基金 305、理财 37）。但「开户热、缴存冷」，个人养老金缴存总额在全国各类养老金资产中占比不到 1%",
+        "impactOnCmb": "招行是主要开户行之一，但按当前规模（年缴费上限 12000 元）对 AUM 与手续费的贡献在可预见期内可忽略——是十年期的期权，不是三年期的驱动力",
+        "source": {
+          "name": "中国证券投资基金业协会《个人养老金制度实施三周年》",
+          "url": "https://www.amac.org.cn/xwfb/hydt/202511/t20251125_27072.html"
+        }
+      }
+    ]
+  },
+  "riskFactors": {
+    "_dimension": "8. 风险因素：地缘政治、监管、供应链等",
+    "items": [
+      {
+        "category": "宏观",
+        "description": "净息差持续收窄且未见底：NIM 由 FY2023 2.15% 降至 FY2025 1.87%、2026Q1 1.83%（同比 -8bp、环比 -3bp）。2025Q4 单季曾环比回升 3bp 至 1.86%，但 2026Q1 即被打断。管理层指引 2026 年仍将收窄——2025 年 5 月 LPR 降息后部分贷款重定价集中在 2026 年前两季度完成；活期存款占比约 50%、活期利率「降无可降」，负债端腾挪空间极为有限，目标仅是「收窄幅度变小、争取下半年企稳」",
+        "evidence": "公司自身披露 + 管理层前瞻表态：招商银行 2025 年度报告摘要补充财务比率表、2026 年一季报 4.2；副行长彭家文 2026-03-31 业绩会发言（21 世纪经济报道 https://www.21jingji.com/article/20260331/herald/e725c45c4ae684efadde7584a3dfed84.html）。行长王良在 FY2025 年报致辞中称「低利率成为银行业发展最大的『灰犀牛』」",
+        "sourceUrl": "https://s3gw.cmbimg.com/lb5001-cmbweb-prd-1255000097/cmbir/20260330/19d0dfa2-e517-48db-ac75-fe89db17cbb7.pdf"
+      },
+      {
+        "category": "竞争",
+        "description": "零售引擎失速、增长切换到对公，差异化标签被稀释：FY2025 对公贷款 +12.29%（2013 年以来最高增速、连续三年加速），个人贷款仅 +2.07%；2026Q1 对公贷款较上年末增加 2244.23 亿元约为 2025 年全年增量的 63%，零售贷款反而下降 1.00%，新增贷款结构中零售贡献为 -21%。信用卡为零售中唯一规模下滑品种，流通卡数由 2022 年 1.03 亿张峰值降至 2025 年末 9745.1 万张，交易额 4.08 万亿元（-7.62%）。同时贷款总额增速连续三年跑输行业（FY2025 5.37% vs 商业银行 7.24%）",
+        "evidence": "外部推断（基于公司披露数据）：中诚信国际 2026 年度跟踪评级报告、招商银行 2026 年一季报 4.3、投资时报统计。管理层已确认信用卡为主动收缩——王良称坚持「平稳低波动」策略、「接受信用卡业务营收贡献占比下降」",
+        "sourceUrl": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225231394.PDF"
+      },
+      {
+        "category": "其他",
+        "description": "零售信贷资产质量劣化，且风险出现在护城河所在领域：零售贷款不良率 FY2025 升至 1.08%（+0.10pct）、2026Q1 进一步上行；小微贷款不良率由 0.79% 跳升至 1.22%（+0.43pct）；不含信用卡的零售不良生成额 226.29 亿元，同比大增 65.22 亿元（约 +40%）；信用卡不良生成额 393 亿元维持高位、2026Q1 同比再增约 20%。对公改善（不良生成 -39.88 亿元）不足以对冲零售恶化",
+        "evidence": "公司自身披露 + 首席风险官表态：招商银行 FY2025 年报、2026 年一季报；副行长兼首席风险官徐明杰 2026-03-31 业绩会「行业的零售信贷风险仍处在上升期，信用卡资产也存在一定压力」（观点网 https://www.guandian.cn/article/20260331/552071.html）；高盛研报（2026Q1 不良生成率同比 +8bp 至 1.08%）",
+        "sourceUrl": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225231394.PDF"
+      },
+      {
+        "category": "其他",
+        "description": "利润质量依赖拨备与税收调节，缓冲垫快速变薄：拨备覆盖率 437.70%（FY2023）→411.98%（FY2024）→391.79%（FY2025，-20.19pct）→387.76%（2026Q1）。FY2025 信用减值损失 398 亿元（-2.56%）与所得税 -4.21% 共同支撑了 +1.21% 的净利润增速。前瞻指标劣化快于不良率：关注类占比 1.29%→1.43%，损失类 0.37%→0.44%。2026Q1 贷款和垫款信用减值损失同比 +9.01%，反哺已开始逆转",
+        "evidence": "公司自身披露 + 外部推断：招商银行 FY2025 年报、2026 年一季报；券商研报《4Q25 息差企稳回升，核心营收增速改善》；投资时报统计",
+        "sourceUrl": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225231394.PDF"
+      },
+      {
+        "category": "信用",
+        "description": "房地产敞口不良率仍处高位但持续出清：FY2025 房地产业不良率 4.64%（较上年末 -0.10pct，近五年最低），绝对水平仍为全行 0.94% 的约五倍；2026Q1 对公房地产贷款 2837.08 亿元、占本公司贷款 4.00%，房地产业不良率 4.44%（-0.20pct）。承担信用风险的地产相关业务余额 3479.35 亿元（较上年末 -1.70%），不承担信用风险 1677.52 亿元（-5.92%）。个人住房贷款余额约 1.43 万亿元、不良率 0.51%（较年初 +3bp）",
+        "evidence": "公司自身披露：招商银行 2026 年一季报 4.4、2025 年报业绩会（观点网）。口径提示：媒体口径 4.64% 与券商口径 4.78% 差 14bp，源于本公司/本集团口径不同，按不可比处理",
+        "sourceUrl": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225231394.PDF"
+      },
+      {
+        "category": "监管",
+        "description": "罚单从分支机构上升到总行与集团并表层面：2026-07-17 总行被国家金融监督管理总局直接罚款 650 万元（部分机构未纳入并表管理范围、未从银行集团层面对同一客户统一授信），为近两年最大罚单；2025-09-12 总行因「数据安全管理不到位」被警告并罚 60 万元；2024-06 招银理财 850 万 + 总行 350 万共 1200 万元（理财业务未能穿透识别底层资产、信息披露不规范）。2026 年以来招行系统累计 10 张罚单、超 1100 万元。被罚事由涉及并表管理、统一授信、数据安全等全局性事项，而非孤立操作失误",
+        "evidence": "监管公示 + 公司临时信息披露：国家金融监督管理总局行政处罚信息公示（中国经济网 http://finance.ce.cn/bank12/scroll/202607/t20260720_3096951.shtml）；招商银行关于杭州、北京分行行政处罚事项的临时信息披露报告（公司官网一手）",
+        "sourceUrl": "http://finance.ce.cn/bank12/scroll/202607/t20260720_3096951.shtml"
+      },
+      {
+        "category": "竞争",
+        "description": "AUM 高增未转化为收入，财富管理规模优势变现受阻：2026Q1 零售 AUM 17.9 万亿元（较上年末 +4.5%），但非利息净收入仅 +1.77%——财富管理手续费高增几乎被银行卡手续费下滑抵消。FY2025 银行卡手续费 136.43 亿元（-18.60%）、代理保险 58.23 亿元（-9.37%）、结算与清算 154.65 亿元（-0.26%）；非利息净收入 1216.80 亿元（-3.31%），其他净收入 466.81 亿元（-13.74%）",
+        "evidence": "公司自身披露 + 外部推断：招商银行 FY2025 年报 3.2.6、2026 年一季报 4.2",
+        "sourceUrl": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225231394.PDF"
+      },
+      {
+        "category": "其他",
+        "description": "非息收入中投资收益占比抬升，盈利波动性上升：FY2025 投资收益 368.37 亿元（+23.28%），占营业收入 10.91% 且持续上升；同期公允价值变动收益 -81.60 亿元，同比减少 142.45 亿元（债券投资与非货币基金公允价值下降）；汇兑净收益 32.28 亿元（-19.82%）。债市波动直接决定这部分损益，其可持续性弱于利息与手续费收入",
+        "evidence": "公司自身披露：招商银行 FY2025 年报利润表与附注",
+        "sourceUrl": "https://s3gw.cmbimg.com/lb5001-cmbweb-prd-1255000097/cmbir/20260330/19d0dfa2-e517-48db-ac75-fe89db17cbb7.pdf"
+      },
+      {
+        "category": "监管",
+        "description": "地方政府隐性债务与化债政策影响：招行自 2023 年中报后未再定量披露地方政府融资平台广义口径余额，仅保留定性表述（「积极应对房地产、地方政府隐性债务、零售贷款等领域风险挑战」）。最近可得定量值为 2022-12-31 的 2636.39 亿元与 2023-06-30 的 2485.7 亿元。缓释因素：招行对公信贷结构未过度依赖地方城投与基础设施，制造业贷款占对公比重由 2020 年末 5.6% 升至 2025 年末 10.4%",
+        "evidence": "公司自身定性披露（定量口径已停披）+ 历史定量值：招商银行 2022 年度业绩新闻稿、21 世纪经济报道（2023 年中报业绩会「坚决打消政府兜底思维」）",
+        "sourceUrl": "https://s3gw.cmbimg.com/lb5001-cmbweb-prd-1255000097/cmbir/20260330/19d0dfa2-e517-48db-ac75-fe89db17cbb7.pdf"
+      },
+      {
+        "category": "技术",
+        "description": "科技投入连续两年下降与「AI First」战略宣示存在张力：信息科技投入 FY2023 141.26 亿 → FY2024 133.50 亿（-5.49%）→ FY2025 129.01 亿（-3.36%），占本公司营收比例 4.59%→4.37%→4.31%；同期宣布 856 个大模型场景落地、Tokens 吞吐增长 10.1 倍。若投入退坡属被动压降成本而非效率提升，长期竞争力存疑；2025-09 已因数据安全管理不到位被罚",
+        "evidence": "公司自身披露 + 外部推断：招商银行 2024 年可持续发展报告、2025 年度报告摘要、上市银行科技投入统计（新浪财经/证券时报）",
+        "sourceUrl": "https://s3gw.cmbimg.com/lb5001-cmbweb-prd-1255000097/cmbir/20260330/19d0dfa2-e517-48db-ac75-fe89db17cbb7.pdf"
+      },
+      {
+        "category": "其他",
+        "description": "行长交接期的战略执行风险：截至数据截止日（2026-08-10）新行长王小青就任仅 13 天。其 2020 年 3 月才进入招商局体系，且 2025 年 8 月至 2026 年 4 月外调招商金控，本行任职连续性有中断；履历以资管、保险、基金条线为主，非招行传统零售条线出身。历史标尺：2022 年田惠宇被免职当日 A 股收跌 7.35%，显示市场对招行行长人事高度敏感。缓释因素：本次为到龄退休的正常交接，董事长缪建民在位近 6 年，实控方招商局系持股稳定",
+        "evidence": "外部推断（基于已披露事实）：经济参考报、21 世纪经济报道、财新网；主会话已独立复核任职资格核准事实",
+        "sourceUrl": "http://jjckb.xinhuanet.com/20260729/0436cbe2f9c949318006557a117a1834/c.html"
+      }
+    ]
+  },
+  "currentValuation": {
+    "_dimension": "9. 当前估值：市值、股息率、负债率、PE、PS、PB、ROA、ROE、PEG、EV/Revenue",
+    "priceAsOf": "2026-08-10 收盘（A 股，交易日 20260810）",
+    "sharePrice": {
+      "primary": {
+        "value": 38.91,
+        "unit": "元/股",
+        "currency": "CNY",
+        "source1": {
+          "name": "Tushare Pro daily（600036.SH, 20260810 收盘）",
+          "url": "https://tushare.pro",
+          "value": 38.91
+        },
+        "source2": {
+          "name": "东方财富行情 secid=1.600036（2026-08-10 收盘）",
+          "url": "https://quote.eastmoney.com/sh600036.html",
+          "value": 38.91
+        },
+        "deviationPct": 0.0,
+        "flag": "ok"
+      },
+      "alt": [
+        {
+          "value": 49.0,
+          "unit": "港元/股",
+          "currency": "HKD",
+          "note": "H 股 03968.HK，2026-08-10 收盘（前收 48.68，日内 48.00–49.02）。按 HKD/CNH 0.8598 折合 42.13 元人民币，A 股较 H 股折价 7.64%（financial_rigor.py 验算；东方财富 AH 比价口径为 -7.62%，差异来自汇率取数时点）——招行是少数 H 股长期贵于 A 股的银行股，不要按惯性写成「A 股溢价」",
+          "source1": {
+            "name": "东方财富行情 secid=116.03968",
+            "url": "https://quote.eastmoney.com/hk/03968.html",
+            "value": 49.0
+          },
+          "source2": {
+            "name": "东方财富 AH 股比价（f188=-762）",
+            "url": "https://quote.eastmoney.com/center/gridlist.html#ah_comparison",
+            "value": 49.0
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        }
+      ]
+    },
+    "sharesOutstanding": {
+      "value": 252.2,
+      "unit": "亿股",
+      "currency": "CNY",
+      "note": "A 股 206.29 亿股 + H 股 45.90 亿股，总股本 25,219,845,601 股；无库存股，近 5 年未变动",
+      "source1": {
+        "name": "Tushare Pro balancesheet total_share（20260331）",
+        "url": "https://tushare.pro",
+        "value": 252.2
+      },
+      "source2": {
+        "name": "Tushare Pro daily_basic total_share（20260810）",
+        "url": "https://tushare.pro",
+        "value": 252.2
+      },
+      "deviationPct": 0.0,
+      "flag": "ok"
+    },
+    "marketCap": {
+      "reported": {
+        "primary": {
+          "value": 9813.0,
+          "unit": "亿元人民币",
+          "note": "A 股口径全市值（总股本 × A 股价）；流通市值 8026.7 亿元",
+          "source1": {
+            "name": "Tushare Pro daily_basic total_mv（20260810）",
+            "url": "https://tushare.pro",
+            "value": 9813.0
+          },
+          "source2": {
+            "name": "东方财富行情 f116（总市值）",
+            "url": "https://quote.eastmoney.com/sh600036.html",
+            "value": 9813.0
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "alt": [
+          {
+            "value": 12357.72,
+            "unit": "亿港元",
+            "note": "按 H 股价 49.00 港元 × 全部普通股 252.20 亿股计（financial_rigor.py 验算 12357.72 亿港元）；H 股流通市值为 2249.54 亿港元（对应 H 股约 45.91 亿股）",
+            "source1": {
+              "name": "东方财富 f116（03968.HK 总市值）",
+              "url": "https://quote.eastmoney.com/hk/03968.html",
+              "value": 12357.72
+            },
+            "source2": {
+              "name": "financial_rigor.py calc 49.00 × 25219845601",
+              "url": "docs/research/tools/financial_rigor.py",
+              "value": 12357.72
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          }
+        ]
+      },
+      "computed": 9813.0,
+      "flag": "ok",
+      "verification": "financial_rigor.py verify-market-cap --price 38.91 --shares 25219845601 --reported 981300000000 → 计算 981.30B CNY，报告 981.30B CNY，偏差 0.00% ✅"
+    },
+    "pe": {
+      "value": 6.51,
+      "basis": "TTM（2025Q2–2026Q1 归母净利 1507.47 亿元）",
+      "staticPe": 6.83,
+      "note": "静态 PE 按 FY2025 EPS 5.70 计为 6.83x；TTM 口径 6.51x。financial_rigor.py calc 验算：9813.0/1507.47=6.51；38.91/5.70=6.83。一年分位 25%（区间 5.94–8.24）",
+      "source1": {
+        "name": "Tushare Pro daily_basic pe_ttm（20260810）",
+        "url": "https://tushare.pro",
+        "value": 6.51
+      },
+      "source2": {
+        "name": "financial_rigor.py calc 9813.0 / 1507.47（TTM 归母净利）",
+        "url": "docs/research/tools/financial_rigor.py",
+        "value": 6.51
+      },
+      "deviationPct": 0.0,
+      "flag": "ok"
+    },
+    "ps": {
+      "value": 2.88,
+      "basis": "TTM 营业收入 3406.21 亿元",
+      "note": "银行 PS 参考意义有限（营业收入含利息支出抵减后的净额，与制造业不可比）；一年分位 25%",
+      "source1": {
+        "name": "Tushare Pro daily_basic ps_ttm",
+        "url": "https://tushare.pro",
+        "value": 2.88
+      }
+    },
+    "pb": {
+      "value": 0.87,
+      "basis": "股价 38.91 / BVPS 44.8998（2026-03-31，已剔除其他权益工具）",
+      "note": "BVPS 口径已扣除其他权益工具：2026-03-31 其他权益工具余额 1499.89 亿元（五只境内无固定期限资本债券；全部境内优先股 274.68 亿元已于 2026-04-15 赎回、2026-04-17 摘牌，季报资产负债表「其中：优先股」已列为 0）。2025-12-31 口径下其他权益工具为 1774.57 亿元（永续债 1499.89 + 优先股 274.68），按报表倒算不区分时点会错记为 1499.89 亿元。若不剔除其他权益工具，PB 被系统性算低至 0.77（financial_rigor.py 验算）。银行以 PB 为核心锚点，招行长期是 A 股银行 PB 最高的一档；当前 0.87 处于一年区间 0.79–1.14 的 22% 分位",
+      "source1": {
+        "name": "Tushare Pro daily_basic pb（20260810）",
+        "url": "https://tushare.pro",
+        "value": 0.87
+      },
+      "source2": {
+        "name": "financial_rigor.py verify-valuation 38.91 / 44.8998",
+        "url": "docs/research/tools/financial_rigor.py",
+        "value": 0.87
+      },
+      "deviationPct": 0.0,
+      "flag": "ok",
+      "otherEquityInstruments": {
+        "2025-12-31": {
+          "total": 1774.57,
+          "unit": "亿元",
+          "composition": "永续债 1499.89 亿元（2021/2023/2024/2025 五只）+ 境内优先股 274.68 亿元（2017-12 发行，股息率 2022 年重置为 3.62%）"
+        },
+        "2026-03-31": {
+          "total": 1499.89,
+          "unit": "亿元",
+          "composition": "仅永续债；优先股已在报表内清零，赎回完成公告日 2026-04-17"
+        },
+        "yearMovement": "2020-07 发行的 499.89 亿元永续债于 2025-07-09 全额赎回，年内新发 200 亿 + 270 亿",
+        "source": {
+          "name": "招商银行 2025 年度报告 附注 36(a)(b) / 2026 年一季报合并资产负债表",
+          "url": "http://static.cninfo.com.cn/finalpage/2026-03-28/1225047590.PDF"
+        }
+      }
+    },
+    "roe": {
+      "value": 13.44,
+      "basis": "FY2025 加权平均净资产收益率（roe_waa）；期末净资产口径 ROE 为 12.02%，分子均为归母净利润",
+      "note": "已双源（Tushare + 年报原文一致）。三年趋势 16.22% → 14.49% → 13.44%，2026Q1 年化 13.48% 环比企稳",
+      "source1": {
+        "name": "Tushare Pro fina_indicator roe_waa（20251231）",
+        "url": "https://tushare.pro",
+        "value": 13.44
+      },
+      "source2": {
+        "name": "招商银行 2025 年度报告 3.1（归属普通股股东加权平均 ROE 13.44%）",
+        "url": "http://static.cninfo.com.cn/finalpage/2026-03-28/1225047590.PDF",
+        "value": 13.44
+      },
+      "deviationPct": 0.0,
+      "flag": "ok"
+    },
+    "roa": {
+      "value": 1.19,
+      "basis": "FY2025 归母净利 1501.81 亿 / 期初期末平均总资产 126412.80 亿（financial_rigor.py 验算 = 1.19%）",
+      "note": "与 ROE 同看：权益乘数 10.09x（平均总资产/平均归母权益，工具验算）。ROE 由 FY2023 的 16.22% 降至 FY2025 的 13.44%，主要来自 ROA 从 1.40% 降至 1.19%（息差收窄），而非加杠杆",
+      "source1": {
+        "name": "Tushare Pro fina_indicator npta（20251231）= 1.1983%",
+        "url": "https://tushare.pro",
+        "value": 1.2
+      },
+      "source2": {
+        "name": "financial_rigor.py calc（平均总资产口径）",
+        "url": "docs/research/tools/financial_rigor.py",
+        "value": 1.19
+      },
+      "deviationPct": 0.84,
+      "flag": "ok"
+    },
+    "dividendYieldPct": {
+      "value": 5.18,
+      "basis": "TTM 每股现金分红 2.016 元（FY2025 中期 1.013 元，2026-01-16 除息；FY2025 末期 1.003 元，2026-07-10 除息）/ 股价 38.91，税前口径",
+      "payoutRatioPct": 35.34,
+      "note": "financial_rigor.py verify-valuation 验算 2.016/38.91=5.18%，与 Tushare dv_ttm 一致。分红率按公司口径为 35.34%（现金分红 508.43 亿元 / 归属普通股股东净利润 1438.74 亿元，年报利润分配方案原文；若按归母净利润 1501.81 亿元为分母则为 33.85%，差额来自永续债与优先股当年分派 63.07 亿元——跨行比较分红率时必须锁定同一分母）。2025 年起实施中期分红，为口径变化点：TTM 股息含 2026-01-16 除息的中期 1.013 元与 2026-07-10 除息的末期 1.003 元。税前口径。一年股息率区间 4.09%–8.49%，当前分位 25%",
+      "source1": {
+        "name": "招商银行 2025 年度利润分配方案公告（每股 2.016 元含税，分红比例 35.34%）",
+        "url": "http://static.cninfo.com.cn/finalpage/2026-03-28/1225047465.PDF",
+        "value": 2.016
+      },
+      "source2": {
+        "name": "Tushare Pro daily_basic dv_ttm（20260810）",
+        "url": "https://tushare.pro",
+        "value": 5.18
+      },
+      "deviationPct": 0.0,
+      "flag": "ok"
+    },
+    "debtRatioPct": {
+      "value": 90.43,
+      "basis": "2026-03-31 总负债 121942.97 亿 / 总资产 134848.82 亿（financial_rigor.py 验算 = 90.43%）",
+      "note": "银行的负债主体是客户存款（2026-03-31 为 10.04 万亿元，占总负债 82.35%），90% 上下的负债率是吸收存款经营的常态而非风险信号；判断资本安全须看监管资本指标：2026-03-31 集团核心一级资本充足率 14.13%（高级法）/ 11.88%（权重法），杠杆率 7.84%，均显著高于监管底线。FY2025 负债率为 90.20%",
+      "source1": {
+        "name": "Tushare Pro balancesheet（20260331）",
+        "url": "https://tushare.pro",
+        "value": 90.43
+      },
+      "source2": {
+        "name": "Tushare Pro fina_indicator debt_to_assets（20260331）",
+        "url": "https://tushare.pro",
+        "value": 90.4294
+      },
+      "deviationPct": 0.0,
+      "flag": "ok"
+    },
+    "peg": {
+      "value": 5.4,
+      "basis": "PE(TTM) 6.51 / FY2025 归母净利同比增速 1.21%（financial_rigor.py calc 验算 6.5096/1.2063=5.40）",
+      "note": "PEG 对招行不构成有效估值信号：分母是接近零的低个位数增速，微小波动会让 PEG 剧烈跳动（若用 2026Q1 的 +1.52% 则为 4.28）。成熟银行的估值锚是 PB 与股息率，PEG 仅作记录",
+      "source1": {
+        "name": "financial_rigor.py calc",
+        "url": "docs/research/tools/financial_rigor.py",
+        "value": 5.4
+      },
+      "source2": {
+        "name": "Tushare Pro fina_indicator netprofit_yoy（FY2025 +1.2063%）",
+        "url": "https://tushare.pro",
+        "value": 1.21
+      },
+      "deviationPct": 0.0,
+      "flag": "ok"
+    },
+    "evToRevenue": {
+      "status": "not-applicable",
+      "reason": "银行的企业价值（EV）口径不成立：负债即经营性资金来源（客户存款），扣除现金加回债务的 EV 公式对金融机构无意义，行业通行以 PB、PE、股息率为估值锚"
+    }
+  },
+  "bullBearCase": {
+    "_dimension": "10. 多空双方核心论点",
+    "bull": [
+      {
+        "point": "估值处于历史底部区间，PB 隐含的资产损失假设与实际资产质量严重不符",
+        "evidence": "2026-08-10 收盘 38.91 元、市值 9813.0 亿元、PB 0.87（一年区间 0.79–1.14 的 22% 分位）、PE(TTM) 6.51（25% 分位）。0.85–0.87 倍 PB 隐含市场假设约 15% 的资产隐性损失，而实际不良率仅 0.94%、拨备覆盖率 387.76%（Tushare + 一季报；估值分位由 cnstock_data.py valuation 计算）"
+      },
+      {
+        "point": "股息回报确定性高，中期分红机制已连续两年执行",
+        "evidence": "FY2025 每股现金分红 2.016 元（中期 1.013 元 2026-01-16 派发、末期 1.003 元 2026-07-10 派发），派现 508.43 亿元，占归属普通股股东净利润 1438.74 亿元的 35.34%；按 38.91 元计股息率 5.18%（financial_rigor.py 验算）。中期分红为 2007 年以来首次，2025-03-25 董事会确立机制（招商银行 2025 年度利润分配方案公告）"
+      },
+      {
+        "point": "资产质量在上市银行中仍显著领先，风险抵补厚度远超同业",
+        "evidence": "FY2025 与 2026Q1 不良率均为 0.94%（连续多年低于 1%），拨备覆盖率 391.79%/387.76%，行业平均约 205%–283%；ROA 1.19% 居上市银行最高一档。股份行对比：招行 0.94% 最低（平安 1.05%、兴业 1.08%、中信 1.15%、浦发 1.26%），六大行普遍 1.2%–1.3%（东方财富行业统计）"
+      },
+      {
+        "point": "零售客群护城河仍在扩张，AUM 增速创历史新高",
+        "evidence": "FY2025 零售 AUM 17.08 万亿元（+14.44%，当年新增超 2 万亿元创历史新高），2026Q1 达 17.86 万亿元（较上年末 +4.52%）；零售客户 2.24 亿户（+6.67%）、金葵花及以上 593.15 万户（+13.29%）、私人银行客户 199,326 户（+17.87%）。AUM 达成节奏加速：第一个 5 万亿用 9 年、第二个 5 年、第三个仅 3 年多（招商银行 FY2025 年报 3.10 / 2026 年一季报 4.7）"
+      },
+      {
+        "point": "大财富管理收入拐点已现，「以量换价」策略被验证",
+        "evidence": "FY2025 大财富管理收入 440.13 亿元（+16.91%，近三年最好），财富管理手续费 267.11 亿元（+21.39%）；手续费及佣金净收入 752.58 亿元（+4.39%），为 2022 年以来首次转正。分项：代销理财 +18.98%、代理基金 +40.36%、代理信托 +65.55%。2026Q1 财富管理手续费 85.07 亿元（+25.42%），代理基金 +55.11%（招商银行 FY2025 年报 3.2.6 / 2026 年一季报 4.2）"
+      },
+      {
+        "point": "负债成本快速下行对冲资产端压力，净利息收入已转正",
+        "evidence": "客户存款成本率 FY2024 1.54% → FY2025 1.17% → 2026Q1 0.99%（同比 -30bp）；计息负债成本率 2026Q1 1.07%（2025Q1 1.39%）。FY2025 净利息收入 2155.93 亿元（+2.04%）扭转连续两年下滑，2026Q1 达 556.42 亿元（+4.99%），营业收入同步转正 +3.81%（招商银行 FY2025 年报 3.2.4 / 2026 年一季报 4.2）"
+      },
+      {
+        "point": "ROE 虽下行但仍显著高于同业，管理层给出明确下限",
+        "evidence": "FY2025 加权 ROE 13.44%，2026Q1 年化 ROAE 13.48%（环比企稳），同期六大行普遍 10%–12%。王良在 2025 年报业绩会明确「未来 ROE 将以 10% 作为底线进行严格管控」，为下行节奏设定了可观察的管理承诺（招商银行 2025 年度报告摘要 / 中国证券报业绩会实录）"
+      },
+      {
+        "point": "对公资产质量与房地产敞口持续出清，为风险成本下降腾出空间",
+        "evidence": "FY2025 对公贷款不良率 0.84%（-0.17pct），对公不良生成额 72.34 亿元（同比 -39.88 亿元）；房地产业不良率 4.64%（-0.10pct，近五年最低），承担信用风险的地产敞口 -5.38%、不承担信用风险敞口 -20.01%；信用成本 FY2023 0.74% → FY2025 0.60%（招商银行 FY2025 年报 / 业绩会）"
+      },
+      {
+        "point": "资本充足水平厚实，是维持高分红率的基础",
+        "evidence": "2026-03-31 集团核心一级资本充足率 14.13%（高级法）/ 11.88%（权重法），一级资本充足率 16.05%、资本充足率 17.76%、杠杆率 7.84%，均显著高于监管底线；按一级资本在全球 1000 家大银行中位列第 8 位，较上年上升 2 位（招商银行 2026 年一季报 4.6）"
+      }
+    ],
+    "bear": [
+      {
+        "point": "ROE 连续三年下行且管理层自己指引的是下行而非反转，估值溢价根基正在消失",
+        "evidence": "加权 ROE：FY2023 16.22% → FY2024 14.49% → FY2025 13.44%（累计 -2.78pct）；ROAA 1.39%→1.28%→1.19%。招行相对大行的历史估值溢价主要来自更高的利润增速，而 FY2025 归母净利润增速仅 +1.21%、2026Q1 仅 +1.52%。王良明确表示「判断未来 ROE 仍会下行，会以 10% 为底线管控下行节奏」（招商银行 2025 年度报告摘要 / 业绩会实录）"
+      },
+      {
+        "point": "息差压力未见底，负债端已无腾挪空间",
+        "evidence": "2026Q1 NIM 1.83%，同比 -8bp、环比 -3bp，Q4 的企稳信号一个季度即被打断。彭家文明确：2025 年 5 月 LPR 降息后仍有部分贷款未完成重定价、集中在 2026 年前两季度；活期存款占比约 50%、活期利率「降无可降」，定期利率已很低，负债端贡献「可能较少」。管理层目标仅为「收窄幅度变小」（21 世纪经济报道业绩会实录）"
+      },
+      {
+        "point": "零售信贷风险仍处上升期——风险出现在招行最不该出问题的地方",
+        "evidence": "零售贷款不良率 FY2025 升至 1.08%（+0.10pct）；小微贷款不良率 0.79%→1.22%（+0.43pct）；不含信用卡的零售不良生成额 226.29 亿元（同比 +65.22 亿元，约 +40%）；信用卡不良生成额 393 亿元维持高位、2026Q1 同比 +20%。对公改善的 -39.88 亿元不足以覆盖零售恶化的 +65.22 亿元（招商银行 FY2025 年报 / 高盛研报 / 中诚信跟踪评级）"
+      },
+      {
+        "point": "「零售之王」的增长引擎已切换到对公，差异化标签被稀释",
+        "evidence": "FY2025 对公贷款 +12.29%（2013 年以来最高增速）、个人贷款 +2.07%；2026Q1 对公增量约为 2025 全年的 63%，零售贷款下降 1.00%，新增贷款中零售贡献 -21%。信用卡流通卡数由 2022 年 1.03 亿张峰值降至 9745.1 万张，交易额 -7.62%。贷款总额增速连续三年跑输行业（招商银行 2026 年一季报 4.3 / 中诚信 2026 年度跟踪评级报告）"
+      },
+      {
+        "point": "AUM 高增未转化为收入，规模优势的变现效率在下降",
+        "evidence": "2026Q1 零售 AUM 较上年末 +4.5%，非利息净收入仅 +1.77%——财富管理高增被银行卡手续费下滑抵消。FY2025 银行卡手续费 -18.60%、代理保险 -9.37%、结算与清算 -0.26%；非利息净收入 1216.80 亿元（-3.31%）。FY2025 零售分部营业收入 1910.17 亿元同比 -2.96%、占比降 1.73pct（招商银行 FY2025 年报 3.6 分部经营业绩）"
+      },
+      {
+        "point": "利润质量依赖拨备释放与税收调节，缓冲垫在快速变薄",
+        "evidence": "拨备覆盖率 437.70%→411.98%→391.79%→387.76%（2026Q1）；FY2025 信用减值损失 398 亿元（-2.56%）与所得税 -4.21% 共同支撑 +1.21% 的利润增速。同时关注类占比 1.29%→1.43%、损失类 0.37%→0.44%，前瞻指标劣化快于不良率；2026Q1 贷款信用减值损失同比 +9.01%，反哺开始逆转（招商银行 FY2025 年报 / 2026 年一季报）"
+      },
+      {
+        "point": "非息收入中投资收益占比抬升，盈利波动性上升",
+        "evidence": "FY2025 投资收益 368.37 亿元（+23.28%），占营业收入 10.91%；公允价值变动收益 -81.60 亿元（同比减少 142.45 亿元）；汇兑净收益 32.28 亿元（-19.82%）。债市波动直接决定这部分损益（招商银行 FY2025 年报利润表）"
+      },
+      {
+        "point": "合规短板已上升到总行与集团并表层面",
+        "evidence": "2026-07-17 总行被金融监管总局直接罚款 650 万元（并表管理、统一授信），为近两年最大罚单；2025-09-12 数据安全罚 60 万元；2024-06 招银理财 + 总行合计 1200 万元。2026 年以来累计 10 张罚单、超 1100 万元，事由为全局性管理事项（金融监管总局行政处罚公示 / 中国经济网）"
+      },
+      {
+        "point": "科技投入连续两年下降，与 AI 战略叙事存在张力",
+        "evidence": "信息科技投入 FY2023 141.26 亿 → FY2024 133.50 亿（-5.49%）→ FY2025 129.01 亿（-3.36%），占本公司营收 4.59%→4.37%→4.31%；同期宣传 856 个大模型场景、Tokens 吞吐增长 10.1 倍（招商银行 2024 年可持续发展报告 / 2025 年度报告摘要）"
+      },
+      {
+        "point": "长期 PB 折价反映的是增长预期缺失，而非单纯错杀",
+        "evidence": "2021 年 5 月招行总市值曾达 1.46 万亿元、位居 A 股上市银行第二，长期是 A 股少数 PB>1 的银行股；2026-08-10 市值 9813.0 亿元、PB 0.87，较峰值缩水约三分之一。近三年与近五年股价均跑输银行板块——同期以国有大行为代表的高股息银行股受追捧，市场对招行的定价逻辑正从「成长股」转向「价值股」"
+      },
+      {
+        "point": "行长交接期的战略执行风险尚无可观察证据",
+        "evidence": "王小青 2026-07-28 获监管核准，截至数据截止日就任 13 天；2020 年 3 月才进入招商局体系，2025 年 8 月至 2026 年 4 月外调招商金控，本行任职有中断，履历以资管、保险、基金为主。首份完整体现其任期的定期报告（2026 年中报）预计 2026 年 8 月下旬披露（经济参考报 / 财新网）"
+      }
+    ],
+    "analystTargets": {
+      "_note": "数据截止 2026-08-10 的近期卖方评级；评级全部为买入/推荐/优于大市，未见卖出评级，但高盛与花旗在 2026Q1 业绩后均下调预测或给出负面措辞——目标价的一致性可能低估下行情形",
+      "aShare": [
+        {
+          "institution": "高盛",
+          "date": "2026-03-12",
+          "rating": "买入",
+          "targetPrice": 54.71,
+          "currency": "CNY"
+        },
+        {
+          "institution": "中信建投证券",
+          "date": "2026-04-29",
+          "rating": "买入",
+          "targetPrice": 50.0,
+          "currency": "CNY"
+        },
+        {
+          "institution": "华泰证券",
+          "date": "2026-04-29",
+          "rating": "买入",
+          "targetPrice": 49.88,
+          "currency": "CNY"
+        },
+        {
+          "institution": "华创证券",
+          "date": "2026-04-29",
+          "rating": "推荐",
+          "targetPrice": 49.19,
+          "currency": "CNY"
+        },
+        {
+          "institution": "平安证券",
+          "date": "2026-04-29",
+          "rating": "强烈推荐",
+          "targetPrice": {
+            "status": "unavailable",
+            "reason": "未给出目标价，仅给 2026 年归母净利润预测 1565.18 亿元"
+          }
+        },
+        {
+          "institution": "国信证券",
+          "date": "2026-03-29",
+          "rating": "优于大市",
+          "targetPrice": {
+            "status": "unavailable",
+            "reason": "维持评级未给目标价；2026–2028 年净利润预测 1548/1624/1730 亿元，对应 PB 0.83x/0.76x/0.70x"
+          }
+        }
+      ],
+      "hShare": [
+        {
+          "institution": "中银国际",
+          "date": "2026-04-29 前后",
+          "rating": "买入",
+          "targetPrice": 59.61,
+          "currency": "HKD"
+        },
+        {
+          "institution": "高盛",
+          "date": "2026-03-12",
+          "rating": "买入",
+          "targetPrice": 53.44,
+          "currency": "HKD"
+        },
+        {
+          "institution": "高盛",
+          "date": "2026-04-29",
+          "rating": "买入",
+          "targetPrice": 52.86,
+          "currency": "HKD",
+          "note": "首季拨备前利润与纯利分别低于预期 3% 与 5%，下调 2026–2028 年预测 1%"
+        }
+      ],
+      "range": "A 股目标价区间 49.19–54.71 元，较 2026-08-10 收盘 38.91 元有 26%–41% 上行空间；H 股 52.86–59.61 港元",
+      "source": {
+        "name": "同花顺 iNews 机构评级汇总 / 各家研报（东方财富研报库）",
+        "url": "https://m.10jqka.com.cn/20260429/c676383592.shtml"
+      }
+    }
+  },
+  "crossValidationLog": [
+    {
+      "field": "市值（2026-08-10）",
+      "source1": {
+        "name": "Tushare daily_basic total_mv",
+        "value": "9813.0 亿元"
+      },
+      "source2": {
+        "name": "financial_rigor.py verify-market-cap（38.91 × 252.198 亿股）",
+        "value": "9813.0 亿元"
+      },
+      "deviationPct": 0.0,
+      "flag": "ok",
+      "resolution": "股价×总股本与报告市值完全一致，无单位/币种错误"
+    },
+    {
+      "field": "总股本",
+      "source1": {
+        "name": "Tushare balancesheet total_share（20260331）",
+        "value": "25,219,845,601 股"
+      },
+      "source2": {
+        "name": "Tushare daily_basic total_share（20260810）",
+        "value": "252.20 亿股"
+      },
+      "deviationPct": 0.0,
+      "flag": "ok",
+      "resolution": "两接口一致，近 5 年总股本未变动（无增发、无回购注销）"
+    },
+    {
+      "field": "负债率（2026Q1）",
+      "source1": {
+        "name": "Tushare balancesheet 计算（121942.97/134848.82）",
+        "value": "90.43%"
+      },
+      "source2": {
+        "name": "Tushare fina_indicator debt_to_assets",
+        "value": "90.4294%"
+      },
+      "deviationPct": 0.0,
+      "flag": "ok",
+      "resolution": "报表计算与指标接口一致"
+    },
+    {
+      "field": "股息率（TTM）",
+      "source1": {
+        "name": "分红实施记录合计 2.016 元 / 股价 38.91（financial_rigor.py 验算）",
+        "value": "5.18%"
+      },
+      "source2": {
+        "name": "Tushare daily_basic dv_ttm",
+        "value": "5.18%"
+      },
+      "deviationPct": 0.0,
+      "flag": "ok",
+      "resolution": "口径一致（税前、含中期分红），确认 TTM 覆盖 FY2025 中期与末期两次分红"
+    },
+    {
+      "field": "FY2025 营业收入",
+      "source1": {
+        "name": "Tushare Pro income",
+        "value": "3375.32 亿元"
+      },
+      "source2": {
+        "name": "东方财富 TOTALOPERATEREVE（另经年报原文核对）",
+        "value": "3375.32 亿元"
+      },
+      "deviationPct": 0.0,
+      "flag": "ok",
+      "resolution": "三方一致（Tushare / 东方财富 / 年报原文），口径均为合并报表营业收入"
+    },
+    {
+      "field": "FY2025 归母净利润",
+      "source1": {
+        "name": "Tushare Pro income",
+        "value": "1501.81 亿元"
+      },
+      "source2": {
+        "name": "东方财富 PARENTNETPROFIT（另经年报原文核对）",
+        "value": "1501.81 亿元"
+      },
+      "deviationPct": 0.0,
+      "flag": "ok",
+      "resolution": "三方一致，口径为归属于本行股东的净利润"
+    },
+    {
+      "field": "2026Q1 营业收入 / 归母净利润",
+      "source1": {
+        "name": "Tushare Pro income",
+        "value": "869.40 亿元 / 378.52 亿元"
+      },
+      "source2": {
+        "name": "招商银行 2026 年一季报原文（东方财富同值）",
+        "value": "869.40 亿元 / 378.52 亿元"
+      },
+      "deviationPct": 0.0,
+      "flag": "ok",
+      "resolution": "一致"
+    },
+    {
+      "field": "总资产 / 总负债（2026-03-31）",
+      "source1": {
+        "name": "Tushare Pro balancesheet",
+        "value": "134848.82 亿元 / 121942.97 亿元"
+      },
+      "source2": {
+        "name": "东方财富 TOTAL_ASSETS_PK / LIABILITY（另经季报原文核对）",
+        "value": "134848.82 亿元 / 121942.97 亿元"
+      },
+      "deviationPct": 0.0,
+      "flag": "ok",
+      "resolution": "三方一致"
+    },
+    {
+      "field": "FY2025 加权平均 ROE",
+      "source1": {
+        "name": "Tushare Pro fina_indicator roe_waa",
+        "value": "13.44%"
+      },
+      "source2": {
+        "name": "招商银行 2025 年度报告 3.1（东方财富 ROEJQ 同值）",
+        "value": "13.44%"
+      },
+      "deviationPct": 0.0,
+      "flag": "ok",
+      "resolution": "口径一致：归属普通股股东加权平均 ROE，分子扣永续债/优先股分派、分母扣其他权益工具"
+    },
+    {
+      "field": "2026Q1 加权平均 ROE（口径闸门拦截）",
+      "source1": {
+        "name": "招商银行 2026 年一季报（年化后）",
+        "value": "13.48%"
+      },
+      "source2": {
+        "name": "东方财富 ROEJQ（单季未年化）",
+        "value": "3.37%"
+      },
+      "deviationPct": "不计算",
+      "flag": "口径不可比",
+      "resolution": "过 Metadata 闸门时发现两者一个为年化、一个为单季未年化，按规范直接记「不可比」而不计误差率；本文件采用官方年化口径 13.48%"
+    },
+    {
+      "field": "其他权益工具余额（PB 口径关键）",
+      "source1": {
+        "name": "报表倒算：归母权益 12823.55 亿 − BVPS 44.8998 × 252.20 亿股",
+        "value": "1499.89 亿元（2026-03-31）"
+      },
+      "source2": {
+        "name": "招商银行 2025 年度报告附注 36 / 2026 年一季报资产负债表",
+        "value": "1499.89 亿元（2026-03-31）；1774.57 亿元（2025-12-31）"
+      },
+      "deviationPct": 0.0,
+      "flag": "ok",
+      "resolution": "2026-03-31 倒算值与原文一致；但 2025-12-31 原文为 1774.57 亿元（含优先股 274.68 亿），倒算法在优先股赎回前后跨时点会记错，最终采用年报附注原文"
+    },
+    {
+      "field": "FY2025 分红总额与分红率",
+      "source1": {
+        "name": "financial_rigor.py calc 2.016 元 × 252.198 亿股",
+        "value": "508.43 亿元"
+      },
+      "source2": {
+        "name": "招商银行 2025 年度利润分配方案公告",
+        "value": "508.43 亿元，分红比例 35.34%"
+      },
+      "deviationPct": 0.0,
+      "flag": "ok",
+      "resolution": "一致；公司分红率分母为归属普通股股东净利润 1438.74 亿元，按归母净利润为分母则 33.85%（financial_rigor.py 验算），文件已同时记录两个口径"
+    },
+    {
+      "field": "A/H 价差（2026-08-10）",
+      "source1": {
+        "name": "financial_rigor.py calc 38.91 / (49.00 × 0.8598)",
+        "value": "A 股较 H 股折价 7.64%"
+      },
+      "source2": {
+        "name": "东方财富 AH 股比价 f188",
+        "value": "-7.62%"
+      },
+      "deviationPct": 0.26,
+      "flag": "ok",
+      "resolution": "差异来自汇率取数时点（HKD/CNH 0.8598，2026-08-10 22:49），方向一致：招行 H 股贵于 A 股"
+    },
+    {
+      "field": "客户存款口径差异（记录备查）",
+      "source1": {
+        "name": "合并资产负债表客户存款（含应计利息）",
+        "value": "99245.58 亿元（2025-12-31）"
+      },
+      "source2": {
+        "name": "年报管理层讨论客户存款总额（不含应计利息）",
+        "value": "98361.30 亿元（2025-12-31）"
+      },
+      "deviationPct": 0.9,
+      "flag": "minor-diff",
+      "resolution": "差额约 884 亿元为应计利息，属口径差异而非错误；本文件资产负债表口径统一用含应计利息值，贷款与存款的经营口径引用则注明不含应计利息"
+    }
+  ]
+}
