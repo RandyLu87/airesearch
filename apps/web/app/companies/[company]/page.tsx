@@ -179,7 +179,8 @@ function DataGaps({ gaps }: { gaps: Json }) {
       <ul>
         {gaps.map((gap: Json, index: number) => (
           <li key={index}>
-            {typeof gap === "string" ? gap : `${text(gap.item)}——${text(gap.reason)}`}
+            {/* 缺口条目历史上有 item / field 两种键名，两种都认，否则整条只剩「—」 */}
+            {typeof gap === "string" ? gap : `${text(gap.item ?? gap.field ?? gap.path)}——${text(gap.reason)}`}
           </li>
         ))}
       </ul>
@@ -579,7 +580,9 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
             <table className="analysis-table">
               <thead><tr><th>指标</th><th>数值</th><th>来源</th></tr></thead>
               <tbody>
-                {["marketCap", "pe", "ps", "peg", "evToRevenue"].map((key) => {
+                {/* pb / roe / roa / dividendYieldPct / debtRatioPct 是银行保险等重资本行业的核心锚点，
+                    非金融公司不填就不渲染（下面的 !cell 直接跳过），不影响既有页面 */}
+                {["marketCap", "pe", "ps", "pb", "roe", "roa", "dividendYieldPct", "debtRatioPct", "peg", "evToRevenue"].map((key) => {
                   const cell = dimValuation.analysis?.currentMultiples?.[key];
                   if (!cell) return null;
                   return (

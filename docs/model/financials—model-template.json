@@ -156,7 +156,7 @@
     ]
   },
   "currentValuation": {
-    "_dimension": "9. 当前估值：市值、PE、PS、PEG、EV/Revenue",
+    "_dimension": "9. 当前估值：市值、股息率、负债率、PE、PS、PB、ROA、ROE、PEG、EV/Revenue",
     "priceAsOf": "__TODO__（带时间戳）",
     "sharePrice": "__TODO__（校验对象；双重上市或双币种写 { primary, alt[] }，见 _spec.multiListing）",
     "sharesOutstanding": "__TODO__（校验对象，最新总股本）",
@@ -167,6 +167,11 @@
     },
     "pe": "__TODO__（工具验算，注明 TTM / 静态；TTM 净利润为负时写 status: not-applicable + reason）",
     "ps": "__TODO__",
+    "pb": "__TODO__（工具验算 股价 / BVPS，注明 BVPS 所属报告期，以及是否已剔除永续债/优先股等其他权益工具——银行保险类不剔除会把 PB 系统性算低；银行、保险、券商等重资本行业以 PB 为核心锚点，须填）",
+    "roe": "__TODO__（最近财年，工具验算；注明口径是加权平均 ROE 还是期末净资产 ROE，以及分子是归母净利润还是含少数股东。Level 2，建议双源，仅单源时注明「仅单源」）",
+    "roa": "__TODO__（最近财年，净利润 / 总资产，工具验算；注明分母用期末值还是期初期末平均值。银行须与 ROE 同时看——ROE = ROA × 权益乘数，杠杆变化会让两者背离）",
+    "dividendYieldPct": "__TODO__（TTM 每股股息 / 当前股价，工具验算；注明是否含中期分红与特别股息、是税前还是税后，并写明对应的分红率 payout ratio。不分红写 status: not-applicable + reason）",
+    "debtRatioPct": "__TODO__（总负债 / 总资产，工具验算；总负债与总资产属 Level 1 须双源。非金融企业建议同时记有息负债率与净负债率并注明是否含经营租赁负债；银行保险类负债主体是客户存款与保险合同负债，90% 上下的负债率是经营常态而非风险信号，须在 note 里说明，另附核心一级资本充足率等监管资本指标才有判断意义）",
     "peg": "__TODO__",
     "evToRevenue": "__TODO__"
   },
