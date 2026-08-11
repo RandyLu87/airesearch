@@ -1,0 +1,155 @@
+{
+  "meta": {
+    "companyId": "hk-3690-meituan",
+    "companyName": "美团 Meituan",
+    "summarizedAt": "2026-08-11T17:20:00+08:00",
+    "dataCutoff": "2026-08-11",
+    "basedOnCollection": "research/companies/hk-3690-meituan/financials-collection.json",
+    "basedOnAnalysis": "research/companies/hk-3690-meituan/financials-analysis.json"
+  },
+  "dimensionSummary": [
+    {
+      "dimensionId": "businessQuality",
+      "title": "生意质量",
+      "mapsTo": "dimensions.businessEssence",
+      "conclusion": "高频刚需的本地即时履约平台，正常年份现金创造力很强，FY2024 自由现金流 461.48 亿元；但无合约锁定又自建运力，一场补贴战就让核心本地商业利润单年摆动 593.19 亿元。",
+      "confidence": 6,
+      "scoreBasis": "① 正面：dimensions.businessEssence.inquiry 记 12 个月交易用户破 8 亿、日均订单份额 50.3%，FY2024 经营利润率 10.91%、净利率 10.61%。② 负面：profitabilityTrend5y 显示净利率在负 13.14% 到 10.61% 间大幅摆动，FY2025 回落至负 6.40%。③ operatingLeverage：FY2025 收入增 8.08%，销售及营销费用增 60.90%，费用增速为收入的 7.5 倍，杠杆双向极陡。④ 证据限制：dataGaps 里留存率、复购率与单均经济模型全部 unavailable，粘性只能判「中」，评分向中性收敛。"
+    },
+    {
+      "dimensionId": "moat",
+      "title": "护城河",
+      "mapsTo": "dimensions.moat",
+      "conclusion": "五类里只有规模效应成立，转换成本、网络效应、技术专利壁垒均判不存在，品牌与定价权待验证，过去 5 年与未来 5 年方向都是变窄。",
+      "confidence": 4,
+      "scoreBasis": "① dimensions.moat.analysis.types 中唯一「存在」的是规模效应，硬证据是 2026Q1 核心本地商业环比减亏 80.16 亿元。② trendPast5y 与 trendNext5y 同判「变窄」：外卖 CGU 毛利率假设由 27% 下修至 13%–26%，5 年收入增速下限转为负 7%。③ 网络效应被证伪：用户逆势增至 8 亿仍未挡住份额降到 50.3%，对手 12 个月建成 6,300 万单每日。④ 证据限制：50.3% 与到店 7 比 3 均为单源第三方估算，未做双源交叉，故给 4 分而非更低。"
+    },
+    {
+      "dimensionId": "management",
+      "title": "管理层",
+      "mapsTo": "dimensions.management",
+      "conclusion": "创始人零股权激励、全年零减持，与股东同向且执行力极强；但全部 RSU 与购股权都不设业绩目标，执行层拿走不问责的巨额股份，资本纪律是短板。",
+      "confidence": 5.5,
+      "scoreBasis": "① 正面：alignment.compensation 记王兴 FY2025 酬金仅 526.2 万元、股权激励为零；keyDecisions 记 2026-04-27 提前赎回 14.814 亿美元可转债、2026Q1 环比减亏 80.16 亿元。② 负面：年报明文「均未设任何业绩目标」，五名最高薪酬人士合计 9.509 亿元中 97.7% 为股权激励。③ capitalAllocation.buybackTiming：2025 年那批回购均价 HK$129.79 仍浮亏约 27.7%，两年回购量抵不过 2026 年授出的 9,282.68 万份 RSU。④ 证据限制：2026 年内部人申报 unavailable，零减持只证到 2025-12-31。"
+    },
+    {
+      "dimensionId": "keyRisk",
+      "title": "最大风险",
+      "mapsTo": "dimensions.inversion",
+      "conclusion": "最大风险是补贴战长期化把外卖永久重定价为低毛利履约业务，公司已在经审计的商誉减值测试里自认，而退坡时间表握在对手手里。",
+      "confidence": 3.5,
+      "scoreBasis": "① dimensions.inversion.failurePaths 首条概率「高」影响「高」：外卖 CGU 5 年收入增速下限改为负 7%，毛利率由 27% 下修至 13%–26%，属经审计口径的自认。② 不可控：阿里指引 2029 财年前后才求即时零售 EBITA 平衡，停战不由美团决定。③ 外部背书：标普 2026-03-04 把评级下调至 BBB+、展望负面，再降三档即失投资级。④ 缓冲：净现金 865.51 亿元、现金厚度约 6.66 年，尚不构成生存风险，故未低于 3 分。"
+    },
+    {
+      "dimensionId": "civilizationTrend",
+      "title": "文明趋势",
+      "mapsTo": "dimensions.industryTrend",
+      "conclusion": "即时零售是履约效率改进而非范式转移，行业仍在扩容，但美团对商户与骑手两端的议价权同时下降，行业顺风换不成公司利润。",
+      "confidence": 5.5,
+      "scoreBasis": "① dimensions.industryTrend.paradigmShift 判「否」：只把时延从天压到分钟，不创造新生产函数。② 行业顺风：TAM 2026 年 GMV 约 1 万亿元，外卖用户 6.30 亿、占网民 56.0%，渗透未饱和。③ 公司逆风：valueChainPosition 记 2026Q1 收入成本占比升 8.7 个百分点至 71.5%，单季收入同比由 17.65% 降到 5.61%。④ 证据限制：growthCurve 中商务部同一报告 12.6% 与 18.9% 两组增速无法调和，行业增速本身带口径不确定，评分向中性收敛。"
+    },
+    {
+      "dimensionId": "valuation",
+      "title": "估值",
+      "mapsTo": "dimensions.valuation",
+      "conclusion": "PS 1.38 倍低于近 5 年任一年末读数，三情景概率加权三年回报 40.14%、年化 11.91%；便宜但算不上显著低估，PB 3.37 倍仍高于 2023 年末低点。",
+      "confidence": 6,
+      "scoreBasis": "① dimensions.valuation.analysis.threeScenario 三档目标价 210.14 / 122.60 / 36.24 港元，隐含回报 123.79% / 30.57% / 负 61.41%，中性档年化仅 9.30%。② reverseDcf：扣净现金后隐含正常化净利 211.6 亿元，只有 2027E 共识 249 亿元的 85.0%。③ 反面：PB 3.37 倍高于 2023 年末低点 3.06 约 10.1%；按公司自用税前折现率 21% 至 23% 反推，隐含永续自由现金流需 581.8 至 803.97 亿元。④ 证据限制：PE 与 PEG 不适用，正常化净利 300/250/100 亿元为自上而下假设，故不给高于 6 分。"
+    }
+  ],
+  "strategies": {
+    "noPosition": {
+      "title": "空仓者",
+      "advice": "① 不在 93.90 港元附近建仓：中性目标价 122.60 港元只对应三年 30.57%、年化 9.30%，安全边际不够。② 等两个条件之一出现再建首仓，一是价格回到 68 港元以下，二是 2026 年中报把核心本地商业单季利润做回正数，首笔不超计划仓位三分之一。③ 护城河只剩规模效应一条且判定在变窄，按周期反转仓位对待，不做长期底仓。",
+      "triggers": [
+        {
+          "condition": "股价回落到 68 港元以下并连续三个交易日站不回去",
+          "action": "建首仓，规模不超过计划仓位的三分之一",
+          "basis": "① 68 港元是管理层 2026-06-29/30 回购均价，见 dimensions.management.analysis.capitalAllocation.buybackTiming。② 从该价到 dimensions.valuation.analysis.threeScenario 中性目标 122.60 港元有 80.29% 空间。③ 悲观档 36.24 港元仍隐含 61.41% 跌幅，故只建三分之一。"
+        },
+        {
+          "condition": "2026 年中报核心本地商业单季经营利润转正",
+          "action": "补至半仓，并等下一季确认不是一次性改善",
+          "basis": "① 2026Q1 该分部仍亏 20.30 亿元，较 2025Q4 的 100.46 亿元减亏 80.16 亿元，见 dimensions.moat.analysis.types 规模效应证据。② 转正直接证伪 dimensions.inversion.failurePaths 首条「补贴战长期化」。③ 中报是数据截止日之后最近的可观察验证点。"
+        },
+        {
+          "condition": "业绩未验证前股价已涨过 122.60 港元",
+          "action": "放弃建仓，转为只跟踪不出手",
+          "basis": "① 122.60 港元为 dimensions.valuation.analysis.threeScenario.neutral 目标价，对应正常化净利 250 亿元与 20 倍 PE。② 越过该位后中性档回报归零，只剩乐观档 210.14 港元一种可能。③ 卖方共识目标价 108.33 港元（38 家）也在该位之下。"
+        }
+      ]
+    },
+    "holding": {
+      "title": "持仓者",
+      "advice": "① 不加仓也不恐慌清仓：概率加权三年回报 40.14%、年化 11.91%，但护城河 4 分、风险 3.5 分偏低，仓位应压到能承受悲观档 61.41% 跌幅的量级。② 以 122.60 港元为分批减持起点，到位先减一半。③ 中报出来之前，不把 2026Q1 单季环比减亏 80.16 亿元当成趋势确认。",
+      "triggers": [
+        {
+          "condition": "股价涨到 122.60 港元中性目标价",
+          "action": "减持至少一半，其余等乐观档条件被验证",
+          "basis": "① 122.60 港元与 30.57% 隐含回报出自 dimensions.valuation.analysis.threeScenario.neutral。② 乐观档 210.14 港元需正常化净利 300 亿元，高于 2027E 共识的 249 亿元。③ dimensions.moat.analysis.trendNext5y 判五年变窄，不支持长期持有等乐观档。"
+        },
+        {
+          "condition": "2026 年中报核心本地商业经营亏损环比再度扩大",
+          "action": "减到观察仓，只留跟踪用的最小仓位",
+          "basis": "① 2026Q1 亏损已收窄至 20.30 亿元，再扩大即推翻减亏趋势，见 dimensions.moat.analysis.types 规模效应证据。② 直接坐实 dimensions.inversion.failurePaths 首条，概率「高」影响「高」。③ 该分部 FY2025 全年已亏 69.04 亿元。"
+        },
+        {
+          "condition": "两家以上机构测得日均订单份额低于 45%",
+          "action": "无条件减半，不等价格反弹",
+          "basis": "① 50.3% 为汇丰单源测算，见 dimensions.moat.analysis.types 转换成本证据，故要求多源确认再执行。② 份额是规模效应唯一支撑，跌破即护城河 breaker。③ 标普按到店份额由约 70% 降到 50% 出头已下调评级。"
+        }
+      ]
+    },
+    "sellSignals": {
+      "title": "卖出信号",
+      "signals": [
+        {
+          "signal": "公司再次下修外卖 CGU 毛利率假设，下限低于 13%",
+          "observable": "年报附注 16 外卖 CGU 毛利率假设区间下限低于 13%",
+          "basis": "① FY2025 已由 27% 下修至 13%–26%，见 dimensions.inversion.analysis.failurePaths 首条与 dimensions.moat.analysis.trendNext5y。② 该假设经审计，是公司对自身长期盈利能力的定价。③ 再下修等于承认外卖利润池被永久压缩。"
+        },
+        {
+          "signal": "到店酒旅 187.11 亿元商誉首次计提减值",
+          "observable": "年报附注 16 到店酒旅 CGU 减值计提金额大于零",
+          "basis": "① 该 CGU 占商誉 277.74 亿元的 67.4%，FY2025 计提为 0，见 dimensions.management.analysis.capitalAllocation.maTrackRecord。② 到店毛利率假设 86%–87% 是当前利润残值的唯一支柱。③ 计提即坐实 dimensions.inversion.analysis.failurePaths 第二条。"
+        },
+        {
+          "signal": "信用资质继续恶化，评级跌出 BBB+ 或现金垫明显变薄",
+          "observable": "评级由 BBB+ 再下调，或净现金跌破 400 亿元",
+          "basis": "① 标普 2026-03-04 已下调至 BBB+、展望负面，见 dimensions.inversion.analysis.failurePaths 第三条。② 净现金 865.51 亿元与约 6.66 年现金厚度，是当前判定「不构成生存风险」的前提。③ 该前提破位，风险性质由周期转结构。"
+        },
+        {
+          "signal": "股价在基本面未验证时越过中性目标价",
+          "observable": "股价达到或超过三情景中性目标价 122.60 港元",
+          "basis": "① 122.60 港元出自 dimensions.valuation.analysis.threeScenario.neutral，隐含 30.57%。② 越过后只剩乐观档 210.14 港元，需正常化净利 300 亿元，高于 2027E 共识 249 亿元。③ 共识目标价 108.33 港元同样低于该位。"
+        }
+      ]
+    },
+    "addSignals": {
+      "title": "加仓信号",
+      "signals": [
+        {
+          "signal": "股价跌回管理层回购价 68 港元以下",
+          "observable": "收盘价连续三日低于 68 港元且无新增基本面利空",
+          "basis": "① 68 港元为 2026-06-29/30 回购均价，见 dimensions.management.analysis.capitalAllocation.buybackTiming。② 该价到 dimensions.valuation.analysis.threeScenario 中性目标 122.60 港元有 80.29% 空间。③ 52 周低点 63.65 港元就在下方 6.4%，必须分批不可一次打满。"
+        },
+        {
+          "signal": "核心本地商业连续两个季度经营利润为正",
+          "observable": "2026 年中报与三季报分部表经营利润均为正数",
+          "basis": "① 2026Q1 仍亏 20.30 亿元、环比减亏 80.16 亿元，见 dimensions.moat.analysis.types 规模效应证据。② 连续两季转正才证伪 dimensions.inversion.analysis.failurePaths 首条，单季不足。③ 一致预期 2026E EPS 仍为负 0.56 元，转正即超预期。"
+        },
+        {
+          "signal": "阿里或京东公开收缩即时零售投入",
+          "observable": "对手财报或指引把盈亏平衡时点提前并削减补贴",
+          "basis": "① 阿里现指引 2027 财年末淘闪单位经济转正、2029 财年前后 EBITA 平衡，见 dimensions.inversion.analysis.failurePaths 首条。② 退坡时间表不在美团手里，对手收手是利润回归的必要条件。③ 京东 2026-07-17 宣布每年超百亿为骑手缴五险一金，方向仍在加码。"
+        },
+        {
+          "signal": "管理层在低位把回购做到足以抵消股权摊薄",
+          "observable": "月报表显示当期回购注销股数超过同期 RSU 授出量",
+          "basis": "① 2026 年已授出 9,282.68 万份 RSU，两年回购合计不足 600 万股，见 dimensions.management.analysis.capitalAllocation.buybackTiming。② 回购超过授出，才把不挂业绩的激励转回股东回报。③ 2025 年 5 月均价 HK$129.79 那批仍浮亏约 27.7%，须看价不看量。"
+        }
+      ]
+    }
+  },
+  "disclaimer": "本总结基于公开信息与数据截止时点的分析生成，仅供研究参考，不构成个性化投资建议。"
+}

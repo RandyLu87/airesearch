@@ -1,0 +1,2486 @@
+{
+  "meta": {
+    "companyId": "hk-3690-meituan",
+    "companyName": "美团 Meituan",
+    "ticker": "3690.HK",
+    "exchange": "香港联合交易所主板",
+    "market": "hk",
+    "reportingCurrency": "CNY",
+    "accountingBasis": "IFRS（国际财务报告准则）",
+    "fiscalYearEnd": "12-31",
+    "dataCutoff": "2026-08-11",
+    "collectedAt": "2026-08-11T09:56:00+08:00",
+    "sources": {
+      "primary": {
+        "name": "stockanalysis.com HKG:3690 财务报表",
+        "url": "https://stockanalysis.com/quote/hkg/3690/financials/"
+      },
+      "secondary": {
+        "name": "Tushare hk_daily 港股行情 + 富途牛牛业绩页",
+        "url": "https://www.futunn.com/hk/stock/03690-HK/earnings"
+      },
+      "originalFilings": [
+        {
+          "type": "年报",
+          "period": "FY2025（2026-04-24 刊发）",
+          "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+        },
+        {
+          "type": "年度业绩公告",
+          "period": "FY2025（2026-03-26 刊发）",
+          "url": "https://media-meituan.todayir.com/20260326174002169812069123_tc.pdf"
+        },
+        {
+          "type": "季报",
+          "period": "2026Q1（2026-06-01 刊发）",
+          "url": "https://media-meituan.todayir.com/202606011753301715997254_en.pdf"
+        },
+        {
+          "type": "股份变动月报表",
+          "period": "截至 2026-07-31（2026-08-06 刊发）",
+          "url": "https://media-meituan.todayir.com/20260806164801425112275017_tc.pdf"
+        }
+      ]
+    },
+    "reportingStatus": "截至数据截止日 2026-08-11，美团最新已披露的正式业绩仍是 2026Q1（2026-06-01 发布）；2026 年中期业绩尚未披露（上年同期 2025Q2 于 2025-08-27 发布，公司投资者日志中暂无 2026Q2 披露日期公告）。",
+    "reportingUnitNote": "公司报表原文单位为人民币千元；本文统一折算为人民币百万元，折算处已注明。"
+  },
+  "revenueStructure": {
+    "_dimension": "1. 收入结构：最近财年及近4季度分部收入、增速、毛利率",
+    "latestFiscalYear": {
+      "period": "FY2025（2025-01-01 至 2025-12-31）",
+      "totalRevenue": {
+        "value": 364855,
+        "unit": "人民币百万元",
+        "currency": "CNY",
+        "source1": {
+          "name": "stockanalysis.com 年度利润表",
+          "url": "https://stockanalysis.com/quote/hkg/3690/financials/",
+          "value": 364855
+        },
+        "source2": {
+          "name": "stockanalysis.com 季度利润表四季加总（2025Q1-Q4）",
+          "url": "https://stockanalysis.com/quote/hkg/3690/financials/?p=quarterly",
+          "value": 364503
+        },
+        "deviationPct": 0.1,
+        "flag": "ok"
+      },
+      "segments": [
+        {
+          "name": "核心本地商业 Core Local Commerce（外卖、闪购、到店酒旅）",
+          "revenue": {
+            "value": 260826,
+            "unit": "人民币百万元",
+            "currency": "CNY",
+            "source1": {
+              "name": "美团 FY2025 年报 分部财务资料",
+              "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf",
+              "value": 260826
+            },
+            "source2": {
+              "name": "美团 FY2025 年度业绩公告（2026-03-26）",
+              "url": "https://media-meituan.todayir.com/20260326174002169812069123_tc.pdf",
+              "value": 260826
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "revenueSharePct": 71.49,
+          "yoyGrowthPct": 4.2,
+          "operatingProfit": {
+            "value": -6904,
+            "unit": "人民币百万元",
+            "currency": "CNY",
+            "note": "上市以来该分部首次年度经营亏损；FY2024 为 +52,415 百万元",
+            "source": {
+              "name": "美团 FY2025 年报 分部财务资料",
+              "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+            }
+          },
+          "grossMarginPct": {
+            "status": "unavailable",
+            "reason": "公司按分部披露收入与经营利润，不披露分部毛利率（年度口径）；已查 FY2025 年报分部财务资料与 MD&A，仅 2026Q1 起按季披露分部毛利。"
+          }
+        },
+        {
+          "name": "新业务 New Initiatives（美团优选、快驴、小象超市、Keeta 海外等）",
+          "revenue": {
+            "value": 104029,
+            "unit": "人民币百万元",
+            "currency": "CNY",
+            "source1": {
+              "name": "美团 FY2025 年报 分部财务资料",
+              "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf",
+              "value": 104029
+            },
+            "source2": {
+              "name": "美团 FY2025 年度业绩公告（2026-03-26）",
+              "url": "https://media-meituan.todayir.com/20260326174002169812069123_tc.pdf",
+              "value": 104029
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "revenueSharePct": 28.51,
+          "yoyGrowthPct": 19.1,
+          "operatingProfit": {
+            "value": -10082,
+            "unit": "人民币百万元",
+            "currency": "CNY",
+            "note": "FY2024 为 -7,273 百万元，亏损扩大",
+            "source": {
+              "name": "美团 FY2025 年报 分部财务资料",
+              "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+            }
+          },
+          "grossMarginPct": {
+            "status": "unavailable",
+            "reason": "同上，公司不披露年度分部毛利率。"
+          }
+        }
+      ],
+      "revenueByType": {
+        "_note": "FY2025 年报口径；自 2026Q1 起公司变更收入列示口径（佣金与在线营销合并为「商家服务」、商品销售单列），比较期已重述。",
+        "items": [
+          {
+            "name": "配送服务",
+            "value": 96068,
+            "unit": "人民币百万元",
+            "yoyGrowthPct": -2.0
+          },
+          {
+            "name": "佣金",
+            "value": 105477,
+            "unit": "人民币百万元",
+            "yoyGrowthPct": 10.6
+          },
+          {
+            "name": "在线营销服务",
+            "value": 51920,
+            "unit": "人民币百万元",
+            "yoyGrowthPct": 5.4
+          },
+          {
+            "name": "其他服务及销售（含利息收入 1,746）",
+            "value": 111390,
+            "unit": "人民币百万元",
+            "yoyGrowthPct": "__TODO__"
+          }
+        ],
+        "source": {
+          "name": "美团 FY2025 年报 MD&A 收入分部及类型表",
+          "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+        }
+      },
+      "totalOperatingLoss": {
+        "value": -25041,
+        "unit": "人民币百万元",
+        "currency": "CNY",
+        "note": "公司分部合计口径；FY2024 为经营溢利 +36,845 百万元。第三方 stockanalysis 报 -31,036（口径含项不同），采用公司披露值。",
+        "source": {
+          "name": "美团 FY2025 年报",
+          "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+        }
+      }
+    },
+    "recentQuarters": [
+      {
+        "period": "2026Q1（截至2026-03-31三个月）",
+        "totalRevenue": {
+          "value": 91039,
+          "unit": "人民币百万元",
+          "currency": "CNY",
+          "source1": {
+            "name": "stockanalysis.com 季度利润表",
+            "url": "https://stockanalysis.com/quote/hkg/3690/financials/?p=quarterly",
+            "value": 91039
+          },
+          "source2": {
+            "name": "富途牛牛 03690 业绩页（公布值）",
+            "url": "https://www.futunn.com/hk/stock/03690-HK/earnings",
+            "value": 91038.9
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "yoyGrowthPct": 5.61,
+        "grossMarginPct": 28.53,
+        "operatingIncome": -6470,
+        "netIncome": -6827,
+        "segments": [
+          {
+            "name": "核心本地商业",
+            "revenue": 64063,
+            "unit": "人民币百万元",
+            "yoyGrowthPct": 0.1,
+            "grossProfit": 20776,
+            "operatingProfit": -2030,
+            "operatingMarginPct": -3.2,
+            "note": "2025Q1 经营溢利 +13,491 百万元、经营利润率 +21.1%，同比由盈转亏"
+          },
+          {
+            "name": "新业务",
+            "revenue": 26976,
+            "unit": "人民币百万元",
+            "yoyGrowthPct": 21.3,
+            "grossProfit": 5263,
+            "operatingProfit": -2116,
+            "operatingMarginPct": -7.8,
+            "note": "2025Q1 为 -2,273 百万元、-10.2%，亏损率同比收窄 2.4 个百分点"
+          },
+          {
+            "name": "未分配项目",
+            "revenue": {
+              "status": "not-applicable",
+              "reason": "未分配项目（Unallocated items）只承载公司层面费用与其他收益净额，不产生分部收入，公司分部表中该行无收入数字。"
+            },
+            "operatingProfit": -2324,
+            "note": "2025Q1 为 -652 百万元；扩大主因是 SAMR 罚款 745.7 百万元与股份支付 1,383 百万元",
+            "yoyGrowthPct": {
+              "status": "not-applicable",
+              "reason": "该行无收入，增速不成立。"
+            }
+          }
+        ],
+        "_note": "公司披露经营亏损 6,469,811 千元（经营利润率 -7.1%）；stockanalysis 报 -6,862，口径含项不同，采用公司披露值。自本季起收入列示口径变更，比较期已重述。",
+        "revenueByType": {
+          "_note": "2026Q1 新列示口径",
+          "items": [
+            {
+              "name": "配送服务",
+              "value": 25006,
+              "unit": "人民币百万元",
+              "yoyGrowthPct": -2.9
+            },
+            {
+              "name": "商家服务（佣金+在线营销）",
+              "value": 38059,
+              "unit": "人民币百万元",
+              "yoyGrowthPct": 3.5
+            },
+            {
+              "name": "商品销售",
+              "value": 20972,
+              "unit": "人民币百万元",
+              "yoyGrowthPct": 46.6
+            },
+            {
+              "name": "其他（含利息收入）",
+              "value": 7002,
+              "unit": "人民币百万元",
+              "yoyGrowthPct": -25.3
+            }
+          ],
+          "source": {
+            "name": "美团 2026Q1 业绩公告",
+            "url": "https://media-meituan.todayir.com/202606011753301715997254_en.pdf"
+          }
+        }
+      },
+      {
+        "period": "2025Q4（截至2025-12-31三个月）",
+        "totalRevenue": {
+          "value": 92096,
+          "unit": "人民币百万元",
+          "currency": "CNY",
+          "source1": {
+            "name": "美团 FY2025 年度业绩公告（2026-03-26）第四季度比较表",
+            "url": "https://media-meituan.todayir.com/20260326174002169812069123_tc.pdf",
+            "value": 92096
+          },
+          "source2": {
+            "name": "富途牛牛 03690 业绩页（公布值 920.964亿）",
+            "url": "https://www.futunn.com/hk/stock/03690-HK/earnings",
+            "value": 92096
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "yoyGrowthPct": 4.1,
+        "grossMarginPct": 25.28,
+        "operatingIncome": -16074,
+        "netIncome": -15144,
+        "segments": [
+          {
+            "name": "核心本地商业",
+            "revenue": 64835,
+            "unit": "人民币百万元",
+            "yoyGrowthPct": -1.1,
+            "operatingProfit": -10046
+          },
+          {
+            "name": "新业务",
+            "revenue": 27262,
+            "unit": "人民币百万元",
+            "yoyGrowthPct": 18.9,
+            "operatingProfit": -4650
+          }
+        ],
+        "_note": "stockanalysis 的 90,969 是「全年减前三季原披露值」的残差算法产物；公司自 2026Q1 起变更收入列示并重述前期（2025Q1 由 86,557 重述为 86,206），残差因此低估 1,127。采用公司直接披露值 92,096。"
+      },
+      {
+        "period": "2025Q3（截至2025-09-30三个月）",
+        "totalRevenue": {
+          "value": 95488,
+          "unit": "人民币百万元",
+          "currency": "CNY",
+          "source1": {
+            "name": "stockanalysis.com 季度利润表",
+            "url": "https://stockanalysis.com/quote/hkg/3690/financials/?p=quarterly",
+            "value": 95488
+          },
+          "source2": {
+            "name": "富途牛牛 03690 业绩页（公布值 954.881亿）",
+            "url": "https://www.futunn.com/hk/stock/03690-HK/earnings",
+            "value": 95488.1
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "yoyGrowthPct": 2.04,
+        "grossMarginPct": 26.37,
+        "operatingIncome": -19188,
+        "netIncome": -18632,
+        "segments": [
+          {
+            "name": {
+              "status": "unavailable",
+              "reason": "本次采集未取 2025Q3 分部拆分：公司季度分部数据分散在各期业绩公告 PDF 中，本轮已优先取全 FY2025、2025Q4 与 2026Q1 三组分部数据；2025Q3 分部拆分对当前判断（补贴战最深点与 2026Q1 环比修复幅度）不构成额外信息。已查范围：FY2025 年报分部财务资料、2026Q1 业绩公告比较期。"
+            },
+            "revenue": {
+              "status": "unavailable",
+              "reason": "同上，未取 2025Q3 分部收入拆分。"
+            },
+            "yoyGrowthPct": {
+              "status": "unavailable",
+              "reason": "同上。"
+            }
+          }
+        ]
+      },
+      {
+        "period": "2025Q2（截至2025-06-30三个月）",
+        "totalRevenue": {
+          "value": 91840,
+          "unit": "人民币百万元",
+          "currency": "CNY",
+          "source1": {
+            "name": "stockanalysis.com 季度利润表",
+            "url": "https://stockanalysis.com/quote/hkg/3690/financials/?p=quarterly",
+            "value": 91840
+          },
+          "source2": {
+            "name": "美团 2025Q2/中期业绩公告（2025-08-27）",
+            "url": "https://media-meituan.todayir.com/20250827164001871611811353_tc.pdf",
+            "value": 91840
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "yoyGrowthPct": 11.66,
+        "grossMarginPct": 33.12,
+        "operatingIncome": -2210,
+        "netIncome": 365,
+        "segments": [
+          {
+            "name": {
+              "status": "unavailable",
+              "reason": "本次采集未取 2025Q2 分部拆分，理由同 2025Q3。已查范围：FY2025 年报分部财务资料、2025Q2 中期业绩公告未逐项抓取。"
+            },
+            "revenue": {
+              "status": "unavailable",
+              "reason": "同上，未取 2025Q2 分部收入拆分。"
+            },
+            "yoyGrowthPct": {
+              "status": "unavailable",
+              "reason": "同上。"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "financialMetrics": {
+    "_dimension": "2. 财务指标：近5年收入、净利润、毛利率、经营利润率、自由现金流、现金储备",
+    "_note": "净利润为 IFRS 归属口径（含少数股东前净利润，公司少数股东权益占比极小）；自由现金流 = 经营活动现金流 - 资本开支，资本开支口径为购建物业厂房设备及无形资产，不含租赁付款与收购对价。现金储备为「现金及现金等价物 + 短期投资」，注意该口径与公司年报「现金及现金等价物 + 短期库务投资」口径存在差异，见 crossValidationLog。",
+    "annual": [
+      {
+        "fiscalYear": "FY2025",
+        "revenue": {
+          "value": 364855,
+          "unit": "人民币百万元",
+          "currency": "CNY",
+          "source1": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/quote/hkg/3690/financials/",
+            "value": 364855
+          },
+          "source2": {
+            "name": "美团 FY2025 年报（364,854,746 千元）",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf",
+            "value": 364855
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "netProfit": {
+          "value": -23355,
+          "unit": "人民币百万元",
+          "currency": "CNY",
+          "note": "IFRS 口径（非 Non-GAAP）。第二源为 EPS 反算，差异源于加权平均股本与期末股本口径不同。",
+          "source1": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/quote/hkg/3690/financials/",
+            "value": -23355
+          },
+          "source2": {
+            "name": "每股收益反算（FY2025 EPS -3.923 元 × 加权平均股本约 61.1 亿股）",
+            "url": "https://www.itiger.com/hans/stock/03690/filings",
+            "value": -23970
+          },
+          "deviationPct": 2.6,
+          "flag": "minor-diff"
+        },
+        "grossMarginPct": 30.43,
+        "operatingMarginPct": -6.86,
+        "freeCashFlow": {
+          "value": -27086,
+          "unit": "人民币百万元",
+          "currency": "CNY",
+          "note": "经营现金流 -13,815 − 资本开支 13,271",
+          "source1": {
+            "name": "stockanalysis.com 现金流量表",
+            "url": "https://stockanalysis.com/quote/hkg/3690/financials/cash-flow-statement/",
+            "value": -27086
+          },
+          "source2": "__TODO__",
+          "deviationPct": "__TODO__",
+          "flag": "__TODO__"
+        },
+        "cashReserves": {
+          "value": 166834,
+          "unit": "人民币百万元",
+          "currency": "CNY",
+          "note": "公司口径：现金及现金等价物 106,771 + 短期库务投资 60,062 = 166,834 百万元（年报 MD&A 原文表述为 RMB106.8 billion + RMB60.1 billion）。不含受限制现金 21,632 与长期库务投资 332。",
+          "source1": {
+            "name": "美团 FY2025 年报 合并财务状况表 / 附注21、25(a)",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf",
+            "value": 166834
+          },
+          "source2": {
+            "name": "美团 FY2025 年报 MD&A（Liquidity and Capital Resources）",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf",
+            "value": 166800
+          },
+          "deviationPct": 0.02,
+          "flag": "ok"
+        },
+        "_note": "经营利润率按公司披露的分部合计经营亏损 -25,041 百万元 / 收入 364,855 百万元 = -6.86%（financial_rigor.py calc 验算）；stockanalysis 的 -8.51% 用的是不同口径的经营利润。",
+        "netCash": {
+          "value": 86551,
+          "unit": "人民币百万元",
+          "currency": "CNY",
+          "note": "= 现金 106,771 + 短期库务投资 60,062 − 借款 22,257 − 应付票据 58,026（不含租赁负债 6,336，含则为 80,215）。有息负债合计 80,283 百万元。",
+          "source": {
+            "name": "美团 FY2025 年报 附注31、32",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        }
+      },
+      {
+        "fiscalYear": "FY2024",
+        "revenue": {
+          "value": 337592,
+          "unit": "人民币百万元",
+          "currency": "CNY",
+          "source1": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/quote/hkg/3690/financials/",
+            "value": 337592
+          },
+          "source2": "__TODO__",
+          "deviationPct": "__TODO__",
+          "flag": "__TODO__"
+        },
+        "netProfit": {
+          "value": 35807,
+          "unit": "人民币百万元",
+          "currency": "CNY",
+          "note": "IFRS 口径",
+          "source1": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/quote/hkg/3690/financials/",
+            "value": 35807
+          },
+          "source2": "__TODO__",
+          "deviationPct": "__TODO__",
+          "flag": "__TODO__"
+        },
+        "grossMarginPct": 38.44,
+        "operatingMarginPct": 10.91,
+        "freeCashFlow": {
+          "value": 46148,
+          "unit": "人民币百万元",
+          "currency": "CNY",
+          "note": "经营现金流 57,147 − 资本开支 10,999",
+          "source1": {
+            "name": "stockanalysis.com 现金流量表",
+            "url": "https://stockanalysis.com/quote/hkg/3690/financials/cash-flow-statement/",
+            "value": 46148
+          },
+          "source2": "__TODO__",
+          "deviationPct": "__TODO__",
+          "flag": "__TODO__"
+        },
+        "cashReserves": {
+          "value": 90102,
+          "unit": "人民币百万元",
+          "currency": "CNY",
+          "note": "现金及等价物 70,834 + 短期投资 19,268",
+          "source1": {
+            "name": "stockanalysis.com 资产负债表",
+            "url": "https://stockanalysis.com/quote/hkg/3690/financials/balance-sheet/",
+            "value": 90102
+          },
+          "source2": "__TODO__",
+          "deviationPct": "__TODO__",
+          "flag": "__TODO__"
+        },
+        "_note": "按公司披露 FY2024 经营溢利 +36,845 百万元 / 收入 337,592 百万元 = 10.91%（工具验算）。"
+      },
+      {
+        "fiscalYear": "FY2023",
+        "revenue": {
+          "value": 276745,
+          "unit": "人民币百万元",
+          "currency": "CNY",
+          "source1": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/quote/hkg/3690/financials/",
+            "value": 276745
+          },
+          "source2": "__TODO__",
+          "deviationPct": "__TODO__",
+          "flag": "__TODO__"
+        },
+        "netProfit": {
+          "value": 13856,
+          "unit": "人民币百万元",
+          "currency": "CNY",
+          "note": "IFRS 口径",
+          "source1": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/quote/hkg/3690/financials/",
+            "value": 13856
+          },
+          "source2": "__TODO__",
+          "deviationPct": "__TODO__",
+          "flag": "__TODO__"
+        },
+        "grossMarginPct": 35.12,
+        "operatingMarginPct": 3.25,
+        "freeCashFlow": {
+          "value": 33642,
+          "unit": "人民币百万元",
+          "currency": "CNY",
+          "note": "经营现金流 40,522 − 资本开支 6,880",
+          "source1": {
+            "name": "stockanalysis.com 现金流量表",
+            "url": "https://stockanalysis.com/quote/hkg/3690/financials/cash-flow-statement/",
+            "value": 33642
+          },
+          "source2": "__TODO__",
+          "deviationPct": "__TODO__",
+          "flag": "__TODO__"
+        },
+        "cashReserves": {
+          "value": 61765,
+          "unit": "人民币百万元",
+          "currency": "CNY",
+          "note": "现金及等价物 33,340 + 短期投资 28,425",
+          "source1": {
+            "name": "stockanalysis.com 资产负债表",
+            "url": "https://stockanalysis.com/quote/hkg/3690/financials/balance-sheet/",
+            "value": 61765
+          },
+          "source2": "__TODO__",
+          "deviationPct": "__TODO__",
+          "flag": "__TODO__"
+        }
+      },
+      {
+        "fiscalYear": "FY2022",
+        "revenue": {
+          "value": 219955,
+          "unit": "人民币百万元",
+          "currency": "CNY",
+          "source1": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/quote/hkg/3690/financials/",
+            "value": 219955
+          },
+          "source2": "__TODO__",
+          "deviationPct": "__TODO__",
+          "flag": "__TODO__"
+        },
+        "netProfit": {
+          "value": -6686,
+          "unit": "人民币百万元",
+          "currency": "CNY",
+          "note": "IFRS 口径",
+          "source1": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/quote/hkg/3690/financials/",
+            "value": -6686
+          },
+          "source2": "__TODO__",
+          "deviationPct": "__TODO__",
+          "flag": "__TODO__"
+        },
+        "grossMarginPct": 28.07,
+        "operatingMarginPct": -3.0,
+        "freeCashFlow": {
+          "value": 5680,
+          "unit": "人民币百万元",
+          "currency": "CNY",
+          "note": "经营现金流 11,411 − 资本开支 5,731",
+          "source1": {
+            "name": "stockanalysis.com 现金流量表",
+            "url": "https://stockanalysis.com/quote/hkg/3690/financials/cash-flow-statement/",
+            "value": 5680
+          },
+          "source2": "__TODO__",
+          "deviationPct": "__TODO__",
+          "flag": "__TODO__"
+        },
+        "cashReserves": {
+          "value": 41552,
+          "unit": "人民币百万元",
+          "currency": "CNY",
+          "note": "现金及等价物 20,159 + 短期投资 21,393",
+          "source1": {
+            "name": "stockanalysis.com 资产负债表",
+            "url": "https://stockanalysis.com/quote/hkg/3690/financials/balance-sheet/",
+            "value": 41552
+          },
+          "source2": "__TODO__",
+          "deviationPct": "__TODO__",
+          "flag": "__TODO__"
+        }
+      },
+      {
+        "fiscalYear": "FY2021",
+        "revenue": {
+          "value": 179128,
+          "unit": "人民币百万元",
+          "currency": "CNY",
+          "source1": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/quote/hkg/3690/financials/",
+            "value": 179128
+          },
+          "source2": "__TODO__",
+          "deviationPct": "__TODO__",
+          "flag": "__TODO__"
+        },
+        "netProfit": {
+          "value": -23538,
+          "unit": "人民币百万元",
+          "currency": "CNY",
+          "note": "IFRS 口径",
+          "source1": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/quote/hkg/3690/financials/",
+            "value": -23538
+          },
+          "source2": "__TODO__",
+          "deviationPct": "__TODO__",
+          "flag": "__TODO__"
+        },
+        "grossMarginPct": 23.71,
+        "operatingMarginPct": -14.48,
+        "freeCashFlow": {
+          "value": -13021,
+          "unit": "人民币百万元",
+          "currency": "CNY",
+          "note": "经营现金流 -4,011 − 资本开支 9,010",
+          "source1": {
+            "name": "stockanalysis.com 现金流量表",
+            "url": "https://stockanalysis.com/quote/hkg/3690/financials/cash-flow-statement/",
+            "value": -13021
+          },
+          "source2": "__TODO__",
+          "deviationPct": "__TODO__",
+          "flag": "__TODO__"
+        },
+        "cashReserves": {
+          "value": 60378,
+          "unit": "人民币百万元",
+          "currency": "CNY",
+          "note": "现金及等价物 32,513 + 短期投资 27,865",
+          "source1": {
+            "name": "stockanalysis.com 资产负债表",
+            "url": "https://stockanalysis.com/quote/hkg/3690/financials/balance-sheet/",
+            "value": 60378
+          },
+          "source2": "__TODO__",
+          "deviationPct": "__TODO__",
+          "flag": "__TODO__"
+        }
+      }
+    ]
+  },
+  "competitiveLandscape": {
+    "_dimension": "3. 竞争格局：市场份额、主要竞争对手对比",
+    "marketShare": {
+      "valuePct": 50.3,
+      "marketDefinition": "中国餐饮外卖/即时配送「日均订单量」份额，分母仅含三大平台合计（美团 + 阿里淘宝闪购含饿了么 + 京东外卖/秒送），排除顺丰同城、达达等纯运力方、社区团购与次日达业态，也排除到店团购与酒旅。2025Q4 三家日均订单量为美团 8,500 万单、阿里 6,300 万单、京东 1,900 万单，对应 50.9%/37.7%/11.4%；2026Q1 为 50.3%/39.4%/10.3%。美团与阿里均不在财报中披露市场份额，本项为第三方券商测算。",
+      "asOf": "2026Q1（汇丰研报，2026-04 经媒体披露）",
+      "source": {
+        "name": "汇丰研报测算，腾讯新闻转述（2026-04-10）",
+        "url": "https://news.qq.com/rain/a/20260410A04APX00"
+      },
+      "note": "GTV 口径与订单口径差异很大且不可混用：补贴战前（2025 年初）美团外卖 GTV 份额约 75%–80%，2025 年末降至 60% 出头；订单量份额降至约 50%。GTV 份额为 [估计]，来自卖方报告转述。即时零售（非餐）另一口径：2025Q4 淘宝闪购 45.2%、美团闪购 45%、京东秒送 8.4%、抖音等 1.5%（勤策消费研究）。",
+      "companyDisclosureCheck": "已查 FY2025 年报（2026-04-24）与 2026Q1 业绩公告（2026-06-01）全文，公司仅表述「maintained our positioning as the go-to platform for on-demand delivery」，全文无任何市场份额百分比披露。"
+    },
+    "competitors": [
+      {
+        "name": "阿里巴巴集团（淘宝闪购 + 饿了么）",
+        "ticker": "9988.HK / BABA",
+        "marketSharePct": 39.4,
+        "revenue": "集团 FY2026（截至 2026-03-31 财年）收入 1,023,670 百万元人民币；其中即时零售 2026 年 1–3 月季度收入 199.9 亿元、同比 +57%，订单规模为去年同期 2.7 倍",
+        "grossMarginPct": 39.81,
+        "note": "① 口径警示：阿里披露「经调整 EBITA」而非经营利润，与美团不可直接比较。② 2026 财年 Q4 淘系电商及即时零售调整后 EBITA 240 亿元、同比 -40%。③ 汇丰测算 2025Q2–2026Q1 淘宝闪购累计亏损约 870 亿元。④ 战略上不退：2026-05-20 致股东信将即时零售定为「核心战略支柱」，电商 CEO 蒋凡指引 2027 财年末淘闪 UE 转正、2029 财年前后即时零售整体 EBITA 盈亏平衡——补贴退坡时间表由对手决定。",
+        "sources": [
+          {
+            "name": "钛媒体 2026Q1 财报解读",
+            "url": "https://www.tmtpost.com/7988017.html"
+          },
+          {
+            "name": "界面《即时零售2026：阿里不能输，美团不能停》",
+            "url": "https://www.jiemian.com/article/14538161.html"
+          },
+          {
+            "name": "汇丰研报转述",
+            "url": "https://news.qq.com/rain/a/20260410A04APX00"
+          }
+        ]
+      },
+      {
+        "name": "京东集团（京东外卖 / 京东秒送，归入新业务分部）",
+        "ticker": "9618.HK / JD",
+        "marketSharePct": 10.3,
+        "revenue": "FY2025 收入 1,309,085 百万元人民币（FY2024 1,158,819，+13%）",
+        "grossMarginPct": 9.31,
+        "note": "① 自营零售模式，毛利率 9.31% 与美团 30.43% 结构不可比。② 外卖战代价：FY2025 集团经营利润仅 3,690 百万元（FY2024 39,570，-91%），新业务分部经营亏损 466.41 亿元。③ 汇丰测算 2025Q2–2026Q1 京东即时零售亏损约 420 亿元。④ 骑手成本走在行业前面：2026-07-17 宣布每年投入超百亿为全职骑手缴五险一金，已覆盖 15 万全职骑手。⑤ 公司公关口径自称份额超 15%（[估计]，与汇丰订单量口径不可比）。",
+        "sources": [
+          {
+            "name": "stockanalysis.com HKG:9618",
+            "url": "https://stockanalysis.com/quote/hkg/9618/financials/"
+          },
+          {
+            "name": "21财经",
+            "url": "https://m.21jingji.com/article/20260717/herald/8b2a060bea9113ed06153eae84240d7b.html"
+          }
+        ]
+      },
+      {
+        "name": "抖音本地生活（字节跳动，到店餐饮/到综/酒旅为主）",
+        "ticker": "[估计] 未上市，字节跳动不披露分部数据",
+        "marketSharePct": {
+          "status": "unavailable",
+          "reason": "到店赛道无公开份额测算；已查字节未上市不披露分部数据、第三方无统一口径。以 GMV 规模侧证：2025 年抖音生活服务 GMV 突破 8,500 亿元、同比 +59%（2024 年约 5,600 亿元、同比 +81%），来源为行业媒体援引平台侧数据，非官方披露"
+        },
+        "revenue": "[估计] 不单独披露",
+        "grossMarginPct": {
+          "status": "unavailable",
+          "reason": "字节跳动未上市、不披露分部损益"
+        },
+        "note": "① 对美团到店的最大威胁。② 结构性短板：中泰证券测算抖音推送式团购核销率仅 50%–60%，美团搜索模式 90% 以上；抖音酒旅团购核销率不足 50%。③ 2026 年 4 月组织调整把酒旅提升至与 KA/自助并列，考核从 GMV 转向入驻率/留存率/核销率。④ 调研称抖音 2025Q4 到店 GTV 同比 +60%，2026 年目标增速至少 30%，且战略侧重规模与商家变现、对利润关注度低。",
+        "sources": [
+          {
+            "name": "虎嗅",
+            "url": "https://www.huxiu.com/article/4848712.html"
+          },
+          {
+            "name": "界面",
+            "url": "https://www.jiemian.com/article/14291726.html"
+          },
+          {
+            "name": "香港01 海豚研究",
+            "url": "https://www.hk01.com/01%E5%B0%88%E6%AC%84/60334884/"
+          }
+        ]
+      },
+      {
+        "name": "携程集团 Trip.com Group（到店酒旅的高毛利对手）",
+        "ticker": "9961.HK / TCOM",
+        "marketSharePct": {
+          "status": "unavailable",
+          "reason": "在线酒旅份额无权威公开测算；已查公司年报与第三方检索无统一口径"
+        },
+        "revenue": "FY2025 收入 62,409 百万元人民币",
+        "grossMarginPct": 80.58,
+        "note": "① FY2025 净利润 33,294 百万元、净利率超 50%，说明酒旅是本地生活里最肥的一块——既是美团到店的利润来源，也是抖音要抢的目标。② 抖音酒旅核销前 GMV 约为携程的 20%。",
+        "sources": [
+          {
+            "name": "stockanalysis.com HKG:9961",
+            "url": "https://stockanalysis.com/quote/hkg/9961/financials/"
+          }
+        ]
+      },
+      {
+        "name": "快手科技（本地生活为边缘业务）",
+        "ticker": "1024.HK",
+        "marketSharePct": {
+          "status": "unavailable",
+          "reason": "公司未单独披露本地生活份额；基数极小"
+        },
+        "revenue": "FY2025 收入 142,776 百万元人民币（+12.51%）",
+        "grossMarginPct": 55.02,
+        "note": "① 2021-12 与美团达成互联互通（快手做流量池、美团做交易履约），此后自营推进有限。② 对美团更接近流量渠道而非正面对手。",
+        "sources": [
+          {
+            "name": "stockanalysis.com HKG:1024",
+            "url": "https://stockanalysis.com/quote/hkg/1024/financials/"
+          }
+        ]
+      },
+      {
+        "name": "拼多多（2026-08-10 上线「最快明天达」）",
+        "ticker": "PDD",
+        "marketSharePct": {
+          "status": "unavailable",
+          "reason": "2026-08-10 刚上线，尚未进入任何份额统计"
+        },
+        "revenue": {
+          "status": "unavailable",
+          "reason": "本次采集未取，与美团业务重叠度目前最低"
+        },
+        "grossMarginPct": {
+          "status": "unavailable",
+          "reason": "同上"
+        },
+        "note": "定位次日达（商家发货 + 第三方运力），与分钟级履约不同层级，短期不构成即时配送直接竞争，但代表新进入者压力。",
+        "sources": [
+          {
+            "name": "新浪财经",
+            "url": "https://finance.sina.cn/stock/jdts/2026-08-10/detail-inimvsvi2800915.d.html"
+          }
+        ]
+      },
+      {
+        "name": "iFood（巴西外卖龙头，Keeta 海外主要对手）",
+        "ticker": "[估计] 未上市，Prosus 全资控股",
+        "marketSharePct": "[估计] 巴西市占率超 80%，超 6,000 万客户、31 万活跃骑手",
+        "revenue": {
+          "status": "unavailable",
+          "reason": "Prosus 未单独披露 iFood 收入"
+        },
+        "grossMarginPct": {
+          "status": "unavailable",
+          "reason": "同上"
+        },
+        "note": "① 制度性壁垒：超 50% 连锁餐厅因与 iFood 的排他协议无法与 Keeta 合作。② iFood 已起诉 Keeta 涉嫌商业间谍，巴西劳动法庭受理三起针对 Keeta 的骑手集体诉讼。③ Keeta 原定 2026 年初上线里约的计划已推迟，目前仅圣保罗小规模试点。",
+        "sources": [
+          {
+            "name": "美团 2026-03-26 业绩电话会实录（华尔街见闻）",
+            "url": "https://wallstreetcn.com/articles/3768485"
+          }
+        ]
+      }
+    ]
+  },
+  "businessModelMoat": {
+    "_dimension": "4. 商业模式与护城河：核心竞争优势来源",
+    "oneLiner": "把本地即时供给与本地即时需求撮合起来并自己完成最后一公里：商户为确定性增量订单与运力付佣金和营销费，消费者为 30 分钟送达的确定性付配送费与会员费，平台再在自营零售里赚商品差价。",
+    "revenueModel": "平台抽成 + 广告 + 履约服务费 + 自营商品差价。自 2026Q1 起分四条线列示（比较期已重述）：① 配送服务 250.06 亿元（占 27.5%）。② 商户服务（佣金 + 在线营销合并）380.59 亿元（占 41.8%）。③ 商品销售（小象超市、快驴及自营医药酒水，全额法确认）209.72 亿元（占 23.0%）。④ 其他含利息收入 70.02 亿元（占 7.7%）。分部仍为核心本地商业与新业务两段。",
+    "moats": [
+      {
+        "type": "网络效应",
+        "trend": "变窄",
+        "evidence": "① 双边网络 + 跨品类交叉：FY2025 年报载明年度交易用户数、用户交易频次、ARPU 三项同创历史新高，平台 GTV 与交易笔数双位数增长。② 2025 年全面升级的美团会员是首个覆盖近全品类的消费者忠诚计划。③ 但公司自 2023 年起不再披露年度交易用户数与活跃商户数绝对值，规模数字无法被外部逐年验证。④ 判定变窄的直接证据：补贴战证明用户在低客单场景可被现金买走，日均订单份额从战前一超降至 2026Q1 的 50.3%，网络效应没能阻止对手在 12 个月内建起 6,300 万单/日的网络。",
+        "source": {
+          "name": "美团 FY2025 年报主席报告 + 汇丰研报转述",
+          "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+        }
+      },
+      {
+        "type": "规模效应",
+        "trend": "稳定",
+        "evidence": "① 履约密度是唯一真正难复制的资产。② 2026Q1 核心本地商业经营亏损环比从 100.46 亿元收窄至 20.30 亿元（环比减亏 80.16 亿元），公司归因为即时配送业务显著减亏，同期对手仍在高投入——说明同样订单量下美团单位成本更低。③ 骑手侧规模：2025 年职业伤害保障覆盖 17 个省市、累计覆盖骑手超 1,600 万人次。",
+        "source": {
+          "name": "美团 2026Q1 业绩公告 + FY2025 年报",
+          "url": "https://media-meituan.todayir.com/202606011753301715997254_en.pdf"
+        }
+      },
+      {
+        "type": "转换成本",
+        "trend": "待验证",
+        "evidence": "① 商户侧在被平台用工具加固：AI 智能掌柜已服务超 70 万家餐饮商户，数字员工支持超 30 万家到店商户，酒店侧既白已在低星与高星酒店获验证，FY2025 AI 商家助手帮助超 340 万商户降本。② 消费者侧转换成本低，多平台并存已成常态。③ 判定待验证：商户侧变宽与消费者侧无锁定同时成立，净效应尚无可观察指标。",
+        "source": {
+          "name": "美团 2026Q1 业绩公告 + FY2025 年报主席报告",
+          "url": "https://media-meituan.todayir.com/202606011753301715997254_en.pdf"
+        }
+      },
+      {
+        "type": "技术专利壁垒",
+        "trend": "待验证",
+        "evidence": "① 自动配送车截至 2025 年底累计完成室外全场景订单超 550 万单、累计自动驾驶里程超 1,900 万公里。② 无人机 2025 年 4 月获中国民航局全国首张低空物流运行合格证，截至 2025 年底运营 70 条航线、累计超 78 万单；2025 年 12 月发布第四代 M-Drone 4L。③ 有牌照与运营数据支撑，但相对平台日均上亿单仍属试验规模，尚不构成成本结构层面的壁垒。",
+        "source": {
+          "name": "美团 FY2025 年报 ESG 章节",
+          "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+        }
+      },
+      {
+        "type": "品牌定价权",
+        "trend": "变窄",
+        "evidence": "① 毛利率 FY2024 38.44% → FY2025 30.43%（-8.01 个百分点）→ 2026Q1 28.53%。② 2026Q1 收入成本占收入比重同比升 8.7 个百分点至 71.5%，公司归因为更高的骑手激励与骑手福利、更多从收入中抵扣的激励。③ 榜单体系（黑珍珠、必吃榜、必玩榜、必住榜）是品牌资产，但不足以对冲价格战。",
+        "source": {
+          "name": "美团 FY2025 年报 + 2026Q1 业绩公告",
+          "url": "https://media-meituan.todayir.com/202606011753301715997254_en.pdf"
+        }
+      }
+    ]
+  },
+  "technology": {
+    "_dimension": "5. 技术能力：核心技术栈、研发投入",
+    "coreTechStack": [
+      "自研多模态大模型 LongCat 系列：已开源 LongCat-Flash-Chat / Flash-Thinking / Flash-Omni / Image / Video；2026-06-30 发布并开源 LongCat-2.0，总参数 1.6 万亿、原生 100 万上下文，官方称是国内首个在 5 万卡国产算力集群完成训练与推理全流程的万亿级参数模型",
+      "消费者侧 AI：智能生活助手「小美」（独立 App）、美团 App 内嵌「小团」（2026Q1 升级 AI 驱动搜索）、小团健康管家（问诊/购药/预约就医）、面向公众的 LongCat App",
+      "商户侧 AI：智能掌柜（超 70 万餐饮商户）、数字员工（超 30 万到店商户）、袋鼠参谋、酒店自研方案「既白」",
+      "即时配送智能调度系统：把自动配送车纳入统一调度，按订单量与实时路况协同多种运力；接驳模式（无人车跑公开道路 + 骑手完成最后 100 米）",
+      "L4 自动配送车 + 低空物流：M-Drone 4L 无人机、自动化机场一体化运营系统、自研视觉导航（ICRA 2022 导航领域最佳论文奖）",
+      "内部 AI 工具链：覆盖编程、会议、文档、设计、销售的全员 AI 工具包；基于 LongCat 的智能客服 Agent 与 AI 销售助手",
+      "产学研：截至 2025 年底与 60 所高校、300 余名学者合作 300 余个课题；与清华共建联合研究院；创办美团机器人研究院（MARS，深圳）"
+    ],
+    "rdExpense": {
+      "value": 25998,
+      "unit": "人民币百万元",
+      "currency": "CNY",
+      "period": "FY2025",
+      "yoyGrowthPct": 23.5,
+      "source1": {
+        "name": "美团 FY2025 年报 MD&A / 合并全面收益表附注7",
+        "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf",
+        "value": 25998
+      },
+      "source2": {
+        "name": "美团 FY2025 年报 MD&A 原文「increased by 23.5% to RMB26.0 billion」",
+        "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf",
+        "value": 26000
+      },
+      "deviationPct": 0.01,
+      "flag": "ok"
+    },
+    "rdIntensityPct": 7.13,
+    "rdTrend": "① FY2021 16,676（占收入 9.3%）。② FY2022 20,740（9.4%）。③ FY2023 21,201（7.7%）。④ FY2024 21,054（6.2%）。⑤ FY2025 25,998（7.1%），同比 +23.5%，公司明确归因于「corporate-level investments in AI」与员工福利开支增加。⑥ 2026Q1 单季 7,043，占收入 7.74%，同比 +22.0%，强度维持高位。",
+    "rdSeries": [
+      {
+        "fiscalYear": "FY2021",
+        "value": 16676,
+        "pctOfRevenue": 9.3
+      },
+      {
+        "fiscalYear": "FY2022",
+        "value": 20740,
+        "pctOfRevenue": 9.4
+      },
+      {
+        "fiscalYear": "FY2023",
+        "value": 21201,
+        "pctOfRevenue": 7.7
+      },
+      {
+        "fiscalYear": "FY2024",
+        "value": 21054,
+        "pctOfRevenue": 6.2
+      },
+      {
+        "fiscalYear": "FY2025",
+        "value": 25998,
+        "pctOfRevenue": 7.1
+      },
+      {
+        "period": "2026Q1",
+        "value": 7043,
+        "pctOfRevenue": 7.74
+      }
+    ],
+    "note": "单位人民币百万元。研发全部费用化，未见资本化开发支出披露。2026Q1 占比 7.74% 经 financial_rigor.py calc 验算（7,043,098/91,038,906）。",
+    "sources": [
+      {
+        "name": "美团 FY2025 年报",
+        "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+      },
+      {
+        "name": "美团 2026Q1 业绩公告",
+        "url": "https://media-meituan.todayir.com/202606011753301715997254_en.pdf"
+      },
+      {
+        "name": "美团 FY2023 年报（FY2022/FY2023 比较期）",
+        "url": "https://media-meituan.todayir.com/20240429080001354311185052_tc.pdf"
+      },
+      {
+        "name": "美团 FY2021 年报",
+        "url": "https://media-meituan.todayir.com/20220419164002110010215763_tc.pdf"
+      }
+    ],
+    "aiCommercializationNote": "① 已披露的只有使用量（70 万/30 万/340 万商户），公司从未披露任何 AI 产品的收入、付费用户或 ROI。② 2026Q1 未分配项目经营亏损扩大至 23.24 亿元，公司列出的三大主因之一即公司层面更多的 AI 投入。③ 第三方榜单中 LongCat-2.0 列《2026 中国 AI 大模型竞争力 TOP20》第 13 位（77.3 分），落后于通义千问、DeepSeek、腾讯混元等。④ 2026-06-01 电话会宣布「小美」与腾讯元宝合作，王兴提出「未来美团不仅服务消费者和商家，还要服务 AI Agent」，尚待验证。"
+  },
+  "management": {
+    "_dimension": "6. 管理层：创始人/CEO履历、持股比例、关键决策记录",
+    "founderCeo": {
+      "name": "王兴 Wang Xing",
+      "age": 47,
+      "background": "① 创始人、执行董事、CEO 兼董事会主席，统管整体战略与高级管理团队。② 2010 年创办美团；此前 2005-12 联合创办校内网并任 CEO 至 2007-04（2006-10 出售给千橡互动），2007-05 联合创办饭否网。③ 教育：2001-07 清华大学电子工程学士，2005-01 美国特拉华大学电气工程硕士。④ 外部任职：2019-07 起任理想汽车（2015.HK / NASDAQ: LI）董事、2021-08 起为非执行董事；2025-03-31 起任泰康保险集团独立董事。",
+      "tenure": "2010 年创办至今；公司 2018-09-20 港交所主板上市，上市后持续担任董事长兼 CEO，截至 FY2025 年报日期（2026-03-26）在任",
+      "otherKeyExecutives": [
+        "穆荣均，46 岁，联合创始人、执行董事、高级副总裁，同为 WVR 受益人",
+        "王莆中，42 岁，核心本地商业 CEO（外卖战与到店反击战一线指挥）",
+        "陈少晖，CFO"
+      ],
+      "source": {
+        "name": "美团 FY2025 年报 董事及高级管理层章节",
+        "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+      }
+    },
+    "ownership": {
+      "structure": "同股不同权（WVR）：A 类股每股 10 票、B 类股每股 1 票，保留事项上每股 1 票。WVR 受益人为王兴与穆荣均。A 类股可按 1:1 单向转换为 B 类股。",
+      "economicPct": {
+        "value": 9.13,
+        "unit": "百分比",
+        "note": "王兴含其设立的慈善基金会口径：(A 类 515,869,783 + B 类 47,742,481) / 总股本 6,175,475,542 = 9.13%（financial_rigor.py calc 验算）。剔除 WangXing Foundation 持有的 47,740,842 股 B 类后为 8.35%。穆荣均约 1.03%。两名 WVR 受益人合计约 9.38%。公司未直接披露该经济权益百分比，年报只给每类股份内部的百分比，此项按披露股数计算。"
+      },
+      "votingPct": {
+        "value": 45.3,
+        "unit": "百分比",
+        "note": "年报原文：王兴实益拥有 515,869,783 股 A 类股，就非保留事项的股东决议案代表约 45.30% 投票权。以 2026-07-31 股数复算 5,158,697,830 / 11,387,852,416 = 45.30%（工具验算），一致。穆荣均约 5.56%，两人合计约 50.86%，即在非保留事项上握有过半数投票权。杠杆倍数约 5.0 倍（45.30% 投票权 / 9.13% 经济权益）。"
+      },
+      "governanceWarning": "年报 WVR 章节原文风险提示：「the interests of the WVR Beneficiaries may not necessarily always be aligned with those of the Shareholders as a whole, and that the WVR Beneficiaries will be in a position to exert significant influence over the affairs of the Company and the outcome of Shareholders' resolutions, irrespective of how other Shareholders vote」。",
+      "sharePlanDilution": "截至 2025-12-31：计划限额下尚可授出 438,585,297 股相关 B 类股份；在外期权 69,120,834 份（加权平均行权价 HKD 84.16）、在外 RSU 104,061,067 份（加权平均授予日公允值 HKD 122.23）。年报口径「需新发股份满足的部分」合计 527,873,449 股，约占已发行股份 8.55%。2026-04-13 授出 79,317,581 份 RSU，2026-07-15 再授 13,509,283 份（授出日 B 类股市价 HKD 83.40）。",
+      "source": {
+        "name": "美团 FY2025 年报 公司资料—不同投票权 / 董事会报告—董事及最高行政人员权益 / 附注33；港交所股份变动月报表（2026-07-31）",
+        "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+      }
+    },
+    "keyDecisions": [
+      {
+        "date": "2025 全年（贯穿 2025Q2–2026Q1）",
+        "decision": "面对京东入局与阿里淘宝闪购的补贴战，选择全面对攻而非收缩防守",
+        "outcome": "代价极高：FY2025 销售及营销费用 1,029.34 亿元（同比 +60.90%），占收入 28.21%；毛利率从 38.44% 降至 30.43%；核心本地商业经营利润由 FY2024 的 +524.15 亿元转为 FY2025 的 -69.04 亿元，单年摆动 -593.19 亿元；集团由盈利 358.08 亿元转为亏损 233.54 亿元。份额上守住第一但一超变三强（2026Q1 50.3%/39.4%/10.3%）。",
+        "source": {
+          "name": "美团 FY2025 年报 + 汇丰研报转述",
+          "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+        }
+      },
+      {
+        "date": "2025（4 月南通/泉州试点，10 月推向全国）",
+        "decision": "骑手养老保险补贴计划：平台补贴 50%、骑手自愿缴，四个无限制；并全额承担职业伤害保障保费",
+        "outcome": "FY2025 年报载明率先实现养老保险补贴全国覆盖；职业伤害保障扩至 17 省市、覆盖骑手超 1,600 万人次；全国骑手配送过程商业保险 100% 覆盖；同舟计划五年投入 100 亿元、建 1,000 个骑手之家。成本参考：截至 2025-12 累计缴纳职业伤害保障保费超 25.6 亿元。2026-07-01 起新就业形态职业伤害保障全国推开，美团自 7 月起全额缴纳。公司从未单独披露骑手社保支出金额。",
+        "source": {
+          "name": "美团 FY2025 年报 ESG 章节",
+          "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+        }
+      },
+      {
+        "date": "2025 年下半年",
+        "decision": "Keeta 海外扩张提速：在香港、沙特基础上一次性进入卡塔尔、科威特、阿联酋、巴西（另有巴林），由王兴亲自督阵",
+        "outcome": "香港 2025Q4 实现正的单位经济效益；沙特全年订单量快速增长。代价是新业务分部 FY2025 经营亏损扩大至 100.82 亿元（FY2024 72.73 亿元），公司明确归因为海外投入增加。巴西受挫：iFood 市占超 80%、超 50% 连锁餐厅受排他协议约束，里约上线计划推迟，目前仅圣保罗小规模试点。",
+        "source": {
+          "name": "美团 FY2025 年报主席报告",
+          "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+        }
+      },
+      {
+        "date": "2026-02-05",
+        "decision": "以约 7.17 亿美元初始对价收购叮咚买菜中国业务",
+        "outcome": "补强前置仓生鲜供应链、与小象超市叠加。市场解读为管理层对投入并不克制的信号。截至数据截止日，该收购对财报的影响尚未在已披露业绩（2026Q1）中单独量化。",
+        "source": {
+          "name": "证券时报",
+          "url": "https://www.stcn.com/article/detail/3631648.html"
+        }
+      },
+      {
+        "date": "2026-03-26（FY2025 业绩电话会）",
+        "decision": "公开表态坚决反对内卷，并给出 2026 年新业务亏损指引",
+        "outcome": "管理层明确：沙特已在部分城市实现盈亏平衡；巴西聚焦圣保罗打磨模式；Keeta 2026 年亏损仍将显著，但将被国内新业务效率改善抵消，「预计 2026 年新业务分部整体亏损不会超过 2025 年」（即不超过 100.82 亿元）。这是目前唯一一条可被后续季报证伪的公开量化指引。",
+        "source": {
+          "name": "华尔街见闻电话会实录",
+          "url": "https://wallstreetcn.com/articles/3768485"
+        }
+      },
+      {
+        "date": "2026-04-27",
+        "decision": "提前赎回 2028 年到期零息可转债本金 14.814 亿美元（按未偿本金 101.28% 赎回）",
+        "outcome": "赎回后仅余 1,860 万美元未偿还。2025-12-31 报表中流动可转债 105.35 亿元于 Q2 出清，直接改变 2026 年净现金与摊薄股数。",
+        "source": {
+          "name": "公告及通告—提早赎回部分可换股债券",
+          "url": "https://media-meituan.todayir.com/202604290046171765261687_tc.pdf"
+        }
+      },
+      {
+        "date": "2026-06-26",
+        "decision": "独立非执行董事轮换：欧高敦退任，姚建华获委任并接任审核委员会主席；杨敏德获重选",
+        "outcome": "轮换后独董为姚建华、冷雪松、沈向洋、杨敏德四人。同日股东周年大会上罗兵咸永道（PwC）续聘议案赞成仅 72.39%、反对 27.61%（B 类股反对 34.38%），为全部议案中反对率最高；杨敏德连任议案反对 17.50%。审核委员会主席是 WVR+VIE 架构下少数股东制衡的关键位置，新任主席尚无履职记录可验证。",
+        "source": {
+          "name": "港交所公告 股东周年大会投票结果及董事会委员会组成变动",
+          "url": "https://media-meituan.todayir.com/20260626223202274512219015_tc.pdf"
+        }
+      },
+      {
+        "date": "2026-06-29 / 06-30",
+        "decision": "时隔一年多重启公开市场回购，两日合计回购 2,924,800 股 B 类股（拟注销）",
+        "outcome": "加权均价约 HKD 68（06-29 均价 68.2107；06-30 最高 69.00、最低 67.25、总代价 HKD 99,987,170.6），占回购授权 617,476,596 股的约 0.47%。回购价位显著低于 2026-08-10 收盘 93.90，是管理层认为便宜的一个价位坐标。",
+        "source": {
+          "name": "翌日披露报表（2026-06-29 / 06-30）",
+          "url": "https://media-meituan.todayir.com/20260630200801708712223443_tc.pdf"
+        }
+      },
+      {
+        "date": "2026Q1（截至 2026-03-31）",
+        "decision": "补贴策略转向更有纪律（a more disciplined approach to subsidies），同时推出十项食品安全强化举措",
+        "outcome": "核心本地商业经营亏损从 2025Q4 的 100.46 亿元环比收窄至 20.30 亿元，经营利润率改善至 -3.2%；公司称削减补贴的同时仍实现新用户增长与核心用户频次提升。但同季因商户资质核验合规缺陷被 SAMR 罚款 7.457 亿元。",
+        "source": {
+          "name": "美团 2026Q1 业绩公告",
+          "url": "https://media-meituan.todayir.com/202606011753301715997254_en.pdf"
+        }
+      }
+    ]
+  },
+  "industryOutlook": {
+    "_dimension": "7. 行业前景：TAM（总可寻址市场）、增长预测",
+    "tam": {
+      "value": 10000,
+      "currency": "CNY",
+      "unit": "亿元",
+      "definition": "中国即时零售市场规模（交易额 GMV 口径，非平台收入）：通过线上即时下单、线下即时履约，依托本地零售供给满足本地即时需求的零售业态。付钱的是终端消费者，美团在其中赚佣金 + 营销 + 配送费 + 自营商品差价，因此不可直接乘以估值倍数。历史与预测：2023 年 6,500 亿元 → 2024 年 7,810 亿元（+20.15%）→ 2025 年预计 9,714 亿元 → 2026 年突破 1 万亿元 → 2030 年 2 万亿元。口径边界提示：该定义以零售商品为主，与餐饮外卖存在重叠与统计争议。",
+      "asOf": "2025-11-25 发布，2026 年为预测值",
+      "source": {
+        "name": "商务部国际贸易经济合作研究院《即时零售行业发展报告（2025）》，新华网报道",
+        "url": "http://www.news.cn/20251126/0acf69e715b1432d8eb6e48d0822f918/c.html"
+      },
+      "alternativeScopes": [
+        {
+          "scope": "2025 年中国本地生活服务市场总规模",
+          "value": "[估计] 35.3 万亿元",
+          "note": "艾瑞咨询口径，含餐饮、休闲娱乐、到店服务等全部本地消费，线上渗透率预计 30.8%。口径过宽，用它当 TAM 会严重高估美团可寻址范围。",
+          "source": {
+            "name": "艾瑞咨询，21经济网转述",
+            "url": "https://www.21jingji.com/article/20250220/herald/d652993e2c87df00f31a64425e8e8cdd.html"
+          }
+        },
+        {
+          "scope": "2025 年全国即时配送订单量",
+          "value": "超 600 亿单，人均每年 43 次",
+          "source": {
+            "name": "中国物流与采购联合会《2026 中国即时物流行业发展报告》，媒体转述",
+            "url": "https://www.seafox.cc/news/industry/takeaway-industry-data-2026-2026-07-24"
+          }
+        }
+      ],
+      "companyDisclosureCheck": "美团在 FY2025 年报与 2026Q1 业绩公告中均未给出任何 TAM 测算或行业规模数字，全部 TAM 为第三方口径。"
+    },
+    "growthForecast": {
+      "cagrPct": 12.6,
+      "horizon": "2026–2030 年（十五五期间年均增速）",
+      "source": {
+        "name": "商务部国际贸易经济合作研究院《即时零售行业发展报告（2025）》",
+        "url": "http://www.news.cn/20251126/0acf69e715b1432d8eb6e48d0822f918/c.html"
+      },
+      "crossCheck": "口径自洽性存疑：同一份报告给出的「2026 年破 1 万亿 → 2030 年 2 万亿」是 4 年翻倍、隐含 CAGR 约 18.9%，与其「十五五年均增速 12.6%」不一致（12.6% 复合 4 年仅约 1.61 万亿）。两个数字来自同一来源，此处如实并列不做调和，引用时须注明该内部不一致。",
+      "structuralDrivers": [
+        "需求端：即时性需求从应急场景转向日常高频；城镇化与单身经济扩大客群",
+        "供给端：闪电仓/前置仓与骑手运力网络扩张，AI 调度降低履约成本，打开药品、数码、鲜花、日用百货等新品类",
+        "政策端：2024-11 商务部等 7 部门《零售业创新提升工程实施方案》明确支持即时零售；城市一刻钟便民生活圈建设",
+        "下沉市场：一线订单增速放缓，低线城市释放更大弹性（媒体与券商共识，非量化数据）"
+      ],
+      "userBase": "[估计] 2026 年 8 月中国网上外卖用户规模约 5.45 亿人（CNNIC 口径，媒体转述）；2023 年即时零售活跃用户约 5.8 亿人、占网民 53.11%（商务部研究院课题组测算）。"
+    }
+  },
+  "riskFactors": {
+    "_dimension": "8. 风险因素：地缘政治、监管、供应链等",
+    "items": [
+      {
+        "category": "竞争",
+        "description": "外卖与即时零售补贴战：把一门高利润生意打成亏损生意，且对手无退出迹象",
+        "evidence": "【公司披露】FY2025 年报归因「前所未有的激烈行业竞争」：核心本地商业经营利润由 +524.15 亿元转为 -69.04 亿元；集团净亏损 233.54 亿元；销售及营销费用 1,029.34 亿元、同比 +60.90%，占收入 28.21%。2026Q1 销售及营销费用 229.69 亿元、同比 +51.1%，占收入 25.2%（同比升 7.6 个百分点）。【外部推断】汇丰测算 2025Q2–2026Q1 淘宝闪购亏损约 870 亿元、京东约 420 亿元；2025 全年三家合计利润损失约 1,731 亿元。阿里明确不退，蒋凡指引 2029 财年前后才实现即时零售整体 EBITA 盈亏平衡——补贴退坡时间表由对手决定。",
+        "source": {
+          "name": "美团 FY2025 年报 / 2026Q1 业绩公告 / 汇丰研报转述",
+          "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+        }
+      },
+      {
+        "category": "竞争",
+        "description": "到店酒旅被抖音持续侵蚀，且抖音 2026 年明确以规模与商家变现优先、不追求利润",
+        "evidence": "【外部推断，公司未披露到店份额】抖音生活服务 2025 年 GMV 突破 8,500 亿元、同比 +59%；调研称抖音 2025Q4 到店 GTV 同比 +60%，2026 年目标增速至少 30%。抖音 2026 年 4 月组织调整将酒旅提升至与 KA/自助并列，直指美团与携程的高毛利腹地。抖音的结构短板是核销率（推送式团购 50%–60% vs 美团搜索模式 90% 以上），但这是效率差而非份额护城河。美团已把到店酒旅并入核心本地商业统一列示，外部无法独立跟踪这块利润基本盘的受损程度。",
+        "source": {
+          "name": "虎嗅 / 香港01 海豚研究 / 界面",
+          "url": "https://www.huxiu.com/article/4848712.html"
+        }
+      },
+      {
+        "category": "监管",
+        "description": "SAMR「幽灵外卖」系列案行政处罚：因商户资质核验合规缺陷被罚 7.457 亿元",
+        "evidence": "【公司披露，已核实】2026Q1 业绩公告 MD&A 原文：其他收益净额由 2025Q1 的 14 亿元降至 5.987 亿元，主因是市场监管总局依《食品安全法》就商户资质核验合规缺陷处以 745.7 百万元罚款；该罚款同为 2026Q1 未分配项目经营亏损扩大至 23.24 亿元的主因之一。【外部背景】处罚时点 2026-04-17，同案查处 7 家电商平台，合计罚没 35.97 亿元，创《食品安全法》实施以来外卖平台最大罚单；美团另被责令 6 个月内不得新增预包装以外的蛋糕店铺。口径提示：媒体转述的「没收违法所得 3,626.25 万元 + 罚款 6.93 亿元」合计约 7.29 亿元与公司披露的 7.457 亿元不完全吻合，以公司财报口径为准。",
+        "source": {
+          "name": "美团 2026Q1 业绩公告 / 光明网",
+          "url": "https://media-meituan.todayir.com/202606011753301715997254_en.pdf"
+        }
+      },
+      {
+        "category": "监管",
+        "description": "网络餐饮食品安全新规（市场监管总局 123 号令）2026-06-01 施行，平台实质审查责任压实，处罚敞口持续",
+        "evidence": "【外部，一手政策】《网络餐饮服务经营者落实食品安全主体责任监督管理规定》2026-06-01 施行，直指异地经营、资质造假、配送不规范。新规落地满两个月后，市场监管总局 2026-08-04 公开表示「外卖平台实质性审查不到位导致的幽灵外卖依然存在」，正推广电子证照核验进一步压实平台责任——意味着此类处罚不是一次性事件。2026-05 江苏省公安厅与省市场监管局联合约谈美团、淘宝闪购、京东外卖、抖音 4 家平台。【公司披露】2026Q1 已推出十项食品安全强化举措。",
+        "source": {
+          "name": "光明网 / 新浪财经",
+          "url": "http://news.china.com.cn/2026-08/04/content_118633011.shtml"
+        }
+      },
+      {
+        "category": "监管",
+        "description": "骑手社保与用工合规成本刚性上升，且被竞争对手主动抬高标准",
+        "evidence": "【公司披露】2026Q1 收入成本同比 +20.2% 至 650.69 亿元，占收入比重同比升 8.7 个百分点至 71.5%，公司归因首位即更高的骑手激励与更丰厚的骑手福利。养老保险补贴计划全国覆盖（平台补 50%）；职业伤害保障扩至 17 省市、覆盖超 1,600 万人次；同舟计划五年 100 亿元。【外部】2026-07-01 起新就业形态职业伤害保障全国推开，美团自 7 月起全额缴纳。京东 2026-07-17 宣布每年投入超百亿为全职骑手缴五险一金（15 万全职骑手已全覆盖），并宣布五年投 220 亿建 15 万套小哥之家——竞争对手在把行业标准往上抬。公司从未单独披露骑手社保支出金额，外部无法精确量化。",
+        "source": {
+          "name": "美团 2026Q1 业绩公告 / FY2025 年报 ESG / 21财经",
+          "url": "https://media-meituan.todayir.com/202606011753301715997254_en.pdf"
+        }
+      },
+      {
+        "category": "其他",
+        "description": "VIE（协议控制）架构：境内牌照类业务通过合约安排并表，法律定性未落定",
+        "evidence": "【公司披露】FY2025 年报设 CONTRACTUAL ARRANGEMENTS 专章并明确写出未决法律风险：《外商投资法》并未明文将合约安排列为外商投资形式，亦未提及事实控制概念，因此「合约安排是否会被认定为外商投资、是否会被视为违反外商投资准入要求、以及将如何处理，均不确定」。年报同时载明报告期内未新签、未续签、未解除任何合约安排。相关境内持股主体由王兴持股 95%、穆荣均持股 5%——控制权与创始人个人高度绑定。",
+        "source": {
+          "name": "美团 FY2025 年报 合约安排章节",
+          "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+        }
+      },
+      {
+        "category": "其他",
+        "description": "WVR 架构下少数股东制衡薄弱，且 2026 年 6 月审核委员会主席换人、审计师续聘遭高比例反对",
+        "evidence": "【公司披露】王兴以约 9.13% 经济权益控制约 45.30% 投票权（杠杆约 5.0 倍），两名 WVR 受益人合计约 9.38% 经济权益对约 50.86% 投票权，非保留事项上过半数。年报自身载明 WVR 受益人利益未必始终与全体股东一致。【治理变动】2026-06-26 原审核委员会主席欧高敦退任，姚建华接任，无履职记录可评估；同日罗兵咸永道续聘议案赞成仅 72.39%、反对 27.61%（B 类股反对 34.38%），为全部议案中反对率最高，是本次窗口里最值得注意的治理信号。",
+        "source": {
+          "name": "美团 FY2025 年报 / 港交所 2026-06-26 公告",
+          "url": "https://media-meituan.todayir.com/20260626223202274512219015_tc.pdf"
+        }
+      },
+      {
+        "category": "地缘政治",
+        "description": "Keeta 海外扩张的地缘与法律风险：中东局势与巴西的制度性壁垒",
+        "evidence": "【管理层口径】2026-03-26 电话会：「我们在这些市场 2026 年的增长仍受外部风险影响，例如当前地区的复杂局势」（指中东）；「Keeta 在 2026 年的亏损仍将显著」。FY2025 年报：新业务分部经营亏损扩大至 100.82 亿元，主因即海外投入增加。【外部推断】巴西 iFood 市占超 80%，超 50% 连锁餐厅因排他协议无法与 Keeta 合作，骑手作为独立承包商无法强制派单，iFood 已起诉 Keeta 涉嫌商业间谍，劳动法庭受理三起骑手集体诉讼，里约上线计划推迟，目前仅圣保罗小规模试点。海外还遭遇中国同行竞争（滴滴在巴西）。",
+        "source": {
+          "name": "华尔街见闻电话会实录 / 美团 FY2025 年报",
+          "url": "https://wallstreetcn.com/articles/3768485"
+        }
+      },
+      {
+        "category": "技术",
+        "description": "AI 投入大幅加码但回报路径未披露，且被公司自己定性为公司级而非业务线级投入",
+        "evidence": "【公司披露】FY2025 研发费用 259.98 亿元、同比 +23.5%，强度回升至 7.13%；2026Q1 研发 70.43 亿元、同比 +22.0%、占收入 7.74%，公司明确表述增量「primarily driven by the increased corporate-level investments in AI」，并将其列为 2026Q1 未分配项目亏损扩大的主因之一。截至数据截止日公司从未披露任何 AI 产品的收入、付费用户数或 ROI，已披露的只有使用量。【外部推断】第三方榜单中 LongCat-2.0 列《2026 中国 AI 大模型竞争力 TOP20》第 13 位（77.3 分），落后于通义千问（第 2）、DeepSeek（第 3）、腾讯混元（第 6）——基础模型层面美团并非领先者，却要承担同等量级的算力资本开支。",
+        "source": {
+          "name": "美团 FY2025 年报 / 2026Q1 业绩公告 / 36氪",
+          "url": "https://media-meituan.todayir.com/202606011753301715997254_en.pdf"
+        }
+      },
+      {
+        "category": "供应链",
+        "description": "食品安全与商户生态质量：补贴战推动商户降本，可能反噬商品品质与平台品牌",
+        "evidence": "【外部推断】复旦大学研究显示补贴战期间商户总利润平均下降 8.9%，约 39% 商户更换低价原材料。【公司自述】美团 2025-09 接受新华社采访时称「价格战、补贴战给中小商户群体造成实际收入减少不止 15%，并且中长期还将削弱其运营能力和店铺生计」。地方监管案例持续（如佛山三水区 2026 年 4 月查处平台上多起商户超范围经营冷食类食品案）。【公司披露】FY2025 支持资金计划帮助超 50 万家商户；2026Q1 推出十项食品安全强化举措、明厨亮灶推广、订单损坏保障。",
+        "source": {
+          "name": "新华网 / 美团 FY2025 年报",
+          "url": "http://www.news.cn/local/20250915/c14b7f1a1d9c403c8607e5d764aa27c6/c.html"
+        }
+      },
+      {
+        "category": "其他",
+        "description": "报表口径变更与并购整合：2026Q1 收入列示口径变更、2026 年 2 月收购叮咚买菜中国业务",
+        "evidence": "【公司披露】自 2026Q1 起更新收入列示：商品销售单列（按总额法确认）、佣金与在线营销合并为商户服务，比较期已重述。此举提升零售业务可见度，但使历史分项收入序列断裂，跨期比较须使用重述数。【外部】2026-02-05 以约 7.17 亿美元初始对价收购叮咚买菜中国业务；截至数据截止日该并购的整合效果与商誉影响尚未在已披露业绩中体现。",
+        "source": {
+          "name": "美团 2026Q1 业绩公告 / 证券时报",
+          "url": "https://media-meituan.todayir.com/202606011753301715997254_en.pdf"
+        }
+      }
+    ]
+  },
+  "currentValuation": {
+    "_dimension": "9. 当前估值：市值、股息率、负债率、PE、PS、PB、ROA、ROE、PEG、EV/Revenue",
+    "priceAsOf": "2026-08-10 收盘（HKT）；2026-08-11 盘中报 HK$95.40–96.05，未采用为口径价",
+    "sharePrice": {
+      "value": 93.9,
+      "unit": "每股",
+      "currency": "HKD",
+      "source1": {
+        "name": "Tushare hk_daily 03690.HK 2026-08-10 收盘",
+        "url": "http://api.tushare.pro",
+        "value": 93.9
+      },
+      "source2": {
+        "name": "FMP profile 3690.HK（2026-08-11 盘中价 96.05，日内涨跌 +2.15，隐含前收盘）",
+        "url": "https://financialmodelingprep.com/",
+        "value": 93.9
+      },
+      "deviationPct": 0.0,
+      "flag": "ok"
+    },
+    "sharesOutstanding": {
+      "value": 6175475542,
+      "unit": "股",
+      "currency": "n/a",
+      "note": "截至 2026-07-31：A 类 579,152,986 股（未上市，每股 10 票）+ B 类 5,596,322,556 股（每股 1 票）。库存股 0；另有 2,924,800 股已回购待注销的 B 类股未计入注销。",
+      "source1": {
+        "name": "港交所 股份发行人的证券变动月报表（截至 2026-07-31，2026-08-06 刊发）",
+        "url": "https://media-meituan.todayir.com/20260806164801425112275017_tc.pdf",
+        "value": 6175475542
+      },
+      "source2": {
+        "name": "老虎证券 / 富途牛牛 03690（股本 61.75 亿股）",
+        "url": "https://www.itiger.com/hans/stock/03690/filings",
+        "value": 6175000000
+      },
+      "deviationPct": 0.01,
+      "flag": "ok"
+    },
+    "marketCap": {
+      "reported": {
+        "value": 579540000000,
+        "unit": "货币单位",
+        "currency": "HKD",
+        "source1": {
+          "name": "stockanalysis.com HKG:3690 统计页（2026-08-11）",
+          "url": "https://stockanalysis.com/quote/hkg/3690/statistics/",
+          "value": 579540000000
+        },
+        "source2": {
+          "name": "富途牛牛 03690（5,693.79亿港元，2026-08-07 收盘价 92.20）",
+          "url": "https://www.futunn.com/stock/03690-HK/announcement",
+          "value": 569379000000
+        },
+        "deviationPct": 1.75,
+        "flag": "minor-diff"
+      },
+      "computed": 579877000000,
+      "flag": "ok",
+      "note": "financial_rigor.py verify-market-cap：93.90 × 6,175,475,542 = 579.88B HKD，与 stockanalysis 报告值 579.54B 偏差 0.06%。双源报告值差异 1.75% 源于价格时点（08-07 收盘 92.20 vs 08-10 收盘 93.90），非口径差异。"
+    },
+    "pe": {
+      "status": "not-applicable",
+      "reason": "TTM 净利润为负，PE 不成立（近四季 2025Q2–2026Q1 净利润合计约 -404.4 亿元人民币：+3.65 / -186.32 / -151.44 / -68.27 亿元）。FY2025 静态每股收益 -3.923 元人民币，同样为负。"
+    },
+    "ps": {
+      "value": 1.38,
+      "note": "市值 5,795 亿港元 / TTM 收入（2025Q2–2026Q1 合计 3,693.36 亿元人民币，按隐含汇率折约 4,202 亿港元）",
+      "source1": {
+        "name": "stockanalysis.com 统计页",
+        "url": "https://stockanalysis.com/quote/hkg/3690/statistics/",
+        "value": 1.38
+      },
+      "source2": {
+        "name": "富途牛牛 03690（市销率 1.32，对应 08-07 价 92.20）",
+        "url": "https://www.futunn.com/stock/03690-HK/announcement",
+        "value": 1.32
+      },
+      "deviationPct": 4.4,
+      "flag": "minor-diff"
+    },
+    "pb": {
+      "value": 3.34,
+      "note": "股价 93.90 港元 / 每股净资产（FY2025 期末 BVPS 24.73 元人民币，按隐含汇率 1 CNY≈1.1377 HKD 折 28.13 港元），经 financial_rigor.py calc 验算 = 3.34。BVPS 所属报告期为 2025-12-31，公司无永续债/优先股需剔除。",
+      "source1": {
+        "name": "financial_rigor.py calc（93.90/28.13）",
+        "url": "docs/research/tools/financial_rigor.py",
+        "value": 3.34
+      },
+      "source2": {
+        "name": "stockanalysis.com 统计页（3.40，对应 08-11 盘中价 95.40）",
+        "url": "https://stockanalysis.com/quote/hkg/3690/statistics/",
+        "value": 3.4
+      },
+      "deviationPct": 1.76,
+      "flag": "minor-diff"
+    },
+    "roe": {
+      "value": -24.09,
+      "unit": "百分比",
+      "note": "FY2025，分子为 IFRS 净利润 -233.55 亿元人民币；口径为期末净资产 ROE。仅单源。",
+      "source1": {
+        "name": "stockanalysis.com 统计页",
+        "url": "https://stockanalysis.com/quote/hkg/3690/statistics/",
+        "value": -24.09
+      },
+      "source2": {
+        "name": "老虎证券 03690（净资产收益率 -24.09%）",
+        "url": "https://www.itiger.com/hans/stock/03690/filings",
+        "value": -24.09
+      },
+      "deviationPct": 0.0,
+      "flag": "ok"
+    },
+    "roa": {
+      "value": -8.5,
+      "unit": "百分比",
+      "note": "FY2025，净利润 / 总资产；分母采用期末总资产 3,469.10 亿元人民币。",
+      "source1": {
+        "name": "stockanalysis.com 统计页",
+        "url": "https://stockanalysis.com/quote/hkg/3690/statistics/",
+        "value": -8.5
+      },
+      "source2": {
+        "name": "老虎证券 03690（总资产收益率 -8.50%）",
+        "url": "https://www.itiger.com/hans/stock/03690/filings",
+        "value": -8.5
+      },
+      "deviationPct": 0.0,
+      "flag": "ok"
+    },
+    "dividendYieldPct": {
+      "status": "not-applicable",
+      "reason": "美团自 2018 年上市以来从未派息，FY2025 每股股息为 0（FMP profile lastDividend=0；富途、老虎均显示股息 TTM 与股息率为「--」），分红率 payout ratio 为 0%。公司处于亏损与高投入期，资本回报以股份回购为主。"
+    },
+    "debtRatioPct": {
+      "value": 56.48,
+      "unit": "百分比",
+      "note": "FY2025 总负债 195,922 / 总资产 346,910 = 56.48%。有息负债（total debt，含租赁负债）86,619 百万元人民币，占总资产 24.97%；净负债为负（现金类资产高于有息负债），即净现金状态。",
+      "source1": {
+        "name": "stockanalysis.com 资产负债表",
+        "url": "https://stockanalysis.com/quote/hkg/3690/financials/balance-sheet/",
+        "value": 56.48
+      },
+      "source2": "__TODO__",
+      "deviationPct": "__TODO__",
+      "flag": "__TODO__"
+    },
+    "peg": {
+      "status": "not-applicable",
+      "reason": "PE 不成立（TTM 净利润为负 -404.4 亿元人民币），PEG = PE / 盈利增速的分子无定义。"
+    },
+    "evToRevenue": {
+      "value": 1.2,
+      "note": "企业价值 5,027 亿港元（市值 5,795 − 现金类 2,050 + 有息负债 1,282）/ TTM 收入 4,202 亿港元",
+      "source1": {
+        "name": "stockanalysis.com 统计页",
+        "url": "https://stockanalysis.com/quote/hkg/3690/statistics/",
+        "value": 1.2
+      },
+      "source2": "__TODO__",
+      "deviationPct": "__TODO__",
+      "flag": "__TODO__"
+    },
+    "analystConsensus": {
+      "priceTarget": 108.33,
+      "currency": "HKD",
+      "rating": "Buy",
+      "source": {
+        "name": "stockanalysis.com 统计页（2026-08-11）",
+        "url": "https://stockanalysis.com/quote/hkg/3690/statistics/"
+      }
+    }
+  },
+  "bullBearCase": {
+    "_dimension": "10. 多空双方核心论点",
+    "bull": [
+      {
+        "point": "最坏的季度已经过去：核心本地商业单季经营亏损环比大幅收窄，且是在补贴纪律收紧的同时实现的",
+        "evidence": "核心本地商业经营亏损从 2025Q4 的 100.46 亿元（经营利润率 -15.5%）环比收窄至 2026Q1 的 20.30 亿元（-3.2%），环比减亏 80.16 亿元；集团经营亏损从 161 亿元（-17.5%）收窄至 64.70 亿元（-7.1%）。公司在 2026Q1 公告中明确表述「amid the moderation of intense industry competition」与「Despite a more disciplined approach to subsidies, we continued to drive new user acquisition」。来源：2026Q1 业绩公告 https://media-meituan.todayir.com/202606011753301715997254_en.pdf"
+      },
+      {
+        "point": "现金厚到足以打完这场战争，不存在流动性风险",
+        "evidence": "截至 2026-03-31 现金及现金等价物 1,170.29 亿元 + 短期库务投资约 633 亿元 = 约 1,803 亿元；2025-12-31 为 1,067.71 + 600.62 = 1,668.34 亿元，对应净现金 865.51 亿元（不含租赁负债）/ 802.15 亿元（含）。2026-04-27 提前赎回 14.814 亿美元零息可转债后，可转债敞口基本清零。来源：FY2025 年报附注 21/25/31/32；2026Q1 业绩公告 https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+      },
+      {
+        "point": "订单份额第一守住了，且第三方预测格局正在收敛为稳态",
+        "evidence": "汇丰口径日均订单量份额 2025Q4 为 50.9%/37.7%/11.4%，2026Q1 为 50.3%/39.4%/10.3%，预测 2026Q4 稳定在约 50%/40%/10%；高盛另一测算给出终局比例 5.5:3.5:1。千亿级补贴换走的份额约 10 个百分点，且京东份额已连续两季回落。来源：腾讯新闻转述汇丰研报 https://news.qq.com/rain/a/20260410A04APX00"
+      },
+      {
+        "point": "新业务亏损有管理层公开量化指引，且海外单市场已跑通盈利模型",
+        "evidence": "2026-03-26 电话会管理层原话：「预计 2026 年新业务分部的整体亏损不会超过 2025 年」——FY2025 新业务经营亏损 100.82 亿元，即 2026 年亏损上限被公开锚定，可被后续季报证伪。Keeta 香港 2025Q4 实现正的单位经济效益（年报披露）；管理层称沙特已在部分城市实现盈亏平衡且削减补贴后订单量仍有韧性。来源：华尔街见闻电话会实录 https://wallstreetcn.com/articles/3768485"
+      },
+      {
+        "point": "AI 与自动化不是 PPT，是有第三方可验证节点的工程投入",
+        "evidence": "LongCat-2.0 于 2026-06-30 发布并开源，总参数 1.6 万亿、原生 100 万上下文，官方称为国内首个在 5 万卡国产算力集群完成训练与推理全流程的万亿参数模型。商用侧覆盖数字：智能掌柜超 70 万家餐饮商户、数字员工超 30 万家到店商户、FY2025 AI 商家助手帮助超 340 万商户降本。自动配送车累计完成室外全场景订单超 550 万单、累计里程超 1,900 万公里；无人机 2025-04 获中国民航局全国首张低空物流运行合格证，截至 2025 年底运营 70 条航线、累计超 78 万单。来源：FY2025 年报 ESG 章节；2026Q1 业绩公告 https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+      },
+      {
+        "point": "赛道本身还在扩容，即时零售是从外卖延伸出去的更大市场",
+        "evidence": "商务部研究院口径：2024 年即时零售规模 7,810 亿元、同比 +20.15%（高于全国网络零售增速 12.95 个百分点），2025 年预计 9,714 亿元，2026 年破 1 万亿元，2030 年 2 万亿元。美团在即时零售侧仍是双寡头之一：2025Q4 淘宝闪购 45.2%、美团闪购 45%、京东秒送 8.4%。来源：新华网 http://www.news.cn/20251126/0acf69e715b1432d8eb6e48d0822f918/c.html"
+      },
+      {
+        "point": "管理层在 HKD 68 一带重启回购，给出了一个自我认定的便宜价位坐标",
+        "evidence": "2026-06-29/30 两日合计回购 2,924,800 股 B 类股，加权均价约 HKD 68（06-29 均价 68.2107；06-30 区间 67.25–69.00），是 2025 年全年仅回购 3,018,700 股后的重启。对照 2026-08-10 收盘 93.90，当前价较管理层回购价高约 38%。来源：翌日披露报表 https://media-meituan.todayir.com/20260630200801708712223443_tc.pdf"
+      }
+    ],
+    "bear": [
+      {
+        "point": "这不是一次性亏损，是利润率被结构性重定价——毛利率两年掉了近 10 个百分点",
+        "evidence": "毛利率 FY2024 38.44% → FY2025 30.43%（-8.01 个百分点）→ 2026Q1 28.53%。2026Q1 收入成本占收入比重同比升 8.7 个百分点至 71.5%，公司归因为更高的骑手激励与骑手福利、更多从收入中抵扣的激励——这两项都是难以逆转的结构性成本，不是可随时关停的营销支出。来源：FY2025 年报；2026Q1 业绩公告 https://media-meituan.todayir.com/202606011753301715997254_en.pdf"
+      },
+      {
+        "point": "利润的绝对量级还在原地：核心本地商业单年利润摆动近 600 亿元，2026Q1 仍在亏损",
+        "evidence": "核心本地商业经营利润 FY2024 +524.15 亿元（利润率 20.9%）→ FY2025 -69.04 亿元（-2.6%），单年摆动 -593.19 亿元；2026Q1 该分部仍亏 20.30 亿元，尚未回正。集团 FY2025 净亏损 233.54 亿元，2026Q1 净亏损 68.27 亿元。来源：FY2025 年报；2026Q1 业绩公告 https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+      },
+      {
+        "point": "补贴退坡的时间表不在美团手里——对手已把即时零售写进战略主轴并给出到 2029 财年的亏损容忍度",
+        "evidence": "阿里 2026-05-20 致股东信将即时零售定位为「淘宝与天猫平台全面升级的核心战略支柱」；2026 年 1 月内部会议定调「首要目标是份额增长，坚定加大投入以达到市场绝对第一」；蒋凡指引 2027 财年末淘闪 UE 转正、2029 财年前后整体 EBITA 盈亏平衡。阿里 2026 财年 Q4 即时零售收入 199.9 亿元、同比 +57%，订单规模达去年同期 2.7 倍。野村 2026 年 7 月明确指出因阿里补贴预算预计保持高位，美团外卖复苏步伐将受拖累，目标价由 107 港元下调至 92 港元。来源：界面 https://www.jiemian.com/article/14538161.html"
+      },
+      {
+        "point": "到店这块最赚钱的业务正被抖音以不要利润要规模的打法侵蚀，且美团不披露该业务的份额与利润",
+        "evidence": "抖音生活服务 2025 年 GMV 突破 8,500 亿元、同比 +59%；调研称抖音 2025Q4 到店 GTV 同比 +60%、2026 年目标增速至少 30%。参照系是携程 FY2025 收入 624.09 亿元、毛利率 80.58%、净利润 332.94 亿元——酒旅的利润厚度决定了竞争者一定会来。美团在 FY2025 年报与 2026Q1 公告中均未披露到店酒旅的分部收入、GTV 或经营利润，外部无法独立跟踪这块利润基本盘的受损程度。来源：虎嗅 https://www.huxiu.com/article/4848712.html"
+      },
+      {
+        "point": "骑手成本正在从可变激励变成法定义务，且被竞争对手主动抬高标准",
+        "evidence": "2026-07-01 起新就业形态职业伤害保障全国推开，美团自 7 月起全额缴纳；养老保险补贴已从 2025 年 4 月两城试点扩至全国（平台补 50%）。京东 2026-07-17 宣布每年投入超百亿为全职骑手缴五险一金（15 万全职骑手已全覆盖并签劳动合同），并宣布五年投 220 亿建 15 万套小哥之家。美团累计已为 1,668 万人次骑手缴纳职业伤害保障保费超 25.6 亿元。公司从未披露骑手社保支出的单独金额，这是一块规模不明、方向单边向上的成本。来源：21财经 https://m.21jingji.com/article/20260717/herald/8b2a060bea9113ed06153eae84240d7b.html"
+      },
+      {
+        "point": "合规敞口已经实体化：7.457 亿元罚单 + 新规下平台责任加重 + 监管明确指出问题尚未解决",
+        "evidence": "2026Q1 因商户资质核验合规缺陷被 SAMR 依《食品安全法》罚款 7.457 亿元，并被责令 6 个月内不得新增预包装以外的蛋糕店铺；同案 7 家平台合计罚没 35.97 亿元。123 号令 2026-06-01 施行满两个月后，市场监管总局 2026-08-04 公开表示幽灵外卖依然存在并推广电子证照核验进一步压实平台责任——意味着此类处罚不是一次性事件。来源：2026Q1 业绩公告；光明网 https://m.gmw.cn/toutiao/2026-08/04/content_38925980.htm"
+      },
+      {
+        "point": "海外是新的亏损来源而非新的利润来源，且巴西这块最大的增量市场已经受阻",
+        "evidence": "新业务分部经营亏损 FY2024 72.73 亿元 → FY2025 100.82 亿元，公司明确归因为海外投入增加；管理层 2026-03-26 承认「Keeta 在 2026 年的亏损仍将显著」。巴西：iFood 市占超 80%、超 50% 连锁餐厅受排他协议约束、iFood 起诉 Keeta 涉嫌商业间谍、劳动法庭受理三起骑手集体诉讼、里约上线计划推迟、目前仅圣保罗小规模试点。中东则面临地缘局势风险。来源：FY2025 年报；华尔街见闻电话会实录 https://wallstreetcn.com/articles/3768485"
+      },
+      {
+        "point": "AI 投入在放大亏损，回报却没有任何可验证的数字",
+        "evidence": "FY2025 研发费用 259.98 亿元、同比 +23.5%；2026Q1 研发 70.43 亿元、同比 +22.0%、占收入 7.74%，公司明确说增量是公司级 AI 投入，且被列为 2026Q1 未分配项目亏损扩大至 23.24 亿元的主因之一。截至数据截止日公司未披露任何 AI 产品的收入、付费转化或单位经济效益，只披露使用量。第三方榜单中 LongCat-2.0 列第 13 位（77.3 分），低于阿里、DeepSeek、腾讯等。来源：FY2025 年报；2026Q1 业绩公告 https://media-meituan.todayir.com/202606011753301715997254_en.pdf"
+      },
+      {
+        "point": "治理结构对少数股东不友好，且 2026 年 6 月同时出现审核委员会主席换人与审计师续聘高反对率",
+        "evidence": "王兴以约 9.13% 经济权益控制约 45.30% 投票权，两名 WVR 受益人合计约 9.38% 经济权益对约 50.86% 投票权；年报自身载明 WVR 受益人利益未必始终与全体股东一致，VIE 合约安排的法律定性「均不确定」。2026-06-26 原审核委员会主席欧高敦退任、姚建华接任（无履职记录），同日罗兵咸永道续聘议案赞成仅 72.39%、反对 27.61%（B 类股反对 34.38%）。来源：FY2025 年报；港交所 2026-06-26 公告 https://media-meituan.todayir.com/20260626223202274512219015_tc.pdf"
+      },
+      {
+        "point": "管理层在亏损期仍在做大额外延并购，收缩纪律存疑",
+        "evidence": "2026-02-05 公告以约 7.17 亿美元初始对价收购叮咚买菜中国业务，时点正处于集团年度净亏损 233.54 亿元之后。长桥海豚研究据此判断「从本季传递出的管理层对投入并不克制的态度，以及 2026 年初耗资超 7 亿美元收购叮咚买菜的举动来看，其他新业务导致的亏损短期内或难以明显收窄」。来源：证券时报 https://www.stcn.com/article/detail/3631648.html"
+      }
+    ]
+  },
+  "crossValidationLog": [
+    {
+      "field": "市值（HKD）",
+      "source1": {
+        "name": "计算值 93.90 × 6,175,000,000（financial_rigor.py verify-market-cap）",
+        "value": 579832500000
+      },
+      "source2": {
+        "name": "stockanalysis.com 统计页报告市值",
+        "value": 579540000000
+      },
+      "deviationPct": 0.05,
+      "flag": "ok",
+      "resolution": "偏差 0.05%，工具判定验证通过；差异源于报告方使用的价格时点与股本尾数取整。"
+    },
+    {
+      "field": "FY2025 总收入",
+      "source1": {
+        "name": "stockanalysis.com 年度利润表",
+        "value": 364855
+      },
+      "source2": {
+        "name": "stockanalysis.com 季度利润表四季加总",
+        "value": 364503
+      },
+      "deviationPct": 0.1,
+      "flag": "ok",
+      "resolution": "偏差 0.10%，工具判定一致，采用年度报表值 364,855 百万元人民币。"
+    },
+    {
+      "field": "2025Q4 收入",
+      "source1": {
+        "name": "美团 FY2025 年度业绩公告第四季度比较表",
+        "value": 92096
+      },
+      "source2": {
+        "name": "富途牛牛业绩页公布值",
+        "value": 92096
+      },
+      "deviationPct": 0.0,
+      "flag": "ok",
+      "resolution": "已回一手披露定案：公司直接披露 2025Q4 收入 92,096,429 千元（同比 +4.1%）。stockanalysis 的 90,969 是「FY2025 全年 364,855 − Q1~Q3 原披露值合计 273,886」的残差；因公司自 2026Q1 变更收入列示并重述比较期（2025Q1 由 86,557 重述为 86,206），残差低估 1,127。采用公司披露值。"
+    },
+    {
+      "field": "2026Q1 收入",
+      "source1": {
+        "name": "stockanalysis.com 季度利润表",
+        "value": 91039
+      },
+      "source2": {
+        "name": "富途牛牛业绩页公布值 910.389亿",
+        "value": 91038.9
+      },
+      "deviationPct": 0.0,
+      "flag": "ok",
+      "resolution": "两源完全一致，采用 91,039 百万元人民币。"
+    },
+    {
+      "field": "股价（2026-08-10 收盘，HKD）",
+      "source1": {
+        "name": "Tushare hk_daily 03690.HK",
+        "value": 93.9
+      },
+      "source2": {
+        "name": "FMP profile 3690.HK 隐含前收盘（96.05 − 2.15）",
+        "value": 93.9
+      },
+      "deviationPct": 0.0,
+      "flag": "ok",
+      "resolution": "两源完全一致。"
+    },
+    {
+      "field": "总股本",
+      "source1": {
+        "name": "港交所股份变动月报表（截至 2026-07-31）",
+        "value": 6175475542
+      },
+      "source2": {
+        "name": "老虎证券 / 富途牛牛",
+        "value": 6175000000
+      },
+      "deviationPct": 0.01,
+      "flag": "ok",
+      "resolution": "已回港交所月报表核实精确尾数 6,175,475,542 股（A 类 579,152,986 + B 类 5,596,322,556）。第三方 61.75 亿为四舍五入，偏差 0.01%。"
+    },
+    {
+      "field": "FY2025 现金储备口径",
+      "source1": {
+        "name": "美团 FY2025 年报（现金 106,771 + 短期库务投资 60,062）",
+        "value": 166834
+      },
+      "source2": {
+        "name": "stockanalysis（现金 106,771 + 短期投资 10,206）",
+        "value": 116977
+      },
+      "deviationPct": 17.57,
+      "flag": "major-diff",
+      "resolution": "已回 FY2025 年报附注 21 定案，差异**完全可解释**：短期库务投资 60,062 由摊余成本 1,162 + FVOCI 9,044 + FVTPL 49,856 三档构成；stockanalysis 只把前两档（合计 10,206）计入「短期投资」，剔除了占大头的 FVTPL 一档 49,856。采用公司口径 166,834 百万元，与 MD&A 原文「RMB106.8 billion + RMB60.1 billion」一致。"
+    },
+    {
+      "field": "市值（HKD，精确股本）",
+      "source1": {
+        "name": "计算值 93.90 × 6,175,475,542（financial_rigor.py verify-market-cap）",
+        "value": 579877000000
+      },
+      "source2": {
+        "name": "stockanalysis.com 统计页",
+        "value": 579540000000
+      },
+      "deviationPct": 0.06,
+      "flag": "ok",
+      "resolution": "工具判定验证通过。"
+    },
+    {
+      "field": "FY2025 经营亏损",
+      "source1": {
+        "name": "美团 FY2025 年报 分部合计",
+        "value": -25041
+      },
+      "source2": {
+        "name": "stockanalysis 年度利润表",
+        "value": -31036
+      },
+      "deviationPct": 21.4,
+      "flag": "major-diff",
+      "resolution": "口径差异而非数据错误：公司分部合计经营亏损含其他收益净额与未分配项目，第三方口径不同（FY2024 同样呈现 36,845 vs 33,159 的系统性差）。采用公司披露值，经营利润率据此重算为 -6.86%。"
+    },
+    {
+      "field": "FY2025 研发开支",
+      "source1": {
+        "name": "美团 FY2025 年报附注7",
+        "value": 25998
+      },
+      "source2": {
+        "name": "美团 FY2025 年报 MD&A 原文 RMB26.0 billion",
+        "value": 26000
+      },
+      "deviationPct": 0.01,
+      "flag": "ok",
+      "resolution": "报表精确值与 MD&A 约数一致，采用 25,998 百万元；占收入 7.13%（工具验算）。"
+    },
+    {
+      "field": "FY2025 净现金",
+      "source1": {
+        "name": "公司口径推算（现金+短期库务投资−借款−应付票据）",
+        "value": 86551
+      },
+      "source2": {
+        "name": "含租赁负债口径",
+        "value": 80215
+      },
+      "deviationPct": 7.9,
+      "flag": "minor-diff",
+      "resolution": "两个口径均如实记录：不含租赁负债 86,551 百万元，含租赁负债 80,215 百万元。引用时须注明口径。"
+    }
+  ],
+  "recentEvents": {
+    "_note": "2026Q1 后至数据截止日 2026-08-11 的重大变化，供分析维度引用。",
+    "window": "2026-02-05 至 2026-08-11（含 2026Q1 之前的两项重大事项）",
+    "conclusion": "窗口内没有改变投资逻辑主线的新披露：无 2026Q2 业绩、无中期业绩预告、无董事会会议召开日期公告（去年为 8-17 预告、8-27 出中期业绩）。最实质的三件事是提前赎回可转债、独董轮换与审计师续聘高反对率、时隔一年多重启回购。",
+    "items": [
+      {
+        "date": "2026-03-04",
+        "event": "标普（S&P Global Ratings）将美团发行人信用评级由 A- 下调至 BBB+，展望负面。依据之一为到店市场份额由 2024 年末约 70% 降至 2025 年末略高于 50%（该份额口径未注明是否为核销后）",
+        "materiality": "high"
+      },
+      {
+        "date": "2026-02-05",
+        "event": "收购叮咚买菜中国业务：公告初始对价约 7.17 亿美元；同一公告披露估值日 2026-01-31 目标集团股东全部权益公允价值为 10.06 亿美元",
+        "materiality": "medium"
+      },
+      {
+        "date": "2026-04-13",
+        "event": "授出 79,317,581 份 RSU（雇员 79,174,927 + 服务提供者 142,654）",
+        "materiality": "medium"
+      },
+      {
+        "date": "2026-04-24",
+        "event": "刊发 FY2025 年报",
+        "materiality": "high"
+      },
+      {
+        "date": "2026-04-27",
+        "event": "提前赎回 2028 年零息可转债本金 14.814 亿美元（按 101.28%），赎回后仅余 1,860 万美元",
+        "materiality": "high"
+      },
+      {
+        "date": "2026-06-01",
+        "event": "2026Q1 业绩公告：收入 910.39 亿元（+5.6%）、经营亏损 64.70 亿元（-7.1%）、核心本地商业经营亏损 20.30 亿元（-3.2%）；自本季变更收入列示口径并重述比较期",
+        "materiality": "high"
+      },
+      {
+        "date": "2026-06-26",
+        "event": "股东周年大会：独董欧高敦退任、姚建华获委任并接任审核委员会主席；罗兵咸永道续聘议案赞成仅 72.39%、反对 27.61%（B 类股反对 34.38%）；回购与发行授权（各 10%）均获通过",
+        "materiality": "high"
+      },
+      {
+        "date": "2026-06-29 / 06-30",
+        "event": "重启公开市场回购，两日合计 2,924,800 股 B 类股，加权均价约 HKD 68",
+        "materiality": "medium"
+      },
+      {
+        "date": "2026-07-15",
+        "event": "再授出 13,509,283 份 RSU，授出日 B 类股市价 HKD 83.40",
+        "materiality": "medium"
+      },
+      {
+        "date": "2026-08-06",
+        "event": "刊发截至 2026-07-31 股份变动月报表：B 类 5,596,322,556 股、A 类 579,152,986 股，库存股 0",
+        "materiality": "medium"
+      }
+    ],
+    "notDisclosed": {
+      "q2Results": "截至 2026-08-11，公司 IR 公告页最新为 2026-08-06 月报表，未见董事会会议召开日期公告，也未见 2026 年中期业绩或盈利预告。对照上年节奏（2025-08-17 发会议日期、2025-08-27 出中期业绩），今年同期尚未启动。已查范围：公司 IR 公告页 2026 年全部条目。",
+      "keetaDetail": "窗口内公司未就 Keeta 单独发过联交所公告；唯一一手表述来自 2026Q1 业绩公告（成熟市场效率显著改善、新市场增长强劲）。检索到的中文媒体稿经回原文核对为 2025 年旧稿，已弃用。",
+      "subsidyWarData": "窗口内未找到可核验时点的一手/官方外卖竞争格局数据；公司在 2026Q1 公告中未披露单量或份额。第三方券商测算见 competitiveLandscape。"
+    }
+  },
+  "evidenceAppendix": {
+    "_note": "第 2 步取证轮次补写（2026-08-11）。不改动已有 10 个维度既有内容，供维度 Agent 第二轮引用。标注 [估计] 者为第三方测算或本研究推算，非公司披露。",
+    "e1_analystConsensus": {
+      "finding": "2026E 一致预期仍为亏损（EPS -0.56 元），2027E 转正至 EPS 4.07 元、对应净利润约 249 亿元，落在本研究中性（200 亿）与乐观（300 亿）之间。前瞻 PE 66.89 的分母是滚动 12 个月混合口径，不等于任一单一财年一致预期，不可直接对账。",
+      "data": [
+        {
+          "metric": "2026E 一致预期 EPS（均值）",
+          "value": -0.56,
+          "unit": "元/股人民币",
+          "period": "FY2026E",
+          "source": {
+            "name": "stockanalysis.com Forecast（与 Yahoo Finance 一致）",
+            "url": "https://stockanalysis.com/quote/hkg/3690/forecast/"
+          }
+        },
+        {
+          "metric": "2026E EPS 分歧区间 / 覆盖家数",
+          "value": "-1.81 至 0.78 / 23 家",
+          "unit": "元/股人民币",
+          "period": "FY2026E",
+          "source": {
+            "name": "Yahoo Finance 3690.HK Analysis",
+            "url": "https://finance.yahoo.com/quote/3690.HK/analysis"
+          }
+        },
+        {
+          "metric": "2027E 一致预期 EPS（均值）",
+          "value": 4.07,
+          "unit": "元/股人民币",
+          "period": "FY2027E",
+          "source": {
+            "name": "Yahoo Finance 3690.HK Analysis",
+            "url": "https://finance.yahoo.com/quote/3690.HK/analysis"
+          }
+        },
+        {
+          "metric": "2027E EPS 分歧区间 / 覆盖家数",
+          "value": "1.21 至 6.32 / 28 家",
+          "unit": "元/股人民币",
+          "period": "FY2027E",
+          "source": {
+            "name": "Yahoo Finance 3690.HK Analysis",
+            "url": "https://finance.yahoo.com/quote/3690.HK/analysis"
+          }
+        },
+        {
+          "metric": "2027E 一致预期净利润（按 EPS × 股本推算）",
+          "value": "[估计] 249",
+          "unit": "亿元人民币",
+          "period": "FY2027E",
+          "source": {
+            "name": "据 Yahoo 一致预期 EPS 与股本推算",
+            "url": "https://finance.yahoo.com/quote/3690.HK/analysis"
+          }
+        },
+        {
+          "metric": "一致预期收入 2026E/2027E/2028E",
+          "value": "4,019.95 / 4,572.60 / 5,139.13",
+          "unit": "亿元人民币",
+          "period": "FY2026E–FY2028E",
+          "source": {
+            "name": "MarketScreener Meituan Finances",
+            "url": "https://www.marketscreener.com/quote/stock/MEITUAN-47006634/finances"
+          }
+        },
+        {
+          "metric": "一致预期 EBIT 2026E/2027E/2028E",
+          "value": "-92.52 / 231.71 / 377.99",
+          "unit": "亿元人民币",
+          "period": "FY2026E–FY2028E",
+          "source": {
+            "name": "MarketScreener Meituan Finances",
+            "url": "https://www.marketscreener.com/quote/stock/MEITUAN-47006634/finances"
+          }
+        },
+        {
+          "metric": "覆盖机构总数 / 共识目标价",
+          "value": "38 家 / 108.33 港元（区间 57.15–140.29）",
+          "unit": "—",
+          "period": "2026-08-11",
+          "source": {
+            "name": "stockanalysis.com Forecast",
+            "url": "https://stockanalysis.com/quote/hkg/3690/forecast/"
+          }
+        },
+        {
+          "metric": "2028E 一致预期净利润与 EPS",
+          "value": {
+            "status": "unavailable",
+            "reason": "Yahoo 仅到 2027；stockanalysis 2027/2028 为付费项；MarketScreener 公开页仅有收入/EBIT/EBITDA。已查该三源。"
+          },
+          "unit": "—",
+          "period": "FY2028E",
+          "source": {
+            "name": "已查范围见 value.reason",
+            "url": "https://stockanalysis.com/quote/hkg/3690/forecast/"
+          }
+        }
+      ]
+    },
+    "e2_historicalMultiples": {
+      "finding": "取得 2021–2025 各年末 PS 与 PB 序列，已用年报自身收入与归母权益逐年反算校验（误差 <2%）。当前 PS 1.38 低于近 5 年任一年末读数（最低 1.57@2025 年末），处于历史区间下沿之外；PB 3.40 高于 2023 年末低点 3.06。口径限制：仅 5 个年末观测点，不能写成精确历史分位。",
+      "data": [
+        {
+          "metric": "PS 年末值 2021/2022/2023/2024/2025",
+          "value": "6.31 / 4.35 / 1.68 / 2.60 / 1.57",
+          "unit": "倍",
+          "period": "各年 12-31",
+          "source": {
+            "name": "companiesmarketcap.com（已用年报收入逐年反算校验）",
+            "url": "https://companiesmarketcap.com/meituan-dianping/ps-ratio/"
+          }
+        },
+        {
+          "metric": "PB 年末值 2021/2022/2023/2024/2025",
+          "value": "9.00 / 7.43 / 3.06 / 5.10 / 3.80",
+          "unit": "倍",
+          "period": "各年 12-31",
+          "source": {
+            "name": "companiesmarketcap.com（已用年报归母权益逐年反算校验）",
+            "url": "https://companiesmarketcap.com/meituan-dianping/pb-ratio/"
+          }
+        },
+        {
+          "metric": "近 5 年年末 PS 区间 / 中位数",
+          "value": "1.57–6.31 / 2.60",
+          "unit": "倍",
+          "period": "2021-12-31 至 2025-12-31",
+          "source": {
+            "name": "据已校验年末序列计算",
+            "url": "https://companiesmarketcap.com/meituan-dianping/ps-ratio/"
+          }
+        },
+        {
+          "metric": "近 5 年年末 PB 区间 / 中位数",
+          "value": "3.06–9.00 / 5.10",
+          "unit": "倍",
+          "period": "2021-12-31 至 2025-12-31",
+          "source": {
+            "name": "据已校验年末序列计算",
+            "url": "https://companiesmarketcap.com/meituan-dianping/pb-ratio/"
+          }
+        },
+        {
+          "metric": "归母权益变动（口径警示）",
+          "value": "1,726.63 亿元 → 1,510.46 亿元，降 216.17 亿元",
+          "unit": "元人民币",
+          "period": "2024-12-31 → 2025-12-31",
+          "source": {
+            "name": "美团 FY2025 年报 财务概要（当年亏损 233.55 亿元及回购所致，PB 分母被动缩小）",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        }
+      ]
+    },
+    "e3_compensation": {
+      "finding": "关键治理证据：年报明文写明报告期内全部 RSU 授出「均未设任何业绩目标」，购股权亦「仅以在职为条件、无任何业绩目标」——股权激励与订单份额、经营利润、股东回报完全不挂钩。王兴 FY2025 全年酬金仅 526.2 万元且股权激励为零；五名最高薪酬人士（均非董事）合计 9.509 亿元，其中 97.7% 为股权激励。",
+      "data": [
+        {
+          "metric": "王兴 FY2025 酬金（袍金/薪金/花红/退休金/股权激励/合计）",
+          "value": "0 / 504.0 / 0 / 22.2 / 0 / 526.2",
+          "unit": "万元人民币",
+          "period": "FY2025",
+          "source": {
+            "name": "美团 FY2025 年报 附注 8(c)",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        },
+        {
+          "metric": "穆荣均 FY2025 酬金合计",
+          "value": 432.0,
+          "unit": "万元人民币",
+          "period": "FY2025",
+          "source": {
+            "name": "美团 FY2025 年报 附注 8(c)",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        },
+        {
+          "metric": "全体董事 FY2025 酬金合计",
+          "value": 1890.4,
+          "unit": "万元人民币",
+          "period": "FY2025",
+          "source": {
+            "name": "美团 FY2025 年报 附注 8(c)",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        },
+        {
+          "metric": "五名最高薪酬人士合计（均非董事）",
+          "value": "9.509 亿元，其中股权激励 9.293 亿元（占 97.7%）、基本薪金 1,949 万元",
+          "unit": "元人民币",
+          "period": "FY2025",
+          "source": {
+            "name": "美团 FY2025 年报 附注 8(b)",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        },
+        {
+          "metric": "五名最高薪酬人士薪酬分档（各 1 人）",
+          "value": "3,050–3,100 万 / 4,450–4,500 万 / 1.150–1.155 亿 / 1.325–1.330 亿 / 7.350–7.355 亿",
+          "unit": "港元",
+          "period": "FY2025",
+          "source": {
+            "name": "美团 FY2025 年报 附注 8(b)",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        },
+        {
+          "metric": "RSU 归属条件（年报原文）",
+          "value": "All of the grant of RSUs mentioned above during the Reporting Period were made without any performance targets.",
+          "unit": "—",
+          "period": "FY2025",
+          "source": {
+            "name": "美团 FY2025 年报 董事会报告 注(5)",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        },
+        {
+          "metric": "购股权归属条件（年报原文）",
+          "value": "vest in tranches ... on condition that participants remain in service without any performance targets",
+          "unit": "—",
+          "period": "截至 2025-12-31",
+          "source": {
+            "name": "美团 FY2025 年报 附注 33",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        },
+        {
+          "metric": "全集团股份激励费用",
+          "value": "FY2025 60.02 亿元（收入成本 2.07 / 销售营销 9.58 / 研发 26.91 / 一般行政 21.46）；FY2024 75.83 亿元",
+          "unit": "元人民币",
+          "period": "FY2025 / FY2024",
+          "source": {
+            "name": "美团 FY2025 年报 附注 8(a)",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        },
+        {
+          "metric": "王莆中、陈少晖个人薪酬",
+          "value": {
+            "status": "unavailable",
+            "reason": "二人均非董事，港交所披露规则不要求逐名披露；已查 FY2025 年报附注 8(b)/8(c)、企业管治报告薪酬分档、董事会报告股份计划章节，仅有匿名合计或分档口径。"
+          },
+          "unit": "—",
+          "period": "FY2025",
+          "source": {
+            "name": "美团 FY2025 年报",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        }
+      ]
+    },
+    "e4_insiderDealings": {
+      "finding": "2025 全年董事层面基本零交易：王兴与穆荣均的 A/B 类持股在 2024-12-31 至 2025-12-31 间完全未变，穆荣均期内购股权行权数为 0。WangXing Foundation 的 B 类股一年仅减少 23,200 股（-0.05%），属慈善基金会缓慢处置，不构成实质减持。2026-01-01 至 2026-08-11 的 DI 申报未取到可核验记录。",
+      "data": [
+        {
+          "metric": "王兴持股变动（Crown Holdings A 类 / Shared Patience A 类 / WAFO Global B 类）",
+          "value": "489,600,000 / 26,269,783 / 1,121，三项均无变动",
+          "unit": "股",
+          "period": "2024-12-31 → 2025-12-31",
+          "source": {
+            "name": "美团 FY2024、FY2025 年报 董事会报告",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        },
+        {
+          "metric": "穆荣均持股变动（Charmway A/B、Shared Vision B、个人实益 B）",
+          "value": "63,569,388 A + 47,580,612 B / 7,996,668 B / 4,500,000 B，均无变动",
+          "unit": "股",
+          "period": "2024-12-31 → 2025-12-31",
+          "source": {
+            "name": "美团 FY2024、FY2025 年报 董事会报告",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        },
+        {
+          "metric": "穆荣均 FY2025 购股权行权数",
+          "value": 0,
+          "unit": "份",
+          "period": "FY2025",
+          "source": {
+            "name": "美团 FY2025 年报 董事会报告 购股权计划表",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        },
+        {
+          "metric": "WangXing Foundation B 类股（三时点）",
+          "value": "2024-06-30 47,789,542 → 2024-12-31 47,764,042 → 2025-12-31 47,740,842，2025 年内减少 23,200 股（-0.05%）",
+          "unit": "股",
+          "period": "2024-06-30 至 2025-12-31",
+          "source": {
+            "name": "美团 2024 中期报告 / FY2024 年报 / FY2025 年报",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        },
+        {
+          "metric": "2025 年公司回购（唯一一次）",
+          "value": "2025 年 5 月回购 3,018,700 股 B 类股，价格区间 122.60–132.40 港元，总额 3.918 亿港元，已于 2026-03-05 注销",
+          "unit": "股 / 港元",
+          "period": "2025-05",
+          "source": {
+            "name": "美团 FY2025 年报 董事会报告",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        },
+        {
+          "metric": "2026-01-01 至 2026-08-11 的 DI 申报明细",
+          "value": {
+            "status": "unavailable",
+            "reason": "已查 FY2025 年报（截至授权日 2026-03-26 无额外披露）、hkexnews 一手公告检索、中英双语两轮检索。Simply Wall St 页面提示 2026-04-21 联合创始人售股约 2,300 万港元，但无一手申报可核对且该页返回 403，不予采信。"
+          },
+          "unit": "—",
+          "period": "2026-01-01 至 2026-08-11",
+          "source": {
+            "name": "已查范围见 value.reason",
+            "url": "https://www.hkexnews.hk"
+          }
+        }
+      ]
+    },
+    "e5_onDemandSegment": {
+      "finding": "确认到店酒旅确实未单列：FY2025 年报报告分部只有核心本地商业与新业务两个。唯一的官方间接口径来自商誉减值测试的 CGU 假设——到店酒旅 CGU 毛利率 86%–87%、未来 5 年收入增长 5%–12%、税前折现率 23%。第三方测算以华创证券最系统，但均为补贴战前模型，用于 FY2025 需大幅折价。",
+      "data": [
+        {
+          "metric": "到店酒旅 CGU 减值测试关键假设（官方间接口径）",
+          "value": "未来 5 年年收入增长 5%–12%；毛利率 86%–87%；永续增长 2.0%；税前折现率 23%",
+          "unit": "%",
+          "period": "2025-12-31",
+          "source": {
+            "name": "美团 FY2025 年报 附注 16 商誉减值",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        },
+        {
+          "metric": "同上 2024-12-31 假设（对比，明显下修）",
+          "value": "未来 5 年年收入增长 6%–22%；毛利率 87%；税前折现率 23%",
+          "unit": "%",
+          "period": "2024-12-31",
+          "source": {
+            "name": "美团 FY2025 年报 附注 16",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        },
+        {
+          "metric": "外卖 CGU 假设（预警信号，大幅下修）",
+          "value": "5 年收入增速由 3%–13% 改为 -7%–17%（下限转负）；毛利率由 27% 改为 13%–26%；税前折现率由 24% 降至 21%",
+          "unit": "%",
+          "period": "2024-12-31 → 2025-12-31",
+          "source": {
+            "name": "美团 FY2025 年报 附注 16 两年假设表对比",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        },
+        {
+          "metric": "第三方测算：到店业务 FY2024 收入 / OPM / 经营利润",
+          "value": "[估计] 508–627 亿元（中枢 566）/ 32.5%–36.5%（中枢 34.5%）/ 165–229 亿元（中枢 195）",
+          "unit": "元人民币、%",
+          "period": "FY2024E",
+          "source": {
+            "name": "华创证券《解码到店业务的竞争策略》",
+            "url": "https://www.fxbaogao.com/detail/4476035"
+          }
+        },
+        {
+          "metric": "到店酒旅 FY2025 单列收入/GTV/经营利润",
+          "value": {
+            "status": "unavailable",
+            "reason": "两次检索未找到覆盖 FY2025 实际期的到店酒旅三项拆分测算；已有券商模型均止于 2024 年或为补贴战前预测。已查范围：FY2025 年报附注 5 分部报告、2026Q1 业绩公告分部表、中文券商研报检索。"
+          },
+          "unit": "—",
+          "period": "FY2025",
+          "source": {
+            "name": "已查范围见 value.reason",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        }
+      ]
+    },
+    "e6_courierSocialCost": {
+      "finding": "确认公司从未披露任何口径的骑手社保/养老补贴/职伤保障年度支出金额，年报 ESG 章节只有覆盖面与一个五年 100 亿元的同舟基金计划。可核验的替代路径是累计缴费额的三个时点快照，据此推算 2025 自然年新增职伤保费约 11.6 亿元以上。",
+      "data": [
+        {
+          "metric": "职业伤害保障累计缴费 / 累计覆盖人次",
+          "value": "超 25.6 亿元 / 1,668 万人次",
+          "unit": "元人民币、人次",
+          "period": "自 2022-07 试点起截至 2025-12",
+          "source": {
+            "name": "《工人日报》2026-01-16（新华网转载）",
+            "url": "https://www.news.cn/local/20260116/7e820e4990c543baa390b458c2a024bf/c.html"
+          }
+        },
+        {
+          "metric": "累计缴费额（前一时点）",
+          "value": "超 20 亿元，累计覆盖骑手 1,300 万人",
+          "unit": "元人民币、人",
+          "period": "截至 2025-09-30",
+          "source": {
+            "name": "新浪财经 2025-11-02",
+            "url": "https://finance.sina.com.cn/jjxw/2025-11-02/doc-infvxtpf4182483.shtml"
+          }
+        },
+        {
+          "metric": "累计缴费额（更早时点）",
+          "value": "逾 14 亿元，7 省市、超 600 万骑手",
+          "unit": "元人民币、人",
+          "period": "2025-04-03 报道时点",
+          "source": {
+            "name": "新华网 2025-04-03",
+            "url": "http://www.news.cn/tech/20250403/1364afa1dcbd4b528d28c0976689d41f/c.html"
+          }
+        },
+        {
+          "metric": "2025 自然年职伤保费新增额（由累计快照差额推算）",
+          "value": "[估计] 约 11.6 亿元（14 亿@2025-03 → 25.6 亿@2025-12）；其中 Q4 约 5.6 亿元",
+          "unit": "元人民币",
+          "period": "2025 年内",
+          "source": {
+            "name": "据三个官方媒体披露的累计快照差额计算",
+            "url": "https://www.news.cn/local/20260116/7e820e4990c543baa390b458c2a024bf/c.html"
+          }
+        },
+        {
+          "metric": "第三方测算：2025 年美团新增社保成本",
+          "value": "[估计] 约 20 亿元",
+          "unit": "元人民币",
+          "period": "FY2025E",
+          "source": {
+            "name": "国海证券测算，《证券时报》引用",
+            "url": "https://www.stcn.com/article/detail/2041877.html"
+          }
+        },
+        {
+          "metric": "第三方测算：若为 100 万骑手全额缴社保的年成本",
+          "value": "[估计] 约 76.8 亿元（按缴费基数约 4,000 元/月、企业承担 16% 推算）",
+          "unit": "元人民币",
+          "period": "以 2023 年缴费基数为口径",
+          "source": {
+            "name": "中国社科院郑秉文测算，《证券时报》引用",
+            "url": "https://www.stcn.com/article/detail/2041877.html"
+          }
+        },
+        {
+          "metric": "公司年报唯一的金额型披露",
+          "value": "同舟基金五年投入 100 亿元（含建 1,000 个骑手之家），2025 年启动",
+          "unit": "元人民币",
+          "period": "2025–2029",
+          "source": {
+            "name": "美团 FY2025 年报 ESG 报告",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        }
+      ]
+    },
+    "e7_userMetrics": {
+      "finding": "**重要修正**：公司确实自 FY2023 起在年报正文停止披露年度交易用户数与年活跃商家数（最后一次为 FY2022：交易用户 6.78 亿、活跃商家 930 万），但在自有新闻稿层面于 2025 年恢复了里程碑式数字披露——2025Q3 新闻稿（2025-11-28）明确「过去 12 个月的交易用户数突破 8 亿大关」。活跃商户数与留存/复购率则自 FY2022 后再无任何数字口径。",
+      "data": [
+        {
+          "metric": "过去 12 个月交易用户数（新闻稿口径，已恢复披露）",
+          "value": "突破 8 亿",
+          "unit": "人",
+          "period": "截至 2025Q3（新闻稿 2025-11-28）",
+          "source": {
+            "name": "美团官网新闻稿《美团发布 2025 年 Q3 财报：季度营收 955 亿元，年交易用户数破 8 亿》",
+            "url": "https://www.meituan.com/news/NN251128093005515"
+          }
+        },
+        {
+          "metric": "最后一次年报口径年度交易用户数",
+          "value": "6.78 亿（较 2021 年 6.90 亿 -1.8%）",
+          "unit": "人",
+          "period": "FY2022",
+          "source": {
+            "name": "财联社《美团 2022 年成绩单》",
+            "url": "https://m.cls.cn/detail/1304189"
+          }
+        },
+        {
+          "metric": "最后一次年活跃商家数",
+          "value": "930 万（同比 +5.1%）",
+          "unit": "家",
+          "period": "FY2022",
+          "source": {
+            "name": "21经济网",
+            "url": "https://www.21jingji.com/article/20230330/herald/b714d064d19034dbe647d3ee4e496136.html"
+          }
+        },
+        {
+          "metric": "FY2022 用户年均交易笔数",
+          "value": "40.8 笔（同比 +14.1%）",
+          "unit": "笔",
+          "period": "FY2022",
+          "source": {
+            "name": "21经济网",
+            "url": "https://www.21jingji.com/article/20230330/herald/b714d064d19034dbe647d3ee4e496136.html"
+          }
+        },
+        {
+          "metric": "2026Q1 业绩公告中的用户/商户数字",
+          "value": "无。全文未出现年交易用户数或活跃商户数的任何数值，仅有定性表述与词汇表定义条目",
+          "unit": "—",
+          "period": "2026Q1",
+          "source": {
+            "name": "美团 2026Q1 业绩公告（全文检索）",
+            "url": "https://media-meituan.todayir.com/202606011753301715997254_en.pdf"
+          }
+        },
+        {
+          "metric": "用户留存率 / 复购率",
+          "value": {
+            "status": "unavailable",
+            "reason": "已查 FY2025 年报全文、2026Q1 公告全文、公司新闻中心财报稿列表，历史上从未以数字口径披露过留存率或复购率。"
+          },
+          "unit": "—",
+          "period": "FY2022 至今",
+          "source": {
+            "name": "已查范围见 value.reason",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        }
+      ]
+    },
+    "e8_cnnicUserBase": {
+      "finding": "**重要修正**：采集文件的 [估计] 5.45 亿人已过时。一手口径为 CNNIC 第 57 次《中国互联网络发展状况统计报告》（2026-02-05 发布，统计截止 2025 年 12 月）：网上外卖用户 6.30 亿人，较 2024 年 12 月增长 3,748 万人，占网民整体 56.0%。",
+      "data": [
+        {
+          "metric": "网上外卖用户规模",
+          "value": "6.30 亿人",
+          "unit": "人",
+          "period": "截至 2025-12",
+          "source": {
+            "name": "CNNIC 第 57 次《中国互联网络发展状况统计报告》，新浪科技引述原文",
+            "url": "https://finance.sina.com.cn/tech/roll/2026-03-17/doc-inhrfshc8397107.shtml"
+          }
+        },
+        {
+          "metric": "较 2024 年 12 月增量 / 占网民比例",
+          "value": "3,748 万人 / 56.0%（较上年 +2.6 个百分点）",
+          "unit": "人、%",
+          "period": "2024-12 → 2025-12",
+          "source": {
+            "name": "CNNIC 第 57 次报告",
+            "url": "https://finance.sina.com.cn/tech/roll/2026-03-17/doc-inhrfshc8397107.shtml"
+          }
+        },
+        {
+          "metric": "分母：网民规模 / 互联网普及率",
+          "value": "11.25 亿人 / 80.1%",
+          "unit": "人、%",
+          "period": "截至 2025-12",
+          "source": {
+            "name": "新华社（新华网转载）",
+            "url": "https://www.news.cn/politics/20260205/2b0859a2bc4a498ebf0bbaeb07557820/c.html"
+          }
+        },
+        {
+          "metric": "口径混淆警示",
+          "value": "CNNIC《数字消费发展报告（2025）》另给 2025 年上半年网上外卖用户 5.69 亿人，与统计报告口径与时点不同，不可混用",
+          "unit": "人",
+          "period": "2025 年上半年",
+          "source": {
+            "name": "CNNIC《数字消费发展报告（2025）》，《人民论坛》引述",
+            "url": "http://paper.people.com.cn/rmlt/pc/content/202605/18/content_30159244.html"
+          }
+        }
+      ]
+    },
+    "e9_goodwillAndMA": {
+      "finding": "商誉自 2018 年 Mobike 并表后连续多年零变动：2023/2024/2025 三个年末均为 277.74 亿元，FY2024 与 FY2025 均未计提减值。CGU 分配是唯一可审计的逐笔残值：到店酒旅 187.11 亿元（占 67%）、外卖 48.45 亿元、共享单车及电单车 37.07 亿元。叮咚买菜交易的公允价值口径为 10.06 亿美元（估值日 2026-01-31），高于公告的 7.17 亿美元初始对价。",
+      "data": [
+        {
+          "metric": "商誉净账面值（三个年末）",
+          "value": "277.74 亿元（2023/2024/2025 三年完全相同）",
+          "unit": "元人民币",
+          "period": "2023-12-31 / 2024-12-31 / 2025-12-31",
+          "source": {
+            "name": "美团 FY2025 年报 附注 16",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        },
+        {
+          "metric": "FY2025 商誉减值计提",
+          "value": "0（本年新增 0、处置 0；减值测试依 IAS 36 已执行）",
+          "unit": "元",
+          "period": "FY2025",
+          "source": {
+            "name": "美团 FY2025 年报 附注 16",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        },
+        {
+          "metric": "商誉 CGU 分配（2025-12-31）",
+          "value": "到店酒旅 187.11 亿 / 外卖 48.45 亿 / 共享单车及电单车 37.07 亿 / 其他 5.09 亿，合计 277.74 亿",
+          "unit": "元人民币",
+          "period": "2025-12-31",
+          "source": {
+            "name": "美团 FY2025 年报 附注 16",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        },
+        {
+          "metric": "商誉来源（年报原文）",
+          "value": "The goodwill balance mainly arose from the strategic transaction of Meituan and Dianping and business combination of Mobike.",
+          "unit": "—",
+          "period": "截至 2025-12-31",
+          "source": {
+            "name": "美团 FY2025 年报 附注 16",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        },
+        {
+          "metric": "减值测试结论（年报原文）",
+          "value": "Management had not identified any reasonably possible change in key assumptions that could cause carrying amounts of CGUs to exceed the recoverable amounts.",
+          "unit": "—",
+          "period": "2025-12-31",
+          "source": {
+            "name": "美团 FY2025 年报 附注 16",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        },
+        {
+          "metric": "叮咚买菜交易的公允价值口径",
+          "value": "估值日 2026-01-31，目标集团股东全部权益公允价值 10.06 亿美元；股份转让协议日期 2026-02-05",
+          "unit": "美元",
+          "period": "2026-02-05",
+          "source": {
+            "name": "美团《须予披露的交易—收购 Dingdong Fresh Holding Limited 全部已发行股份》公告",
+            "url": "https://stockn.xueqiu.com/83690/20260205640944.pdf"
+          }
+        },
+        {
+          "metric": "上市以来逐笔并购对价明细",
+          "value": {
+            "status": "unavailable",
+            "reason": "FY2025 年报仅以文字提及大众点评与摩拜两笔来源，未给对价；CGU 分配表是唯一的逐笔残值代理。逐笔对价需回 2018 年招股书与 2018 年报，超出本轮检索预算。"
+          },
+          "unit": "—",
+          "period": "2015–2018",
+          "source": {
+            "name": "已查范围见 value.reason",
+            "url": "https://media-meituan.todayir.com/20260424065602168712120049_en.pdf"
+          }
+        }
+      ]
+    },
+    "e10_dianpingShareAfterRedemption": {
+      "finding": "**重要修正**：核销后口径份额测算确实存在，不应写「无」。国信证券测算 2024 年核销后 GTV 美团:抖音约 7:3（同期 GMV 口径为 2:1）；雷峰网称抖音按核销 GMV 口径「交易数据要折半」，即 2025 年约 4,250 亿元。另标普 2026-03-04 将美团评级由 A- 下调至 BBB+（展望负面），依据之一是到店份额由 2024 年末约 70% 降至 2025 年末略高于 50%。",
+      "data": [
+        {
+          "metric": "核销后 GTV 份额（美团:抖音）",
+          "value": "[估计] 7:3（同期 GMV 口径 2:1）",
+          "unit": "比例",
+          "period": "FY2024（报告发布 2024-12-31）",
+          "source": {
+            "name": "国信证券《互联网行业 2025 年投资策略》",
+            "url": "https://pdf.dfcfw.com/pdf/H3_AP202412311641493712_1.pdf"
+          }
+        },
+        {
+          "metric": "抖音 GMV → 核销 GMV 折算系数",
+          "value": "[估计] 约 0.5，隐含 2025 年抖音核销后约 4,250 亿元",
+          "unit": "倍、元人民币",
+          "period": "FY2025",
+          "source": {
+            "name": "雷峰网《抖音生服换挡时刻：GMV 超 8500 亿》",
+            "url": "https://view.inews.qq.com/a/20260302A02P2Q00"
+          }
+        },
+        {
+          "metric": "核销率对比",
+          "value": "[估计] 抖音主站 50%–60%；抖省省约 70%；美团 90% 以上",
+          "unit": "%",
+          "period": "2026 年上半年",
+          "source": {
+            "name": "moomoo 社区深度贴（原文自注统计时点与口径不同）",
+            "url": "http://www.moomoo.com/hans/community/feed/a-guide-to-meituan-down-86-is-it-still-expensive-116876842238358"
+          }
+        },
+        {
+          "metric": "美团:抖音到店份额演变（未注明口径）",
+          "value": "[估计] 由 7:3 演变为约 6:4，美团丢失约 23% 的市场",
+          "unit": "比例、%",
+          "period": "FY2025",
+          "source": {
+            "name": "《经济观察报》，36氪引述",
+            "url": "https://m.36kr.com/p/3765263516107529"
+          }
+        },
+        {
+          "metric": "长期份额判断",
+          "value": "[估计] 传统到店市场中美团与抖音份额长期看维持 2:1",
+          "unit": "比例",
+          "period": "2026 年观点",
+          "source": {
+            "name": "含瑞银在内的多家分析，36氪引述",
+            "url": "https://m.36kr.com/p/3798927572513537"
+          }
+        },
+        {
+          "metric": "同一机构同一时点的双边核销后份额绝对值",
+          "value": {
+            "status": "unavailable",
+            "reason": "两次检索仅找到单边折算系数与比例式表述，未找到任何机构给出两家核销后交易额绝对值并据此计算份额。口径警示：各机构对「到店 GTV」是否含泛娱乐、亲子、近场零售无统一标准。"
+          },
+          "unit": "—",
+          "period": "FY2025",
+          "source": {
+            "name": "已查范围见 value.reason",
+            "url": "https://m.36kr.com/p/3765263516107529"
+          }
+        }
+      ]
+    }
+  }
+}
