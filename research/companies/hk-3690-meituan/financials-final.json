@@ -3,7 +3,7 @@
   "meta": {
     "companyId": "hk-3690-meituan",
     "companyName": "美团 Meituan",
-    "generatedAt": "2026-08-11T12:19:38+08:00",
+    "generatedAt": "2026-08-12T22:30:12+08:00",
     "dataCutoff": "2026-08-11",
     "validation": {
       "threshold": 7.0,
@@ -12,7 +12,7 @@
         "analysis": 10.0,
         "summary": 10.0
       },
-      "validatedAt": "2026-08-11T12:19:38+08:00"
+      "validatedAt": "2026-08-12T22:30:12+08:00"
     },
     "sources": {
       "collection": "research/companies/hk-3690-meituan/financials-collection.json",
@@ -5426,7 +5426,7 @@
     "meta": {
       "companyId": "hk-3690-meituan",
       "companyName": "美团 Meituan",
-      "summarizedAt": "2026-08-11T17:20:00+08:00",
+      "summarizedAt": "2026-08-12T10:00:00+08:00",
       "dataCutoff": "2026-08-11",
       "basedOnCollection": "research/companies/hk-3690-meituan/financials-collection.json",
       "basedOnAnalysis": "research/companies/hk-3690-meituan/financials-analysis.json"
@@ -5479,6 +5479,14 @@
         "conclusion": "PS 1.38 倍低于近 5 年任一年末读数，三情景概率加权三年回报 40.14%、年化 11.91%；便宜但算不上显著低估，PB 3.37 倍仍高于 2023 年末低点。",
         "confidence": 6,
         "scoreBasis": "① dimensions.valuation.analysis.threeScenario 三档目标价 210.14 / 122.60 / 36.24 港元，隐含回报 123.79% / 30.57% / 负 61.41%，中性档年化仅 9.30%。② reverseDcf：扣净现金后隐含正常化净利 211.6 亿元，只有 2027E 共识 249 亿元的 85.0%。③ 反面：PB 3.37 倍高于 2023 年末低点 3.06 约 10.1%；按公司自用税前折现率 21% 至 23% 反推，隐含永续自由现金流需 581.8 至 803.97 亿元。④ 证据限制：PE 与 PEG 不适用，正常化净利 300/250/100 亿元为自上而下假设，故不给高于 6 分。"
+      },
+      {
+        "dimensionId": "corporateCulture",
+        "title": "企业文化",
+        "mapsTo": "dimensions.management.analysis.culture",
+        "conclusion": "执行力强、愿为长期地位牺牲短期利润，且创始人零股权激励、全年零减持；但激励机制普遍不设业绩目标、问责弱，2026Q1 因补贴战外部性遭监管处罚 7.457 亿元。",
+        "confidence": 5.5,
+        "scoreBasis": "① 长期主义：culture 记一年投入上年 524.15 亿元核心利润打补贴战，2026Q1 环比减亏 80.16 亿元证明收放有度，研发强度回升至 7.74%。② 股东同向：alignment.compensation 记王兴 FY2025 股权激励为零、全年零减持。③ 问责弱：五名最高薪酬人士 97.7% 报酬为无业绩目标股权激励，organization.keyPersonRisk 记独董续聘赞成率仅 72.39%。④ 外部性与证据限制：复旦研究（单源）示补贴战期商户利润降 8.9%，2026Q1 被处罚 7.457 亿元，向中性收敛。"
       }
     ],
     "strategies": {

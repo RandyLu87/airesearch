@@ -315,7 +315,7 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
               </article>
             ))}
           </div>
-          <p className="company-note">信心度为价值投资视角下对该维度的看多程度（0–10，越高越看多）；最大风险按可控程度、估值按价格吸引力打分。</p>
+          <p className="company-note">信心度为价值投资视角下对该维度的看多程度（0–10，越高越看多）；最大风险按可控程度、估值按价格吸引力打分；企业文化按文化对长期股东的有利程度打分，结论为基于已落盘证据的客观陈述。</p>
         </Section>
 
         {/* ③ 策略建议（第 3 步产出）：建议 + 触发条件直读，字段溯源折叠 */}

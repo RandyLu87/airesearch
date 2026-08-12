@@ -2,7 +2,8 @@
   "_spec": {
     "purpose": "研究流程第 3 步（分析总结）的产出模板。由评估 Agent 基于第 1 步采集与第 2 步分析的落盘文件生成，不重新采集。步骤正文见 docs/research/workflow/03-analysis-summary.md。",
     "todoSentinel": "所有待填值写 \"__TODO__\"；无法给出的字段不删除，改写 { \"status\": \"unavailable\", \"reason\": \"缺失原因\" }。",
-    "confidence": "信心度总分 10 分（0–10，整数或 0.5 步长）：价值投资视角下对该维度的看多程度，分数越高越看多。梯度：9–10 教科书级优秀（宽护城河/卓越管理层/显著低估）；7–8 明显有利有小瑕疵；5–6 中性或好坏参半；3–4 明显不利；0–2 严重不利。最大风险维度按风险可控程度打分（越致命越低），估值维度按价格吸引力打分（越透支越低）。证据不足向中性收敛并在 scoreBasis 说明，不把数据缺口误报为看空理由。",
+    "confidence": "信心度总分 10 分（0–10，整数或 0.5 步长）：价值投资视角下对该维度的看多程度，分数越高越看多。梯度：9–10 教科书级优秀（宽护城河/卓越管理层/显著低估）；7–8 明显有利有小瑕疵；5–6 中性或好坏参半；3–4 明显不利；0–2 严重不利。最大风险维度按风险可控程度打分（越致命越低），估值维度按价格吸引力打分（越透支越低），企业文化维度按文化对长期股东的有利程度打分（诚信披露、长期主义、股东导向为正；粉饰、短期激进、高管动荡为负）。证据不足向中性收敛并在 scoreBasis 说明，不把数据缺口误报为看空理由。",
+    "corporateCulture": "企业文化维度的 conclusion 是客观陈述，不是印象分：只转述第 2 步 dimensions.management.analysis.culture 及管理层维度其他字段（keyDecisions、alignment、organization）已落盘的可观察证据，不引入前两步文件之外的公司口碑、媒体印象或行业刻板印象，严禁编造。该字段缺失、unavailable 或证据以单源/[估计] 为主时，结论如实写明证据限制，信心度向中性（5–6）收敛。",
     "traceability": "每个结论、评分、建议的 basis 字段必须写明引用的前两步文件字段路径（如 dimensions.valuation.analysis.threeScenario）与关键数据，不接受凭空判断。",
     "strategies": "每条策略建议必须绑定可观察触发条件（价格区间 / 指标阈值 / 具体事件），价格类引用第 2 步 threeScenario 结果，基本面类引用 failurePaths、护城河 breaker 或驱动指标。"
   },
@@ -62,6 +63,14 @@
       "conclusion": "__TODO__",
       "confidence": "__TODO__（0-10）",
       "scoreBasis": "__TODO__"
+    },
+    {
+      "dimensionId": "corporateCulture",
+      "title": "企业文化",
+      "mapsTo": "dimensions.management.analysis.culture",
+      "conclusion": "__TODO__（客观陈述文化特征：只转述第 2 步已落盘的可观察证据，不评价性拔高或贬低；证据不足时如实写明，见 _spec.corporateCulture）",
+      "confidence": "__TODO__（0-10）",
+      "scoreBasis": "__TODO__（引用 dimensions.management.analysis.culture 及管理层维度相关字段的可观察证据；文化证据多为 Level 3 单源事实，评分按证据强度向中性收敛）"
     }
   ],
   "strategies": {

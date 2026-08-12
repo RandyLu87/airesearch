@@ -180,6 +180,15 @@ const fixtureFinal = {
         confidence: 8,
         scoreBasis: "收入结构与留存均有双源数据。",
       },
+      {
+        // 第 3 步的第七个维度（docs/research/workflow/03-analysis-summary.md）：
+        // 结论是转述第 2 步落盘证据的客观陈述，卡片必须与其他维度一样渲染出来。
+        dimensionId: "corporateCulture",
+        title: "企业文化",
+        conclusion: "工程师文化：管理层公开信连续五年逐条复盘错误决策。",
+        confidence: 6.5,
+        scoreBasis: "引用 dimensions.management.analysis.culture；证据为单源 Level 3，向中性收敛。",
+      },
     ],
     strategies: {
       noPosition: { title: "空仓者", advice: "等待回撤到测试区间。", triggers: [] },
@@ -285,6 +294,9 @@ test("publishes a company analysis page from financials-final.json", () => {
   assert.equal(text.includes("发布链路测试公司"), true);
   assert.equal(text.includes("订阅收入占八成"), true);
   assert.equal(text.includes("8 / 10"), true, "confidence score missing");
+  // 企业文化维度卡：结论客观陈述 + 信心度都要出现在页面上，防止「模板加了、前端没显示」。
+  assert.equal(text.includes("工程师文化：管理层公开信连续五年逐条复盘错误决策。"), true, "corporate culture conclusion missing");
+  assert.equal(text.includes("6.5 / 10"), true, "corporate culture confidence missing");
   assert.equal(text.includes("本总结不构成个性化投资建议。"), true);
   // 完整性得分来自合并脚本记录的校验结果。
   assert.equal(text.includes("9.1 / 8.4 / 9.6"), true, "validation scores missing");
