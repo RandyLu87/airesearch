@@ -3,8 +3,8 @@
     "companyId": "us-amd-advanced-micro-devices",
     "companyName": "AMD (Advanced Micro Devices)",
     "analyzedAt": "2026-08-05T23:10+08:00",
-    "updatedAt": "2026-08-09T21:40+08:00(仅刷新 valuation 维度的价格相关字段;其余5个维度经复核内容未变,保留原文)",
-    "dataCutoff": "2026-08-09 21:20(Asia/Shanghai)",
+    "updatedAt": "2026-08-12T21:50+08:00(仅刷新 valuation 维度的价格相关字段,price 483.36→474.32;其余5个维度经复核内容未变,保留原文。本次同步在 businessEssence/moat 相关维度的既有叙述基础上确认 2026-08-06 Taalas 收购不改变结论方向,不重写维度正文)",
+    "dataCutoff": "2026-08-12 21:30(Asia/Shanghai)",
     "basedOnCollection": "research/companies/us-amd-advanced-micro-devices/financials-collection.json"
   },
   "dimensions": {
@@ -1371,46 +1371,46 @@
     },
     "valuation": {
       "title": "估值分析",
-      "conclusion": "当前价(2026-08-07收盘$483.36,较财报前$518.58回落6.8%)仍隐含'AI叙事近乎完美兑现':以FY2026共识EPS $7.46为基数,工具精算显示中性情景(35%增长+30x退出)三年目标价$550.6、+13.9%(股价回落使回报率较8/5口径的+6.2%边际改善,但目标价本身未变,不构成新证据)——市场实质上仍把2027年共识收入~$80B(+61%)和EPS翻倍($13.87)当作基准情形定价,安全边际主要取决于2027共识能否兑现。",
+      "conclusion": "当前价(2026-08-11收盘$474.32,较8/7收盘$483.36回落1.87%,较财报前$518.58回落8.5%)仍隐含'AI叙事近乎完美兑现':以FY2026共识EPS $7.46为基数,工具精算显示中性情景(35%增长+30x退出)三年目标价$550.6、+16.1%(股价延续小幅回落使回报率较8/9口径的+13.9%再边际改善,但目标价本身未变,不构成新证据)——市场实质上仍把2027年共识收入~$80B(+61%)和EPS翻倍($13.87)当作基准情形定价,安全边际主要取决于2027共识能否兑现。",
       "analysis": {
         "currentMultiples": {
           "_hint": "沿用第1步采集(已双源验证并经 financial_rigor 验算)",
           "marketCap": {
-            "value": "788.17B USD(2026-08-07收盘口径,verify-market-cap 偏差0.01%);较8/4财报前845.6B回落6.8%",
-            "asOf": "2026-08-07",
+            "value": "773.43B USD(2026-08-11收盘口径,verify-market-cap偏差0.01%);较8/7收盘788.17B回落1.87%,较8/4财报前845.6B回落8.5%",
+            "asOf": "2026-08-11",
             "source": {
-              "name": "第1步采集(FMP quote/market-cap,2026-08-09复核)",
+              "name": "第1步采集(FMP quote/market-cap,2026-08-12复核)",
               "url": "https://stockanalysis.com/stocks/AMD/"
             },
             "currency": "USD"
           },
           "pe": {
-            "value": "TTM 122.53(工具精算,FMP口径122.68);P/FY26E=64.80(483.36/7.46);P/FY27E=34.85(483.36/13.87)——均经工具精算,较8/5口径(69.51/37.39)因股价回落而下移",
-            "asOf": "2026-08-09",
+            "value": "TTM 120.24(工具精算,FMP口径120.39);P/FY26E=63.58(474.32/7.46);P/FY27E=34.20(474.32/13.87)——均经工具精算,较8/9口径(122.53/64.80/34.85)因股价延续小幅回落而下移",
+            "asOf": "2026-08-12",
             "source": {
               "name": "第1步采集 + financial_rigor calc",
               "url": "https://stockanalysis.com/stocks/amd/forecast/"
             }
           },
           "ps": {
-            "value": "TTM 19.08(FMP)/≈19.09(推算,revenuePerShareTTM $25.32)",
-            "asOf": "2026-08-09",
+            "value": "TTM 18.72(FMP)/≈18.74(推算,revenuePerShareTTM $25.32不变)",
+            "asOf": "2026-08-12",
             "source": {
               "name": "第1步采集",
               "url": "https://stockanalysis.com/stocks/AMD/statistics/"
             }
           },
           "peg": {
-            "value": "0.99(FMP,TTM增长率口径)/0.78(stockanalysis,2026-08-05采集,远期共识增长率口径)——两口径不可比,不计误差率,并列参考",
-            "asOf": "2026-08-09",
+            "value": "0.97(FMP,TTM增长率口径,forward口径1.22)/0.78(stockanalysis,2026-08-05采集,远期共识增长率口径)——两口径不可比,不计误差率,并列参考",
+            "asOf": "2026-08-12",
             "source": {
               "name": "第1步采集",
               "url": "https://stockanalysis.com/stocks/AMD/statistics/"
             }
           },
           "evToRevenue": {
-            "value": "19.06(FMP evToSalesTTM)/≈19.07(推算,净现金口径复核)——本次两来源已收敛一致",
-            "asOf": "2026-08-09",
+            "value": "18.71(FMP evToSalesTTM)/≈18.70(推算,净现金口径复核)——两来源持续收敛一致",
+            "asOf": "2026-08-12",
             "source": {
               "name": "第1步采集",
               "url": "https://stockanalysis.com/stocks/AMD/statistics/"
@@ -1422,9 +1422,9 @@
           "assumptions": "贴现率10%([估计],成长半导体8-12%取中);年限5-10年双口径;终值退出PE 25-30x(对标NVDA TTM 32.5x与成熟半导体上限);未计或有稀释——若OpenAI/Meta权证全归属(+~3.2亿股,~20%),隐含增长要求再上浮约两成[估计]"
         },
         "threeScenario": {
-          "_hint": "由主会话运行 docs/research/tools/financial_rigor.py three-scenario 精确计算,禁止心算;2026-08-09 复核仅刷新 price 输入(483.36,原518.58),EPS/增速/退出PE假设未变(4天内无新共识预测发布)",
+          "_hint": "由主会话运行 docs/research/tools/financial_rigor.py three-scenario 精确计算,禁止心算;2026-08-12 复核仅刷新 price 输入(474.32,原483.36),EPS/增速/退出PE假设未变(3天内无新共识预测发布)",
           "inputs": {
-            "price": 483.36,
+            "price": 474.32,
             "eps": 7.46,
             "sharesHundredMillion": 16.3045,
             "growth": [
@@ -1442,22 +1442,22 @@
           },
           "optimistic": {
             "targetPrice": "USD 1,111.2(目标EPS 27.78 × 40x)",
-            "impliedReturnPct": "+129.9%"
+            "impliedReturnPct": "+134.3%"
           },
           "neutral": {
             "targetPrice": "USD 550.6(目标EPS 18.35 × 30x)",
-            "impliedReturnPct": "+13.9%"
+            "impliedReturnPct": "+16.1%"
           },
           "pessimistic": {
             "targetPrice": "USD 198.6(目标EPS 9.93 × 20x)",
-            "impliedReturnPct": "-58.9%"
+            "impliedReturnPct": "-58.1%"
           },
-          "assumptionBasis": "EPS基数$7.46=FY2026共识(47位分析师,stockanalysis/S&P Global,2026-08-05采集值,4天内未见新共识修订;不用TTM GAAP $3.90,其含Xilinx摊销与权证费用系统性低估经营盈利)。增速:乐观55%(共识FY2027 EPS已隐含+86%后温和减速[估计]);中性35%(公司长期收入增速>35%目标,26Q2实际+50%/Q3指引+41%);悲观10%(AI capex消化周期,参照2022-23下行,与$400空方目标自洽[估计])。退出PE:乐观40x(当前Fwd口径44x附近,NVDA高增期35-45x[估计]);中性30x(对标NVDA当前TTM 32.46x);悲观20x(对标NVDA Fwd 21.22x/TSM 19.32x的成熟半导体中枢)。目标股价(美元绝对值)由EPS×退出PE决定,与现价无关,故三档不变;回报率因现价从518.58降至483.36(-6.8%)而全线上移,中性情形回报从+6.2%升至+13.9%,但绝对目标价$550.6本身并未上调,不构成新的看多证据",
-          "toolOutput": "乐观(Bull) 55% 40x → EPS 27.78 → $1,111.2 (+129.9%);中性(Base) 35% 30x → EPS 18.35 → $550.6 (+13.9%);悲观(Bear) 10% 20x → EPS 9.93 → $198.6 (-58.9%)。✅ 精确十进制,financial_rigor three-scenario,2026-08-09(price=483.36复核)"
+          "assumptionBasis": "EPS基数$7.46=FY2026共识(47位分析师,stockanalysis/S&P Global,2026-08-05采集值,4天内未见新共识修订;不用TTM GAAP $3.90,其含Xilinx摊销与权证费用系统性低估经营盈利)。增速:乐观55%(共识FY2027 EPS已隐含+86%后温和减速[估计]);中性35%(公司长期收入增速>35%目标,26Q2实际+50%/Q3指引+41%);悲观10%(AI capex消化周期,参照2022-23下行,与$400空方目标自洽[估计])。退出PE:乐观40x(当前Fwd口径44x附近,NVDA高增期35-45x[估计]);中性30x(对标NVDA当前TTM 32.46x);悲观20x(对标NVDA Fwd 21.22x/TSM 19.32x的成熟半导体中枢)。目标股价(美元绝对值)由EPS×退出PE决定,与现价无关,故三档不变;回报率因现价从483.36降至474.32(-1.87%)而继续小幅上移,中性情形回报从+13.9%升至+16.1%,但绝对目标价$550.6本身并未上调,不构成新的看多证据",
+          "toolOutput": "乐观(Bull) 55% 40x → EPS 27.78 → $1,111.2 (+134.3%);中性(Base) 35% 30x → EPS 18.35 → $550.6 (+16.1%);悲观(Bear) 10% 20x → EPS 9.93 → $198.6 (-58.1%)。✅ 精确十进制,financial_rigor three-scenario,2026-08-12(price=474.32复核)"
         },
         "vsOwnHistory": {
           "metric": "PE(TTM)",
-          "currentValue": "122.53(2026-08-09复核,工具精算);此前8/5口径125.7-133",
+          "currentValue": "120.24(2026-08-12复核,工具精算);此前8/9口径122.53,8/5口径125.7-133",
           "historicalRange": "财年末PE:2021年43.8x、2022年45.9x、2023年1,144.9x(失真:Xilinx摊销把GAAP净利压到近零)、2024年107.3x、2025年78.4x;2021-2025中位数78.4x。当前TTM PE处于历史高位区,但与2024-25同为'GAAP利润被摊销/权证费用压低'的口径;更可比的Fwd口径(P/FY26E≈64.8x,2026-08-09复核较8/5的65-70x区间边际回落)仍显著高于2021-22年43-46x水平。注:历史序列取自finbox/fullratio检索摘要,单层验证(macrotrends/fullratio直连403)",
           "source": {
             "name": "finbox(P/E LTM by FY),单层验证",
@@ -1515,13 +1515,13 @@
           {
             "name": "对比结论",
             "peTtm": "AMD TTM ~126-133为组内最高",
-            "peForward": "AMD P/FY26E≈64.8x(2026-08-09复核)高于NVDA(21x)/AVGO(27x)/TSM(19x),仅与INTC(61x,重组期低基数)相仿;溢价全部押在2027年EPS翻倍上——若达成,P/FY27E≈34.9x回到'贵但可辩护'区间",
+            "peForward": "AMD P/FY26E≈63.6x(2026-08-12复核)高于NVDA(21x)/AVGO(27x)/TSM(19x),仅与INTC(61x,重组期低基数)相仿;溢价全部押在2027年EPS翻倍上——若达成,P/FY27E≈34.2x回到'贵但可辩护'区间",
             "ps": "AMD PS 20.47与NVDA 20.25几乎持平,但NVDA净利率远高——同PS下AMD隐含的利润率改善预期更激进",
             "source": {
               "name": "综合上述各页 + financial_rigor calc",
               "url": "https://stockanalysis.com/stocks/amd/forecast/"
             },
-            "pe": "TTM AMD TTM ≈122.5x(2026-08-09复核,此前8/5为126-133)为组内最高 / Fwd AMD P/FY26E≈64.8x 高于NVDA(21x)/AVGO(27x)/TSM(19x),仅与INTC(61x,重组期低基数)相仿;溢价全部押在2027年EPS翻倍上——若达成,P/FY27E≈34.9x回到'贵但可辩护'区间"
+            "pe": "TTM AMD TTM ≈120.2x(2026-08-12复核,此前8/9为122.5x、8/5为126-133x)为组内最高 / Fwd AMD P/FY26E≈63.6x 高于NVDA(21x)/AVGO(27x)/TSM(19x),仅与INTC(61x,重组期低基数)相仿;溢价全部押在2027年EPS翻倍上——若达成,P/FY27E≈34.2x回到'贵但可辩护'区间"
           }
         ],
         "consensus": {
@@ -1565,6 +1565,20 @@
     }
   },
   "crossValidationLog": [
+    {
+      "field": "三情景估值(3年,2026-08-12复核)",
+      "source1": {
+        "name": "financial_rigor three-scenario(price 474.32, EPS 7.46, growth 55/35/10%, PE 40/30/20)",
+        "value": "乐观$1,111.2(+134.3%)/中性$550.6(+16.1%)/悲观$198.6(-58.1%)"
+      },
+      "source2": {
+        "name": "输入依据不变:stockanalysis共识+NVDA/TSM倍数锚(见 threeScenario.assumptionBasis)",
+        "value": "目标股价绝对值与8/9(price=483.36)、8/5(price=518.58)口径一致,仅回报率随现价变动"
+      },
+      "deviationPct": 0,
+      "flag": "ok",
+      "resolution": "精确十进制计算,可审计复现;三轮复核目标价未变,确认价格下移未改变估值假设本身"
+    },
     {
       "field": "三情景估值(3年)",
       "source1": {
