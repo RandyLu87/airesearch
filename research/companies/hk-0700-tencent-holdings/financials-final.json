@@ -1,0 +1,2551 @@
+{
+  "finalVersion": "1.0.0",
+  "meta": {
+    "companyId": "hk-0700-tencent-holdings",
+    "companyName": "腾讯控股有限公司 (Tencent Holdings Limited)",
+    "generatedAt": "2026-08-19T15:32:32+08:00",
+    "dataCutoff": "2026-08-19（Asia/Shanghai）；最新已披露季报为2026年第二季度（截至2026-06-30，2026-08-12发布，已纳入本次采集）",
+    "validation": {
+      "threshold": 7.0,
+      "scores": {
+        "collection": 9.6,
+        "analysis": 9.7,
+        "summary": 10.0
+      },
+      "validatedAt": "2026-08-19T15:32:32+08:00"
+    },
+    "sources": {
+      "collection": "research/companies/hk-0700-tencent-holdings/financials-collection.json",
+      "analysis": "research/companies/hk-0700-tencent-holdings/financials-analysis.json",
+      "summary": "research/companies/hk-0700-tencent-holdings/financials-summary.json"
+    }
+  },
+  "collection": {
+    "meta": {
+      "companyId": "hk-0700-tencent-holdings",
+      "companyName": "腾讯控股有限公司 (Tencent Holdings Limited)",
+      "ticker": "00700.HK（港币柜台）/ 80700.HK（人民币柜台）；美股OTC非保荐ADR代码 TCEHY（1 ADS = 1 普通股）",
+      "exchange": "香港联合交易所主板（主要上市地，2004-06-16上市）；美股OTC非保荐ADR",
+      "market": "hk",
+      "reportingCurrency": "RMB (CNY)",
+      "accountingBasis": "IFRS（国际财务报告准则）；财报同时披露公司自定义的Non-IFRS调整后利润（剔除股份酬金、投资公司损益、无形资产摊销、减值拨备、SSV&CPP捐赠等项目）",
+      "fiscalYearEnd": "12月31日",
+      "dataCutoff": "2026-08-19（Asia/Shanghai）；最新已披露季报为2026年第二季度（截至2026-06-30，2026-08-12发布，已纳入本次采集）",
+      "collectedAt": "2026-08-19",
+      "sources": {
+        "primary": {
+          "name": "Tencent 官方投资者关系网站及新闻稿（IR@tencent.com）",
+          "url": "https://www.tencent.com/investors/results"
+        },
+        "secondary": {
+          "name": "stockanalysis.com (HKG:700 / TCEHY)",
+          "url": "https://stockanalysis.com/quote/hkg/0700/"
+        },
+        "originalFilings": [
+          {
+            "type": "季报新闻稿",
+            "period": "2Q2026（截至2026-06-30）",
+            "url": "https://www.tencent.com/wp-content/uploads/2026/08/Tencent-Announces-2026-Second-Quarter-Results.pdf"
+          },
+          {
+            "type": "季报新闻稿",
+            "period": "3Q2025（截至2025-09-30）",
+            "url": "https://static.www.tencent.com/uploads/2025/11/13/e63656944030f90a5e4c8f1718d8bdd6.pdf"
+          },
+          {
+            "type": "年报+第四季度新闻稿",
+            "period": "FY2025 / 4Q2025（截至2025-12-31）",
+            "url": "https://static.www.tencent.com/uploads/2026/03/18/e6a646796d0d869acc76271c9ee1a6a5.pdf"
+          },
+          {
+            "type": "年报+第四季度新闻稿",
+            "period": "FY2021 / 4Q2021（截至2021-12-31）",
+            "url": "https://static.www.tencent.com/uploads/2022/03/23/b107f5a267bf6a7d00fd8373cd841558.pdf"
+          },
+          {
+            "type": "年报+第四季度新闻稿（官方公告数字经财经媒体转载核实）",
+            "period": "FY2022（截至2022-12-31）",
+            "url": "https://static.www.tencent.com/uploads/2023/03/22/8d304603bd688ad947575f738ce62fca.pdf"
+          },
+          {
+            "type": "年报+第四季度新闻稿（官方公告数字经财经媒体转载核实）",
+            "period": "FY2023（截至2023-12-31）",
+            "url": "https://static.www.tencent.com/uploads/2024/03/20/bf2dcfef256a1e4dd70883e29f48c23b.pdf"
+          }
+        ]
+      }
+    },
+    "revenueStructure": {
+      "_dimension": "1. 收入结构：最近财年及近4季度分部收入、增速、毛利率",
+      "latestFiscalYear": {
+        "period": "FY2025（截至2025-12-31）",
+        "totalRevenue": {
+          "value": 751766,
+          "unit": "RMB million",
+          "currency": "RMB",
+          "source1": {
+            "name": "Tencent官方FY2025/4Q2025新闻稿",
+            "url": "https://static.www.tencent.com/uploads/2026/03/18/e6a646796d0d869acc76271c9ee1a6a5.pdf",
+            "value": 751766
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "value": 751766
+          },
+          "deviationPct": 0,
+          "flag": "ok"
+        },
+        "segments": [
+          {
+            "name": "增值服务(VAS)",
+            "revenue": {
+              "value": 369281,
+              "unit": "RMB million",
+              "currency": "RMB",
+              "source1": {
+                "name": "官方FY2025新闻稿",
+                "value": 369281
+              },
+              "source2": {
+                "name": "stockanalysis.com/新浪财经转载官方数字",
+                "value": 369300
+              },
+              "deviationPct": 0.005,
+              "flag": "ok"
+            },
+            "revenueSharePct": 49.13,
+            "yoyGrowthPct": 16,
+            "grossMarginPct": {
+              "status": "unavailable",
+              "reason": "官方FY2025新闻稿未按分部披露年度毛利率，仅披露集团整体毛利率(56%)；已查官方年报/季报新闻稿全文，分部毛利率仅在季度新闻稿的季度MD&A中披露（见recentQuarters）"
+            }
+          },
+          {
+            "name": "网络广告(Marketing Services)",
+            "revenue": {
+              "value": 144973,
+              "unit": "RMB million",
+              "currency": "RMB",
+              "source1": {
+                "name": "官方FY2025新闻稿",
+                "value": 144973
+              },
+              "source2": {
+                "name": "stockanalysis.com",
+                "value": 145000
+              },
+              "deviationPct": 0.02,
+              "flag": "ok"
+            },
+            "revenueSharePct": 19.28,
+            "yoyGrowthPct": 19,
+            "grossMarginPct": {
+              "status": "unavailable",
+              "reason": "同上，官方年度新闻稿未按分部披露毛利率"
+            }
+          },
+          {
+            "name": "金融科技与企业服务",
+            "revenue": {
+              "value": 229435,
+              "unit": "RMB million",
+              "currency": "RMB",
+              "source1": {
+                "name": "官方FY2025新闻稿",
+                "value": 229435
+              },
+              "source2": {
+                "name": "stockanalysis.com",
+                "value": 229400
+              },
+              "deviationPct": 0.02,
+              "flag": "ok"
+            },
+            "revenueSharePct": 30.52,
+            "yoyGrowthPct": 8,
+            "grossMarginPct": {
+              "status": "unavailable",
+              "reason": "同上"
+            }
+          },
+          {
+            "name": "其他",
+            "revenue": {
+              "value": 8077,
+              "unit": "RMB million",
+              "currency": "RMB",
+              "source1": {
+                "name": "官方FY2025新闻稿",
+                "value": 8077
+              },
+              "source2": null,
+              "deviationPct": null,
+              "flag": "官方单一口径"
+            },
+            "revenueSharePct": 1.07,
+            "yoyGrowthPct": 4.1,
+            "grossMarginPct": {
+              "status": "unavailable",
+              "reason": "同上"
+            }
+          }
+        ]
+      },
+      "recentQuarters": [
+        {
+          "period": "3Q2025（截至2025-09-30）",
+          "totalRevenue": {
+            "value": 192869,
+            "unit": "RMB million",
+            "currency": "RMB",
+            "source1": {
+              "name": "官方3Q2025新闻稿",
+              "url": "https://static.www.tencent.com/uploads/2025/11/13/e63656944030f90a5e4c8f1718d8bdd6.pdf",
+              "value": 192869
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "value": 192869
+            },
+            "deviationPct": 0,
+            "flag": "ok"
+          },
+          "yoyGrowthPct": 15,
+          "segments": [
+            {
+              "name": "VAS",
+              "revenue": 95860,
+              "yoyGrowthPct": 16,
+              "grossMarginPct": 61,
+              "grossProfit": 58623
+            },
+            {
+              "name": "网络广告",
+              "revenue": 36242,
+              "yoyGrowthPct": 21,
+              "grossMarginPct": 57,
+              "grossProfit": 20551
+            },
+            {
+              "name": "金融科技与企业服务",
+              "revenue": 58174,
+              "yoyGrowthPct": 10,
+              "grossMarginPct": 50,
+              "grossProfit": 29210
+            },
+            {
+              "name": "其他",
+              "revenue": 2593,
+              "yoyGrowthPct": 83,
+              "grossMarginPct": 16,
+              "grossProfit": 414
+            }
+          ]
+        },
+        {
+          "period": "4Q2025（截至2025-12-31）",
+          "totalRevenue": {
+            "value": 194371,
+            "unit": "RMB million",
+            "currency": "RMB",
+            "source1": {
+              "name": "官方FY2025/4Q2025新闻稿",
+              "value": 194371
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "value": 194371
+            },
+            "deviationPct": 0,
+            "flag": "ok"
+          },
+          "yoyGrowthPct": 13,
+          "segments": [
+            {
+              "name": "VAS",
+              "revenue": 89920,
+              "yoyGrowthPct": 14,
+              "note": "官方MD&A：国内游戏38.2十亿元(+15%)，国际游戏21.1十亿元(+32%)，社交网络30.6十亿元(+3%)"
+            },
+            {
+              "name": "网络广告",
+              "revenue": 41116,
+              "yoyGrowthPct": 17
+            },
+            {
+              "name": "金融科技与企业服务",
+              "revenue": 60818,
+              "yoyGrowthPct": 8
+            },
+            {
+              "name": "其他",
+              "revenue": 2517,
+              "yoyGrowthPct": null
+            }
+          ]
+        },
+        {
+          "period": "1Q2026（截至2026-03-31）",
+          "totalRevenue": {
+            "value": 196458,
+            "unit": "RMB million",
+            "currency": "RMB",
+            "source1": {
+              "name": "官方2Q2026新闻稿（环比对比列）",
+              "value": 196458
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "value": 196458
+            },
+            "deviationPct": 0,
+            "flag": "ok"
+          },
+          "yoyGrowthPct": 9,
+          "note": "官方2Q2026新闻稿未在本次采集中重复披露1Q2026分部拆分，来自3月分析师报告(CMBI 2026-05-14)引用官方口径：游戏收入642亿元(+8%)，营销服务382亿元(+20%)",
+          "segments": [
+            {
+              "name": "VAS",
+              "revenue": 96110,
+              "yoyGrowthPct": {
+                "status": "unavailable",
+                "reason": "本次采集未单独抓取1Q2026官方新闻稿原文，仅取自2Q2026新闻稿环比对比列的绝对值"
+              }
+            },
+            {
+              "name": "网络广告",
+              "revenue": 38171,
+              "yoyGrowthPct": 20
+            },
+            {
+              "name": "金融科技与企业服务",
+              "revenue": 59885,
+              "yoyGrowthPct": null
+            },
+            {
+              "name": "其他",
+              "revenue": 2292,
+              "yoyGrowthPct": null
+            }
+          ]
+        },
+        {
+          "period": "2Q2026（截至2026-06-30）",
+          "totalRevenue": {
+            "value": 204785,
+            "unit": "RMB million",
+            "currency": "RMB",
+            "source1": {
+              "name": "官方2Q2026新闻稿",
+              "url": "https://www.tencent.com/wp-content/uploads/2026/08/Tencent-Announces-2026-Second-Quarter-Results.pdf",
+              "value": 204785
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "value": 204785
+            },
+            "deviationPct": 0,
+            "flag": "ok"
+          },
+          "yoyGrowthPct": 11,
+          "segments": [
+            {
+              "name": "VAS",
+              "revenue": 98414,
+              "yoyGrowthPct": 8,
+              "note": "国内游戏473亿元(+17%)，国际游戏186亿元(-0.8%，固定汇率+4%)，社交网络325亿元(+0.8%)"
+            },
+            {
+              "name": "网络广告",
+              "revenue": 43565,
+              "yoyGrowthPct": 22
+            },
+            {
+              "name": "金融科技与企业服务",
+              "revenue": 60286,
+              "yoyGrowthPct": 9
+            },
+            {
+              "name": "其他",
+              "revenue": 2520,
+              "yoyGrowthPct": 37
+            }
+          ]
+        }
+      ]
+    },
+    "financialMetrics": {
+      "_dimension": "2. 财务指标：近5年收入、净利润、毛利率、经营利润率、自由现金流、现金储备",
+      "annual": [
+        {
+          "fiscalYear": "FY2021",
+          "revenue": {
+            "value": 560118,
+            "unit": "RMB million",
+            "currency": "RMB",
+            "source1": {
+              "name": "官方FY2021新闻稿",
+              "value": 560118
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "value": 560118
+            },
+            "deviationPct": 0,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": 224822,
+            "unit": "RMB million",
+            "currency": "RMB",
+            "note": "IFRS归母净利润；Non-IFRS归母净利润123,788百万元",
+            "source1": {
+              "name": "官方FY2021新闻稿",
+              "value": 224822
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "value": 224822
+            },
+            "deviationPct": 0,
+            "flag": "ok"
+          },
+          "grossMarginPct": 43.91,
+          "operatingMarginPct": 48,
+          "operatingMarginNote": "官方IFRS经营利润率（经营利润271,620/收入560,118=48.5%，含投资公司出售等大额其他收益）；stockanalysis.com按其标准化口径计算为22.11%——口径不可比（该口径剔除大额一次性投资收益），非数据误差",
+          "freeCashFlow": {
+            "status": "unavailable",
+            "reason": "官方2021年度新闻稿未披露自由现金流/经营活动现金流headline指标（该指标自2024年后新闻稿才常态化披露）；stockanalysis.com现金流量表页面仅展示近4年+TTM(2022起)，未覆盖2021年，已查两处来源均无法取得"
+          },
+          "cashReserves": {
+            "value": 253528,
+            "unit": "RMB million",
+            "currency": "RMB",
+            "note": "现金及现金等价物167,966 + 短期投资85,562（stockanalysis.com资产负债表口径）；官方仅披露期末净债务(20,243)（净债务转负，反映当年债务超过现金储备）",
+            "source1": {
+              "name": "stockanalysis.com",
+              "value": 253528
+            },
+            "source2": null,
+            "deviationPct": null,
+            "flag": "仅单源（官方未披露对应的现金+短期投资加总口径，仅披露净现金/净债务）"
+          }
+        },
+        {
+          "fiscalYear": "FY2022",
+          "revenue": {
+            "value": 554552,
+            "unit": "RMB million",
+            "currency": "RMB",
+            "source1": {
+              "name": "官方FY2022新闻稿（经北京商报/36氪转载核实）",
+              "value": 554552
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "value": 554552
+            },
+            "deviationPct": 0,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": 188243,
+            "unit": "RMB million",
+            "currency": "RMB",
+            "note": "IFRS归母净利润；Non-IFRS归母净利润115,649百万元",
+            "source1": {
+              "name": "官方FY2022新闻稿",
+              "value": 188243
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "value": 188243
+            },
+            "deviationPct": 0,
+            "flag": "ok"
+          },
+          "grossMarginPct": 43.08,
+          "operatingMarginPct": 43,
+          "operatingMarginNote": "官方IFRS经营利润率43%（新闻稿列示口径，2022年因大额投资减值拖累）；stockanalysis.com标准化口径19.99%，口径不可比同上",
+          "freeCashFlow": {
+            "value": 123412,
+            "unit": "RMB million",
+            "currency": "RMB",
+            "note": "经营现金流-资本支出口径（stockanalysis.com）",
+            "source1": {
+              "name": "stockanalysis.com",
+              "value": 123412
+            },
+            "source2": null,
+            "deviationPct": null,
+            "flag": "仅单源"
+          },
+          "cashReserves": {
+            "value": 262793,
+            "unit": "RMB million",
+            "currency": "RMB",
+            "note": "现金及现金等价物156,739 + 短期投资106,054（stockanalysis.com）",
+            "source1": {
+              "name": "stockanalysis.com",
+              "value": 262793
+            },
+            "source2": null,
+            "deviationPct": null,
+            "flag": "仅单源"
+          }
+        },
+        {
+          "fiscalYear": "FY2023",
+          "revenue": {
+            "value": 609015,
+            "unit": "RMB million",
+            "currency": "RMB",
+            "source1": {
+              "name": "官方FY2023新闻稿（经界面新闻转载核实）",
+              "value": 609015
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "value": 609015
+            },
+            "deviationPct": 0,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": 115216,
+            "unit": "RMB million",
+            "currency": "RMB",
+            "note": "IFRS归母净利润（同比-39%，主因投资公司减值及处置损失）；Non-IFRS归母净利润157,688百万元",
+            "source1": {
+              "name": "官方FY2023新闻稿（经界面新闻转载核实）",
+              "value": 115216
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "value": 115216
+            },
+            "deviationPct": 0,
+            "flag": "ok"
+          },
+          "grossMarginPct": 48.13,
+          "operatingMarginPct": 26.76,
+          "operatingMarginNote": "stockanalysis.com标准化口径；官方新闻稿原文确认FY2023毛利率48%（与2024年新闻稿'毛利率提升至53%，上年48%'一致），经营利润率未见官方单独headline",
+          "freeCashFlow": {
+            "value": 200954,
+            "unit": "RMB million",
+            "currency": "RMB",
+            "source1": {
+              "name": "stockanalysis.com",
+              "value": 200954
+            },
+            "source2": null,
+            "deviationPct": null,
+            "flag": "仅单源"
+          },
+          "cashReserves": {
+            "value": 364252,
+            "unit": "RMB million",
+            "currency": "RMB",
+            "note": "现金及现金等价物172,320 + 短期投资191,932（stockanalysis.com）",
+            "source1": {
+              "name": "stockanalysis.com",
+              "value": 364252
+            },
+            "source2": null,
+            "deviationPct": null,
+            "flag": "仅单源"
+          }
+        },
+        {
+          "fiscalYear": "FY2024",
+          "revenue": {
+            "value": 660257,
+            "unit": "RMB million",
+            "currency": "RMB",
+            "source1": {
+              "name": "官方FY2025新闻稿(比较列，audited)",
+              "value": 660257
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "value": 660257
+            },
+            "deviationPct": 0,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": 194073,
+            "unit": "RMB million",
+            "currency": "RMB",
+            "note": "IFRS归母净利润；Non-IFRS归母净利润222,703百万元",
+            "source1": {
+              "name": "官方FY2025新闻稿(比较列，audited)",
+              "value": 194073
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "value": 194073
+            },
+            "deviationPct": 0,
+            "flag": "ok"
+          },
+          "grossMarginPct": 52.9,
+          "operatingMarginPct": 32,
+          "operatingMarginNote": "官方IFRS经营利润率32%（经营利润208,099百万元/收入660,257百万元=31.5%，四舍五入为32%，与官方新闻稿列示一致；此前版本误将FY2025经营利润241,562代入FY2024分子计算，属主会话计算错误，已订正）",
+          "freeCashFlow": {
+            "value": 195594,
+            "unit": "RMB million",
+            "currency": "RMB",
+            "source1": {
+              "name": "stockanalysis.com",
+              "value": 195594
+            },
+            "source2": null,
+            "deviationPct": null,
+            "flag": "仅单源（官方FY2024年报未在本次采集范围内单独抓取自由现金流headline）"
+          },
+          "cashReserves": {
+            "value": 328841,
+            "unit": "RMB million",
+            "currency": "RMB",
+            "note": "现金及现金等价物132,519 + 短期投资196,322（stockanalysis.com）；对照官方资产负债表现金及现金等价物132,519与短期定存/理财等口径接近",
+            "source1": {
+              "name": "stockanalysis.com",
+              "value": 328841
+            },
+            "source2": {
+              "name": "官方FY2025新闻稿资产负债表(比较列)",
+              "value": 328841
+            },
+            "deviationPct": 0,
+            "flag": "ok"
+          }
+        },
+        {
+          "fiscalYear": "FY2025",
+          "revenue": {
+            "value": 751766,
+            "unit": "RMB million",
+            "currency": "RMB",
+            "source1": {
+              "name": "官方FY2025新闻稿",
+              "value": 751766
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "value": 751766
+            },
+            "deviationPct": 0,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": 224842,
+            "unit": "RMB million",
+            "currency": "RMB",
+            "note": "IFRS归母净利润；Non-IFRS归母净利润259,626百万元（+17% YoY）",
+            "source1": {
+              "name": "官方FY2025新闻稿",
+              "value": 224842
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "value": 224842
+            },
+            "deviationPct": 0,
+            "flag": "ok"
+          },
+          "grossMarginPct": 56.25,
+          "operatingMarginPct": 32,
+          "operatingMarginNote": "官方IFRS经营利润率headline列示32%（经营利润241,562百万元/收入751,766=32.1%，与呈现值一致）；Non-IFRS经营利润率37%",
+          "freeCashFlow": {
+            "value": 182600,
+            "unit": "RMB million",
+            "currency": "RMB",
+            "note": "官方公司自定义FCF口径（非简单OCF-资本开支，另扣除媒体内容采购及租赁付款等）；stockanalysis.com按OCF-资本开支简化口径计算为215,570百万元——口径不可比，非数据误差，采用官方数字为准",
+            "source1": {
+              "name": "官方FY2025新闻稿",
+              "value": 182600
+            },
+            "source2": null,
+            "deviationPct": null,
+            "flag": "口径不可比（见note，采用官方口径）"
+          },
+          "cashReserves": {
+            "value": 494900,
+            "unit": "RMB million",
+            "currency": "RMB",
+            "note": "官方口径\"总现金\"（Total cash），含现金及现金等价物141,041+定期存款+短期投资等；同比+19%",
+            "source1": {
+              "name": "官方FY2025新闻稿",
+              "value": 494900
+            },
+            "source2": {
+              "name": "stockanalysis.com(现金141,041+短期投资245,582=386,623，口径较官方更窄，未含全部定存)",
+              "value": 386623
+            },
+            "deviationPct": null,
+            "flag": "口径不可比（stockanalysis.com未计入长期定期存款70,302，采用官方\"总现金\"口径为准）"
+          }
+        }
+      ]
+    },
+    "competitiveLandscape": {
+      "_dimension": "3. 竞争格局：市场份额、主要竞争对手对比（腾讯为多业务集团，游戏/广告/云/金融科技分属不同市场，marketShare 取最可量化的游戏业务为主锚点，其余业务份额记入 competitors 各条 note）",
+      "marketShare": {
+        "valuePct": 50,
+        "marketDefinition": "中国游戏行业按实际销售收入计算的市场份额（2025年上半年口径）；分口径另有：按国内自研市场份额29%，按海外自研市场份额28%",
+        "asOf": "2025H1（2025年上半年）",
+        "source": {
+          "name": "前瞻产业研究院/新浪财经《洞察2025：中国游戏行业竞争格局及市场份额》，引用中国音数协游戏工委(GPC)数据",
+          "url": "https://finance.sina.com.cn/roll/2025-09-06/doc-infpptpe4868607.shtml"
+        },
+        "note": "2025年第一季度口径下，腾讯（429亿元）+网易（240.48亿元）合计占中国游戏市场（857.04亿元）近80%（来源：证券时报 https://stcn.com/article/detail/1837682.html，2025年一季报解读）；国内游戏市场为寡头市场，腾讯网易合计约七成份额（来源：证券市场周刊 https://static.weeklyonstock.com/25/0715/zbf090835.html）"
+      },
+      "competitors": [
+        {
+          "name": "网易游戏 (NetEase, Inc.)",
+          "ticker": "09999.HK / NTES(NASDAQ)",
+          "marketSharePct": 28,
+          "revenue": {
+            "status": "unavailable",
+            "reason": "本次检索仅取得2024年公司整体口径营收(约1053亿元，前瞻产业研究院/新浪财经2025-09-06)及2025Q1游戏及相关增值服务净收入240.48亿元（证券时报2025年一季报解读），未取得可比的游戏分部年度营收精确数字，需回财报核实"
+          },
+          "grossMarginPct": {
+            "status": "unavailable",
+            "reason": "本次检索未采集网易游戏分部毛利率数据"
+          },
+          "note": "国内游戏市场双寡头之一，2025H1按实际销售收入市场份额28%（腾讯50%），按国内自研市场份额27%（腾讯29%），按海外自研市场份额12%（腾讯28%）；旗下《逆水寒》出海表现较好；来源：新浪财经2025-09-06 https://finance.sina.com.cn/roll/2025-09-06/doc-infpptpe4868607.shtml"
+        },
+        {
+          "name": "字节跳动（抖音/今日头条，广告业务）",
+          "ticker": "未上市",
+          "marketSharePct": {
+            "status": "unavailable",
+            "reason": "未查到字节跳动在中国数字广告市场的精确份额百分比，多篇行业报告仅定性描述'阿里巴巴、字节跳动、腾讯三家主导中国数字广告支出的大部分份额'，未给出可交叉验证的具体数字"
+          },
+          "revenue": {
+            "status": "unavailable",
+            "reason": "字节跳动未上市，未披露分部广告收入"
+          },
+          "grossMarginPct": {
+            "status": "unavailable",
+            "reason": "未上市，无披露"
+          },
+          "note": "[估计/定性] 中国数字广告市场三大主导者之一（阿里巴巴、字节跳动、腾讯），2025年字节跳动为全球前五大广告主之一（与Google/Meta/Amazon/Alibaba并列），来源：Axios 2025-06-10《China now owns 20% of global ad market》(引用WPP Media预测) https://www.axios.com/2025/06/10/china-ad-market ；抖音短视频与直播电商广告持续挤压腾讯社交广告的用户时长与预算份额，为定性判断，非精确市占率数字"
+        },
+        {
+          "name": "阿里云 (Alibaba Cloud)",
+          "ticker": "9988.HK / BABA(NYSE)（阿里巴巴集团子业务，不单独上市）",
+          "marketSharePct": 26.8,
+          "revenue": {
+            "status": "unavailable",
+            "reason": "本次检索未采集阿里云分部年度营收精确数字，仅取得市场份额数据"
+          },
+          "grossMarginPct": {
+            "status": "unavailable",
+            "reason": "未采集"
+          },
+          "note": "中国公有云IaaS市场份额第一（26.8%，2025年10月31日IDC《中国公有云服务市场跟踪报告》，vs 腾讯云7.9%、华为云12.9%、天翼云12.3%、移动云9.4%）；在中国AI云市场份额亦居首位（38.1%，2025年，Omdia《中国AI云市场份额2025》，超过二至四名总和）；来源：腾讯云开发者社区转载IDC数据 https://cloud.tencent.com/developer/article/2644787 ；IT之家转载Omdia数据 https://www.ithome.com/0/952/224.htm"
+        },
+        {
+          "name": "华为云 (Huawei Cloud)",
+          "ticker": "未上市（华为技术有限公司子业务）",
+          "marketSharePct": 12.9,
+          "revenue": {
+            "status": "unavailable",
+            "reason": "未上市，未采集分部营收"
+          },
+          "grossMarginPct": {
+            "status": "unavailable",
+            "reason": "未采集"
+          },
+          "note": "中国公有云IaaS市场份额第三（12.9%，2025年10月31日IDC数据，高于腾讯云7.9%），在政务云及国产化替代（基于昇腾芯片全栈自主架构）领域优势明显；来源同上IDC/腾讯云开发者社区转载"
+        },
+        {
+          "name": "蚂蚁集团/支付宝 (Ant Group / Alipay)",
+          "ticker": "未上市（曾计划A+H上市后于2020年暂缓）",
+          "marketSharePct": {
+            "status": "major-diff",
+            "reason": "不同来源对支付宝与微信支付的市场份额排序存在重大冲突：(1) 易观(Analysys)数据显示截至2025年第一季度，微信支付市场份额59.7%，支付宝36.2%（来源：蛇眼财经/新浪财经2025-07-13 https://cj.sina.cn/articles/view/6860422930/198e9bf12001016mi6 ）；(2) 中国支付清算协会《中国移动支付发展报告》显示2024年按交易金额支付宝45.7%领先、微信支付41.8%（同一来源转引）；(3) 中国金融科技产业发展研究院预测2025年支付宝份额'超过50%'（来源：globepay.co 2025-11-19）。三者口径（活跃用户份额/交易金额份额/预测值）与统计机构均不同，未能交叉验证出单一权威数字，如实标注冲突而非采用其中一个"
+          },
+          "revenue": {
+            "status": "unavailable",
+            "reason": "未上市，无独立披露"
+          },
+          "grossMarginPct": {
+            "status": "unavailable",
+            "reason": "未上市，无披露"
+          },
+          "note": "支付宝与微信支付/财付通合计占中国第三方移动支付市场约87.5%~90%（多来源一致，见上）；两者为双寡头格局，2019年后基本停止贴身竞争、转向巩固各自优势场景（线下扫码 vs 电商生态），2025年支付宝推出'碰一下'功能重新加码线下支付竞争（来源：人人都是产品经理 2025 https://www.woshipm.com/it/6165372.html）"
+        }
+      ]
+    },
+    "businessModelMoat": {
+      "_dimension": "4. 商业模式与护城河：核心竞争优势来源",
+      "oneLiner": "腾讯依托微信/QQ构建的十亿级月活社交与内容生态锁定用户注意力与关系链，游戏玩家为虚拟道具/皮肤/战令付费，广告主为精准触达用户注意力的竞价广告位付费，商户/企业为微信支付通道佣金及云计算/SaaS基础设施付费——本质是把'社交流量'转化为三条独立但相互导流的现金流（游戏内购、广告竞价、支付+云服务抽成）。",
+      "revenueModel": "游戏内购（道具/皮肤/战令/抽卡）+订阅复购（腾讯视频/QQ音乐/腾讯会议等会员）+广告竞价（效果广告为主，品牌广告为辅，AI驱动定向能力提升单价）+支付佣金（微信支付商户费率）+金融服务分成（理财、消费贷导流）+云服务（IaaS/PaaS按量付费与SaaS订阅）。收入结构：VAS 49%、网络广告19%、金融科技与企业服务31%（FY2025官方口径，已在financialMetrics中采集）",
+      "moats": [
+        {
+          "type": "网络效应",
+          "evidence": "微信/WeChat 生态双边网络效应：用户端超10亿月活账户（2023年报披露13.43亿合并月活，本次未重新核实最新数字），商户/开发者端微信小程序生态持续扩张；2025年8月至12月，承载微信小店的'订单与卡包'访问数量环比增长132%，成交额增长320%（2026年1月15日微信公开课PRO官方披露，转引自证券时报 https://stcn.com/article/detail/3600145.html）；微信小程序在跨境及境外用户中使用次数突破50亿次，覆盖全球100个国家和地区（同一来源）",
+          "trend": "变宽（微信小店/视频号电商闭环持续深化，出海动作打开增量空间）"
+        },
+        {
+          "type": "转换成本",
+          "evidence": "QQ/微信社交关系链的用户迁移成本极高；游戏账号资产（皮肤、战绩、社交关系）与长青IP（王者荣耀自2015年上线持续领跑中国iOS手游畅销榜，来源：腾讯新闻2026-01-07 https://news.qq.com/rain/a/20260107A06I3000）形成用户黏性；企业微信/腾讯会议/腾讯文档嵌入企业工作流后迁移成本高",
+          "trend": "稳定"
+        },
+        {
+          "type": "规模效应",
+          "evidence": "游戏研运一体化规模效应：腾讯+网易占中国游戏市场约78-80%份额（多来源一致，见competitiveLandscape）；腾讯云通过主动砍掉低毛利硬件转售与重度定制化政企项目，2025年首次实现全年规模化盈利，调整后运营利润50亿元（来源：风闻/guancha.cn引用刘炽平财报电话会表态 https://user.guancha.cn/main/content?id=1637456）",
+          "trend": "变宽（游戏），但云计算侧为'以份额换利润'的主动收窄——腾讯云市场份额从2025年Q2的10%降至Q3的9%（Omdia数据，同一来源），规模效应让位于盈利质量"
+        },
+        {
+          "type": "技术专利壁垒",
+          "evidence": "混元大模型全链路自研：自研星脉高速网络（单集群支持12.8万卡，通信性能提升30%、成本降70%）、Angel训练推理平台（训练性能较DeepSpeed提升2.6倍，推理成本降70%）、MoE架构万亿参数规模模型（来源：腾讯云开发者社区 https://cloud.tencent.com/developer/article/2652460）；2018年以来累计研发投入超2696.54亿元（截至2023年，来源：同花顺/10jqka.com.cn 2024-03-20），全球专利申请总数超7.5万件、授权专利超3.7万件",
+          "trend": "待验证——应用层AI Agent矩阵（WorkBuddy/CodeBuddy/QClaw/元宝）具差异化打法且元宝月活突破1亿（2026年3月官方财报），但底层基础模型层面相较字节跳动（2026年计划资本开支2500亿元，高于腾讯1300亿元，来源：华尔街见闻转引大摩报告 https://wallstreetcn.com/articles/3767721）投入强度仍偏保守，能否维持技术代差存在不确定性"
+        }
+      ]
+    },
+    "technology": {
+      "_dimension": "5. 技术能力：核心技术栈、研发投入",
+      "coreTechStack": [
+        "混元大模型(HunYuan/Hy系列)：MoE混合专家架构，含Hunyuan-Large(389B总参数/52B激活参数，7T训练tokens，256K上下文，2024年11月开源，来源：智东西 https://m.zhidx.com/p/453560.html)、Hunyuan-A13B(80B总参数/13B激活参数混合推理模型，2025年6月开源，来源：量子位 https://www.qbitai.com/2025/06/302762.html)、Hunyuan-Video(超130亿参数开源视频生成模型)、Hunyuan-3D、Hunyuan-DiT(中文原生DiT文生图模型)；2026年初混元2.0/3.0迭代，混元图像3.0",
+        "自研星脉高速网络（3层架构，单集群支持12.8万卡）",
+        "Angel训练推理平台（自研，训练性能较DeepSpeed提升2.6倍，推理成本降70%）",
+        "微信小程序/小游戏生态基础设施",
+        "腾讯云IaaS/PaaS/AI云基础设施（专有云支持多种国产GPU，千卡集群日均故障率控制在0.16%以下）",
+        "游戏研发引擎与长青IP长线运营体系（王者荣耀、和平精英、PUBG Mobile、金铲铲之战、三角洲行动等）",
+        "AI Agent产品矩阵：WorkBuddy(AI办公)、CodeBuddy/QClaw(AI编程与智能体)、元宝(Yuanbao,C端AI助手，月活破1亿)、ima(AI工作台)、搜狗输入法AI"
+      ],
+      "rdExpense": {
+        "value": 85750,
+        "unit": "RMB million",
+        "currency": "RMB",
+        "note": "FY2025研发投入857.5亿元（较2024年706.86亿元增加150.64亿元，同比增长21.31%，创历史新高），四季度单季研发投入超237亿元；已完成第二独立来源交叉验证：证券时报(经凤凰网转载)、观点网(经腾讯云开发者社区转载)、虎嗅网(2026-03-19/20)均独立报道同一数字857.5亿元，与原采集单源858亿元（四舍五入口径）一致，非数据错误",
+        "source1": {
+          "name": "腾讯新闻(view.inews.qq.com)转载官方FY2025财报",
+          "url": "https://view.inews.qq.com/a/20260320A03L2W00",
+          "value": 85750
+        },
+        "source2": {
+          "name": "证券时报/凤凰网(finance.ifeng.com)",
+          "url": "https://finance.ifeng.com/c/8rb5Wtjt7Fr",
+          "value": 85750
+        },
+        "deviationPct": 0,
+        "flag": "ok"
+      },
+      "rdIntensityPct": 11.41,
+      "rdIntensityNote": "85750/751766=11.41%（简单除法，未经financial_rigor.py工具验算，主会话入库前建议复核）",
+      "rdTrend": "FY2022 614.0亿元 → FY2023 640.78亿元(+4.4%) → FY2024 706.86亿元(+10.3%) → FY2025 857.5亿元(+21.3%)。近3年研发投入增速持续加快，2025年增速创近年新高，主因AI大模型与Agent产品投入加码（2025年AI新产品投入180亿元，公司披露2026年计划至少翻倍）。来源：FY2022数字来自新华网转载全国工商联《2023民营企业500强报告》 http://www.news.cn/tech/20230912/96a9c1d92a544fa9a4ba203e7c628fca/c.html ；FY2023数字来自腾讯云开发者社区转载官方财报 https://cloud.tencent.com/developer/news/1333815 ；FY2024/FY2025见上",
+      "note": "官方新闻稿及年报中的'研发投入'为损益表费用化研发支出口径，与'资本开支'（792亿元，FY2025，主要为IT基础设施、数据中心、土地使用权及知识产权投入）为两个独立披露项目，未见官方对研发支出中资本化部分占比的单独细分说明；GPU等AI算力硬件采购计入资本开支而非研发费用，分析时需注意二者口径分离，避免将792亿元资本开支与857.5亿元研发投入混算。来源：腾讯新闻2026-03-20 https://view.inews.qq.com/a/20260320A03L2W00"
+    },
+    "management": {
+      "_dimension": "6. 管理层：创始人/CEO履历、持股比例、关键决策记录",
+      "founderCeo": {
+        "name": "马化腾 (Pony Ma / Ma Huateng)",
+        "background": "1971年10月29日出生于海南省东方市八所港，祖籍广东汕头；1984年随家人迁至深圳；1989-1993年就读深圳大学计算机系（计算机及应用专业，理学学士学位）；1993年毕业后加入润讯通讯发展有限公司（中国电信服务与产品供应商，英文名China Motion Telecom Development Limited），负责互联网寻呼系统研发工作，从软件工程师做到开发部主管；1998年11月与张志东、陈一丹、许晨晔、曾李青联合创办腾讯计算机系统有限公司；曾任中华人民共和国第十二届、第十三届全国人大代表。来源：维基百科 https://zh.wikipedia.org/zh-cn/馬化騰 ；腾讯官网董事会介绍 https://www.tencent.com/our-actions/governance/board-of-directors",
+        "tenure": "自1998年创立公司起即为核心创始人，自1999年起受雇于集团，现任执行董事、董事会主席兼首席执行官，全面负责集团战略规划、定位与管理，任期持续至今（截至2026-08-19已超27年），未见任何继任安排的公开披露"
+      },
+      "ownership": {
+        "economicPct": {
+          "value": 8.85,
+          "note": "马化腾(Pony Ma)通过Advance Data Services Limited持有；不同来源披露时点略有差异(8%~8.85%)",
+          "source1": {
+            "name": "marketscreener.com（引用HKEX披露）",
+            "value": 8.852
+          },
+          "source2": {
+            "name": "Wikipedia(Tencent条目，引用公司年报)",
+            "value": 8.42
+          },
+          "deviationPct": 5.1,
+          "flag": "minor-diff（披露时点不同+股份回购导致比例持续小幅上升，非数据错误）"
+        },
+        "votingPct": "与经济权益一致（腾讯为单一股权结构，无AB股安排，1股1票）",
+        "largestShareholder": {
+          "name": "Prosus N.V.（南非Naspers国际子公司）",
+          "economicPct": {
+            "value": 22.66,
+            "note": "Prosus截至2026-03-31财年末披露持股22.66%，较上年23.5%继续减持；investing.com引用2025-12-31披露为23.16%",
+            "source1": {
+              "name": "Prosus 2026财年年报（截至2026-03-31）",
+              "value": 22.66
+            },
+            "source2": {
+              "name": "investing.com（引用HKEX 2025-12-31权益披露）",
+              "value": 23.16
+            },
+            "deviationPct": 2.2,
+            "flag": "minor-diff（披露时点不同，Prosus持续减持中，非数据错误）"
+          }
+        },
+        "source": {
+          "name": "marketscreener.com / investing.com / Prosus年报",
+          "url": "https://www.marketscreener.com/quote/stock/TENCENT-HOLDINGS-LIMITED-155909820/company-shareholders"
+        },
+        "president": {
+          "name": "刘炽平 (Martin Lau)",
+          "role": "总裁兼投资委员会主席，2005年加入腾讯，被市场普遍认为是腾讯'二号人物'，2026年2月被披露已退出京东、美团董事会",
+          "source": {
+            "name": "新浪财经2026-02-02",
+            "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-02-02/doc-inhkkvaf7532187.shtml"
+          }
+        }
+      },
+      "keyDecisions": [
+        {
+          "date": "2021-07-24",
+          "decision": "国家市场监管总局对腾讯2016年收购中国音乐集团股权案作出反垄断行政处罚，责令腾讯及关联公司30日内解除独家音乐版权、停止高额预付金等版权费用支付方式，处罚款50万元",
+          "outcome": "腾讯放弃网络音乐独家版权，为《反垄断法》实施以来首例责令恢复市场竞争状态案件，重塑在线音乐行业竞争格局；同期'互联互通'政策要求腾讯解除微信外链屏蔽，冲击其此前的生态壁垒打法。来源：北京市市场监督管理局2021-07-24公告 https://scjgj.beijing.gov.cn/zwxx/scjgdt/202111/t20211102_2527419.html"
+        },
+        {
+          "date": "2021-12-23",
+          "decision": "腾讯宣布以中期特别股息（实物分派）方式向股东派发所持约4.6亿股京东股份",
+          "outcome": "腾讯对京东持股比例由17%降至2.3%，不再为京东第一大股东，总裁刘炽平同时卸任京东董事会职务；派发股票价值约1277亿港元。标志腾讯投资退出策略的开端。来源：证券时报 https://www.stcn.com/article/detail/733681.html"
+        },
+        {
+          "date": "2022年11月",
+          "decision": "腾讯宣布以实物分派（中期特别股息）方式向股东派发所持美团约90%的股份",
+          "outcome": "腾讯对美团持股大幅降至不足2%，总裁刘炽平同时辞任美团董事会；派发股票价值约1554亿港元。此举被视为在游戏版号停发、大股东Naspers减持、股价承压背景下安抚投资者信心的举措。来源：证券时报 https://www.stcn.com/article/detail/733681.html ；36氪 https://m.36kr.com/p/3344512269124482"
+        },
+        {
+          "date": "2025年下半年（四季度）",
+          "decision": "重组AI基础设施组织架构：技术工程事业群内新设'AI Infra部'与'数据计算平台部'，原'数据平台部'更名为'AI Data部'，撤销'机器学习平台部'",
+          "outcome": "打通算力、数据到模型训练的全链路能力，为混元大模型与AI Agent业务提供底层支撑；四季度混元2.0推理能力与效率提升。来源：新浪财经2026-03-20转载官方财报 https://finance.sina.com.cn/roll/2026-03-20/doc-inhrqtzi6933129.shtml"
+        },
+        {
+          "date": "2026-02-02（马化腾在2025年度员工大会上披露，报道日期）",
+          "decision": "马化腾在腾讯2025年度员工大会上公开宣布，腾讯已完全从对京东、美团的投资中退出，总裁刘炽平也已退出相关公司董事会",
+          "outcome": "确认此前多年分批减持的最终结果，标志腾讯移动互联网时代'买入口、连生态'投资逻辑的系统性终结，为向AI时代新一轮资产配置腾挪资源和管理精力。来源：新浪财经2026-02-02 https://finance.sina.com.cn/stock/relnews/hk/2026-02-02/doc-inhkkvaf7532187.shtml"
+        },
+        {
+          "date": "2026年7月",
+          "decision": "腾讯参与快手旗下'可灵AI'近30亿美元融资（投后估值约180亿美元），同时将所持快手港股本体股份减持至9.37%（未一次性清仓）",
+          "outcome": "延续腾讯'退出移动互联网旧仓位、押注AI新叙事资产'的投资策略转向；可灵AI计划五年内独立上市。来源：投资界 https://news.pedaily.cn/202607/566066.shtml ；钛媒体 https://www.tmtpost.com/8081244.html"
+        },
+        {
+          "date": "2026年3月18日财报电话会（对2026年展望的表态）",
+          "decision": "总裁刘炽平在2025年报电话会议上表示，2026年AI新产品投入计划至少较2025年的180亿元翻倍",
+          "outcome": "确立AI投入优先于股份回购的资源分配顺序（若AI算力基础设施投入不及预期，资金将重新分配至回购）；财报发布次日(2026-03-19)股价大跌近7%，单日市值蒸发约3400亿港元，反映市场对'回购力度可能让位于AI投入'的担忧。来源：东方财富网 https://caifuhao.eastmoney.com/news/20260319100845905371050 ；钛媒体2026-03-20 https://www.tmtpost.com/7922781.html"
+        }
+      ]
+    },
+    "industryOutlook": {
+      "_dimension": "7. 行业前景：TAM（总可寻址市场）、增长预测（腾讯三大主业分属三个不同行业，分别列出）",
+      "tam": {
+        "value": "游戏：中国游戏市场2025年预计规模突破3600亿元人民币；数字广告：中国数字广告支出市场2025年规模约140.97亿美元(约合1409.7亿人民币量级，原文单位为USD billion)；云计算：中国整体公有云市场(IaaS+PaaS+SaaS)2024年约450亿美元",
+        "currency": "RMB / USD（各行业口径不同，见definition）",
+        "definition": "游戏：中国音数协游戏工委(GPC)口径下的中国游戏市场实际销售收入，含移动游戏、客户端游戏及自主研发游戏海外市场销售收入；数字广告：中国境内全渠道数字广告支出（含搜索、社交、电商、短视频等），Research and Markets/PayNXT360口径；云计算：中国公有云IaaS+PaaS+SaaS市场规模，IDC口径（大摩援引）",
+        "asOf": "游戏：2025年（预测口径，前瞻产业研究院/游戏工委），2025-09-16发布；数字广告：2025年（Research and Markets Databook Q1 2026 Update，2026-02-10发布）；云计算：2024年实际值（IDC，经大摩2026年报告转引）",
+        "source": {
+          "name": "前瞻产业研究院/新浪财经（游戏）；Research and Markets（数字广告，经GlobeNewswire/Yahoo Finance转载）；IDC（云计算，经华尔街见闻转引大摩报告）",
+          "url": "https://finance.sina.com.cn/roll/2025-09-16/doc-infqsafk8853211.shtml"
+        }
+      },
+      "growthForecast": {
+        "cagrPct": "游戏：中国游戏市场规模2025年(约3600亿元)至2030年(约5000亿元)隐含CAGR约6.8%；数字广告：2020-2025年CAGR 13.3%，2026-2029年预测CAGR 17.8%（市场规模将从2025年140.97亿美元扩张至2029年266.62亿美元，注：原文标题写'2030年'与正文'2029年'存在表述不一致，已如实标注该冲突）；云计算：中国整体公有云市场2024-2029年CAGR约18%（大摩援引IDC数据）；中国AI云细分市场增速显著更高——2025年上半年规模223亿元，预计2030年突破1930亿元，或2025-2030年CAGR达26.8%（Omdia口径）",
+        "horizon": "游戏2025-2030；数字广告2026-2029；云计算2024-2029（整体公有云）及2025-2030（AI云细分）",
+        "source": {
+          "name": "前瞻产业研究院（游戏，2025-09-16）；Research and Markets/PayNXT360（数字广告，2026-02-10）；华尔街见闻转引摩根士丹利报告（云计算）；21世纪经济报道转引Omdia《中国AI云市场，1H25》（AI云，2025-10-29）",
+          "url": "https://www.globenewswire.com/news-release/2026/02/10/3235186/0/en/china-digital-ad-spend-business-report-2026-market-to-reach-266-62-billion-by-2030-alibaba-tencent-and-bytedance-continue-to-capture-the-majority-of-digital-ad-spend.html"
+        }
+      }
+    },
+    "riskFactors": {
+      "_dimension": "8. 风险因素：地缘政治、监管、供应链、竞争、技术等",
+      "items": [
+        {
+          "category": "地缘政治",
+          "description": "美国国防部（现称'战争部'）1260H'中国军事企业'清单(Chinese Military Companies List/CMC List)风险：腾讯于2025年1月6-7日（美国时间）首次被列入该清单，港股当日下跌7.3%；清单本身不构成资产冻结或出口管制类制裁，但根据2024财年NDAA第805条，自2026年6月30日起国防部禁止与清单企业（含其受控子公司）签订、续签或延展合同；根据2025财年NDAA第851条，2026年6月起为清单企业提供游说服务的说客不得同时代理国防部客户，已导致腾讯的多家华盛顿游说公司终止合作关系。截至2026年6月8日最新一次清单更新（扩容至188家实体，新增阿里巴巴、百度、比亚迪等），腾讯仍在清单中且'正寻求除名'（尚未被移除），已启动复议(reconsideration)程序，保留诉诸法律手段的权利",
+          "evidence": "Reuters 2025-01-06 https://www.reuters.com/world/us-adds-tencent-catl-list-chinese-firms-allegedly-aiding-beijings-military-2025-01-06 ；CBS News（同日）https://www.cbsnews.com/news/tencent-ban-catl-stock-us-department-of-defense ；德国之声中文网2026-06-09（'腾讯已于去年被列入名单，目前正寻求除名'）https://www.dw.com/zh/美国扩大中国军企清单-比亚迪宇树皆入列/a-77470854 ；Arnold & Porter 2026-07法律简报（确认腾讯在2026年6月8日更新版清单中）https://www.arnoldporter.com/en/perspectives/advisories/2026/07/china-imposes-export-control-and-government-procurement-restrictions-on-designated-u-s-companies ；UPI 2026-06-30（游说公司解约）https://www.upi.com/Top_News/World-News/2026/06/30/tech-companies-alibaba/6981782864542"
+        },
+        {
+          "category": "监管",
+          "description": "游戏版号审批政策周期性收紧的历史风险：2018年监管部门曾冻结中国大陆游戏版号审批长达9个月，直接导致腾讯游戏业务停滞。当前(2025年上半年)版号发放节奏相对宽松（共批准757款国产游戏、55款进口游戏），但版号审批仍是行政许可事项，政策存在不确定性",
+          "evidence": "BBC中文2021年报道（回顾2018年版号冻结历史）https://www.bbc.com/zhongwen/simp/chinese-news-58392571 ；时代财经2025-07-10（2025年上半年版号发放数据）https://www.tfcaijing.com/article/page/59696c70704b6f706238556d7167424c6e56445776513d3d"
+        },
+        {
+          "category": "监管",
+          "description": "反垄断监管历史处罚记录：2021年7月24日市场监管总局对腾讯2016年收购中国音乐集团案作出行政处罚（责令解除独家音乐版权、罚款50万元），为反垄断法首例责令恢复市场竞争状态案件；同期'互联互通'政策要求腾讯解除微信外链屏蔽。虽为存量历史事件，但反映平台经济反垄断监管框架仍在，未来经营者集中审查、数据与算法监管等仍可能对腾讯投资并购与生态壁垒策略形成约束",
+          "evidence": "北京市市场监督管理局2021-07-24公告 https://scjgj.beijing.gov.cn/zwxx/scjgdt/202111/t20211102_2527419.html ；21世纪经济报道2021-07-24 https://m.21jingji.com/article/20210724/herald/7b84250763a6ebcfbc2cd755c445edc3_zaker.html"
+        },
+        {
+          "category": "竞争",
+          "description": "多线竞争压力：（1）游戏：网易游戏国内市场份额约28%（2025H1）紧追腾讯的50%，且米哈游等第二梯队厂商凭借出海精品游戏挤压腾讯长尾份额；（2）广告：字节跳动/抖音在短视频与直播电商广告领域持续蚕食腾讯社交广告的用户时长与广告预算份额；（3）云计算：腾讯云在中国公有云IaaS市场份额仅7.9%（2025年10月IDC数据），显著落后于阿里云(26.8%)、华为云(12.9%)、天翼云(12.3%)，且'要利润不要规模'策略下份额从10%(2025Q2)降至9%(2025Q3，Omdia数据)；（4）支付：微信支付与支付宝双寡头格局下，不同口径数据显示两者份额此消彼长，支付宝2025年推出'碰一下'功能加码线下支付竞争",
+          "evidence": "新浪财经2025-09-06（游戏份额）https://finance.sina.com.cn/roll/2025-09-06/doc-infpptpe4868607.shtml ；腾讯云开发者社区转载IDC(云计算份额)https://cloud.tencent.com/developer/article/2644787 ；风闻/guancha.cn(腾讯云份额下降)https://user.guancha.cn/main/content?id=1637456 ；蛇眼财经/新浪财经(支付份额)https://cj.sina.cn/articles/view/6860422930/198e9bf12001016mi6"
+        },
+        {
+          "category": "技术",
+          "description": "AI军备竞赛投入回报不确定性：2025年AI新产品投入180亿元，公司披露2026年计划至少翻倍（360亿元以上），叠加2025年792亿元总资本开支（同比大幅增长，主要用于GPU与数据中心建设）。腾讯2026年计划资本开支约1300亿元，显著低于字节跳动(2500亿元)与阿里巴巴(1600亿元)（大摩测算），存在AI基础设施投入强度不足、技术代差扩大的风险；同时若元宝/混元等AI应用商业化变现速度不及预期，将拖累利润率与资本回报周期。财报发布后市场反应已印证该担忧——2026年3月19日财报公布次日港股大跌近7%，单日市值蒸发约3400亿港元",
+          "evidence": "腾讯新闻2026-03-20(AI投入表态)https://view.inews.qq.com/a/20260320A03L2W00 ；华尔街见闻转引大摩报告(资本开支对比)https://wallstreetcn.com/articles/3767721 ；钛媒体2026-03-20(股价反应)https://www.tmtpost.com/7922781.html"
+        }
+      ]
+    },
+    "currentValuation": {
+      "_dimension": "9. 当前估值：市值、股息率、负债率、PE、PS、PB、ROA、ROE、PEG、EV/Revenue",
+      "priceAsOf": "2026-08-19（港股收盘，FMP/stockanalysis.com同步快照）",
+      "sharePrice": {
+        "primary": {
+          "value": 447.2,
+          "unit": "HKD",
+          "currency": "HKD",
+          "source1": {
+            "name": "FMP company.profile-symbol",
+            "value": 447.2
+          },
+          "source2": {
+            "name": "stockanalysis.com HKG:0700",
+            "value": 447.2
+          },
+          "deviationPct": 0,
+          "flag": "ok"
+        },
+        "alt": [
+          {
+            "value": 56.5,
+            "unit": "USD",
+            "currency": "USD",
+            "note": "TCEHY 非保荐OTC ADR，1 ADS=1普通股，2026-08-18收盘价",
+            "source1": {
+              "name": "investing.com",
+              "value": 56.5
+            },
+            "source2": {
+              "name": "marketwatch.com",
+              "value": 56.77
+            },
+            "deviationPct": 0.48,
+            "flag": "minor-diff（美股盘中与港股收盘时点差异，非数据错误）"
+          }
+        ]
+      },
+      "sharesOutstanding": {
+        "value": 9013000000,
+        "unit": "shares",
+        "note": "以FMP市值/股价隐含股本反推（4,029,910,327,019/447.2≈90.13亿股）；官方2025年报披露2025-12-31已发行股份91.20亿股，2026年上半年持续回购注销（2Q2026回购3740万股），股本递减趋势与隐含值一致",
+        "source1": {
+          "name": "FMP company.profile-symbol（隐含）",
+          "value": 9012743905
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "value": 8980000000
+        },
+        "deviationPct": 0.36,
+        "flag": "ok"
+      },
+      "marketCap": {
+        "reported": {
+          "value": 4029910327019,
+          "unit": "HKD",
+          "currency": "HKD",
+          "source": {
+            "name": "FMP company.profile-symbol",
+            "url": "https://financialmodelingprep.com"
+          }
+        },
+        "computed": 4015667360.0,
+        "computedNote": "financial_rigor.py verify-market-cap：447.2 HKD × 89.80亿股 = 4.02万亿港元，与FMP报告市值4.03万亿港元偏差0.35%",
+        "flag": "ok"
+      },
+      "pe": {
+        "value": 14.78,
+        "basis": "TTM IFRS基本每股收益（2025Q3~2026Q2四个季度官方基本EPS合计26.023元人民币），股价按447.2港元×0.8598(HKD/CNY,2026-08-19)=384.54元人民币换算后计算，financial_rigor.py verify-valuation验算",
+        "note": "若用Non-IFRS TTM EPS（四季度Non-IFRS归母净利润合计271,565百万元/期末隐含股本90.13亿股≈30.14元）计算，PE约12.76x",
+        "source1": {
+          "name": "主会话据官方季报EPS数据验算",
+          "value": 14.78
+        },
+        "source2": {
+          "name": "stockanalysis.com（HKG:0700，trailing PE）",
+          "value": 15.06
+        },
+        "deviationPct": 1.9,
+        "flag": "minor-diff（TTM窗口切分方式与汇率快照时点不同导致的正常差异）"
+      },
+      "ps": {
+        "value": {
+          "status": "unavailable",
+          "reason": "未在本次采集中单独验算PS，可由市值(RMB口径3,465,325百万元=4,029,910,327,019HKD×0.8598)/TTM收入(3Q2025~2Q2026合计789,483百万元)≈4.39推算，建议第4步校验时以工具确认后再采用"
+        }
+      },
+      "pb": {
+        "value": 3.05,
+        "note": "股价(折人民币384.54元)/BVPS；BVPS=归母净资产1,135,853百万元(2026-06-30)/隐含股本90.13亿股=126.02元/股，已剔除少数股东权益86,660百万元",
+        "source1": {
+          "name": "主会话据financial_rigor.py verify-valuation验算",
+          "value": 3.05
+        },
+        "source2": null,
+        "deviationPct": null,
+        "flag": "仅单源计算（未找到第三方同期同口径PB快照，建议第4步复核）"
+      },
+      "roe": {
+        "value": 20.57,
+        "unit": "%",
+        "note": "TTM(2025Q3~2026Q2)归母净利润235,508百万元 / 平均归母净资产(期初1,154,152+期末1,135,853)/2=1,145,002.5百万元；期末静态ROE(EPS/BVPS法)为20.65%，两种口径基本一致",
+        "source1": {
+          "name": "主会话据官方财报数据验算",
+          "value": 20.57
+        },
+        "source2": null,
+        "deviationPct": null,
+        "flag": "仅单源计算（Level 2，建议双源，本次未获取第三方ROE快照）"
+      },
+      "roa": {
+        "value": 11.22,
+        "unit": "%",
+        "note": "TTM归母净利润235,508百万元 / 平均总资产(期初2,038,986+期末2,159,394)/2=2,099,190百万元；分母用期初期末平均值",
+        "source1": {
+          "name": "主会话据官方财报数据验算",
+          "value": 11.22
+        },
+        "source2": null,
+        "deviationPct": null,
+        "flag": "仅单源计算"
+      },
+      "dividendYieldPct": {
+        "value": 1.19,
+        "note": "TTM每股股息5.30港元（年度股息，不含特别股息如实物分派JD/美团股票的历史案例）/ 当前股价447.2港元；税前口径，2025年度股息同比增长约42%（官方FY2025新闻稿披露方向性数字，未列示每股绝对值）",
+        "source1": {
+          "name": "FMP company.profile-symbol(lastDividend)",
+          "value": 1.185
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "value": 1.19
+        },
+        "deviationPct": 0.4,
+        "flag": "ok"
+      },
+      "debtRatioPct": {
+        "value": 43.39,
+        "unit": "%",
+        "note": "总负债936,881/总资产2,159,394（2026-06-30，官方资产负债表）；非金融企业，另有息负债(短期借款86,292+长期借款212,650+应付票据154,021)=452,963百万元，有息负债率20.97%；净现金58,191百万元(官方口径)，净负债为负，财务结构稳健",
+        "source1": {
+          "name": "官方2Q2026新闻稿资产负债表",
+          "value": 43.39
+        },
+        "source2": {
+          "name": "stockanalysis.com(总负债797,921/总资产2,038,986=39.13%，FY2025年末口径)",
+          "value": 39.13
+        },
+        "deviationPct": null,
+        "flag": "口径不可比（一为2026Q2末最新口径，一为FY2025年末口径，非同期不计偏差率）"
+      },
+      "peg": {
+        "status": "unavailable",
+        "reason": "需要未来3-5年一致预期净利润复合增速，本次采集未获取分析师一致预期数据源，待第2步估值维度Agent结合行业前景补充后由工具计算"
+      },
+      "evToRevenue": {
+        "status": "unavailable",
+        "reason": "需先确认企业价值(EV=市值+有息负债-现金)口径，本次采集未做该项工具验算，留待第4步校验阶段或估值维度Agent补充"
+      }
+    },
+    "bullBearCase": {
+      "_dimension": "10. 多空双方核心论点",
+      "bull": [
+        {
+          "point": "微信生态网络效应仍在深化变现，小程序/视频号/微信小店构成'内循环'电商与广告新增长极，且开始规模化出海",
+          "evidence": "2025年8月至12月，承载微信小店的'订单与卡包'访问数量环比增长132%，成交额增长320%；微信小程序在跨境及境外用户中使用次数突破50亿次，覆盖全球100个国家和地区（2026年1月15日微信公开课PRO官方披露，来源：证券时报 https://stcn.com/article/detail/3600145.html）"
+        },
+        {
+          "point": "AI战略投入拐点已现，混元大模型能力持续提升且C端AI应用矩阵已实现规模化用户增长",
+          "evidence": "腾讯元宝月活跃用户突破1亿；AI工作台ima月活超1300万，知识库文件超4.2亿；混元图像3.0带动元宝AI生图日均调用量春节期间增长30倍（2026年3月官方FY2025财报，来源：新浪财经 https://finance.sina.com.cn/roll/2026-03-20/doc-inhrqtzi6933129.shtml）"
+        },
+        {
+          "point": "游戏业务国内外双轮驱动，新游长青化能力持续兑现，国内市场份额进一步提升",
+          "evidence": "2025年国际市场游戏收入同比增长33%（按固定汇率计算32%），《王者荣耀》以71%的收入涨幅重返全球手游收入榜首（2025年4月，Sensor Tower数据，来源：证券时报 https://stcn.com/article/detail/1837682.html）；2025H1按实际销售收入腾讯游戏市场份额达50%，高于网易的28%（来源：新浪财经 https://finance.sina.com.cn/roll/2025-09-06/doc-infpptpe4868607.shtml）"
+        },
+        {
+          "point": "现金流与股东回报能力强劲，持续大规模股份回购，为港股'回购王'",
+          "evidence": "2024年累计回购1120亿港元；2025年回购金额约800亿港元（略低于市场预期）；2026年以来（截至8月18日）多次回购，年内以63.58亿港元回购额稳居港股'回购王'（2026年3月数据，来源：21世纪经济报道 https://www.21jingji.com/article/20260313/herald/fc88eac937e751cbc14192238b1ced09.html ；证券时报最新公告 https://www.stcn.com/article/detail/1478499.html）"
+        },
+        {
+          "point": "腾讯云战略转型初见成效，实现首次全年规模化盈利，避开与阿里云的正面价格战",
+          "evidence": "2025年腾讯云首次实现全年规模化盈利，调整后运营利润50亿元；主动裁撤逾百亿元低毛利业务（硬件转售、重度定制化政企项目），转向'要利润不要规模'的高质量增长路径（来源：风闻/guancha.cn引用刘炽平财报电话会表态 https://user.guancha.cn/main/content?id=1637456）"
+        }
+      ],
+      "bear": [
+        {
+          "point": "美国地缘政治风险持续悬而未决，尾部风险未消除",
+          "evidence": "腾讯自2025年1月起被列入美国防部'中国军事企业'(1260H)清单，截至2026年6月最新一次清单更新（扩容至188家实体）仍未被移除，复议程序尚无明确结果；2026年6月30日起国防部禁止与清单企业签约、美国说客也开始终止代理清单企业业务（来源：见riskFactors地缘政治条目）"
+        },
+        {
+          "point": "腾讯云在AI基础设施军备竞赛中投入强度落后主要对手，市场份额被动让渡",
+          "evidence": "腾讯云公有云IaaS市场份额仅7.9%（2025年10月IDC数据），且从2025Q2的10%降至Q3的9%（Omdia数据）；2026年计划资本开支约1300亿元，显著低于字节跳动(2500亿元)与阿里巴巴(1600亿元)（来源：华尔街见闻转引大摩报告 https://wallstreetcn.com/articles/3767721）"
+        },
+        {
+          "point": "投资版图系统性退出，'卖资产反哺回购'的股东回报模式面临可持续性质疑",
+          "evidence": "腾讯已相继退出/大幅减持京东(2021)、美团(2022，降至<2%)、快手(2026年7月降至9.37%)、知乎(全额退出)等主要被投企业；'腾讯减持京东、美团、Sea→套现几百亿→回购自家股票'的模式被指为'一次性提款机'而非可持续现金流来源（来源：虎嗅网 https://www.huxiu.com/article/4871785.html ；投资界2026-07 https://news.pedaily.cn/202607/566066.shtml）"
+        },
+        {
+          "point": "支付业务竞争格局仍不稳定，不同数据源对市场份额排序存在重大分歧，反映微信支付/支付宝双寡头竞争尚未定局",
+          "evidence": "易观数据显示2025年Q1微信支付59.7% vs 支付宝36.2%；但中国支付清算协会数据显示2024年按交易金额支付宝45.7% vs 微信支付41.8%，两组数据排序相反（来源：蛇眼财经/新浪财经 https://cj.sina.cn/articles/view/6860422930/198e9bf12001016mi6）"
+        },
+        {
+          "point": "研发与资本开支加速可能侵蚀短期利润和股东回报预期，市场已用脚投票",
+          "evidence": "2026年AI新产品投入计划较2025年180亿元至少翻倍，若算力基础设施投入不及预期才会将资金重新分配至回购（隐含回购优先级让位于AI投入）；2025年报发布次日(2026-03-19)港股大跌近7%，单日市值蒸发约3400亿港元（来源：东方财富网 https://caifuhao.eastmoney.com/news/20260319100845905371050 ；钛媒体2026-03-20《当腾讯不再回购自由》 https://www.tmtpost.com/7922781.html）"
+        }
+      ]
+    },
+    "crossValidationLog": [
+      {
+        "field": "FY2025年收入",
+        "source1": {
+          "name": "官方FY2025新闻稿",
+          "value": 751766
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "value": 751766
+        },
+        "deviationPct": 0,
+        "flag": "ok",
+        "resolution": "financial_rigor.py cross-validate验算通过，两源完全一致"
+      },
+      {
+        "field": "FY2025归母净利润(IFRS)",
+        "source1": {
+          "name": "官方FY2025新闻稿",
+          "value": 224842
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "value": 224842
+        },
+        "deviationPct": 0,
+        "flag": "ok",
+        "resolution": "financial_rigor.py cross-validate验算通过，两源完全一致"
+      },
+      {
+        "field": "当前市值",
+        "source1": {
+          "name": "FMP(股价447.2×股本89.8亿股计算)",
+          "value": 4015667360000
+        },
+        "source2": {
+          "name": "FMP company.profile-symbol报告市值",
+          "value": 4029910327019
+        },
+        "deviationPct": 0.35,
+        "flag": "ok",
+        "resolution": "financial_rigor.py verify-market-cap验算，偏差0.35%在可接受范围，采用报告市值"
+      },
+      {
+        "field": "总股本",
+        "source1": {
+          "name": "FMP隐含(marketCap/price)",
+          "value": 9012743905
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "value": 8980000000
+        },
+        "deviationPct": 0.36,
+        "flag": "ok",
+        "resolution": "两源接近，采用FMP隐含值作为主口径"
+      },
+      {
+        "field": "马化腾持股比例",
+        "source1": {
+          "name": "marketscreener.com",
+          "value": 8.852
+        },
+        "source2": {
+          "name": "Wikipedia(引用公司年报)",
+          "value": 8.42
+        },
+        "deviationPct": 5.1,
+        "flag": "minor-diff",
+        "resolution": "披露时点不同(公司持续回购推高比例分母缩小)，非数据错误，采用较新的marketscreener数字"
+      },
+      {
+        "field": "Prosus持股比例",
+        "source1": {
+          "name": "Prosus 2026财年年报(截至2026-03-31)",
+          "value": 22.66
+        },
+        "source2": {
+          "name": "investing.com(引用2025-12-31 HKEX披露)",
+          "value": 23.16
+        },
+        "deviationPct": 2.2,
+        "flag": "minor-diff",
+        "resolution": "Prosus持续减持中，披露时点不同导致的正常差异，采用最新Prosus自身年报数字"
+      }
+    ]
+  },
+  "analysis": {
+    "meta": {
+      "companyId": "hk-0700-tencent-holdings",
+      "companyName": "腾讯控股有限公司 (Tencent Holdings Limited)",
+      "analyzedAt": "2026-08-19",
+      "dataCutoff": "2026-08-19（Asia/Shanghai）",
+      "basedOnCollection": "research/companies/hk-0700-tencent-holdings/financials-collection.json"
+    },
+    "dimensions": {
+      "businessEssence": {
+        "title": "生意本质",
+        "conclusion": "腾讯靠微信生态锁定十亿级用户，将社交流量转化为游戏内购、广告竞价、支付云服务三条现金流，毛利率五年持续扩张。",
+        "analysis": {
+          "revenueBreakdown": {
+            "period": "FY2025",
+            "items": [
+              {
+                "segment": "增值服务(VAS)",
+                "revenue": "369,281百万元",
+                "sharePct": "49.13%",
+                "source": {
+                  "name": "Tencent官方FY2025/4Q2025新闻稿",
+                  "url": "https://static.www.tencent.com/uploads/2026/03/18/e6a646796d0d869acc76271c9ee1a6a5.pdf"
+                }
+              },
+              {
+                "segment": "网络广告",
+                "revenue": "144,973百万元",
+                "sharePct": "19.28%",
+                "source": {
+                  "name": "Tencent官方FY2025/4Q2025新闻稿",
+                  "url": "https://static.www.tencent.com/uploads/2026/03/18/e6a646796d0d869acc76271c9ee1a6a5.pdf"
+                }
+              },
+              {
+                "segment": "金融科技与企业服务",
+                "revenue": "229,435百万元",
+                "sharePct": "30.52%",
+                "source": {
+                  "name": "Tencent官方FY2025/4Q2025新闻稿",
+                  "url": "https://static.www.tencent.com/uploads/2026/03/18/e6a646796d0d869acc76271c9ee1a6a5.pdf"
+                }
+              },
+              {
+                "segment": "其他",
+                "revenue": "8,077百万元",
+                "sharePct": "1.07%",
+                "source": {
+                  "name": "Tencent官方FY2025/4Q2025新闻稿",
+                  "url": "https://static.www.tencent.com/uploads/2026/03/18/e6a646796d0d869acc76271c9ee1a6a5.pdf"
+                }
+              }
+            ]
+          },
+          "profitabilityTrend5y": {
+            "series": [
+              {
+                "fiscalYear": "FY2021",
+                "grossMarginPct": "43.91",
+                "operatingMarginPct": "48",
+                "netMarginPct": "40.14",
+                "source": {
+                  "name": "官方FY2021新闻稿",
+                  "url": "https://static.www.tencent.com/uploads/2022/03/23/b107f5a267bf6a7d00fd8373cd841558.pdf"
+                }
+              },
+              {
+                "fiscalYear": "FY2022",
+                "grossMarginPct": "43.08",
+                "operatingMarginPct": "43",
+                "netMarginPct": "33.95",
+                "source": {
+                  "name": "官方FY2022新闻稿",
+                  "url": "https://static.www.tencent.com/uploads/2023/03/22/8d304603bd688ad947575f738ce62fca.pdf"
+                }
+              },
+              {
+                "fiscalYear": "FY2023",
+                "grossMarginPct": "48.13",
+                "operatingMarginPct": "26.76",
+                "netMarginPct": "18.92",
+                "source": {
+                  "name": "官方FY2023新闻稿",
+                  "url": "https://static.www.tencent.com/uploads/2024/03/20/bf2dcfef256a1e4dd70883e29f48c23b.pdf"
+                }
+              },
+              {
+                "fiscalYear": "FY2024",
+                "grossMarginPct": "52.9",
+                "operatingMarginPct": "32",
+                "netMarginPct": "29.4",
+                "source": {
+                  "name": "官方FY2025新闻稿(比较列)",
+                  "url": "https://static.www.tencent.com/uploads/2026/03/18/e6a646796d0d869acc76271c9ee1a6a5.pdf"
+                }
+              },
+              {
+                "fiscalYear": "FY2025",
+                "grossMarginPct": "56.25",
+                "operatingMarginPct": "32",
+                "netMarginPct": "29.91",
+                "source": {
+                  "name": "官方FY2025新闻稿",
+                  "url": "https://static.www.tencent.com/uploads/2026/03/18/e6a646796d0d869acc76271c9ee1a6a5.pdf"
+                }
+              }
+            ]
+          },
+          "businessModelCanvas": {
+            "salesModel": "混合",
+            "productForm": "混合",
+            "note": "游戏为道具/皮肤/战令内购与订阅复购并存，广告为竞价付费，支付为佣金分成，云为按量付费与SaaS订阅，四类模式叠加，收入结构VAS 49%/广告19%/金融科技与企业服务31%（FY2025官方口径）。"
+          },
+          "stickiness": {
+            "level": "强",
+            "mechanism": "①微信/QQ月活超10亿，社交关系链迁移成本极高；②游戏账号资产（皮肤/战绩）与王者荣耀等长青IP强化用户黏性；③企业微信/腾讯会议/文档嵌入企业工作流后转换成本高。",
+            "evidence": [
+              {
+                "metric": "微信小店订单与卡包访问量环比增速",
+                "value": "环比+132%，成交额环比+320%",
+                "asOf": "2025年8月-12月",
+                "source": {
+                  "name": "证券时报(转引微信公开课PRO官方数据)",
+                  "url": "https://stcn.com/article/detail/3600145.html"
+                }
+              },
+              {
+                "metric": "微信小程序跨境使用次数",
+                "value": "超50亿次，覆盖全球100个国家地区",
+                "asOf": "微信公开课PRO2026-01-15",
+                "source": {
+                  "name": "证券时报(转引微信公开课PRO官方数据)",
+                  "url": "https://stcn.com/article/detail/3600145.html"
+                }
+              },
+              {
+                "metric": "国内游戏市场份额(按实际销售收入)",
+                "value": "50%",
+                "asOf": "2025H1",
+                "source": {
+                  "name": "前瞻产业研究院/新浪财经",
+                  "url": "https://finance.sina.com.cn/roll/2025-09-06/doc-infpptpe4868607.shtml"
+                }
+              }
+            ]
+          },
+          "grossMarginVsPeers": {
+            "companyPct": "56.25",
+            "peers": [],
+            "whyHigherOrLower": "①VAS毛利率最高(3Q2025达61%)，广告57%，金融科技与企业服务(含云)最低(50%)，分部结构决定综合毛利率；②腾讯云主动砍低毛利硬件转售与重度定制政企项目换取盈利质量；③集团毛利率FY2021至FY2025从43.9%升至56.25%，反映产品结构持续向高毛利VAS/广告倾斜；缺同行分部毛利率数据，已登记dataGaps。"
+          },
+          "operatingLeverage": {
+            "observation": "①FY2025收入同比+13.9%，毛利润同比+21.0%，毛利润增速快于收入增速，体现正经营杠杆；②IFRS净利润同比+15.9%，Non-IFRS净利润同比+16.6%，均高于收入增速；③研发投入FY2025同比+21.3%(857.5亿元)增速快于收入，属主动加码AI而非被动费用膨胀。",
+            "evidence": [
+              {
+                "metric": "收入同比增速",
+                "value": "+13.9%(660,257→751,766百万元)",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "官方FY2025新闻稿",
+                  "url": "https://static.www.tencent.com/uploads/2026/03/18/e6a646796d0d869acc76271c9ee1a6a5.pdf"
+                }
+              },
+              {
+                "metric": "毛利润同比增速(推算)",
+                "value": "+21.0%(约349,276→422,743百万元)",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "官方FY2025新闻稿",
+                  "url": "https://static.www.tencent.com/uploads/2026/03/18/e6a646796d0d869acc76271c9ee1a6a5.pdf"
+                }
+              },
+              {
+                "metric": "Non-IFRS归母净利润同比增速",
+                "value": "+16.6%(222,703→259,626百万元)",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "官方FY2025新闻稿",
+                  "url": "https://static.www.tencent.com/uploads/2026/03/18/e6a646796d0d869acc76271c9ee1a6a5.pdf"
+                }
+              },
+              {
+                "metric": "研发投入同比增速",
+                "value": "+21.3%(706.86亿→857.5亿元)",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "腾讯新闻转载官方财报",
+                  "url": "https://view.inews.qq.com/a/20260320A03L2W00"
+                }
+              }
+            ]
+          }
+        },
+        "inquiry": {
+          "question": "这门生意好在哪？如果只能用一句话描述，是什么？",
+          "answer": "好生意，因社交网络效应+转换成本构筑强黏性，把流量转化为多元现金流。①微信生态月活超10亿，游戏资产、社交关系链使用户迁移成本极高；②收入分VAS/广告/金融科技三线，毛利率FY2021至FY2025从43.9%升至56.25%；③腾讯网易合计占游戏市场约80%份额，规模效应叠加高毛利支撑千亿级研发投入。"
+        },
+        "dataGaps": [
+          {
+            "path": "analysis.grossMarginVsPeers.peers",
+            "reason": "文件未采集网易游戏、阿里巴巴(含阿里云)等可比公司的分部或整体毛利率数据，仅有市场份额，毛利率均标记unavailable",
+            "searched": "financials-collection.json 的 competitiveLandscape.competitors 中网易游戏grossMarginPct为status:unavailable，阿里云/华为云条目均无grossMarginPct字段",
+            "evidenceRequest": {
+              "metric": "网易游戏、阿里巴巴/阿里云等主要竞争对手最近财年毛利率",
+              "question": "网易游戏、阿里云等主要竞争对手最近财年的毛利率分别是多少？",
+              "whyNeeded": "用于横向验证腾讯56.25%综合毛利率在同业中的相对水平，判断是结构性护城河还是行业普遍现象",
+              "priority": "medium"
+            }
+          },
+          {
+            "path": "analysis.stickiness.evidence",
+            "reason": "文件未采集游戏账号/会员订阅的用户留存率、续费率或NPS等直接量化黏性的指标，仅有生态活跃度间接证据",
+            "searched": "financials-collection.json 全文未见'留存率'、'续费率'、'NPS'等字段，仅businessModelMoat.moats[0].evidence提及微信小店活跃度增速",
+            "evidenceRequest": {
+              "metric": "游戏玩家12个月留存率、腾讯视频/QQ音乐会员续费率、NPS",
+              "question": "腾讯核心游戏及订阅业务的用户留存率/续费率/NPS具体数值是多少？",
+              "whyNeeded": "直接量化用户黏性强弱，比现有的生态活跃度间接指标更能验证strong stickiness的判断",
+              "priority": "medium"
+            }
+          }
+        ]
+      },
+      "moat": {
+        "title": "护城河评估",
+        "conclusion": "网络效应与社交转换成本构成核心护城河，规模效应稳固但技术代差与地缘政治风险考验未来五年边界。",
+        "analysis": {
+          "types": [
+            {
+              "type": "品牌/定价权",
+              "test": "是否能在不损失销量的情况下提价？",
+              "verdict": "待验证",
+              "evidence": [
+                {
+                  "metric": "《王者荣耀》全球手游收入排名及同比增速",
+                  "value": "收入同比+71%，重返全球手游收入榜首",
+                  "asOf": "2025-04（Sensor Tower数据）",
+                  "source": {
+                    "name": "Sensor Tower数据，经证券时报转载",
+                    "url": "https://stcn.com/article/detail/1837682.html"
+                  }
+                },
+                {
+                  "metric": "VAS分部毛利率",
+                  "value": "61%",
+                  "asOf": "3Q2025（截至2025-09-30）",
+                  "source": {
+                    "name": "官方3Q2025新闻稿",
+                    "url": "https://static.www.tencent.com/uploads/2025/11/13/e63656944030f90a5e4c8f1718d8bdd6.pdf"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "转换成本",
+              "test": "客户迁移到竞品的成本有多高？",
+              "verdict": "存在",
+              "evidence": [
+                {
+                  "metric": "长青IP上线年限及畅销榜地位",
+                  "value": "《王者荣耀》自2015年上线持续领跑中国iOS手游畅销榜",
+                  "asOf": "2026-01-07",
+                  "source": {
+                    "name": "腾讯新闻",
+                    "url": "https://news.qq.com/rain/a/20260107A06I3000"
+                  }
+                },
+                {
+                  "metric": "企业侧生产力工具嵌入度（定性）",
+                  "value": "企业微信/腾讯会议/腾讯文档嵌入企业工作流后迁移成本高（定性判断，文件未给出量化流失率）",
+                  "asOf": "financials-collection.json采集时点2026-08-19",
+                  "source": {
+                    "name": "financials-collection.json businessModelMoat.moats字段",
+                    "url": "https://static.www.tencent.com/uploads/2026/03/18/e6a646796d0d869acc76271c9ee1a6a5.pdf"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "网络效应",
+              "test": "用户越多产品越好吗？",
+              "verdict": "存在",
+              "evidence": [
+                {
+                  "metric": "微信小店'订单与卡包'访问量与成交额环比增速",
+                  "value": "访问量环比+132%，成交额环比+320%",
+                  "asOf": "2025年8-12月（2026-01-15微信公开课PRO披露）",
+                  "source": {
+                    "name": "微信公开课PRO官方披露，经证券时报转载",
+                    "url": "https://stcn.com/article/detail/3600145.html"
+                  }
+                },
+                {
+                  "metric": "微信小程序跨境/境外用户累计使用次数",
+                  "value": "突破50亿次，覆盖全球100个国家和地区",
+                  "asOf": "截至2026-01-15披露",
+                  "source": {
+                    "name": "微信公开课PRO官方披露，经证券时报转载",
+                    "url": "https://stcn.com/article/detail/3600145.html"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "规模效应",
+              "test": "规模带来的成本优势有多大？",
+              "verdict": "存在",
+              "evidence": [
+                {
+                  "metric": "腾讯+网易国内游戏市场合计份额",
+                  "value": "腾讯50%、网易28%，两者合计约七至八成",
+                  "asOf": "2025H1",
+                  "source": {
+                    "name": "前瞻产业研究院/新浪财经，引用GPC数据",
+                    "url": "https://finance.sina.com.cn/roll/2025-09-06/doc-infpptpe4868607.shtml"
+                  }
+                },
+                {
+                  "metric": "腾讯云调整后运营利润",
+                  "value": "2025年首次实现全年规模化盈利，调整后运营利润50亿元",
+                  "asOf": "FY2025",
+                  "source": {
+                    "name": "guancha.cn引用刘炽平财报电话会表态",
+                    "url": "https://user.guancha.cn/main/content?id=1637456"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "技术/专利壁垒",
+              "test": "技术领先几年？能否被复制？",
+              "verdict": "待验证",
+              "evidence": [
+                {
+                  "metric": "FY2025研发投入及增速",
+                  "value": "857.5亿元，同比+21.3%，创历史新高",
+                  "asOf": "FY2025（2026-03-20财报披露）",
+                  "source": {
+                    "name": "腾讯新闻转载官方FY2025财报",
+                    "url": "https://view.inews.qq.com/a/20260320A03L2W00"
+                  }
+                },
+                {
+                  "metric": "2026年AI相关资本开支同业对比",
+                  "value": "腾讯计划约1300亿元，低于字节跳动2500亿元、阿里巴巴1600亿元",
+                  "asOf": "2026年计划（大摩测算）",
+                  "source": {
+                    "name": "华尔街见闻转引摩根士丹利报告",
+                    "url": "https://wallstreetcn.com/articles/3767721"
+                  }
+                }
+              ]
+            }
+          ],
+          "trendPast5y": {
+            "direction": "变宽",
+            "basis": "①毛利率从2021年43.91%升至2025年56.25%，定价与成本结构持续改善；②微信小店/视频号2025年8-12月访问量环比+132%、GMV环比+320%，网络效应加速深化；③腾讯游戏份额稳定在50%（网易28%），研运一体化规模效应稳固。"
+          },
+          "trendNext5y": {
+            "direction": "稳定",
+            "basis": "①AI应用元宝月活破1亿验证场景延展性，但2026年资本开支约1300亿元低于字节跳动2500亿元，存在大模型代际卡位落后风险；②美国1260H清单与反垄断历史监管风险悬而未决，构成外生不确定性；③腾讯云主动让份额换利润，规模效应边界主动收窄。"
+          }
+        },
+        "inquiry": {
+          "question": "10年后这条护城河还在吗？什么能摧毁它？",
+          "answer": "微信社交与转换成本护城河大概率仍在，但技术代差与地缘政治风险可能侵蚀边界。①微信社交关系链与账号资产迁移成本极高，除非出现范式级社交产品替代，否则护城河难被复制；②若腾讯AI基础设施投入持续落后字节、阿里，错失大模型代际卡位，护城河将从“技术并进”退化为“生态防守”；③美国1260H清单若升级为实质制裁级出口管制，可能从外部侵蚀国际化路径与资本市场信任。"
+        },
+        "dataGaps": [
+          {
+            "path": "moat.analysis.types[0].evidence（品牌/定价权直接提价测试数据）",
+            "reason": "采集文件未见公司对游戏道具/会员价格调整后销量或用户流失变化的直接数据，也无第三方品牌溢价定量研究",
+            "searched": "financials-collection.json 未见相关字段",
+            "evidenceRequest": {
+              "metric": "核心产品提价前后DAU/ARPU变化率",
+              "question": "腾讯核心产品（如王者荣耀战令、微信视频号会员）近年是否有提价动作，提价后用户流失率与ARPU变化如何？",
+              "whyNeeded": "验证品牌/定价权护城河是否真实存在及强度，避免仅凭市场份额与毛利率间接推断",
+              "priority": "medium"
+            }
+          },
+          {
+            "path": "moat.analysis.types[1].evidence（转换成本量化数据）",
+            "reason": "文件仅有定性描述（社交关系链、企业微信/腾讯文档嵌入工作流），无用户迁移成本的量化指标",
+            "searched": "financials-collection.json 未见相关字段",
+            "evidenceRequest": {
+              "metric": "微信/QQ用户流失率或竞品渗透率变化",
+              "question": "是否有第三方调研量化微信用户迁移到竞品社交应用的意愿或实际流失率？",
+              "whyNeeded": "将转换成本护城河从定性判断升级为可验证的量化证据",
+              "priority": "low"
+            }
+          }
+        ]
+      },
+      "inversion": {
+        "title": "逆向思考与风险清单",
+        "conclusion": "最大风险是AI投入强度落后与投资退出红利耗尽，叠加地缘政治尾部风险复合冲击护城河。",
+        "analysis": {
+          "failurePaths": [
+            {
+              "path": "AI资本开支强度落后字节阿里，技术代差扩大拖累云与Agent商业化变现",
+              "probability": "中",
+              "impact": "高",
+              "evidence": [
+                {
+                  "metric": "2026年计划资本开支对比",
+                  "value": "腾讯约1300亿元 vs 字节2500亿元 vs 阿里1600亿元",
+                  "asOf": "2026年计划",
+                  "source": {
+                    "name": "华尔街见闻转引摩根士丹利报告",
+                    "url": "https://wallstreetcn.com/articles/3767721"
+                  }
+                },
+                {
+                  "metric": "财报发布后股价反应",
+                  "value": "2026-03-19次日港股跌近7%，单日市值蒸发约3400亿港元",
+                  "asOf": "2026-03-19",
+                  "source": {
+                    "name": "东方财富网/钛媒体",
+                    "url": "https://www.tmtpost.com/7922781.html"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "美国1260H清单风险升级为出口管制或资产限制，海外业务与游说渠道加速脱钩",
+              "probability": "低",
+              "impact": "高",
+              "evidence": [
+                {
+                  "metric": "1260H中国军事企业清单在列状态",
+                  "value": "2026年6月8日更新扩容至188家实体，腾讯仍未被移除",
+                  "asOf": "2026-06-08",
+                  "source": {
+                    "name": "德国之声中文网/Arnold & Porter法律简报",
+                    "url": "https://www.dw.com/zh/美国扩大中国军企清单-比亚迪宇树皆入列/a-77470854"
+                  }
+                },
+                {
+                  "metric": "国防部合同禁令生效",
+                  "value": "自2026-06-30起禁止与清单企业签约续约；代理清单企业的说客与国防部脱钩",
+                  "asOf": "2026-06-30",
+                  "source": {
+                    "name": "UPI",
+                    "url": "https://www.upi.com/Top_News/World-News/2026/06/30/tech-companies-alibaba/6981782864542"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "游戏版号审批政策重演2018年式收紧，VAS核心现金牛业务阶段性停滞",
+              "probability": "低",
+              "impact": "高",
+              "evidence": [
+                {
+                  "metric": "2018年版号冻结历史",
+                  "value": "版号审批冻结长达9个月，直接导致腾讯游戏业务停滞",
+                  "asOf": "2018年",
+                  "source": {
+                    "name": "BBC中文",
+                    "url": "https://www.bbc.com/zhongwen/simp/chinese-news-58392571"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "广告、云、支付三条第二曲线均被字节/阿里/支付宝持续挤压，份额被动萎缩",
+              "probability": "中",
+              "impact": "中",
+              "evidence": [
+                {
+                  "metric": "腾讯云公有云IaaS市场份额",
+                  "value": "7.9%（2025年10月），较2025Q2的10%降至Q3的9%",
+                  "asOf": "2025-10",
+                  "source": {
+                    "name": "IDC/Omdia数据，经腾讯云开发者社区转载",
+                    "url": "https://cloud.tencent.com/developer/article/2644787"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "京东美团快手等被投优质资产已系统性退出，卖资产反哺回购模式面临枯竭",
+              "probability": "中",
+              "impact": "中",
+              "evidence": [
+                {
+                  "metric": "2025年回购金额",
+                  "value": "约800亿港元，略低于市场预期",
+                  "asOf": "2025年度",
+                  "source": {
+                    "name": "21世纪经济报道",
+                    "url": "https://www.21jingji.com/article/20260313/herald/fc88eac937e751cbc14192238b1ced09.html"
+                  }
+                },
+                {
+                  "metric": "对京东美团投资退出确认",
+                  "value": "马化腾公开宣布已完全退出对京东、美团的投资",
+                  "asOf": "2026-02-02",
+                  "source": {
+                    "name": "新浪财经",
+                    "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-02-02/doc-inhkkvaf7532187.shtml"
+                  }
+                }
+              ]
+            }
+          ],
+          "historicalAnalogies": [
+            {
+              "company": "雅虎(Yahoo)/美国在线(AOL)",
+              "similarity": "曾是互联网流量入口霸主，后被新形态平台逐步替代流量与广告份额",
+              "outcome": "未能自我颠覆护城河，长期股价与估值持续萎缩沦为二线资产",
+              "source": {
+                "name": "分析师通用行业知识判断，非采集文件数据",
+                "url": ""
+              }
+            },
+            {
+              "company": "通用电气(GE)",
+              "similarity": "多元化集团曾长期依赖出售子公司/金融资产反哺股东回报与报表",
+              "outcome": "资产出售红利耗尽后主业增长乏力，长期股价大幅跑输大盘",
+              "source": {
+                "name": "分析师通用行业知识判断，非采集文件数据",
+                "url": ""
+              }
+            },
+            {
+              "company": "英特尔(Intel)",
+              "similarity": "长期资本开支与研发投入强度落后新一代技术浪潮的领先竞争者",
+              "outcome": "错失架构代际转换红利，市场份额与估值溢价双重承压",
+              "source": {
+                "name": "分析师通用行业知识判断，非采集文件数据",
+                "url": ""
+              }
+            }
+          ],
+          "crossDisciplinaryChecks": [
+            {
+              "model": "网络效应理论",
+              "finding": "①微信月活超10亿构成强双边网络效应，但边际用户增长已趋近饱和；②小程序/视频号内循环增长依赖存量用户时长再分配而非新增用户，若抖音持续挤压时长，增量将放缓；③云计算业务缺乏同等网络效应，份额被动让渡验证该业务护城河明显薄于社交主业。"
+            },
+            {
+              "model": "技术采纳曲线",
+              "finding": "①AI大模型/Agent仍处早期采纳阶段，元宝月活破1亿显示已进入早期多数人群，但商业化变现路径尚未验证；②腾讯资本开支强度显著低于字节与阿里，若采纳曲线加速跨越鸿沟，产能不足可能使其错过关键窗口期；③历史上研发强度落后者往往在采纳曲线陡峭期被后来者反超。"
+            },
+            {
+              "model": "竞争博弈",
+              "finding": "①游戏领域腾讯网易双寡头合计约78%~80%份额，双方均倾向维持现状而非价格战，护城河相对稳固；②云计算腾讯主动收缩份额(10%降至9%)让位阿里云，属'利润优先'策略选择而非纯能力不足；③支付领域微信支付与支付宝数据冲突反映双方仍在博弈，均衡尚未稳定。"
+            }
+          ],
+          "biasSelfCheck": [
+            {
+              "bias": "叙事偏差",
+              "check": "①'社交生态永续复利'叙事易掩盖云份额主动收缩、广告份额被蚕食等结构性压力被包装为'战略选择'；②'AI投入拐点已现'的乐观叙事与'资本开支强度落后主要对手'的事实并存，需警惕只采信符合既有多头叙事的证据；③'完全退出京东美团'既可解读为'轻装上阵'，也可解读为'可变现核心资产已耗尽'。"
+            },
+            {
+              "bias": "锚定效应",
+              "check": "①以历史PE/PB区间或2021年前市值高点作为'便宜'锚点，忽视地缘清单、AI军备竞赛等结构性新风险已改变基本面；②TTM PE 14.78x与Non-IFRS PE 12.76x两个锚点选择不同将得出不同'便宜'结论；③若锚定财报前价格判断'超跌抄底'，可能低估市场对回购让位AI投入的合理担忧。"
+            },
+            {
+              "bias": "幸存者偏差",
+              "check": "①王者荣耀自2015年持续领跑的长青IP案例容易让人高估'长线运营能力'普适性，忽视大量失败游戏项目未被统计；②仅关注腾讯成功穿越2018年版号冻结与2021年反垄断处罚，可能低估未来同类监管事件的实际冲击力度；③被投企业高位退出案例被视为'投资眼光'，未纳入统计的失败投资案例同样存在幸存者偏差。"
+            }
+          ],
+          "bearCase": [
+            {
+              "point": "美国地缘政治风险持续悬而未决，尾部风险未消除",
+              "holder": "路透社/CBS News/德国之声等国际财经媒体",
+              "evidence": [
+                {
+                  "metric": "1260H中国军事企业清单在列状态",
+                  "value": "2026年6月8日更新扩容至188家实体，腾讯仍在清单中",
+                  "asOf": "2026-06-08",
+                  "source": {
+                    "name": "Reuters/德国之声/Arnold & Porter法律简报",
+                    "url": "https://www.dw.com/zh/美国扩大中国军企清单-比亚迪宇树皆入列/a-77470854"
+                  }
+                }
+              ]
+            },
+            {
+              "point": "腾讯云在AI基础设施军备竞赛中投入强度落后主要对手，市场份额被动让渡",
+              "holder": "华尔街见闻转引大摩分析师报告",
+              "evidence": [
+                {
+                  "metric": "腾讯云公有云IaaS市场份额",
+                  "value": "7.9%（2025年10月），较2025Q2的10%降至Q3的9%",
+                  "asOf": "2025-10",
+                  "source": {
+                    "name": "IDC/Omdia数据，经腾讯云开发者社区/风闻转载",
+                    "url": "https://cloud.tencent.com/developer/article/2644787"
+                  }
+                }
+              ]
+            },
+            {
+              "point": "投资版图系统性退出，卖资产反哺回购的股东回报模式面临可持续性质疑",
+              "holder": "虎嗅网/投资界等财经媒体",
+              "evidence": [
+                {
+                  "metric": "2025年回购金额",
+                  "value": "约800亿港元，略低于市场预期",
+                  "asOf": "2025年度",
+                  "source": {
+                    "name": "21世纪经济报道/证券时报",
+                    "url": "https://www.21jingji.com/article/20260313/herald/fc88eac937e751cbc14192238b1ced09.html"
+                  }
+                }
+              ]
+            },
+            {
+              "point": "支付业务竞争格局仍不稳定，不同数据源对市场份额排序存在重大分歧",
+              "holder": "蛇眼财经/新浪财经引用易观与支付清算协会数据",
+              "evidence": [
+                {
+                  "metric": "微信支付vs支付宝市场份额",
+                  "value": "易观:59.7%比36.2%(2025Q1)；支付清算协会:41.8%比45.7%(2024年交易金额)",
+                  "asOf": "2025Q1/2024",
+                  "source": {
+                    "name": "蛇眼财经/新浪财经",
+                    "url": "https://cj.sina.cn/articles/view/6860422930/198e9bf12001016mi6"
+                  }
+                }
+              ]
+            },
+            {
+              "point": "研发与资本开支加速可能侵蚀短期利润和股东回报预期，市场已用脚投票",
+              "holder": "东方财富网/钛媒体等财经媒体及二级市场投资者",
+              "evidence": [
+                {
+                  "metric": "2025年报发布次日港股跌幅",
+                  "value": "跌近7%，单日市值蒸发约3400亿港元",
+                  "asOf": "2026-03-19",
+                  "source": {
+                    "name": "东方财富网/钛媒体",
+                    "url": "https://www.tmtpost.com/7922781.html"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "inquiry": {
+          "question": "我最可能在哪里犯错？聪明人为什么会不买/做空这家公司？",
+          "answer": "最大误判风险是低估AI投入落后与投资退出红利枯竭对护城河的长期侵蚀。①低估资本开支差距(1300亿vs字节2500亿/阿里1600亿)对未来技术代差与云份额的复合影响，误以为社交流量护城河可无限覆盖新战场；②锚定微信生态历史叙事，忽视广告、支付、云三条曲线均面临结构性挤压，误判为战略选择而非能力短板；③低估卖资产反哺回购模式的有限期性，京东美团快手等优质标的已基本出清，聪明的空头正押注这一现金流枯竭叠加1260H清单尾部风险的复合冲击。"
+        },
+        "dataGaps": [
+          {
+            "path": "competitiveLandscape.competitors[字节跳动].marketSharePct",
+            "reason": "未查到字节跳动中国数字广告市场的精确份额百分比，仅有定性描述",
+            "searched": "financials-collection.json 已将该字段标注为unavailable，本维度按硬性规则禁止联网补充",
+            "evidenceRequest": {
+              "metric": "字节跳动中国数字广告市场份额精确数字及近3年趋势",
+              "question": "字节跳动/抖音在中国数字广告市场的具体份额及近3年增速变化是多少？",
+              "whyNeeded": "用于量化评估腾讯网络广告业务面临的竞争侵蚀速度，判断bearCase中份额被蚕食论点的严重程度",
+              "priority": "medium"
+            }
+          },
+          {
+            "path": "technology/management中AI产品的收入贡献拆分",
+            "reason": "文件仅披露AI投入金额(180亿元/计划翻倍)与元宝等产品月活，未见AI相关业务对总收入或成本节约的可量化贡献",
+            "searched": "financials-collection.json 的technology与management字段未见AI业务营收拆分数据",
+            "evidenceRequest": {
+              "metric": "AI相关产品对总收入的具体贡献占比或增量收入/成本节约",
+              "question": "腾讯AI新产品在2025/2026年为公司带来了多少可量化的增量收入或成本节约？",
+              "whyNeeded": "判断AI投入回报不确定性这一失败路径的实际概率高低，避免仅凭投入金额对比做定性判断",
+              "priority": "high"
+            }
+          }
+        ]
+      },
+      "management": {
+        "title": "管理层评估",
+        "conclusion": "马化腾创业27年高度集权治理，投资退出决策果断，但AI投入优先回购的沟通引发市场信心波动",
+        "analysis": {
+          "keyDecisions": [
+            {
+              "date": "2021-07-24",
+              "decision": "监管责令腾讯解除音乐独家版权，罚款50万元",
+              "outcome": "开创反垄断恢复竞争先例，倒逼生态壁垒策略转型",
+              "rating": "★2",
+              "source": {
+                "name": "北京市市场监督管理局2021-07-24公告",
+                "url": "https://scjgj.beijing.gov.cn/zwxx/scjgdt/202111/t20211102_2527419.html"
+              }
+            },
+            {
+              "date": "2021-12-23",
+              "decision": "以实物股息向股东派发所持京东约4.6亿股",
+              "outcome": "京东持股降至2.3%，价值约1277亿港元，退出提前布局",
+              "rating": "★4",
+              "source": {
+                "name": "证券时报",
+                "url": "https://www.stcn.com/article/detail/733681.html"
+              }
+            },
+            {
+              "date": "2022年11月",
+              "decision": "以实物股息派发所持美团约90%股份",
+              "outcome": "美团持股降至不足2%，价值约1554亿港元，安抚市场信心",
+              "rating": "★3",
+              "source": {
+                "name": "证券时报/36氪",
+                "url": "https://m.36kr.com/p/3344512269124482"
+              }
+            },
+            {
+              "date": "2025年下半年（四季度）",
+              "decision": "重组AI基础设施组织，新设AI Infra部与数据计算平台部",
+              "outcome": "打通算力-数据-模型全链路，助力混元2.0推理能力提升",
+              "rating": "★4",
+              "source": {
+                "name": "新浪财经2026-03-20",
+                "url": "https://finance.sina.com.cn/roll/2026-03-20/doc-inhrqtzi6933129.shtml"
+              }
+            },
+            {
+              "date": "2026-02-02",
+              "decision": "马化腾宣布已完全退出京东、美团投资",
+              "outcome": "确认移动互联网'买量连生态'逻辑终结，资源转向AI",
+              "rating": "★4",
+              "source": {
+                "name": "新浪财经2026-02-02",
+                "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-02-02/doc-inhkkvaf7532187.shtml"
+              }
+            },
+            {
+              "date": "2026年7月",
+              "decision": "参与快手'可灵AI'近30亿美元融资，减持快手至9.37%",
+              "outcome": "押注AI新叙事资产，可灵AI计划五年内独立上市",
+              "rating": "★3",
+              "source": {
+                "name": "投资界/钛媒体",
+                "url": "https://news.pedaily.cn/202607/566066.shtml"
+              }
+            },
+            {
+              "date": "2026年3月18日财报电话会",
+              "decision": "刘炽平称2026年AI新品投入至少较2025年翻倍",
+              "outcome": "回购让位AI投入，次日港股大跌7%，市值蒸发约3400亿港元",
+              "rating": "★2",
+              "source": {
+                "name": "东方财富网/钛媒体",
+                "url": "https://www.tmtpost.com/7922781.html"
+              }
+            }
+          ],
+          "capitalAllocation": {
+            "rdReturn": "研发857.5亿元(+21%)，AI产品变现未兑现，回报难验证[估计]",
+            "maTrackRecord": "分批清仓京东、美团，累计套现超2831亿港元，退出彻底",
+            "buybackTiming": "2024年回购1120亿港元，2025年约800亿，AI投入或挤压2026回购空间",
+            "evidence": [
+              {
+                "metric": "FY2025研发投入",
+                "value": "857.5亿元人民币(+21.3% YoY)",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "腾讯新闻转载官方财报",
+                  "url": "https://view.inews.qq.com/a/20260320A03L2W00"
+                }
+              },
+              {
+                "metric": "京东特别股息派发价值",
+                "value": "约1277亿港元",
+                "asOf": "2021-12-23",
+                "source": {
+                  "name": "证券时报",
+                  "url": "https://www.stcn.com/article/detail/733681.html"
+                }
+              },
+              {
+                "metric": "美团特别股息派发价值",
+                "value": "约1554亿港元",
+                "asOf": "2022年11月",
+                "source": {
+                  "name": "证券时报/36氪",
+                  "url": "https://m.36kr.com/p/3344512269124482"
+                }
+              },
+              {
+                "metric": "2024年股份回购总额",
+                "value": "1120亿港元",
+                "asOf": "FY2024",
+                "source": {
+                  "name": "21世纪经济报道",
+                  "url": "https://www.21jingji.com/article/20260313/herald/fc88eac937e751cbc14192238b1ced09.html"
+                }
+              },
+              {
+                "metric": "2025年股份回购总额",
+                "value": "约800亿港元（略低于市场预期）",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "21世纪经济报道/证券时报",
+                  "url": "https://www.stcn.com/article/detail/1478499.html"
+                }
+              }
+            ]
+          },
+          "alignment": {
+            "ownership": "马化腾经济权益约8.85%，投票权同比例(1股1票，无AB股结构)",
+            "compensation": "薪酬结构与考核挂钩：unavailable（采集文件未披露高管薪酬细节）",
+            "insiderSelling": "分批减持京东(2021)、美团(2022)、快手(2026降至9.37%)",
+            "evidence": [
+              {
+                "metric": "马化腾经济权益",
+                "value": "8.85%(HKEX口径，另有8.42%年报口径)",
+                "asOf": "2026-08-19",
+                "source": {
+                  "name": "marketscreener.com",
+                  "url": "https://www.marketscreener.com/quote/stock/TENCENT-HOLDINGS-LIMITED-155909820/company-shareholders"
+                }
+              },
+              {
+                "metric": "第一大股东Prosus持股",
+                "value": "22.66%（较上年23.5%继续减持）",
+                "asOf": "2026-03-31",
+                "source": {
+                  "name": "Prosus 2026财年年报",
+                  "url": "https://www.marketscreener.com/quote/stock/TENCENT-HOLDINGS-LIMITED-155909820/company-shareholders"
+                }
+              },
+              {
+                "metric": "腾讯持有快手港股股份",
+                "value": "减持至9.37%",
+                "asOf": "2026年7月",
+                "source": {
+                  "name": "投资界",
+                  "url": "https://news.pedaily.cn/202607/566066.shtml"
+                }
+              }
+            ]
+          },
+          "organization": {
+            "teamStability": "①马化腾自1998年创立公司起执掌至今，任期超27年，未见继任安排公开披露；②总裁刘炽平2005年加入腾讯，长期被视为'二号人物'，2026年2月退出京东、美团董事会但仍任腾讯投资委员会主席；③采集文件未覆盖CTO/CFO等其他核心高管的任期与稳定性数据，需列入数据缺口。",
+            "keyPersonRisk": "①马化腾单一创始人兼董事会主席兼CEO已27年，未见公开继任计划，关键人依赖度高；②总裁刘炽平作为长期'二号人物'若离任，可能影响投资退出、AI战略等重大决策的执行连续性；③公司治理层面未见接班梯队或继任委员会相关披露，采集文件未涉及，属数据缺口。"
+          },
+          "culture": "①管理层历史决策显示较强资本配置纪律，系统性退出京东、美团等重资产投资并将资金转向AI（来源：新浪财经2026-02-02）；②马化腾在年度员工大会上公开向全员宣布投资退出结果，体现一定的高层-员工直接沟通习惯（来源：同上）；③采集文件未包含员工流失率、内部满意度调查等企业文化的独立可观察量化指标，如需更全面判断需补充数据缺口，不作延伸推断。"
+        },
+        "inquiry": {
+          "question": "如果CEO退休，这家公司还能保持竞争力吗？",
+          "answer": "短期难以完全替代马化腾个人角色，但业务护城河可支撑竞争力延续。①总裁刘炽平作为长期'二号人物'及投委会主席具备一定接班基础，但2026年2月已退出京东、美团董事会，实际角色边界待观察（来源：新浪财经2026-02-02）；②微信生态、游戏长青IP、云与AI基础设施等护城河非依赖单一个人，短期业务连续性风险有限（来源：businessModelMoat维度）；③公司未见公开继任计划披露，创始人兼任董事会主席27年高度集权，若无交接预案，突发情形下可能引发治理与战略连续性冲击，属关键数据缺口。"
+        },
+        "dataGaps": [
+          {
+            "path": "management.compensation",
+            "reason": "采集文件management字段未披露管理层薪酬结构及与业绩考核挂钩的具体机制",
+            "searched": "financials-collection.json 未见相关字段",
+            "evidenceRequest": {
+              "metric": "高管薪酬结构与考核指标",
+              "question": "腾讯管理层（马化腾、刘炽平等）薪酬构成（固定/股权激励/绩效奖金）及与ROE、AI战略等考核指标的挂钩情况如何？",
+              "whyNeeded": "评估管理层激励机制是否与股东长期利益一致",
+              "priority": "medium"
+            }
+          },
+          {
+            "path": "management.organization.successionPlan",
+            "reason": "采集文件未披露CEO或核心高管的继任计划、接班梯队安排",
+            "searched": "financials-collection.json 未见相关字段",
+            "evidenceRequest": {
+              "metric": "继任计划披露",
+              "question": "腾讯董事会是否已建立并披露CEO/核心高管的继任计划或接班梯队机制？",
+              "whyNeeded": "评估创始人高度集权下的关键人风险是否可控",
+              "priority": "high"
+            }
+          },
+          {
+            "path": "management.culture",
+            "reason": "采集文件未包含员工流失率、内部满意度调查等企业文化量化观察指标",
+            "searched": "financials-collection.json 未见相关字段",
+            "evidenceRequest": {
+              "metric": "员工流失率/满意度调查数据",
+              "question": "腾讯近年核心技术及管理岗位员工流失率、内部员工满意度调查结果如何？",
+              "whyNeeded": "补充企业文化维度的可观察量化证据，避免仅凭决策记录推断",
+              "priority": "low"
+            }
+          }
+        ]
+      },
+      "industryTrend": {
+        "title": "行业与长期趋势",
+        "conclusion": "腾讯坐拥游戏+广告+云三大行业敞口，社交护城河深厚但AI资本开支落后头部对手，范式转移中地位待验证。",
+        "analysis": {
+          "paradigmShift": {
+            "verdict": "部分",
+            "reasoning": "①核心社交/游戏/广告业务处于移动互联网既有范式的深化阶段，非新范式；②AI大模型/Agent代表真正的技术范式转移，腾讯以混元MoE+元宝布局其中，但2026年计划资本开支约1300亿元，低于字节跳动2500亿元、阿里巴巴1600亿元(riskFactors，大摩测算)；③AI云细分市场2025-2030年CAGR达26.8%(Omdia)，远高于传统云18%，腾讯云份额7.9%落后阿里云26.8%，对AI新范式增量需求的承接能力待验证。"
+          },
+          "historicalAnalogy": "基于通用行业知识判断：①移动互联网范式下腾讯凭微信生态类似电力普及期区域垄断电网运营商，网络效应即护城河；②AI范式更接近技术路线未定型的早期阶段，腾讯以混元自研+Agent矩阵切入应用层，定位偏\"整合分发者\"而非底层模型原创者；③若AI胜负手在场景与流量分发(类比互联网应用层)，腾讯优势仍具决定性；若胜负手在算力军备竞赛(类比电力基建资本战)，投入强度落后可能致其边缘化。",
+          "tam": {
+            "current": {
+              "value": "三业务不可直接加总：游戏(TAM)2025年中国市场约3600亿元人民币；数字广告(TAM)2025年中国市场约140.97亿美元；云计算(TAM)2024年中国公有云IaaS+PaaS+SaaS约450亿美元",
+              "currency": "RMB/USD（分行业口径不同）",
+              "asOf": "游戏2025年(预测口径)；数字广告2025年；云计算2024年实际值",
+              "source": {
+                "name": "前瞻产业研究院/新浪财经(游戏)；Research and Markets(数字广告)；IDC经大摩转引(云计算)，见industryOutlook.tam",
+                "url": "https://finance.sina.com.cn/roll/2025-09-16/doc-infqsafk8853211.shtml"
+              }
+            },
+            "ceiling": "①游戏：中国市场2025年约3600亿元→2030年预测约5000亿元，天花板增量约1400亿元(前瞻产业研究院)；②数字广告：2025年140.97亿美元→2029年预测266.62亿美元(Research and Markets)；③云计算：未见官方远期绝对值天花板，仅有2024-2029年CAGR约18%，AI云细分2030年预测规模1930亿元(Omdia)可作增量参考。",
+            "growthCurve": "游戏国内成熟/海外成长；广告成长期；云计算成长期，AI云细分为导入期"
+          },
+          "valueChainPosition": "①游戏：研运一体化+自研长青IP(王者荣耀等)，处产业链顶端议价权强，与网易合计占国内市场约78-80%；②广告：处流量分发环节，面临字节跳动/抖音挤压用户时长与预算，议价权受流量此消彼长牵制；③云计算：处IaaS/PaaS基础设施供给端，议价权弱于阿里云(份额7.9%vs26.8%)，主动放弃低毛利定制化项目换利润率。",
+          "techRouteRisk": "①自研混元MoE大模型技术路线，若第三方/开源模型持续追平能力，代差优势可能收窄；②2026年计划资本开支约1300亿元，显著低于字节跳动2500亿元、阿里巴巴1600亿元(大摩测算)，AI基础设施投入强度不足存在被拉开代差的风险；③游戏引擎、云计算IaaS等基础技术路线相对成熟，颠覆性替代风险较低，风险集中于AI大模型代际竞争。",
+          "concentration": {
+            "customers": "2C平台型公司，用户超10亿月活高度分散，无显著客户集中度",
+            "suppliers": "unavailable：文件未披露GPU/芯片供应商集中度具体数据",
+            "evidence": [
+              {
+                "metric": "微信小程序跨境使用次数",
+                "value": "超50亿次，覆盖全球100个国家和地区",
+                "asOf": "2025年12月(微信公开课PRO披露)",
+                "source": {
+                  "name": "证券时报转载微信公开课PRO官方数据",
+                  "url": "https://stcn.com/article/detail/3600145.html"
+                }
+              },
+              {
+                "metric": "资本开支(含GPU/数据中心采购)",
+                "value": "792亿元人民币，与857.5亿元研发费用为独立披露口径",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "腾讯新闻转载官方FY2025财报",
+                  "url": "https://view.inews.qq.com/a/20260320A03L2W00"
+                }
+              }
+            ]
+          }
+        },
+        "inquiry": {
+          "question": "站在20年后回看，这家公司是「这个时代的标准石油」还是「昙花一现的3Com」？",
+          "answer": "更像具护城河的\"标准石油\"，但AI代差落后存在\"3Com\"式掉队风险。①社交流量护城河近似基础设施垄断——微信生态网络效应持续变宽(小程序跨境超50亿次)，短期难被颠覆；②AI范式转移中资本开支落后(2026年1300亿元<字节2500亿元<阿里1600亿元)，云份额仅7.9%远落后阿里云26.8%，若技术代差扩大存在被绕过风险；③地缘政治(美国军事企业清单)、监管(游戏版号)构成外生不确定性，但游戏/广告/支付/云多业务组合分散了单一技术路线被颠覆的整体性风险。"
+        },
+        "dataGaps": [
+          {
+            "path": "industryOutlook.growthForecast（云计算）",
+            "reason": "云计算业务缺少2029/2030年绝对规模的天花板预测数值，仅有CAGR相对增速",
+            "searched": "financials-collection.json industryOutlook.growthForecast 未见云计算绝对规模目标值字段",
+            "evidenceRequest": {
+              "metric": "中国公有云市场2029年预测规模绝对值(IaaS+PaaS+SaaS)",
+              "question": "IDC/大摩报告对2029年中国公有云市场规模的绝对值预测是多少？",
+              "whyNeeded": "用于测算云计算业务TAM天花板的绝对空间，评估腾讯云增长空间上限",
+              "priority": "medium"
+            }
+          },
+          {
+            "path": "concentration.suppliers（GPU/芯片供应商集中度）",
+            "reason": "采集文件仅提及腾讯云支持国产GPU及自研星脉网络，未披露具体供应商名称、采购占比或集中度数据",
+            "searched": "financials-collection.json technology/riskFactors 均未见GPU供应商集中度字段",
+            "evidenceRequest": {
+              "metric": "英伟达等GPU供应商采购占比/集中度",
+              "question": "腾讯云/AI基础设施GPU采购中，英伟达及国产替代供应商各占多大比例？是否存在单一供应商集中度过高的断供风险？",
+              "whyNeeded": "评估供应链层面的议价权与断供风险，尤其在出口管制与地缘政治背景下",
+              "priority": "high"
+            }
+          }
+        ]
+      },
+      "valuation": {
+        "title": "估值分析",
+        "conclusion": "TTM PE14.78x显著低于中性情景隐含估值，三情景上行空间大于下行风险，但AI投入与地缘政治风险仍存",
+        "analysis": {
+          "currentMultiples": {
+            "marketCap": {
+              "value": "4.03万亿港元",
+              "currency": "HKD",
+              "asOf": "2026-08-19",
+              "source": {
+                "name": "采集文件currentValuation.marketCap（FMP company.profile-symbol）",
+                "url": ""
+              }
+            },
+            "pe": {
+              "value": "14.78x(TTM,人民币口径，基于2025Q3~2026Q2四季度IFRS基本EPS合计26.023元)",
+              "asOf": "2026-08-19",
+              "source": {
+                "name": "采集文件currentValuation.pe（主会话据官方季报验算，stockanalysis.com交叉验证15.06x）",
+                "url": ""
+              }
+            },
+            "ps": {
+              "value": "unavailable——采集文件未单独验算，仅按市值(RMB口径约3.47万亿元)/TTM收入(789,483百万元)粗略推算约4.39x[估计，未经工具验算]",
+              "asOf": "2026-08-19",
+              "source": {
+                "name": "采集文件currentValuation.ps",
+                "url": ""
+              }
+            },
+            "peg": {
+              "value": "unavailable——需未来3-5年分析师一致预期净利润复合增速，采集文件未获取该数据源",
+              "asOf": "2026-08-19",
+              "source": {
+                "name": "采集文件currentValuation.peg",
+                "url": ""
+              }
+            },
+            "evToRevenue": {
+              "value": "unavailable——需先确认EV(市值+有息负债-现金)口径，采集文件未做该项验算",
+              "asOf": "2026-08-19",
+              "source": {
+                "name": "采集文件currentValuation.evToRevenue",
+                "url": ""
+              }
+            }
+          },
+          "reverseDcf": {
+            "impliedGrowth": "当前14.78倍PE隐含增速已低于FY25实际增速，AI溢价未计入",
+            "assumptions": "①未做显性FCF贴现模型，改用3年期目标PE反推近似隐含增长区间；②终值取11x~18x三档目标PE对应悲观至乐观情景；③未单独设定贴现率，以当前TTM PE14.78x与三档终值PE对比框定市场隐含预期。"
+          },
+          "threeScenario": {
+            "inputs": {
+              "price": 384.54,
+              "eps": 26.023,
+              "sharesHundredMillion": 90.13,
+              "growth": [
+                "18%",
+                "12%",
+                "5%"
+              ],
+              "pe": [
+                18,
+                15,
+                11
+              ],
+              "years": 3,
+              "currency": "RMB"
+            },
+            "optimistic": {
+              "targetPrice": "769.6",
+              "impliedReturnPct": "+100.1%"
+            },
+            "neutral": {
+              "targetPrice": "548.4",
+              "impliedReturnPct": "+42.6%"
+            },
+            "pessimistic": {
+              "targetPrice": "331.4",
+              "impliedReturnPct": "-13.8%"
+            },
+            "assumptionBasis": "①乐观18%/18x：对标数字广告17.8%及AI云26.8% CAGR增速，叠加游戏出海(国际游戏收入+33%)，PE看齐CMBI SOTP乐观情景；②中性12%/15x：贴近FY2025实际净利润+16%增速温和放缓，PE对齐当前TTM14.78x及CMBI 750港元目标价隐含~15x FY26E估值；③悲观5%/11x：对标游戏成熟期6.8%CAGR叠加AI资本开支侵蚀利润，PE反映地缘政治清单风险及云份额下滑压制。",
+            "toolOutput": "============================================================\n三情景估值模型 (Three-Scenario Valuation)\n============================================================\n  当前股价: 384.54 RMB\n  当前EPS:  26.023\n  预测期:   3年\n\n  情景                年增速     目标PE      目标EPS       目标股价      涨跌幅\n  ------------ -------- -------- ---------- ---------- --------\n  乐观 (Bull)         18%      18x      42.76     769.6  +100.1%\n  中性 (Base)         12%      15x      36.56     548.4   +42.6%\n  悲观 (Bear)          5%      11x      30.12     331.4   -13.8%\n\n  ✅ 所有计算使用精确十进制, 结果可审计复现"
+          },
+          "vsOwnHistory": {
+            "metric": "PE(TTM)",
+            "currentValue": "14.78x",
+            "historicalRange": "采集文件未采集历史PE区间数据，无法判断当前分位",
+            "source": {
+              "name": "采集文件currentValuation（无历史区间字段）",
+              "url": ""
+            }
+          },
+          "vsPeers": [
+            {
+              "name": "网易(NetEase, 09999.HK/NTES)",
+              "pe": "unavailable——采集文件未获取网易可比PE/PS数据",
+              "ps": "unavailable——同上",
+              "source": {
+                "name": "采集文件competitiveLandscape.competitors（网易游戏，仅有市场份额28%，无PE/PS）",
+                "url": ""
+              }
+            },
+            {
+              "name": "阿里巴巴(9988.HK/BABA，云计算业务对标)",
+              "pe": "unavailable——采集文件仅采集阿里云市场份额26.8%，未获取阿里巴巴整体或云业务PE/PS",
+              "ps": "unavailable——同上",
+              "source": {
+                "name": "采集文件competitiveLandscape.competitors（阿里云）",
+                "url": ""
+              }
+            }
+          ]
+        },
+        "inquiry": {
+          "question": "如果股市明天关闭5年，你愿意以这个价格持有吗？",
+          "answer": "愿意持有，当前估值隐含较高安全边际。①三情景测算悲观情景仅下跌13.8%，中性情景上行42.6%，风险回报比合理；②微信生态网络效应与转换成本护城河稳固，现金流与股东回报能力强(持续大规模回购)；③但需接受地缘政治(1260H清单)、AI资本开支加速侵蚀短期利润、腾讯云份额落后阿里云等尾部风险，且投资退出后新增长曲线(AI变现)兑现节奏仍待验证。"
+        },
+        "dataGaps": [
+          {
+            "path": "currentValuation.ps",
+            "reason": "PS、PEG、EV/Revenue三项估值指标在采集文件中均标记unavailable，缺可比数据源",
+            "searched": "financials-collection.json currentValuation字段"
+          },
+          {
+            "path": "valuation.analysis.vsPeers",
+            "reason": "同行(网易/阿里巴巴)可比PE/PS数据未采集，vsPeers无法量化对比",
+            "searched": "financials-collection.json competitiveLandscape字段"
+          },
+          {
+            "path": "valuation.analysis.vsOwnHistory",
+            "reason": "腾讯自身历史PE/PB区间及分位数据未覆盖，vsOwnHistory无法判断当前估值处于历史哪个区间",
+            "searched": "financials-collection.json currentValuation字段"
+          }
+        ]
+      }
+    },
+    "crossValidationLog": [
+      {
+        "field": "三情景估值-中性情景目标价",
+        "source1": {
+          "name": "financial_rigor.py three-scenario工具输出",
+          "value": "548.4元人民币"
+        },
+        "source2": {
+          "name": "对应人民币价隐含港元目标价(548.4/0.8598≈637.8港元)，低于CMBI(招银国际)SOTP目标价750港元",
+          "value": "637.8港元"
+        },
+        "deviationPct": "17.6",
+        "flag": "minor-diff",
+        "resolution": "本研究中性情景假设(12%增速/15x PE)较CMBI分析师SOTP估值(750港元)更保守，差异源于假设口径不同(本研究基于EPS×PE简化模型，CMBI用分部加总估值)，均为合理估值区间内的正常差异，非数据错误"
+      },
+      {
+        "field": "TTM PE(人民币口径)",
+        "source1": {
+          "name": "主会话据官方季报EPS数据验算(第1步)",
+          "value": "14.78x"
+        },
+        "source2": {
+          "name": "stockanalysis.com trailing PE",
+          "value": "15.06x"
+        },
+        "deviationPct": "1.9",
+        "flag": "ok",
+        "resolution": "已在第1步currentValuation中记录，第2步估值维度复用未重新验算，偏差在可接受范围"
+      }
+    ]
+  },
+  "summary": {
+    "meta": {
+      "companyId": "hk-0700-tencent-holdings",
+      "companyName": "腾讯控股有限公司 (Tencent Holdings Limited)",
+      "summarizedAt": "2026-08-19",
+      "dataCutoff": "2026-08-19（Asia/Shanghai）",
+      "basedOnCollection": "research/companies/hk-0700-tencent-holdings/financials-collection.json",
+      "basedOnAnalysis": "research/companies/hk-0700-tencent-holdings/financials-analysis.json"
+    },
+    "dimensionSummary": [
+      {
+        "dimensionId": "businessQuality",
+        "title": "生意质量",
+        "mapsTo": "dimensions.businessEssence",
+        "conclusion": "腾讯依托微信生态锁定超10亿月活，将流量转化为游戏、广告、金融科技三条现金流，毛利率五年持续扩张，毛利增速快于收入增速，经营杠杆为正。",
+        "confidence": 8,
+        "scoreBasis": "①毛利率从FY2021的43.91%持续升至FY2025的56.25%(profitabilityTrend5y)；②FY2025收入+13.9%、毛利+21.0%、Non-IFRS净利+16.6%，均现正经营杠杆(operatingLeverage)；③VAS/广告/金融科技三分部占比49%/19%/31%，现金流来源分散(revenueBreakdown)；④同行毛利率对比与用户留存率数据缺失(dataGaps)，未据此推低分。"
+      },
+      {
+        "dimensionId": "moat",
+        "title": "护城河",
+        "mapsTo": "dimensions.moat",
+        "conclusion": "网络效应、转换成本、规模效应三类护城河均判定存在且五年持续变宽，但品牌定价权与技术专利壁垒待验证，未来五年边界受AI代差与地缘风险考验。",
+        "confidence": 7,
+        "scoreBasis": "①网络效应/转换成本/规模效应verdict=存在，trendPast5y=变宽(moat.analysis.types/trendPast5y)；②品牌定价权与技术专利壁垒verdict=待验证，2026年腾讯AI资本开支约1300亿元低于字节2500亿元、阿里1600亿元(types[4].evidence)；③trendNext5y方向仅为「稳定」而非「变宽」，反映技术代差与1260H清单悬而未决。"
+      },
+      {
+        "dimensionId": "management",
+        "title": "管理层",
+        "mapsTo": "dimensions.management",
+        "conclusion": "马化腾执掌27年高度集权，投资退出决策果断且套现规模大，但未见继任计划披露，AI优先于回购的沟通曾引发单日市值蒸发约3400亿港元。",
+        "confidence": 6,
+        "scoreBasis": "①关键决策评分区间★2-★4，投资退出类评分较高、监管处罚与AI沟通类评分较低(keyDecisions)；②累计退出京东、美团、快手套现超2831亿港元，回购金额2024年1120亿→2025年约800亿呈下滑(capitalAllocation)；③高管薪酬结构与继任计划均unavailable且priority=high(dataGaps)，关键人风险突出，信心度向中性收敛。"
+      },
+      {
+        "dimensionId": "keyRisk",
+        "title": "最大风险",
+        "mapsTo": "dimensions.inversion",
+        "conclusion": "最大风险是AI资本开支强度落后字节、阿里导致技术代差扩大，叠加投资退出红利耗尽压缩回购空间，两者复合冲击护城河与股东回报可持续性。",
+        "confidence": 4,
+        "scoreBasis": "①AI资本开支2026年腾讯约1300亿元vs字节2500亿元vs阿里1600亿元，probability=中/impact=高，为最高优先级失败路径(failurePaths[0])；②美国1260H清单2026-06-08更新扩容至188家实体腾讯仍未移除，2026-06-30国防部合同禁令生效，probability=低/impact=高(failurePaths[1])；③京东/美团/快手等优质资产已系统性退出，回购金额同比下滑，「卖资产反哺回购」模式可持续性存疑(failurePaths[4])。"
+      },
+      {
+        "dimensionId": "civilizationTrend",
+        "title": "文明趋势",
+        "mapsTo": "dimensions.industryTrend",
+        "conclusion": "游戏、广告、支付处移动互联网范式深化阶段趋势有利，但AI大模型代际竞争中腾讯资本开支强度落后头部对手，长期能否延续护城河待验证。",
+        "confidence": 6,
+        "scoreBasis": "①paradigmShift verdict=「部分」：核心业务处存量深化，AI代表真正范式转移但腾讯投入强度落后(paradigmShift)；②AI云细分2025-2030年CAGR达26.8%远高于传统云18%，腾讯云份额7.9%落后阿里云26.8%(tam/valueChainPosition)；③historicalAnalogy判断腾讯更似「标准石油」但存在「3Com式掉队」风险，属分析师逻辑推演非独立验证(inquiry.answer)，信心度收敛。"
+      },
+      {
+        "dimensionId": "valuation",
+        "title": "估值",
+        "mapsTo": "dimensions.valuation",
+        "conclusion": "TTM PE14.78x、PB3.05x，三情景测算显示悲观下行13.8%、中性上行42.6%、乐观上行100.1%，风险回报比明显偏向低估但地缘与AI投入尾部风险未计入。",
+        "confidence": 7,
+        "scoreBasis": "①三情景：悲观331.4元(-13.8%)/中性548.4元(+42.6%)/乐观769.6元(+100.1%)(threeScenario)；②TTM PE14.78x、PB3.05x、ROE20.57%，估值不高盈利能力强(currentMultiples)；③PS/PEG/EV-Revenue均unavailable，历史PE区间与同业对比(vsOwnHistory/vsPeers)缺失，无法判断历史/同业分位，未据此拔高分数。"
+      },
+      {
+        "dimensionId": "corporateCulture",
+        "title": "企业文化",
+        "mapsTo": "dimensions.management.analysis.culture",
+        "conclusion": "管理层历史决策显示较强资本配置纪律，系统性退出京东、美团并转向AI；马化腾曾在年度员工大会公开向全员通报投资退出结果。",
+        "confidence": 5,
+        "scoreBasis": "①系统性退出京东、美团等重资产投资并将资金转向AI，体现资本配置纪律(management.analysis.culture①)；②马化腾在2025年度员工大会公开向全员通报投资退出结果，体现高层-员工直接沟通习惯(culture②)；③员工流失率、内部满意度调查等独立量化指标缺失，priority=low(management.dataGaps)，证据单薄，信心度收敛至中性而非因缺口推低分。"
+      }
+    ],
+    "strategies": {
+      "noPosition": {
+        "title": "空仓者",
+        "advice": "①TTM PE14.78x低于中性情景隐含估值，安全边际较高，可考虑分批建仓；②AI投入与1260H清单风险未消化，不宜一次性满仓；③等待三季报验证AI资本开支与云份额趋势。",
+        "triggers": [
+          {
+            "condition": "港股跌至约385港元附近(对应人民币悲观情景331.4元)",
+            "action": "可加大首次建仓比例，逐步分批介入",
+            "basis": "①悲观情景331.4元(-13.8%)(valuation.threeScenario.pessimistic)；②港元换算=331.4/0.8598≈385港元；③下行空间有限，安全边际显著提升。"
+          },
+          {
+            "condition": "2026年三季报AI资本开支占比连续两季低于同业中位数",
+            "action": "暂缓建仓，等待技术代差收敛信号明确",
+            "basis": "①2026年计划资本开支腾讯1300亿元vs字节2500亿元vs阿里1600亿元(inversion.failurePaths[0])；②为最高优先级失败路径，probability中/impact高；③单一年度数据尚不构成趋势确认，需多期验证。"
+          }
+        ]
+      },
+      "holding": {
+        "title": "持仓者",
+        "advice": "①三情景下行有限(-13.8%)、上行显著(+42.6%~+100.1%)，可继续持有；②密切跟踪AI资本开支与云份额等基本面指标；③回购力度若持续下滑需重估股东回报可持续性。",
+        "triggers": [
+          {
+            "condition": "腾讯云IaaS份额连续两季度跌破2025年10月的7.9%",
+            "action": "减仓观察，验证云计算竞争力是否加速恶化",
+            "basis": "①腾讯云份额从2025Q2的10%降至Q3的9%、10月7.9%(inversion.failurePaths[3])；②bearCase同样指出该趋势为多空分歧焦点；③连续两季度低于该水平构成实质性恶化信号。"
+          },
+          {
+            "condition": "1260H清单风险升级为实质出口管制或资产限制",
+            "action": "立即减仓，规避地缘政治尾部风险",
+            "basis": "①1260H清单probability=低/impact=高，2026-06-30国防部合同禁令已生效(failurePaths[1])；②截至2026-06-08更新腾讯仍未获除名；③升级为出口管制将改变风险量级，需及时止损。"
+          },
+          {
+            "condition": "港股涨至约895港元附近(对应人民币乐观目标价769.6元)",
+            "action": "考虑逢高部分止盈，锁定部分收益",
+            "basis": "①乐观情景769.6元(+100.1%)(valuation.threeScenario.optimistic)；②港元换算=769.6/0.8598≈895港元；③该情景假设18%增速/18x PE已计入较乐观预期。"
+          }
+        ]
+      },
+      "sellSignals": {
+        "title": "卖出信号",
+        "signals": [
+          {
+            "signal": "港股股价站稳约895港元附近(对应人民币乐观目标价769.6元)",
+            "observable": "港股收盘价连续多日高于895港元",
+            "basis": "①valuation.threeScenario.optimistic目标价769.6元(+100.1%)；②港元换算=769.6/0.8598≈895港元；③该价位已计入18%增速/18x PE乐观假设。"
+          },
+          {
+            "signal": "2026年AI资本开支实际落地不及计划且与同业差距持续扩大",
+            "observable": "季报资本开支披露显示与字节、阿里差距扩大",
+            "basis": "①2026年计划腾讯1300亿元vs字节2500亿元vs阿里1600亿元(inversion.failurePaths[0])；②为最高优先级失败路径；③实际低于计划将强化技术代差扩大的判断。"
+          },
+          {
+            "signal": "1260H清单升级为出口管制或腾讯被纳入实体清单",
+            "observable": "美国商务部或国防部发布正式管制文件",
+            "basis": "①1260H清单probability=低/impact=高(failurePaths[1])；②2026-06-08更新扩容至188家实体腾讯仍未移除；③升级将从外生角度实质侵蚀国际化路径。"
+          }
+        ]
+      },
+      "addSignals": {
+        "title": "加仓信号",
+        "signals": [
+          {
+            "signal": "港股跌至约385港元附近(对应人民币悲观情景331.4元)",
+            "observable": "港股收盘价跌破385港元且基本面未恶化",
+            "basis": "①悲观情景331.4元(-13.8%)(valuation.threeScenario.pessimistic)；②港元换算=331.4/0.8598≈385港元；③若基本面未同步恶化则安全边际显著提升。"
+          },
+          {
+            "signal": "腾讯云与AI产品份额出现多源确认的加速增长",
+            "observable": "IDC/Omdia等第三方数据与官方财报同步验证份额回升",
+            "basis": "①技术专利壁垒verdict=待验证，需多源确认(moat.analysis.types[4])；②当前依赖单一大摩测算的资本开支对比数据；③多源同向确认可显著提升护城河判断的可信度。"
+          },
+          {
+            "signal": "2026年资本开支指引上修并接近字节、阿里中枢水平",
+            "observable": "季度或年度公告上调资本开支指引",
+            "basis": "①inversion.failurePaths[0]标注为最高优先级失败路径；②当前差距为腾讯1300亿元vs字节2500亿元vs阿里1600亿元；③指引上修接近同业中枢将实质缓解技术代差担忧。"
+          }
+        ]
+      }
+    },
+    "disclaimer": "本总结基于公开信息与数据截止时点的分析生成，仅供研究参考，不构成个性化投资建议。"
+  }
+}
