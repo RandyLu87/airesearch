@@ -1,0 +1,156 @@
+{
+  "_spec": {
+    "purpose": "研究流程第 3 步（分析总结）的产出模板。由评估 Agent 基于第 1 步采集与第 2 步分析的落盘文件生成，不重新采集。步骤正文见 docs/research/workflow/03-analysis-summary.md。"
+  },
+  "meta": {
+    "companyId": "hk-9899-netease-cloud-music",
+    "companyName": "网易云音乐股份有限公司 (NetEase Cloud Music Inc.)",
+    "summarizedAt": "2026-08-20",
+    "dataCutoff": "2026-08-20（Asia/Shanghai）",
+    "basedOnCollection": "research/companies/hk-9899-netease-cloud-music/financials-collection.json",
+    "basedOnAnalysis": "research/companies/hk-9899-netease-cloud-music/financials-analysis.json"
+  },
+  "dimensionSummary": [
+    {
+      "dimensionId": "businessQuality",
+      "title": "生意质量",
+      "mapsTo": "dimensions.businessEssence",
+      "conclusion": "本质是靠会员订阅与UGC社区锁住存量乐迷的现金牛生意，毛利率已从深度亏损修复至健康水平，但收入四年基本停滞，利润改善主要靠费用收缩而非规模增长，2026H1已现负经营杠杆。",
+      "confidence": 5.5,
+      "scoreBasis": "①会员订阅收入占总收入约65%，FY2025同比+13.3%，是收入利润压舱石(analysis.revenueBreakdown)；②毛利率FY2021 2.04%→FY2025 35.69%持续修复，但收入FY2021-2025基本持平(69.98亿→77.59亿元)(analysis.profitabilityTrend5y)；③2026H1出现负经营杠杆：收入+3.4%而销售及市场费用+80.7%，营业利润反降11.6%，说明利润弹性来自费用端而非天然规模效应(analysis.operatingLeverage)。"
+    },
+    {
+      "dimensionId": "moat",
+      "title": "护城河",
+      "mapsTo": "dimensions.moat",
+      "conclusion": "护城河集中在转换成本与社区网络效应，对存量付费用户留存有效，但对新增/回流用户吸引力持续减弱，规模效应弱于腾讯音乐，过去5年及未来5年趋势均判断为变窄。",
+      "confidence": 4,
+      "scoreBasis": "①转换成本与网络效应verdict均为'存在'，但品牌定价权与技术专利verdict为'待验证'，规模效应verdict为'不存在'，毛利率35.69%仍落后腾讯音乐44.2%约8.5pp(analysis.types)；②trendPast5y与trendNext5y均判定'变窄'，MAU从2021年1.83亿降至2026年3月1.4682亿并被汽水音乐(1.5605亿)反超、跌出行业前三(analysis.trendPast5y/trendNext5y)；③品牌定价权与技术壁垒证据不足(dataGaps载明未查得ARPU分年拆分、专利仅第三方数据)，证据限制下评分向中性收敛。"
+    },
+    {
+      "dimensionId": "management",
+      "title": "管理层",
+      "mapsTo": "dimensions.management",
+      "conclusion": "丁磊持股集中(60.29%)带来强利益绑定，回购择时相对合理，但主席兼CEO角色未分离构成治理偏离，且2025年削减营销费用换取利润的决策被评为可持续性差。",
+      "confidence": 5,
+      "scoreBasis": "①股份回购决策评级★4，耗资9.67亿港元、彼时TTM PE约11.99倍处相对低位(analysis.keyDecisions[0])；②2025年降本增效决策评级仅★2，指出'短期美化利润但牺牲竞争地位，可持续性差'，与汽水音乐MAU反超时点重合(analysis.keyDecisions[2])；③治理层面主席与CEO角色未分离，构成对《企业管治守则》C.2.1条的自评偏离(analysis.culture)；④薪酬结构、并购记录、团队稳定性均为dataGaps未披露，证据限制下评分向中性收敛。"
+    },
+    {
+      "dimensionId": "keyRisk",
+      "title": "最大风险",
+      "mapsTo": "dimensions.inversion",
+      "conclusion": "最大风险是汽水音乐依托抖音流量对用户时长的持续分流叠加费用管控红利耗尽的双重挤压：前者概率高、影响高且短期难以逆转，后者已在2026H1兑现为营业利润下滑，两者叠加可能使公司从追随者滑向边缘化。",
+      "confidence": 3.5,
+      "scoreBasis": "①汽水音乐MAU持续反超路径probability标为'高'、impact标为'高'，2026年3月MAU 1.5605亿对网易云音乐1.4682亿(failurePaths[0])；②费用管控红利耗尽路径同样probability'高'、impact'高'，2026H1销售及市场费用同比+80.7%已导致营业利润同比-11.6%(failurePaths[2])；③净现金118.5亿元(占市值近六成)与净现金状态(负债率22.7%且基本无有息负债)提供一定缓冲，但风险本身指向核心竞争位置持续弱化而非可对冲的单一事件，故评分不高但未至严重不利区间。"
+    },
+    {
+      "dimensionId": "civilizationTrend",
+      "title": "文明趋势",
+      "mapsTo": "dimensions.industryTrend",
+      "conclusion": "在线音乐流媒体作为渠道范式已确立，中国市场仍处平稳扩张期，但网易云音乐在产业链中上游议价权持续弱于腾讯音乐系，且下游流量入口正被短视频渠道再范式化分流，公司享受行业增长的确定性低于行业本身增长的确定性。",
+      "confidence": 6,
+      "scoreBasis": "①行业增速放缓但未见萎缩：IFPI披露2025年中国录制音乐收入同比+20.1%居全球前20大市场第一，Omdia预测中国份额2025年5.8%→2030年8.7%(analysis.tam/paradigmShift)；②上游版权议价权劣势明确：招股章程披露2020年基线与腾讯音乐系收入差距达3.6倍，官方风险因素原文承认'规模上仍有显著差距'(analysis.valueChainPosition)；③下游分发渠道正被汽水音乐的短视频算法逻辑再范式化，2026年3月MAU反超(analysis.techRouteRisk)。"
+    },
+    {
+      "dimensionId": "valuation",
+      "title": "估值",
+      "mapsTo": "dimensions.valuation",
+      "conclusion": "当前估值已隐含较悲观预期，EV/Revenue仅1.04倍、反解永续增长率约1.7%，净现金覆盖近六成市值，三情景测算呈现明显上行倾斜(中性+26.1%/乐观+90.2%)但悲观情景仍有-35.7%下行空间。",
+      "confidence": 7,
+      "scoreBasis": "①TTM PE 11.99倍(经调整11.29倍)、EV/Revenue 1.04倍，反解Gordon模型隐含永续增长率约1.7%，'市场几乎未计入成长溢价'(analysis.currentMultiples/reverseDcf)；②三情景测算：乐观214.2港元(+90.2%)、中性141.9港元(+26.1%)、悲观72.5港元(-35.7%)，基于当前价112.6港元(analysis.threeScenario)；③净现金约118.5亿元人民币占当前市值约200亿元人民币近六成，对下行提供部分对冲(bullBearCase/inquiry)；④历史PE区间与同业腾讯音乐PE/PS对比均unavailable(dataGaps)，证据限制下评分未进一步上调。"
+    },
+    {
+      "dimensionId": "corporateCulture",
+      "title": "企业文化",
+      "mapsTo": "dimensions.management.analysis.culture",
+      "conclusion": "已披露证据显示公司治理结构上主席与CEO角色未分离并自评偏离监管守则，成本纪律随经营压力大幅摇摆(先降后升)，技术投入方向明确转向AI，但薪酬考核、团队稳定性、并购能力等文化相关证据大面积缺失。",
+      "confidence": 4.5,
+      "scoreBasis": "①治理结构：主席与CEO角色未分离(丁磊兼任)，公司自评构成对《企业管治守则》C.2.1条的偏离，董事会解释为提升战略执行效率(analysis.culture①)；②成本纪律随经营压力摇摆：2025年销售及市场费用同比削减33.2%、管理费用降4.4%，但2026H1销售费用同比激增80.7%回补(analysis.culture②)；③技术投入向AI倾斜：2026H1研发费用同比+3.2%，主要投向Climber大模型升级与AI互动功能(analysis.culture③)；④薪酬考核挂钩指标、核心高管团队稳定性、并购历史均为dataGaps标记unavailable(management.dataGaps)，证据限制下评分向中性收敛。"
+    }
+  ],
+  "strategies": {
+    "noPosition": {
+      "title": "空仓者",
+      "advice": "①当前估值已部分计入悲观预期但护城河变窄趋势未反转，不建议现价追高建仓；②可等待价格跌至悲观情景附近或竞争/费用指标出现企稳信号后分批介入；③优先以小仓位试探而非重仓，因治理集中与MAU反超风险尚未消除。",
+      "triggers": [
+        {
+          "condition": "股价跌至72.5港元附近，接近悲观情景对应价位",
+          "action": "可考虑左侧小仓位试探性建仓，不宜一次性重仓",
+          "basis": "①72.5港元为悲观情景目标价(-35.7%)，对应引用dimensions.valuation.analysis.threeScenario悲观情景；②净现金约118.5亿元占当前市值近六成，EV/Revenue仅1.04倍，为下行提供部分对冲，引用dimensions.valuation.analysis.currentMultiples与bullBearCase。"
+        },
+        {
+          "condition": "汽水音乐MAU领先优势连续两个季度不再扩大",
+          "action": "确认护城河企稳后再考虑分批建仓",
+          "basis": "①引用dimensions.moat.analysis.trendNext5y'变窄'判断及dimensions.inversion.analysis.failurePaths[0]汽水音乐MAU 1.5605亿对网易云音乐1.4682亿的反超路径；②该路径probability标注'高'、impact标注'高'，是判断护城河是否企稳的核心观测指标。"
+        },
+        {
+          "condition": "销售及市场费用增速回落且收入增速同步转正并企稳",
+          "action": "确认经营杠杆恢复良性后再考虑建仓",
+          "basis": "①引用dimensions.inversion.analysis.failurePaths[2]费用管控红利耗尽路径，2026H1销售及市场费用同比+80.7%而营业利润同比-11.6%；②引用dimensions.businessEssence.analysis.operatingLeverage说明当前利润弹性来自费用端而非规模效应。"
+        }
+      ]
+    },
+    "holding": {
+      "title": "持仓者",
+      "advice": "①现价112.6港元处于悲观与中性情景之间，可维持现有仓位观察后续两份财报；②密切跟踪会员订阅收入增速与MAU排名两个核心指标是否进一步恶化；③若护城河与费用杠杆同步恶化应考虑减仓而非死扛，因生意质量与护城河评分均处中性偏低区间。",
+      "triggers": [
+        {
+          "condition": "股价维持在112至142港元区间，对应现价至中性目标价",
+          "action": "维持现有仓位，暂不加仓也不减仓",
+          "basis": "①141.9港元为中性情景目标价(+26.1%)，引用dimensions.valuation.analysis.threeScenario中性情景；②TTM PE 11.99倍与EV/Revenue 1.04倍未明显高估，引用dimensions.valuation.analysis.currentMultiples。"
+        },
+        {
+          "condition": "会员订阅收入同比增速进一步跌破2026H1的5.3%",
+          "action": "警惕订阅增长引擎失速，应考虑减仓",
+          "basis": "①引用dimensions.inversion.analysis.failurePaths[1]会员ARPPU增长逼近天花板路径，会员订阅收入增速已由FY2025的+13.3%放缓至2026H1的+5.3%；②该路径probability标注'中'、impact标注'高'。"
+        },
+        {
+          "condition": "汽水音乐MAU领先优势持续扩大超过两个季度",
+          "action": "重新评估护城河宽度，考虑分批减仓",
+          "basis": "①引用dimensions.moat.analysis.trendPast5y/trendNext5y均判定'变窄'的结论；②引用dimensions.inversion.analysis.failurePaths[0]汽水音乐同比+78%反超网易云音乐MAU的数据。"
+        }
+      ]
+    },
+    "sellSignals": {
+      "title": "卖出信号",
+      "signals": [
+        {
+          "signal": "汽水音乐对网易云音乐的MAU领先优势连续两个季度继续扩大",
+          "observable": "QuestMobile季度数据显示两者MAU差距持续拉大而非收窄",
+          "basis": "①引用dimensions.inversion.analysis.failurePaths[0]，2026年3月网易云音乐1.4682亿对汽水音乐1.5605亿，probability'高'、impact'高'；②引用dimensions.moat.analysis.trendNext5y护城河变窄判断。"
+        },
+        {
+          "signal": "销售及市场费用维持高增速但收入增速未同步回升",
+          "observable": "半年报或年报显示营销费用同比增速超50%而收入增速低于5%",
+          "basis": "①引用dimensions.businessEssence.analysis.operatingLeverage，2026H1销售及市场费用同比+80.7%而收入仅+3.4%、营业利润-11.6%；②引用dimensions.inversion.analysis.failurePaths[2]费用管控红利耗尽路径。"
+        },
+        {
+          "signal": "会员订阅收入同比增速进一步降至个位数低位或转负",
+          "observable": "下一份半年报或年报的会员订阅收入同比增速低于3%或为负",
+          "basis": "①引用dimensions.inversion.analysis.failurePaths[1]，增速已由FY2025的+13.3%放缓至2026H1的+5.3%；②引用dimensions.businessEssence.inquiry.answer中'幸存者偏差'提示，警惕分母缩小掩盖用户总盘萎缩。"
+        }
+      ]
+    },
+    "addSignals": {
+      "title": "加仓信号",
+      "signals": [
+        {
+          "signal": "股价回落至72.5港元附近悲观情景价位但基本面未同步恶化",
+          "observable": "价格跌破悲观目标价而同期MAU与订阅收入未进一步下滑",
+          "basis": "①72.5港元引用dimensions.valuation.analysis.threeScenario悲观情景(-35.7%)；②净现金约118.5亿元占市值近六成为估值提供缓冲，引用dimensions.valuation.analysis.currentMultiples与bullBearCase。"
+        },
+        {
+          "signal": "网易云音乐MAU排名重新反超汽水音乐或差距明显收窄",
+          "observable": "QuestMobile数据显示网易云音乐MAU回升至汽水音乐之上或差距缩小超三成",
+          "basis": "①引用dimensions.moat.analysis.trendNext5y中'方向暂未见反转信号'的表述，一旦反转即构成加仓依据；②引用dimensions.inversion.analysis.failurePaths[0]的MAU对比基准数据。"
+        },
+        {
+          "signal": "销售费用增速回落同时收入维持正增长，经营杠杆转正",
+          "observable": "半年报或年报显示营业利润增速快于收入增速",
+          "basis": "①引用dimensions.businessEssence.analysis.operatingLeverage，当前判断'规模效应对利润的传导尚未验证'，一旦验证即为加仓信号；②引用dimensions.management.analysis.keyDecisions[0]回购决策评级★4，说明管理层在低估值区间有回购意愿可作为佐证。"
+        }
+      ]
+    }
+  },
+  "disclaimer": "本总结基于公开信息与数据截止时点的分析生成，仅供研究参考，不构成个性化投资建议。"
+}

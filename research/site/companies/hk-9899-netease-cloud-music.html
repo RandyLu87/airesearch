@@ -1,0 +1,905 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>网易云音乐股份有限公司 (NetEase Cloud Music Inc.)分析报告</title><meta name="description" content="以商业模式、核心驱动、最新变化和当前价格隐含的假设为主线的上市公司研究。"/><meta name="research-publication-version" content="0.1.0"/><meta name="research-final-version" content="1.0.0"/><style>/* Inter 只覆盖拉丁字形，中文一律走系统字体，所以字体文件按站点实际用到的字符
+   子集化过（48.3 KB → 25.8 KB），可变字重轴保留。重新生成见 fonts/README.md。
+   font-display: swap + 下面的系统字体兜底，保证字体在弱网下取不到时只是字形回退，
+   不影响可读性。 */
+@font-face {
+  font-family: "Inter Local";
+  src: url("../assets/fonts/InterVariable.woff2") format("woff2-variations");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  --paper: #f7f7f2;
+  --ink: #101010;
+  --muted: #686863;
+  --line: #c9c9c2;
+  --line-dark: #93938c;
+  --signal: #ff4d00;
+  --soft: #ecece6;
+  --max: 1440px;
+  color-scheme: light;
+  font-family: "Inter Local", system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--paper); }
+body { margin: 0; color: var(--ink); background: var(--paper); }
+a { color: inherit; text-underline-offset: .2em; }
+p, li { line-height: 1.62; }
+
+.research-report,
+.company-page {
+  width: min(100%, var(--max));
+  margin: 0 auto;
+  padding: 0 36px 80px;
+}
+
+.report-hero {
+  min-height: 78vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 26px 0 34px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.eyebrow-row,
+.metric-meta,
+.company-card-meta,
+.company-eyebrow {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 56px;
+  align-items: end;
+  margin: 10vh 0 8vh;
+}
+
+.kicker,
+.section-kicker {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+h1, h2, h3, p { margin-top: 0; }
+h1 {
+  max-width: 980px;
+  margin-bottom: 24px;
+  font-size: clamp(58px, 10vw, 150px);
+  font-weight: 500;
+  letter-spacing: -.075em;
+  line-height: .82;
+}
+
+.headline {
+  max-width: 840px;
+  margin: 0;
+  font-size: clamp(22px, 3vw, 42px);
+  font-weight: 450;
+  letter-spacing: -.035em;
+  line-height: 1.08;
+}
+
+.stance-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--ink);
+}
+.stance-block .label,
+.hero-facts span,
+.summary-grid span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.stance-block strong { font-size: 42px; font-weight: 520; letter-spacing: -.05em; }
+.stance-block > span:last-child { color: var(--muted); font-size: 13px; }
+
+/* Auto-fit for the same reason as `.company-summary`: the cell count follows the
+   contract, and 1.2.0 trades a fair value for a market capitalisation. */
+.hero-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  border-top: 1px solid var(--line-dark);
+}
+.hero-facts > div { padding: 18px 18px 0 0; }
+.hero-facts span, .hero-facts strong { display: block; }
+.hero-facts strong { margin-top: 8px; font-size: 18px; font-weight: 560; }
+.hero-facts small { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; }
+
+.section-nav {
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 12px 0;
+  background: color-mix(in srgb, var(--paper) 94%, transparent);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(12px);
+}
+.section-nav a,
+.pill-link {
+  flex: 0 0 auto;
+  padding: 8px 14px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 650;
+  text-decoration: none;
+}
+.section-nav a:hover, .pill-link:hover { color: var(--paper); background: var(--ink); }
+
+.report-section {
+  display: grid;
+  grid-template-columns: minmax(72px, 1fr) minmax(0, 10fr);
+  gap: 32px;
+  padding: 76px 0 86px;
+  border-bottom: 1px solid var(--ink);
+}
+.section-number { font-size: 12px; font-variant-numeric: tabular-nums; }
+.section-content { min-width: 0; }
+.section-content h2 {
+  max-width: 980px;
+  margin-bottom: 26px;
+  font-size: clamp(42px, 6vw, 92px);
+  font-weight: 490;
+  letter-spacing: -.065em;
+  line-height: .92;
+}
+.lead {
+  max-width: 960px;
+  margin-bottom: 38px;
+  font-size: clamp(20px, 2.3vw, 32px);
+  letter-spacing: -.025em;
+  line-height: 1.24;
+}
+
+.summary-grid,
+.metric-grid,
+.chart-grid,
+.scenario-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--ink);
+}
+.summary-grid article {
+  min-height: 180px;
+  padding: 20px 28px 26px 0;
+  border-bottom: 1px solid var(--line);
+}
+.summary-grid article:nth-child(odd) { border-right: 1px solid var(--line); }
+.summary-grid article:nth-child(even) { padding-left: 28px; }
+.summary-grid p { max-width: 540px; margin: 24px 0 0; font-size: 18px; }
+
+.change-ledger { margin-top: 54px; }
+.change-ledger h3 { font-size: 14px; letter-spacing: .08em; text-transform: uppercase; }
+.change-ledger dl { border-top: 1px solid var(--line-dark); }
+.change-ledger dl div { display: grid; grid-template-columns: 150px 1fr; gap: 24px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.change-ledger dt { font-weight: 650; }
+.change-ledger dd { margin: 0; color: var(--muted); }
+
+.editorial-list { max-width: 980px; margin: 0; padding: 0; list-style: none; counter-reset: editorial; }
+.editorial-list > li { position: relative; min-height: 72px; padding: 18px 0 18px 56px; border-top: 1px solid var(--line); font-size: 17px; counter-increment: editorial; }
+.editorial-list > li::before { position: absolute; left: 0; content: counter(editorial, decimal-leading-zero); color: var(--muted); font-size: 11px; letter-spacing: .1em; }
+.source-ids { display: inline-flex; gap: 6px; margin-top: 22px; color: var(--muted); font-size: 11px; }
+.source-ids a { color: var(--ink); font-weight: 700; text-decoration: none; }
+
+.metric-grid { margin-top: 36px; }
+.metric-card { min-height: 260px; padding: 20px 28px 28px 0; border-bottom: 1px solid var(--line); }
+.metric-card:nth-child(odd) { border-right: 1px solid var(--line); }
+.metric-card:nth-child(even) { padding-left: 28px; }
+.metric-meta { color: var(--muted); }
+.metric-card h3 { margin: 42px 0 10px; font-size: 17px; font-weight: 580; }
+.metric-card > strong { display: block; font-size: clamp(30px, 4vw, 58px); font-weight: 480; letter-spacing: -.055em; }
+.metric-card p { max-width: 440px; margin: 16px 0; color: var(--muted); }
+.metric-card small { display: block; padding-top: 12px; border-top: 1px solid var(--line); }
+
+.chart-grid { margin-top: 64px; gap: 28px; border-top: 0; }
+.decision-chart { margin: 0; padding: 18px 0 22px; border-top: 1px solid var(--line-dark); }
+.chart-title { margin-bottom: 8px; font-size: 13px; font-weight: 650; letter-spacing: .04em; }
+.decision-chart svg { display: block; width: 100%; height: 180px; }
+.decision-chart figcaption { max-width: 430px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+.chart-axis { stroke: var(--line-dark); stroke-width: 1; }
+.chart-track { fill: var(--soft); }
+.chart-value--ink { fill: var(--ink); }
+.chart-value--signal { fill: var(--signal); }
+.chart-marker { stroke: var(--ink); stroke-width: 1; }
+.chart-label { fill: var(--ink); font-family: "Inter Local", sans-serif; font-size: 11px; font-weight: 650; letter-spacing: .05em; }
+.chart-line { fill: none; stroke-width: 3; vector-effect: non-scaling-stroke; }
+.chart-line--ink { stroke: var(--ink); }
+.chart-line--signal { stroke: var(--signal); }
+.chart-line--muted { stroke: var(--line-dark); stroke-dasharray: 5 4; }
+.chart-legend, .chart-driver-label, .chart-trend { fill: var(--muted); font-family: "Inter Local", "PingFang SC", sans-serif; font-size: 10px; }
+.chart-trend { fill: var(--ink); font-size: 9px; }
+
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 16px 12px; text-align: right; border-bottom: 1px solid var(--line); }
+th:first-child, td:first-child { padding-left: 0; text-align: left; }
+thead th { color: var(--muted); font-size: 11px; font-weight: 650; letter-spacing: .04em; vertical-align: bottom; }
+tbody th { font-weight: 650; }
+
+.scenario-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.scenario-grid article { padding: 24px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.scenario-grid article:last-child { border-right: 0; }
+.scenario-grid article > span { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .12em; }
+.scenario-grid h3 { margin: 42px 0 24px; font-size: 36px; font-weight: 500; letter-spacing: -.04em; }
+.scenario-grid p { min-height: 96px; color: var(--muted); }
+.scenario-grid dl { display: grid; grid-template-columns: 52px 1fr; gap: 8px 16px; font-size: 12px; }
+.scenario-grid dl > div { display: contents; }
+.scenario-grid dt { color: var(--muted); }
+.scenario-grid dd { margin: 0; }
+
+.action-zones { margin-top: 46px; border-top: 1px solid var(--ink); }
+.action-zones > div { display: grid; grid-template-columns: 180px 160px 1fr; gap: 24px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.action-zones strong { font-size: 18px; }
+.action-zones span { font-weight: 650; }
+.action-zones p { margin: 0; color: var(--muted); }
+
+/* Where today's price ranks in its own multiple history. A fact about the
+   market, so it is typeset as one: no colour, no arrow, no verdict word. */
+.multiple-percentile { margin: 18px 0 0; color: var(--muted); font-size: 14px; }
+.multiple-percentile strong { color: var(--ink); font-weight: 650; }
+.multiple-percentile small { display: block; margin-top: 6px; font-size: 11px; }
+.multiple-percentile--unavailable { font-style: italic; }
+
+/* Attributed assumption sets. Every seat is styled identically — an emphasised
+   seat would be the "基准" this contract removed, reintroduced as CSS. */
+.assumption-sets { border-top: 1px solid var(--ink); }
+.assumption-sets-note { margin: 18px 0 28px; max-width: 74ch; color: var(--muted); font-size: 13px; }
+.assumption-set { padding: 26px 0; border-bottom: 1px solid var(--line); }
+.assumption-set-head { display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; }
+.assumption-set-kind { padding: 4px 9px; border: 1px solid var(--ink); border-radius: 999px; font-size: 10px; letter-spacing: .08em; }
+.assumption-set-head strong { font-size: 17px; font-weight: 600; }
+/* The bias sits above the numbers, never in a footnote: a short report and an
+   issuer's guidance render identically otherwise, and that similarity is the lie. */
+.assumption-set-bias { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 14px; margin: 14px 0 0; padding: 12px 14px; border-inline-start: 2px solid var(--signal); background: color-mix(in srgb, var(--signal) 5%, transparent); font-size: 13px; }
+.assumption-set-bias > span { color: var(--muted); font-size: 11px; letter-spacing: .06em; }
+.assumption-set-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin: 20px 0 0; }
+.assumption-set-facts dt { color: var(--muted); font-size: 11px; text-transform: uppercase; }
+.assumption-set-facts dd { margin: 8px 0 0; font-size: 22px; font-weight: 520; }
+.assumption-set-facts dd small { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; font-weight: 400; }
+.assumption-set-assumptions { margin: 18px 0 0; max-width: 78ch; color: var(--muted); }
+.assumption-set-components { margin: 14px 0 0; padding: 0; list-style: none; font-size: 12px; }
+.assumption-set-components li { display: grid; grid-template-columns: 68px minmax(0, 1fr); gap: 14px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.assumption-set-components li > span { color: var(--muted); }
+.assumption-set-missing { margin: 16px 0 0; color: var(--muted); font-style: italic; }
+
+.disagreement-anchor { display: flex; flex-wrap: wrap; gap: 16px; margin: 0 0 18px; color: var(--muted); font-size: 13px; }
+.disagreement-anchor strong { color: var(--ink); }
+.disagreement-converged { margin: 16px 0 0; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+
+.split-section { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px; }
+.split-section h2 { font-size: clamp(36px, 4vw, 62px); }
+.evidence-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--ink); }
+.evidence-list li { padding: 0; border-bottom: 1px solid var(--line); }
+.evidence-list details { padding: 20px 0; }
+.evidence-list summary { display: grid; grid-template-columns: 42px 90px minmax(0, 1fr); gap: 12px; align-items: center; cursor: pointer; font-size: 17px; font-weight: 600; list-style: none; }
+.evidence-list summary::-webkit-details-marker { display: none; }
+.evidence-number { color: var(--muted); font-size: 11px; }
+.evidence-detail { margin: 18px 0 0 144px; padding-top: 14px; border-top: 1px solid var(--line); }
+.evidence-list p, .evidence-list small { display: block; margin: 0 0 8px; color: var(--muted); }
+.external-link { display: inline-block; margin-top: 12px; font-size: 13px; font-weight: 650; overflow-wrap: anywhere; }
+.evidence-kind { align-self: start; width: max-content; padding: 5px 9px; border: 1px solid var(--ink); border-radius: 999px; font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
+.evidence-kind--calculation { border-color: var(--signal); color: var(--signal); }
+.evidence-kind--inference { border-style: dashed; }
+.disclaimer { margin: 48px 0 0; padding-top: 16px; border-top: 1px solid var(--ink); color: var(--muted); font-size: 12px; }
+.back-to-top { position: fixed; right: 24px; bottom: 24px; display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid var(--ink); border-radius: 50%; background: var(--paper); text-decoration: none; }
+
+/* The header is sized against the fold, not against the viewport: the first
+   card (269px) plus a peek of the next one has to fit under it at 375×667, so
+   the whole header block stays inside ~350px. A vh-based margin here spent
+   122px of a 763px-tall laptop viewport on empty space. */
+.company-header { padding: 24px 0 24px; border-bottom: 1px solid var(--ink); }
+/* The air above the title scales with the viewport, because the title itself
+   does: a flat 24px reads right under a 128px heading on a short laptop and
+   cramped under a 150px one on a 27" display. Bounded at 72px so it can never
+   repeat 16vh's 122px, and the tight bottom margin keeps the tagline bound to
+   the title rather than floating between the two. */
+.company-header h1 { margin: clamp(24px, 6vh, 72px) 0 20px; }
+
+/* 中文标题的行距与字距。全局 h1 的 `line-height: .82` / `letter-spacing: -.075em`
+   是给拉丁标题的——字母有升部降部，收紧后行框里仍留得出空隙。汉字字形填满整个
+   em 方框，同样的值一旦折行就是物理重叠、字距为负则直接粘连。
+   这条必须在基础层生效（移动端标题折行更早，同样会叠）。 */
+.company-header h1[data-cjk="true"] { line-height: 1.06; letter-spacing: -.04em; }
+
+/* 字号按标题视觉宽度分档，目标是任何公司名都落在两行以内，而不是让长中文名
+   吃掉整屏。分档由渲染层算好写进 data-title-scale（见 companies/[company]/page.tsx）。
+   只在宽屏生效：≤800px 有自己的一套尺寸，而属性选择器的特异性高于媒体查询里的
+   `.company-header h1`，放到基础层会把移动端一起打挂。 */
+@media (min-width: 801px) {
+  .company-header h1[data-title-scale="md"] { font-size: clamp(52px, 8.5vw, 118px); }
+  .company-header h1[data-title-scale="sm"] { font-size: clamp(44px, 7vw, 96px); }
+}
+/* Only the desktop ceiling comes down — 40px cost two lines and 137px of the
+   fold. The 22px floor stays: narrow screens have budget to spare, and this is
+   also the company page's lead thesis. */
+.company-current { max-width: 840px; font-size: clamp(22px, 1.8vw, 26px); line-height: 1.3; }
+/* Auto-fit rather than a fixed four: how many cells there are depends on which
+   contract the latest snapshot was written under (1.2.0 has no stance and no fair
+   value), and a fixed track would leave a hole where the verdict used to be. */
+.company-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); border-bottom: 1px solid var(--ink); }
+.company-summary > div { padding: 22px 18px 24px 0; }
+.company-summary span { display: block; color: var(--muted); font-size: 11px; text-transform: uppercase; }
+.company-summary strong { display: block; margin-top: 10px; font-size: 24px; font-weight: 520; }
+.company-summary small { display: block; margin-top: 8px; color: var(--muted); font-size: 11px; }
+.company-section { padding: 72px 0; border-bottom: 1px solid var(--ink); }
+/* The coverage list shares the fold with the header above it, so it hugs it.
+   Company pages keep the full 72px rhythm: their summary bar already clears the
+   fold, and tightening one of eight sections would only break the cadence. */
+.coverage-section { padding-top: 28px; }
+.company-section h2 { margin-bottom: 32px; font-size: clamp(36px, 5vw, 72px); font-weight: 490; letter-spacing: -.055em; }
+.snapshot-pair { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+.snapshot-card { padding: 22px 0; border-top: 1px solid var(--ink); }
+.snapshot-card time { color: var(--muted); font-size: 12px; }
+.snapshot-card h3 { margin: 28px 0 12px; font-size: 36px; font-weight: 500; }
+.snapshot-card strong { display: block; margin-bottom: 22px; font-size: 22px; }
+.snapshot-card p { color: var(--muted); }
+.snapshot-card dl { display: grid; grid-template-columns: 120px 1fr; gap: 8px 16px; margin: 24px 0 0; padding-top: 16px; border-top: 1px solid var(--line); font-size: 13px; }
+.snapshot-card dt { color: var(--muted); }
+.snapshot-card dd { margin: 0; }
+.comparison-heading { margin: 54px 0 14px; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; }
+.comparison-status { display: inline-block; padding: 4px 8px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; }
+.comparison-status--no { color: var(--muted); border-style: dashed; }
+.comparison-detail-grid { margin-top: 22px; }
+.comparison-detail { min-height: 240px; padding: 22px 24px 26px 0; border-top: 1px solid var(--ink); }
+.comparison-detail > span { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.comparison-detail > strong { display: block; margin: 36px 0 20px; font-size: clamp(24px, 3vw, 40px); font-weight: 500; letter-spacing: -.04em; }
+.comparison-detail ul, .comparison-detail ol { margin: 28px 0 0; padding-left: 20px; }
+.comparison-detail li { margin-bottom: 8px; color: var(--muted); }
+.report-index { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+.report-link { display: flex; min-height: 220px; flex-direction: column; justify-content: space-between; padding: 20px; border: 1px solid var(--ink); text-decoration: none; }
+.report-link:hover { color: var(--paper); background: var(--ink); }
+.report-link time { font-size: 12px; }
+.report-link strong { font-size: 28px; font-weight: 520; }
+/* Index card text sets no colour of its own so the card inverts cleanly on
+   hover; the hairline stays --line, which reads on both grounds. A stance can
+   run to a full sentence, so it wraps instead of being clipped. */
+.company-card-stance { margin: 14px 0 0; font-size: 15px; }
+.company-card-facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 18px 0 20px; padding-top: 14px; border-top: 1px solid var(--line); }
+.company-card-facts dt { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.company-card-facts dd { margin: 6px 0 0; font-size: 17px; }
+.company-card-facts small { display: block; font-size: 11px; }
+/* Sits under the cards, not above them: it is a caveat about how to read the
+   figures, and below the fold it doubles as the peek that invites scrolling. */
+.coverage-note { max-width: 640px; margin: 24px 0 0; color: var(--muted); font-size: 14px; }
+
+@media (max-width: 800px) {
+  .research-report, .company-page { padding: 0 18px 48px; }
+  .report-hero { min-height: 90svh; }
+  .hero-grid { grid-template-columns: 1fr; gap: 38px; margin: 12vh 0 7vh; }
+  h1 { font-size: clamp(56px, 20vw, 96px); }
+  /* One line for 上市公司研究 at 375px: a wrapped page title costs another 60px
+     of the fold. The report cover keeps the full size. A 46px title needs far
+     less air above it than a 150px one, and 375×667 has no budget to give. */
+  .company-header h1 { margin: 24px 0 16px; font-size: clamp(36px, 11vw, 46px); }
+  .stance-block { width: 65%; }
+  .hero-facts, .company-summary { grid-template-columns: repeat(2, 1fr); }
+  .report-section { grid-template-columns: 1fr; gap: 14px; padding: 52px 0 62px; }
+  .section-number { padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+  .section-content h2 { font-size: clamp(40px, 14vw, 68px); }
+  .summary-grid, .metric-grid, .chart-grid, .scenario-grid, .split-section, .snapshot-pair, .report-index { grid-template-columns: 1fr; }
+  .summary-grid article:nth-child(odd), .metric-card:nth-child(odd) { border-right: 0; }
+  .summary-grid article:nth-child(even), .metric-card:nth-child(even) { padding-left: 0; }
+  .scenario-grid article { padding-left: 0; border-right: 0; }
+  .action-zones > div { grid-template-columns: 1fr; gap: 6px; }
+  .change-ledger dl div { grid-template-columns: 1fr; gap: 8px; }
+  .evidence-list summary { grid-template-columns: 34px 82px minmax(0, 1fr); gap: 8px; font-size: 14px; }
+  .evidence-detail { margin-left: 0; }
+}
+
+@media print {
+  :root { --paper: #fff; }
+  @page { size: A4; margin: 16mm; }
+  .research-report { max-width: none; padding: 0; }
+  .report-hero { min-height: 250mm; break-after: page; }
+  .section-nav, .back-to-top, .company-page link, .company-page script { display: none; }
+  .report-section { display: block; padding: 12mm 0; break-before: page; }
+  .section-number { margin-bottom: 12mm; }
+  .metric-card, .decision-chart, .scenario-grid article, tr, .evidence-list li { break-inside: avoid; }
+  .evidence-list details { display: block; }
+  .evidence-list details > * { display: block; }
+  .section-content h2 { font-size: 48px; }
+  a { text-decoration: none; }
+}
+
+/* ── 通用小件 ─────────────────────────────────────────── */
+.block-heading { margin: 46px 0 16px; font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.company-note { max-width: 900px; margin: 0 0 28px; color: var(--muted); font-size: 16px; }
+.empty-note { margin: 0; padding: 18px 0; color: var(--muted); font-size: 14px; }
+.cell-prose { max-width: 420px; text-align: left; color: var(--muted); font-size: 13px; }
+.cell-change { font-weight: 650; }
+.trend { display: inline-block; padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; font-weight: 650; white-space: nowrap; }
+.trend--改善 { color: var(--signal); border-color: var(--signal); }
+.trend--恶化 { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.trend--待验证 { border-style: dashed; }
+
+/* 首列在横向滚动时钉住，否则宽表一滑就不知道在看哪一行 */
+.table-wrap table th:first-child { position: sticky; left: 0; z-index: 1; background: var(--paper); }
+
+/* ── 指标释义浮层（原生 popover，零 JS） ───────────────── */
+.metric-note-anchor { display: inline; white-space: nowrap; }
+.metric-note-toggle { margin-inline-start: 5px; padding: 0; border: 0; background: none; color: var(--muted); font: inherit; font-size: .8em; line-height: 1; cursor: pointer; }
+.metric-note-toggle:hover, .metric-note-toggle:focus-visible { color: var(--signal); }
+.metric-note-toggle { anchor-name: var(--note-anchor); }
+/* 贴着触发它的那个 ⓘ 弹出。不覆盖定位的话，浏览器默认是 inset:0 + margin:auto，
+   也就是视口正中——那是对话框的位置，不是名词解释该出现的位置。
+   仍然用 popover 而不是内联展开：它在 top layer，不会被财报表的横向滚动容器裁掉，
+   而且自带点击外部关闭与 Esc 关闭。 */
+/* 默认隐藏由这里显式声明，不依赖浏览器 UA 样式表的
+   `[popover]:not(:popover-open){display:none}`。上一版就是漏了这一条：
+   浏览器一旦没把该元素当 popover 处理，它就停在原地永久显示。
+   `:popover-open` 不被支持时整条规则会被丢弃，结果是保持隐藏——
+   失败方向朝「看不见」而不是「糊在页面上」。 */
+.metric-note { display: none; }
+.metric-note[popover] { position: fixed; width: min(380px, calc(100vw - 32px)); margin: 0; padding: 18px 20px; border: 1px solid var(--ink); background: var(--paper); color: var(--ink); font-size: 13px; font-weight: 400; font-style: normal; line-height: 1.58; text-align: left; white-space: normal; letter-spacing: 0; box-shadow: 0 10px 30px rgb(16 16 16 / .16); }
+.metric-note[popover]:popover-open { display: block; }
+/* 浮层内部的排版必须自己定死。它嵌在 <strong>、<h3> 这类容器里，
+   区块级的着色与字号规则会顺着继承进来——SOTP 那一版整段变橙就是这么来的。 */
+.metric-note, .metric-note > * { color: var(--ink); }
+/* 真的没有 popover 支持时，ⓘ 点了不会有反应，那就别给这个假承诺，
+   改为把页尾的指标释义表在屏幕上也显示出来。 */
+@supports not selector(:popover-open) {
+  .metric-note-toggle { display: none; }
+  .metric-glossary { display: block; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--ink); }
+}
+@supports (anchor-name: --a) {
+  .metric-note[popover] { position-anchor: var(--note-anchor); position-area: block-end span-inline-end; position-try-fallbacks: flip-block, flip-inline, block-start span-inline-start; margin-block-start: 8px; inset: auto; }
+}
+/* 不支持锚定定位的浏览器（目前主要是 Firefox）回落到视口居中；
+   不加变暗背景，避免它读起来像一个必须处理的模态。 */
+@supports not (anchor-name: --a) {
+  .metric-note[popover] { inset: 0; margin: auto; height: fit-content; }
+}
+.metric-note > * { display: block; }
+.metric-note-title { margin-bottom: 10px; font-size: 15px; font-weight: 650; }
+.metric-note-formula { margin-bottom: 10px; padding: 8px 10px; background: var(--soft); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+.metric-note-company { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); }
+.metric-note-pitfall { margin-top: 10px; color: var(--signal); }
+
+/* ── 商业模式 ─────────────────────────────────────────── */
+/* 长文本分段：按作者已写下的结构切开——句号分段，(1)(2)(3) 转有序列表。
+   段间距用 margin 而不是空行，且最后一段不带下边距，避免和外层容器的
+   padding 叠出双倍空隙。 */
+.prose-block > p { margin: 0 0 12px; }
+.prose-block > p:last-child { margin-bottom: 0; }
+.prose-enum { margin: 4px 0 12px; padding: 0; list-style: none; counter-reset: prose-enum; }
+.prose-enum:last-child { margin-bottom: 0; }
+.prose-enum li { position: relative; padding-left: 26px; counter-increment: prose-enum; }
+.prose-enum li + li { margin-top: 8px; }
+.prose-enum li::before {
+  content: "(" counter(prose-enum) ")";
+  position: absolute; left: 0; top: 0;
+  color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums;
+}
+/* 在 .editorial-list（章节要点与风险清单）里，分段块继承外层字号与行高 */
+.editorial-list > li .prose-block > p,
+.editorial-list > li .prose-enum li { font-size: inherit; line-height: inherit; }
+.constraint-list .prose-enum li { color: var(--muted); font-size: 14px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.model-prose { margin: 0 0 4px; max-width: 62ch; font-size: 15px; }
+
+/* 因果链：一条连续脊线穿过所有环节。节点标签在各公司间从 4 字到 54 字不等，
+   只有流式文本能自适应换行，因此刻意用 CSS 而非 ADR-0004 的内联 SVG。
+   不用通栏横线分隔——那会让递进关系读成表格行；序号也不用 --signal，
+   它在本设计里是语义色，而序号位置不携带语义。 */
+/* 因果链的飞轮环：卡片装全文，位置在构建期由环节数算出。
+   卡宽 210px、相邻卡中心间距 291px（8 环），几何上不可能碰撞，因此不需要
+   逐公司调参。只在 PC 上出现——打印内容宽仅 673px、手机更窄，两者回落到
+   下面的阶梯流，文字完全相同。 */
+/* 环与阶梯流互斥：宽屏显示环，窄屏与纸上显示阶梯流。另一份是
+   display:none，因此辅助技术与搜索引擎只会看到一份文本。 */
+@media (min-width: 1080px) {
+  .flywheel ~ .causal-flow { display: none; }
+}
+@media (max-width: 1079px) {
+  .flywheel { display: none; }
+}
+.flywheel { position: relative; width: 100%; max-width: 1000px; margin: 18px auto 6px; }
+.flywheel-track { position: absolute; inset: 0; width: 100%; height: 100%; }
+.flywheel-arc { fill: none; stroke: var(--line-dark); stroke-width: 2; vector-effect: non-scaling-stroke; }
+.flywheel-head { fill: var(--line-dark); }
+.flywheel-hub {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  display: flex; flex-direction: column; gap: 8px; align-items: center;
+  max-width: 260px; text-align: center;
+}
+.flywheel-hub { gap: 4px; max-width: 300px; }
+.flywheel-hub strong { font-size: 19px; font-weight: 560; letter-spacing: -.02em; text-wrap: balance; }
+.flywheel-hub em { font-size: 15px; font-style: normal; letter-spacing: .04em; }
+.flywheel-hub span { margin-top: 6px; color: var(--muted); font-size: 12px; }
+.flywheel-cards { margin: 0; padding: 0; list-style: none; }
+.flywheel-cards li {
+  position: absolute; transform: translate(-50%, -50%);
+  /* 宽度用百分比而不是 px：这样卡宽与环半径同比例缩放，间距/卡宽之比恒为
+     0.76，容器变窄也不会碰撞。写死 210px 时容器缩到 900px 以下就会重叠。 */
+  width: 23%; padding: 15px 15px 14px; text-align: center;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 10px;
+}
+.nowrap { white-space: nowrap; }
+.flywheel-cards p { margin: 0; font-size: 13px; line-height: 1.5; text-wrap: pretty; }
+.flywheel-badge {
+  position: absolute; left: 50%; top: 0; transform: translate(-50%, -50%);
+  display: grid; place-items: center; width: 24px; height: 24px;
+  border-radius: 50%; background: var(--ink); color: var(--paper);
+  font-size: 12px; font-weight: 650; font-variant-numeric: tabular-nums;
+}
+
+/* 脊线是正文列的 border-left：相邻环节的边框首尾相接，天然连续，不需要用
+   背景色去打断再拼回来——上一版正是这么做的，结果线看着像虚线。 */
+.causal-flow { --gut: 30px; --lane: 20px; margin: 6px 0 0; }
+.causal-flow ol { margin: 0; padding: 0; list-style: none; }
+.causal-flow li { display: grid; grid-template-columns: var(--gut) minmax(0, 1fr); break-inside: avoid; }
+.causal-step { grid-column: 1; padding: 1px 13px 0 0; text-align: right; color: var(--muted); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.causal-flow li p { grid-column: 2; position: relative; margin: 0; max-width: 58ch; padding: 0 0 21px var(--lane); border-left: 1px solid var(--line); font-size: 15px; line-height: 1.62; }
+/* 节点是脊线上的小空心圆，比在文字里塞符号安静得多 */
+.causal-flow li p::before {
+  content: ""; position: absolute; left: -3.5px; top: .6em;
+  box-sizing: border-box; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--paper); border: 1px solid var(--line-dark);
+}
+/* 回指：同一条脊线转成虚线继续往下，读作「线绕回去了」 */
+.causal-loop { display: grid; grid-template-columns: var(--gut) minmax(0, 1fr); margin: 0; }
+.causal-loop-mark { grid-column: 1; padding: 15px 13px 0 0; text-align: right; color: var(--line-dark); font-size: 12.5px; }
+.causal-loop-note { grid-column: 2; padding: 15px 0 0 var(--lane); border-left: 1px dashed var(--line-dark); color: var(--muted); font-size: 12.5px; line-height: 1.6; }
+
+/* 现金引擎瀑布：走 SVG 与其余决策图表同族——它需要零基线、正负方向与
+   跨条基准线，这三样用 CSS 横条做会很别扭。高度由行数在组件里算出。 */
+.cash-waterfall { padding-top: 14px; }
+.cash-waterfall svg { height: auto; }
+.waterfall-label { fill: var(--ink); font-size: 11px; }
+.waterfall-value { fill: var(--ink); font-size: 11px; font-variant-numeric: tabular-nums; }
+.waterfall-value--total { font-weight: 650; }
+.waterfall-value--cost { fill: var(--signal); }
+.waterfall-bar--segment { fill: var(--ink); }
+.waterfall-bar--total { fill: var(--line-dark); }
+.waterfall-bar--cost { fill: var(--signal); }
+.waterfall-axis { stroke: var(--line-dark); stroke-width: 1; }
+.segment-list { display: grid; gap: 22px; }
+.segment-row { padding: 20px 0; border-top: 1px solid var(--line-dark); }
+.segment-head { display: flex; align-items: baseline; gap: 14px; }
+.segment-head strong { font-size: 20px; font-weight: 560; }
+.segment-head em { margin-left: auto; font-size: 28px; font-style: normal; font-weight: 480; letter-spacing: -.04em; }
+.segment-role { padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; }
+.segment-role--经济核心 { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.segment-role--收缩中 { border-style: dashed; color: var(--muted); }
+.segment-bar { display: block; height: 6px; margin: 12px 0 16px; background: var(--soft); }
+.segment-bar span { display: block; height: 100%; background: var(--ink); }
+.segment-row dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0; font-size: 13px; }
+.segment-row dt { margin-bottom: 4px; color: var(--muted); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+.segment-row dd { margin: 0; }
+
+/* ── 行业地位 ─────────────────────────────────────────── */
+.share-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px; }
+.share-card { padding: 22px 0; border-top: 1px solid var(--ink); }
+.share-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--muted); font-size: 11px; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; }
+.share-card h3 { margin: 24px 0 12px; font-size: 16px; font-weight: 580; }
+.share-card > strong { display: block; font-size: clamp(30px, 4vw, 52px); font-weight: 480; letter-spacing: -.05em; }
+.share-rank { margin: 12px 0 0; color: var(--muted); font-size: 13px; }
+.share-reason { margin: 8px 0 0; color: var(--signal); font-size: 13px; }
+.share-denominator { margin: 18px 0 0; padding: 14px 0 0; border-top: 1px solid var(--line); list-style: none; font-size: 12px; color: var(--muted); }
+.share-denominator li { margin-bottom: 6px; line-height: 1.5; }
+.share-excluded { color: var(--signal); }
+.divergence-callout { max-width: 900px; margin: 34px 0 0; padding: 20px 24px; border-left: 3px solid var(--signal); background: var(--soft); font-size: 15px; }
+.divergence-callout strong { display: block; margin-bottom: 8px; letter-spacing: .04em; }
+.concentration { max-width: 900px; margin: 24px 0 0; color: var(--muted); font-size: 14px; }
+
+/* ── 报告期筛选（纯 CSS） ─────────────────────────────── */
+.cadence-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.cadence-nav { display: flex; gap: 8px; margin-bottom: 20px; }
+.cadence-label { padding: 7px 16px; border: 1px solid var(--ink); border-radius: 999px; font-size: 12px; font-weight: 650; cursor: pointer; }
+.cadence-label:hover { background: var(--soft); }
+.cadence-panel, .cadence-panel-heading { display: none; }
+.cadence-input--1:checked ~ .cadence-panel--1,
+.cadence-input--2:checked ~ .cadence-panel--2,
+.cadence-input--3:checked ~ .cadence-panel--3 { display: block; }
+.cadence-input--1:checked ~ .cadence-nav .cadence-label--1,
+.cadence-input--2:checked ~ .cadence-nav .cadence-label--2,
+.cadence-input--3:checked ~ .cadence-nav .cadence-label--3 { color: var(--paper); background: var(--ink); }
+.cadence-input--1:focus-visible ~ .cadence-nav .cadence-label--1,
+.cadence-input--2:focus-visible ~ .cadence-nav .cadence-label--2,
+.cadence-input--3:focus-visible ~ .cadence-nav .cadence-label--3 { outline: 2px solid var(--signal); outline-offset: 2px; }
+.row-segment th { font-weight: 400; }
+.segment-indent { padding-left: 14px; color: var(--muted); }
+.period-derived { margin-left: 6px; padding: 2px 6px; border: 1px dashed var(--line-dark); border-radius: 999px; font-size: 9px; font-weight: 400; }
+
+/* ── 价值桥 ───────────────────────────────────────────── */
+.value-bridge { margin: 0 0 44px; padding: 20px 0 24px; border-top: 1px solid var(--ink); }
+.value-bridge .chart-title { margin-bottom: 20px; }
+.bridge-rows { margin: 0; padding: 0; list-style: none; }
+.bridge-rows li { display: grid; grid-template-columns: minmax(120px, 200px) minmax(0, 1fr) 78px; gap: 16px; align-items: center; padding: 9px 0; }
+.bridge-label { font-size: 14px; }
+.bridge-track { position: relative; height: 22px; background: var(--soft); }
+.bridge-bar { position: absolute; top: 0; height: 100%; background: var(--ink); }
+.bridge-bar--face-value { background: var(--line-dark); }
+.bridge-bar--cut { background: repeating-linear-gradient(45deg, var(--signal) 0 4px, transparent 4px 8px); }
+.bridge-bar--total { background: var(--signal); }
+.bridge-marker { position: absolute; top: -5px; width: 2px; height: 32px; background: var(--ink); }
+.bridge-value { font-size: 15px; font-variant-numeric: tabular-nums; text-align: right; }
+.bridge-total { border-top: 1px solid var(--ink); font-weight: 650; }
+.bridge-total .bridge-value, .bridge-price .bridge-value { font-size: 18px; font-weight: 650; }
+.bridge-price .bridge-label, .bridge-price .bridge-value { color: var(--muted); }
+.bridge-range { margin: 18px 0 0; color: var(--muted); font-size: 13px; }
+
+/* ── 估值方法与升级提示 ───────────────────────────────── */
+.method-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px; margin-bottom: 30px; }
+.method-pair article { padding: 20px 0; border-top: 1px solid var(--line-dark); }
+.method-pair article > span { display: block; margin-bottom: 12px; color: var(--muted); font-size: 11px; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; }
+.method-pair strong { display: block; margin-bottom: 12px; font-size: 22px; font-weight: 540; }
+.method-pair p { margin: 0; color: var(--muted); font-size: 14px; }
+.method-ideal { border-top-color: var(--signal); }
+.method-ideal > span { color: var(--signal); }
+.implied-line { max-width: 940px; margin: 0 0 30px; padding: 18px 22px; background: var(--soft); font-size: 15px; }
+.implied-line strong { margin-right: 12px; letter-spacing: .04em; }
+.upgrade-hint { margin-bottom: 30px; padding: 22px 24px; border: 1px solid var(--signal); }
+.upgrade-hint h4 { margin: 0 0 16px; font-size: 15px; font-weight: 650; color: var(--signal); }
+.upgrade-hint ol { margin: 0; padding-left: 20px; }
+.upgrade-hint li { margin-bottom: 14px; font-size: 14px; }
+.upgrade-hint li > * { display: block; }
+.upgrade-hint li strong { margin-bottom: 4px; }
+.upgrade-hint li span { color: var(--muted); }
+.upgrade-hint li em { margin-top: 4px; color: var(--muted); font-size: 12px; font-style: normal; }
+.health-check { margin-bottom: 30px; padding: 16px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.health-check summary { font-size: 13px; font-weight: 650; cursor: pointer; }
+.health-check ul { margin: 18px 0 0; padding: 0; list-style: none; }
+.health-check li { margin-bottom: 16px; font-size: 13px; }
+.health-check li > * { display: block; }
+.health-response { width: max-content; margin-bottom: 6px; padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; }
+.health-response--blocked { color: var(--signal); border-color: var(--signal); }
+.health-check li strong { margin-bottom: 4px; }
+.health-check li span:last-child { color: var(--muted); }
+
+/* ── 驱动、约束与「相对上次」 ─────────────────────────── */
+.driver-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--ink); }
+.driver-card { min-height: 230px; padding: 20px 24px 26px 0; border-bottom: 1px solid var(--line); }
+.driver-card:not(:nth-child(3n)) { border-right: 1px solid var(--line); }
+.driver-card:not(:nth-child(3n+1)) { padding-left: 24px; }
+.driver-card h3 { margin: 30px 0 10px; font-size: 15px; font-weight: 580; }
+.driver-card > strong { display: block; font-size: clamp(22px, 2.6vw, 34px); font-weight: 480; letter-spacing: -.04em; }
+.driver-delta { margin: 14px 0; color: var(--muted); font-size: 13px; }
+.driver-card small { display: block; padding-top: 12px; border-top: 1px solid var(--line); font-size: 12px; }
+.constraint-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line-dark); }
+.constraint-list > li { display: grid; grid-template-columns: 90px 260px 1fr; gap: 20px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.constraint-list > li > .prose-block > p, .constraint-list > li > p { margin: 0; color: var(--muted); font-size: 14px; }
+.delta-line { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0 0 26px; border-top: 1px solid var(--ink); }
+.delta-line > div { padding: 18px 18px 20px 0; }
+.delta-line dt { color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.delta-line dd { margin: 10px 0 0; font-size: 17px; font-weight: 520; }
+.driver-change-list { margin: 26px 0 0; padding: 0; list-style: none; }
+.driver-change-list li { padding: 16px 0; border-top: 1px solid var(--line); }
+.driver-change-list p { margin: 8px 0 0; color: var(--muted); font-size: 14px; }
+.driver-change { display: inline-block; margin-right: 12px; padding: 3px 9px; border: 1px solid var(--signal); border-radius: 999px; color: var(--signal); font-size: 10px; text-transform: uppercase; }
+
+/* ── 护城河与转折点 ───────────────────────────────────── */
+.moat-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0 30px; border-top: 1px solid var(--ink); }
+.moat-card { padding: 20px 0 24px; border-bottom: 1px solid var(--line); }
+.moat-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px; }
+.moat-type { font-size: 15px; font-weight: 650; }
+.moat-trend { display: inline-block; margin-left: auto; padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; font-weight: 650; white-space: nowrap; }
+.moat-trend--变宽 { color: var(--signal); border-color: var(--signal); }
+.moat-trend--变窄 { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.moat-trend--待验证 { border-style: dashed; }
+.moat-trend--已撤销 { color: var(--muted); border-style: dotted; }
+.moat-mechanism { margin: 0 0 16px; font-size: 14px; }
+.moat-card dl { display: grid; gap: 12px; margin: 0; }
+.moat-card dt { margin-bottom: 4px; color: var(--muted); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+.moat-card dd { margin: 0; font-size: 13px; }
+.moat-absent { margin: 0; color: var(--muted); font-size: 14px; }
+.moat-trend-list { margin: 26px 0 0; padding: 0; list-style: none; }
+.moat-trend-list li { display: grid; grid-template-columns: 90px 200px 1fr; gap: 20px; align-items: baseline; padding: 14px 0; border-top: 1px solid var(--line); }
+.moat-trend-list p { margin: 0; color: var(--muted); font-size: 14px; }
+.moat-trend-list .moat-trend { margin-left: 0; }
+
+/* ── 分歧点 ───────────────────────────────────────────── */
+.disagreement { margin-bottom: 30px; padding: 22px 24px; border: 1px solid var(--line-dark); }
+.disagreement h4 { display: flex; align-items: baseline; gap: 12px; margin: 0 0 18px; font-size: 15px; font-weight: 650; }
+.disagreement-driver { margin-left: auto; color: var(--muted); font-size: 12px; font-weight: 480; }
+.disagreement dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin: 0; }
+.disagreement dt { margin-bottom: 6px; color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.disagreement dd { margin: 0; }
+/* 重合不是错误，但也不是好消息：虚线边框把它和一条真实分歧区分开。 */
+.disagreement--converged { border-style: dashed; }
+
+/* ── 管理层承诺与资本配置 ─────────────────────────────── */
+.commitment-counts { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0 20px; margin: 0 0 26px; border-top: 1px solid var(--ink); }
+.commitment-counts article { padding: 16px 0 18px; }
+.commitment-counts span { display: block; color: var(--muted); font-size: 11px; letter-spacing: .06em; }
+.commitment-counts strong { display: block; margin-top: 8px; font-size: clamp(24px, 2.6vw, 34px); font-weight: 480; letter-spacing: -.04em; }
+.commitment-outstanding { margin: 0 0 24px; padding: 0; list-style: none; border-top: 1px solid var(--line-dark); }
+.commitment-outstanding li { display: grid; grid-template-columns: 90px 1fr 200px; gap: 16px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.commitment-outstanding em { color: var(--muted); font-size: 12px; font-style: normal; text-align: right; }
+.commitment-status { display: inline-block; padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; font-weight: 650; white-space: nowrap; }
+.commitment-status--未兑现 { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.commitment-status--部分兑现 { border-style: dashed; }
+.commitment-latest { margin: 0 0 24px; color: var(--muted); font-size: 14px; }
+
+/* ── 证据密度 ─────────────────────────────────────────── */
+.density-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 24px; margin: 0 0 24px; border-top: 1px solid var(--ink); }
+.density-grid article { padding: 18px 0 20px; }
+.density-grid span { display: block; color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.density-grid strong { display: block; margin: 10px 0 8px; font-size: clamp(22px, 2.4vw, 30px); font-weight: 480; letter-spacing: -.04em; }
+.density-grid small { display: block; color: var(--muted); font-size: 12px; }
+.density-method { margin: 0 0 20px; color: var(--muted); font-size: 14px; }
+.density-clear { margin: 0; padding: 14px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+.density-responses { margin: 0; padding: 0; list-style: none; }
+.density-responses > li { padding: 16px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.density-responses > li > strong { display: block; margin: 8px 0 4px; }
+.density-responses > li > span:not([class]) { color: var(--muted); }
+.density-blocked { margin: 12px 0 0; padding-left: 20px; }
+.density-blocked li { margin-bottom: 10px; }
+.density-blocked li > * { display: block; }
+.density-blocked li span { color: var(--muted); }
+.density-blocked li em { margin-top: 2px; color: var(--muted); font-size: 12px; font-style: normal; }
+
+/* ── 打印用指标释义表（屏幕隐藏） ─────────────────────── */
+.metric-glossary { display: none; }
+
+@media (max-width: 800px) {
+  .share-grid, .method-pair, .driver-grid, .delta-line, .segment-row dl { grid-template-columns: 1fr; }
+  .causal-flow { --gut: 24px; --lane: 14px; }
+  .causal-step { padding-right: 9px; }
+  .causal-loop-mark { padding-right: 9px; }
+  .driver-card:not(:nth-child(3n)) { border-right: 0; }
+  .driver-card:not(:nth-child(3n+1)) { padding-left: 0; }
+  .constraint-list > li { grid-template-columns: 1fr; gap: 8px; }
+  .moat-trend-list li { grid-template-columns: 1fr; gap: 8px; }
+  .disagreement dl { grid-template-columns: 1fr; }
+  .density-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .commitment-counts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .commitment-outstanding li { grid-template-columns: 1fr; gap: 8px; }
+  .commitment-outstanding em { text-align: left; }
+  .bridge-rows li { grid-template-columns: minmax(96px, 1fr) 64px; }
+  .bridge-track { display: none; }
+  .segment-head { flex-wrap: wrap; }
+  .segment-head em { margin-left: 0; }
+}
+
+@media print {
+  /* 浮层在纸上没有意义：关掉触发器，改用页尾的释义表。 */
+  .metric-note-toggle, .metric-note[popover] { display: none !important; }
+  .metric-glossary { display: block; break-before: page; }
+  .metric-glossary dl { border-top: 1px solid var(--ink); }
+  .metric-glossary div { padding: 10px 0; border-bottom: 1px solid var(--line); break-inside: avoid; }
+  .metric-glossary dt { font-weight: 650; }
+  .metric-glossary dd { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+  /* 筛选页签在纸上同样无效：三档全部展开，各自带标题。 */
+  .cadence-nav { display: none; }
+  .cadence-panel { display: block !important; break-inside: avoid; }
+  .cadence-panel-heading { display: block; margin: 16px 0 8px; font-size: 13px; font-weight: 650; }
+  .table-wrap table th:first-child { position: static; }
+  .segment-row, .share-card, .driver-card, .value-bridge, .upgrade-hint { break-inside: avoid; }
+  /* 节点圆心用纸色填充，打印时纸色是纯白 */
+  .flywheel { display: none !important; }
+  .flywheel ~ .causal-flow { display: block !important; }
+  .causal-flow li p::before { background: #fff; }
+  .causal-flow ol, .cash-waterfall { break-inside: avoid; }
+  .health-check[open] summary ~ * { display: block; }
+}
+.cadence-missing { margin: 0 0 14px; color: var(--muted); font-size: 12px; }
+
+/* ———— 分析页（financials-final 渲染）————
+   原则：结论一眼可读，溯源（打分依据 / 依据字段路径 / 证据 / 缺口）默认折叠。 */
+
+/* 折叠溯源块：摘要行小号大写，与 block-heading 同族 */
+.fold { margin-top: 16px; border-top: 1px solid var(--line); }
+.fold summary { padding: 10px 0 4px; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; list-style: none; user-select: none; }
+.fold summary::-webkit-details-marker { display: none; }
+.fold summary::after { content: "＋"; margin-left: 8px; }
+.fold[open] summary::after { content: "－"; }
+.fold summary:hover { color: var(--ink); }
+.fold p { max-width: 900px; margin: 8px 0 12px; color: var(--muted); font-size: 13px; line-height: 1.65; }
+.fold ul { max-width: 900px; margin: 8px 0 12px; padding-left: 18px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+.fold li { margin-bottom: 8px; }
+td .fold { margin-top: 4px; border-top: 0; }
+td .fold summary { padding: 0; }
+td .fold p, td .fold ul { font-size: 12px; }
+
+/*
+ * 分点叙述：分析文件里长字段按「① ② ③」分点书写（见
+ * docs/research/workflow/02-multi-dimension-analysis.md），渲染层切成 .prose-point，
+ * 每点独占一行；序号悬挂在文字左侧，折行后与首字对齐，长段落才真正可扫读。
+ */
+.prose-point { display: block; padding-left: 1.35em; text-indent: -1.35em; }
+.prose-point + .prose-point { margin-top: 6px; }
+.fold .prose-point + .prose-point, td .prose-point + .prose-point { margin-top: 4px; }
+
+/* 每节开头的一句话结论：正文级可读，不再用 muted 小字 */
+.section-lead { max-width: 900px; margin: 0 0 34px; font-size: clamp(17px, 1.4vw, 20px); line-height: 1.6; }
+
+/* 维度总结卡里的结论段 */
+.driver-card .dim-conclusion { margin: 14px 0 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+/* 策略建议：两列卡片（空仓者/持仓者） */
+.strategy-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 56px; border-top: 1px solid var(--ink); }
+.strategy-grid > article { padding: 26px 0 30px; border-bottom: 1px solid var(--line); }
+.strategy-grid h3 { margin: 0 0 14px; font-size: 22px; font-weight: 560; letter-spacing: -.02em; }
+.strategy-grid .advice { margin: 0 0 18px; font-size: 15px; line-height: 1.65; }
+.trigger-lines { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line-dark); }
+.trigger-lines > li { padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14px; line-height: 1.55; }
+.trigger-lines strong { font-weight: 650; }
+.trigger-lines .then { color: var(--muted); }
+
+/* 卖出/加仓信号：全宽行，信号名一行、观察方式一段 */
+.signal-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line-dark); }
+.signal-list > li { padding: 20px 0 16px; border-bottom: 1px solid var(--line); }
+.signal-list .signal-name { display: block; margin: 0 0 6px; font-size: 17px; font-weight: 620; letter-spacing: -.01em; }
+.signal-list .signal-desc { max-width: 900px; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.6; }
+
+/* 追问：左边框引用卡，问题加粗、回答正文 */
+.inquiry-block { max-width: 940px; margin: 44px 0 6px; padding: 20px 26px 22px; border-left: 3px solid var(--ink); background: color-mix(in srgb, var(--ink) 4%, var(--paper)); }
+.inquiry-block .q { margin: 0 0 10px; font-size: 16px; font-weight: 700; }
+.inquiry-block .a { margin: 0; font-size: 15px; line-height: 1.7; }
+
+/* 键值行：代替 delta-line 承载长文本（四列窄栏放长段会变成高塔） */
+.kv-list { margin: 0 0 8px; border-top: 1px solid var(--line-dark); }
+.kv-list > div { display: grid; grid-template-columns: 170px 1fr; gap: 24px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.kv-list dt { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding-top: 3px; }
+.kv-list dd { max-width: 900px; margin: 0; font-size: 15px; line-height: 1.6; }
+
+/* 含长文本的表格：左对齐、顶对齐 */
+.analysis-table th, .analysis-table td { text-align: left; vertical-align: top; }
+.analysis-table td { font-size: 13px; line-height: 1.55; color: var(--muted); }
+.analysis-table td:first-child { color: var(--ink); font-weight: 600; font-size: 14px; }
+table td { vertical-align: top; }
+
+@media (max-width: 900px) {
+  .strategy-grid { grid-template-columns: 1fr; gap: 0; }
+  .kv-list > div { grid-template-columns: 1fr; gap: 6px; }
+}
+/* 表格与折叠块内的来源标注不需要 22px 顶距（那是给正文段落用的） */
+td .source-ids, .fold .source-ids { margin-top: 0; }
+/* 首页卡片文案兜底：最多三行截断，防止长结论把卡片撑成一屏 */
+.company-card-stance { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+/* 来源胶囊：不显示名称，只留一枚可点击的高亮标记；名称与时点在 title 提示里 */
+.source-pill { display: inline-block; margin-left: 6px; padding: 1px 8px 2px; border: 1px solid var(--line-dark); border-radius: 999px; color: var(--ink); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-decoration: none; vertical-align: middle; white-space: nowrap; }
+.source-pill:hover { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+
+/* 研究评估页（研究流程第 7 步）：复用既有的区块、表格与统计条，只补三处 */
+/* 首页 eyebrow 里的评估页入口：不占额外高度，第一张公司卡片仍不用滚动 */
+.company-eyebrow a { text-decoration: underline; text-underline-offset: .3em; }
+/* 均分走势：纵轴固定 1–5 分，样本量不足时页面根本不渲染它 */
+.evals-trend { margin: 0 0 32px; }
+.evals-trend svg { display: block; width: 100%; height: auto; border: 1px solid var(--line); }
+.evals-trend figcaption { margin-top: 10px; color: var(--muted); font-size: 12px; }
+/* 缺陷清单：元数据一行、症状原文一行，不折叠——它是这一页最该被读到的东西 */
+.evals-defects { margin: 0; padding: 0; list-style: none; }
+.evals-defects li { padding: 18px 0; border-bottom: 1px solid var(--line); }
+.evals-defects li p { max-width: 900px; margin: 10px 0 0; font-size: 16px; }
+.evals-defect-meta { display: flex; flex-wrap: wrap; gap: 16px; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+</style></head><body class="research-shell"><script defer="" src="../assets/research.js"></script><main class="company-page"><header class="company-header"><div class="company-eyebrow"><span>COMPANY ANALYSIS</span><span>9899.HK</span></div><h1 data-cjk="true" data-title-scale="sm">网易云音乐股份有限公司 (NetEase Cloud Music Inc.)</h1><p class="company-current">本质是向重社区体验的音乐爱好者提供订阅制音乐消费与UGC音乐社交场景：超六成收入来自会员为持续获取会员专属曲库、音质与社区权益而按月/按年付费（FY2025会员订阅收入占总收入约65%），其余靠社交娱乐虚拟礼物分成、数字专辑与广告变现；在版权资源落后于腾讯音乐系的行业格局下，商业模式的关键杠杆是用独立音乐人原创内容与UGC社区氛围留住并沉淀用户，再靠订阅转化与社交娱乐消费两条腿变现。</p></header><div class="company-summary"><div><span>市值</span><strong>23,051,044,345 HKD</strong><small>2026-08-20 前双源验证</small></div><div><span>股价</span><strong>112.6 HKD</strong><small>截至 <time>2026-08-20 收盘</time></small></div><div><span>PE</span><strong>11.99</strong><small>TTM 口径</small></div><div><span>数据完整性</span><strong>9.4 / 9.6 / 10</strong><small>采集 / 分析 / 总结，满分 10</small></div><div><span>数据截止</span><strong>2026-08-20</strong></div></div><section class="company-section" aria-labelledby="dimension-summary"><p class="section-kicker">CONCLUSIONS AND CONFIDENCE</p><h2 id="dimension-summary">维度总结与信心度</h2><div class="driver-grid"><article class="driver-card"><h3>生意质量</h3><strong>5.5 / 10</strong><p class="dim-conclusion">本质是靠会员订阅与UGC社区锁住存量乐迷的现金牛生意，毛利率已从深度亏损修复至健康水平，但收入四年基本停滞，利润改善主要靠费用收缩而非规模增长，2026H1已现负经营杠杆。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">①会员订阅收入占总收入约65%，FY2025同比+13.3%，是收入利润压舱石(analysis.revenueBreakdown)；</span><span class="prose-point">②毛利率FY2021 2.04%→FY2025 35.69%持续修复，但收入FY2021-2025基本持平(69.98亿→77.59亿元)(analysis.profitabilityTrend5y)；</span><span class="prose-point">③2026H1出现负经营杠杆：收入+3.4%而销售及市场费用+80.7%，营业利润反降11.6%，说明利润弹性来自费用端而非天然规模效应(analysis.operatingLeverage)。</span></p></details></article><article class="driver-card"><h3>护城河</h3><strong>4 / 10</strong><p class="dim-conclusion">护城河集中在转换成本与社区网络效应，对存量付费用户留存有效，但对新增/回流用户吸引力持续减弱，规模效应弱于腾讯音乐，过去5年及未来5年趋势均判断为变窄。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">①转换成本与网络效应verdict均为&#x27;存在&#x27;，但品牌定价权与技术专利verdict为&#x27;待验证&#x27;，规模效应verdict为&#x27;不存在&#x27;，毛利率35.69%仍落后腾讯音乐44.2%约8.5pp(analysis.types)；</span><span class="prose-point">②trendPast5y与trendNext5y均判定&#x27;变窄&#x27;，MAU从2021年1.83亿降至2026年3月1.4682亿并被汽水音乐(1.5605亿)反超、跌出行业前三(analysis.trendPast5y/trendNext5y)；</span><span class="prose-point">③品牌定价权与技术壁垒证据不足(dataGaps载明未查得ARPU分年拆分、专利仅第三方数据)，证据限制下评分向中性收敛。</span></p></details></article><article class="driver-card"><h3>管理层</h3><strong>5 / 10</strong><p class="dim-conclusion">丁磊持股集中(60.29%)带来强利益绑定，回购择时相对合理，但主席兼CEO角色未分离构成治理偏离，且2025年削减营销费用换取利润的决策被评为可持续性差。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">①股份回购决策评级★4，耗资9.67亿港元、彼时TTM PE约11.99倍处相对低位(analysis.keyDecisions[0])；</span><span class="prose-point">②2025年降本增效决策评级仅★2，指出&#x27;短期美化利润但牺牲竞争地位，可持续性差&#x27;，与汽水音乐MAU反超时点重合(analysis.keyDecisions[2])；</span><span class="prose-point">③治理层面主席与CEO角色未分离，构成对《企业管治守则》C.2.1条的自评偏离(analysis.culture)；</span><span class="prose-point">④薪酬结构、并购记录、团队稳定性均为dataGaps未披露，证据限制下评分向中性收敛。</span></p></details></article><article class="driver-card"><h3>最大风险</h3><strong>3.5 / 10</strong><p class="dim-conclusion">最大风险是汽水音乐依托抖音流量对用户时长的持续分流叠加费用管控红利耗尽的双重挤压：前者概率高、影响高且短期难以逆转，后者已在2026H1兑现为营业利润下滑，两者叠加可能使公司从追随者滑向边缘化。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">①汽水音乐MAU持续反超路径probability标为&#x27;高&#x27;、impact标为&#x27;高&#x27;，2026年3月MAU 1.5605亿对网易云音乐1.4682亿(failurePaths[0])；</span><span class="prose-point">②费用管控红利耗尽路径同样probability&#x27;高&#x27;、impact&#x27;高&#x27;，2026H1销售及市场费用同比+80.7%已导致营业利润同比-11.6%(failurePaths[2])；</span><span class="prose-point">③净现金118.5亿元(占市值近六成)与净现金状态(负债率22.7%且基本无有息负债)提供一定缓冲，但风险本身指向核心竞争位置持续弱化而非可对冲的单一事件，故评分不高但未至严重不利区间。</span></p></details></article><article class="driver-card"><h3>文明趋势</h3><strong>6 / 10</strong><p class="dim-conclusion">在线音乐流媒体作为渠道范式已确立，中国市场仍处平稳扩张期，但网易云音乐在产业链中上游议价权持续弱于腾讯音乐系，且下游流量入口正被短视频渠道再范式化分流，公司享受行业增长的确定性低于行业本身增长的确定性。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">①行业增速放缓但未见萎缩：IFPI披露2025年中国录制音乐收入同比+20.1%居全球前20大市场第一，Omdia预测中国份额2025年5.8%→2030年8.7%(analysis.tam/paradigmShift)；</span><span class="prose-point">②上游版权议价权劣势明确：招股章程披露2020年基线与腾讯音乐系收入差距达3.6倍，官方风险因素原文承认&#x27;规模上仍有显著差距&#x27;(analysis.valueChainPosition)；</span><span class="prose-point">③下游分发渠道正被汽水音乐的短视频算法逻辑再范式化，2026年3月MAU反超(analysis.techRouteRisk)。</span></p></details></article><article class="driver-card"><h3>估值</h3><strong>7 / 10</strong><p class="dim-conclusion">当前估值已隐含较悲观预期，EV/Revenue仅1.04倍、反解永续增长率约1.7%，净现金覆盖近六成市值，三情景测算呈现明显上行倾斜(中性+26.1%/乐观+90.2%)但悲观情景仍有-35.7%下行空间。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">①TTM PE 11.99倍(经调整11.29倍)、EV/Revenue 1.04倍，反解Gordon模型隐含永续增长率约1.7%，&#x27;市场几乎未计入成长溢价&#x27;(analysis.currentMultiples/reverseDcf)；</span><span class="prose-point">②三情景测算：乐观214.2港元(+90.2%)、中性141.9港元(+26.1%)、悲观72.5港元(-35.7%)，基于当前价112.6港元(analysis.threeScenario)；</span><span class="prose-point">③净现金约118.5亿元人民币占当前市值约200亿元人民币近六成，对下行提供部分对冲(bullBearCase/inquiry)；</span><span class="prose-point">④历史PE区间与同业腾讯音乐PE/PS对比均unavailable(dataGaps)，证据限制下评分未进一步上调。</span></p></details></article><article class="driver-card"><h3>企业文化</h3><strong>4.5 / 10</strong><p class="dim-conclusion">已披露证据显示公司治理结构上主席与CEO角色未分离并自评偏离监管守则，成本纪律随经营压力大幅摇摆(先降后升)，技术投入方向明确转向AI，但薪酬考核、团队稳定性、并购能力等文化相关证据大面积缺失。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">①治理结构：主席与CEO角色未分离(丁磊兼任)，公司自评构成对《企业管治守则》C.2.1条的偏离，董事会解释为提升战略执行效率(analysis.culture</span><span class="prose-point">①)；</span><span class="prose-point">②成本纪律随经营压力摇摆：2025年销售及市场费用同比削减33.2%、管理费用降4.4%，但2026H1销售费用同比激增80.7%回补(analysis.culture</span><span class="prose-point">②)；</span><span class="prose-point">③技术投入向AI倾斜：2026H1研发费用同比+3.2%，主要投向Climber大模型升级与AI互动功能(analysis.culture</span><span class="prose-point">③)；</span><span class="prose-point">④薪酬考核挂钩指标、核心高管团队稳定性、并购历史均为dataGaps标记unavailable(management.dataGaps)，证据限制下评分向中性收敛。</span></p></details></article></div><p class="company-note">信心度为价值投资视角下对该维度的看多程度（0–10，越高越看多）；最大风险按可控程度、估值按价格吸引力打分；企业文化按文化对长期股东的有利程度打分，结论为基于已落盘证据的客观陈述。</p></section><section class="company-section" aria-labelledby="strategies"><p class="section-kicker">WHAT TO DO ABOUT IT</p><h2 id="strategies">策略建议</h2><div class="strategy-grid"><article><h3>空仓者</h3><p class="advice"><span class="prose-point">①当前估值已部分计入悲观预期但护城河变窄趋势未反转，不建议现价追高建仓；</span><span class="prose-point">②可等待价格跌至悲观情景附近或竞争/费用指标出现企稳信号后分批介入；</span><span class="prose-point">③优先以小仓位试探而非重仓，因治理集中与MAU反超风险尚未消除。</span></p><ul class="trigger-lines"><li><strong>股价跌至72.5港元附近，接近悲观情景对应价位</strong><span class="then"> —— 可考虑左侧小仓位试探性建仓，不宜一次性重仓</span></li><li><strong>汽水音乐MAU领先优势连续两个季度不再扩大</strong><span class="then"> —— 确认护城河企稳后再考虑分批建仓</span></li><li><strong>销售及市场费用增速回落且收入增速同步转正并企稳</strong><span class="then"> —— 确认经营杠杆恢复良性后再考虑建仓</span></li></ul><details class="fold"><summary>各触发条件的依据</summary><ul><li><span class="prose-point">①72.5港元为悲观情景目标价(-35.7%)，对应引用dimensions.valuation.analysis.threeScenario悲观情景；</span><span class="prose-point">②净现金约118.5亿元占当前市值近六成，EV/Revenue仅1.04倍，为下行提供部分对冲，引用dimensions.valuation.analysis.currentMultiples与bullBearCase。</span></li><li><span class="prose-point">①引用dimensions.moat.analysis.trendNext5y&#x27;变窄&#x27;判断及dimensions.inversion.analysis.failurePaths[0]汽水音乐MAU 1.5605亿对网易云音乐1.4682亿的反超路径；</span><span class="prose-point">②该路径probability标注&#x27;高&#x27;、impact标注&#x27;高&#x27;，是判断护城河是否企稳的核心观测指标。</span></li><li><span class="prose-point">①引用dimensions.inversion.analysis.failurePaths[2]费用管控红利耗尽路径，2026H1销售及市场费用同比+80.7%而营业利润同比-11.6%；</span><span class="prose-point">②引用dimensions.businessEssence.analysis.operatingLeverage说明当前利润弹性来自费用端而非规模效应。</span></li></ul></details></article><article><h3>持仓者</h3><p class="advice"><span class="prose-point">①现价112.6港元处于悲观与中性情景之间，可维持现有仓位观察后续两份财报；</span><span class="prose-point">②密切跟踪会员订阅收入增速与MAU排名两个核心指标是否进一步恶化；</span><span class="prose-point">③若护城河与费用杠杆同步恶化应考虑减仓而非死扛，因生意质量与护城河评分均处中性偏低区间。</span></p><ul class="trigger-lines"><li><strong>股价维持在112至142港元区间，对应现价至中性目标价</strong><span class="then"> —— 维持现有仓位，暂不加仓也不减仓</span></li><li><strong>会员订阅收入同比增速进一步跌破2026H1的5.3%</strong><span class="then"> —— 警惕订阅增长引擎失速，应考虑减仓</span></li><li><strong>汽水音乐MAU领先优势持续扩大超过两个季度</strong><span class="then"> —— 重新评估护城河宽度，考虑分批减仓</span></li></ul><details class="fold"><summary>各触发条件的依据</summary><ul><li><span class="prose-point">①141.9港元为中性情景目标价(+26.1%)，引用dimensions.valuation.analysis.threeScenario中性情景；</span><span class="prose-point">②TTM PE 11.99倍与EV/Revenue 1.04倍未明显高估，引用dimensions.valuation.analysis.currentMultiples。</span></li><li><span class="prose-point">①引用dimensions.inversion.analysis.failurePaths[1]会员ARPPU增长逼近天花板路径，会员订阅收入增速已由FY2025的+13.3%放缓至2026H1的+5.3%；</span><span class="prose-point">②该路径probability标注&#x27;中&#x27;、impact标注&#x27;高&#x27;。</span></li><li><span class="prose-point">①引用dimensions.moat.analysis.trendPast5y/trendNext5y均判定&#x27;变窄&#x27;的结论；</span><span class="prose-point">②引用dimensions.inversion.analysis.failurePaths[0]汽水音乐同比+78%反超网易云音乐MAU的数据。</span></li></ul></details></article></div><div><h3 class="block-heading">卖出信号</h3><ul class="signal-list"><li><strong class="signal-name">汽水音乐对网易云音乐的MAU领先优势连续两个季度继续扩大</strong><p class="signal-desc">QuestMobile季度数据显示两者MAU差距持续拉大而非收窄</p><details class="fold"><summary>依据</summary><p><span class="prose-point">①引用dimensions.inversion.analysis.failurePaths[0]，2026年3月网易云音乐1.4682亿对汽水音乐1.5605亿，probability&#x27;高&#x27;、impact&#x27;高&#x27;；</span><span class="prose-point">②引用dimensions.moat.analysis.trendNext5y护城河变窄判断。</span></p></details></li><li><strong class="signal-name">销售及市场费用维持高增速但收入增速未同步回升</strong><p class="signal-desc">半年报或年报显示营销费用同比增速超50%而收入增速低于5%</p><details class="fold"><summary>依据</summary><p><span class="prose-point">①引用dimensions.businessEssence.analysis.operatingLeverage，2026H1销售及市场费用同比+80.7%而收入仅+3.4%、营业利润-11.6%；</span><span class="prose-point">②引用dimensions.inversion.analysis.failurePaths[2]费用管控红利耗尽路径。</span></p></details></li><li><strong class="signal-name">会员订阅收入同比增速进一步降至个位数低位或转负</strong><p class="signal-desc">下一份半年报或年报的会员订阅收入同比增速低于3%或为负</p><details class="fold"><summary>依据</summary><p><span class="prose-point">①引用dimensions.inversion.analysis.failurePaths[1]，增速已由FY2025的+13.3%放缓至2026H1的+5.3%；</span><span class="prose-point">②引用dimensions.businessEssence.inquiry.answer中&#x27;幸存者偏差&#x27;提示，警惕分母缩小掩盖用户总盘萎缩。</span></p></details></li></ul></div><div><h3 class="block-heading">加仓信号</h3><ul class="signal-list"><li><strong class="signal-name">股价回落至72.5港元附近悲观情景价位但基本面未同步恶化</strong><p class="signal-desc">价格跌破悲观目标价而同期MAU与订阅收入未进一步下滑</p><details class="fold"><summary>依据</summary><p><span class="prose-point">①72.5港元引用dimensions.valuation.analysis.threeScenario悲观情景(-35.7%)；</span><span class="prose-point">②净现金约118.5亿元占市值近六成为估值提供缓冲，引用dimensions.valuation.analysis.currentMultiples与bullBearCase。</span></p></details></li><li><strong class="signal-name">网易云音乐MAU排名重新反超汽水音乐或差距明显收窄</strong><p class="signal-desc">QuestMobile数据显示网易云音乐MAU回升至汽水音乐之上或差距缩小超三成</p><details class="fold"><summary>依据</summary><p><span class="prose-point">①引用dimensions.moat.analysis.trendNext5y中&#x27;方向暂未见反转信号&#x27;的表述，一旦反转即构成加仓依据；</span><span class="prose-point">②引用dimensions.inversion.analysis.failurePaths[0]的MAU对比基准数据。</span></p></details></li><li><strong class="signal-name">销售费用增速回落同时收入维持正增长，经营杠杆转正</strong><p class="signal-desc">半年报或年报显示营业利润增速快于收入增速</p><details class="fold"><summary>依据</summary><p><span class="prose-point">①引用dimensions.businessEssence.analysis.operatingLeverage，当前判断&#x27;规模效应对利润的传导尚未验证&#x27;，一旦验证即为加仓信号；</span><span class="prose-point">②引用dimensions.management.analysis.keyDecisions[0]回购决策评级★4，说明管理层在低估值区间有回购意愿可作为佐证。</span></p></details></li></ul></div></section><section class="company-section" aria-labelledby="business-essence"><p class="section-kicker">WHAT THE BUSINESS IS</p><h2 id="business-essence">生意本质</h2><p class="section-lead">网易云音乐是以社区UGC内容锁定存量乐迷、靠会员订阅提价与费用管控驱动利润修复的音乐流媒体生意。</p><h3 class="block-heading">收入结构（FY2025（2025-01-01至2025-12-31））</h3><div class="table-wrap"><table><thead><tr><th>分部</th><th>收入（百万 RMB (CNY)）</th><th>占比（%）</th><th>来源</th></tr></thead><tbody><tr><td>在线音乐服务 Online music services</td><td>5,994,000千元人民币，同比+12%（管理层讨论与分析口径推算数据，非年报逐项列示原文金额）</td><td>77.25%</td><td><a class="source-pill" href="https://www.itiger.com/news/2658923974" rel="noreferrer" title="老虎证券快讯《被汽水超车后，网易云音乐的原创牌还灵吗？》转引2025年年报数据">来源</a></td></tr><tr><td>社交娱乐服务及其他 Social entertainment services and others</td><td>1,765,450千元人民币（官方总收入7,759,450减在线音乐服务收入5,994,000的推算值）</td><td>22.75%</td><td><a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf" rel="noreferrer" title="网易云音乐2025年年报「五年财务概要」（官方总收入原文，分部数字为推算）">来源</a></td></tr></tbody></table></div><h3 class="block-heading">5 年盈利能力趋势</h3><div class="table-wrap"><table><thead><tr><th>财年</th><th>毛利率</th><th>经营利润率</th><th>净利率</th><th>来源</th></tr></thead><tbody><tr><td>FY2021</td><td>2.04%</td><td>未取得：该年度经营亏损，年报未单独披露纯营业利润行项目，仅可获得税前利润率-29.3%作为替代参考，非规范经营利润率科目</td><td>-29.38%（净利润-2,056,092÷收入6,997,622换算，非公司列示科目）%</td><td><a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf" rel="noreferrer" title="网易云音乐2025年年报「五年财务概要」">来源</a></td></tr><tr><td>FY2022</td><td>14.38%</td><td>未取得：该年度税前仍为亏损(-204,479千元)，年报未单独列示营业利润行项目，仅可获得税前利润率-2.3%替代参考</td><td>-2.46%（净利润-221,494÷收入8,992,221换算，非公司列示科目）%</td><td><a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf" rel="noreferrer" title="网易云音乐2025年年报「五年财务概要」">来源</a></td></tr><tr><td>FY2023</td><td>26.73%</td><td>4.22%</td><td>9.33%（净利润734,182÷收入7,866,992换算，非公司列示科目）%</td><td><a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf" rel="noreferrer" title="网易云音乐2025年年报「五年财务概要」">来源</a></td></tr><tr><td>FY2024</td><td>33.73%</td><td>14.73%</td><td>19.64%（净利润1,561,507÷收入7,950,146换算，非公司列示科目）%</td><td><a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf" rel="noreferrer" title="网易云音乐2025年年报「五年财务概要」">来源</a></td></tr><tr><td>FY2025</td><td>35.69%</td><td>20.90%</td><td>35.42%（净利润2,748,210÷收入7,759,450换算，含约747百万元一次性递延所得税抵免，非公司列示科目）%</td><td><a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf" rel="noreferrer" title="网易云音乐2025年年报「五年财务概要」">来源</a></td></tr></tbody></table></div><h3 class="block-heading">商业模式与粘性</h3><dl class="kv-list"><div><dt>商业模式</dt><dd>混合 · 平台</dd></div><div><dt>粘性 / 锁定 · 中</dt><dd><span class="prose-point">①UGC社区沉淀(评论区、歌单文化)带来高频访问习惯，FY2024官方披露DAU/MAU比率稳居30%以上；</span><span class="prose-point">②独立音乐人原创内容生态(125万音乐人/730万曲目)提供差异化内容，但对拉新作用有限；</span><span class="prose-point">③用户听歌历史、收藏、歌单等数字资产沉淀形成一定迁移转换成本，主要发挥存量付费用户留存作用而非新用户获取作用。</span></dd></div><div><dt>毛利率 vs 同行 · 35.69%（FY2025）%</dt><dd><span class="prose-point">①腾讯音乐系头部流行版权储备与议价能力更强，内容成本因规模效应被更充分摊薄；</span><span class="prose-point">②网易云音乐版权投入长期居于跟随地位(2020年按收入计市场份额20.5% vs 对手72.8%)，版权成本占收入比重相对更高；</span><span class="prose-point">③网易云音乐近年靠降本增效与会员提价推动毛利率从FY2021的2.04%快速修复至FY2025的35.69%，差距收窄但尚未追平。</span></dd></div><div><dt>经营杠杆</dt><dd><span class="prose-point">①FY2021-2025收入基本持平(69.98亿→77.59亿元)而经营利润率从负值改善至20.90%，主要靠销售及市场费用大幅压缩(FY2025同比-33.2%)驱动，非规模增长带来的天然经营杠杆；</span><span class="prose-point">②2026H1费用管控转向——销售及市场费用同比+80.7%而收入仅+3.4%，导致营业利润同比-11.6%，出现负经营杠杆；</span><span class="prose-point">③历史数据显示公司利润弹性主要来自费用端而非收入端，规模效应对利润的传导尚未验证。</span></dd></div></dl><details class="fold"><summary>本节证据 6 条</summary><ul><li>DAU/MAU比率：稳居30%以上（FY2024（2024年报口径）） <a class="source-pill" href="https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0220/2025022000338_c.pdf" rel="noreferrer" title="网易云音乐FY2024年度业绩公告">来源</a></li><li>注册独立音乐人数/上传曲目数：超125万名 / 约730万首（2026-06-30） <a class="source-pill" href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf" rel="noreferrer" title="网易云音乐2026中期业绩公告">来源</a></li><li>会员订阅收入同比增速：+13.3%（由4,459,000千元增至5,053,000千元）（FY2025） <a class="source-pill" href="https://www.itiger.com/news/2658923974" rel="noreferrer" title="老虎证券快讯《被汽水超车后，网易云音乐的原创牌还灵吗？》转引年报数据">来源</a></li><li>2026H1销售及市场费用同比：+80.7%（163,379→295,209千元）（2026H1） <a class="source-pill" href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf" rel="noreferrer" title="网易云音乐2026中期业绩公告">来源</a></li><li>2026H1收入同比 vs 营业利润同比：收入+3.4% vs 营业利润-11.6%（2026H1） <a class="source-pill" href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf" rel="noreferrer" title="网易云音乐2026中期业绩公告">来源</a></li><li>FY2025营业利润率 vs FY2024：20.90% vs 14.73%（收入同比-2.4%，主因销售及市场费用同比-33.2%至4.09亿元）（FY2025） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf" rel="noreferrer" title="网易云音乐2025年年报">来源</a></li></ul></details><aside class="inquiry-block"><p class="q">追问 · 这门生意好在哪？如果只能用一句话描述，是什么？</p><p class="a"><span class="prose-point">本质是靠社区内容锁住存量付费用户、用订阅提价对冲用户规模下滑的现金牛生意。</span><span class="prose-point">①会员订阅收入占比约65%且持续增长(FY2025同比+13.3%)，是收入与利润的压舱石；</span><span class="prose-point">②毛利率随规模与降本已从FY2021的2.04%修复至FY2025的35.69%，2026H1末净现金约118.5亿元覆盖近六成市值，抗风险能力强；</span><span class="prose-point">③但MAU已被汽水音乐反超、行业排名跌出前三，说明这门生意守成有余、拓新不足，增长引擎已从用户扩张切换为单用户变现与费用管控，可持续性依赖持续的内容与产品迭代。</span></p></aside><details class="fold"><summary>数据缺口 4 项</summary><ul><li>analysis.profitabilityTrend5y.series[0].operatingMarginPct (FY2021)——该年度经营亏损，年报未单独披露纯营业利润行项目，官方仅可获得税前利润率-29.3%作为替代参考，非规范经营利润率科目</li><li>analysis.profitabilityTrend5y.series[1].operatingMarginPct (FY2022)——该年度税前仍为亏损(-204,479千元)，年报未单独列示营业利润行项目，仅能以税前利润率-2.3%替代参考</li><li>analysis.grossMarginVsPeers.peers[0].source.url——腾讯音乐毛利率44.2%数据引自本地已采集的hk-1698-tencent-music/financials-collection.json文件，该文件对此数据点未附外部可直达URL，仅有本地文件路径</li><li>analysis.revenueBreakdown.items[0].revenue（在线音乐服务分部收入）——公司官方年报未逐项披露分部收入绝对值及分部毛利率，收入数字来自老虎证券快讯转引年报数据（单源），非公司公告逐项列示原文</li></ul></details></section><section class="company-section" aria-labelledby="moat"><p class="section-kicker">WHAT PROTECTS IT</p><h2 id="moat">护城河评估</h2><p class="section-lead">护城河集中于转换成本与社区网络效应，规模效应弱于腾讯音乐，网络效应正被汽水音乐削弱变窄。</p><div class="table-wrap"><table class="analysis-table"><thead><tr><th>类型</th><th>验证方法</th><th>判定</th><th>证据</th></tr></thead><tbody><tr><td>品牌/定价权</td><td>是否能在不损失销量的情况下提价？</td><td>待验证</td><td><details class="fold"><summary>证据 2 条</summary><ul><li>整体毛利率：FY2021 2.04% → FY2025 35.69%（FY2021–FY2025） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf" rel="noreferrer" title="网易云音乐2025年年报「五年财务概要」">来源</a></li><li>会员订阅收入同比增速：FY2025同比+13.3%（4,459,000→5,053,000千元）；2026H1同比+5.3%（2,469,800→2,600,900千元）（2026H1（截至2026-06-30）） <a class="source-pill" href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf" rel="noreferrer" title="网易云音乐2026中期业绩公告">来源</a></li></ul></details></td></tr><tr><td>转换成本</td><td>客户迁移到竞品的成本有多高？</td><td>存在</td><td><details class="fold"><summary>证据 2 条</summary><ul><li>用户数字资产沉淀（歌单/收藏/评论/听歌历史）构成迁移成本：研报判断：用户沉淀的数字资产提高了迁移平台的转换成本，形成庞大高质量数据集（单源研报观点，非公司官方量化披露）（2025年中报点评） <a class="source-pill" href="https://www.nxny.com" rel="noreferrer" title="东吴证券研报（www.nxny.com转引）">来源</a></li><li>MAU下滑期间会员订阅收入仍逆势增长：FY2025同比+13.3%，2026H1同比+5.3%；同期MAU持续承压并于2026年3月被汽水音乐反超（2026H1） <a class="source-pill" href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf" rel="noreferrer" title="网易云音乐2026中期业绩公告">来源</a></li></ul></details></td></tr><tr><td>网络效应</td><td>用户越多产品越好吗？</td><td>存在</td><td><details class="fold"><summary>证据 3 条</summary><ul><li>iOS端DAU/MAU比率：42%（2025-06） <a class="source-pill" href="https://www.nxny.com" rel="noreferrer" title="东吴证券研报转引Sensor Tower数据（www.nxny.com转引，单源）">来源</a></li><li>官方DAU/MAU比率：稳居30%以上（FY2024） <a class="source-pill" href="https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0220/2025022000338_c.pdf" rel="noreferrer" title="网易云音乐FY2024年度业绩公告">来源</a></li><li>行业MAU排名：2026年3月网易云音乐MAU 1.4682亿，被汽水音乐（1.5605亿）反超，跌出行业前三（2026-03） <a class="source-pill" href="https://www.itiger.com/news/2658923974" rel="noreferrer" title="QuestMobile数据，经老虎证券快讯转引">来源</a></li></ul></details></td></tr><tr><td>规模效应</td><td>规模带来的成本优势有多大？</td><td>不存在</td><td><details class="fold"><summary>证据 2 条</summary><ul><li>毛利率对比（vs腾讯音乐）：网易云音乐FY2025毛利率35.69% vs 腾讯音乐FY2025毛利率44.2%，差距约8.5个百分点，归因于头部版权曲库议价能力与规模效应更强（有利于腾讯音乐而非网易云音乐）（FY2025） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf" rel="noreferrer" title="网易云音乐2025年年报「五年财务概要」；hk-1698-tencent-music研究产出financials-collection.json">来源</a></li><li>收入体量对比：腾讯音乐FY2025收入329.02亿元，约为网易云音乐FY2025收入77.59亿元的4.2倍（FY2025） </li></ul></details></td></tr><tr><td>技术/专利壁垒</td><td>技术领先几年？能否被复制？</td><td>待验证</td><td><details class="fold"><summary>证据 4 条</summary><ul><li>自研AI推荐大模型「Climber」及AI互动功能矩阵：2026H1升级支撑&#x27;心动模式&#x27;&#x27;AI灵感歌单&#x27;等个性化推荐，并新增&#x27;AI情绪调音师&#x27;&#x27;AI宠物播放器&#x27;等功能（2026H1） <a class="source-pill" href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf" rel="noreferrer" title="网易云音乐2026中期业绩公告">来源</a></li><li>研发强度：2026H1研发费用391,011千元/收入3,958,706千元 ≈ 9.88%（2026H1） <a class="source-pill" href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf" rel="noreferrer" title="网易云音乐2026中期业绩公告">来源</a></li><li>独立音乐人生态规模：截至2026年6月注册独立音乐人超125万名、上传曲目约730万首，较2025年6月（81.9万名/480万首）近乎翻倍（2026-06） <a class="source-pill" href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf" rel="noreferrer" title="网易云音乐2026中期业绩公告管理层讨论与分析">来源</a></li><li>专利/知识产权披露：官方年报未独立披露专利数量；第三方天眼查显示专利信息1,609条，21世纪经济报道称2022-2024年密集申请逾700条专利，主要用于与腾讯音乐互诉&#x27;产品抄袭&#x27;诉讼场景，而非对外宣传的核心技术护城河（2024-11-27（媒体报道日期）） </li></ul></details></td></tr></tbody></table></div><dl class="kv-list"><div><dt>过去 5 年 · 变窄</dt><dd><span class="prose-point">①MAU从2021年1.83亿降至2023H1的1.49亿，2026年3月被汽水音乐反超跌出行业前三；</span><span class="prose-point">②内容差异化护城河变宽（音乐人数近乎翻倍至125万+），但未阻止用户流失，深度与份额宽度背离；</span><span class="prose-point">③转换成本与社区效应仍支撑会员订阅收入逆势增长（FY2025+13.3%），变窄集中体现在获客端而非存量留存端。</span></dd></div><div><dt>未来 5 年 · 变窄</dt><dd><span class="prose-point">①汽水音乐依托抖音流量持续导流下沉市场，MAU反超趋势大概率延续，网络效应对新增用户的拉动进一步减弱；</span><span class="prose-point">②腾讯音乐完成喜马拉雅并表并以SVIP深挖存量用户，规模与版权优势（毛利率44.2%对比35.7%）持续压制网易云音乐；</span><span class="prose-point">③独立音乐人生态与AI推荐若能提升内容转化率，叠加转换成本对存量会员的留存效果，收窄速度或放缓，但方向暂未见反转信号。</span></dd></div></dl><aside class="inquiry-block"><p class="q">追问 · 10年后这条护城河还在吗？什么能摧毁它？</p><p class="a"><span class="prose-point">护城河部分尚存但正被削弱，短视频平台崛起可能进一步侵蚀。</span><span class="prose-point">①转换成本（数字资产沉淀）与会员订阅粘性最可能延续，是护城河中最抗打的部分；</span><span class="prose-point">②社区网络效应若持续被汽水音乐等短视频衍生App分流增量用户，10年维度可能被稀释为存量用户的留存工具而非增长引擎；</span><span class="prose-point">③摧毁因素：若腾讯音乐系凭规模、版权优势及并购喜马拉雅进一步扩大成本差距，或字节系持续以流量补贴抢占下沉市场，护城河可能从第二梯队滑落为边缘化平台。</span></p></aside><details class="fold"><summary>数据缺口 3 项</summary><ul><li>moat.analysis.types[0]（品牌/定价权）.evidence——未查到会员单价/ARPU分年拆分或提价公告，无法判断提价而不失客户的真实弹性，仅能用毛利率与订阅收入总增速间接推断</li><li>moat.analysis.types[4]（技术/专利壁垒）.evidence[3]——公司官方年报/中期报告未见专利数量或知识产权资产独立披露章节，仅第三方天眼查聚合数据及媒体报道可用</li><li>moat.analysis.trendPast5y / trendNext5y——公司上市后未再披露收入口径市场份额（最后一次官方数字为2020年20.5%），护城河宽度变化只能用MAU排名近似替代评判</li></ul></details></section><section class="company-section" aria-labelledby="inversion"><p class="section-kicker">HOW IT COULD FAIL</p><h2 id="inversion">逆向思考与风险清单</h2><p class="section-lead">网易云音乐护城河正被短视频流量入口侵蚀，费用收缩驱动的盈利改善难以持续，治理独立性亦存疑。</p><div class="table-wrap"><table class="analysis-table"><thead><tr><th>失败路径</th><th>概率</th><th>影响</th><th>证据</th></tr></thead><tbody><tr><td>汽水音乐持续导流分流用户，网易云音乐MAU份额被长期压缩</td><td>高</td><td>高</td><td><details class="fold"><summary>证据 1 条</summary><ul><li>月活跃用户数(MAU)：网易云音乐1.4682亿 vs 汽水音乐1.5605亿，汽水音乐同比+78%首次反超（2026-03） <a class="source-pill" href="https://www.itiger.com/news/2658923974" rel="noreferrer" title="QuestMobile《2026年一季度中国移动互联网典型行业洞察报告》，经老虎证券快讯转引">来源</a></li></ul></details></td></tr><tr><td>会员ARPPU增长逼近天花板，订阅收入增速持续放缓</td><td>中</td><td>高</td><td><details class="fold"><summary>证据 1 条</summary><ul><li>会员订阅收入同比增速：FY2025 +13.3%（4,459,000→5,053,000千元）放缓至2026H1 +5.3%（2,469,800→2,600,900千元）（2026H1） <a class="source-pill" href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf" rel="noreferrer" title="网易云音乐2026中期业绩公告">来源</a></li></ul></details></td></tr><tr><td>费用管控红利耗尽，重启获客投入侵蚀经营利润率</td><td>高</td><td>高</td><td><details class="fold"><summary>证据 1 条</summary><ul><li>销售及市场费用同比 / 经营利润同比：2025年-33.2%至4.09亿元后，2026H1反弹+80.7%至295,209千元，同期营业利润-11.6%（2026H1） <a class="source-pill" href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf" rel="noreferrer" title="网易云音乐2026中期业绩公告「财务回顾」章节">来源</a></li></ul></details></td></tr><tr><td>网易绝对控股+主席兼CEO一肩挑，治理独立性与关联交易风险积累</td><td>中</td><td>中</td><td><details class="fold"><summary>证据 1 条</summary><ul><li>控股股东经济权益比例 / 治理守则偏离：丁磊透过控制法团持股60.29%（不含库存股），倘悉数行使回购授权将升至66.99%；公司主席与CEO角色未按《企业管治守则》C.2.1条分离（2026-04-15） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501143_c.pdf" rel="noreferrer" title="网易云音乐2026年股东周年大会通函">来源</a></li></ul></details></td></tr><tr><td>支柱二税制与国内税收优惠资格重新认定推高实际税负</td><td>中</td><td>低</td><td><details class="fold"><summary>证据 1 条</summary><ul><li>支柱二当期补足税费用：2026H1确认2,294万元（2025H1为3,070万元）；中国子公司高新技术企业15%优惠税率需每三年重新认定（2026H1） <a class="source-pill" href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf" rel="noreferrer" title="网易云音乐2026中期业绩公告附注4「税项」">来源</a></li></ul></details></td></tr></tbody></table></div><h3 class="block-heading">历史类比</h3><ul class="signal-list"><li><strong class="signal-name">Pandora Media（北美互联网电台/音乐流媒体先驱）</strong><p class="signal-desc">曾以细分音乐社区体验建立早期优势，后被拥有更大流量与资本的Spotify、Apple Music夹击，用户增长与ARPU双双承压；结局：未能守住独立地位，2018年被SiriusXM整体收购，从行业颠覆者变为被整合对象 </p></li><li><strong class="signal-name">人人网（中国早期校园社交网络）</strong><p class="signal-desc">早期以差异化社区体验建立用户心智护城河，后被拥有更大流量入口与内容生态的新兴平台反超用户时长；结局：用户与商业价值持续流失，最终在行业格局中被边缘化 </p></li></ul><h3 class="block-heading">空方论点</h3><ul class="signal-list"><li><strong class="signal-name">汽水音乐依托抖音流量强势崛起且公司获客投入趋于保守，中长期用户与时长份额面临流失风险</strong><p class="signal-desc">持有者：QuestMobile数据经老虎证券快讯及多家媒体转引</p><details class="fold"><summary>证据 1 条</summary><ul><li>MAU对比 / 营销费用同比：网易云音乐1.4682亿 vs 汽水音乐1.5605亿(2026-03)；2025年销售及市场费用同比-33.2%（2026-03 / FY2025） <a class="source-pill" href="https://www.itiger.com/news/2658923974" rel="noreferrer" title="QuestMobile数据，经老虎证券快讯转引">来源</a></li></ul></details></li><li><strong class="signal-name">2025年利润改善主要由费用收缩驱动而非收入增长，2026H1费用重新回升侵蚀经营利润，可持续性存疑</strong><p class="signal-desc">持有者：本研究基于财报数据推演</p><details class="fold"><summary>证据 1 条</summary><ul><li>销售及市场费用同比 / 营业利润同比：163,379→295,209千元（+80.7%），营业利润同比-11.6%（2026H1） <a class="source-pill" href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf" rel="noreferrer" title="网易云音乐2026中期业绩公告「财务回顾」章节">来源</a></li></ul></details></li><li><strong class="signal-name">净利润与经调整净利润大幅下滑主因2025H1一次性递延所得税抵免高基数，核心经营性盈利改善幅度小于表面数字</strong><p class="signal-desc">持有者：本研究基于财报数据推演（引用2026中期业绩公告附注1原文说明）</p><details class="fold"><summary>证据 1 条</summary><ul><li>净利润同比 / 经调整净利润同比：净利润-57.0%，经调整净利润-55.8%（2025H1一次性递延所得税抵免849.4百万元形成高基数）（2026H1） <a class="source-pill" href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf" rel="noreferrer" title="网易云音乐2026中期业绩公告附注1">来源</a></li></ul></details></li></ul><details class="fold"><summary>跨学科检验 3 项 · 偏误自查 3 项</summary><ul><li><strong>网络效应理论</strong>：<span class="prose-point">网易云音乐的网络效应主要是UGC评论区/歌单驱动的单边社区强化，而非跨边网络效应；</span><span class="prose-point">①汽水音乐依托抖音生态的注意力网络效应（短视频BGM即时导流至音频消费）具有更强的跨生态位穿透力；</span><span class="prose-point">②社区护城河阻止了用户进一步流失，但不足以收复失地，说明其网络效应深度不足以对抗字节系流量入口的降维打击</span></li><li><strong>竞争博弈</strong>：<span class="prose-point">①2025年网易云音乐选择&#x27;收缩费用换利润&#x27;的保守策略，汽水音乐同期选择&#x27;抖音导流+免费/低价&#x27;的激进扩张策略，形成非对称博弈；</span><span class="prose-point">②网易云音乐短期财务表现占优（经调整净利润+68.2%）但让渡了用户争夺先手，2026H1被迫将营销费用同比拉高80.7%被动跟随，说明其在这场博弈中处于追随者而非主导者地位</span></li><li><strong>技术采纳曲线</strong>：「Climber」大模型升级与AI互动功能矩阵至2026H1才密集推出，晚于抖音系已成熟的短视频推荐分发能力；2026年3月MAU仍被汽水音乐反超，尚未观察到AI功能对留存产生反转性拉动，公司处于技术采纳曲线的追赶而非领先阶段</li><li><strong>叙事偏差</strong>：丁磊网易系光环与独立音乐人生态的正面叙事容易掩盖MAU连续承压、被汽水反超的用户端硬数据，应以QuestMobile第三方MAU数据而非管理层讨论叙事作为核心验证锚点</li><li><strong>锚定效应</strong>：招股章程披露的2020年20.5%收入份额（行业第二）已是6年前基线，容易被过度锚定为&#x27;公司仍居行业前二/三&#x27;，而当前公司已是MAU行业第四且收入份额数字长期未更新，需以最新MAU排名重新锚定认知</li><li><strong>幸存者偏差</strong>：会员订阅收入持续增长（FY2025+13.3%）可能只是流失用户主要集中在免费/轻度用户群，剩余付费用户基数变小后比率性改善，需警惕用分母缩小掩盖用户总盘萎缩的事实</li></ul></details><aside class="inquiry-block"><p class="q">追问 · 我最可能在哪里犯错？聪明人为什么会不买/做空这家公司？</p><p class="a"><span class="prose-point">最可能的误判是低估短视频流量入口的降维打击速度，高估社区护城河韧性。</span><span class="prose-point">①汽水音乐仅靠抖音导流，1年内MAU反超经营13年的网易云音乐社区壁垒(1.5605亿对1.4682亿)，说明护城河抗跨生态竞争能力弱于叙事描述；</span><span class="prose-point">②2025年利润改善主要靠营销费用削减33.2%而非收入增长，2026H1费用回升80.7%后营业利润转跌11.6%，本质是费用杠杆而非经营杠杆，可持续性存疑；</span><span class="prose-point">③丁磊经济权益超60%、主席兼CEO一肩挑且上市以来未曾分红，治理制衡不足，叠加支柱二税制与国内税收优惠资格重新认定的不确定性，这些都是只看净现金与低PE时容易被忽略的折价理由。</span></p></aside></section><section class="company-section" aria-labelledby="management"><p class="section-kicker">WHO RUNS IT</p><h2 id="management">管理层评估</h2><p class="section-lead">丁磊主席兼CEO角色未分离，持股60.29%利益绑定，但费用管控驱动利润可持续性存疑</p><h3 class="block-heading">关键决策复盘</h3><div class="table-wrap"><table class="analysis-table"><thead><tr><th>时间</th><th>决策</th><th>结果</th><th>评分</th></tr></thead><tbody><tr><td>2026-02至2026-05</td><td>在联交所公开市场累计回购7,299,800股股份，总代价约967,035,899.59港元</td><td>回购股份已于2026-06-12注销，减少已发行股本，对每股盈利有正面摊薄效应（2026H1加权平均股数208,961,138股，较2025H1的210,424,603股减少约0.7%） <a class="source-pill" href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf" rel="noreferrer" title="网易云音乐2026中期业绩公告">来源</a></td><td>★4（回购时点PE约11.99倍、EV/Revenue约1.04倍，估值处相对低位，注销股份摊薄增厚每股盈利，但港股回购通常分批小额进行，无法判断是否精准择时于阶段性低点）</td></tr><tr><td>2026-08-20</td><td>董事会决议不宣派2026年中期股息</td><td>延续公司自上市以来未曾派息的政策，现金优先用于股份回购与业务投入 <a class="source-pill" href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf" rel="noreferrer" title="网易云音乐2026中期业绩公告">来源</a></td><td>★3（净现金11,851,723千元、无有息负债，账面资金充裕，以回购代替股息是可接受的资本配置方式，但长期零派息与巨额净现金并存，资本配置效率有优化空间，中性评级）</td></tr><tr><td>2026年一季度前后</td><td>推行全公司降本增效：2025全年销售及市场费用同比大幅缩减33.2%至4.09亿元，管理费用降4.4%，研发费用降2.3%</td><td>在收入同比下滑2.4%的背景下实现经调整净利润同比+68.2%（含一次性递延税项抵免），但对外获客投入趋于保守，与「汽水音乐」MAU反超、公司失去行业MAU第三名位置的时间点重合 <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf" rel="noreferrer" title="网易云音乐2025年年报「五年财务概要」及财务回顾章节">来源</a></td><td>★2（利润改善主要靠削减营销费用而非收入增长驱动，同期竞品加大投入并反超公司MAU排名，2026H1销售费用又被迫同比激增80.7%回补，说明该决策短期美化利润但牺牲了竞争地位，可持续性差）</td></tr></tbody></table></div><dl class="kv-list"><div><dt>研发回报</dt><dd>未取得：公司未披露研发投入与营收/利润产出的对应关系或ROI指标，已查FY2025年报、2026中期业绩公告管理层讨论与分析全文，仅有费用绝对值与同比，无回报率测算</dd></div><div><dt>并购记录</dt><dd>未取得：未见公司披露任何重大并购事件；collection文件仅提及竞争对手腾讯音乐已并购喜马拉雅，网易云音乐自身无并购记录可评估成功率</dd></div><div><dt>回购时机</dt><dd>2026年2-5月耗资约9.67亿港元回购，彼时TTM PE约11.99倍、EV/Revenue约1.04倍，估值处相对低位</dd></div><div><dt>管理层持股</dt><dd>丁磊（透过控制法团）持股经济权益60.29%（2026-04-15）；投票权比例因AB股结构信息缺失unavailable</dd></div><div><dt>薪酬结构</dt><dd>未取得：第1步采集文件未收录管理层薪酬结构与考核挂钩指标，年报薪酬章节未纳入本次采集范围</dd></div><div><dt>减持记录</dt><dd>未见直接减持披露；丁磊控制法团持股比例由59.83%(2024-06-30)升至60.29%(2026-04-15)，系公司回购注销股份被动提升所致，非主动增持或减持</dd></div><div><dt>团队稳定性</dt><dd>未取得：collection文件仅采集创始人丁磊履历，未采集CFO/COO等核心高管团队任期与流动数据</dd></div><div><dt>关键人风险</dt><dd>丁磊身兼网易集团与云音乐双重主席兼CEO，角色未分离，关键人风险较高</dd></div><div><dt>企业文化</dt><dd><span class="prose-point">①治理结构：主席与CEO角色未分离（丁磊兼任），公司自评偏离《企业管治守则》C.2.1条，董事会解释为提升战略执行效率；</span><span class="prose-point">②成本纪律随经营压力摇摆：2025年销售及市场费用同比大幅削减33.2%、管理费用降4.4%，但2026H1销售费用又同比激增80.7%回补；</span><span class="prose-point">③技术投入向AI倾斜：2026H1研发费用同比+3.2%，主要投向Climber大模型升级与AI情绪调音师等AI互动功能。</span></dd></div></dl><details class="fold"><summary>本节证据 5 条</summary><ul><li>股份回购总代价：967,035,899.59港元（7,299,800股）（2026-06-12（注销日）） <a class="source-pill" href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf" rel="noreferrer" title="网易云音乐2026中期业绩公告">来源</a></li><li>TTM PE（工具验算）：11.99倍（经调整口径11.29倍）（2026-08-20） </li><li>EV/Revenue（工具验算）：1.04倍（2026-08-20） </li><li>丁磊（透过控制法团）持股经济权益比例：60.29%（占已发行股本总额，不含库存股份）（2026-04-15） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501143_c.pdf" rel="noreferrer" title="网易云音乐2026年股东周年大会通函「股份购回授权的说明函件」">来源</a></li><li>同一持股（129,034,168股）历史比例：59.83%（2024-06-30） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2024/0919/2024091900362_c.pdf" rel="noreferrer" title="网易云音乐2024年中期报告「权益披露」章节">来源</a></li></ul></details><aside class="inquiry-block"><p class="q">追问 · 如果CEO退休，这家公司还能保持竞争力吗？</p><p class="a"><span class="prose-point">短期冲击有限但中长期存治理隐忧，业务已部分平台化但接班安排不透明。</span><span class="prose-point">①治理层面：丁磊身兼网易集团与云音乐双重主席兼CEO，角色未分离已构成公司自评的守则偏离（C.2.1条），退休将触发继任治理真空，现有资料未见继任计划披露；</span><span class="prose-point">②控制权层面：网易（丁磊控制法团）持股经济权益60.29%（2026-04-15），投票权比例因AB股结构信息缺失unavailable，控股权变动路径不明确；</span><span class="prose-point">③业务韧性层面：核心竞争力（125万独立音乐人生态、UGC社区文化、约65%会员订阅收入占比）已沉淀为平台化资产而非单纯依赖创始人个人IP，但现有资料未采集二把手/核心高管团队的任期与稳定性数据，管理梯队独立决策能力无法验证。</span></p></aside><details class="fold"><summary>数据缺口 6 项</summary><ul><li>management.analysis.capitalAllocation.rdReturn——公司未披露研发投入产出/ROI指标，已查FY2025年报及2026中期业绩公告管理层讨论与分析全文</li><li>management.analysis.capitalAllocation.maTrackRecord——未见公司披露任何重大并购事件，无法评估并购成功率</li><li>management.analysis.alignment.compensation——第1步采集文件未收录管理层薪酬结构及考核挂钩指标数据</li><li>management.analysis.alignment.insiderSelling——无直接减持披露，仅有持股比例被动变化的间接数据，无法排除文件披露范围外的减持行为</li><li>management.analysis.alignment.ownership.votingPct——已查招股章程AB股结构说明及2024-2026年AGM通告、股份变动月报表，均未见对当前A/B两类股份数量拆分及投票权比例的更新披露</li><li>management.analysis.organization.teamStability——collection文件仅采集创始人履历，未采集CFO/COO等核心高管团队任期与流动数据</li></ul></details></section><section class="company-section" aria-labelledby="industry-trend"><p class="section-kicker">WHERE THE WORLD IS GOING</p><h2 id="industry-trend">行业与长期趋势</h2><p class="section-lead">在线音乐行业仍处成长期但增速放缓，网易云音乐版权议价权弱于腾讯音乐系，正被短视频渠道加速分流。</p><dl class="kv-list"><div><dt>范式转移</dt><dd>部分</dd></div><div><dt>历史类比</dt><dd><span class="prose-point">①音乐流媒体对应的历史类比并非蒸汽机/电力这类通用技术革命，而更接近渠道技术迭代——如广播取代留声机、流媒体取代CD/下载，驱动力是分发成本下降与用户习惯迁移，而非生产力质变；</span><span class="prose-point">②网易云音乐处于流媒体渗透曲线的存量竞争者位置：2016-2020年（CIC测算行业CAGR 57.9%）赶上渗透率快速提升红利期，凭UGC社区差异化做到2020年行业第二（20.5%份额），但2020年后渗透率红利见顶，进入腾讯音乐系与字节系汽水音乐夹击的存量再分配期；</span><span class="prose-point">③公司自研AI推荐大模型Climber及AIGC互动功能更像渗透曲线内部的效率工具升级，尚无证据表明其正在开创音乐产业新的范式转移。</span></dd></div><div><dt>TAM</dt><dd>167000（人民币百万元，即1,670亿元人民币） RMB；阶段：成长</dd></div><div><dt>价值链位置</dt><dd><span class="prose-point">①网易云音乐是产业链中游的流媒体分发平台，上游为版权方（唱片公司/独立音乐人）及词曲版权代理方，下游为付费订阅用户及广告主/社交娱乐消费用户；</span><span class="prose-point">②上游议价权明显劣势——招股章程披露2020年基线显示，与掌握主流版权资源的腾讯音乐系（&#x27;A公司&#x27;）收入差距达3.6倍（93亿 vs 26亿元），公司官方风险因素原文承认&#x27;与最大市场参与者现时在规模上仍有显著差距&#x27;，商业模式护城河分析亦明确关键杠杆是&#x27;在版权资源落后于腾讯音乐系的行业格局下&#x27;以UGC对冲版权劣势；</span><span class="prose-point">③下游议价权部分依赖社区转换成本与订阅粘性（会员订阅收入占总收入约65%，FY2025同比+13.3%），但2026年3月MAU被汽水音乐反超，显示对增量/回流用户的吸引力正被短视频渠道稀释。</span></dd></div><div><dt>技术路线风险</dt><dd><span class="prose-point">①AIGC音乐对传统版权授权+人工创作路线构成潜在替代风险——若AI生成曲目可低成本满足BGM类消费需求，将侵蚀依赖版权成本结构的流媒体平台差异化优势，公司已投入AI推荐大模型Climber及AI情绪调音师等功能，属防御性布局而非对冲版权风险的根本解法；</span><span class="prose-point">②公司更紧迫的技术路线风险并非AI而是分发渠道范式差异——汽水音乐依托短视频算法推荐+海量UGC短内容，将音乐消费从主动搜索订阅曲库改造为被动刷流分发BGM，2026年3月已致其MAU反超网易云音乐；</span><span class="prose-point">③公司2026H1 AI相关研发投入同比+3.2%至3.91亿元（研发强度9.88%），显示管理层已识别该风险并加码，但未见量化AI功能对留存/转化实际效果的数据，防御路线有效性存疑。</span></dd></div><div><dt>客户集中度</dt><dd>存在单一客户集中度：2026H1占总收入10%以上的外部客户（公司未披露身份）收入59,760.7万元，占比15.10%，较2025H1的13.09%上升，公司未披露该客户身份及业务性质</dd></div><div><dt>供应商集中度</dt><dd>未取得：collection文件businessModelMoat维度仅有&#x27;版权资源落后于腾讯音乐系&#x27;的定性表述，未披露前几大版权方（唱片公司）采购金额占比等定量集中度指标，已查全文未见相关附注</dd></div></dl><details class="fold"><summary>范式转移正反方证据与 TAM 天花板检验</summary><p><span class="prose-point">①音乐流媒体对实体唱片/下载模式的范式转移已于2015年前后基本完成，网易云音乐是这次转移中崛起的新平台，而非从零开创新范式；</span><span class="prose-point">②当前所处的是范式转移完成后的存量竞争与结构性再分配阶段——短视频平台（汽水音乐）依托BGM即时消费的分发逻辑对传统订阅制音乐平台发起二次分流，属于渠道再范式化而非全新技术革命；</span><span class="prose-point">③IFPI/Omdia数据显示全球及中国流媒体市场仍在增长（中国份额5.8%→2030年8.7%），但增速已从招股章程预测的2020-2025E CAGR 32.2%降至Omdia预测的2026-2030年全球CAGR 5.4%，说明行业已从爆发式渗透期转入平稳扩张期。</span></p><p>无官方天花板测算；Omdia预测2030年中国份额达8.7%，仍有提升空间。</p></details><details class="fold"><summary>本节证据 1 条</summary><ul><li>客户A收入占比：2026H1: 597,607千元/15.10%；2025H1: 500,977千元/13.09%（2026H1） <a class="source-pill" href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf" rel="noreferrer" title="网易云音乐2026中期业绩公告附注2(c)「主要客户信息」">来源</a></li></ul></details><aside class="inquiry-block"><p class="q">追问 · 站在20年后回看，这家公司是「这个时代的标准石油」还是「昙花一现的3Com」？</p><p class="a"><span class="prose-point">更接近区域性守成者而非标准石油式垄断者或3Com式速朽者，胜负未定。</span><span class="prose-point">①内容基础设施属性使其不会瞬间消失——UGC社区与数字资产沉淀形成转换成本，会员订阅收入FY2025同比+13.3%，FY2023起净利润已转正，具备长期存续基础；</span><span class="prose-point">②但远未达标准石油式行业定价权——版权资源持续落后于腾讯音乐系，2020年官方数据显示双方收入差距达3.6倍，上游成本结构长期受制于人；</span><span class="prose-point">③20年维度真正的变量是分发渠道范式再造——字节系汽水音乐已凭短视频算法在2026年3月反超其MAU，若趋势持续深化，网易云音乐更可能收敛为服务存量重度乐迷的利基订阅平台，而非行业标准制定者。</span></p></aside><details class="fold"><summary>数据缺口 2 项</summary><ul><li>industryTrend.analysis.concentration.suppliers——collection文件未披露版权方（唱片公司/独立音乐人）采购集中度定量数据，仅有定性表述</li><li>industryTrend.analysis.tam.ceiling——无第三方机构对行业绝对天花板的定量测算，仅能引用Omdia的份额趋势作方向性佐证</li></ul></details></section><section class="company-section" aria-labelledby="valuation"><p class="section-kicker">WHAT THE PRICE IMPLIES</p><h2 id="valuation">估值分析</h2><p class="section-lead">估值已隐含悲观预期，EV/Revenue仅1.04倍、隐含永续增长率约1.7%，但费用管控可持续性存疑压制估值弹性。</p><h3 class="block-heading">三情景（3 年，工具精确计算）</h3><div class="action-zones"><div><strong>214.2 HKD</strong><span>乐观</span><p>隐含回报 +90.2%</p></div><div><strong>141.9 HKD</strong><span>中性</span><p>隐含回报 +26.1%</p></div><div><strong>72.5 HKD</strong><span>悲观</span><p>隐含回报 -35.7%</p></div></div><details class="fold"><summary>三情景假设依据与工具输出</summary><p><span class="prose-point">①增速：乐观15%——参考FY2025会员订阅收入同比+13.3%及降本增效带来的经营杠杆持续释放；中性8%——对应2026H1收入+3.4%叠加毛利率企稳后的温和净利润增长；悲观-5%——汽水音乐持续分流叠加2026H1销售及市场费用同比+80.7%侵蚀利润的趋势线性外推。</span><span class="prose-point">②PE：中性12x锚定当前TTM PE(报表口径)11.99x；乐观15x对应AI功能矩阵与会员ARPPU回升带来的估值修复；悲观9x对应汽水音乐分流兑现、增长预期落空后的估值折价，三档跨度覆盖近年竞争格局生变导致的市场情绪波动。</span><span class="prose-point">③口径：EPS按TTM归母净利润(RMB1,669,565千元)×汇率1.1513折算为HKD后除以期末总股本204,716,202股，得HKD9.39，与股价同为HKD口径，避免RMB/HKD混用。</span></p><p class="tool-output">============================================================
+三情景估值模型 (Three-Scenario Valuation)
+============================================================
+  当前股价: 112.6 HKD
+  当前EPS:  9.389438479813142
+  预测期:   3年
+
+  情景                年增速     目标PE      目标EPS       目标股价      涨跌幅
+  ------------ -------- -------- ---------- ---------- --------
+  乐观 (Bull)         15%      15x      14.28     214.2   +90.2%
+  中性 (Base)          8%      12x      11.83     141.9   +26.1%
+  悲观 (Bear)         -5%       9x       8.05      72.5   -35.7%
+
+  ✅ 所有计算使用精确十进制, 结果可审计复现</p></details><h3 class="block-heading">当前倍数</h3><div class="table-wrap"><table class="analysis-table"><thead><tr><th>指标</th><th>数值</th><th>来源</th></tr></thead><tbody><tr><td>marketCap</td><td>23,051,044,345 HKD</td><td><a class="source-pill" href="research/companies/hk-9899-netease-cloud-music/financials-collection.json" rel="noreferrer" title="本次研究第1步数据采集与financial_rigor.py验算">来源</a></td></tr><tr><td>pe</td><td>11.99x（TTM，报表口径，IFRS归母净利润）；经调整口径(剔除股份支付)为11.29x</td><td><a class="source-pill" href="research/companies/hk-9899-netease-cloud-music/financials-collection.json" rel="noreferrer" title="本次研究第1步数据采集与financial_rigor.py验算">来源</a></td></tr><tr><td>ps</td><td>2.54x（TTM市值(RMB)/TTM收入）</td><td><a class="source-pill" href="research/companies/hk-9899-netease-cloud-music/financials-collection.json" rel="noreferrer" title="本次研究第1步数据采集与financial_rigor.py验算">来源</a></td></tr><tr><td>peg</td><td>未取得：FY2025核心业绩含约7.47亿元一次性递延所得税抵免，剔除后经营性盈利基数与各机构前瞻盈利预测口径差异较大（如浦银国际FY26E调整后净利润预测20.30亿元 vs 官方FY25经调整净利润28.60亿元本身即含一次性因素），暂不计算PEG，已在collection文件中记录</td><td></td></tr><tr><td>evToRevenue</td><td>1.04x（EV=市值20,021,753千元RMB-现金及银行存款11,851,723千元/TTM收入7,891,039千元，假设有息负债为零）</td><td><a class="source-pill" href="research/companies/hk-9899-netease-cloud-music/financials-collection.json" rel="noreferrer" title="本次研究第1步数据采集与financial_rigor.py验算">来源</a></td></tr></tbody></table></div><dl class="kv-list"><div><dt>反向 DCF</dt><dd>隐含永续增长率约1.7%，市场几乎未计入成长溢价，情绪偏悲观。</dd></div><div><dt>vs 自身历史 · PE（TTM，报表口径） 当前 11.99x</dt><dd>未取得：financials-collection.json全文、公司目录下历史存档文件均未记录52周股价区间或历史PE区间字段；本维度不允许联网检索核实</dd></div><div><dt>或有稀释</dt><dd>—</dd></div></dl><h3 class="block-heading">同行对比</h3><div class="table-wrap"><table><thead><tr><th>公司</th><th>PE（TTM / Fwd）</th><th>PS</th><th>来源</th></tr></thead><tbody><tr><td>腾讯音乐娱乐集团 Tencent Music Entertainment (1698.HK)</td><td>— / —</td><td>未取得：需读取hk-1698-tencent-music的currentValuation数据，本维度未获得该文件访问权限；已知其FY2025毛利率44.2%，高于网易云音乐35.69%约8.5个百分点</td><td></td></tr></tbody></table></div><aside class="inquiry-block"><p class="q">追问 · 如果股市明天关闭5年，你愿意以这个价格持有吗？</p><p class="a"><span class="prose-point">愿意，但仅作小仓位配置——当前估值已部分计入悲观预期，具备一定安全边际。</span><span class="prose-point">①净现金约118.5亿元（2026H1末）占市值近六成，EV/Revenue仅1.04倍，下行空间已被现金储备部分对冲；</span><span class="prose-point">②会员订阅收入占比约65%且FY2025同比+13.3%，独立音乐人生态（125万人/超730万首曲目）提供内容差异化，具备穿越周期的付费基础；</span><span class="prose-point">③但汽水音乐MAU已反超、2026H1营销费用同比+80.7%侵蚀利润，若竞争与费用压力持续5年，中性情景3年目标涨幅仅26.1%、悲观情景下跌35.7%，且公司自上市以来未曾派息，长期持有需承受较大波动而无现金分红缓冲。</span></p></aside><details class="fold"><summary>数据缺口 3 项</summary><ul><li>valuation.analysis.vsOwnHistory.historicalRange——52周股价区间/历史PE区间在collection文件及公司目录下所有历史文件均未记录，本维度不允许联网核实</li><li>valuation.analysis.vsPeers[0].pe / ps——未获得hk-1698-tencent-music目录financials-collection.json的currentValuation字段访问权限</li><li>valuation.analysis.currentMultiples.peg——一次性递延所得税抵免导致前瞻盈利口径不可比，沿用collection文件结论标记unavailable</li></ul></details></section><section class="company-section" aria-labelledby="provenance"><p class="section-kicker">PROVENANCE</p><h2 id="provenance">数据与免责声明</h2><p class="company-note">本页由三份经完整性校验（阈值 7 分）的结构化文件合并渲染： 采集 research/companies/hk-9899-netease-cloud-music/financials-collection.json、分析 research/companies/hk-9899-netease-cloud-music/financials-analysis.json、总结 research/companies/hk-9899-netease-cloud-music/financials-summary.json。 生成于 <time>2026-08-20T21:19:49+08:00</time>，数据截止 2026-08-20（Asia/Shanghai）；最新已披露财报为 2026 年中期业绩（截至 2026-06-30，2026-08-20 发布，已纳入本次采集，为本次研究触发的最新财报）。</p><p class="company-note">本总结基于公开信息与数据截止时点的分析生成，仅供研究参考，不构成个性化投资建议。</p></section></main></body></html>

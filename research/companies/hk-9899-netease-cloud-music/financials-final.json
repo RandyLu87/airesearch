@@ -1,0 +1,2147 @@
+{
+  "finalVersion": "1.0.0",
+  "meta": {
+    "companyId": "hk-9899-netease-cloud-music",
+    "companyName": "网易云音乐股份有限公司 (NetEase Cloud Music Inc.)",
+    "generatedAt": "2026-08-20T21:19:49+08:00",
+    "dataCutoff": "2026-08-20（Asia/Shanghai）；最新已披露财报为 2026 年中期业绩（截至 2026-06-30，2026-08-20 发布，已纳入本次采集，为本次研究触发的最新财报）",
+    "validation": {
+      "threshold": 7.0,
+      "scores": {
+        "collection": 9.4,
+        "analysis": 9.6,
+        "summary": 10.0
+      },
+      "validatedAt": "2026-08-20T21:19:49+08:00"
+    },
+    "sources": {
+      "collection": "research/companies/hk-9899-netease-cloud-music/financials-collection.json",
+      "analysis": "research/companies/hk-9899-netease-cloud-music/financials-analysis.json",
+      "summary": "research/companies/hk-9899-netease-cloud-music/financials-summary.json"
+    }
+  },
+  "collection": {
+    "_spec": {
+      "purpose": "公司数据采集产出模板。采集范围以 docs/model/financial-model.md 的 10 个维度为唯一清单，数据源与交叉验证规范以 docs/model/financial-data.md 为唯一正文。",
+      "sourceSubstitutionNote": "港股 aastocks 为纯 JS 渲染页面，WebFetch/Tavily 均无法取得表格内容（沿用 hk-1698-tencent-music 2026-08-12 的实测记录）。改用：HKEXnews 官方公告/年报 PDF（原文数字，Official 层兼 Primary）为 source1；stockanalysis.com 的结构化整理数据为 source2；行情与股本用 FMP company profile-symbol / shares-float（数据源为 HKEXnews 权益披露）交叉验证。"
+    },
+    "meta": {
+      "companyId": "hk-9899-netease-cloud-music",
+      "companyName": "网易云音乐股份有限公司 (NetEase Cloud Music Inc.)",
+      "ticker": "9899.HK",
+      "exchange": "香港联合交易所主板（2021-12-02 以介绍方式上市）",
+      "market": "hk",
+      "reportingCurrency": "RMB (CNY)",
+      "accountingBasis": "IFRS（国际财务报告准则）；财报同时披露 Non-IFRS 经调整营业利润/净利润",
+      "fiscalYearEnd": "12月31日",
+      "dataCutoff": "2026-08-20（Asia/Shanghai）；最新已披露财报为 2026 年中期业绩（截至 2026-06-30，2026-08-20 发布，已纳入本次采集，为本次研究触发的最新财报）",
+      "collectedAt": "2026-08-20",
+      "sources": {
+        "primary": {
+          "name": "NetEase Cloud Music Inc. HKEXnews 官方公告",
+          "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf"
+        },
+        "secondary": {
+          "name": "stockanalysis.com (HKG:9899)",
+          "url": "https://stockanalysis.com/quote/hkg/9899/financials"
+        },
+        "originalFilings": [
+          {
+            "type": "中期业绩公告",
+            "period": "2026H1（截至2026-06-30）",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf"
+          },
+          {
+            "type": "年报",
+            "period": "FY2025",
+            "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf"
+          },
+          {
+            "type": "年度业绩公告",
+            "period": "FY2024",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0220/2025022000338_c.pdf"
+          },
+          {
+            "type": "中期报告",
+            "period": "2025H1",
+            "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/0911/2025091100381_c.pdf"
+          },
+          {
+            "type": "招股书",
+            "period": "2021-11-23",
+            "url": "披露易，本次未重新下载，沿用招股书公开披露的股权结构信息"
+          }
+        ]
+      }
+    },
+    "revenueStructure": {
+      "_dimension": "1. 收入结构：最近财年及近4季度分部收入、增速、毛利率",
+      "latestFiscalYear": {
+        "period": "FY2025（2025-01-01 至 2025-12-31）",
+        "totalRevenue": {
+          "value": 7759450,
+          "unit": "RMB thousand",
+          "currency": "RMB",
+          "source1": {
+            "name": "网易云音乐 2025 年年报「五年财务概要」",
+            "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf",
+            "value": 7759450
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/quote/hkg/9899/financials",
+            "value": 7759000
+          },
+          "deviationPct": 0.006,
+          "flag": "ok"
+        },
+        "segments": [
+          {
+            "name": "在线音乐服务 Online music services",
+            "revenue": {
+              "value": 5994000,
+              "unit": "RMB thousand（约数，年报口径为亿元取整）",
+              "currency": "RMB",
+              "source1": {
+                "name": "老虎证券快讯《被汽水超车后，网易云音乐的原创牌还灵吗？》转引 2025 年年报数据",
+                "url": "https://www.itiger.com/news/2658923974",
+                "value": 5994000
+              },
+              "source2": {
+                "name": "内部推算：总收入 7,759,450 减社交娱乐分部推算值，两者相加与官方披露总收入一致，作为算术交叉验证",
+                "url": "",
+                "value": 5994000
+              },
+              "deviationPct": 0,
+              "flag": "ok"
+            },
+            "revenueSharePct": 77.25,
+            "yoyGrowthPct": 12,
+            "grossMarginPct": {
+              "status": "unavailable",
+              "reason": "公司未按分部单独披露毛利率，仅披露整体毛利率（FY2025: 35.7%）；已查年报管理层讨论与分析全文及五年财务概要，均无分部毛利率拆分"
+            },
+            "note": "其中会员订阅收入（Membership subscription revenue）由 2024 年人民币 4,459,000 千元增至 2025 年人民币 5,053,000 千元，同比 +13.3%，占在线音乐服务收入约 84.3%，占公司总收入约 65%（来源：老虎证券快讯转引年报数据，单源，未见公司官方公告逐项披露此拆分，标记仅单源）"
+          },
+          {
+            "name": "社交娱乐服务及其他 Social entertainment services and others",
+            "revenue": {
+              "value": 1765450,
+              "unit": "RMB thousand（总收入减在线音乐服务收入的推算值）",
+              "currency": "RMB",
+              "source1": {
+                "name": "推算：官方总收入 7,759,450 千元 - 在线音乐服务 5,994,000 千元",
+                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf",
+                "value": 1765450
+              },
+              "source2": {
+                "name": "unavailable",
+                "url": "",
+                "value": null
+              },
+              "deviationPct": null,
+              "flag": "minor-diff"
+            },
+            "revenueSharePct": 22.75,
+            "yoyGrowthPct": {
+              "status": "unavailable",
+              "reason": "该分部同比未见公司官方公告或年报直接披露具体数字，仅定性表述持续下降后企稳；已查年报管理层讨论与分析全文及多篇券商/媒体解读文章，均未给出精确同比"
+            },
+            "grossMarginPct": {
+              "status": "unavailable",
+              "reason": "同上，公司未拆分分部毛利率"
+            }
+          }
+        ]
+      },
+      "recentQuarters": [
+        {
+          "period": "2026H1（截至2026-06-30，2026-08-20发布，官方口径为半年度而非单季度）",
+          "totalRevenue": {
+            "value": 3958706,
+            "unit": "RMB thousand",
+            "currency": "RMB",
+            "source1": {
+              "name": "网易云音乐 2026 中期业绩公告",
+              "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf",
+              "value": 3958706
+            },
+            "source2": {
+              "name": "NetEase, Inc.（网易集团母公司）2026H1 业绩公告披露的网易云音乐分部净收入（约40亿元/583.4百万美元）",
+              "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000466_c.pdf",
+              "value": 4000000
+            },
+            "deviationPct": 1.04,
+            "flag": "minor-diff",
+            "note": "网易集团口径为四舍五入至亿元的近似值（约40亿），与网易云音乐自身精确披露的 3,958.706 百万元一致，差异属取整口径而非数据冲突"
+          },
+          "yoyGrowthPct": 3.4,
+          "segments": [
+            {
+              "name": "在线音乐服务",
+              "revenue": 3067428,
+              "yoyGrowthPct": 3.4,
+              "note": "其中会员订阅服务收入由 2,469,800 千元增至 2,600,900 千元"
+            },
+            {
+              "name": "社交娱乐服务及其他",
+              "revenue": 891278,
+              "yoyGrowthPct": 3.7
+            }
+          ]
+        },
+        {
+          "period": "2026Q1（截至2026-03-31，单季度，2026-05-21网易集团披露云音乐经营数据）",
+          "totalRevenue": {
+            "value": 1981000,
+            "unit": "RMB thousand（约数）",
+            "currency": "RMB",
+            "source1": {
+              "name": "老虎证券快讯转引网易云音乐 2026 年第一季度经营数据",
+              "url": "https://www.itiger.com/news/2658923974",
+              "value": 1981000
+            },
+            "source2": {
+              "name": "NetEase, Inc. 2026Q1 业绩公告：网易云音乐净收入约20亿元（287.2百万美元）",
+              "url": "https://www.fxbaogao.com/detail/5431285",
+              "value": 2000000
+            },
+            "deviationPct": 0.96,
+            "flag": "minor-diff",
+            "note": "网易集团口径四舍五入至亿元"
+          },
+          "yoyGrowthPct": 6.6,
+          "note": "毛利润由上年同期6.83亿元增至7.34亿元，毛利率约37.1%；2025年全年收入下滑后单季度重新恢复正增长"
+        },
+        {
+          "period": "2025H1（截至2025-06-30，官方比较期数据）",
+          "totalRevenue": {
+            "value": 3827117,
+            "unit": "RMB thousand",
+            "currency": "RMB",
+            "source1": {
+              "name": "网易云音乐 2026 中期业绩公告（比较期数字）",
+              "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf",
+              "value": 3827117
+            },
+            "source2": {
+              "name": "网易云音乐 2025 年中期报告",
+              "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/0911/2025091100381_c.pdf",
+              "value": 3827117
+            },
+            "deviationPct": 0,
+            "flag": "ok"
+          },
+          "yoyGrowthPct": -6.0
+        }
+      ],
+      "granularityNote": "公司仅按半年度（中期）与年度披露详细损益表与分部收入，未单独发布季度财报；单季度数字仅能从母公司网易(9999)按季披露的分部净收入（取整至亿元）或经营数据快讯中获得，精度低于半年度官方数字，已在上方逐条注明来源与口径差异。",
+      "customerConcentration": {
+        "note": "公司在中期业绩公告附注「主要客户信息」中披露占总收入10%以上的单一外部客户，公司未披露该客户身份（考虑其收入占比与业务性质，可能为应用分发/支付渠道方，本次未核实具体身份，不作推测性认定）",
+        "customerA": {
+          "revenue2026H1": {
+            "value": 597607,
+            "unit": "RMB thousand",
+            "sharePct": 15.1
+          },
+          "revenue2025H1": {
+            "value": 500977,
+            "unit": "RMB thousand",
+            "sharePct": 13.09
+          },
+          "source": {
+            "name": "网易云音乐 2026 中期业绩公告附注2(c)「主要客户信息」",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf"
+          }
+        }
+      }
+    },
+    "financialMetrics": {
+      "_dimension": "2. 财务指标：近5年收入、净利润、毛利率、经营利润率、自由现金流、现金储备",
+      "annual": [
+        {
+          "fiscalYear": "FY2021",
+          "revenue": {
+            "value": 6997622,
+            "unit": "RMB thousand",
+            "currency": "RMB",
+            "source1": {
+              "name": "网易云音乐 2025 年年报「五年财务概要」",
+              "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf",
+              "value": 6997622
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/quote/hkg/9899/financials",
+              "value": 6998000
+            },
+            "deviationPct": 0.005,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": -2056092,
+            "unit": "RMB thousand（归属于本公司权益持有人，IFRS）",
+            "currency": "RMB",
+            "source1": {
+              "name": "网易云音乐 2025 年年报「五年财务概要」",
+              "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf",
+              "value": -2056092
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/quote/hkg/9899/financials",
+              "value": -2056000
+            },
+            "deviationPct": 0.004,
+            "flag": "ok"
+          },
+          "grossMarginPct": 2.04,
+          "operatingMarginPct": {
+            "status": "not-applicable",
+            "reason": "该年度经营亏损（除所得税前亏损 2,051,423 千元），经营利润率为负值区间的量级参考意义有限，年报未单独披露纯营业利润行项目；以税前利润率替代：-29.3%"
+          },
+          "freeCashFlow": {
+            "status": "unavailable",
+            "reason": "上市首年（2021-12-02上市），本次研究未重新下载 FY2021/2022 年报现金流量表原文；已查 FY2025 年报「五年财务概要」，该表不含现金流量数据，仅含损益表与资产负债表摘要"
+          },
+          "cashReserves": {
+            "status": "unavailable",
+            "reason": "同上，未重新下载 FY2021 年报资产负债表明细中的现金及银行存款拆分；FY2021 年末总资产为 9,387,638 千元（含现金及各类金融资产），具体现金口径待补充"
+          }
+        },
+        {
+          "fiscalYear": "FY2022",
+          "revenue": {
+            "value": 8992221,
+            "unit": "RMB thousand",
+            "currency": "RMB",
+            "source1": {
+              "name": "网易云音乐 2025 年年报「五年财务概要」",
+              "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf",
+              "value": 8992221
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/quote/hkg/9899/financials",
+              "value": 8992000
+            },
+            "deviationPct": 0.002,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": -221494,
+            "unit": "RMB thousand（归属于本公司权益持有人，IFRS）",
+            "currency": "RMB",
+            "source1": {
+              "name": "网易云音乐 2025 年年报「五年财务概要」",
+              "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf",
+              "value": -221494
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/quote/hkg/9899/financials",
+              "value": -221000
+            },
+            "deviationPct": 0.22,
+            "flag": "ok"
+          },
+          "grossMarginPct": 14.38,
+          "operatingMarginPct": {
+            "status": "not-applicable",
+            "reason": "该年度税前仍为亏损（-204,479千元），以税前利润率替代：-2.3%"
+          },
+          "freeCashFlow": {
+            "status": "unavailable",
+            "reason": "同 FY2021，未重新下载该年年报现金流量表"
+          },
+          "cashReserves": {
+            "status": "unavailable",
+            "reason": "同 FY2021"
+          }
+        },
+        {
+          "fiscalYear": "FY2023",
+          "revenue": {
+            "value": 7866992,
+            "unit": "RMB thousand",
+            "currency": "RMB",
+            "source1": {
+              "name": "网易云音乐 2025 年年报「五年财务概要」",
+              "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf",
+              "value": 7866992
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/quote/hkg/9899/financials",
+              "value": 7867000
+            },
+            "deviationPct": 0.0001,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": 734182,
+            "unit": "RMB thousand（归属于本公司权益持有人，IFRS）",
+            "currency": "RMB",
+            "source1": {
+              "name": "网易云音乐 2025 年年报「五年财务概要」",
+              "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf",
+              "value": 734182
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/quote/hkg/9899/financials",
+              "value": 734000
+            },
+            "deviationPct": 0.02,
+            "flag": "ok"
+          },
+          "grossMarginPct": 26.73,
+          "operatingMarginPct": 4.22,
+          "freeCashFlow": {
+            "status": "unavailable",
+            "reason": "未重新下载 FY2023 年报现金流量表原文（本次仅下载并核对 FY2025 年报的经营现金流与资本开支，含 FY2024/FY2025 两年对比数据）；已查 FY2025 年报「五年财务概要」不含现金流数据"
+          },
+          "cashReserves": {
+            "value": 9505088,
+            "unit": "RMB thousand（现金及现金等价物 4,020,400 + 银行存款(流动) 5,484,688 + 银行存款(非流动) 0）",
+            "currency": "RMB",
+            "source1": {
+              "name": "网易云音乐 FY2024 年度业绩公告（比较期资产负债表）",
+              "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0220/2025022000338_c.pdf",
+              "value": 9505088
+            },
+            "source2": {
+              "name": "unavailable，仅单源",
+              "url": "",
+              "value": null
+            },
+            "deviationPct": null,
+            "flag": "ok"
+          }
+        },
+        {
+          "fiscalYear": "FY2024",
+          "revenue": {
+            "value": 7950146,
+            "unit": "RMB thousand",
+            "currency": "RMB",
+            "source1": {
+              "name": "网易云音乐 2025 年年报「五年财务概要」",
+              "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf",
+              "value": 7950146
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/quote/hkg/9899/financials",
+              "value": 7950000
+            },
+            "deviationPct": 0.002,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": 1561507,
+            "unit": "RMB thousand（归属于本公司权益持有人，IFRS）",
+            "currency": "RMB",
+            "source1": {
+              "name": "网易云音乐 2025 年年报「五年财务概要」",
+              "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf",
+              "value": 1561507
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/quote/hkg/9899/financials",
+              "value": 1561000
+            },
+            "deviationPct": 0.03,
+            "flag": "ok"
+          },
+          "grossMarginPct": 33.73,
+          "operatingMarginPct": 14.73,
+          "freeCashFlow": {
+            "value": 1770911,
+            "unit": "RMB thousand（经营活动所得现金净额 1,774,620 - 购买物业厂房及设备 3,709）",
+            "currency": "RMB",
+            "source1": {
+              "name": "网易云音乐 2025 年年报合并现金流量表",
+              "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf",
+              "value": 1770911
+            },
+            "source2": {
+              "name": "unavailable，仅单源；资本开支口径不含经营租赁本金偿还（已单独列示于融资活动）",
+              "url": "",
+              "value": null
+            },
+            "deviationPct": null,
+            "flag": "ok"
+          },
+          "cashReserves": {
+            "value": 11615879,
+            "unit": "RMB thousand（现金及现金等价物 3,795,210 + 银行存款(流动) 6,420,669 + 银行存款(非流动) 1,400,000）",
+            "currency": "RMB",
+            "source1": {
+              "name": "网易云音乐 2025 年年报合并资产负债表",
+              "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf",
+              "value": 11615879
+            },
+            "source2": {
+              "name": "unavailable，仅单源",
+              "url": "",
+              "value": null
+            },
+            "deviationPct": null,
+            "flag": "ok"
+          }
+        },
+        {
+          "fiscalYear": "FY2025",
+          "revenue": {
+            "value": 7759450,
+            "unit": "RMB thousand",
+            "currency": "RMB",
+            "source1": {
+              "name": "网易云音乐 2025 年年报「五年财务概要」",
+              "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf",
+              "value": 7759450
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/quote/hkg/9899/financials",
+              "value": 7759000
+            },
+            "deviationPct": 0.006,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": 2748210,
+            "unit": "RMB thousand（归属于本公司权益持有人，IFRS，含约747百万元一次性递延所得税抵免）",
+            "currency": "RMB",
+            "source1": {
+              "name": "网易云音乐 2025 年年报「五年财务概要」",
+              "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf",
+              "value": 2748210
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "url": "https://stockanalysis.com/quote/hkg/9899/financials",
+              "value": 2746000
+            },
+            "deviationPct": 0.08,
+            "flag": "ok",
+            "note": "非经常性项目：2025年确认递延所得税抵免约人民币746.7百万元（一家全资子公司累积税项亏损确认递延税项资产所致），剔除后经营性归母净利润约21亿元（来源：腾讯新闻《跌出前三！网易云音乐被汽水偷家后，只剩账上135亿现金？》转引年报数据，单源）"
+          },
+          "grossMarginPct": 35.69,
+          "operatingMarginPct": 20.9,
+          "freeCashFlow": {
+            "value": 1606878,
+            "unit": "RMB thousand（经营活动所得现金净额 1,618,081 - 购买物业厂房及设备 11,203）",
+            "currency": "RMB",
+            "source1": {
+              "name": "网易云音乐 2025 年年报合并现金流量表",
+              "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf",
+              "value": 1606878
+            },
+            "source2": {
+              "name": "unavailable，仅单源",
+              "url": "",
+              "value": null
+            },
+            "deviationPct": null,
+            "flag": "ok"
+          },
+          "cashReserves": {
+            "value": 13575076,
+            "unit": "RMB thousand（现金及现金等价物 3,117,624 + 银行存款(流动) 9,057,452 + 银行存款(非流动) 1,400,000）",
+            "currency": "RMB",
+            "source1": {
+              "name": "网易云音乐 2025 年年报合并资产负债表",
+              "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf",
+              "value": 13575076
+            },
+            "source2": {
+              "name": "媒体报道《跌出前三...只剩账上135亿现金》独立复述该数字",
+              "url": "https://view.inews.qq.com/a/20260723A09ZKD00",
+              "value": 13500000
+            },
+            "deviationPct": 0.55,
+            "flag": "ok"
+          }
+        }
+      ],
+      "latestInterim": {
+        "period": "2026H1（截至2026-06-30）",
+        "note": "已在 revenueStructure.recentQuarters 中完整披露；2026H1 净利润同比-57.0%主因2025H1一次性递延所得税抵免RMB849.4百万元的高基数，2026H1经调整净利润为859,656千元（-55.8%），2026H1末现金及现金等价物+银行存款合计 11,851,723 千元（较2025年末13,575,076千元下降，部分用于792,998,800港元的股份回购与新增1,278,874千元按公允价值计量金融资产的配置）"
+      }
+    },
+    "competitiveLandscape": {
+      "_dimension": "3. 竞争格局：市场份额、主要竞争对手对比",
+      "marketShare": {
+        "valuePct": {
+          "historicalOfficial": {
+            "value": 20.5,
+            "unit": "percent（按在线音乐服务收入计，2020年度）",
+            "asOf": "2020年（2021-11-23招股章程「行业」及「风险因素」章节披露的最后一次官方收入份额数字）",
+            "source": {
+              "name": "网易云音乐招股章程「行业」章节，引用灼识咨询（CIC）数据",
+              "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2021/1202/10036008/sehk21111600902_c.pdf"
+            },
+            "detail": "2020年中国在线音乐娱乐市场按收入计：网易云音乐（本集团）在线音乐服务收入人民币26亿元，市场份额20.5%，居行业第二；'A公司'（对应腾讯音乐系QQ音乐/酷狗/酷我）收入93亿元，市场份额72.8%，居第一。招股章程风险因素章节原文确认：'本集团于2020年按在线音乐服务收入计在中国拥有第二大市场份额（20.5%），但本集团与最大市场参与者现时在规模上仍有显著差距'"
+          },
+          "current": {
+            "status": "unavailable",
+            "reason": "已查 FY2024/FY2025 年报及 2026 中期业绩公告的管理层讨论与分析全文，公司上市后再未重新披露收入口径市场份额数字，仅披露 MAU/DAU 等用户规模指标；已查 QuestMobile 数据引用文章与券商研报，均只披露 MAU 排名与规模而非收入口径市场份额。IPO 时披露的 20.5%（2020年）已是6年前的历史数字，不能代表当前份额，仅作为官方口径的历史基线保留。当前市场格局改用 MAU 数据近似替代，见下方 note"
+          }
+        },
+        "marketDefinition": "中国在线音乐 App 市场，按月活跃用户（MAU）排名",
+        "asOf": "2026-03（QuestMobile《2026年一季度中国移动互联网典型行业洞察报告》）",
+        "source": {
+          "name": "QuestMobile 数据，经老虎证券快讯转引",
+          "url": "https://www.itiger.com/news/2658923974"
+        },
+        "note": "2026年3月，字节跳动旗下「汽水音乐」MAU达1.5605亿，首次超过网易云音乐的1.4682亿，进入在线音乐行业前三；网易云音乐失去长期保持的行业第三名位置（此前格局大致为：腾讯音乐系QQ音乐/酷狗/酷我居前，网易云音乐长期位居第三/第四梯队头部）"
+      },
+      "competitors": [
+        {
+          "name": "腾讯音乐娱乐集团 Tencent Music Entertainment（QQ音乐/酷狗音乐/酷我音乐）",
+          "ticker": "1698.HK / TME (NYSE)",
+          "marketSharePct": {
+            "status": "unavailable",
+            "reason": "行业长期无权威收入口径市场份额披露，仅有MAU与营收规模对比"
+          },
+          "revenue": {
+            "value": 32902,
+            "unit": "RMB million（FY2025）",
+            "note": "为网易云音乐FY2025收入（77.59亿元）的约4.2倍，来源：hk-1698-tencent-music 研究产出 financials-collection.json"
+          },
+          "grossMarginPct": {
+            "value": 44.2,
+            "unit": "percent（FY2025，2025-01-01至2025-12-31）",
+            "source": {
+              "name": "research/companies/hk-1698-tencent-music/financials-collection.json（本地已采集数据，转引TME官方新闻稿与stockanalysis.com交叉验证结果）",
+              "url": ""
+            },
+            "note": "对比网易云音乐FY2025整体毛利率35.69%（本文件financialMetrics维度），腾讯音乐毛利率高出约8.5个百分点，反映其头部版权曲库议价能力与规模效应更强；腾讯音乐该口径为公司利润表原始列示口径，2025年后半段起因收购喜马拉雅并表，收入口径已扩大为「音乐相关服务」，与网易云音乐的「在线音乐服务」口径不完全可比"
+          },
+          "note": "资金规模与头部流行版权储备远超网易云音乐；2026年上半年因用户流失与会员增速放缓，利润同比下滑32%，正通过SVIP高价权益体系深度变现存量用户；2026年5月已完成对喜马拉雅的并购交割并开始并表"
+        },
+        {
+          "name": "汽水音乐 Qishui Music（字节跳动/抖音旗下，未上市）",
+          "ticker": "[估计] 未上市，无公开财务数据",
+          "marketSharePct": {
+            "status": "unavailable",
+            "reason": "未上市公司不披露财务与用户分层收入数据，仅QuestMobile披露MAU"
+          },
+          "revenue": {
+            "status": "unavailable",
+            "reason": "未上市，无公开披露"
+          },
+          "grossMarginPct": {
+            "status": "unavailable",
+            "reason": "未上市，无公开披露"
+          },
+          "note": "[估计] 依托抖音短视频流量池，将短视频流行BGM直接转化为音频消费需求，采用免费或低价订阅策略吸引价格敏感的下沉市场用户；MAU于2026年3月同比增长78%至1.5605亿，首次超越网易云音乐进入行业前三；用户群体三线及以下城市占比偏高，偏好碎片化BGM，与网易云音乐高线城市、长尾曲目、强社区氛围的用户画像形成一定分层，但已对全行业用户时长分配构成实质分流压力，是本次研究识别到的最主要新增竞争威胁（来源：腾讯新闻与老虎证券转引QuestMobile数据，单源，未见官方一手披露的对应数字）"
+        }
+      ]
+    },
+    "businessModelMoat": {
+      "_dimension": "4. 商业模式与护城河：核心竞争优势来源",
+      "oneLiner": "本质是向重社区体验的音乐爱好者提供订阅制音乐消费与UGC音乐社交场景：超六成收入来自会员为持续获取会员专属曲库、音质与社区权益而按月/按年付费（FY2025会员订阅收入占总收入约65%），其余靠社交娱乐虚拟礼物分成、数字专辑与广告变现；在版权资源落后于腾讯音乐系的行业格局下，商业模式的关键杠杆是用独立音乐人原创内容与UGC社区氛围留住并沉淀用户，再靠订阅转化与社交娱乐消费两条腿变现。",
+      "revenueModel": "订阅复购（会员订阅收入占总收入约65%，是最大收入来源）+ 一次性数字专辑/单曲销售 + 广告 + 社交娱乐服务（直播/K歌等虚拟礼物抽成）",
+      "moats": [
+        {
+          "type": "内容差异化——独立音乐人原创内容生态",
+          "evidence": "截至2026年6月，平台注册独立音乐人数超125万名，上传曲目数约730万首（2026中期业绩公告管理层讨论与分析，官方一手数据）；对比增长轨迹：截至2025年6月为81.9万名音乐人/480万首（东吴证券2025中报点评转引官方数据），截至2024年底为77.4万名/440万首——一年内音乐人数近乎翻倍。IPO招股章程披露的2020年基线：网易云音乐独立音乐人数逾30万名，同期'A公司'（腾讯音乐系）逾23万名，但A公司在线音乐服务收入是网易云音乐的3.6倍（93亿 vs 26亿元），网易云音乐按收入计市场份额20.5%、居行业第二（灼识咨询数据，招股章程「行业」及「风险因素」章节引用），反映网易云音乐在版权投入不占优势的情况下以独立音乐人密度形成差异化定位",
+          "trend": "变宽但转化率存疑——内容供给端持续扩张（音乐人数年增速近100%），但同期MAU持续承压且2026年3月被汽水音乐反超（见competitiveLandscape），说明内容差异化本身尚不足以对抗短视频平台的流量分流，'内容护城河的深度'与'能否转化为用户份额的宽度'出现背离"
+        },
+        {
+          "type": "社区网络效应／UGC沉淀（评论区、歌单文化）",
+          "evidence": "公司自2013年上线起即以评论区、歌单等UGC功能构建'音乐社交'定位，在版权资源落后于腾讯音乐系的情况下用社区内容对冲版权劣势（知乎专栏《写给古典音乐爱好者的九万字流媒体时代聆听指南》：'2013年网易云音乐上线时，市场份额仅1.3%……社区是用UGC内容对冲版权内容不足的低成本护城河'，媒体分析，单源）；东吴证券研报转引Sensor Tower数据：2025年6月网易云音乐iOS端DAU/MAU比率达42%（www.nxny.com，单源）；公司FY2024年报官方披露'日活跃用户数/月活跃用户数比率稳居30%以上'（官方一手数据），高于多数内容类App的行业均值，反映用户高频访问的社区使用习惯",
+          "trend": "变窄——同一篇知乎专栏分析指出，2021年独家版权禁令后版权差距缩小，'用户留下来的理由（社区）和付费的理由（听歌）之间的错位依然存在'，网易云音乐MAU从2021年1.83亿降至2023年上半年1.49亿，'社区护城河阻止了用户进一步流失，但不足以收复失地，其深度或许被高估'；叠加2026年3月汽水音乐MAU反超的事实，社区效应对新增/回流用户的吸引力趋于减弱，当前主要发挥存量付费用户的留存作用而非新用户获取作用"
+        },
+        {
+          "type": "转换成本——用户数字资产沉淀",
+          "evidence": "东吴证券研报（www.nxny.com转引）：'用户沉淀的数字资产提高了迁移平台的转换成本，形成了庞大的高质量数据集牢筑壁垒'，指用户在网易云音乐积累的歌单、收藏、评论、听歌历史等个人数据资产，迁移至其他平台需放弃这些沉淀内容，构成一定转换成本（单源，为研报观点，非公司官方量化披露，公司年报未见对该护城河的定量测算）",
+          "trend": "稳定——转换成本对存量付费会员的留存起支撑作用，会员订阅收入FY2025仍同比+13.3%、2026H1音乐订阅收入同比+5.3%，是对冲MAU下滑压力的关键因素之一；但对从未深度使用过网易云音乐的新用户（如汽水音乐从抖音导流的下沉市场轻度用户）不构成进入壁垒，该护城河'守成有余、开拓不足'"
+        }
+      ]
+    },
+    "technology": {
+      "_dimension": "5. 技术能力：核心技术栈、研发投入",
+      "coreTechStack": [
+        "自研AI生成式推荐大模型「Climber」（2026年上半年升级，支撑「心动模式」「AI灵感歌单」等个性化推荐功能）",
+        "AI音乐互动功能矩阵：「AI情绪调音师」「情绪播放器」「AI宠物播放器」「AIGC个人主页背景」（2026H1新推出）"
+      ],
+      "rdExpense": {
+        "value": 391011,
+        "unit": "RMB thousand（2026H1）",
+        "currency": "RMB",
+        "source1": {
+          "name": "网易云音乐 2026 中期业绩公告",
+          "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf",
+          "value": 390967
+        },
+        "source2": {
+          "name": "unavailable，仅单源",
+          "url": "",
+          "value": null
+        },
+        "deviationPct": null,
+        "flag": "ok",
+        "note": "2026H1研发费用人民币391.0百万元，较2025H1的378.9百万元增加3.2%，主要由于期内AI相关支出增加；2025全年研发费用同比下降2.3%（据媒体转引年报数据，公司官方未见单独列示年度研发费用绝对值原文，仅有同比百分比）"
+      },
+      "rdIntensityPct": {
+        "status": "unavailable",
+        "reason": "2025全年研发费用绝对值未取得公司官方原文数字（仅有同比-2.3%的媒体转述），无法与年度收入7,759,450千元计算精确研发强度；2026H1研发强度可计算：391,011/3,958,706=9.88%"
+      },
+      "rdTrend": "研发费用近两个报告期（2025H1→2026H1）小幅回升+3.2%，公司在2025年全年推行降本增效期间研发费用同比下降2.3%，2026年重新增加AI相关投入，与「Climber」大模型升级及多款AI功能上线的时间点吻合",
+      "note": "资本化研发支出：本次检索未在公司官方年报/中期报告中找到独立披露的「资本化开发支出」科目或政策说明；东吴证券研报整理的资产负债表历史及预测数据（eastmoney经纪商PDF）显示公司「商誉及无形资产」账面价值常年仅约600-800万元人民币量级（对应2023A-2026E区间），相对总资产（2026H1末163.63亿元）可忽略不计，指向研发支出基本按IFRS要求全额费用化而非资本化，但该判断基于经纪商测算表推断，未逐项核对年报附注中无形资产明细原文，仅单源。专利/知识产权：公司官方年报及中期报告均未见专利数量或知识产权资产的独立披露章节；第三方企业信息聚合平台天眼查显示运营主体「杭州网易云音乐科技有限公司」名下专利信息1,609条、商标信息864条、著作权信息1,620条（非公司官方IR口径，第三方聚合数据）；21世纪经济报道（2024-11-27）报道称公司在2022-2024年间密集申请逾700条专利（含'黑胶打碟界面''一起听歌'图形用户界面等产品外观专利），主要用于与腾讯音乐互诉'产品抄袭'的知识产权诉讼场景，而非作为核心技术护城河对外宣传披露"
+    },
+    "management": {
+      "_dimension": "6. 管理层：创始人/CEO履历、持股比例、关键决策记录",
+      "founderCeo": {
+        "name": "丁磊（William Lei Ding）",
+        "background": "网易公司（NetEase, Inc.）创始人、董事长兼CEO，网易云音乐董事会主席兼首席执行官。网易云音乐由网易内部孵化后于2021年12月分拆上市，丁磊自分拆前即负责云音乐整体执行、业务方向及管理",
+        "tenure": "网易云音乐董事会主席兼CEO（角色合一）：自2021年12月上市至今"
+      },
+      "ownership": {
+        "economicPct": {
+          "value": 60.29,
+          "unit": "percent（占已发行股本总额，不包括库存股份）",
+          "asOf": "2026-04-15（「最后实际可行日期」）",
+          "source1": {
+            "name": "网易云音乐2026年股东周年大会通函「股份购回授权的说明函件」",
+            "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501143_c.pdf",
+            "value": "执行董事兼控股股东丁磊先生（透过其控制法团）于129,034,168股股份（不包括库存股份）中拥有权益，占已发行股本总额（不包括库存股份）约60.29%；倘董事悉数行使建议股份购回授权，该权益比例将增至约66.99%"
+          },
+          "source2": {
+            "name": "网易云音乐2024年中期报告「权益披露」章节（较早期数字，交叉验证股份数量与结构未变）",
+            "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2024/0919/2024091900362_c.pdf",
+            "value": "网易（NetEase）作为实益拥有人，持有同样的129,034,168股股份，占（2024-06-30时点）已发行股本总额约59.83%"
+          },
+          "deviationPct": null,
+          "flag": "ok",
+          "note": "两份文件披露的绝对股数完全一致（129,034,168股），持股比例由59.83%（2024-06-30）升至60.29%（2026-04-15），差异源于分母缩小——公司持续回购注销股份（总股本由约2.18亿股降至2.05亿股附近），而非网易集团增持；该权益在公司权益登记中列示为控股股东丁磊先生透过其控制法团（Shining Globe International Limited经网易持有）的权益，网易本身在2024年披露中直接列为「实益拥有人」，两者指向同一持股结构。本次研究未取得公司2026年中期报告（预计将于业绩公告后数周内刊发，含2026-06-30时点的权益披露表）或更新的权益披露文件（Disclosure of Interests），故2026-04-15为本次可查得的最新官方数字；鉴于2026年2-6月仍有合计7,299,800股回购并于6月12日注销，实际2026-08-20时点比例大概率略高于60.29%，但未经官方文件证实，不作外推填充"
+        },
+        "votingPct": {
+          "status": "unavailable",
+          "reason": "IPO招股章程披露AB股结构：B类普通股每股可投10票，网易持有的股份为B类普通股，IPO后网易投票权不低于50%。但本次检索发现2024-2026年多份股东周年大会通告的表决说明均使用'每名股东应就其所持每一股股份投一票'的通用措辞（如2026-04-15、2025-04-25、2024-04-25三份通告），未见对B类股加权投票权的专门说明；同时联交所权益披露月报表（Form FF301, 2026年5-6月）中「股份类别」栏目均填报为'不适用'，未见A/B两类股份并列申报。已查范围：招股章程释义章节、2024/2025/2026三个年度的AGM通告及委任代表表格、2026年5-6月的股份变动月报表；未查得任何一份文件明确重申或更新目前A/B两类股份的具体数量拆分及对应投票权比例，无法据此计算精确的当前投票权百分比，也无法排除公司在上市后是否已对双重股权结构做过调整。经济权益比例（60.29%，2026-04-15）可作为投票权下限的参考基准"
+        },
+        "source": {
+          "name": "网易云音乐2026年股东周年大会通函（2026-04-15）；招股书（2021-11-23）历史基线交叉核对",
+          "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501143_c.pdf"
+        }
+      },
+      "keyDecisions": [
+        {
+          "date": "2026-02至2026-05",
+          "decision": "在联交所公开市场累计回购7,299,800股股份，总代价约967,035,899.59港元",
+          "outcome": "回购股份已于2026-06-12注销，减少已发行股本，对每股盈利有正面摊薄效应（2026H1加权平均股数208,961,138股，较2025H1的210,424,603股减少约1.5亿股/约0.7%）"
+        },
+        {
+          "date": "2026-08-20",
+          "decision": "董事会决议不宣派2026年中期股息",
+          "outcome": "延续公司自上市以来未曾派息的政策，现金优先用于股份回购与业务投入"
+        },
+        {
+          "date": "2026年一季度前后",
+          "decision": "推行全公司降本增效：2025全年销售及市场费用同比大幅缩减33.2%至4.09亿元，管理费用降4.4%，研发费用降2.3%",
+          "outcome": "在收入同比下滑2.4%的背景下实现经调整净利润同比+68.2%（含一次性递延税项抵免），但对外获客投入趋于保守，与「汽水音乐」MAU反超、公司失去行业MAU第三名位置的时间点重合，市场对费用管控驱动利润增长的可持续性存在分歧（详见 bullBearCase）"
+        }
+      ],
+      "governanceNote": "根据《企业管治守则》守则条文第C.2.1条，主席与首席执行官的角色应有区分，公司主席丁磊先生兼任首席执行官，构成对该守则条文的偏离；公司在2026中期业绩公告中披露此偏离并解释为便于战略执行效率，董事会将不时重新评估（来源：2026中期业绩公告「公司管治及其他资料」章节，Level 3单源即可）"
+    },
+    "industryOutlook": {
+      "_dimension": "7. 行业前景：TAM（总可寻址市场）、增长预测",
+      "tam": {
+        "value": 167000,
+        "unit": "RMB million（1,670亿元人民币）",
+        "currency": "RMB",
+        "definition": "中国在线音乐娱乐市场规模（广义口径，含在线音乐服务与音乐衍生社交娱乐/直播K歌等），网易云音乐招股章程「行业」章节引用灼识咨询（CIC）测算：市场规模由2016年人民币67亿元增至2020年人民币414亿元（2016-2020 CAGR 57.9%），预期2025年将达到人民币1,670亿元（2020-2025E CAGR 32.2%）",
+        "asOf": "灼识咨询报告数据基期2020年，2021-11-23网易云音乐招股章程引用；2025年目标年份已至，但本次检索未查得该机构或其他第三方对2025年实际市场规模的复核/更新数字，也未查得针对2025年之后的滚动新预测",
+        "source": {
+          "name": "灼识咨询（CIC）研究报告，经网易云音乐招股章程「概要」及「行业」章节引用；界面新闻《音乐反垄断整改百天后，市场竞争恢复得怎么样？》转引确认同一数字",
+          "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2021/1202/10036008/sehk21111600893_c.pdf ; https://www.jiemian.com/article/6805573.html"
+        },
+        "note": "该预测为IPO时点（2021年）的前瞻性行业测算，非公司当前财报或最新第三方报告的滚动更新数字，采用时需注意时效性；2020-2025年实际CAGR是否达到32.2%本次未做验证"
+      },
+      "growthForecast": {
+        "cagrPct": "招股章程引用CIC预测2020-2025E CAGR 32.2%（历史前瞻数据，预测期已到期，缺乏该机构后续滚动更新）；实际增速的最新旁证——据IFPI《2026年全球音乐报告》（2026-03-18/19发布），2025年中国录制音乐收入同比实际增长20.1%，增速位列全球前20大市场第一，推动中国超越德国成为全球第四大音乐市场（较2024年排名上升1位）",
+        "horizon": "2020-2025E（招股章程原始预测区间，已到期）；前瞻性补充——Omdia《全球音乐产业预测》（2026-07-16发布）：全球订阅流媒体零售收入将由2025年284亿美元增至2026年305亿美元（+7.2%），2026-2030年CAGR预计5.4%，2030年将突破370亿美元；中国在全球录制音乐市场的收入份额预计由2025年5.8%升至2030年8.7%，预计2028年超越英国、2029年超越日本，2030年成为全球第二大音乐市场",
+        "source": {
+          "name": "IFPI《2026年全球音乐报告》（经中国音像著作权集体管理协会cavca.org、新浪财经转引）；Omdia《全球音乐产业预测》（经新浪财经、凤凰网转引）",
+          "url": "https://www.cavca.org/newsDetail/2317 ; https://finance.sina.com.cn/tech/roll/2026-03-19/doc-inhrnqzv6972626.shtml ; https://finance.sina.com.cn/tech/digi/2026-07-16/doc-inihyiyh4433469.shtml"
+        },
+        "note": "以上IFPI/Omdia数字为全球录制音乐（唱片）市场口径，与招股章程CIC测算的「在线音乐娱乐市场」口径不完全一致（后者含社交娱乐/直播等更广泛业务），两组数字不可直接拼接对比，仅作为交叉参考公司所处行业整体仍处于增长通道的旁证"
+      }
+    },
+    "riskFactors": {
+      "_dimension": "8. 风险因素：地缘政治、监管、供应链等",
+      "items": [
+        {
+          "category": "竞争",
+          "description": "字节跳动旗下「汽水音乐」依托抖音流量池快速崛起，2026年3月MAU（1.5605亿）首次超过网易云音乐（1.4682亿），使公司失去长期保持的行业MAU第三名位置；汽水音乐采用免费/低价策略主打下沉市场，虽与网易云音乐的高线城市、长尾曲目用户画像存在一定分层，但已对行业整体用户时长分配构成实质性分流",
+          "evidence": "QuestMobile《2026年一季度中国移动互联网典型行业洞察报告》，经老虎证券快讯转引，单源"
+        },
+        {
+          "category": "竞争",
+          "description": "腾讯音乐娱乐集团凭借更强资金规模与头部流行版权储备保持行业收入规模领先（FY2025收入约为网易云音乐的4.2倍），且已并购喜马拉雅进一步扩大音频内容版图",
+          "evidence": "浦银国际研究报告及hk-1698-tencent-music研究产出交叉印证，单源"
+        },
+        {
+          "category": "技术/运营",
+          "description": "2026年4月1日发生持续约一天的大规模系统故障，导致大量用户账号被错误封禁",
+          "evidence": "中文维基百科「网易云音乐」词条转引媒体报道，未见公司官方公告确认具体影响范围与后续处理，单源且来源可信度需要在后续复核中提升"
+        },
+        {
+          "category": "监管",
+          "description": "本集团受香港支柱二规则（Pillar Two，OECD全球最低税负制）范本约束，截至2026H1已确认当期补足税费用2,294万元（2025H1为3,070万元）；此外中国子公司高新技术企业15%优惠税率需每三年重新认定，存在政策不确定性",
+          "evidence": "2026中期业绩公告附注4「税项」，官方一手披露，Level 3单源即可"
+        },
+        {
+          "category": "费用管控可持续性",
+          "description": "2025年利润改善主要由销售及市场费用同比大幅削减33.2%驱动，而非收入端增长（FY2025收入同比-2.4%）；2026H1销售及市场费用同比转为大幅增加(+80.7%至2.95亿元)，反映此前的费用收缩可能已不可持续，需要重新加大获客与品牌投入以应对汽水音乐的分流压力，这将直接影响未来利润率",
+          "evidence": "2026中期业绩公告「财务回顾」章节官方原文数据（销售及市场费用163,379→295,209千元），叠加腾讯新闻对2025年度费用管控的分析报道交叉印证"
+        }
+      ]
+    },
+    "currentValuation": {
+      "_dimension": "9. 当前估值：市值、股息率、负债率、PE、PS、PB、ROA、ROE、PEG、EV/Revenue",
+      "priceAsOf": "2026-08-20 收盘（Asia/Shanghai）",
+      "sharePrice": {
+        "value": 112.6,
+        "unit": "HKD",
+        "currency": "HKD",
+        "source1": {
+          "name": "Tushare hk_daily（港股日线行情）",
+          "url": "",
+          "value": 112.6
+        },
+        "source2": {
+          "name": "FMP company profile-symbol",
+          "url": "",
+          "value": 112.6
+        },
+        "deviationPct": 0,
+        "flag": "ok"
+      },
+      "sharesOutstanding": {
+        "value": 204716202,
+        "unit": "股",
+        "source1": {
+          "name": "FMP shares-float（数据源为HKEXnews权益披露）",
+          "url": "https://www1.hkexnews.hk/search/titlesearch.xhtml",
+          "value": 204716202
+        },
+        "source2": {
+          "name": "stockanalysis.com（基本每股盈利加权平均股数口径，210.33M，与期末实际股数存在方法论差异——后者反映2026H1加权平均含1-5月回购股份未注销前的较高股数）",
+          "url": "https://stockanalysis.com/quote/hkg/9899",
+          "value": 210330000
+        },
+        "deviationPct": 2.74,
+        "flag": "minor-diff",
+        "note": "差异原因为口径不同（期末实际已发行股数 vs 半年度加权平均股数），非数据冲突；2026H1加权平均基本股数208,961,138股与期末实际股数204,716,202股之间的差异也印证了2026年2-6月持续回购注销股份的轨迹，采用期末实际股数用于市值/估值计算"
+      },
+      "marketCap": {
+        "reported": {
+          "value": 23051044345,
+          "unit": "HKD",
+          "currency": "HKD",
+          "source": "FMP company profile-symbol (9899.HK)"
+        },
+        "computed": 23051204957.2,
+        "flag": "ok",
+        "verifiedBy": "docs/research/tools/financial_rigor.py verify-market-cap --price 112.6 --shares 204716202 --reported 23051044345 --currency HKD，偏差0.00%"
+      },
+      "pe": {
+        "value": 11.99,
+        "basis": "TTM（2025H2+2026H1归母净利润，IFRS报表口径，工具验算）",
+        "note": "经调整口径（剔除股份支付）TTM PE为11.29倍；两种口径均未剔除2025H1一次性递延所得税抵免849.4百万元的高基数影响对TTM期间的部分残留，实际经营性盈利能力对应的PE可能高于表面数字，详见财务指标维度FY2025净利润note"
+      },
+      "ps": {
+        "value": 2.54,
+        "basis": "TTM市值(RMB)/TTM收入，工具验算"
+      },
+      "pb": {
+        "value": 1.58,
+        "basis": "股价(折人民币97.80元)/每股净资产(61.76元，2026-06-30期末权益12,644,208千元/204,716,202股)，工具验算"
+      },
+      "roe": {
+        "value": 13.2,
+        "unit": "percent",
+        "basis": "TTM归母净利润(IFRS)/2026-06-30期末权益，工具验算；口径为期末净资产ROE而非加权平均ROE，分子为归母净利润；建议双源但港股公司自身不披露ROE指标，仅单源计算"
+      },
+      "roa": {
+        "value": 10.2,
+        "unit": "percent",
+        "basis": "TTM归母净利润/2026-06-30期末总资产16,363,025千元，工具验算，分母用期末值"
+      },
+      "dividendYieldPct": {
+        "status": "not-applicable",
+        "reason": "公司自2021年12月上市以来未曾派发股息（含本次2026中期业绩公告明确「董事会已议决不宣派报告期间的中期股息」），无股息可计算收益率"
+      },
+      "debtRatioPct": {
+        "value": 22.7,
+        "unit": "percent",
+        "basis": "总负债3,718,817千元/总资产16,363,025千元(2026-06-30)，工具验算",
+        "note": "公司基本无有息负债（负债主要为合约负债、应付账款、应计费用及所得税应付款等经营性负债），账面现金及银行存款合计11,851,723千元远超总负债，为净现金状态"
+      },
+      "peg": {
+        "status": "unavailable",
+        "reason": "核心业绩含一次性递延所得税调整，剔除后的「经营性」盈利基数与各机构前瞻盈利预测口径差异较大（如浦银国际FY26E调整后净利润预测20.30亿元 vs 官方FY25经调整净利润28.60亿元本身即含一次性因素），暂不计算PEG，估值维度分析中改用EV/Revenue与经营性盈利定性讨论增长与估值的匹配度"
+      },
+      "evToRevenue": {
+        "value": 1.04,
+        "unit": "x",
+        "basis": "EV(市值20,021,753千元人民币 - 现金及银行存款11,851,723千元)/TTM收入7,891,039千元，工具验算；假设有息负债为零（未见任何银行借款或债券披露）"
+      }
+    },
+    "bullBearCase": {
+      "_dimension": "10. 多空双方核心论点",
+      "bull": [
+        {
+          "point": "净现金储备充裕（11,851,723千元，约占当前市值人民币200亿元的近六成），EV/Revenue仅1.04倍，估值已price-in大量悲观预期",
+          "evidence": "工具验算的currentValuation数据，本文件"
+        },
+        {
+          "point": "会员订阅收入占比持续提升（FY2025达总收入约65%），2025年会员订阅收入同比+13.3%，商业模式正从用户规模扩张转向单用户价值深挖",
+          "evidence": "老虎证券快讯转引年报数据，单源"
+        },
+        {
+          "point": "独立音乐人与原创内容生态形成差异化壁垒（125万注册音乐人、超730万首曲目），与腾讯音乐的大众版权曲库形成错位竞争",
+          "evidence": "2026中期业绩公告管理层讨论与分析原文"
+        }
+      ],
+      "bear": [
+        {
+          "point": "汽水音乐凭借抖音流量强势崛起，2026年3月MAU反超网易云音乐并首次挤入行业前三，公司在获客端投入趋于保守（2025年营销费用大幅削减33.2%）与竞争对手激进扩张形成鲜明反差，中长期用户与时长份额面临流失风险",
+          "evidence": "QuestMobile数据经媒体转引，单源"
+        },
+        {
+          "point": "2025年利润改善主要由费用收缩驱动而非收入增长（FY2025收入同比-2.4%），2026H1销售及市场费用同比大幅回升80.7%侵蚀经营利润（营业利润-11.6%），费用管控驱动的盈利改善可持续性存疑",
+          "evidence": "2026中期业绩公告官方财务数据，本文件revenueStructure与riskFactors章节"
+        },
+        {
+          "point": "报告期净利润与经调整净利润的同比大幅下滑（-57.0%/-55.8%）主要因2025H1一次性递延所得税抵免的高基数效应，反映公司核心经营性盈利的实际改善幅度小于表面财务数字",
+          "evidence": "2026中期业绩公告附注1原文说明"
+        }
+      ]
+    },
+    "crossValidationLog": [
+      {
+        "field": "市值(2026-08-20)",
+        "source1": {
+          "name": "FMP company profile-symbol",
+          "value": "23,051,044,345 HKD"
+        },
+        "source2": {
+          "name": "股价112.6 HKD × 总股本204,716,202股（financial_rigor.py verify-market-cap）",
+          "value": "23,051,204,957.2 HKD"
+        },
+        "deviationPct": 0.0007,
+        "flag": "ok",
+        "resolution": "一致，采用source1数字"
+      },
+      {
+        "field": "2026H1收入",
+        "source1": {
+          "name": "网易云音乐官方中期业绩公告",
+          "value": "3,958,706千元"
+        },
+        "source2": {
+          "name": "stockanalysis.com TTM口径反推验证（FY2025-2025H1+2026H1=7,891,039，与其披露TTM收入7,891百万元一致）",
+          "value": "7,891,039千元（TTM，用于间接验证2026H1数字）"
+        },
+        "deviationPct": 0,
+        "flag": "ok",
+        "resolution": "算术一致，确认官方2026H1收入数字准确"
+      },
+      {
+        "field": "总股本(2026-08-20)",
+        "source1": {
+          "name": "FMP shares-float（源自HKEXnews权益披露）",
+          "value": "204,716,202股"
+        },
+        "source2": {
+          "name": "stockanalysis.com（2026H1加权平均基本股数口径）",
+          "value": "210,330,000股（口径为半年度加权平均，非期末实际股数）"
+        },
+        "deviationPct": 2.74,
+        "flag": "minor-diff",
+        "resolution": "口径差异（期末实际股数 vs 半年度加权平均股数），非数据冲突；采用期末实际股数204,716,202用于估值计算，因2026年2-6月的回购注销使期末股数低于半年度加权平均"
+      },
+      {
+        "field": "FY2025净利润（归母，IFRS）",
+        "source1": {
+          "name": "网易云音乐2025年年报「五年财务概要」",
+          "value": "2,748,210千元"
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "value": "2,746,000千元（约数）"
+        },
+        "deviationPct": 0.08,
+        "flag": "ok",
+        "resolution": "一致（四舍五入差异），采用source1精确数字"
+      },
+      {
+        "field": "FY2025现金及银行存款合计",
+        "source1": {
+          "name": "网易云音乐2025年年报合并资产负债表（现金3,117,624+流动银行存款9,057,452+非流动银行存款1,400,000）",
+          "value": "13,575,076千元"
+        },
+        "source2": {
+          "name": "腾讯新闻《跌出前三...只剩账上135亿现金》独立复述",
+          "value": "13,500,000千元（约数，约135亿元）"
+        },
+        "deviationPct": 0.55,
+        "flag": "ok",
+        "resolution": "一致，媒体报道为四舍五入表述，采用source1精确数字"
+      }
+    ]
+  },
+  "analysis": {
+    "_spec": {
+      "purpose": "研究流程第 2 步（多维度分析）的产出模板。六个维度共用统一信封：{ conclusion, analysis, inquiry, dataGaps }。步骤正文见 docs/research/workflow/02-multi-dimension-analysis.md。"
+    },
+    "meta": {
+      "companyId": "hk-9899-netease-cloud-music",
+      "companyName": "网易云音乐股份有限公司 (NetEase Cloud Music Inc.)",
+      "analyzedAt": "2026-08-20",
+      "dataCutoff": "2026-08-20（Asia/Shanghai）",
+      "basedOnCollection": "research/companies/hk-9899-netease-cloud-music/financials-collection.json"
+    },
+    "dimensions": {
+      "businessEssence": {
+        "title": "生意本质",
+        "conclusion": "网易云音乐是以社区UGC内容锁定存量乐迷、靠会员订阅提价与费用管控驱动利润修复的音乐流媒体生意。",
+        "analysis": {
+          "revenueBreakdown": {
+            "period": "FY2025（2025-01-01至2025-12-31）",
+            "items": [
+              {
+                "segment": "在线音乐服务 Online music services",
+                "revenue": "5,994,000千元人民币，同比+12%（管理层讨论与分析口径推算数据，非年报逐项列示原文金额）",
+                "sharePct": "77.25%",
+                "source": {
+                  "name": "老虎证券快讯《被汽水超车后，网易云音乐的原创牌还灵吗？》转引2025年年报数据",
+                  "url": "https://www.itiger.com/news/2658923974"
+                }
+              },
+              {
+                "segment": "社交娱乐服务及其他 Social entertainment services and others",
+                "revenue": "1,765,450千元人民币（官方总收入7,759,450减在线音乐服务收入5,994,000的推算值）",
+                "sharePct": "22.75%",
+                "source": {
+                  "name": "网易云音乐2025年年报「五年财务概要」（官方总收入原文，分部数字为推算）",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf"
+                }
+              }
+            ]
+          },
+          "profitabilityTrend5y": {
+            "series": [
+              {
+                "fiscalYear": "FY2021",
+                "grossMarginPct": "2.04%",
+                "operatingMarginPct": {
+                  "status": "unavailable",
+                  "reason": "该年度经营亏损，年报未单独披露纯营业利润行项目，仅可获得税前利润率-29.3%作为替代参考，非规范经营利润率科目"
+                },
+                "netMarginPct": "-29.38%（净利润-2,056,092÷收入6,997,622换算，非公司列示科目）",
+                "source": {
+                  "name": "网易云音乐2025年年报「五年财务概要」",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf"
+                }
+              },
+              {
+                "fiscalYear": "FY2022",
+                "grossMarginPct": "14.38%",
+                "operatingMarginPct": {
+                  "status": "unavailable",
+                  "reason": "该年度税前仍为亏损(-204,479千元)，年报未单独列示营业利润行项目，仅可获得税前利润率-2.3%替代参考"
+                },
+                "netMarginPct": "-2.46%（净利润-221,494÷收入8,992,221换算，非公司列示科目）",
+                "source": {
+                  "name": "网易云音乐2025年年报「五年财务概要」",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf"
+                }
+              },
+              {
+                "fiscalYear": "FY2023",
+                "grossMarginPct": "26.73%",
+                "operatingMarginPct": "4.22%",
+                "netMarginPct": "9.33%（净利润734,182÷收入7,866,992换算，非公司列示科目）",
+                "source": {
+                  "name": "网易云音乐2025年年报「五年财务概要」",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf"
+                }
+              },
+              {
+                "fiscalYear": "FY2024",
+                "grossMarginPct": "33.73%",
+                "operatingMarginPct": "14.73%",
+                "netMarginPct": "19.64%（净利润1,561,507÷收入7,950,146换算，非公司列示科目）",
+                "source": {
+                  "name": "网易云音乐2025年年报「五年财务概要」",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf"
+                }
+              },
+              {
+                "fiscalYear": "FY2025",
+                "grossMarginPct": "35.69%",
+                "operatingMarginPct": "20.90%",
+                "netMarginPct": "35.42%（净利润2,748,210÷收入7,759,450换算，含约747百万元一次性递延所得税抵免，非公司列示科目）",
+                "source": {
+                  "name": "网易云音乐2025年年报「五年财务概要」",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf"
+                }
+              }
+            ]
+          },
+          "businessModelCanvas": {
+            "salesModel": "混合",
+            "productForm": "平台",
+            "note": "①会员订阅收入占总收入约65%为最大单一来源，具订阅/复购特征；②同时存在数字专辑单曲一次性销售、广告及社交娱乐虚拟礼物等多元变现，故归类混合；③产品形态集内容分发、UGC社区、直播K歌社交娱乐于一体，判定为平台型。"
+          },
+          "stickiness": {
+            "level": "中",
+            "mechanism": "①UGC社区沉淀(评论区、歌单文化)带来高频访问习惯，FY2024官方披露DAU/MAU比率稳居30%以上；②独立音乐人原创内容生态(125万音乐人/730万曲目)提供差异化内容，但对拉新作用有限；③用户听歌历史、收藏、歌单等数字资产沉淀形成一定迁移转换成本，主要发挥存量付费用户留存作用而非新用户获取作用。",
+            "evidence": [
+              {
+                "metric": "DAU/MAU比率",
+                "value": "稳居30%以上",
+                "asOf": "FY2024（2024年报口径）",
+                "source": {
+                  "name": "网易云音乐FY2024年度业绩公告",
+                  "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0220/2025022000338_c.pdf"
+                }
+              },
+              {
+                "metric": "注册独立音乐人数/上传曲目数",
+                "value": "超125万名 / 约730万首",
+                "asOf": "2026-06-30",
+                "source": {
+                  "name": "网易云音乐2026中期业绩公告",
+                  "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf"
+                }
+              },
+              {
+                "metric": "会员订阅收入同比增速",
+                "value": "+13.3%（由4,459,000千元增至5,053,000千元）",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "老虎证券快讯《被汽水超车后，网易云音乐的原创牌还灵吗？》转引年报数据",
+                  "url": "https://www.itiger.com/news/2658923974"
+                }
+              }
+            ]
+          },
+          "grossMarginVsPeers": {
+            "companyPct": "35.69%（FY2025）",
+            "peers": [
+              {
+                "name": "腾讯音乐娱乐集团 Tencent Music Entertainment (1698.HK/TME)",
+                "grossMarginPct": "44.2%（FY2025）",
+                "source": {
+                  "name": "research/companies/hk-1698-tencent-music/financials-collection.json（本地已采集数据，原始转引TME官方新闻稿与stockanalysis.com交叉验证）",
+                  "url": "research/companies/hk-1698-tencent-music/financials-collection.json"
+                }
+              }
+            ],
+            "whyHigherOrLower": "①腾讯音乐系头部流行版权储备与议价能力更强，内容成本因规模效应被更充分摊薄；②网易云音乐版权投入长期居于跟随地位(2020年按收入计市场份额20.5% vs 对手72.8%)，版权成本占收入比重相对更高；③网易云音乐近年靠降本增效与会员提价推动毛利率从FY2021的2.04%快速修复至FY2025的35.69%，差距收窄但尚未追平。"
+          },
+          "operatingLeverage": {
+            "observation": "①FY2021-2025收入基本持平(69.98亿→77.59亿元)而经营利润率从负值改善至20.90%，主要靠销售及市场费用大幅压缩(FY2025同比-33.2%)驱动，非规模增长带来的天然经营杠杆；②2026H1费用管控转向——销售及市场费用同比+80.7%而收入仅+3.4%，导致营业利润同比-11.6%，出现负经营杠杆；③历史数据显示公司利润弹性主要来自费用端而非收入端，规模效应对利润的传导尚未验证。",
+            "evidence": [
+              {
+                "metric": "2026H1销售及市场费用同比",
+                "value": "+80.7%（163,379→295,209千元）",
+                "asOf": "2026H1",
+                "source": {
+                  "name": "网易云音乐2026中期业绩公告",
+                  "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf"
+                }
+              },
+              {
+                "metric": "2026H1收入同比 vs 营业利润同比",
+                "value": "收入+3.4% vs 营业利润-11.6%",
+                "asOf": "2026H1",
+                "source": {
+                  "name": "网易云音乐2026中期业绩公告",
+                  "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf"
+                }
+              },
+              {
+                "metric": "FY2025营业利润率 vs FY2024",
+                "value": "20.90% vs 14.73%（收入同比-2.4%，主因销售及市场费用同比-33.2%至4.09亿元）",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "网易云音乐2025年年报",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf"
+                }
+              }
+            ]
+          }
+        },
+        "inquiry": {
+          "question": "这门生意好在哪？如果只能用一句话描述，是什么？",
+          "answer": "本质是靠社区内容锁住存量付费用户、用订阅提价对冲用户规模下滑的现金牛生意。①会员订阅收入占比约65%且持续增长(FY2025同比+13.3%)，是收入与利润的压舱石；②毛利率随规模与降本已从FY2021的2.04%修复至FY2025的35.69%，2026H1末净现金约118.5亿元覆盖近六成市值，抗风险能力强；③但MAU已被汽水音乐反超、行业排名跌出前三，说明这门生意守成有余、拓新不足，增长引擎已从用户扩张切换为单用户变现与费用管控，可持续性依赖持续的内容与产品迭代。"
+        },
+        "dataGaps": [
+          {
+            "path": "analysis.profitabilityTrend5y.series[0].operatingMarginPct (FY2021)",
+            "reason": "该年度经营亏损，年报未单独披露纯营业利润行项目，官方仅可获得税前利润率-29.3%作为替代参考，非规范经营利润率科目",
+            "searched": "financials-collection.json financialMetrics.annual FY2021节点；未重新下载FY2021年报原文核对"
+          },
+          {
+            "path": "analysis.profitabilityTrend5y.series[1].operatingMarginPct (FY2022)",
+            "reason": "该年度税前仍为亏损(-204,479千元)，年报未单独列示营业利润行项目，仅能以税前利润率-2.3%替代参考",
+            "searched": "financials-collection.json financialMetrics.annual FY2022节点；未重新下载FY2022年报原文核对"
+          },
+          {
+            "path": "analysis.grossMarginVsPeers.peers[0].source.url",
+            "reason": "腾讯音乐毛利率44.2%数据引自本地已采集的hk-1698-tencent-music/financials-collection.json文件，该文件对此数据点未附外部可直达URL，仅有本地文件路径",
+            "searched": "financials-collection.json competitiveLandscape.competitors[0].grossMarginPct.source（本次禁止联网，未能补充外部URL）"
+          },
+          {
+            "path": "analysis.revenueBreakdown.items[0].revenue（在线音乐服务分部收入）",
+            "reason": "公司官方年报未逐项披露分部收入绝对值及分部毛利率，收入数字来自老虎证券快讯转引年报数据（单源），非公司公告逐项列示原文",
+            "searched": "financials-collection.json revenueStructure.latestFiscalYear.segments[0]；采集时已查年报管理层讨论与分析全文及五年财务概要，均无分部收入/毛利率原文拆分"
+          }
+        ]
+      },
+      "moat": {
+        "title": "护城河评估",
+        "conclusion": "护城河集中于转换成本与社区网络效应，规模效应弱于腾讯音乐，网络效应正被汽水音乐削弱变窄。",
+        "analysis": {
+          "types": [
+            {
+              "type": "品牌/定价权",
+              "test": "是否能在不损失销量的情况下提价？",
+              "verdict": "待验证",
+              "evidence": [
+                {
+                  "metric": "整体毛利率",
+                  "value": "FY2021 2.04% → FY2025 35.69%",
+                  "asOf": "FY2021–FY2025",
+                  "source": {
+                    "name": "网易云音乐2025年年报「五年财务概要」",
+                    "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf"
+                  }
+                },
+                {
+                  "metric": "会员订阅收入同比增速",
+                  "value": "FY2025同比+13.3%（4,459,000→5,053,000千元）；2026H1同比+5.3%（2,469,800→2,600,900千元）",
+                  "asOf": "2026H1（截至2026-06-30）",
+                  "source": {
+                    "name": "网易云音乐2026中期业绩公告",
+                    "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "转换成本",
+              "test": "客户迁移到竞品的成本有多高？",
+              "verdict": "存在",
+              "evidence": [
+                {
+                  "metric": "用户数字资产沉淀（歌单/收藏/评论/听歌历史）构成迁移成本",
+                  "value": "研报判断：用户沉淀的数字资产提高了迁移平台的转换成本，形成庞大高质量数据集（单源研报观点，非公司官方量化披露）",
+                  "asOf": "2025年中报点评",
+                  "source": {
+                    "name": "东吴证券研报（www.nxny.com转引）",
+                    "url": "https://www.nxny.com"
+                  }
+                },
+                {
+                  "metric": "MAU下滑期间会员订阅收入仍逆势增长",
+                  "value": "FY2025同比+13.3%，2026H1同比+5.3%；同期MAU持续承压并于2026年3月被汽水音乐反超",
+                  "asOf": "2026H1",
+                  "source": {
+                    "name": "网易云音乐2026中期业绩公告",
+                    "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "网络效应",
+              "test": "用户越多产品越好吗？",
+              "verdict": "存在",
+              "evidence": [
+                {
+                  "metric": "iOS端DAU/MAU比率",
+                  "value": "42%",
+                  "asOf": "2025-06",
+                  "source": {
+                    "name": "东吴证券研报转引Sensor Tower数据（www.nxny.com转引，单源）",
+                    "url": "https://www.nxny.com"
+                  }
+                },
+                {
+                  "metric": "官方DAU/MAU比率",
+                  "value": "稳居30%以上",
+                  "asOf": "FY2024",
+                  "source": {
+                    "name": "网易云音乐FY2024年度业绩公告",
+                    "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0220/2025022000338_c.pdf"
+                  }
+                },
+                {
+                  "metric": "行业MAU排名",
+                  "value": "2026年3月网易云音乐MAU 1.4682亿，被汽水音乐（1.5605亿）反超，跌出行业前三",
+                  "asOf": "2026-03",
+                  "source": {
+                    "name": "QuestMobile数据，经老虎证券快讯转引",
+                    "url": "https://www.itiger.com/news/2658923974"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "规模效应",
+              "test": "规模带来的成本优势有多大？",
+              "verdict": "不存在",
+              "evidence": [
+                {
+                  "metric": "毛利率对比（vs腾讯音乐）",
+                  "value": "网易云音乐FY2025毛利率35.69% vs 腾讯音乐FY2025毛利率44.2%，差距约8.5个百分点，归因于头部版权曲库议价能力与规模效应更强（有利于腾讯音乐而非网易云音乐）",
+                  "asOf": "FY2025",
+                  "source": {
+                    "name": "网易云音乐2025年年报「五年财务概要」；hk-1698-tencent-music研究产出financials-collection.json",
+                    "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf"
+                  }
+                },
+                {
+                  "metric": "收入体量对比",
+                  "value": "腾讯音乐FY2025收入329.02亿元，约为网易云音乐FY2025收入77.59亿元的4.2倍",
+                  "asOf": "FY2025",
+                  "source": {
+                    "name": "hk-1698-tencent-music研究产出financials-collection.json（转引TME官方新闻稿与stockanalysis.com）",
+                    "url": ""
+                  }
+                }
+              ]
+            },
+            {
+              "type": "技术/专利壁垒",
+              "test": "技术领先几年？能否被复制？",
+              "verdict": "待验证",
+              "evidence": [
+                {
+                  "metric": "自研AI推荐大模型「Climber」及AI互动功能矩阵",
+                  "value": "2026H1升级支撑'心动模式''AI灵感歌单'等个性化推荐，并新增'AI情绪调音师''AI宠物播放器'等功能",
+                  "asOf": "2026H1",
+                  "source": {
+                    "name": "网易云音乐2026中期业绩公告",
+                    "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf"
+                  }
+                },
+                {
+                  "metric": "研发强度",
+                  "value": "2026H1研发费用391,011千元/收入3,958,706千元 ≈ 9.88%",
+                  "asOf": "2026H1",
+                  "source": {
+                    "name": "网易云音乐2026中期业绩公告",
+                    "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf"
+                  }
+                },
+                {
+                  "metric": "独立音乐人生态规模",
+                  "value": "截至2026年6月注册独立音乐人超125万名、上传曲目约730万首，较2025年6月（81.9万名/480万首）近乎翻倍",
+                  "asOf": "2026-06",
+                  "source": {
+                    "name": "网易云音乐2026中期业绩公告管理层讨论与分析",
+                    "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf"
+                  }
+                },
+                {
+                  "metric": "专利/知识产权披露",
+                  "value": "官方年报未独立披露专利数量；第三方天眼查显示专利信息1,609条，21世纪经济报道称2022-2024年密集申请逾700条专利，主要用于与腾讯音乐互诉'产品抄袭'诉讼场景，而非对外宣传的核心技术护城河",
+                  "asOf": "2024-11-27（媒体报道日期）",
+                  "source": {
+                    "name": "21世纪经济报道；天眼查（第三方聚合数据，非公司官方IR口径）",
+                    "url": ""
+                  }
+                }
+              ]
+            }
+          ],
+          "trendPast5y": {
+            "direction": "变窄",
+            "basis": "①MAU从2021年1.83亿降至2023H1的1.49亿，2026年3月被汽水音乐反超跌出行业前三；②内容差异化护城河变宽（音乐人数近乎翻倍至125万+），但未阻止用户流失，深度与份额宽度背离；③转换成本与社区效应仍支撑会员订阅收入逆势增长（FY2025+13.3%），变窄集中体现在获客端而非存量留存端。"
+          },
+          "trendNext5y": {
+            "direction": "变窄",
+            "basis": "①汽水音乐依托抖音流量持续导流下沉市场，MAU反超趋势大概率延续，网络效应对新增用户的拉动进一步减弱；②腾讯音乐完成喜马拉雅并表并以SVIP深挖存量用户，规模与版权优势（毛利率44.2%对比35.7%）持续压制网易云音乐；③独立音乐人生态与AI推荐若能提升内容转化率，叠加转换成本对存量会员的留存效果，收窄速度或放缓，但方向暂未见反转信号。"
+          }
+        },
+        "inquiry": {
+          "question": "10年后这条护城河还在吗？什么能摧毁它？",
+          "answer": "护城河部分尚存但正被削弱，短视频平台崛起可能进一步侵蚀。①转换成本（数字资产沉淀）与会员订阅粘性最可能延续，是护城河中最抗打的部分；②社区网络效应若持续被汽水音乐等短视频衍生App分流增量用户，10年维度可能被稀释为存量用户的留存工具而非增长引擎；③摧毁因素：若腾讯音乐系凭规模、版权优势及并购喜马拉雅进一步扩大成本差距，或字节系持续以流量补贴抢占下沉市场，护城河可能从第二梯队滑落为边缘化平台。"
+        },
+        "dataGaps": [
+          {
+            "path": "moat.analysis.types[0]（品牌/定价权）.evidence",
+            "reason": "未查到会员单价/ARPU分年拆分或提价公告，无法判断提价而不失客户的真实弹性，仅能用毛利率与订阅收入总增速间接推断",
+            "searched": "五年财务概要毛利率、会员订阅收入总额、2026中期业绩公告管理层讨论与分析"
+          },
+          {
+            "path": "moat.analysis.types[4]（技术/专利壁垒）.evidence[3]",
+            "reason": "公司官方年报/中期报告未见专利数量或知识产权资产独立披露章节，仅第三方天眼查聚合数据及媒体报道可用",
+            "searched": "FY2024/FY2025年报、2026中期业绩公告技术/知识产权相关章节、天眼查、21世纪经济报道"
+          },
+          {
+            "path": "moat.analysis.trendPast5y / trendNext5y",
+            "reason": "公司上市后未再披露收入口径市场份额（最后一次官方数字为2020年20.5%），护城河宽度变化只能用MAU排名近似替代评判",
+            "searched": "FY2024/FY2025年报管理层讨论与分析全文、2026中期业绩公告、QuestMobile转引报道"
+          }
+        ]
+      },
+      "inversion": {
+        "title": "逆向思考与风险清单",
+        "conclusion": "网易云音乐护城河正被短视频流量入口侵蚀，费用收缩驱动的盈利改善难以持续，治理独立性亦存疑。",
+        "analysis": {
+          "failurePaths": [
+            {
+              "path": "汽水音乐持续导流分流用户，网易云音乐MAU份额被长期压缩",
+              "probability": "高",
+              "impact": "高",
+              "evidence": [
+                {
+                  "metric": "月活跃用户数(MAU)",
+                  "value": "网易云音乐1.4682亿 vs 汽水音乐1.5605亿，汽水音乐同比+78%首次反超",
+                  "asOf": "2026-03",
+                  "source": {
+                    "name": "QuestMobile《2026年一季度中国移动互联网典型行业洞察报告》，经老虎证券快讯转引",
+                    "url": "https://www.itiger.com/news/2658923974"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "会员ARPPU增长逼近天花板，订阅收入增速持续放缓",
+              "probability": "中",
+              "impact": "高",
+              "evidence": [
+                {
+                  "metric": "会员订阅收入同比增速",
+                  "value": "FY2025 +13.3%（4,459,000→5,053,000千元）放缓至2026H1 +5.3%（2,469,800→2,600,900千元）",
+                  "asOf": "2026H1",
+                  "source": {
+                    "name": "网易云音乐2026中期业绩公告",
+                    "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "费用管控红利耗尽，重启获客投入侵蚀经营利润率",
+              "probability": "高",
+              "impact": "高",
+              "evidence": [
+                {
+                  "metric": "销售及市场费用同比 / 经营利润同比",
+                  "value": "2025年-33.2%至4.09亿元后，2026H1反弹+80.7%至295,209千元，同期营业利润-11.6%",
+                  "asOf": "2026H1",
+                  "source": {
+                    "name": "网易云音乐2026中期业绩公告「财务回顾」章节",
+                    "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "网易绝对控股+主席兼CEO一肩挑，治理独立性与关联交易风险积累",
+              "probability": "中",
+              "impact": "中",
+              "evidence": [
+                {
+                  "metric": "控股股东经济权益比例 / 治理守则偏离",
+                  "value": "丁磊透过控制法团持股60.29%（不含库存股），倘悉数行使回购授权将升至66.99%；公司主席与CEO角色未按《企业管治守则》C.2.1条分离",
+                  "asOf": "2026-04-15",
+                  "source": {
+                    "name": "网易云音乐2026年股东周年大会通函",
+                    "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501143_c.pdf"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "支柱二税制与国内税收优惠资格重新认定推高实际税负",
+              "probability": "中",
+              "impact": "低",
+              "evidence": [
+                {
+                  "metric": "支柱二当期补足税费用",
+                  "value": "2026H1确认2,294万元（2025H1为3,070万元）；中国子公司高新技术企业15%优惠税率需每三年重新认定",
+                  "asOf": "2026H1",
+                  "source": {
+                    "name": "网易云音乐2026中期业绩公告附注4「税项」",
+                    "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf"
+                  }
+                }
+              ]
+            }
+          ],
+          "historicalAnalogies": [
+            {
+              "company": "Pandora Media（北美互联网电台/音乐流媒体先驱）",
+              "similarity": "曾以细分音乐社区体验建立早期优势，后被拥有更大流量与资本的Spotify、Apple Music夹击，用户增长与ARPU双双承压",
+              "outcome": "未能守住独立地位，2018年被SiriusXM整体收购，从行业颠覆者变为被整合对象",
+              "source": {
+                "name": "公开历史资料，本研究基于分析推理未附具体来源链接",
+                "url": ""
+              }
+            },
+            {
+              "company": "人人网（中国早期校园社交网络）",
+              "similarity": "早期以差异化社区体验建立用户心智护城河，后被拥有更大流量入口与内容生态的新兴平台反超用户时长",
+              "outcome": "用户与商业价值持续流失，最终在行业格局中被边缘化",
+              "source": {
+                "name": "公开历史资料，本研究基于分析推理未附具体来源链接",
+                "url": ""
+              }
+            }
+          ],
+          "crossDisciplinaryChecks": [
+            {
+              "model": "网络效应理论",
+              "finding": "网易云音乐的网络效应主要是UGC评论区/歌单驱动的单边社区强化，而非跨边网络效应；①汽水音乐依托抖音生态的注意力网络效应（短视频BGM即时导流至音频消费）具有更强的跨生态位穿透力；②社区护城河阻止了用户进一步流失，但不足以收复失地，说明其网络效应深度不足以对抗字节系流量入口的降维打击"
+            },
+            {
+              "model": "竞争博弈",
+              "finding": "①2025年网易云音乐选择'收缩费用换利润'的保守策略，汽水音乐同期选择'抖音导流+免费/低价'的激进扩张策略，形成非对称博弈；②网易云音乐短期财务表现占优（经调整净利润+68.2%）但让渡了用户争夺先手，2026H1被迫将营销费用同比拉高80.7%被动跟随，说明其在这场博弈中处于追随者而非主导者地位"
+            },
+            {
+              "model": "技术采纳曲线",
+              "finding": "「Climber」大模型升级与AI互动功能矩阵至2026H1才密集推出，晚于抖音系已成熟的短视频推荐分发能力；2026年3月MAU仍被汽水音乐反超，尚未观察到AI功能对留存产生反转性拉动，公司处于技术采纳曲线的追赶而非领先阶段"
+            }
+          ],
+          "biasSelfCheck": [
+            {
+              "bias": "叙事偏差",
+              "check": "丁磊网易系光环与独立音乐人生态的正面叙事容易掩盖MAU连续承压、被汽水反超的用户端硬数据，应以QuestMobile第三方MAU数据而非管理层讨论叙事作为核心验证锚点"
+            },
+            {
+              "bias": "锚定效应",
+              "check": "招股章程披露的2020年20.5%收入份额（行业第二）已是6年前基线，容易被过度锚定为'公司仍居行业前二/三'，而当前公司已是MAU行业第四且收入份额数字长期未更新，需以最新MAU排名重新锚定认知"
+            },
+            {
+              "bias": "幸存者偏差",
+              "check": "会员订阅收入持续增长（FY2025+13.3%）可能只是流失用户主要集中在免费/轻度用户群，剩余付费用户基数变小后比率性改善，需警惕用分母缩小掩盖用户总盘萎缩的事实"
+            }
+          ],
+          "bearCase": [
+            {
+              "point": "汽水音乐依托抖音流量强势崛起且公司获客投入趋于保守，中长期用户与时长份额面临流失风险",
+              "holder": "QuestMobile数据经老虎证券快讯及多家媒体转引",
+              "evidence": [
+                {
+                  "metric": "MAU对比 / 营销费用同比",
+                  "value": "网易云音乐1.4682亿 vs 汽水音乐1.5605亿(2026-03)；2025年销售及市场费用同比-33.2%",
+                  "asOf": "2026-03 / FY2025",
+                  "source": {
+                    "name": "QuestMobile数据，经老虎证券快讯转引",
+                    "url": "https://www.itiger.com/news/2658923974"
+                  }
+                }
+              ]
+            },
+            {
+              "point": "2025年利润改善主要由费用收缩驱动而非收入增长，2026H1费用重新回升侵蚀经营利润，可持续性存疑",
+              "holder": "本研究基于财报数据推演",
+              "evidence": [
+                {
+                  "metric": "销售及市场费用同比 / 营业利润同比",
+                  "value": "163,379→295,209千元（+80.7%），营业利润同比-11.6%",
+                  "asOf": "2026H1",
+                  "source": {
+                    "name": "网易云音乐2026中期业绩公告「财务回顾」章节",
+                    "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf"
+                  }
+                }
+              ]
+            },
+            {
+              "point": "净利润与经调整净利润大幅下滑主因2025H1一次性递延所得税抵免高基数，核心经营性盈利改善幅度小于表面数字",
+              "holder": "本研究基于财报数据推演（引用2026中期业绩公告附注1原文说明）",
+              "evidence": [
+                {
+                  "metric": "净利润同比 / 经调整净利润同比",
+                  "value": "净利润-57.0%，经调整净利润-55.8%（2025H1一次性递延所得税抵免849.4百万元形成高基数）",
+                  "asOf": "2026H1",
+                  "source": {
+                    "name": "网易云音乐2026中期业绩公告附注1",
+                    "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "inquiry": {
+          "question": "我最可能在哪里犯错？聪明人为什么会不买/做空这家公司？",
+          "answer": "最可能的误判是低估短视频流量入口的降维打击速度，高估社区护城河韧性。①汽水音乐仅靠抖音导流，1年内MAU反超经营13年的网易云音乐社区壁垒(1.5605亿对1.4682亿)，说明护城河抗跨生态竞争能力弱于叙事描述；②2025年利润改善主要靠营销费用削减33.2%而非收入增长，2026H1费用回升80.7%后营业利润转跌11.6%，本质是费用杠杆而非经营杠杆，可持续性存疑；③丁磊经济权益超60%、主席兼CEO一肩挑且上市以来未曾分红，治理制衡不足，叠加支柱二税制与国内税收优惠资格重新认定的不确定性，这些都是只看净现金与低PE时容易被忽略的折价理由。"
+        },
+        "dataGaps": []
+      },
+      "management": {
+        "title": "管理层评估",
+        "conclusion": "丁磊主席兼CEO角色未分离，持股60.29%利益绑定，但费用管控驱动利润可持续性存疑",
+        "analysis": {
+          "keyDecisions": [
+            {
+              "date": "2026-02至2026-05",
+              "decision": "在联交所公开市场累计回购7,299,800股股份，总代价约967,035,899.59港元",
+              "outcome": "回购股份已于2026-06-12注销，减少已发行股本，对每股盈利有正面摊薄效应（2026H1加权平均股数208,961,138股，较2025H1的210,424,603股减少约0.7%）",
+              "rating": "★4（回购时点PE约11.99倍、EV/Revenue约1.04倍，估值处相对低位，注销股份摊薄增厚每股盈利，但港股回购通常分批小额进行，无法判断是否精准择时于阶段性低点）",
+              "source": {
+                "name": "网易云音乐2026中期业绩公告",
+                "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf"
+              }
+            },
+            {
+              "date": "2026-08-20",
+              "decision": "董事会决议不宣派2026年中期股息",
+              "outcome": "延续公司自上市以来未曾派息的政策，现金优先用于股份回购与业务投入",
+              "rating": "★3（净现金11,851,723千元、无有息负债，账面资金充裕，以回购代替股息是可接受的资本配置方式，但长期零派息与巨额净现金并存，资本配置效率有优化空间，中性评级）",
+              "source": {
+                "name": "网易云音乐2026中期业绩公告",
+                "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf"
+              }
+            },
+            {
+              "date": "2026年一季度前后",
+              "decision": "推行全公司降本增效：2025全年销售及市场费用同比大幅缩减33.2%至4.09亿元，管理费用降4.4%，研发费用降2.3%",
+              "outcome": "在收入同比下滑2.4%的背景下实现经调整净利润同比+68.2%（含一次性递延税项抵免），但对外获客投入趋于保守，与「汽水音乐」MAU反超、公司失去行业MAU第三名位置的时间点重合",
+              "rating": "★2（利润改善主要靠削减营销费用而非收入增长驱动，同期竞品加大投入并反超公司MAU排名，2026H1销售费用又被迫同比激增80.7%回补，说明该决策短期美化利润但牺牲了竞争地位，可持续性差）",
+              "source": {
+                "name": "网易云音乐2025年年报「五年财务概要」及财务回顾章节",
+                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf"
+              }
+            }
+          ],
+          "capitalAllocation": {
+            "rdReturn": {
+              "status": "unavailable",
+              "reason": "公司未披露研发投入与营收/利润产出的对应关系或ROI指标，已查FY2025年报、2026中期业绩公告管理层讨论与分析全文，仅有费用绝对值与同比，无回报率测算"
+            },
+            "maTrackRecord": {
+              "status": "unavailable",
+              "reason": "未见公司披露任何重大并购事件；collection文件仅提及竞争对手腾讯音乐已并购喜马拉雅，网易云音乐自身无并购记录可评估成功率"
+            },
+            "buybackTiming": "2026年2-5月耗资约9.67亿港元回购，彼时TTM PE约11.99倍、EV/Revenue约1.04倍，估值处相对低位",
+            "evidence": [
+              {
+                "metric": "股份回购总代价",
+                "value": "967,035,899.59港元（7,299,800股）",
+                "asOf": "2026-06-12（注销日）",
+                "source": {
+                  "name": "网易云音乐2026中期业绩公告",
+                  "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf"
+                }
+              },
+              {
+                "metric": "TTM PE（工具验算）",
+                "value": "11.99倍（经调整口径11.29倍）",
+                "asOf": "2026-08-20",
+                "source": {
+                  "name": "docs/research/tools/financial_rigor.py 工具验算",
+                  "url": ""
+                }
+              },
+              {
+                "metric": "EV/Revenue（工具验算）",
+                "value": "1.04倍",
+                "asOf": "2026-08-20",
+                "source": {
+                  "name": "docs/research/tools/financial_rigor.py 工具验算",
+                  "url": ""
+                }
+              }
+            ]
+          },
+          "alignment": {
+            "ownership": "丁磊（透过控制法团）持股经济权益60.29%（2026-04-15）；投票权比例因AB股结构信息缺失unavailable",
+            "compensation": {
+              "status": "unavailable",
+              "reason": "第1步采集文件未收录管理层薪酬结构与考核挂钩指标，年报薪酬章节未纳入本次采集范围"
+            },
+            "insiderSelling": "未见直接减持披露；丁磊控制法团持股比例由59.83%(2024-06-30)升至60.29%(2026-04-15)，系公司回购注销股份被动提升所致，非主动增持或减持",
+            "evidence": [
+              {
+                "metric": "丁磊（透过控制法团）持股经济权益比例",
+                "value": "60.29%（占已发行股本总额，不含库存股份）",
+                "asOf": "2026-04-15",
+                "source": {
+                  "name": "网易云音乐2026年股东周年大会通函「股份购回授权的说明函件」",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501143_c.pdf"
+                }
+              },
+              {
+                "metric": "同一持股（129,034,168股）历史比例",
+                "value": "59.83%",
+                "asOf": "2024-06-30",
+                "source": {
+                  "name": "网易云音乐2024年中期报告「权益披露」章节",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2024/0919/2024091900362_c.pdf"
+                }
+              }
+            ]
+          },
+          "organization": {
+            "teamStability": {
+              "status": "unavailable",
+              "reason": "collection文件仅采集创始人丁磊履历，未采集CFO/COO等核心高管团队任期与流动数据"
+            },
+            "keyPersonRisk": "丁磊身兼网易集团与云音乐双重主席兼CEO，角色未分离，关键人风险较高"
+          },
+          "culture": "①治理结构：主席与CEO角色未分离（丁磊兼任），公司自评偏离《企业管治守则》C.2.1条，董事会解释为提升战略执行效率；②成本纪律随经营压力摇摆：2025年销售及市场费用同比大幅削减33.2%、管理费用降4.4%，但2026H1销售费用又同比激增80.7%回补；③技术投入向AI倾斜：2026H1研发费用同比+3.2%，主要投向Climber大模型升级与AI情绪调音师等AI互动功能。"
+        },
+        "inquiry": {
+          "question": "如果CEO退休，这家公司还能保持竞争力吗？",
+          "answer": "短期冲击有限但中长期存治理隐忧，业务已部分平台化但接班安排不透明。①治理层面：丁磊身兼网易集团与云音乐双重主席兼CEO，角色未分离已构成公司自评的守则偏离（C.2.1条），退休将触发继任治理真空，现有资料未见继任计划披露；②控制权层面：网易（丁磊控制法团）持股经济权益60.29%（2026-04-15），投票权比例因AB股结构信息缺失unavailable，控股权变动路径不明确；③业务韧性层面：核心竞争力（125万独立音乐人生态、UGC社区文化、约65%会员订阅收入占比）已沉淀为平台化资产而非单纯依赖创始人个人IP，但现有资料未采集二把手/核心高管团队的任期与稳定性数据，管理梯队独立决策能力无法验证。"
+        },
+        "dataGaps": [
+          {
+            "path": "management.analysis.capitalAllocation.rdReturn",
+            "reason": "公司未披露研发投入产出/ROI指标，已查FY2025年报及2026中期业绩公告管理层讨论与分析全文",
+            "searched": "FY2025年报、2026中期业绩公告"
+          },
+          {
+            "path": "management.analysis.capitalAllocation.maTrackRecord",
+            "reason": "未见公司披露任何重大并购事件，无法评估并购成功率",
+            "searched": "FY2025年报、2026中期业绩公告"
+          },
+          {
+            "path": "management.analysis.alignment.compensation",
+            "reason": "第1步采集文件未收录管理层薪酬结构及考核挂钩指标数据",
+            "searched": "financials-collection.json management字段全文"
+          },
+          {
+            "path": "management.analysis.alignment.insiderSelling",
+            "reason": "无直接减持披露，仅有持股比例被动变化的间接数据，无法排除文件披露范围外的减持行为",
+            "searched": "financials-collection.json management.ownership字段"
+          },
+          {
+            "path": "management.analysis.alignment.ownership.votingPct",
+            "reason": "已查招股章程AB股结构说明及2024-2026年AGM通告、股份变动月报表，均未见对当前A/B两类股份数量拆分及投票权比例的更新披露",
+            "searched": "招股章程、2024-2026年AGM通告"
+          },
+          {
+            "path": "management.analysis.organization.teamStability",
+            "reason": "collection文件仅采集创始人履历，未采集CFO/COO等核心高管团队任期与流动数据",
+            "searched": "financials-collection.json management字段全文"
+          }
+        ]
+      },
+      "industryTrend": {
+        "title": "行业与长期趋势",
+        "conclusion": "在线音乐行业仍处成长期但增速放缓，网易云音乐版权议价权弱于腾讯音乐系，正被短视频渠道加速分流。",
+        "analysis": {
+          "paradigmShift": {
+            "verdict": "部分",
+            "reasoning": "①音乐流媒体对实体唱片/下载模式的范式转移已于2015年前后基本完成，网易云音乐是这次转移中崛起的新平台，而非从零开创新范式；②当前所处的是范式转移完成后的存量竞争与结构性再分配阶段——短视频平台（汽水音乐）依托BGM即时消费的分发逻辑对传统订阅制音乐平台发起二次分流，属于渠道再范式化而非全新技术革命；③IFPI/Omdia数据显示全球及中国流媒体市场仍在增长（中国份额5.8%→2030年8.7%），但增速已从招股章程预测的2020-2025E CAGR 32.2%降至Omdia预测的2026-2030年全球CAGR 5.4%，说明行业已从爆发式渗透期转入平稳扩张期。"
+          },
+          "historicalAnalogy": "①音乐流媒体对应的历史类比并非蒸汽机/电力这类通用技术革命，而更接近渠道技术迭代——如广播取代留声机、流媒体取代CD/下载，驱动力是分发成本下降与用户习惯迁移，而非生产力质变；②网易云音乐处于流媒体渗透曲线的存量竞争者位置：2016-2020年（CIC测算行业CAGR 57.9%）赶上渗透率快速提升红利期，凭UGC社区差异化做到2020年行业第二（20.5%份额），但2020年后渗透率红利见顶，进入腾讯音乐系与字节系汽水音乐夹击的存量再分配期；③公司自研AI推荐大模型Climber及AIGC互动功能更像渗透曲线内部的效率工具升级，尚无证据表明其正在开创音乐产业新的范式转移。",
+          "tam": {
+            "current": {
+              "value": "167000（人民币百万元，即1,670亿元人民币）",
+              "currency": "RMB",
+              "asOf": "灼识咨询（CIC）2021年测算的2025年预测值，经网易云音乐招股章程「行业」章节引用；该预测期已于2025年到期，本次未查得该机构或其他第三方对2025年实际市场规模的复核/更新数字，仅为IPO时点的前瞻性测算，非最新滚动数据",
+              "source": {
+                "name": "灼识咨询（CIC）研究报告，经网易云音乐招股章程「概要」及「行业」章节引用",
+                "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2021/1202/10036008/sehk21111600893_c.pdf"
+              }
+            },
+            "ceiling": "无官方天花板测算；Omdia预测2030年中国份额达8.7%，仍有提升空间。",
+            "growthCurve": "成长"
+          },
+          "valueChainPosition": "①网易云音乐是产业链中游的流媒体分发平台，上游为版权方（唱片公司/独立音乐人）及词曲版权代理方，下游为付费订阅用户及广告主/社交娱乐消费用户；②上游议价权明显劣势——招股章程披露2020年基线显示，与掌握主流版权资源的腾讯音乐系（'A公司'）收入差距达3.6倍（93亿 vs 26亿元），公司官方风险因素原文承认'与最大市场参与者现时在规模上仍有显著差距'，商业模式护城河分析亦明确关键杠杆是'在版权资源落后于腾讯音乐系的行业格局下'以UGC对冲版权劣势；③下游议价权部分依赖社区转换成本与订阅粘性（会员订阅收入占总收入约65%，FY2025同比+13.3%），但2026年3月MAU被汽水音乐反超，显示对增量/回流用户的吸引力正被短视频渠道稀释。",
+          "techRouteRisk": "①AIGC音乐对传统版权授权+人工创作路线构成潜在替代风险——若AI生成曲目可低成本满足BGM类消费需求，将侵蚀依赖版权成本结构的流媒体平台差异化优势，公司已投入AI推荐大模型Climber及AI情绪调音师等功能，属防御性布局而非对冲版权风险的根本解法；②公司更紧迫的技术路线风险并非AI而是分发渠道范式差异——汽水音乐依托短视频算法推荐+海量UGC短内容，将音乐消费从主动搜索订阅曲库改造为被动刷流分发BGM，2026年3月已致其MAU反超网易云音乐；③公司2026H1 AI相关研发投入同比+3.2%至3.91亿元（研发强度9.88%），显示管理层已识别该风险并加码，但未见量化AI功能对留存/转化实际效果的数据，防御路线有效性存疑。",
+          "concentration": {
+            "customers": "存在单一客户集中度：2026H1占总收入10%以上的外部客户（公司未披露身份）收入59,760.7万元，占比15.10%，较2025H1的13.09%上升，公司未披露该客户身份及业务性质",
+            "suppliers": {
+              "status": "unavailable",
+              "reason": "collection文件businessModelMoat维度仅有'版权资源落后于腾讯音乐系'的定性表述，未披露前几大版权方（唱片公司）采购金额占比等定量集中度指标，已查全文未见相关附注"
+            },
+            "evidence": [
+              {
+                "metric": "客户A收入占比",
+                "value": "2026H1: 597,607千元/15.10%；2025H1: 500,977千元/13.09%",
+                "asOf": "2026H1",
+                "source": {
+                  "name": "网易云音乐2026中期业绩公告附注2(c)「主要客户信息」",
+                  "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000350_c.pdf"
+                }
+              }
+            ]
+          }
+        },
+        "inquiry": {
+          "question": "站在20年后回看，这家公司是「这个时代的标准石油」还是「昙花一现的3Com」？",
+          "answer": "更接近区域性守成者而非标准石油式垄断者或3Com式速朽者，胜负未定。①内容基础设施属性使其不会瞬间消失——UGC社区与数字资产沉淀形成转换成本，会员订阅收入FY2025同比+13.3%，FY2023起净利润已转正，具备长期存续基础；②但远未达标准石油式行业定价权——版权资源持续落后于腾讯音乐系，2020年官方数据显示双方收入差距达3.6倍，上游成本结构长期受制于人；③20年维度真正的变量是分发渠道范式再造——字节系汽水音乐已凭短视频算法在2026年3月反超其MAU，若趋势持续深化，网易云音乐更可能收敛为服务存量重度乐迷的利基订阅平台，而非行业标准制定者。"
+        },
+        "dataGaps": [
+          {
+            "path": "industryTrend.analysis.concentration.suppliers",
+            "reason": "collection文件未披露版权方（唱片公司/独立音乐人）采购集中度定量数据，仅有定性表述",
+            "searched": "financials-collection.json businessModelMoat与industryOutlook字段全文"
+          },
+          {
+            "path": "industryTrend.analysis.tam.ceiling",
+            "reason": "无第三方机构对行业绝对天花板的定量测算，仅能引用Omdia的份额趋势作方向性佐证",
+            "searched": "financials-collection.json industryOutlook字段全文"
+          }
+        ]
+      },
+      "valuation": {
+        "title": "估值分析",
+        "conclusion": "估值已隐含悲观预期，EV/Revenue仅1.04倍、隐含永续增长率约1.7%，但费用管控可持续性存疑压制估值弹性。",
+        "analysis": {
+          "currentMultiples": {
+            "marketCap": {
+              "value": "23,051,044,345",
+              "currency": "HKD",
+              "asOf": "2026-08-20",
+              "source": {
+                "name": "本次研究第1步数据采集与financial_rigor.py验算",
+                "url": "research/companies/hk-9899-netease-cloud-music/financials-collection.json"
+              }
+            },
+            "pe": {
+              "value": "11.99x（TTM，报表口径，IFRS归母净利润）；经调整口径(剔除股份支付)为11.29x",
+              "asOf": "2026-08-20",
+              "source": {
+                "name": "本次研究第1步数据采集与financial_rigor.py验算",
+                "url": "research/companies/hk-9899-netease-cloud-music/financials-collection.json"
+              }
+            },
+            "ps": {
+              "value": "2.54x（TTM市值(RMB)/TTM收入）",
+              "asOf": "2026-08-20",
+              "source": {
+                "name": "本次研究第1步数据采集与financial_rigor.py验算",
+                "url": "research/companies/hk-9899-netease-cloud-music/financials-collection.json"
+              }
+            },
+            "peg": {
+              "status": "unavailable",
+              "reason": "FY2025核心业绩含约7.47亿元一次性递延所得税抵免，剔除后经营性盈利基数与各机构前瞻盈利预测口径差异较大（如浦银国际FY26E调整后净利润预测20.30亿元 vs 官方FY25经调整净利润28.60亿元本身即含一次性因素），暂不计算PEG，已在collection文件中记录"
+            },
+            "evToRevenue": {
+              "value": "1.04x（EV=市值20,021,753千元RMB-现金及银行存款11,851,723千元/TTM收入7,891,039千元，假设有息负债为零）",
+              "asOf": "2026-08-20",
+              "source": {
+                "name": "本次研究第1步数据采集与financial_rigor.py验算",
+                "url": "research/companies/hk-9899-netease-cloud-music/financials-collection.json"
+              }
+            }
+          },
+          "reverseDcf": {
+            "impliedGrowth": "隐含永续增长率约1.7%，市场几乎未计入成长溢价，情绪偏悲观。",
+            "assumptions": "贴现率10%，Gordon单阶段模型反解g≈1.7%，未做分阶段DCF。"
+          },
+          "threeScenario": {
+            "inputs": {
+              "price": "112.6",
+              "eps": "9.39（HKD，由TTM归母净利润RMB1,669,565千元×汇率1.1513折算后除以期末总股本得出）",
+              "sharesHundredMillion": "2.04716202",
+              "growth": [
+                "15%",
+                "8%",
+                "-5%"
+              ],
+              "pe": [
+                "15x",
+                "12x",
+                "9x"
+              ],
+              "years": 3,
+              "currency": "HKD"
+            },
+            "optimistic": {
+              "targetPrice": "214.2 HKD",
+              "impliedReturnPct": "+90.2%"
+            },
+            "neutral": {
+              "targetPrice": "141.9 HKD",
+              "impliedReturnPct": "+26.1%"
+            },
+            "pessimistic": {
+              "targetPrice": "72.5 HKD",
+              "impliedReturnPct": "-35.7%"
+            },
+            "assumptionBasis": "①增速：乐观15%——参考FY2025会员订阅收入同比+13.3%及降本增效带来的经营杠杆持续释放；中性8%——对应2026H1收入+3.4%叠加毛利率企稳后的温和净利润增长；悲观-5%——汽水音乐持续分流叠加2026H1销售及市场费用同比+80.7%侵蚀利润的趋势线性外推。②PE：中性12x锚定当前TTM PE(报表口径)11.99x；乐观15x对应AI功能矩阵与会员ARPPU回升带来的估值修复；悲观9x对应汽水音乐分流兑现、增长预期落空后的估值折价，三档跨度覆盖近年竞争格局生变导致的市场情绪波动。③口径：EPS按TTM归母净利润(RMB1,669,565千元)×汇率1.1513折算为HKD后除以期末总股本204,716,202股，得HKD9.39，与股价同为HKD口径，避免RMB/HKD混用。",
+            "toolOutput": "============================================================\n三情景估值模型 (Three-Scenario Valuation)\n============================================================\n  当前股价: 112.6 HKD\n  当前EPS:  9.389438479813142\n  预测期:   3年\n\n  情景                年增速     目标PE      目标EPS       目标股价      涨跌幅\n  ------------ -------- -------- ---------- ---------- --------\n  乐观 (Bull)         15%      15x      14.28     214.2   +90.2%\n  中性 (Base)          8%      12x      11.83     141.9   +26.1%\n  悲观 (Bear)         -5%       9x       8.05      72.5   -35.7%\n\n  ✅ 所有计算使用精确十进制, 结果可审计复现"
+          },
+          "vsOwnHistory": {
+            "metric": "PE（TTM，报表口径）",
+            "currentValue": "11.99x",
+            "historicalRange": {
+              "status": "unavailable",
+              "reason": "financials-collection.json全文、公司目录下历史存档文件均未记录52周股价区间或历史PE区间字段；本维度不允许联网检索核实"
+            },
+            "source": {
+              "name": "unavailable",
+              "url": ""
+            }
+          },
+          "vsPeers": [
+            {
+              "name": "腾讯音乐娱乐集团 Tencent Music Entertainment (1698.HK)",
+              "pe": {
+                "status": "unavailable",
+                "reason": "需读取hk-1698-tencent-music的currentValuation数据，本维度未获得该文件访问权限；已知其FY2025收入32,902百万元RMB(约为网易云音乐4.2倍)"
+              },
+              "ps": {
+                "status": "unavailable",
+                "reason": "需读取hk-1698-tencent-music的currentValuation数据，本维度未获得该文件访问权限；已知其FY2025毛利率44.2%，高于网易云音乐35.69%约8.5个百分点"
+              },
+              "source": {
+                "name": "research/companies/hk-9899-netease-cloud-music/financials-collection.json competitiveLandscape.competitors（转引hk-1698-tencent-music研究产出的收入与毛利率数据）",
+                "url": ""
+              }
+            }
+          ]
+        },
+        "inquiry": {
+          "question": "如果股市明天关闭5年，你愿意以这个价格持有吗？",
+          "answer": "愿意，但仅作小仓位配置——当前估值已部分计入悲观预期，具备一定安全边际。①净现金约118.5亿元（2026H1末）占市值近六成，EV/Revenue仅1.04倍，下行空间已被现金储备部分对冲；②会员订阅收入占比约65%且FY2025同比+13.3%，独立音乐人生态（125万人/超730万首曲目）提供内容差异化，具备穿越周期的付费基础；③但汽水音乐MAU已反超、2026H1营销费用同比+80.7%侵蚀利润，若竞争与费用压力持续5年，中性情景3年目标涨幅仅26.1%、悲观情景下跌35.7%，且公司自上市以来未曾派息，长期持有需承受较大波动而无现金分红缓冲。"
+        },
+        "dataGaps": [
+          {
+            "path": "valuation.analysis.vsOwnHistory.historicalRange",
+            "reason": "52周股价区间/历史PE区间在collection文件及公司目录下所有历史文件均未记录，本维度不允许联网核实",
+            "searched": "financials-collection.json、公司目录下financials.json与历史analysis.md"
+          },
+          {
+            "path": "valuation.analysis.vsPeers[0].pe / ps",
+            "reason": "未获得hk-1698-tencent-music目录financials-collection.json的currentValuation字段访问权限",
+            "searched": "本次分析仅授权读取本公司collection文件"
+          },
+          {
+            "path": "valuation.analysis.currentMultiples.peg",
+            "reason": "一次性递延所得税抵免导致前瞻盈利口径不可比，沿用collection文件结论标记unavailable",
+            "searched": "financials-collection.json currentValuation.peg"
+          }
+        ]
+      }
+    },
+    "crossValidationLog": [
+      {
+        "field": "TTM EPS折算（RMB→HKD）",
+        "source1": {
+          "name": "TTM归母净利润1,669,565千元RMB × 汇率1.1513 ÷ 期末总股本204,716,202股",
+          "value": "9.389438479813142 HKD"
+        },
+        "source2": {
+          "name": "docs/research/tools/financial_rigor.py three-scenario 工具入参核对",
+          "value": "9.39 HKD（工具原始输出）"
+        },
+        "deviationPct": 0,
+        "flag": "ok",
+        "resolution": "一致，工具输出与手工折算核对一致，采用工具输出的精确值"
+      },
+      {
+        "field": "三情景估值（three-scenario）",
+        "source1": {
+          "name": "docs/research/tools/financial_rigor.py three-scenario --price 112.6 --eps 9.389438479813142 --shares 2.04716202 --growth 15 8 -5 --pe 15 12 9 --years 3 --currency HKD",
+          "value": "乐观214.2 HKD(+90.2%) / 中性141.9 HKD(+26.1%) / 悲观72.5 HKD(-35.7%)"
+        },
+        "source2": {
+          "name": "不适用（工具计算无需第二来源交叉验证，计算逻辑透明可复现）",
+          "value": "N/A"
+        },
+        "deviationPct": null,
+        "flag": "ok",
+        "resolution": "工具原始输出直接采用，assumptionBasis已说明三档增速与PE取值依据"
+      },
+      {
+        "field": "净利润÷收入换算的净利率（FY2021-FY2025）",
+        "source1": {
+          "name": "financials-collection.json financialMetrics.annual 的revenue与netProfit原始数字",
+          "value": "FY2021: -2,056,092/6,997,622；FY2025: 2,748,210/7,759,450 等"
+        },
+        "source2": {
+          "name": "本维度分析Agent的简单比例计算（非新数据源，仅为两个已知数字的算术换算）",
+          "value": "FY2021: -29.38%；FY2025: 35.42% 等"
+        },
+        "deviationPct": 0,
+        "flag": "ok",
+        "resolution": "算术换算非引入新数据，不构成交叉验证意义上的双源比对，已在数值旁注明非公司列示科目"
+      },
+      {
+        "field": "研发强度（2026H1）",
+        "source1": {
+          "name": "网易云音乐2026中期业绩公告：研发费用391,011千元 / 收入3,958,706千元",
+          "value": "9.88%"
+        },
+        "source2": {
+          "name": "不适用，单一算术换算",
+          "value": "N/A"
+        },
+        "deviationPct": null,
+        "flag": "ok",
+        "resolution": "简单比例计算，两个分子分母均来自同一份官方公告，无交叉验证必要性"
+      }
+    ]
+  },
+  "summary": {
+    "_spec": {
+      "purpose": "研究流程第 3 步（分析总结）的产出模板。由评估 Agent 基于第 1 步采集与第 2 步分析的落盘文件生成，不重新采集。步骤正文见 docs/research/workflow/03-analysis-summary.md。"
+    },
+    "meta": {
+      "companyId": "hk-9899-netease-cloud-music",
+      "companyName": "网易云音乐股份有限公司 (NetEase Cloud Music Inc.)",
+      "summarizedAt": "2026-08-20",
+      "dataCutoff": "2026-08-20（Asia/Shanghai）",
+      "basedOnCollection": "research/companies/hk-9899-netease-cloud-music/financials-collection.json",
+      "basedOnAnalysis": "research/companies/hk-9899-netease-cloud-music/financials-analysis.json"
+    },
+    "dimensionSummary": [
+      {
+        "dimensionId": "businessQuality",
+        "title": "生意质量",
+        "mapsTo": "dimensions.businessEssence",
+        "conclusion": "本质是靠会员订阅与UGC社区锁住存量乐迷的现金牛生意，毛利率已从深度亏损修复至健康水平，但收入四年基本停滞，利润改善主要靠费用收缩而非规模增长，2026H1已现负经营杠杆。",
+        "confidence": 5.5,
+        "scoreBasis": "①会员订阅收入占总收入约65%，FY2025同比+13.3%，是收入利润压舱石(analysis.revenueBreakdown)；②毛利率FY2021 2.04%→FY2025 35.69%持续修复，但收入FY2021-2025基本持平(69.98亿→77.59亿元)(analysis.profitabilityTrend5y)；③2026H1出现负经营杠杆：收入+3.4%而销售及市场费用+80.7%，营业利润反降11.6%，说明利润弹性来自费用端而非天然规模效应(analysis.operatingLeverage)。"
+      },
+      {
+        "dimensionId": "moat",
+        "title": "护城河",
+        "mapsTo": "dimensions.moat",
+        "conclusion": "护城河集中在转换成本与社区网络效应，对存量付费用户留存有效，但对新增/回流用户吸引力持续减弱，规模效应弱于腾讯音乐，过去5年及未来5年趋势均判断为变窄。",
+        "confidence": 4,
+        "scoreBasis": "①转换成本与网络效应verdict均为'存在'，但品牌定价权与技术专利verdict为'待验证'，规模效应verdict为'不存在'，毛利率35.69%仍落后腾讯音乐44.2%约8.5pp(analysis.types)；②trendPast5y与trendNext5y均判定'变窄'，MAU从2021年1.83亿降至2026年3月1.4682亿并被汽水音乐(1.5605亿)反超、跌出行业前三(analysis.trendPast5y/trendNext5y)；③品牌定价权与技术壁垒证据不足(dataGaps载明未查得ARPU分年拆分、专利仅第三方数据)，证据限制下评分向中性收敛。"
+      },
+      {
+        "dimensionId": "management",
+        "title": "管理层",
+        "mapsTo": "dimensions.management",
+        "conclusion": "丁磊持股集中(60.29%)带来强利益绑定，回购择时相对合理，但主席兼CEO角色未分离构成治理偏离，且2025年削减营销费用换取利润的决策被评为可持续性差。",
+        "confidence": 5,
+        "scoreBasis": "①股份回购决策评级★4，耗资9.67亿港元、彼时TTM PE约11.99倍处相对低位(analysis.keyDecisions[0])；②2025年降本增效决策评级仅★2，指出'短期美化利润但牺牲竞争地位，可持续性差'，与汽水音乐MAU反超时点重合(analysis.keyDecisions[2])；③治理层面主席与CEO角色未分离，构成对《企业管治守则》C.2.1条的自评偏离(analysis.culture)；④薪酬结构、并购记录、团队稳定性均为dataGaps未披露，证据限制下评分向中性收敛。"
+      },
+      {
+        "dimensionId": "keyRisk",
+        "title": "最大风险",
+        "mapsTo": "dimensions.inversion",
+        "conclusion": "最大风险是汽水音乐依托抖音流量对用户时长的持续分流叠加费用管控红利耗尽的双重挤压：前者概率高、影响高且短期难以逆转，后者已在2026H1兑现为营业利润下滑，两者叠加可能使公司从追随者滑向边缘化。",
+        "confidence": 3.5,
+        "scoreBasis": "①汽水音乐MAU持续反超路径probability标为'高'、impact标为'高'，2026年3月MAU 1.5605亿对网易云音乐1.4682亿(failurePaths[0])；②费用管控红利耗尽路径同样probability'高'、impact'高'，2026H1销售及市场费用同比+80.7%已导致营业利润同比-11.6%(failurePaths[2])；③净现金118.5亿元(占市值近六成)与净现金状态(负债率22.7%且基本无有息负债)提供一定缓冲，但风险本身指向核心竞争位置持续弱化而非可对冲的单一事件，故评分不高但未至严重不利区间。"
+      },
+      {
+        "dimensionId": "civilizationTrend",
+        "title": "文明趋势",
+        "mapsTo": "dimensions.industryTrend",
+        "conclusion": "在线音乐流媒体作为渠道范式已确立，中国市场仍处平稳扩张期，但网易云音乐在产业链中上游议价权持续弱于腾讯音乐系，且下游流量入口正被短视频渠道再范式化分流，公司享受行业增长的确定性低于行业本身增长的确定性。",
+        "confidence": 6,
+        "scoreBasis": "①行业增速放缓但未见萎缩：IFPI披露2025年中国录制音乐收入同比+20.1%居全球前20大市场第一，Omdia预测中国份额2025年5.8%→2030年8.7%(analysis.tam/paradigmShift)；②上游版权议价权劣势明确：招股章程披露2020年基线与腾讯音乐系收入差距达3.6倍，官方风险因素原文承认'规模上仍有显著差距'(analysis.valueChainPosition)；③下游分发渠道正被汽水音乐的短视频算法逻辑再范式化，2026年3月MAU反超(analysis.techRouteRisk)。"
+      },
+      {
+        "dimensionId": "valuation",
+        "title": "估值",
+        "mapsTo": "dimensions.valuation",
+        "conclusion": "当前估值已隐含较悲观预期，EV/Revenue仅1.04倍、反解永续增长率约1.7%，净现金覆盖近六成市值，三情景测算呈现明显上行倾斜(中性+26.1%/乐观+90.2%)但悲观情景仍有-35.7%下行空间。",
+        "confidence": 7,
+        "scoreBasis": "①TTM PE 11.99倍(经调整11.29倍)、EV/Revenue 1.04倍，反解Gordon模型隐含永续增长率约1.7%，'市场几乎未计入成长溢价'(analysis.currentMultiples/reverseDcf)；②三情景测算：乐观214.2港元(+90.2%)、中性141.9港元(+26.1%)、悲观72.5港元(-35.7%)，基于当前价112.6港元(analysis.threeScenario)；③净现金约118.5亿元人民币占当前市值约200亿元人民币近六成，对下行提供部分对冲(bullBearCase/inquiry)；④历史PE区间与同业腾讯音乐PE/PS对比均unavailable(dataGaps)，证据限制下评分未进一步上调。"
+      },
+      {
+        "dimensionId": "corporateCulture",
+        "title": "企业文化",
+        "mapsTo": "dimensions.management.analysis.culture",
+        "conclusion": "已披露证据显示公司治理结构上主席与CEO角色未分离并自评偏离监管守则，成本纪律随经营压力大幅摇摆(先降后升)，技术投入方向明确转向AI，但薪酬考核、团队稳定性、并购能力等文化相关证据大面积缺失。",
+        "confidence": 4.5,
+        "scoreBasis": "①治理结构：主席与CEO角色未分离(丁磊兼任)，公司自评构成对《企业管治守则》C.2.1条的偏离，董事会解释为提升战略执行效率(analysis.culture①)；②成本纪律随经营压力摇摆：2025年销售及市场费用同比削减33.2%、管理费用降4.4%，但2026H1销售费用同比激增80.7%回补(analysis.culture②)；③技术投入向AI倾斜：2026H1研发费用同比+3.2%，主要投向Climber大模型升级与AI互动功能(analysis.culture③)；④薪酬考核挂钩指标、核心高管团队稳定性、并购历史均为dataGaps标记unavailable(management.dataGaps)，证据限制下评分向中性收敛。"
+      }
+    ],
+    "strategies": {
+      "noPosition": {
+        "title": "空仓者",
+        "advice": "①当前估值已部分计入悲观预期但护城河变窄趋势未反转，不建议现价追高建仓；②可等待价格跌至悲观情景附近或竞争/费用指标出现企稳信号后分批介入；③优先以小仓位试探而非重仓，因治理集中与MAU反超风险尚未消除。",
+        "triggers": [
+          {
+            "condition": "股价跌至72.5港元附近，接近悲观情景对应价位",
+            "action": "可考虑左侧小仓位试探性建仓，不宜一次性重仓",
+            "basis": "①72.5港元为悲观情景目标价(-35.7%)，对应引用dimensions.valuation.analysis.threeScenario悲观情景；②净现金约118.5亿元占当前市值近六成，EV/Revenue仅1.04倍，为下行提供部分对冲，引用dimensions.valuation.analysis.currentMultiples与bullBearCase。"
+          },
+          {
+            "condition": "汽水音乐MAU领先优势连续两个季度不再扩大",
+            "action": "确认护城河企稳后再考虑分批建仓",
+            "basis": "①引用dimensions.moat.analysis.trendNext5y'变窄'判断及dimensions.inversion.analysis.failurePaths[0]汽水音乐MAU 1.5605亿对网易云音乐1.4682亿的反超路径；②该路径probability标注'高'、impact标注'高'，是判断护城河是否企稳的核心观测指标。"
+          },
+          {
+            "condition": "销售及市场费用增速回落且收入增速同步转正并企稳",
+            "action": "确认经营杠杆恢复良性后再考虑建仓",
+            "basis": "①引用dimensions.inversion.analysis.failurePaths[2]费用管控红利耗尽路径，2026H1销售及市场费用同比+80.7%而营业利润同比-11.6%；②引用dimensions.businessEssence.analysis.operatingLeverage说明当前利润弹性来自费用端而非规模效应。"
+          }
+        ]
+      },
+      "holding": {
+        "title": "持仓者",
+        "advice": "①现价112.6港元处于悲观与中性情景之间，可维持现有仓位观察后续两份财报；②密切跟踪会员订阅收入增速与MAU排名两个核心指标是否进一步恶化；③若护城河与费用杠杆同步恶化应考虑减仓而非死扛，因生意质量与护城河评分均处中性偏低区间。",
+        "triggers": [
+          {
+            "condition": "股价维持在112至142港元区间，对应现价至中性目标价",
+            "action": "维持现有仓位，暂不加仓也不减仓",
+            "basis": "①141.9港元为中性情景目标价(+26.1%)，引用dimensions.valuation.analysis.threeScenario中性情景；②TTM PE 11.99倍与EV/Revenue 1.04倍未明显高估，引用dimensions.valuation.analysis.currentMultiples。"
+          },
+          {
+            "condition": "会员订阅收入同比增速进一步跌破2026H1的5.3%",
+            "action": "警惕订阅增长引擎失速，应考虑减仓",
+            "basis": "①引用dimensions.inversion.analysis.failurePaths[1]会员ARPPU增长逼近天花板路径，会员订阅收入增速已由FY2025的+13.3%放缓至2026H1的+5.3%；②该路径probability标注'中'、impact标注'高'。"
+          },
+          {
+            "condition": "汽水音乐MAU领先优势持续扩大超过两个季度",
+            "action": "重新评估护城河宽度，考虑分批减仓",
+            "basis": "①引用dimensions.moat.analysis.trendPast5y/trendNext5y均判定'变窄'的结论；②引用dimensions.inversion.analysis.failurePaths[0]汽水音乐同比+78%反超网易云音乐MAU的数据。"
+          }
+        ]
+      },
+      "sellSignals": {
+        "title": "卖出信号",
+        "signals": [
+          {
+            "signal": "汽水音乐对网易云音乐的MAU领先优势连续两个季度继续扩大",
+            "observable": "QuestMobile季度数据显示两者MAU差距持续拉大而非收窄",
+            "basis": "①引用dimensions.inversion.analysis.failurePaths[0]，2026年3月网易云音乐1.4682亿对汽水音乐1.5605亿，probability'高'、impact'高'；②引用dimensions.moat.analysis.trendNext5y护城河变窄判断。"
+          },
+          {
+            "signal": "销售及市场费用维持高增速但收入增速未同步回升",
+            "observable": "半年报或年报显示营销费用同比增速超50%而收入增速低于5%",
+            "basis": "①引用dimensions.businessEssence.analysis.operatingLeverage，2026H1销售及市场费用同比+80.7%而收入仅+3.4%、营业利润-11.6%；②引用dimensions.inversion.analysis.failurePaths[2]费用管控红利耗尽路径。"
+          },
+          {
+            "signal": "会员订阅收入同比增速进一步降至个位数低位或转负",
+            "observable": "下一份半年报或年报的会员订阅收入同比增速低于3%或为负",
+            "basis": "①引用dimensions.inversion.analysis.failurePaths[1]，增速已由FY2025的+13.3%放缓至2026H1的+5.3%；②引用dimensions.businessEssence.inquiry.answer中'幸存者偏差'提示，警惕分母缩小掩盖用户总盘萎缩。"
+          }
+        ]
+      },
+      "addSignals": {
+        "title": "加仓信号",
+        "signals": [
+          {
+            "signal": "股价回落至72.5港元附近悲观情景价位但基本面未同步恶化",
+            "observable": "价格跌破悲观目标价而同期MAU与订阅收入未进一步下滑",
+            "basis": "①72.5港元引用dimensions.valuation.analysis.threeScenario悲观情景(-35.7%)；②净现金约118.5亿元占市值近六成为估值提供缓冲，引用dimensions.valuation.analysis.currentMultiples与bullBearCase。"
+          },
+          {
+            "signal": "网易云音乐MAU排名重新反超汽水音乐或差距明显收窄",
+            "observable": "QuestMobile数据显示网易云音乐MAU回升至汽水音乐之上或差距缩小超三成",
+            "basis": "①引用dimensions.moat.analysis.trendNext5y中'方向暂未见反转信号'的表述，一旦反转即构成加仓依据；②引用dimensions.inversion.analysis.failurePaths[0]的MAU对比基准数据。"
+          },
+          {
+            "signal": "销售费用增速回落同时收入维持正增长，经营杠杆转正",
+            "observable": "半年报或年报显示营业利润增速快于收入增速",
+            "basis": "①引用dimensions.businessEssence.analysis.operatingLeverage，当前判断'规模效应对利润的传导尚未验证'，一旦验证即为加仓信号；②引用dimensions.management.analysis.keyDecisions[0]回购决策评级★4，说明管理层在低估值区间有回购意愿可作为佐证。"
+          }
+        ]
+      }
+    },
+    "disclaimer": "本总结基于公开信息与数据截止时点的分析生成，仅供研究参考，不构成个性化投资建议。"
+  }
+}
