@@ -2,15 +2,16 @@
   "_spec": {
     "purpose": "研究流程第 3 步（分析总结）的产出模板。由评估 Agent 基于第 1 步采集与第 2 步分析的落盘文件生成，不重新采集。步骤正文见 docs/research/workflow/03-analysis-summary.md。",
     "todoSentinel": "所有待填值写 \"__TODO__\"；无法给出的字段不删除，改写 { \"status\": \"unavailable\", \"reason\": \"缺失原因\" }。",
-    "confidence": "信心度总分 10 分（0–10，整数或 0.5 步长）：价值投资视角下对该维度的看多程度，分数越高越看多。梯度：9–10 教科书级优秀（宽护城河/卓越管理层/显著低估）；7–8 明显有利有小瑕疵；5–6 中性或好坏参半；3–4 明显不利；0–2 严重不利。最大风险维度按风险可控程度打分（越致命越低），估值维度按价格吸引力打分（越透支越低）。证据不足向中性收敛并在 scoreBasis 说明，不把数据缺口误报为看空理由。",
+    "confidence": "信心度总分 10 分（0–10，整数或 0.5 步长）：价值投资视角下对该维度的看多程度，分数越高越看多。梯度：9–10 教科书级优秀（宽护城河/卓越管理层/显著低估）；7–8 明显有利有小瑕疵；5–6 中性或好坏参半；3–4 明显不利；0–2 严重不利。最大风险维度按风险可控程度打分（越致命越低），估值维度按价格吸引力打分（越透支越低），企业文化维度按文化对长期股东的有利程度打分（诚信披露、长期主义、股东导向为正；粉饰、短期激进、高管动荡为负）。证据不足向中性收敛并在 scoreBasis 说明，不把数据缺口误报为看空理由。",
+    "corporateCulture": "企业文化维度的 conclusion 是客观陈述，不是印象分：只转述第 2 步 dimensions.management.analysis.culture 及管理层维度其他字段（keyDecisions、alignment、organization）已落盘的可观察证据，不引入前两步文件之外的公司口碑、媒体印象或行业刻板印象，严禁编造。该字段缺失、unavailable 或证据以单源/[估计] 为主时，结论如实写明证据限制，信心度向中性（5–6）收敛。",
     "traceability": "每个结论、评分、建议的 basis 字段必须写明引用的前两步文件字段路径（如 dimensions.valuation.analysis.threeScenario）与关键数据，不接受凭空判断。",
     "strategies": "每条策略建议必须绑定可观察触发条件（价格区间 / 指标阈值 / 具体事件），价格类引用第 2 步 threeScenario 结果，基本面类引用 failurePaths、护城河 breaker 或驱动指标。"
   },
   "meta": {
     "companyId": "hk-1024-kuaishou",
     "companyName": "快手科技 / Kuaishou Technology",
-    "summarizedAt": "2026-08-09T18:00:00+08:00",
-    "dataCutoff": "2026-08-09（Asia/Shanghai）",
+    "summarizedAt": "2026-08-20T15:00:00+08:00",
+    "dataCutoff": "2026-08-20（Asia/Shanghai）",
     "basedOnCollection": "research/companies/hk-1024-kuaishou/financials-collection.json",
     "basedOnAnalysis": "research/companies/hk-1024-kuaishou/financials-analysis.json"
   },
@@ -19,91 +20,99 @@
       "dimensionId": "businessQuality",
       "title": "生意质量",
       "mapsTo": "dimensions.businessEssence",
-      "conclusion": "快手把老铁社区沉淀的下沉流量转卖给广告主、商家与打赏用户，FY2025毛利率55.02%、经营利润增速35%远超营收12.5%增速，经营杠杆强劲，但AI资本开支翻倍已使自由现金流同比下滑45.8%。",
-      "confidence": 7.5,
-      "scoreBasis": "①官方口径FY2025毛利率55.02%、经营利润率14.45%，经营利润同比+35.0%远超营收+12.5%，经营杠杆显著为正（dimensions.businessEssence.analysis.operatingLeverage）；②DAU/MAU比约53.5%显示强用户粘性，磁力引擎UAX渗透率近60%降低获客成本（dimensions.businessEssence.analysis.stickiness）；③FY2025自由现金流同比-45.8%至RMB117.74亿，因AI资本开支翻倍，短期现金创造能力承压（同上operatingLeverage.evidence）；④分部毛利率、用户留存率等关键数据缺失，限制对单位经济更精细的判断（dimensions.businessEssence.dataGaps）。"
+      "conclusion": "老铁社区高粘性变现模式未变，但2026Q2首次出现传统引擎（广告+直播）收入绝对收缩-1.6%，经营杠杆由正转负（经营利润-29.0%），毛利率下滑主要为收入结构切换而非核心广告定价权恶化。",
+      "confidence": 5.5,
+      "scoreBasis": "①经营杠杆本季由正转负：2026Q2营收+1.4%但经营利润-29.0%、期内利润-36.0%（dimensions.businessEssence.analysis.operatingLeverage）；②传统引擎（广告+直播）合计收入同比-1.6%，全部净增长依赖电商服务费+可灵AI（dimensions.businessEssence.analysis.revenueBreakdown.latestQuarterUpdate.legacyEngineContraction）；③毛利率下滑4.1pp证据链更支持结构切换而非核心定价权恶化，在线营销服务仍+4.4%正增长但增速持续放缓（dimensions.businessEssence.analysis.marginBridge2026Q2）；④分部毛利率、用户留存率等关键数据仍缺失（dimensions.businessEssence.dataGaps）。"
     },
     {
       "dimensionId": "moat",
       "title": "护城河",
       "mapsTo": "dimensions.moat",
-      "conclusion": "快手护城河呈网络效应变窄、规模效应稳定、AI技术壁垒变宽的三力抵消格局，品牌定价权不存在、转换成本证据不足，长期存续高度取决于Kling AI能否独立商业化成功。",
-      "confidence": 5.5,
-      "scoreBasis": "①MAU增速3.4%对比抖音14.7%，网络效应边际收窄（dimensions.moat.analysis.types[2]）；②研发强度稳定10.15%支撑规模效应，但直播收入连续两季下滑（-1.0%、-13.5%）显示定价权不存在（dimensions.moat.analysis.types[0]、[3]）；③OneRec/Kling AI技术壁垒判定为\"变宽\"，但关键证据（观看时长+1.6%、ARR翻倍、180-200亿美元估值传闻）均单源且分拆\"仍处初步阶段\"未签约（dimensions.moat.analysis.types[4]）；④转换成本（UAX渗透率60%）与提价弹性均缺乏第三方验证（dimensions.moat.dataGaps）。"
+      "conclusion": "网络效应因MAU增速落后抖音持续变窄；技术壁垒因可灵AI分拆签约成为可定价资产，但其FY2025净亏损同比扩大约280%且竞争加剧，护城河商业耐久性的不确定性同步上升；转换成本仍待验证。",
+      "confidence": 5,
+      "scoreBasis": "①可灵AI分拆融资已于2026-07-02签约落地，投后估值约USD180亿，腾讯/阿里云/百度联合押注（dimensions.moat.analysis.types[4]）；②但可灵AI FY2025净亏损同比扩大约280%(RMB5亿→19亿)且面临字节/谷歌/阿里直接竞争，行业称\"建壁垒窗口期不多\"（同上note）；③集团总收入增速连续三季度加速降速(11.8%→3.4%→1.4%)，网络效应基本盘持续被抖音蚕食（dimensions.moat.analysis.types[2]）；④转换成本因分部成本拆分数据缺失维持\"待验证\"（dimensions.moat.dataGaps）。"
     },
     {
       "dimensionId": "management",
       "title": "管理层",
       "mapsTo": "dimensions.management",
-      "conclusion": "创始人以约66%投票权掌控公司，宿华已完成CEO到战略角色的平稳交接，资本配置转向常态化分红回购且AI研发转化力强，但薪酬考核披露缺失、回购均价高于现价、高管梯队信息空白。",
-      "confidence": 6.5,
-      "scoreBasis": "①程一笑、宿华合计经济权益约18.6%、投票权约66%（WVR架构），宿华已有CEO转战略角色先例，继任缓冲较好（dimensions.management.analysis.alignment、organization.keyPersonRisk）；②FY2025首次特别股息+常态化末期股息+持续回购，资本配置转向股东回报，Kling AI/OneRec研发已转化为收入与效率提升（dimensions.management.analysis.keyDecisions、capitalAllocation.rdReturn）；③两次回购测算均价（HK$54.9、HK$47.6）均高于现价HK$44.18，择时非精准抄底（dimensions.management.analysis.capitalAllocation.buybackTiming）；④管理层薪酬结构、CFO/COO等高管梯队信息均缺失，治理透明度证据不足（dimensions.management.dataGaps）。"
+      "conclusion": "程一笑/宿华合计约66%投票权治理结构未变，可灵AI分拆52天内完成签约显示执行力强，但H1加杠杆(总借款+109.4%)支撑回购的资本结构逻辑未获官方解释，管理层薪酬考核信息仍缺失。",
+      "confidence": 6,
+      "scoreBasis": "①可灵AI分拆从评估到签约仅约52天，吸引腾讯/阿里云/百度多元资本背书，执行力评价上调（dimensions.management.analysis.keyDecisions中可灵AI分拆条目）；②H1总借款+109.4%、财务开支净额+452.6%支撑回购，与账上约RMB1,213亿可动用资金并存但未获官方解释（dimensions.management.analysis.capitalAllocation.buybackTiming）；③管理层展望首次转\"审慎\"但CEO对外引言仍偏正面，判断为诚实表态而非恐慌信号（dimensions.management.analysis.culture）；④薪酬结构、高管梯队信息仍unavailable（dimensions.management.dataGaps）。"
     },
     {
       "dimensionId": "keyRisk",
       "title": "最大风险",
       "mapsTo": "dimensions.inversion",
-      "conclusion": "最大风险是抖音持续虹吸用户时长（MAU增速3.4%对比14.7%），带动直播收入结构性萎缩（2026Q1同比-13.5%）并与AI高资本开支能否兑现回报叠加，是公司难以单方面对冲的竞争格局层面风险。",
-      "confidence": 4,
-      "scoreBasis": "①快手/抖音MAU增速差距3.4%对14.7%且持续扩大，被列为\"中概率、高影响\"失败路径（dimensions.inversion.analysis.failurePaths[0]）；②直播收入连续两季走弱（2025Q4-1.0%、2026Q1-13.5%），与MAU差距互为印证，指向结构性而非周期性（同上evidence）；③Kling AI分拆\"仍处初步阶段未签约\"，叠加FY2025资本开支翻倍、FCF-45.8%，若分拆或商业化落空将侵蚀现金储备，同为\"中概率、高影响\"（dimensions.inversion.analysis.failurePaths[2]）；④监管处罚（2026年1-2月合计超RMB1.45亿）与腾讯减持为中概率、中影响的叠加风险（同上failurePaths[1]、[4]）。"
+      "conclusion": "最大风险从单一竞争劣势升级为\"盈利结构性恶化+审慎展望+加杠杆\"三重叠加：2026Q2经营利润-29.0%、期内利润-36.0%已部分实际兑现而非纯假设情景，且直播收入连续两季度-13.5%未见改善。",
+      "confidence": 3,
+      "scoreBasis": "①盈利结构性恶化失败路径被列为\"中偏高概率、高影响\"且部分已实际发生（dimensions.inversion.analysis.failurePaths[1]）；②直播收入连续两季度同比-13.5%、MAU增速3.4%对比抖音14.7%未见改善（同上failurePaths[0]）；③H1总借款+109.4%、财务开支净额+452.6%推升偿债/流动性风险（同上failurePaths[1]证据）；④可灵AI自身净亏损同比+280%，分拆落地未解决独立造血能力问题（同上failurePaths[3]）。"
     },
     {
       "dimensionId": "civilizationTrend",
       "title": "文明趋势",
       "mapsTo": "dimensions.industryTrend",
-      "conclusion": "短视频用户渗透率已达95.4%接近天花板，广告与直播电商增速降至10-12%/约18%的中速区间，AI内容生成处于范式转移早期；快手是短视频\"老二\"兼AI应用探索者，长期定位取决于Kling AI能否升级为基础设施供应商。",
-      "confidence": 5.5,
-      "scoreBasis": "①短视频用户渗透率95.4%见顶，在线营销TAM预测CAGR10-12%、直播电商CAGR降至约18%，行业转入中速增长（dimensions.industryTrend.analysis.tam）；②议价权因MAU落后抖音（458.16百万vs936.41百万）总体偏弱势，电商GMV份额约20%出头且较2024年持平略降（dimensions.industryTrend.analysis.valueChainPosition）；③OneRec/Kling AI代表的AI范式转移仍处早期，判定为\"部分\"范式转移，20年维度更接近\"区域性寡头\"而非\"标准石油\"（dimensions.industryTrend.analysis.paradigmShift、inquiry.answer）；④广告主/供应商集中度数据缺失，行业TAM各口径差异达一倍以上未调和（dimensions.industryTrend.dataGaps）。"
+      "conclusion": "短视频用户渗透率95.4%见顶判断不变，但本轮新增关键证据：核心商业化收入增速(+4.4%)已跑输QuestMobile统计的行业大盘(+8.1%)达3.7个百分点，远逊于腾讯营销服务+22%，份额流失证据从用户端扩展到商业化效率端。",
+      "confidence": 4.5,
+      "scoreBasis": "①2026Q2在线营销服务收入+4.4%，低于QuestMobile统计行业大盘+8.1%达3.7个百分点，远逊腾讯营销服务+22%（dimensions.industryTrend.analysis.tam.growthCurve）；②可灵AI所在赛道从\"早期探索\"升级为\"资本化竞速+盈利压力显现\"阶段，媒体称\"建壁垒窗口期不多\"（同上paradigmShift）；③2026年资本开支指引约RMB260亿，AI军备竞赛不进则退（dimensions.industryTrend.analysis.techRouteRisk）；④广告主/供应商集中度数据仍缺失（dimensions.industryTrend.dataGaps）。"
     },
     {
       "dimensionId": "valuation",
       "title": "估值",
       "mapsTo": "dimensions.valuation",
-      "conclusion": "9.77倍trailing PE已隐含近零增长预期，三情景测算显示悲观情景仅跌7.9%、中性涨36.2%、乐观涨118.5%，风险收益明显正偏，估值端具备安全边际但上行高度依赖尚未签约的Kling AI分拆兑现。",
-      "confidence": 7,
-      "scoreBasis": "①trailing PE9.77x／forward PE10.10x隐含市场预期未来12个月EPS小幅下滑而非增长，估值未计入AI新业务溢价（dimensions.valuation.analysis.reverseDcf）；②三情景测算：乐观HKD96.5(+118.5%)、中性HKD60.2(+36.2%)、悲观HKD40.7(-7.9%)，下行有限、上行空间大（dimensions.valuation.analysis.threeScenario）；③EV/Revenue0.96x低于PS1.17x，反映净现金约RMB918亿的安全垫（dimensions.valuation.analysis.currentMultiples）；④历史PE分位数与Bilibili等可比公司估值倍数缺失，且乐观/中性情景部分依赖分拆预期兑现，估值判断存在证据限制（dimensions.valuation.dataGaps）。"
+      "conclusion": "9.31x TTM PE隐含的永续增长率与上轮9.77x读数高度相似，本次下跌是盈利下修的合理定价而非错杀；三情景风险分布较上轮明显右偏，悲观情景18.6港元已跌破现价，反映风险上升而非估值更便宜。",
+      "confidence": 5.5,
+      "scoreBasis": "①三情景本轮全面重算：乐观50.4港元(+48.8%)/中性32.8港元(-3.3%)/悲观18.6港元(-45.2%)，悲观情景首次跌破现价，风险分布较上轮(悲观仅-7.9%)明显右偏（dimensions.valuation.analysis.threeScenario）；②反向DCF隐含永续增长率约-0.24%~+1.26%，与上轮读数高度相似，说明并未变得更便宜（dimensions.valuation.analysis.reverseDcf）；③SOTP框架下核心广告+直播主业隐含价值为负(约-HKD72B~80B)，理论上存在深度低估空间，但汇率假设近似、财报后最新分析师目标价缺失，属方向性判断（dimensions.valuation.analysis.vsPeers中可灵AI SOTP条目）；④历史PE分位数、Bilibili估值倍数仍缺失（dimensions.valuation.dataGaps）。"
+    },
+    {
+      "dimensionId": "corporateCulture",
+      "title": "企业文化",
+      "mapsTo": "dimensions.management.analysis.culture",
+      "conclusion": "2026Q2业绩公告首次出现\"审慎\"展望措辞，与CEO对外引言中仍使用的\"稳健\"\"经营韧性\"表述形成语气分层；可灵AI分拆52天内完成签约；H1回购资金来源与总借款+109.4%同步发生，公司未就此提供官方解释。",
+      "confidence": 5.5,
+      "scoreBasis": "①正式展望章节首次使用\"鑒於經營環境日益複雜且充滿挑戰，我們對短期業務前景持審慎態度\"，CEO引言仍用\"穩健的財務與營運表現\"等正面措辞，两文本语气分层（dimensions.management.analysis.culture）；②可灵AI分拆从评估到签约约52天，吸引腾讯/阿里云/百度等多元资本背书（dimensions.management.analysis.keyDecisions）；③H1回购(约HKD19.7亿)与总借款+109.4%、财务开支净额+452.6%同期发生，公司未解释为何持有巨额现金仍选择加杠杆（dimensions.management.analysis.capitalAllocation.buybackTiming）；④员工NPS/离职率等量化文化指标仍缺失，证据以单源定性描述为主（dimensions.management.dataGaps）。"
     }
   ],
   "strategies": {
     "noPosition": {
       "title": "空仓者",
-      "advice": "①9.77x PE与三情景悲观仅-7.9%下行空间提供一定安全边际，可考虑分批小仓位试探性建仓而非重仓；②竞争劣势（MAU差距3.4%对14.7%）与直播收入连续下滑尚未见拐点，不建议在企稳确认前满仓；③优先等待Kling AI分拆签署最终协议等实质性催化剂后再加大仓位。",
+      "advice": "①悲观情景18.6港元已跌破现价，风险分布较上轮明显右偏，不建议现价满仓介入；②等待2026Q3财报验证毛利率/经营利润降幅是否收窄，确认审慎展望是阶段性还是结构性；③可灵AI亏损率若出现收敛迹象，AI第二曲线的确定性将实质提升。",
       "triggers": [
         {
-          "condition": "股价回落至HKD40.7附近且核心商业化收入增速仍维持10%以上",
-          "action": "可分批小仓位建仓，博弈估值修复",
-          "basis": "①对应悲观情景目标价HKD40.7，跌幅仅7.9%（dimensions.valuation.analysis.threeScenario.pessimistic）；②若核心广告+其他服务增速未跌破10%（2026Q1为10.7%），说明基本面未同步恶化，仅估值下探（dimensions.businessEssence.analysis相关revenueStructure数据）。"
+          "condition": "股价跌至18.6港元附近且在线营销服务收入增速未转负",
+          "action": "可少量试探性建仓，博弈核心业务被错杀的可能",
+          "basis": "①对应悲观情景目标价18.6港元，跌幅45.2%（dimensions.valuation.analysis.threeScenario.pessimistic）；②若在线营销服务(当前+4.4%)未同步转负，说明核心广告业务未同步恶化（dimensions.businessEssence.analysis.marginBridge2026Q2.coreAdBusinessCheck）。"
         },
         {
-          "condition": "Kling AI分拆签署最终协议且披露确定性估值",
-          "action": "确认AI第二曲线兑现，可加仓至中性仓位",
-          "basis": "①当前投行SOTP目标价隐含37%-68%空间建立在\"仍处初步阶段未签约\"的传闻上（dimensions.moat.analysis.types[4]、dimensions.inversion.analysis.failurePaths[2]）；②签约落地将消除该项最大不确定性来源。"
+          "condition": "2026Q3财报毛利率/经营利润同比降幅较Q2收窄",
+          "action": "确认盈利下修是阶段性，可提升至标准仓位",
+          "basis": "①2026Q2毛利率-4.1pp、经营利润-29.0%被列为\"中偏高概率高影响\"失败路径（dimensions.inversion.analysis.failurePaths[1]）；②降幅收窄将验证管理层\"审慎\"措辞是短期现象而非结构性恶化（dimensions.management.analysis.culture）。"
         },
         {
-          "condition": "快手主APP MAU同比增速回升、缩小与抖音14.7%的差距",
-          "action": "视为网络效应企稳信号，可提升至标准仓位",
-          "basis": "①MAU差距3.4%对14.7%是最大失败路径的核心证据（dimensions.inversion.analysis.failurePaths[0]）；②差距收窄将直接改善businessQuality与moat两维度的负面判断依据。"
+          "condition": "官方披露可灵AI分季度亏损率呈收敛趋势",
+          "action": "视为AI第二曲线兑现，可逐步加仓",
+          "basis": "①可灵AI FY2025净亏损同比+280%是本轮新增风险（dimensions.moat.analysis.types[4]）；②分季度亏损率数据目前缺失（dimensions.moat.dataGaps），收敛趋势将实质降低护城河耐久性的不确定性。"
         }
       ]
     },
     "holding": {
       "title": "持仓者",
-      "advice": "①净现金约RMB918亿与9.77x低估值提供安全垫，核心仓位可继续持有，无需因短期波动恐慌卖出；②密切跟踪直播收入与Kling AI分拆进展两条主线，恶化信号出现即减仓而非死扛；③若股价大幅冲高至乐观情景附近而基本面未同步验证，应逢高兑现部分仓位。",
+      "advice": "①SOTP框架下净现金+可灵AI留存股权已接近甚至超过当前市值，核心主业隐含估值为负，核心仓位可继续持有；②传统引擎(广告+直播)绝对收缩、加杠杆回购是本轮新增风险点，需相应降低集中度；③股价冲高至乐观情景附近可逢高兑现部分收益。",
       "triggers": [
         {
-          "condition": "直播收入连续两季度同比降幅超过10%（当前2026Q1已-13.5%）",
-          "action": "减持部分仓位，视为结构性而非周期性下滑",
-          "basis": "①直播收入2025Q4-1.0%、2026Q1-13.5%已被列为高概率高影响失败路径的核心证据（dimensions.inversion.analysis.failurePaths[0]）；②延续验证竞争劣势不可逆时应下修businessQuality判断。"
+          "condition": "广告+直播合计收入连续两季度同比负增长且降幅继续扩大",
+          "action": "减持部分仓位，视为结构性而非切换性收缩",
+          "basis": "①2026Q2传统引擎合计收入同比-1.6%为本轮首次出现（dimensions.businessEssence.analysis.revenueBreakdown.latestQuarterUpdate.legacyEngineContraction）；②降幅扩大将推翻\"仅为结构切换代价\"的现有判断。"
         },
         {
-          "condition": "股价上探至HKD90附近接近乐观情景目标价HKD96.5",
-          "action": "分批卖出兑现部分收益，降低仓位集中度",
-          "basis": "①乐观情景+118.5%建立在增速18%、PE13x假设上，尚未被Kling AI分拆签约验证（dimensions.valuation.analysis.threeScenario.optimistic）；②卖方SOTP目标价63-74港元区间也低于该乐观终点，提示上方存在获利区间。"
+          "condition": "股价上探至50.4港元附近(乐观情景目标价)",
+          "action": "分批卖出兑现部分收益",
+          "basis": "①乐观情景50.4港元(+48.8%)假设核心商业化收入增速转化为盈利增速（dimensions.valuation.analysis.threeScenario.optimistic）；②该情景尚未获新催化剂验证，宜逢高部分止盈。"
         },
         {
-          "condition": "资本开支维持高位但Kling AI ARR增速环比转为放缓",
-          "action": "重新评估AI资本开支回报节奏，考虑减仓",
-          "basis": "①FY2025资本开支同比翻倍、FCF同比-45.8%，回报兑现节奏是核心不确定性（dimensions.inversion.analysis.failurePaths[2]）；②ARR增速若从翻倍转为放缓，将动摇moat中\"技术壁垒变宽\"的判断依据。"
+          "condition": "总借款继续攀升且公司仍未解释加杠杆回购逻辑",
+          "action": "视为治理纪律松动信号，考虑降低仓位",
+          "basis": "①H1总借款+109.4%、财务开支净额+452.6%与账上约RMB1,213亿可动用资金并存但无官方解释（dimensions.management.analysis.capitalAllocation.buybackTiming）；②该疑点已被列为需持续跟踪的资本配置风险点（dimensions.management.dataGaps）。"
         }
       ]
     },
@@ -111,24 +120,24 @@
       "title": "卖出信号",
       "signals": [
         {
-          "signal": "MAU增速差距进一步扩大且直播收入跌幅继续扩大",
-          "observable": "快手MAU同比增速跌破3%或直播收入同比跌幅超过15%",
-          "basis": "①对应最大失败路径\"中概率高影响\"的持续验证（dimensions.inversion.analysis.failurePaths[0]）；②businessQuality与moat正面判断均建立在当前粘性数据上，恶化将同步失效。"
+          "signal": "审慎展望被证实为持续性而非阶段性盈利下修",
+          "observable": "2026Q3财报毛利率降幅或经营利润降幅未较Q2收窄",
+          "basis": "①盈利结构性恶化失败路径列为\"中偏高概率高影响\"（dimensions.inversion.analysis.failurePaths[1]）；②2026Q2经营利润-29.0%、期内利润-36.0%（同上证据）。"
         },
         {
-          "signal": "Kling AI分拆计划被官方公告终止或无限期搁置",
-          "observable": "公司发布公告确认不再推进分拆或撤回融资安排",
-          "basis": "①分拆是moat技术壁垒\"变宽\"及valuation乐观/中性情景的核心支撑（dimensions.moat.analysis.types[4]、dimensions.valuation.analysis.threeScenario）；②若终止，AI第二曲线期权价值归零，估值将向悲观情景收敛。"
+          "signal": "可灵AI分拆资产注入或港股上市计划被推迟或取消",
+          "observable": "官方公告确认9个月资产注入期限延期或撤回2027年初上市计划",
+          "basis": "①可灵AI FY2025净亏损同比+280%且竞争加剧（dimensions.moat.analysis.types[4]）；②分拆落地未解决独立造血能力问题（dimensions.inversion.analysis.failurePaths[3]）。"
         },
         {
-          "signal": "监管处罚再次发生且金额或频次超过2026年1-2月水平",
-          "observable": "半年内再度出现单笔超RMB1亿元的行政处罚",
-          "basis": "①2026年1-2月已合计罚没超RMB1.45亿元，被列为中概率中影响失败路径（dimensions.inversion.analysis.failurePaths[1]）；②重复处罚将证实内容审核系统性漏洞而非一次性事件，抬高长期合规成本。"
+          "signal": "股价跌破18.6港元且核心广告收入增速同步转负",
+          "observable": "股价持续低于18.6港元且在线营销服务收入同比转负(当前+4.4%)",
+          "basis": "①悲观情景18.6港元(-45.2%)（dimensions.valuation.analysis.threeScenario.pessimistic）；②同步转负将推翻\"核心广告业务未恶化\"的判断（dimensions.businessEssence.analysis.marginBridge2026Q2.coreAdBusinessCheck）。"
         },
         {
-          "signal": "股价上涨至乐观情景目标价HKD96.5附近但基本面未同步改善",
-          "observable": "股价触及HKD90以上且MAU/直播收入未见企稳",
-          "basis": "①乐观情景+118.5%依赖增速18%与PE13x的重估假设（dimensions.valuation.analysis.threeScenario.optimistic）；②若keyRisk相关指标未验证改善，纯情绪推升的估值透支应止盈离场。"
+          "signal": "杠杆继续快速攀升同时经营现金流同比降幅扩大",
+          "observable": "总借款环比继续大幅增长且经营现金流同比降幅超过H1的-23.2%",
+          "basis": "①H1总借款+109.4%、财务开支净额+452.6%（dimensions.management.analysis.capitalAllocation）；②经营现金流H1已同比-23.2%（financials-collection.json interim2026H1.operatingCashFlow）。"
         }
       ]
     },
@@ -136,24 +145,24 @@
       "title": "加仓信号",
       "signals": [
         {
-          "signal": "股价跌至悲观情景目标价HKD40.7附近但核心商业化收入未恶化",
-          "observable": "股价触及HKD40-41区间且在线营销+其他服务收入增速仍≥10%",
-          "basis": "①悲观情景对应跌幅仅-7.9%，假设建立在总收入增速降至3.4%延续的情形（dimensions.valuation.analysis.threeScenario.pessimistic）；②若核心商业化收入未跟随恶化，说明市场过度定价悲观情景，存在错杀机会。"
+          "signal": "核心商业化收入增速回升至追平或反超行业大盘",
+          "observable": "在线营销服务收入同比增速回升至8%以上(当前+4.4%，行业大盘+8.1%)",
+          "basis": "①2026Q2在线营销服务+4.4%落后QuestMobile统计行业大盘+8.1%达3.7个百分点（dimensions.industryTrend.analysis.tam.growthCurve）；②追平大盘将修复\"份额流失\"判断。"
         },
         {
-          "signal": "Kling AI分拆签署最终协议并确认估值区间",
-          "observable": "公司公告披露具体分拆交易条款及确定性估值（如落在180-200亿美元区间）",
-          "basis": "①当前投行目标价（摩根大通71港元等）均建立在分拆传闻之上，签约将把不确定性转为确定性（dimensions.moat.analysis.types[4]、dimensions.inversion.analysis.failurePaths[2]）；②确定性提升应推动中性/乐观情景概率权重上调。"
+          "signal": "可灵AI亏损率出现收敛证据",
+          "observable": "官方或分拆上市文件披露季度亏损/收入比环比下降",
+          "basis": "①可灵AI FY2025净亏损同比+280%（dimensions.moat.analysis.types[4]）；②分季度盈亏拆分数据目前缺失（dimensions.moat.dataGaps），收敛将实质提升护城河耐久性确定性。"
         },
         {
-          "signal": "快手MAU同比增速明显回升，与抖音差距收窄至个位数百分点以内",
-          "observable": "快手主APP MAU同比增速回升至8%以上（当前3.4%对比抖音14.7%）",
-          "basis": "①MAU差距是keyRisk与moat网络效应\"变窄\"判断的核心依据（dimensions.inversion.analysis.failurePaths[0]、dimensions.moat.analysis.types[2]）；②差距收窄将系统性上修businessQuality、moat、keyRisk三个维度评分。"
+          "signal": "股价回落至18.6港元附近但盈利降幅未进一步扩大",
+          "observable": "股价触及18.6-20港元区间且经调整净利润同比降幅未超过H1的-28.5%",
+          "basis": "①悲观情景18.6港元(-45.2%)（dimensions.valuation.analysis.threeScenario.pessimistic）；②H1经调整净利润同比-28.5%（financials-collection.json interim2026H1.adjustedNetProfit），未进一步恶化说明市场过度定价悲观情景。"
         },
         {
-          "signal": "直播收入同比增速转正并维持两个季度以上",
-          "observable": "直播收入连续两季度同比增速为正（当前2026Q1为-13.5%）",
-          "basis": "①直播收入连续下滑是最大失败路径的核心证据（dimensions.inversion.analysis.failurePaths[0]）；②企稳将直接反驳\"结构性萎缩恶性循环\"的风险判断，支持加仓。"
+          "signal": "直播收入降幅收窄或转正并维持两个季度以上",
+          "observable": "直播收入同比增速由-13.5%收窄至个位数降幅或转正",
+          "basis": "①直播收入已连续两季度同比-13.5%未见改善（dimensions.businessEssence.analysis.revenueBreakdown.latestQuarterUpdate.legacyEngineContraction）；②企稳将直接反驳\"传统引擎绝对收缩\"的新增风险判断（dimensions.inversion.analysis.failurePaths[0]）。"
         }
       ]
     }
