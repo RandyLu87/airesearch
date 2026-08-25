@@ -325,6 +325,8 @@ SHAPE_LABELS = {
     "bare-absent-string": "裸占位字符串",
     "unabbreviated-number": "大数字未缩写",
     "unit-overridden-by-currency": "量级被币种压掉",
+    "placeholder-unit-label": "单位写成占位符",
+    "mixed-notation": "同一文件内记数法混用",
 }
 
 SHAPE_HINTS = {
@@ -342,6 +344,15 @@ SHAPE_HINTS = {
         "currency \"RMB billion\"），渲染层无法判断哪个才是 value 的量级。"
         "把量级只留在一处：unit 写全（\"RMB million\"）、currency 只写币种（\"RMB\"），"
         "或者干脆把量级折进 value 的缩写字符串（\"7517.66亿\"）。",
+    "placeholder-unit-label":
+        "`unit` / `currency` 只写真单位，没有就写 null——`\"-\"` / `\"n/a\"` / `\"—\"` 这类占位符"
+        "字符串非空，渲染层拿它当单位拼在数值后面（`43.3亿 -`）；currency 位上的占位符还会"
+        "压过真正的 unit，读者看不出计量的是股数还是钱。",
+    "mixed-notation":
+        "同一份公司文件里的金额数字只用一套记数法：中文量级（\"1044.61亿\"）或英文缩写"
+        "（\"104.46B\"）。两套并存不是错值，但同一页里两种量级要读者自己换算——"
+        "按该文件里占多数的那套改写少数派（数值语义不变）。计数类单位（股 / 辆 / 户）"
+        "与 source1 / source2 里照抄来源原文的数值副本不在此列。",
 }
 
 
@@ -397,6 +408,108 @@ def is_unit_magnitude_dropped(node):
     return magnitude_of(unit_label(node)) != scale
 
 
+def placeholder_unit_labels(node):
+    """`unit` / `currency` 写成占位符的键名。
+
+    `"-"` / `"n/a"` / `"—"` 是「这里没有单位」的意思，但它们是非空字符串：渲染层照单位
+    拼在数值后面（快手 sharesOutstanding 渲染成 `43.3亿 -`），currency 位上的占位符还会
+    压过真正的 unit。`unit_label()` 现在把它们当没写（OWLL-27 / PR #19），所以这条检测
+    挡的是数据层——没有单位就写 `null`，不要用字符串占位。
+    """
+    if not isinstance(node, dict):
+        return []
+    return [key for key in ("unit", "currency")
+            if key in node and PLACEHOLDER_LABEL.match(annotation(node.get(key)))]
+
+
+# ---------------------------------------------------------------------------
+# 记数法一致性（文件级）
+#
+# 金额缩写有两套记数法：中文量级（`"1044.61亿"`）与英文缩写（`"104.46B"`）。两套都对，
+# 混在同一份文件里就不对——理想汽车 hk-2015 的市值一处写 `"101.22B"`（reported）、
+# 一处写 `"1044.61亿"`（computed），同一个指标在同一页上要读者自己换算两套量级。
+#
+# 判定基准是「同一文件内是否两套并存」，不是上市地：快手是港股中文报告，`亿` 在那份
+# 文件里本来就是主流写法，按上市地一刀切会误伤。两类不算数：
+#   - 计数类单位（股 / 辆 / 户 / MAU）——中文里「3.49亿股」是自然写法，与金额记数法无关；
+#   - `source1` / `source2` 里的数值副本——那是照抄来源原文，来源怎么写就怎么记。
+# ---------------------------------------------------------------------------
+
+# 缩写过的金额字符串：`"1044.61亿"` / `"104.46B"` / `"81.5bn"`，币种词可以带在里面
+# （`"230.51亿元"`）。裸数字（未缩写）由 unabbreviated-number 那条管，不在这里重复报。
+#
+# 只认「数字 + 量级（+ 币种）」这一种整串写法：`"6,071亿美元（2029年，全球生成式AI市场
+# 规模预测）"`（MiniMax 引自 IDC 的行业 TAM）这类带括号注释的引述不参与比较——它是照抄
+# 来源原文的一句话，改写它等于改写引文，不是本文件自己的记数法。
+CN_ABBREV = re.compile(r"^-?\d[\d,]*(\.\d+)?\s*(万亿|亿|千万|百万|万|千)\s*"
+                       r"(元|美元|港元|港币|人民币|日元|欧元|美金)?$")
+EN_ABBREV = re.compile(r"^-?\d[\d,]*(\.\d+)?\s*(trillion|billion|million|thousand|bn|mn|[TBMK])\s*"
+                       r"(RMB|CNY|HKD|USD|EUR|JPY|GBP|TWD|SGD|KRW)?$", re.I)
+
+# 币种词表：只有金额字段参与记数法比较，靠 unit / currency 里的币种词认出来。
+CURRENCY_TOKENS = ("rmb", "cny", "hkd", "usd", "eur", "jpy", "gbp", "twd", "sgd", "krw",
+                   "人民币", "港元", "港币", "美元", "美金", "日元", "欧元", "元")
+
+# 数值副本所在的键：来源怎么写就怎么记，不参与本文件的记数法比较。
+PROVENANCE_KEYS = {"source1", "source2", "sources", "source"}
+
+
+def is_currency_label(label):
+    lower = label.lower()
+    return any(token in lower for token in CURRENCY_TOKENS)
+
+
+def notation_of(value):
+    """缩写字符串用的是哪套记数法：`"cn"` / `"en"` / None（没缩写或不是数字）。"""
+    if not isinstance(value, str):
+        return None
+    text = value.strip()
+    if CN_ABBREV.match(text):
+        return "cn"
+    if EN_ABBREV.match(text):
+        return "en"
+    return None
+
+
+def scan_notation(node, path="", found=None):
+    """收集金额字段用的记数法，返回 [(path, "cn" | "en")]。"""
+    if found is None:
+        found = []
+    if isinstance(node, dict):
+        unit, currency = annotation(node.get("unit")), annotation(node.get("currency"))
+        if "value" in node and (is_currency_label(unit) or is_currency_label(currency)):
+            notation = notation_of(node["value"])
+            if notation:
+                found.append((path, notation))
+        for key, value in node.items():
+            if key in META_KEYS or key in PROVENANCE_KEYS:
+                continue
+            scan_notation(value, "%s.%s" % (path, key) if path else key, found)
+    elif isinstance(node, list):
+        for i, item in enumerate(node):
+            scan_notation(item, "%s[%d]" % (path, i), found)
+    return found
+
+
+def mixed_notation_problems(instance):
+    """两套记数法并存时，把少数派的字段逐个报出来（并列时报后出现的那一套）。"""
+    found = scan_notation(instance)
+    groups = {"cn": [p for p, n in found if n == "cn"], "en": [p for p, n in found if n == "en"]}
+    if not (groups["cn"] and groups["en"]):
+        return []
+    # 少数派要改写；数量相同时改后出现的那一套（先立住的写法是这份文件的基调）。
+    first_seen = {notation: index for index, (_, notation) in reversed(list(enumerate(found)))}
+    minority = min(groups, key=lambda n: (len(groups[n]), -first_seen[n]))
+    majority = "en" if minority == "cn" else "cn"
+    label = {"cn": "中文量级", "en": "英文缩写"}
+    return [{
+        "path": path,
+        "type": "mixed-notation",
+        "found": "%s（本文件金额多数用%s，如 %s）"
+                 % (label[minority], label[majority], groups[majority][0]),
+    } for path in groups[minority]]
+
+
 def scan_shape(node, path="", problems=None):
     """全量扫描写法问题，返回 [{path, type, found}]。"""
     if problems is None:
@@ -408,6 +521,12 @@ def scan_shape(node, path="", problems=None):
                 "type": "unit-overridden-by-currency",
                 "found": "%s（unit %s / currency %s）" % (node["value"], node.get("unit"),
                                                         node.get("currency")),
+            })
+        for key in placeholder_unit_labels(node):
+            problems.append({
+                "path": "%s.%s" % (path, key) if path else key,
+                "type": "placeholder-unit-label",
+                "found": "%s: %r" % (key, node[key]),
             })
         if is_unabbreviated_number(node):
             problems.append({
@@ -575,7 +694,8 @@ def check_file(step, instance_path):
     walk(template, instance, "", tally)
     # 写法问题独立于模板：命中的字段可能根本不在模板槽位上（如 source2.name），
     # 一律补记为 0 分权重缺口；walk() 已记过的同一 path 不重复计。
-    shape_problems = scan_shape(instance)
+    # 记数法一致性是文件级判断（「同一份文件内是否两套并存」），单个节点上看不出来。
+    shape_problems = scan_shape(instance) + mixed_notation_problems(instance)
     recorded = {(g["path"], g["type"]) for g in tally.gaps}
     for problem in shape_problems:
         key = (problem["path"], problem["type"])

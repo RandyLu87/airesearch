@@ -3,7 +3,7 @@
   "meta": {
     "companyId": "us-futu-futu-holdings",
     "companyName": "富途控股 Futu Holdings Limited",
-    "generatedAt": "2026-08-25T21:13:36+08:00",
+    "generatedAt": "2026-08-25T22:55:09+08:00",
     "dataCutoff": "2026-08-25（Asia/Shanghai）；最新披露为 2026Q2（截至2026-06-30）未经审计财报，2026-08-20 发布",
     "validation": {
       "threshold": 7.0,
@@ -12,7 +12,7 @@
         "analysis": 9.8,
         "summary": 10.0
       },
-      "validatedAt": "2026-08-25T21:13:36+08:00"
+      "validatedAt": "2026-08-25T22:55:09+08:00"
     },
     "sources": {
       "collection": "research/companies/us-futu-futu-holdings/financials-collection.json",
@@ -826,7 +826,7 @@
       "sharesOutstanding": {
         "value": 140.19,
         "unit": "million ADS",
-        "currency": "N/A",
+        "currency": null,
         "source1": {
           "name": "stockanalysis.com Statistics（Shares Out）",
           "url": "https://stockanalysis.com/stocks/futu/statistics",

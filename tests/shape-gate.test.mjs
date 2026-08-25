@@ -162,3 +162,43 @@ test("the shape gate blocks unit and currency declaring different magnitudes", (
   ]);
   assert.equal(code, 1, "an ambiguous magnitude must fail the run");
 });
+
+test("the shape gate blocks a placeholder written into currency", () => {
+  // 快手 hk-1024 原样：`currency: "-"` 非空，渲染层拿它当单位 → `43.3亿 -`。
+  const fixture = structuredClone(clean);
+  fixture.currentValuation.sharesOutstanding = { value: "43.3亿", unit: "股", currency: "-" };
+  const { code, problems } = runGate(fixture);
+  assert.deepEqual(problems, [
+    ["placeholder-unit-label", "currentValuation.sharesOutstanding.currency"],
+  ]);
+  assert.equal(code, 1, "a placeholder currency must fail the run");
+});
+
+test("the shape gate accepts null for a field that has no unit", () => {
+  // 「没有币种」的正确写法是 null——annotation() 当它没写，页面上只剩 `43.3亿 股`。
+  const fixture = structuredClone(clean);
+  fixture.currentValuation.sharesOutstanding = { value: "43.3亿", unit: "股", currency: null };
+  assert.deepEqual(runGate(fixture).problems, []);
+});
+
+test("the shape gate blocks two notations for money inside one file", () => {
+  // 理想汽车 hk-2015 原样：同一个市值一处 `"101.22B"`、一处 `"1044.61亿"`。
+  const fixture = structuredClone(clean);
+  fixture.currentValuation.marketCap.computed = { value: "23.05B", unit: "HKD" };
+  const { code, problems } = runGate(fixture);
+  // 夹具里金额只有 reported（`"230.51亿"`）与 computed 两处，并列时报后出现的那一套。
+  assert.deepEqual(problems, [["mixed-notation", "currentValuation.marketCap.computed"]]);
+  assert.equal(code, 1, "mixing notations must fail the run");
+});
+
+test("the notation check leaves counts and quoted source values alone", () => {
+  // 夹具的金额一律用中文量级；这里加进来的英文缩写都在不参与比较的位置上：
+  // 「3.49亿股」是计数单位（中文里的自然写法），`349.24M` 是 source1 里照抄的来源原文。
+  const fixture = structuredClone(clean);
+  fixture.currentValuation.sharesOutstanding = {
+    value: "3.49亿",
+    unit: "股",
+    source1: { name: "stockanalysis.com", value: "349.24M" },
+  };
+  assert.deepEqual(runGate(fixture).problems, []);
+});

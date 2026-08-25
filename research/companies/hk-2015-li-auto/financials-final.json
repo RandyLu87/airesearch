@@ -3,7 +3,7 @@
   "meta": {
     "companyId": "hk-2015-li-auto",
     "companyName": "理想汽车 (Li Auto Inc.)",
-    "generatedAt": "2026-08-25T21:11:23+08:00",
+    "generatedAt": "2026-08-25T22:55:09+08:00",
     "dataCutoff": "2026-08-07",
     "validation": {
       "threshold": 7.0,
@@ -12,7 +12,7 @@
         "analysis": 10.0,
         "summary": 9.6
       },
-      "validatedAt": "2026-08-25T21:11:23+08:00"
+      "validatedAt": "2026-08-25T22:55:09+08:00"
     },
     "sources": {
       "collection": "research/companies/hk-2015-li-auto/financials-collection.json",
@@ -839,7 +839,7 @@
           "source": "FMP(2026-08-07)，stockanalysis口径分别为98.12B HKD/12.72B USD(偏差约2.4%-3.06%，判断为不同股本口径快照时点差异)"
         },
         "computed": {
-          "value": "1044.61亿",
+          "value": "104.46B",
           "unit": "HKD",
           "method": "financial_rigor.py verify-market-cap: 49.92 HKD × 2,092,558,209股",
           "toolOutput": "计算市值104.46B HKD，报告市值(FMP)101.22B HKD，偏差3.20%"
