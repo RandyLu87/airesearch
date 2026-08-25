@@ -37,6 +37,8 @@ function runGate(collection) {
     return {
       code: result.status,
       gapTypes: entry.gaps.map((gap) => gap.type),
+      requiredSlots: entry.requiredSlots,
+      filled: entry.filled,
       problems: entry.shapeProblems.map((problem) => [problem.type, problem.path]),
     };
   } finally {
@@ -83,6 +85,25 @@ test("the shape gate blocks an unabbreviated market cap", () => {
   const { code, problems } = runGate(fixture);
   assert.deepEqual(problems, [["unabbreviated-number", "currentValuation.marketCap.reported"]]);
   assert.equal(code, 1, "an unabbreviated large number must fail the run");
+});
+
+test("stringifying a large number without abbreviating it does not slip through", () => {
+  // 渲染层的 formatNumeric 只作用于 number，字符串原样输出——加引号不改任何东西。
+  const fixture = structuredClone(clean);
+  fixture.currentValuation.marketCap.reported = { value: "23,051,044,345", currency: "HKD" };
+  const { code, problems } = runGate(fixture);
+  assert.deepEqual(problems, [["unabbreviated-number", "currentValuation.marketCap.reported"]]);
+  assert.equal(code, 1, "a stringified-but-unabbreviated number must fail the run");
+});
+
+test("an unabbreviated number costs its slot instead of inflating the denominator", () => {
+  // 命中的字段 walk() 本来记满权重；写法闸门要把那 1 分收回，而不是只多加一个 0 分槽位。
+  const base = runGate(clean);
+  const fixture = structuredClone(clean);
+  fixture.currentValuation.marketCap.reported = { value: 23051044345, currency: "HKD" };
+  const hit = runGate(fixture);
+  assert.equal(hit.requiredSlots, base.requiredSlots, "分母不该被抬高");
+  assert.equal(hit.filled, base.filled - 1, "命中的槽位应从已填里扣掉");
 });
 
 test("the shape gate blocks a bare absent string", () => {
