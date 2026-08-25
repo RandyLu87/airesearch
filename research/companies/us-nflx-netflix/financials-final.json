@@ -3,7 +3,7 @@
   "meta": {
     "companyId": "us-nflx-netflix",
     "companyName": "Netflix, Inc.",
-    "generatedAt": "2026-08-25T21:11:24+08:00",
+    "generatedAt": "2026-08-25T22:26:45+08:00",
     "dataCutoff": "2026-08-09（Asia/Shanghai）",
     "validation": {
       "threshold": 7.0,
@@ -12,7 +12,7 @@
         "analysis": 9.8,
         "summary": 9.4
       },
-      "validatedAt": "2026-08-25T21:11:24+08:00"
+      "validatedAt": "2026-08-25T22:26:45+08:00"
     },
     "sources": {
       "collection": "research/companies/us-nflx-netflix/financials-collection.json",
@@ -1032,7 +1032,7 @@
         "flag": "ok"
       },
       "sharesOutstanding": {
-        "value": "41.6394亿",
+        "value": "4.16394B",
         "unit": "shares",
         "currency": null,
         "source1": {
