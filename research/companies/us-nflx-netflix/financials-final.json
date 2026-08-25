@@ -3,16 +3,16 @@
   "meta": {
     "companyId": "us-nflx-netflix",
     "companyName": "Netflix, Inc.",
-    "generatedAt": "2026-08-09T21:03:23+08:00",
+    "generatedAt": "2026-08-25T21:11:24+08:00",
     "dataCutoff": "2026-08-09（Asia/Shanghai）",
     "validation": {
       "threshold": 7.0,
       "scores": {
-        "collection": 8.6,
+        "collection": 8.5,
         "analysis": 9.8,
-        "summary": 10.0
+        "summary": 9.4
       },
-      "validatedAt": "2026-08-09T21:03:23+08:00"
+      "validatedAt": "2026-08-25T21:11:24+08:00"
     },
     "sources": {
       "collection": "research/companies/us-nflx-netflix/financials-collection.json",
@@ -69,8 +69,7 @@
       "latestFiscalYear": {
         "period": "FY2025（截至2025-12-31）",
         "totalRevenue": {
-          "value": 45183036000,
-          "unit": "currency",
+          "value": "45.183B",
           "currency": "USD",
           "source1": {
             "name": "FMP income-statement",
@@ -90,8 +89,7 @@
           {
             "name": "美国与加拿大 (UCAN)",
             "revenue": {
-              "value": 19957152000,
-              "unit": "currency",
+              "value": "19.9572B",
               "currency": "USD",
               "source1": {
                 "name": "FMP revenue-geographic-segments",
@@ -99,9 +97,8 @@
                 "value": 19957152000
               },
               "source2": {
-                "name": "unavailable",
-                "url": "",
-                "value": null
+                "status": "unavailable",
+                "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
               },
               "deviationPct": null,
               "flag": "仅单源（地区分部为公司10-K原始披露，FMP直接摘录，未做第二源交叉验证）"
@@ -116,8 +113,7 @@
           {
             "name": "欧洲、中东与非洲 (EMEA)",
             "revenue": {
-              "value": 14514646000,
-              "unit": "currency",
+              "value": "14.5146B",
               "currency": "USD",
               "source1": {
                 "name": "FMP revenue-geographic-segments",
@@ -125,9 +121,8 @@
                 "value": 14514646000
               },
               "source2": {
-                "name": "unavailable",
-                "url": "",
-                "value": null
+                "status": "unavailable",
+                "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
               },
               "deviationPct": null,
               "flag": "仅单源"
@@ -142,8 +137,7 @@
           {
             "name": "拉丁美洲 (LATAM)",
             "revenue": {
-              "value": 5357521000,
-              "unit": "currency",
+              "value": "5.35752B",
               "currency": "USD",
               "source1": {
                 "name": "FMP revenue-geographic-segments",
@@ -151,9 +145,8 @@
                 "value": 5357521000
               },
               "source2": {
-                "name": "unavailable",
-                "url": "",
-                "value": null
+                "status": "unavailable",
+                "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
               },
               "deviationPct": null,
               "flag": "仅单源"
@@ -168,8 +161,7 @@
           {
             "name": "亚太 (APAC)",
             "revenue": {
-              "value": 5353717000,
-              "unit": "currency",
+              "value": "5.35372B",
               "currency": "USD",
               "source1": {
                 "name": "FMP revenue-geographic-segments",
@@ -177,9 +169,8 @@
                 "value": 5353717000
               },
               "source2": {
-                "name": "unavailable",
-                "url": "",
-                "value": null
+                "status": "unavailable",
+                "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
               },
               "deviationPct": null,
               "flag": "仅单源"
@@ -197,8 +188,7 @@
         {
           "period": "2025Q3（截至2025-09-30）",
           "totalRevenue": {
-            "value": 11510307000,
-            "unit": "currency",
+            "value": "11.5103B",
             "currency": "USD",
             "source1": {
               "name": "FMP income-statement(quarter)",
@@ -219,8 +209,7 @@
         {
           "period": "2025Q4（截至2025-12-31）",
           "totalRevenue": {
-            "value": 12050762000,
-            "unit": "currency",
+            "value": "12.0508B",
             "currency": "USD",
             "source1": {
               "name": "FMP income-statement(quarter)",
@@ -241,8 +230,7 @@
         {
           "period": "2026Q1（截至2026-03-31）",
           "totalRevenue": {
-            "value": 12249757000,
-            "unit": "currency",
+            "value": "12.2498B",
             "currency": "USD",
             "source1": {
               "name": "FMP income-statement(quarter)",
@@ -263,8 +251,7 @@
         {
           "period": "2026Q2（截至2026-06-30，最新一季）",
           "totalRevenue": {
-            "value": 12559938000,
-            "unit": "currency",
+            "value": "12.5599B",
             "currency": "USD",
             "source1": {
               "name": "FMP income-statement(quarter)",
@@ -272,9 +259,8 @@
               "value": 12559938000
             },
             "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": null
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "deviationPct": null,
             "flag": "仅单源（stockanalysis 季度页截至采集时尚未更新到 2026Q2，已查该页面确认最新为 2026Q1）"
@@ -290,8 +276,7 @@
         {
           "fiscalYear": "2021",
           "revenue": {
-            "value": 29697844000,
-            "unit": "currency",
+            "value": "29.6978B",
             "currency": "USD",
             "source1": {
               "name": "FMP",
@@ -307,8 +292,7 @@
             "flag": "ok"
           },
           "netProfit": {
-            "value": 5116228000,
-            "unit": "currency",
+            "value": "5.11623B",
             "currency": "USD",
             "note": "GAAP归母净利润",
             "source1": {
@@ -327,8 +311,7 @@
           "grossMarginPct": 41.64,
           "operatingMarginPct": 20.86,
           "freeCashFlow": {
-            "value": -131975000,
-            "unit": "currency",
+            "value": "-131.975M",
             "currency": "USD",
             "note": "资本支出口径为PP&E购置，不含内容资产投资；2021年为疫情后制作复工年，FCF转负",
             "source1": {
@@ -345,8 +328,7 @@
             "flag": "ok"
           },
           "cashReserves": {
-            "value": 6027804000,
-            "unit": "currency",
+            "value": "6.0278B",
             "currency": "USD",
             "note": "现金及等价物，不含短期投资(2021年短期投资为0)",
             "source1": {
@@ -355,9 +337,8 @@
               "value": 6027804000
             },
             "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": null
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "deviationPct": null,
             "flag": "仅单源"
@@ -366,8 +347,7 @@
         {
           "fiscalYear": "2022",
           "revenue": {
-            "value": 31615550000,
-            "unit": "currency",
+            "value": "31.6155B",
             "currency": "USD",
             "source1": {
               "name": "FMP",
@@ -383,8 +363,7 @@
             "flag": "ok"
           },
           "netProfit": {
-            "value": 4491924000,
-            "unit": "currency",
+            "value": "4.49192B",
             "currency": "USD",
             "note": "GAAP归母净利润",
             "source1": {
@@ -403,8 +382,7 @@
           "grossMarginPct": 39.37,
           "operatingMarginPct": 17.82,
           "freeCashFlow": {
-            "value": 1618528000,
-            "unit": "currency",
+            "value": "1.61853B",
             "currency": "USD",
             "note": "资本支出口径为PP&E购置",
             "source1": {
@@ -421,8 +399,7 @@
             "flag": "ok"
           },
           "cashReserves": {
-            "value": 6058452000,
-            "unit": "currency",
+            "value": "6.05845B",
             "currency": "USD",
             "note": "现金+短期投资",
             "source1": {
@@ -431,9 +408,8 @@
               "value": 6058452000
             },
             "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": null
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "deviationPct": null,
             "flag": "仅单源"
@@ -442,8 +418,7 @@
         {
           "fiscalYear": "2023",
           "revenue": {
-            "value": 33723297000,
-            "unit": "currency",
+            "value": "33.7233B",
             "currency": "USD",
             "source1": {
               "name": "FMP",
@@ -459,8 +434,7 @@
             "flag": "ok"
           },
           "netProfit": {
-            "value": 5407990000,
-            "unit": "currency",
+            "value": "5.40799B",
             "currency": "USD",
             "note": "GAAP归母净利润",
             "source1": {
@@ -479,8 +453,7 @@
           "grossMarginPct": 41.54,
           "operatingMarginPct": 20.62,
           "freeCashFlow": {
-            "value": 6925749000,
-            "unit": "currency",
+            "value": "6.92575B",
             "currency": "USD",
             "note": "资本支出口径为PP&E购置",
             "source1": {
@@ -497,8 +470,7 @@
             "flag": "ok"
           },
           "cashReserves": {
-            "value": 7137886000,
-            "unit": "currency",
+            "value": "7.13789B",
             "currency": "USD",
             "note": "现金+短期投资",
             "source1": {
@@ -507,9 +479,8 @@
               "value": 7137886000
             },
             "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": null
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "deviationPct": null,
             "flag": "仅单源"
@@ -518,8 +489,7 @@
         {
           "fiscalYear": "2024",
           "revenue": {
-            "value": 39000966000,
-            "unit": "currency",
+            "value": "39.001B",
             "currency": "USD",
             "source1": {
               "name": "FMP",
@@ -535,8 +505,7 @@
             "flag": "ok"
           },
           "netProfit": {
-            "value": 8711631000,
-            "unit": "currency",
+            "value": "8.71163B",
             "currency": "USD",
             "note": "GAAP归母净利润",
             "source1": {
@@ -555,8 +524,7 @@
           "grossMarginPct": 46.06,
           "operatingMarginPct": 26.71,
           "freeCashFlow": {
-            "value": 6921826000,
-            "unit": "currency",
+            "value": "6.92183B",
             "currency": "USD",
             "note": "资本支出口径为PP&E购置",
             "source1": {
@@ -573,8 +541,7 @@
             "flag": "ok"
           },
           "cashReserves": {
-            "value": 9583739000,
-            "unit": "currency",
+            "value": "9.58374B",
             "currency": "USD",
             "note": "现金+短期投资",
             "source1": {
@@ -583,9 +550,8 @@
               "value": 9583739000
             },
             "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": null
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "deviationPct": null,
             "flag": "仅单源"
@@ -594,8 +560,7 @@
         {
           "fiscalYear": "2025",
           "revenue": {
-            "value": 45183036000,
-            "unit": "currency",
+            "value": "45.183B",
             "currency": "USD",
             "source1": {
               "name": "FMP income-statement",
@@ -611,8 +576,7 @@
             "flag": "ok"
           },
           "netProfit": {
-            "value": 10981201000,
-            "unit": "currency",
+            "value": "10.9812B",
             "currency": "USD",
             "note": "GAAP归母净利润",
             "source1": {
@@ -631,8 +595,7 @@
           "grossMarginPct": 48.49,
           "operatingMarginPct": 29.49,
           "freeCashFlow": {
-            "value": 9461053000,
-            "unit": "currency",
+            "value": "9.46105B",
             "currency": "USD",
             "note": "资本支出口径为PP&E购置",
             "source1": {
@@ -649,8 +612,7 @@
             "flag": "ok"
           },
           "cashReserves": {
-            "value": 9062359000,
-            "unit": "currency",
+            "value": "9.06236B",
             "currency": "USD",
             "note": "现金+短期投资",
             "source1": {
@@ -815,8 +777,7 @@
         "直播与新业务技术基础设施（支撑WWE Raw每周直播、NFL圣诞赛事等大型低延迟直播事件，以及云游戏/移动游戏业务）"
       ],
       "rdExpense": {
-        "value": 3391390000,
-        "unit": "currency",
+        "value": "3.39139B",
         "currency": "USD",
         "note": "FY2025，Netflix 财报中列为 Technology and Development，含内容以外的产品/工程/推荐算法研发",
         "source1": {
@@ -1071,7 +1032,7 @@
         "flag": "ok"
       },
       "sharesOutstanding": {
-        "value": 4163939999,
+        "value": "41.6394亿",
         "unit": "shares",
         "currency": null,
         "source1": {
@@ -1142,9 +1103,8 @@
           "value": "6.49x"
         },
         "source2": {
-          "name": "unavailable",
-          "url": "",
-          "value": null
+          "status": "unavailable",
+          "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
         },
         "deviationPct": null,
         "flag": "仅单源"

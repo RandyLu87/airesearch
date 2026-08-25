@@ -3,7 +3,7 @@
   "meta": {
     "companyId": "hk-0700-tencent-holdings",
     "companyName": "腾讯控股有限公司 (Tencent Holdings Limited)",
-    "generatedAt": "2026-08-19T15:32:32+08:00",
+    "generatedAt": "2026-08-25T21:11:23+08:00",
     "dataCutoff": "2026-08-19（Asia/Shanghai）；最新已披露季报为2026年第二季度（截至2026-06-30，2026-08-12发布，已纳入本次采集）",
     "validation": {
       "threshold": 7.0,
@@ -12,7 +12,7 @@
         "analysis": 9.7,
         "summary": 10.0
       },
-      "validatedAt": "2026-08-19T15:32:32+08:00"
+      "validatedAt": "2026-08-25T21:11:23+08:00"
     },
     "sources": {
       "collection": "research/companies/hk-0700-tencent-holdings/financials-collection.json",
@@ -1022,7 +1022,7 @@
         ]
       },
       "sharesOutstanding": {
-        "value": 9013000000,
+        "value": "90.13亿",
         "unit": "shares",
         "note": "以FMP市值/股价隐含股本反推（4,029,910,327,019/447.2≈90.13亿股）；官方2025年报披露2025-12-31已发行股份91.20亿股，2026年上半年持续回购注销（2Q2026回购3740万股），股本递减趋势与隐含值一致",
         "source1": {
@@ -1038,7 +1038,7 @@
       },
       "marketCap": {
         "reported": {
-          "value": 4029910327019,
+          "value": "4.02991万亿",
           "unit": "HKD",
           "currency": "HKD",
           "source": {
