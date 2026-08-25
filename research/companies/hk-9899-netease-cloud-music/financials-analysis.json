@@ -311,7 +311,7 @@
       "conclusion": "估值已隐含悲观预期，EV/Revenue仅1.04倍、隐含永续增长率约1.7%，但费用管控可持续性存疑压制估值弹性。",
       "analysis": {
         "currentMultiples": {
-          "marketCap": {"value": "23,051,044,345", "currency": "HKD", "asOf": "2026-08-20", "source": {"name": "本次研究第1步数据采集与financial_rigor.py验算", "url": "research/companies/hk-9899-netease-cloud-music/financials-collection.json"}},
+          "marketCap": {"value": "230.51亿", "currency": "HKD", "asOf": "2026-08-20", "source": {"name": "本次研究第1步数据采集与financial_rigor.py验算", "url": "research/companies/hk-9899-netease-cloud-music/financials-collection.json"}},
           "pe": {"value": "11.99x（TTM，报表口径，IFRS归母净利润）；经调整口径(剔除股份支付)为11.29x", "asOf": "2026-08-20", "source": {"name": "本次研究第1步数据采集与financial_rigor.py验算", "url": "research/companies/hk-9899-netease-cloud-music/financials-collection.json"}},
           "ps": {"value": "2.54x（TTM市值(RMB)/TTM收入）", "asOf": "2026-08-20", "source": {"name": "本次研究第1步数据采集与financial_rigor.py验算", "url": "research/companies/hk-9899-netease-cloud-music/financials-collection.json"}},
           "peg": {"status": "unavailable", "reason": "FY2025核心业绩含约7.47亿元一次性递延所得税抵免，剔除后经营性盈利基数与各机构前瞻盈利预测口径差异较大（如浦银国际FY26E调整后净利润预测20.30亿元 vs 官方FY25经调整净利润28.60亿元本身即含一次性因素），暂不计算PEG，已在collection文件中记录"},
