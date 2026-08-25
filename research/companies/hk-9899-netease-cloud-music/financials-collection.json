@@ -57,8 +57,8 @@
     "latestFiscalYear": {
       "period": "FY2025（2025-01-01 至 2025-12-31）",
       "totalRevenue": {
-        "value": 7759450,
-        "unit": "RMB thousand",
+        "value": "77.5945亿",
+        "unit": "RMB",
         "currency": "RMB",
         "source1": {
           "name": "网易云音乐 2025 年年报「五年财务概要」",
@@ -77,8 +77,8 @@
         {
           "name": "在线音乐服务 Online music services",
           "revenue": {
-            "value": 5994000,
-            "unit": "RMB thousand（约数，年报口径为亿元取整）",
+            "value": "59.94亿",
+            "unit": "RMB（约数，年报口径为亿元取整）",
             "currency": "RMB",
             "source1": {
               "name": "老虎证券快讯《被汽水超车后，网易云音乐的原创牌还灵吗？》转引 2025 年年报数据",
@@ -104,8 +104,8 @@
         {
           "name": "社交娱乐服务及其他 Social entertainment services and others",
           "revenue": {
-            "value": 1765450,
-            "unit": "RMB thousand（总收入减在线音乐服务收入的推算值）",
+            "value": "17.6545亿",
+            "unit": "RMB（总收入减在线音乐服务收入的推算值）",
             "currency": "RMB",
             "source1": {
               "name": "推算：官方总收入 7,759,450 千元 - 在线音乐服务 5,994,000 千元",
@@ -136,8 +136,8 @@
       {
         "period": "2026H1（截至2026-06-30，2026-08-20发布，官方口径为半年度而非单季度）",
         "totalRevenue": {
-          "value": 3958706,
-          "unit": "RMB thousand",
+          "value": "39.5871亿",
+          "unit": "RMB",
           "currency": "RMB",
           "source1": {
             "name": "网易云音乐 2026 中期业绩公告",
@@ -171,8 +171,8 @@
       {
         "period": "2026Q1（截至2026-03-31，单季度，2026-05-21网易集团披露云音乐经营数据）",
         "totalRevenue": {
-          "value": 1981000,
-          "unit": "RMB thousand（约数）",
+          "value": "19.81亿",
+          "unit": "RMB（约数）",
           "currency": "RMB",
           "source1": {
             "name": "老虎证券快讯转引网易云音乐 2026 年第一季度经营数据",
@@ -194,8 +194,8 @@
       {
         "period": "2025H1（截至2025-06-30，官方比较期数据）",
         "totalRevenue": {
-          "value": 3827117,
-          "unit": "RMB thousand",
+          "value": "38.2712亿",
+          "unit": "RMB",
           "currency": "RMB",
           "source1": {
             "name": "网易云音乐 2026 中期业绩公告（比较期数字）",
@@ -232,8 +232,8 @@
       {
         "fiscalYear": "FY2021",
         "revenue": {
-          "value": 6997622,
-          "unit": "RMB thousand",
+          "value": "69.9762亿",
+          "unit": "RMB",
           "currency": "RMB",
           "source1": {"name": "网易云音乐 2025 年年报「五年财务概要」", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf", "value": 6997622},
           "source2": {"name": "stockanalysis.com", "url": "https://stockanalysis.com/quote/hkg/9899/financials", "value": 6998000},
@@ -241,8 +241,8 @@
           "flag": "ok"
         },
         "netProfit": {
-          "value": -2056092,
-          "unit": "RMB thousand（归属于本公司权益持有人，IFRS）",
+          "value": "-20.5609亿",
+          "unit": "RMB（归属于本公司权益持有人，IFRS）",
           "currency": "RMB",
           "source1": {"name": "网易云音乐 2025 年年报「五年财务概要」", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf", "value": -2056092},
           "source2": {"name": "stockanalysis.com", "url": "https://stockanalysis.com/quote/hkg/9899/financials", "value": -2056000},
@@ -266,8 +266,8 @@
       {
         "fiscalYear": "FY2022",
         "revenue": {
-          "value": 8992221,
-          "unit": "RMB thousand",
+          "value": "89.9222亿",
+          "unit": "RMB",
           "currency": "RMB",
           "source1": {"name": "网易云音乐 2025 年年报「五年财务概要」", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf", "value": 8992221},
           "source2": {"name": "stockanalysis.com", "url": "https://stockanalysis.com/quote/hkg/9899/financials", "value": 8992000},
@@ -294,8 +294,8 @@
       {
         "fiscalYear": "FY2023",
         "revenue": {
-          "value": 7866992,
-          "unit": "RMB thousand",
+          "value": "78.6699亿",
+          "unit": "RMB",
           "currency": "RMB",
           "source1": {"name": "网易云音乐 2025 年年报「五年财务概要」", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf", "value": 7866992},
           "source2": {"name": "stockanalysis.com", "url": "https://stockanalysis.com/quote/hkg/9899/financials", "value": 7867000},
@@ -318,8 +318,8 @@
           "reason": "未重新下载 FY2023 年报现金流量表原文（本次仅下载并核对 FY2025 年报的经营现金流与资本开支，含 FY2024/FY2025 两年对比数据）；已查 FY2025 年报「五年财务概要」不含现金流数据"
         },
         "cashReserves": {
-          "value": 9505088,
-          "unit": "RMB thousand（现金及现金等价物 4,020,400 + 银行存款(流动) 5,484,688 + 银行存款(非流动) 0）",
+          "value": "95.0509亿",
+          "unit": "RMB（现金及现金等价物 4,020,400 + 银行存款(流动) 5,484,688 + 银行存款(非流动) 0，明细数字为原披露的千元口径）",
           "currency": "RMB",
           "source1": {"name": "网易云音乐 FY2024 年度业绩公告（比较期资产负债表）", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0220/2025022000338_c.pdf", "value": 9505088},
           "source2": {"name": "unavailable，仅单源", "url": "", "value": null},
@@ -330,8 +330,8 @@
       {
         "fiscalYear": "FY2024",
         "revenue": {
-          "value": 7950146,
-          "unit": "RMB thousand",
+          "value": "79.5015亿",
+          "unit": "RMB",
           "currency": "RMB",
           "source1": {"name": "网易云音乐 2025 年年报「五年财务概要」", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf", "value": 7950146},
           "source2": {"name": "stockanalysis.com", "url": "https://stockanalysis.com/quote/hkg/9899/financials", "value": 7950000},
@@ -339,8 +339,8 @@
           "flag": "ok"
         },
         "netProfit": {
-          "value": 1561507,
-          "unit": "RMB thousand（归属于本公司权益持有人，IFRS）",
+          "value": "15.6151亿",
+          "unit": "RMB（归属于本公司权益持有人，IFRS）",
           "currency": "RMB",
           "source1": {"name": "网易云音乐 2025 年年报「五年财务概要」", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf", "value": 1561507},
           "source2": {"name": "stockanalysis.com", "url": "https://stockanalysis.com/quote/hkg/9899/financials", "value": 1561000},
@@ -350,8 +350,8 @@
         "grossMarginPct": 33.73,
         "operatingMarginPct": 14.73,
         "freeCashFlow": {
-          "value": 1770911,
-          "unit": "RMB thousand（经营活动所得现金净额 1,774,620 - 购买物业厂房及设备 3,709）",
+          "value": "17.7091亿",
+          "unit": "RMB（经营活动所得现金净额 1,774,620 - 购买物业厂房及设备 3,709，明细数字为原披露的千元口径）",
           "currency": "RMB",
           "source1": {"name": "网易云音乐 2025 年年报合并现金流量表", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf", "value": 1770911},
           "source2": {"name": "unavailable，仅单源；资本开支口径不含经营租赁本金偿还（已单独列示于融资活动）", "url": "", "value": null},
@@ -359,8 +359,8 @@
           "flag": "ok"
         },
         "cashReserves": {
-          "value": 11615879,
-          "unit": "RMB thousand（现金及现金等价物 3,795,210 + 银行存款(流动) 6,420,669 + 银行存款(非流动) 1,400,000）",
+          "value": "116.159亿",
+          "unit": "RMB（现金及现金等价物 3,795,210 + 银行存款(流动) 6,420,669 + 银行存款(非流动) 1,400,000，明细数字为原披露的千元口径）",
           "currency": "RMB",
           "source1": {"name": "网易云音乐 2025 年年报合并资产负债表", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf", "value": 11615879},
           "source2": {"name": "unavailable，仅单源", "url": "", "value": null},
@@ -371,8 +371,8 @@
       {
         "fiscalYear": "FY2025",
         "revenue": {
-          "value": 7759450,
-          "unit": "RMB thousand",
+          "value": "77.5945亿",
+          "unit": "RMB",
           "currency": "RMB",
           "source1": {"name": "网易云音乐 2025 年年报「五年财务概要」", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf", "value": 7759450},
           "source2": {"name": "stockanalysis.com", "url": "https://stockanalysis.com/quote/hkg/9899/financials", "value": 7759000},
@@ -380,8 +380,8 @@
           "flag": "ok"
         },
         "netProfit": {
-          "value": 2748210,
-          "unit": "RMB thousand（归属于本公司权益持有人，IFRS，含约747百万元一次性递延所得税抵免）",
+          "value": "27.4821亿",
+          "unit": "RMB（归属于本公司权益持有人，IFRS，含约747百万元一次性递延所得税抵免）",
           "currency": "RMB",
           "source1": {"name": "网易云音乐 2025 年年报「五年财务概要」", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf", "value": 2748210},
           "source2": {"name": "stockanalysis.com", "url": "https://stockanalysis.com/quote/hkg/9899/financials", "value": 2746000},
@@ -392,8 +392,8 @@
         "grossMarginPct": 35.69,
         "operatingMarginPct": 20.90,
         "freeCashFlow": {
-          "value": 1606878,
-          "unit": "RMB thousand（经营活动所得现金净额 1,618,081 - 购买物业厂房及设备 11,203）",
+          "value": "16.0688亿",
+          "unit": "RMB（经营活动所得现金净额 1,618,081 - 购买物业厂房及设备 11,203，明细数字为原披露的千元口径）",
           "currency": "RMB",
           "source1": {"name": "网易云音乐 2025 年年报合并现金流量表", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf", "value": 1606878},
           "source2": {"name": "unavailable，仅单源", "url": "", "value": null},
@@ -401,8 +401,8 @@
           "flag": "ok"
         },
         "cashReserves": {
-          "value": 13575076,
-          "unit": "RMB thousand（现金及现金等价物 3,117,624 + 银行存款(流动) 9,057,452 + 银行存款(非流动) 1,400,000）",
+          "value": "135.751亿",
+          "unit": "RMB（现金及现金等价物 3,117,624 + 银行存款(流动) 9,057,452 + 银行存款(非流动) 1,400,000，明细数字为原披露的千元口径）",
           "currency": "RMB",
           "source1": {"name": "网易云音乐 2025 年年报合并资产负债表", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf", "value": 13575076},
           "source2": {"name": "媒体报道《跌出前三...只剩账上135亿现金》独立复述该数字", "url": "https://view.inews.qq.com/a/20260723A09ZKD00", "value": 13500000},
@@ -656,7 +656,7 @@
       "flag": "ok"
     },
     "sharesOutstanding": {
-      "value": 204716202,
+      "value": "2.04716亿",
       "unit": "股",
       "source1": {
         "name": "FMP shares-float（数据源为HKEXnews权益披露）",
@@ -674,7 +674,7 @@
     },
     "marketCap": {
       "reported": {
-        "value": 23051044345,
+        "value": "230.51亿",
         "unit": "HKD",
         "currency": "HKD",
         "source": "FMP company profile-symbol (9899.HK)"

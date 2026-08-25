@@ -88,7 +88,7 @@
         "fiscalYear": "FY2025",
         "revenue": { "value": 79038, "unit": "千美元", "currency": "USD", "source1": { "name": "年度业绩公告", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf", "value": 79038 }, "source2": { "name": "财联社", "url": "https://www.cls.cn/detail/2300002", "value": 79038 }, "deviationPct": 0, "flag": "ok" },
         "netProfit": {
-          "value": -1871617, "unit": "千美元", "currency": "USD", "basis": "IFRS 净亏损（含金融负债公允价值亏损15.899亿美元等非现金项目）",
+          "value": "-1.87162B", "unit": "美元", "currency": "USD", "basis": "IFRS 净亏损（含金融负债公允价值亏损15.899亿美元等非现金项目）",
           "adjustedNetLoss": { "value": -250856, "unit": "千美元", "currency": "USD", "basis": "非IFRS「经调整净亏损」= 净亏损加回股份支付费用、金融负债公允价值亏损、上市开支" },
           "source1": { "name": "年度业绩公告财务摘要", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf", "value": -1871617 },
           "source2": { "name": "财联社2026-03-02快讯", "url": "https://www.cls.cn/detail/2300002", "value": -1871617 },
@@ -400,7 +400,7 @@
       "note": "当日涨9.83%（+29.2），振幅29.41%（低287.0/高374.4），52周高点1,330.0港元（2026年3月，距今回撤约75.5%）——该股自上市以来波动率极端，日内20%+涨跌属常态，估值截面对时点极度敏感"
     },
     "sharesOutstanding": {
-      "value": 349235308, "unit": "股（A类268,132,774 + B类81,102,534，不含库存股）",
+      "value": "3.49235亿", "unit": "股（A类268,132,774 + B类81,102,534，不含库存股）",
       "source1": { "name": "HKEXnews《证券变动月报表》截至2026-07-31", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0806/2026080601089_c.pdf", "value": 349235308 },
       "source2": { "name": "Yahoo Finance 市值反推（113.99B港元 ÷ 326.4港元）", "url": "https://hk.finance.yahoo.com/quote/0100.HK", "value": 349234432 },
       "deviationPct": 0.0003, "flag": "ok",

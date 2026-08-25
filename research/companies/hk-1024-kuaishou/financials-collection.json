@@ -504,7 +504,7 @@
       "note": "Tushare hk_daily本轮触发1次/小时频率限制未能取得2026-08-20盘中价，改用FMP+stockanalysis双源交叉验证；2026-08-19收盘价37.80 HKD（Tushare hk_daily取得，-4.01% intraday，早于当晚业绩发布）"
     },
     "sharesOutstanding": {
-      "value": 4330000000,
+      "value": "43.3亿",
       "unit": "股",
       "currency": "-",
       "source1": { "name": "stockanalysis.com", "value": 4330000000 },

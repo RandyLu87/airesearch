@@ -413,10 +413,10 @@
       ]
     },
     "sharesOutstanding": {
-      "value": 3108803728, "unit": "shares", "note": "FY2025全年摊薄口径（A类+B类合计），加权平均；公司自身EPS计算即用此口径", "source1": { "name": "TME 官方新闻稿（2026-03-17，FY2025合并利润表附注）", "value": 3108803728 }, "source2": { "name": "FMP隐含股本（marketCap/price=104519244991/33.92）", "value": 3079927204 }, "deviationPct": 0.93, "flag": "ok（FMP快照日期与本次不同，差异主要来自股份回购与期间变化)"
+      "value": "31.088亿", "unit": "shares", "note": "FY2025全年摊薄口径（A类+B类合计），加权平均；公司自身EPS计算即用此口径", "source1": { "name": "TME 官方新闻稿（2026-03-17，FY2025合并利润表附注）", "value": 3108803728 }, "source2": { "name": "FMP隐含股本（marketCap/price=104519244991/33.92）", "value": 3079927204 }, "deviationPct": 0.93, "flag": "ok（FMP快照日期与本次不同，差异主要来自股份回购与期间变化)"
     },
     "marketCap": {
-      "reported": { "value": 122250000000, "unit": "HKD", "currency": "HKD", "note": "stockanalysis.com HKG:1698实时快照", "source": { "name": "stockanalysis.com", "url": "https://stockanalysis.com/quote/hkg/1698/statistics" } },
+      "reported": { "value": "1222.5亿", "unit": "HKD", "currency": "HKD", "note": "stockanalysis.com HKG:1698实时快照", "source": { "name": "stockanalysis.com", "url": "https://stockanalysis.com/quote/hkg/1698/statistics" } },
       "computed": 119876308014.08,
       "flag": "minor-diff（1.94%，financial_rigor.py verify-market-cap 验算：38.56 HKD × 31.088亿股 = 1198.76亿港元，vs 第三方快照1222.5亿港元；差异在可接受范围，可能因股价/股本快照时点不同）"
     },

@@ -33,8 +33,7 @@
     "latestFiscalYear": {
       "period": "FY2025（截至2025-12-31）",
       "totalRevenue": {
-        "value": 45183036000,
-        "unit": "currency",
+        "value": "45.183B",
         "currency": "USD",
         "source1": { "name": "FMP income-statement", "url": "https://financialmodelingprep.com", "value": 45183036000 },
         "source2": { "name": "stockanalysis.com", "url": "https://stockanalysis.com/stocks/NFLX/financials/", "value": 45183000000 },
@@ -46,7 +45,7 @@
         {
           "name": "美国与加拿大 (UCAN)",
           "revenue": {
-            "value": 19957152000, "unit": "currency", "currency": "USD",
+            "value": "19.9572B", "currency": "USD",
             "source1": { "name": "FMP revenue-geographic-segments", "url": "https://financialmodelingprep.com", "value": 19957152000 },
             "source2": { "name": "unavailable", "url": "", "value": null },
             "deviationPct": null, "flag": "仅单源（地区分部为公司10-K原始披露，FMP直接摘录，未做第二源交叉验证）"
@@ -58,7 +57,7 @@
         {
           "name": "欧洲、中东与非洲 (EMEA)",
           "revenue": {
-            "value": 14514646000, "unit": "currency", "currency": "USD",
+            "value": "14.5146B", "currency": "USD",
             "source1": { "name": "FMP revenue-geographic-segments", "url": "https://financialmodelingprep.com", "value": 14514646000 },
             "source2": { "name": "unavailable", "url": "", "value": null },
             "deviationPct": null, "flag": "仅单源"
@@ -70,7 +69,7 @@
         {
           "name": "拉丁美洲 (LATAM)",
           "revenue": {
-            "value": 5357521000, "unit": "currency", "currency": "USD",
+            "value": "5.35752B", "currency": "USD",
             "source1": { "name": "FMP revenue-geographic-segments", "url": "https://financialmodelingprep.com", "value": 5357521000 },
             "source2": { "name": "unavailable", "url": "", "value": null },
             "deviationPct": null, "flag": "仅单源"
@@ -82,7 +81,7 @@
         {
           "name": "亚太 (APAC)",
           "revenue": {
-            "value": 5353717000, "unit": "currency", "currency": "USD",
+            "value": "5.35372B", "currency": "USD",
             "source1": { "name": "FMP revenue-geographic-segments", "url": "https://financialmodelingprep.com", "value": 5353717000 },
             "source2": { "name": "unavailable", "url": "", "value": null },
             "deviationPct": null, "flag": "仅单源"
@@ -97,7 +96,7 @@
       {
         "period": "2025Q3（截至2025-09-30）",
         "totalRevenue": {
-          "value": 11510307000, "unit": "currency", "currency": "USD",
+          "value": "11.5103B", "currency": "USD",
           "source1": { "name": "FMP income-statement(quarter)", "url": "https://financialmodelingprep.com", "value": 11510307000 },
           "source2": { "name": "stockanalysis.com", "url": "https://stockanalysis.com/stocks/NFLX/financials/?p=quarterly", "value": 11510000000 },
           "deviationPct": 0.0, "flag": "ok"
@@ -108,7 +107,7 @@
       {
         "period": "2025Q4（截至2025-12-31）",
         "totalRevenue": {
-          "value": 12050762000, "unit": "currency", "currency": "USD",
+          "value": "12.0508B", "currency": "USD",
           "source1": { "name": "FMP income-statement(quarter)", "url": "https://financialmodelingprep.com", "value": 12050762000 },
           "source2": { "name": "stockanalysis.com", "url": "https://stockanalysis.com/stocks/NFLX/financials/?p=quarterly", "value": 12051000000 },
           "deviationPct": 0.0, "flag": "ok"
@@ -119,7 +118,7 @@
       {
         "period": "2026Q1（截至2026-03-31）",
         "totalRevenue": {
-          "value": 12249757000, "unit": "currency", "currency": "USD",
+          "value": "12.2498B", "currency": "USD",
           "source1": { "name": "FMP income-statement(quarter)", "url": "https://financialmodelingprep.com", "value": 12249757000 },
           "source2": { "name": "stockanalysis.com", "url": "https://stockanalysis.com/stocks/NFLX/financials/?p=quarterly", "value": 12250000000 },
           "deviationPct": 0.0, "flag": "ok"
@@ -130,7 +129,7 @@
       {
         "period": "2026Q2（截至2026-06-30，最新一季）",
         "totalRevenue": {
-          "value": 12559938000, "unit": "currency", "currency": "USD",
+          "value": "12.5599B", "currency": "USD",
           "source1": { "name": "FMP income-statement(quarter)", "url": "https://financialmodelingprep.com", "value": 12559938000 },
           "source2": { "name": "unavailable", "url": "", "value": null },
           "deviationPct": null, "flag": "仅单源（stockanalysis 季度页截至采集时尚未更新到 2026Q2，已查该页面确认最新为 2026Q1）"
@@ -145,48 +144,48 @@
     "annual": [
       {
         "fiscalYear": "2021",
-        "revenue": { "value": 29697844000, "unit": "currency", "currency": "USD", "source1": {"name":"FMP","url":"https://financialmodelingprep.com","value":29697844000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/","value":29698000000}, "deviationPct": 0.0, "flag": "ok" },
-        "netProfit": { "value": 5116228000, "unit": "currency", "currency": "USD", "note": "GAAP归母净利润", "source1": {"name":"FMP","url":"https://financialmodelingprep.com","value":5116228000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/","value":5116000000}, "deviationPct": 0.0, "flag": "ok" },
+        "revenue": { "value": "29.6978B", "currency": "USD", "source1": {"name":"FMP","url":"https://financialmodelingprep.com","value":29697844000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/","value":29698000000}, "deviationPct": 0.0, "flag": "ok" },
+        "netProfit": { "value": "5.11623B", "currency": "USD", "note": "GAAP归母净利润", "source1": {"name":"FMP","url":"https://financialmodelingprep.com","value":5116228000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/","value":5116000000}, "deviationPct": 0.0, "flag": "ok" },
         "grossMarginPct": 41.64,
         "operatingMarginPct": 20.86,
-        "freeCashFlow": { "value": -131975000, "unit": "currency", "currency": "USD", "note": "资本支出口径为PP&E购置，不含内容资产投资；2021年为疫情后制作复工年，FCF转负", "source1": {"name":"FMP cashflow-statement","url":"https://financialmodelingprep.com","value":-131975000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/cash-flow-statement/","value":-131980000}, "deviationPct": 0.0, "flag": "ok" },
-        "cashReserves": { "value": 6027804000, "unit": "currency", "currency": "USD", "note": "现金及等价物，不含短期投资(2021年短期投资为0)", "source1": {"name":"FMP balance-sheet-statement","url":"https://financialmodelingprep.com","value":6027804000}, "source2": {"name":"unavailable","url":"","value": null}, "deviationPct": null, "flag": "仅单源" }
+        "freeCashFlow": { "value": "-131.975M", "currency": "USD", "note": "资本支出口径为PP&E购置，不含内容资产投资；2021年为疫情后制作复工年，FCF转负", "source1": {"name":"FMP cashflow-statement","url":"https://financialmodelingprep.com","value":-131975000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/cash-flow-statement/","value":-131980000}, "deviationPct": 0.0, "flag": "ok" },
+        "cashReserves": { "value": "6.0278B", "currency": "USD", "note": "现金及等价物，不含短期投资(2021年短期投资为0)", "source1": {"name":"FMP balance-sheet-statement","url":"https://financialmodelingprep.com","value":6027804000}, "source2": {"name":"unavailable","url":"","value": null}, "deviationPct": null, "flag": "仅单源" }
       },
       {
         "fiscalYear": "2022",
-        "revenue": { "value": 31615550000, "unit": "currency", "currency": "USD", "source1": {"name":"FMP","url":"https://financialmodelingprep.com","value":31615550000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/","value":31616000000}, "deviationPct": 0.0, "flag": "ok" },
-        "netProfit": { "value": 4491924000, "unit": "currency", "currency": "USD", "note": "GAAP归母净利润", "source1": {"name":"FMP","url":"https://financialmodelingprep.com","value":4491924000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/","value":4492000000}, "deviationPct": 0.0, "flag": "ok" },
+        "revenue": { "value": "31.6155B", "currency": "USD", "source1": {"name":"FMP","url":"https://financialmodelingprep.com","value":31615550000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/","value":31616000000}, "deviationPct": 0.0, "flag": "ok" },
+        "netProfit": { "value": "4.49192B", "currency": "USD", "note": "GAAP归母净利润", "source1": {"name":"FMP","url":"https://financialmodelingprep.com","value":4491924000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/","value":4492000000}, "deviationPct": 0.0, "flag": "ok" },
         "grossMarginPct": 39.37,
         "operatingMarginPct": 17.82,
-        "freeCashFlow": { "value": 1618528000, "unit": "currency", "currency": "USD", "note": "资本支出口径为PP&E购置", "source1": {"name":"FMP cashflow-statement","url":"https://financialmodelingprep.com","value":1618528000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/cash-flow-statement/","value":1619000000}, "deviationPct": 0.0, "flag": "ok" },
-        "cashReserves": { "value": 6058452000, "unit": "currency", "currency": "USD", "note": "现金+短期投资", "source1": {"name":"FMP balance-sheet-statement","url":"https://financialmodelingprep.com","value":6058452000}, "source2": {"name":"unavailable","url":"","value": null}, "deviationPct": null, "flag": "仅单源" }
+        "freeCashFlow": { "value": "1.61853B", "currency": "USD", "note": "资本支出口径为PP&E购置", "source1": {"name":"FMP cashflow-statement","url":"https://financialmodelingprep.com","value":1618528000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/cash-flow-statement/","value":1619000000}, "deviationPct": 0.0, "flag": "ok" },
+        "cashReserves": { "value": "6.05845B", "currency": "USD", "note": "现金+短期投资", "source1": {"name":"FMP balance-sheet-statement","url":"https://financialmodelingprep.com","value":6058452000}, "source2": {"name":"unavailable","url":"","value": null}, "deviationPct": null, "flag": "仅单源" }
       },
       {
         "fiscalYear": "2023",
-        "revenue": { "value": 33723297000, "unit": "currency", "currency": "USD", "source1": {"name":"FMP","url":"https://financialmodelingprep.com","value":33723297000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/","value":33723000000}, "deviationPct": 0.0, "flag": "ok" },
-        "netProfit": { "value": 5407990000, "unit": "currency", "currency": "USD", "note": "GAAP归母净利润", "source1": {"name":"FMP","url":"https://financialmodelingprep.com","value":5407990000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/","value":5408000000}, "deviationPct": 0.0, "flag": "ok" },
+        "revenue": { "value": "33.7233B", "currency": "USD", "source1": {"name":"FMP","url":"https://financialmodelingprep.com","value":33723297000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/","value":33723000000}, "deviationPct": 0.0, "flag": "ok" },
+        "netProfit": { "value": "5.40799B", "currency": "USD", "note": "GAAP归母净利润", "source1": {"name":"FMP","url":"https://financialmodelingprep.com","value":5407990000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/","value":5408000000}, "deviationPct": 0.0, "flag": "ok" },
         "grossMarginPct": 41.54,
         "operatingMarginPct": 20.62,
-        "freeCashFlow": { "value": 6925749000, "unit": "currency", "currency": "USD", "note": "资本支出口径为PP&E购置", "source1": {"name":"FMP cashflow-statement","url":"https://financialmodelingprep.com","value":6925749000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/cash-flow-statement/","value":6926000000}, "deviationPct": 0.0, "flag": "ok" },
-        "cashReserves": { "value": 7137886000, "unit": "currency", "currency": "USD", "note": "现金+短期投资", "source1": {"name":"FMP balance-sheet-statement","url":"https://financialmodelingprep.com","value":7137886000}, "source2": {"name":"unavailable","url":"","value": null}, "deviationPct": null, "flag": "仅单源" }
+        "freeCashFlow": { "value": "6.92575B", "currency": "USD", "note": "资本支出口径为PP&E购置", "source1": {"name":"FMP cashflow-statement","url":"https://financialmodelingprep.com","value":6925749000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/cash-flow-statement/","value":6926000000}, "deviationPct": 0.0, "flag": "ok" },
+        "cashReserves": { "value": "7.13789B", "currency": "USD", "note": "现金+短期投资", "source1": {"name":"FMP balance-sheet-statement","url":"https://financialmodelingprep.com","value":7137886000}, "source2": {"name":"unavailable","url":"","value": null}, "deviationPct": null, "flag": "仅单源" }
       },
       {
         "fiscalYear": "2024",
-        "revenue": { "value": 39000966000, "unit": "currency", "currency": "USD", "source1": {"name":"FMP","url":"https://financialmodelingprep.com","value":39000966000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/","value":39001000000}, "deviationPct": 0.0, "flag": "ok" },
-        "netProfit": { "value": 8711631000, "unit": "currency", "currency": "USD", "note": "GAAP归母净利润", "source1": {"name":"FMP","url":"https://financialmodelingprep.com","value":8711631000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/","value":8712000000}, "deviationPct": 0.0, "flag": "ok" },
+        "revenue": { "value": "39.001B", "currency": "USD", "source1": {"name":"FMP","url":"https://financialmodelingprep.com","value":39000966000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/","value":39001000000}, "deviationPct": 0.0, "flag": "ok" },
+        "netProfit": { "value": "8.71163B", "currency": "USD", "note": "GAAP归母净利润", "source1": {"name":"FMP","url":"https://financialmodelingprep.com","value":8711631000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/","value":8712000000}, "deviationPct": 0.0, "flag": "ok" },
         "grossMarginPct": 46.06,
         "operatingMarginPct": 26.71,
-        "freeCashFlow": { "value": 6921826000, "unit": "currency", "currency": "USD", "note": "资本支出口径为PP&E购置", "source1": {"name":"FMP cashflow-statement","url":"https://financialmodelingprep.com","value":6921826000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/cash-flow-statement/","value":6922000000}, "deviationPct": 0.0, "flag": "ok" },
-        "cashReserves": { "value": 9583739000, "unit": "currency", "currency": "USD", "note": "现金+短期投资", "source1": {"name":"FMP balance-sheet-statement","url":"https://financialmodelingprep.com","value":9583739000}, "source2": {"name":"unavailable","url":"","value": null}, "deviationPct": null, "flag": "仅单源" }
+        "freeCashFlow": { "value": "6.92183B", "currency": "USD", "note": "资本支出口径为PP&E购置", "source1": {"name":"FMP cashflow-statement","url":"https://financialmodelingprep.com","value":6921826000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/cash-flow-statement/","value":6922000000}, "deviationPct": 0.0, "flag": "ok" },
+        "cashReserves": { "value": "9.58374B", "currency": "USD", "note": "现金+短期投资", "source1": {"name":"FMP balance-sheet-statement","url":"https://financialmodelingprep.com","value":9583739000}, "source2": {"name":"unavailable","url":"","value": null}, "deviationPct": null, "flag": "仅单源" }
       },
       {
         "fiscalYear": "2025",
-        "revenue": { "value": 45183036000, "unit": "currency", "currency": "USD", "source1": {"name":"FMP income-statement","url":"https://financialmodelingprep.com","value":45183036000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/","value":45183000000}, "deviationPct": 0.0, "flag": "ok" },
-        "netProfit": { "value": 10981201000, "unit": "currency", "currency": "USD", "note": "GAAP归母净利润", "source1": {"name":"FMP income-statement","url":"https://financialmodelingprep.com","value":10981201000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/","value":10981000000}, "deviationPct": 0.0, "flag": "ok" },
+        "revenue": { "value": "45.183B", "currency": "USD", "source1": {"name":"FMP income-statement","url":"https://financialmodelingprep.com","value":45183036000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/","value":45183000000}, "deviationPct": 0.0, "flag": "ok" },
+        "netProfit": { "value": "10.9812B", "currency": "USD", "note": "GAAP归母净利润", "source1": {"name":"FMP income-statement","url":"https://financialmodelingprep.com","value":10981201000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/","value":10981000000}, "deviationPct": 0.0, "flag": "ok" },
         "grossMarginPct": 48.49,
         "operatingMarginPct": 29.49,
-        "freeCashFlow": { "value": 9461053000, "unit": "currency", "currency": "USD", "note": "资本支出口径为PP&E购置", "source1": {"name":"FMP cashflow-statement","url":"https://financialmodelingprep.com","value":9461053000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/cash-flow-statement/","value":9461000000}, "deviationPct": 0.0, "flag": "ok" },
-        "cashReserves": { "value": 9062359000, "unit": "currency", "currency": "USD", "note": "现金+短期投资", "source1": {"name":"FMP balance-sheet-statement","url":"https://financialmodelingprep.com","value":9062359000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/balance-sheet/","value":9062000000}, "deviationPct": 0.0, "flag": "ok" }
+        "freeCashFlow": { "value": "9.46105B", "currency": "USD", "note": "资本支出口径为PP&E购置", "source1": {"name":"FMP cashflow-statement","url":"https://financialmodelingprep.com","value":9461053000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/cash-flow-statement/","value":9461000000}, "deviationPct": 0.0, "flag": "ok" },
+        "cashReserves": { "value": "9.06236B", "currency": "USD", "note": "现金+短期投资", "source1": {"name":"FMP balance-sheet-statement","url":"https://financialmodelingprep.com","value":9062359000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/balance-sheet/","value":9062000000}, "deviationPct": 0.0, "flag": "ok" }
       }
     ]
   },
@@ -289,7 +288,7 @@
       "直播与新业务技术基础设施（支撑WWE Raw每周直播、NFL圣诞赛事等大型低延迟直播事件，以及云游戏/移动游戏业务）"
     ],
     "rdExpense": {
-      "value": 3391390000, "unit": "currency", "currency": "USD", "note": "FY2025，Netflix 财报中列为 Technology and Development，含内容以外的产品/工程/推荐算法研发",
+      "value": "3.39139B", "currency": "USD", "note": "FY2025，Netflix 财报中列为 Technology and Development，含内容以外的产品/工程/推荐算法研发",
       "source1": {"name":"FMP income-statement","url":"https://financialmodelingprep.com","value":3391390000},
       "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/","value": null},
       "deviationPct": null, "flag": "仅单源（stockanalysis 未单列该科目，10-K 原文口径与 FMP 一致）"
@@ -440,7 +439,7 @@
       "deviationPct": 0.0, "flag": "ok"
     },
     "sharesOutstanding": {
-      "value": 4163939999, "unit": "shares", "currency": null,
+      "value": "41.6394亿", "unit": "shares", "currency": null,
       "source1": { "name": "FMP shares-float", "url": "https://financialmodelingprep.com", "value": 4163939999 },
       "source2": { "name": "stockanalysis.com", "url": "https://stockanalysis.com/stocks/NFLX/", "value": 4160000000 },
       "deviationPct": 0.05, "flag": "ok"

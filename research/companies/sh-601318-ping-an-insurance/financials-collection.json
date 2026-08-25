@@ -24,8 +24,7 @@
     "latestFiscalYear": {
       "period": "FY2025",
       "totalRevenue": {
-        "value": 1050506000000,
-        "unit": "currency",
+        "value": "1.05051万亿",
         "currency": "CNY",
         "source1": { "name": "Tushare income(period=20251231, report_type=1, total_revenue)", "url": "https://tushare.pro", "value": 1050506000000 },
         "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA（TOTALOPERATEREVE）", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 1050506000000 },
@@ -35,28 +34,28 @@
       "segments": [
         {
           "name": "保险服务收入（寿险及健康险+财产保险，新保险合同准则口径）",
-          "revenue": { "value": 559500000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare fina_mainbz(type=P, 20251231)", "url": "https://tushare.pro", "value": 559500000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
+          "revenue": { "value": "5595亿", "currency": "CNY", "source1": { "name": "Tushare fina_mainbz(type=P, 20251231)", "url": "https://tushare.pro", "value": 559500000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
           "revenueSharePct": "38.6%",
           "yoyGrowthPct": "unavailable（fina_mainbz 未提供分部同比，需回年报逐项核对）",
           "grossMarginPct": { "status": "unavailable", "reason": "保险/银行/投资类收入不适用传统『毛利率』概念，公司未按此口径披露；fina_mainbz 分部表无毛利率字段" }
         },
         {
           "name": "银行业务利息净收入（合计，含多笔明细行）",
-          "revenue": { "value": 169700000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare fina_mainbz(type=P, 20251231)，主表行『银行业务利息净收入：银行业务利』", "url": "https://tushare.pro", "value": 169700000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
+          "revenue": { "value": "1697亿", "currency": "CNY", "source1": { "name": "Tushare fina_mainbz(type=P, 20251231)，主表行『银行业务利息净收入：银行业务利』", "url": "https://tushare.pro", "value": 169700000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
           "revenueSharePct": "11.7%",
           "yoyGrowthPct": "unavailable",
           "grossMarginPct": { "status": "unavailable", "reason": "同上，银行利息净收入不适用毛利率" }
         },
         {
           "name": "投资收益",
-          "revenue": { "value": 152860000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare fina_mainbz(type=P, 20251231)", "url": "https://tushare.pro", "value": 152860000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
+          "revenue": { "value": "1528.6亿", "currency": "CNY", "source1": { "name": "Tushare fina_mainbz(type=P, 20251231)", "url": "https://tushare.pro", "value": 152860000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
           "revenueSharePct": "10.5%",
           "yoyGrowthPct": "unavailable",
           "grossMarginPct": { "status": "unavailable", "reason": "不适用" }
         },
         {
           "name": "非银行业务利息收入（合计，含多笔明细行）",
-          "revenue": { "value": 135800000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare fina_mainbz(type=P, 20251231)", "url": "https://tushare.pro", "value": 135800000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
+          "revenue": { "value": "1358亿", "currency": "CNY", "source1": { "name": "Tushare fina_mainbz(type=P, 20251231)", "url": "https://tushare.pro", "value": 135800000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
           "revenueSharePct": "9.4%",
           "yoyGrowthPct": "unavailable",
           "grossMarginPct": { "status": "unavailable", "reason": "不适用" }
@@ -75,48 +74,48 @@
     "annual": [
       {
         "fiscalYear": "FY2021",
-        "revenue": { "value": 1180440000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare income(period=20211231, report_type=1)", "url": "https://tushare.pro", "value": 1180440000000 }, "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 1180444000000 }, "deviationPct": "0.00%", "flag": "ok" },
-        "netProfit": { "value": 101620000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare income(n_income_attr_p)", "url": "https://tushare.pro", "value": 101620000000 }, "source2": { "name": "东方财富", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 101618000000 }, "deviationPct": "0.00%", "flag": "ok" },
+        "revenue": { "value": "1.18044万亿", "currency": "CNY", "source1": { "name": "Tushare income(period=20211231, report_type=1)", "url": "https://tushare.pro", "value": 1180440000000 }, "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 1180444000000 }, "deviationPct": "0.00%", "flag": "ok" },
+        "netProfit": { "value": "1016.2亿", "currency": "CNY", "source1": { "name": "Tushare income(n_income_attr_p)", "url": "https://tushare.pro", "value": 101620000000 }, "source2": { "name": "东方财富", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 101618000000 }, "deviationPct": "0.00%", "flag": "ok" },
         "grossMarginPct": { "status": "unavailable", "reason": "保险/银行集团不适用传统毛利率口径，公司未披露，见 revenueStructure.reason_no_gross_margin" },
         "operatingMarginPct": { "status": "unavailable", "reason": "cnstock_data.py fina_indicator 未返回该标的 operating margin 字段；集团层面『营业利润/营业总收入』受保险准备金评估利率波动影响极大，公司年报未单列该比率，本次未自行推算" },
-        "freeCashFlow": { "value": 77930000000, "unit": "currency", "currency": "CNY", "note": "口径为『经营活动现金流净额-资本支出』，来自 Tushare fina_indicator/cashflow；对保险集团而言，经营现金流主要反映保费流入与赔付/退保流出的净额，含大量保险浮存金（float），与工业企业『自由现金流』概念含义不同，不宜直接类比制造业估值", "source1": { "name": "Tushare cashflow/fina_indicator", "url": "https://tushare.pro", "value": 77930000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
-        "cashReserves": { "value": 535070000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare balancesheet（货币资金）", "url": "https://tushare.pro", "value": 535070000000 }, "source2": { "name": "东方财富 RPT_DMSK_FN_BALANCE（MONETARYFUNDS）", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 535067000000 }, "deviationPct": "0.00%", "flag": "ok" }
+        "freeCashFlow": { "value": "779.3亿", "currency": "CNY", "note": "口径为『经营活动现金流净额-资本支出』，来自 Tushare fina_indicator/cashflow；对保险集团而言，经营现金流主要反映保费流入与赔付/退保流出的净额，含大量保险浮存金（float），与工业企业『自由现金流』概念含义不同，不宜直接类比制造业估值", "source1": { "name": "Tushare cashflow/fina_indicator", "url": "https://tushare.pro", "value": 77930000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
+        "cashReserves": { "value": "5350.7亿", "currency": "CNY", "source1": { "name": "Tushare balancesheet（货币资金）", "url": "https://tushare.pro", "value": 535070000000 }, "source2": { "name": "东方财富 RPT_DMSK_FN_BALANCE（MONETARYFUNDS）", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 535067000000 }, "deviationPct": "0.00%", "flag": "ok" }
       },
       {
         "fiscalYear": "FY2022",
-        "revenue": { "value": 1110570000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare income(period=20221231, report_type=1)，与官方2022年报『营业收入11,105.68亿元』一致", "url": "https://tushare.pro", "value": 1110568000000 }, "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA（该字段值8,803.55亿元，与官方年报及Tushare偏差11.56%，financial_rigor.py判定❌重大差异；经WebSearch核实公司2022年报官方披露『营业收入11,105.68亿元，同比降5.9%；归母净利润837.74亿元，同比降17.56%』，与东方财富该接口不符，判定为该接口对保险类公司的数据异常，本字段弃用东方财富数值", "url": "https://finance.sina.com.cn/jjxw/2023-03-22/doc-imymtrua9968957.shtml", "value": 880355000000 }, "deviationPct": "11.56%（东方财富异常值，已弃用；采用Tushare与官方年报一致值）", "flag": "major-diff-resolved" },
-        "netProfit": { "value": 83774000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare income(n_income_attr_p)，与官方年报一致", "url": "https://tushare.pro", "value": 83774000000 }, "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA（异常值，已弃用，理由同上）", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 111008000000 }, "deviationPct": "13.98%（东方财富异常值，已弃用）", "flag": "major-diff-resolved" },
+        "revenue": { "value": "1.11057万亿", "currency": "CNY", "source1": { "name": "Tushare income(period=20221231, report_type=1)，与官方2022年报『营业收入11,105.68亿元』一致", "url": "https://tushare.pro", "value": 1110568000000 }, "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA（该字段值8,803.55亿元，与官方年报及Tushare偏差11.56%，financial_rigor.py判定❌重大差异；经WebSearch核实公司2022年报官方披露『营业收入11,105.68亿元，同比降5.9%；归母净利润837.74亿元，同比降17.56%』，与东方财富该接口不符，判定为该接口对保险类公司的数据异常，本字段弃用东方财富数值", "url": "https://finance.sina.com.cn/jjxw/2023-03-22/doc-imymtrua9968957.shtml", "value": 880355000000 }, "deviationPct": "11.56%（东方财富异常值，已弃用；采用Tushare与官方年报一致值）", "flag": "major-diff-resolved" },
+        "netProfit": { "value": "837.74亿", "currency": "CNY", "source1": { "name": "Tushare income(n_income_attr_p)，与官方年报一致", "url": "https://tushare.pro", "value": 83774000000 }, "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA（异常值，已弃用，理由同上）", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 111008000000 }, "deviationPct": "13.98%（东方财富异常值，已弃用）", "flag": "major-diff-resolved" },
         "grossMarginPct": { "status": "unavailable", "reason": "同 FY2021" },
         "operatingMarginPct": { "status": "unavailable", "reason": "同 FY2021" },
-        "freeCashFlow": { "value": 477030000000, "unit": "currency", "currency": "CNY", "note": "同 FY2021 口径说明", "source1": { "name": "Tushare cashflow/fina_indicator", "url": "https://tushare.pro", "value": 477030000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
-        "cashReserves": { "value": 612590000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare balancesheet", "url": "https://tushare.pro", "value": 612590000000 }, "source2": { "name": "东方财富 RPT_DMSK_FN_BALANCE", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 613737000000 }, "deviationPct": "0.19%", "flag": "ok" }
+        "freeCashFlow": { "value": "4770.3亿", "currency": "CNY", "note": "同 FY2021 口径说明", "source1": { "name": "Tushare cashflow/fina_indicator", "url": "https://tushare.pro", "value": 477030000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
+        "cashReserves": { "value": "6125.9亿", "currency": "CNY", "source1": { "name": "Tushare balancesheet", "url": "https://tushare.pro", "value": 612590000000 }, "source2": { "name": "东方财富 RPT_DMSK_FN_BALANCE", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 613737000000 }, "deviationPct": "0.19%", "flag": "ok" }
       },
       {
         "fiscalYear": "FY2023",
-        "revenue": { "value": 913790000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare income(period=20231231, report_type=1)", "url": "https://tushare.pro", "value": 913790000000 }, "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 913789000000 }, "deviationPct": "0.00%", "flag": "ok", "note": "2023年起执行新保险合同准则(I17)，与2022年及以前数据口径不完全可比，公司年报已就此专门说明，本报告不直接计算2022→2023同比增速" },
-        "netProfit": { "value": 85660000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare income(n_income_attr_p)", "url": "https://tushare.pro", "value": 85660000000 }, "source2": { "name": "东方财富", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 85665000000 }, "deviationPct": "0.00%", "flag": "ok" },
+        "revenue": { "value": "9137.9亿", "currency": "CNY", "source1": { "name": "Tushare income(period=20231231, report_type=1)", "url": "https://tushare.pro", "value": 913790000000 }, "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 913789000000 }, "deviationPct": "0.00%", "flag": "ok", "note": "2023年起执行新保险合同准则(I17)，与2022年及以前数据口径不完全可比，公司年报已就此专门说明，本报告不直接计算2022→2023同比增速" },
+        "netProfit": { "value": "856.6亿", "currency": "CNY", "source1": { "name": "Tushare income(n_income_attr_p)", "url": "https://tushare.pro", "value": 85660000000 }, "source2": { "name": "东方财富", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 85665000000 }, "deviationPct": "0.00%", "flag": "ok" },
         "grossMarginPct": { "status": "unavailable", "reason": "同 FY2021" },
         "operatingMarginPct": { "status": "unavailable", "reason": "同 FY2021" },
-        "freeCashFlow": { "value": 352590000000, "unit": "currency", "currency": "CNY", "note": "同 FY2021 口径说明", "source1": { "name": "Tushare cashflow/fina_indicator", "url": "https://tushare.pro", "value": 352590000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
-        "cashReserves": { "value": 577210000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare balancesheet", "url": "https://tushare.pro", "value": 577210000000 }, "source2": { "name": "东方财富 RPT_DMSK_FN_BALANCE", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 577212000000 }, "deviationPct": "0.00%", "flag": "ok" }
+        "freeCashFlow": { "value": "3525.9亿", "currency": "CNY", "note": "同 FY2021 口径说明", "source1": { "name": "Tushare cashflow/fina_indicator", "url": "https://tushare.pro", "value": 352590000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
+        "cashReserves": { "value": "5772.1亿", "currency": "CNY", "source1": { "name": "Tushare balancesheet", "url": "https://tushare.pro", "value": 577210000000 }, "source2": { "name": "东方财富 RPT_DMSK_FN_BALANCE", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 577212000000 }, "deviationPct": "0.00%", "flag": "ok" }
       },
       {
         "fiscalYear": "FY2024",
-        "revenue": { "value": 1028920000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare income(period=20241231, report_type=1)", "url": "https://tushare.pro", "value": 1028920000000 }, "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 1028925000000 }, "deviationPct": "0.00%", "flag": "ok" },
-        "netProfit": { "value": 126610000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare income(n_income_attr_p)", "url": "https://tushare.pro", "value": 126610000000 }, "source2": { "name": "东方财富", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 126607000000 }, "deviationPct": "0.00%", "flag": "ok" },
+        "revenue": { "value": "1.02892万亿", "currency": "CNY", "source1": { "name": "Tushare income(period=20241231, report_type=1)", "url": "https://tushare.pro", "value": 1028920000000 }, "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 1028925000000 }, "deviationPct": "0.00%", "flag": "ok" },
+        "netProfit": { "value": "1266.1亿", "currency": "CNY", "source1": { "name": "Tushare income(n_income_attr_p)", "url": "https://tushare.pro", "value": 126610000000 }, "source2": { "name": "东方财富", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 126607000000 }, "deviationPct": "0.00%", "flag": "ok" },
         "grossMarginPct": { "status": "unavailable", "reason": "同 FY2021" },
         "operatingMarginPct": { "status": "unavailable", "reason": "同 FY2021" },
-        "freeCashFlow": { "value": 375800000000, "unit": "currency", "currency": "CNY", "note": "同 FY2021 口径说明", "source1": { "name": "Tushare cashflow/fina_indicator", "url": "https://tushare.pro", "value": 375800000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
-        "cashReserves": { "value": 683430000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare balancesheet", "url": "https://tushare.pro", "value": 683430000000 }, "source2": { "name": "东方财富 RPT_DMSK_FN_BALANCE", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 683433000000 }, "deviationPct": "0.00%", "flag": "ok" }
+        "freeCashFlow": { "value": "3758亿", "currency": "CNY", "note": "同 FY2021 口径说明", "source1": { "name": "Tushare cashflow/fina_indicator", "url": "https://tushare.pro", "value": 375800000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
+        "cashReserves": { "value": "6834.3亿", "currency": "CNY", "source1": { "name": "Tushare balancesheet", "url": "https://tushare.pro", "value": 683430000000 }, "source2": { "name": "东方财富 RPT_DMSK_FN_BALANCE", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 683433000000 }, "deviationPct": "0.00%", "flag": "ok" }
       },
       {
         "fiscalYear": "FY2025",
-        "revenue": { "value": 1050510000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare income(period=20251231, report_type=1)", "url": "https://tushare.pro", "value": 1050510000000 }, "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 1050506000000 }, "deviationPct": "0.00%", "flag": "ok" },
-        "netProfit": { "value": 134780000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare income(n_income_attr_p)", "url": "https://tushare.pro", "value": 134780000000 }, "source2": { "name": "东方财富", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 134778000000 }, "deviationPct": "0.00%", "flag": "ok" },
+        "revenue": { "value": "1.05051万亿", "currency": "CNY", "source1": { "name": "Tushare income(period=20251231, report_type=1)", "url": "https://tushare.pro", "value": 1050510000000 }, "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 1050506000000 }, "deviationPct": "0.00%", "flag": "ok" },
+        "netProfit": { "value": "1347.8亿", "currency": "CNY", "source1": { "name": "Tushare income(n_income_attr_p)", "url": "https://tushare.pro", "value": 134780000000 }, "source2": { "name": "东方财富", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 134778000000 }, "deviationPct": "0.00%", "flag": "ok" },
         "grossMarginPct": { "status": "unavailable", "reason": "同 FY2021" },
         "operatingMarginPct": { "status": "unavailable", "reason": "同 FY2021" },
-        "freeCashFlow": { "value": 650280000000, "unit": "currency", "currency": "CNY", "note": "同 FY2021 口径说明；同比+73.03%主要受保险资金运用与银行同业存款季节性波动影响，非核心承保业务改善的直接反映，需结合寿险及健康险营运利润（1,033亿，+7.5%YoY，来源见 revenueStructure note）综合判断", "source1": { "name": "Tushare cashflow/fina_indicator", "url": "https://tushare.pro", "value": 650280000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
-        "cashReserves": { "value": 745680000000, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare balancesheet", "url": "https://tushare.pro", "value": 745680000000 }, "source2": { "name": "东方财富 RPT_DMSK_FN_BALANCE", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 745679000000 }, "deviationPct": "0.00%", "flag": "ok" }
+        "freeCashFlow": { "value": "6502.8亿", "currency": "CNY", "note": "同 FY2021 口径说明；同比+73.03%主要受保险资金运用与银行同业存款季节性波动影响，非核心承保业务改善的直接反映，需结合寿险及健康险营运利润（1,033亿，+7.5%YoY，来源见 revenueStructure note）综合判断", "source1": { "name": "Tushare cashflow/fina_indicator", "url": "https://tushare.pro", "value": 650280000000 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
+        "cashReserves": { "value": "7456.8亿", "currency": "CNY", "source1": { "name": "Tushare balancesheet", "url": "https://tushare.pro", "value": 745680000000 }, "source2": { "name": "东方财富 RPT_DMSK_FN_BALANCE", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 745679000000 }, "deviationPct": "0.00%", "flag": "ok" }
       }
     ],
     "supplementalIndicators": {
@@ -342,7 +341,7 @@
     "_dimension": "9. 当前估值：市值、PE、PS、PEG、EV/Revenue",
     "priceAsOf": "2026-08-07",
     "sharePrice": { "value": 53.38, "unit": "currency", "currency": "CNY", "source1": { "name": "Tushare daily(trade_date=20260807)", "url": "https://tushare.pro", "value": 53.38 }, "source2": { "name": "status", "url": "", "value": "unavailable（同日盘口价，未另行核对第二行情源，A股收盘价为公开唯一权威数据，风险极低）" }, "deviationPct": "unavailable", "flag": "ok" },
-    "sharesOutstanding": { "value": 18107641995, "unit": "shares", "source1": { "name": "Tushare daily_basic(total_share，20260807)", "url": "https://tushare.pro", "value": 18107641995 }, "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA(TOTAL_SHARE，2026Q1)", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 18107641995 }, "deviationPct": "0.00%", "flag": "ok" },
+    "sharesOutstanding": { "value": "181.076亿", "unit": "shares", "source1": { "name": "Tushare daily_basic(total_share，20260807)", "url": "https://tushare.pro", "value": 18107641995 }, "source2": { "name": "东方财富 RPT_F10_FINANCE_MAINFINADATA(TOTAL_SHARE，2026Q1)", "url": "https://data.eastmoney.com/bbsj/601318.html", "value": 18107641995 }, "deviationPct": "0.00%", "flag": "ok" },
     "marketCap": {
       "reported": "9,665.9亿 CNY（Tushare daily_basic total_mv，2026-08-07）",
       "computed": "966,610,231,712.10 CNY = 53.38 × 18,107,641,995股，financial_rigor.py verify-market-cap 偏差0.00%",
