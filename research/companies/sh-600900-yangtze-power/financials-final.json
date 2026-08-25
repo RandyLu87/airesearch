@@ -3,16 +3,16 @@
   "meta": {
     "companyId": "sh-600900-yangtze-power",
     "companyName": "中国长江电力股份有限公司",
-    "generatedAt": "2026-08-09T20:06:31+08:00",
+    "generatedAt": "2026-08-25T21:11:24+08:00",
     "dataCutoff": "2026-08-07",
     "validation": {
       "threshold": 7.0,
       "scores": {
-        "collection": 9.9,
-        "analysis": 9.8,
-        "summary": 10.0
+        "collection": 9.5,
+        "analysis": 9.7,
+        "summary": 9.5
       },
-      "validatedAt": "2026-08-09T20:06:31+08:00"
+      "validatedAt": "2026-08-25T21:11:24+08:00"
     },
     "sources": {
       "collection": "research/companies/sh-600900-yangtze-power/financials-collection.json",
@@ -95,11 +95,13 @@
                 "value": 756.6
               },
               "source2": {
-                "name": "unavailable",
-                "url": "",
-                "value": "unavailable"
+                "status": "unavailable",
+                "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
               },
-              "deviationPct": "unavailable",
+              "deviationPct": {
+                "status": "not-applicable",
+                "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+              },
               "flag": "ok",
               "note": "Level 2/分部字段，单源，已与利润表总收入对账（差异 0.00%）"
             },
@@ -122,11 +124,13 @@
                 "value": 103.2
               },
               "source2": {
-                "name": "unavailable",
-                "url": "",
-                "value": "unavailable"
+                "status": "unavailable",
+                "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
               },
-              "deviationPct": "unavailable",
+              "deviationPct": {
+                "status": "not-applicable",
+                "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+              },
               "flag": "ok"
             },
             "revenueSharePct": 12.0,
@@ -148,11 +152,13 @@
                 "value": 2.6
               },
               "source2": {
-                "name": "unavailable",
-                "url": "",
-                "value": "unavailable"
+                "status": "unavailable",
+                "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
               },
-              "deviationPct": "unavailable",
+              "deviationPct": {
+                "status": "not-applicable",
+                "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+              },
               "flag": "ok"
             },
             "revenueSharePct": 0.3,
@@ -177,21 +183,21 @@
               "value": 196.83
             },
             "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            },
             "flag": "ok",
             "note": "单季值 = H1累计366.98亿 - Q1累计170.15亿，经 financial_rigor.py calc 验算"
           },
           "yoyGrowthPct": 2.69,
           "segments": [
             {
-              "name": "unavailable",
-              "revenue": "unavailable",
-              "yoyGrowthPct": "unavailable",
-              "note": "分部数据仅按年披露，无季度分部"
+              "status": "unavailable",
+              "reason": "分部数据仅按年披露，无季度分部"
             }
           ]
         },
@@ -207,20 +213,21 @@
               "value": 290.43
             },
             "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            },
             "flag": "ok",
             "note": "单季值 = 9M累计657.41亿 - H1累计366.98亿，经 financial_rigor.py calc 验算"
           },
           "yoyGrowthPct": -7.87,
           "segments": [
             {
-              "name": "unavailable",
-              "revenue": "unavailable",
-              "yoyGrowthPct": "unavailable"
+              "status": "unavailable",
+              "reason": "公司未按季度披露分部收入，该季无分部数据可列示"
             }
           ]
         },
@@ -236,20 +243,21 @@
               "value": 205.01
             },
             "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            },
             "flag": "ok",
             "note": "单季值 = FY2025累计862.42亿 - 9M累计657.41亿，经 financial_rigor.py calc 验算"
           },
           "yoyGrowthPct": 12.88,
           "segments": [
             {
-              "name": "unavailable",
-              "revenue": "unavailable",
-              "yoyGrowthPct": "unavailable"
+              "status": "unavailable",
+              "reason": "公司未按季度披露分部收入，该季无分部数据可列示"
             }
           ]
         },
@@ -275,9 +283,8 @@
           "yoyGrowthPct": 6.45,
           "segments": [
             {
-              "name": "unavailable",
-              "revenue": "unavailable",
-              "yoyGrowthPct": "unavailable"
+              "status": "unavailable",
+              "reason": "公司未按季度披露分部收入，该季无分部数据可列示"
             }
           ]
         }
@@ -336,11 +343,13 @@
               "value": 420.7
             },
             "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            },
             "flag": "ok",
             "noteLevel": "FCF 属 Level 1，本次仅取得 Tushare 单源"
           },
@@ -389,10 +398,13 @@
               "value": 16.0
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable"
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            }
           }
         },
         {
@@ -422,10 +434,13 @@
               "value": 325.0
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            },
             "flag": "ok"
           },
           "grossMarginPct": 59.1,
@@ -439,8 +454,8 @@
               "value": 452.3
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           },
@@ -468,8 +483,8 @@
               "value": 344.12
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           },
@@ -480,8 +495,8 @@
               "value": 15.8
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           }
@@ -497,8 +512,8 @@
               "value": 781.1
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           },
@@ -512,8 +527,8 @@
               "value": 272.4
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           },
@@ -528,8 +543,8 @@
               "value": 524.9
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           },
@@ -542,8 +557,8 @@
               "value": 77.78
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           },
@@ -556,8 +571,8 @@
               "value": 359.64
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok",
             "note": "总资产较FY2022从3272.68亿跃升至5719.43亿，系2023年1月完成收购乌东德、白鹤滩两座巨型水电站（原三峡集团资产注入）所致，总负债、总资产同步大幅增长"
@@ -569,8 +584,8 @@
               "value": 14.1
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           }
@@ -586,8 +601,8 @@
               "value": 520.6
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           },
@@ -601,8 +616,8 @@
               "value": 213.1
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           },
@@ -617,8 +632,8 @@
               "value": 260.4
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           },
@@ -631,8 +646,8 @@
               "value": 93.02
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           },
@@ -645,8 +660,8 @@
               "value": 131.51
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           },
@@ -657,8 +672,8 @@
               "value": 11.6
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           }
@@ -674,8 +689,8 @@
               "value": 556.5
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           },
@@ -689,8 +704,8 @@
               "value": 262.7
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           },
@@ -705,8 +720,8 @@
               "value": 322.6
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           },
@@ -719,8 +734,8 @@
               "value": 99.3
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           },
@@ -733,8 +748,8 @@
               "value": 138.28
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           },
@@ -745,8 +760,8 @@
               "value": 14.9
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           }
@@ -862,11 +877,13 @@
           "value": 24.55
         },
         "source2": {
-          "name": "unavailable",
-          "url": "",
-          "value": "unavailable"
+          "status": "unavailable",
+          "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
         },
-        "deviationPct": "unavailable",
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+        },
         "flag": "ok",
         "noteLevel": "Level 2/3字段，单源（公司ESG报告披露），未做交叉验证"
       },
@@ -1343,7 +1360,10 @@
           "name": "腾讯新闻/市值观察《逼近历史新高，分红超2300亿》转引公司公告",
           "value": "2023年1月完成收购乌东德、白鹤滩水电站（原三峡集团资产注入）"
         },
-        "deviationPct": "not-applicable",
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "两个来源分别是总资产跃升幅度与资产注入事件的定性描述，不是同一数值口径，无法计算偏差率"
+        },
         "flag": "ok",
         "resolution": "非数据错误，系重大资产收购导致的真实业务变化，第2步分析维度需重点说明此结构性跃升对历史增速可比性的影响"
       }
@@ -2429,10 +2449,13 @@
           "value": "36.4 / 29.7 / 22.9 CNY"
         },
         "source2": {
-          "name": "不适用（工具唯一计算源，禁止心算复核）",
-          "value": "not-applicable"
+          "status": "not-applicable",
+          "reason": "工具输出是唯一计算源，按规范禁止心算复核，无第二来源数值可比对"
         },
-        "deviationPct": "not-applicable",
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+        },
         "flag": "ok",
         "resolution": "按工具精确输出采用，输入假设（增速5.5%/3.5%/0.5%，PE 22x/19x/16x）见threeScenario.assumptionBasis"
       },
@@ -2446,7 +2469,10 @@
           "name": "东方财富股票数据页（时点未明确标注）",
           "value": "51.99%"
         },
-        "deviationPct": "not-applicable",
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "两来源时点不一致（研报为2026-05-29，东方财富页面未标注报告期），按 Metadata 闸门记为不可比，不计算偏差率"
+        },
         "flag": "minor-diff",
         "resolution": "口径/时点可能不一致（东方财富未标注具体报告期），采用有明确FY2025年报口径标注的华源证券数据"
       },
@@ -2460,7 +2486,10 @@
           "name": "股百科转引2025年年报（电力主业口径）",
           "value": "44.72%"
         },
-        "deviationPct": "not-applicable",
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "两来源口径不一致（整体口径 vs 电力主业口径），按 Metadata 闸门记为不可比，不计算偏差率"
+        },
         "flag": "minor-diff",
         "resolution": "口径差异（整体 vs 电力主业），非数据冲突，两个数字均在分析中列出并注明口径"
       }

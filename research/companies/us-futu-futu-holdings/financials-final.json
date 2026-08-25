@@ -3,16 +3,16 @@
   "meta": {
     "companyId": "us-futu-futu-holdings",
     "companyName": "富途控股 Futu Holdings Limited",
-    "generatedAt": "2026-08-25T19:31:33+08:00",
+    "generatedAt": "2026-08-25T21:13:36+08:00",
     "dataCutoff": "2026-08-25（Asia/Shanghai）；最新披露为 2026Q2（截至2026-06-30）未经审计财报，2026-08-20 发布",
     "validation": {
       "threshold": 7.0,
       "scores": {
-        "collection": 9.6,
-        "analysis": 9.9,
+        "collection": 9.4,
+        "analysis": 9.8,
         "summary": 10.0
       },
-      "validatedAt": "2026-08-25T19:31:33+08:00"
+      "validatedAt": "2026-08-25T21:13:36+08:00"
     },
     "sources": {
       "collection": "research/companies/us-futu-futu-holdings/financials-collection.json",
@@ -186,19 +186,27 @@
               "value": 6402.9
             },
             "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": ""
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            },
             "flag": "ok"
           },
           "yoyGrowthPct": 86.3,
           "segments": [
             {
               "name": "官方未在本次检索中拆分季度分部收入",
-              "revenue": "unavailable",
-              "yoyGrowthPct": "unavailable"
+              "revenue": {
+                "status": "unavailable",
+                "reason": "本次采集未取得该口径下的收入数字"
+              },
+              "yoyGrowthPct": {
+                "status": "unavailable",
+                "reason": "本次采集未取得可比基期数据，未自行推算以免口径错配"
+              }
             }
           ]
         },
@@ -214,19 +222,27 @@
               "value": 6438.5
             },
             "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": ""
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            },
             "flag": "ok"
           },
           "yoyGrowthPct": 45.3,
           "segments": [
             {
               "name": "官方未在本次检索中拆分季度分部收入",
-              "revenue": "unavailable",
-              "yoyGrowthPct": "unavailable"
+              "revenue": {
+                "status": "unavailable",
+                "reason": "本次采集未取得该口径下的收入数字"
+              },
+              "yoyGrowthPct": {
+                "status": "unavailable",
+                "reason": "本次采集未取得可比基期数据，未自行推算以免口径错配"
+              }
             }
           ]
         },
@@ -242,19 +258,27 @@
               "value": 5856.0
             },
             "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": ""
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            },
             "flag": "ok"
           },
           "yoyGrowthPct": 24.7,
           "segments": [
             {
               "name": "官方未在本次检索中拆分季度分部收入",
-              "revenue": "unavailable",
-              "yoyGrowthPct": "unavailable"
+              "revenue": {
+                "status": "unavailable",
+                "reason": "本次采集未取得该口径下的收入数字"
+              },
+              "yoyGrowthPct": {
+                "status": "unavailable",
+                "reason": "本次采集未取得可比基期数据，未自行推算以免口径错配"
+              }
             }
           ]
         },
@@ -270,19 +294,27 @@
               "value": 7200.2
             },
             "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": ""
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            },
             "flag": "ok"
           },
           "yoyGrowthPct": 35.6,
           "segments": [
             {
               "name": "官方未在本次检索中拆分季度分部收入",
-              "revenue": "unavailable",
-              "yoyGrowthPct": "unavailable"
+              "revenue": {
+                "status": "unavailable",
+                "reason": "本次采集未取得该口径下的收入数字"
+              },
+              "yoyGrowthPct": {
+                "status": "unavailable",
+                "reason": "本次采集未取得可比基期数据，未自行推算以免口径错配"
+              }
             }
           ]
         }
@@ -303,11 +335,13 @@
               "value": 6738
             },
             "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": ""
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            },
             "flag": "ok"
           },
           "netProfit": {
@@ -320,11 +354,13 @@
               "value": 2810
             },
             "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": ""
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            },
             "flag": "ok"
           },
           "grossMarginPct": {
@@ -353,11 +389,13 @@
               "value": 7322
             },
             "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": ""
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            },
             "flag": "ok"
           },
           "netProfit": {
@@ -370,11 +408,13 @@
               "value": 2927
             },
             "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": ""
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            },
             "flag": "ok"
           },
           "grossMarginPct": {
@@ -403,11 +443,13 @@
               "value": 9098
             },
             "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": ""
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            },
             "flag": "ok"
           },
           "netProfit": {
@@ -420,11 +462,13 @@
               "value": 4281
             },
             "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": ""
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            },
             "flag": "ok"
           },
           "grossMarginPct": {
@@ -496,9 +540,8 @@
               "value": 11688.383
             },
             "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": ""
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "deviationPct": "unavailable（仅单源，官方资产负债表）",
             "flag": "ok"
@@ -577,17 +620,32 @@
         {
           "name": "老虎证券 UP Fintech Holding (Tiger Brokers)",
           "ticker": "TIGR",
-          "marketSharePct": "unavailable",
+          "marketSharePct": {
+            "status": "unavailable",
+            "reason": "本次采集未取得该主体在同一市场定义下的份额数据"
+          },
           "revenue": "unavailable（未在本次检索范围内取得可比口径最新收入）",
-          "grossMarginPct": "unavailable",
+          "grossMarginPct": {
+            "status": "unavailable",
+            "reason": "本次采集未取得该口径下的毛利率——对应主体未单独披露毛利行项目"
+          },
           "note": "老虎证券管理层曾公开承认『过去几年在香港市场落后于富途』，但在新加坡为最大在线券商；老虎与富途同为被中国证监会2022年公开警示、被要求停止招揽内地新客户的两家跨境券商之一，2026年5月的CSRC处罚事先告知书同样涉及富途及关联主体，需关注老虎是否面临类似监管处置（本次检索未确认老虎是否同批被处罚）。来源：SCMP《Tiger Brokers set to expand in Hong Kong to catch online rival Futu》(scmp.com/business/banking-finance/article/3218257，约2023年)；新京报（bjnews.com.cn/detail/1780584327129886.html）提及富途、老虎、长桥三家跨境券商自2026-06-02起对内地存量客户账户同步调整。"
         },
         {
           "name": "盈立证券 / 华盛证券 / Webull（老虎以外的跨境券商）",
           "ticker": "[未上市或未确认]",
-          "marketSharePct": "unavailable",
-          "revenue": "unavailable",
-          "grossMarginPct": "unavailable",
+          "marketSharePct": {
+            "status": "unavailable",
+            "reason": "本次采集未取得该主体在同一市场定义下的份额数据"
+          },
+          "revenue": {
+            "status": "unavailable",
+            "reason": "本次采集未取得该口径下的收入数字"
+          },
+          "grossMarginPct": {
+            "status": "unavailable",
+            "reason": "本次采集未取得该口径下的毛利率——对应主体未单独披露毛利行项目"
+          },
           "note": "本次检索未取得可比财务数据，已查范围：中英文财经媒体与检索工具默认结果，未见2026年时点的专项对比报告。"
         }
       ]
@@ -784,8 +842,8 @@
       },
       "marketCap": {
         "reported": {
-          "value": 16236,
-          "unit": "US$ million",
+          "value": "16.236B",
+          "unit": "USD",
           "currency": "USD",
           "source1": {
             "name": "stockanalysis.com Ratios（Market Capitalization, 2026-08-24）",
@@ -800,7 +858,7 @@
           "deviationPct": 0.02,
           "flag": "ok"
         },
-        "computed": 16236.34,
+        "computed": "16.2363B USD（原采集值 16,236.34 US$ million）",
         "flag": "ok"
       },
       "pe": {
@@ -1001,7 +1059,10 @@
             "series": [
               {
                 "fiscalYear": "FY2021",
-                "grossMarginPct": "unavailable",
+                "grossMarginPct": {
+                  "status": "not-applicable",
+                  "reason": "券商利润表无营业成本/毛利行项目，毛利率口径不适用；同口径的经营利润率与净利率见同一条目"
+                },
                 "operatingMarginPct": 47.24,
                 "netMarginPct": 41.7,
                 "source": {
@@ -1011,7 +1072,10 @@
               },
               {
                 "fiscalYear": "FY2022",
-                "grossMarginPct": "unavailable",
+                "grossMarginPct": {
+                  "status": "not-applicable",
+                  "reason": "券商利润表无营业成本/毛利行项目，毛利率口径不适用；同口径的经营利润率与净利率见同一条目"
+                },
                 "operatingMarginPct": 48.74,
                 "netMarginPct": 39.99,
                 "source": {
@@ -1021,7 +1085,10 @@
               },
               {
                 "fiscalYear": "FY2023",
-                "grossMarginPct": "unavailable",
+                "grossMarginPct": {
+                  "status": "not-applicable",
+                  "reason": "券商利润表无营业成本/毛利行项目，毛利率口径不适用；同口径的经营利润率与净利率见同一条目"
+                },
                 "operatingMarginPct": 55.03,
                 "netMarginPct": 47.06,
                 "source": {
@@ -1031,7 +1098,10 @@
               },
               {
                 "fiscalYear": "FY2024",
-                "grossMarginPct": "unavailable",
+                "grossMarginPct": {
+                  "status": "not-applicable",
+                  "reason": "券商利润表无营业成本/毛利行项目，毛利率口径不适用；同口径的经营利润率与净利率见同一条目"
+                },
                 "operatingMarginPct": 55.32,
                 "netMarginPct": 40.03,
                 "source": {
@@ -1085,10 +1155,13 @@
             "peers": [
               {
                 "name": "老虎证券 UP Fintech (TIGR)",
-                "grossMarginPct": "unavailable",
+                "grossMarginPct": {
+                  "status": "unavailable",
+                  "reason": "本次采集未取得该口径下的毛利率——对应主体未单独披露毛利行项目"
+                },
                 "source": {
-                  "name": "unavailable",
-                  "url": ""
+                  "status": "unavailable",
+                  "reason": "本次采集未取得可直接引用的来源，该数值不予采用"
                 }
               }
             ],
@@ -1618,8 +1691,14 @@
           "vsPeers": [
             {
               "name": "老虎证券 UP Fintech (TIGR)",
-              "pe": "unavailable",
-              "ps": "unavailable",
+              "pe": {
+                "status": "unavailable",
+                "reason": "本次分析未取得该同行可比口径的 PE"
+              },
+              "ps": {
+                "status": "unavailable",
+                "reason": "本次分析未取得该同行可比口径的 PS"
+              },
               "source": {
                 "name": "unavailable，未在本次检索范围内取得可比口径数据",
                 "url": ""

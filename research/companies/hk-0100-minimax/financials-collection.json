@@ -88,7 +88,7 @@
         "fiscalYear": "FY2025",
         "revenue": { "value": 79038, "unit": "千美元", "currency": "USD", "source1": { "name": "年度业绩公告", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf", "value": 79038 }, "source2": { "name": "财联社", "url": "https://www.cls.cn/detail/2300002", "value": 79038 }, "deviationPct": 0, "flag": "ok" },
         "netProfit": {
-          "value": -1871617, "unit": "千美元", "currency": "USD", "basis": "IFRS 净亏损（含金融负债公允价值亏损15.899亿美元等非现金项目）",
+          "value": "-1.87162B", "unit": "美元", "currency": "USD", "basis": "IFRS 净亏损（含金融负债公允价值亏损15.899亿美元等非现金项目）",
           "adjustedNetLoss": { "value": -250856, "unit": "千美元", "currency": "USD", "basis": "非IFRS「经调整净亏损」= 净亏损加回股份支付费用、金融负债公允价值亏损、上市开支" },
           "source1": { "name": "年度业绩公告财务摘要", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0302/2026030202838_c.pdf", "value": -1871617 },
           "source2": { "name": "财联社2026-03-02快讯", "url": "https://www.cls.cn/detail/2300002", "value": -1871617 },
@@ -100,8 +100,8 @@
           "value": -280829, "unit": "千美元", "currency": "USD",
           "basis": "经营活动所用现金流量净额(-279,641) + 购买物业厂房及设备(-920) + 购买非流动资产项目(-268)，工具验算见 crossValidationLog",
           "source1": { "name": "2025年度报告综合现金流量表", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0422/2026042202119_c.pdf", "value": -280829 },
-          "source2": { "name": "unavailable", "url": "", "value": "unavailable" },
-          "deviationPct": "unavailable",
+          "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" },
+          "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源数值可比对，偏差率不适用" },
           "flag": "minor-diff",
           "note": "仅单源（公司经审计现金流量表），FCF 非交易所强制第三方复核指标，未找到独立来源逐项复核；Level 1 字段按规范应双源，此处标注仅单源"
         },
@@ -131,8 +131,8 @@
           "value": -259242, "unit": "千美元", "currency": "USD",
           "basis": "经营活动所用现金流量净额(-258,483) + 购买物业厂房及设备(-759)",
           "source1": { "name": "2025年度报告综合现金流量表（比较列）", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0422/2026042202119_c.pdf", "value": -259242 },
-          "source2": { "name": "unavailable", "url": "", "value": "unavailable" },
-          "deviationPct": "unavailable", "flag": "minor-diff", "note": "仅单源，理由同FY2025"
+          "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" },
+          "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源数值可比对，偏差率不适用" }, "flag": "minor-diff", "note": "仅单源，理由同FY2025"
         },
         "cashReserves": {
           "value": 288912, "unit": "千美元", "currency": "USD",
@@ -196,25 +196,25 @@
       {
         "name": "DeepSeek（深度求索）",
         "ticker": "未上市 [估计]",
-        "marketSharePct": "unavailable",
+        "marketSharePct": { "status": "unavailable", "reason": "本次采集未取得该主体在同一市场定义下的份额数据" },
         "revenue": "unavailable（未上市，未查到官方收入披露）",
-        "grossMarginPct": "unavailable",
+        "grossMarginPct": { "status": "unavailable", "reason": "本次采集未取得该口径下的毛利率——对应主体未单独披露毛利行项目" },
         "note": "以极致性价比与开源策略著称；DeepSeek-V4-Flash在OpenRouter平台2026年8月初连续三周位居全球调用量榜首（周调用量3.69万亿Token，环比+19%），是当前全球调用量最大的开源模型之一（来源：证券时报stcn.com/article/detail/3948206.html 2026年8月报道）；市场传闻其融资'获国家队加持'（binance.com转载，未经证实，标注为传闻）"
       },
       {
         "name": "字节跳动豆包（Doubao）",
         "ticker": "字节跳动未上市，豆包为其大模型产品线非独立上市实体",
-        "marketSharePct": "unavailable",
+        "marketSharePct": { "status": "unavailable", "reason": "本次采集未取得该主体在同一市场定义下的份额数据" },
         "revenue": "unavailable（未拆分披露）",
-        "grossMarginPct": "unavailable",
+        "grossMarginPct": { "status": "unavailable", "reason": "本次采集未取得该口径下的毛利率——对应主体未单独披露毛利行项目" },
         "note": "背靠字节跳动全平台流量，月活用户约1.72亿（QuestMobile 2025年三季度报告，另一篇博客综合报道称1.59亿，口径/时点不同）；2025年11月日均Token调用量50万亿，约为智谱同期4.2万亿的12倍（来源：新浪财经finance.sina.com.cn/roll/2025-12-24/doc-inhcxizc9649528.shtml）"
       },
       {
         "name": "阿里巴巴千问（Qwen）",
         "ticker": "9988.HK（阿里巴巴集团，千问为其大模型产品线非独立上市实体）",
-        "marketSharePct": "unavailable",
+        "marketSharePct": { "status": "unavailable", "reason": "本次采集未取得该主体在同一市场定义下的份额数据" },
         "revenue": "unavailable（未拆分披露）",
-        "grossMarginPct": "unavailable",
+        "grossMarginPct": { "status": "unavailable", "reason": "本次采集未取得该口径下的毛利率——对应主体未单独披露毛利行项目" },
         "note": "千问App月活约3,000万（新浪财经2025-12-24报道口径）；阿里云另披露超200万企业用户通过阿里云调用/部署大模型（口径不同：前者为C端App MAU，后者为B端云上调用企业数，不可直接比较）"
       },
       {
@@ -222,23 +222,23 @@
         "ticker": "未上市 [估计]",
         "marketSharePct": "unavailable（招股书CIC口径下全球前5名均为美国公司，OpenAI大概率位列其中，但招股书未点名具体对应哪一档份额）",
         "revenue": "ARR约250亿美元（鉅亨网2026年报道口径，具体统计截止时点未详细注明）",
-        "grossMarginPct": "unavailable",
+        "grossMarginPct": { "status": "unavailable", "reason": "本次采集未取得该口径下的毛利率——对应主体未单独披露毛利行项目" },
         "note": "估值约1万亿美元，对应PS约40倍（鉅亨网hao.cnyes.com/post/247204口径）；企业编码（coding）市场份额约21%，落后于Anthropic的54%（Menlo Ventures估算，经36氪m.36kr.com/p/3756715657507333转引）"
       },
       {
         "name": "Anthropic",
         "ticker": "未上市 [估计]",
-        "marketSharePct": "unavailable",
+        "marketSharePct": { "status": "unavailable", "reason": "本次采集未取得该主体在同一市场定义下的份额数据" },
         "revenue": "ARR约440亿美元（鉅亨网2026年报道口径）；另一篇报道称同期ARR经历约90亿→470亿美元的跃升区间（雷峰网leiphone.com转述，与鉅亨网数字量级一致但非同一时点，互相印证但不可精确对齐）",
-        "grossMarginPct": "unavailable",
+        "grossMarginPct": { "status": "unavailable", "reason": "本次采集未取得该口径下的毛利率——对应主体未单独披露毛利行项目" },
         "note": "估值约1.2万亿美元，对应PS约27倍（鉅亨网口径）；企业编码市场份额约54%（Menlo Ventures估算）；Claude Code单产品线2026年2月ARR即达25亿美元；2026-06-12曾因美国政府出口管制指令一度暂停非美籍用户对Claude Fable/Mythos模型的访问，7月1日恢复（来源：techflowpost.com/article/32560）——此事件亦说明海外头部模型厂商同样受出口管制/合规约束，并非中国厂商独有风险"
       },
       {
         "name": "Google（Gemini）",
         "ticker": "GOOG/GOOGL（Alphabet，Gemini为其产品线非独立上市实体）",
-        "marketSharePct": "unavailable",
+        "marketSharePct": { "status": "unavailable", "reason": "本次采集未取得该主体在同一市场定义下的份额数据" },
         "revenue": "ARR约150亿美元（鉅亨网口径）",
-        "grossMarginPct": "unavailable",
+        "grossMarginPct": { "status": "unavailable", "reason": "本次采集未取得该口径下的毛利率——对应主体未单独披露毛利行项目" },
         "note": "估值约1,500亿美元系市场对Gemini业务线的隐含估值拆分估算（非独立上市公司，实际市值被Alphabet其他成熟业务稀释，可比性存疑），对应PS约10倍（鉅亨网hao.cnyes.com/post/247204口径）"
       }
     ],
@@ -400,7 +400,7 @@
       "note": "当日涨9.83%（+29.2），振幅29.41%（低287.0/高374.4），52周高点1,330.0港元（2026年3月，距今回撤约75.5%）——该股自上市以来波动率极端，日内20%+涨跌属常态，估值截面对时点极度敏感"
     },
     "sharesOutstanding": {
-      "value": 349235308, "unit": "股（A类268,132,774 + B类81,102,534，不含库存股）",
+      "value": "3.49235亿", "unit": "股（A类268,132,774 + B类81,102,534，不含库存股）",
       "source1": { "name": "HKEXnews《证券变动月报表》截至2026-07-31", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0806/2026080601089_c.pdf", "value": 349235308 },
       "source2": { "name": "Yahoo Finance 市值反推（113.99B港元 ÷ 326.4港元）", "url": "https://hk.finance.yahoo.com/quote/0100.HK", "value": 349234432 },
       "deviationPct": 0.0003, "flag": "ok",

@@ -3,16 +3,16 @@
   "meta": {
     "companyId": "us-amd-advanced-micro-devices",
     "companyName": "AMD (Advanced Micro Devices)",
-    "generatedAt": "2026-08-12T21:37:59+08:00",
+    "generatedAt": "2026-08-25T21:11:24+08:00",
     "dataCutoff": "2026-08-12 21:30(Asia/Shanghai)",
     "validation": {
       "threshold": 7.0,
       "scores": {
         "collection": 9.8,
-        "analysis": 10.0,
-        "summary": 10.0
+        "analysis": 9.9,
+        "summary": 9.6
       },
-      "validatedAt": "2026-08-12T21:37:59+08:00"
+      "validatedAt": "2026-08-25T21:11:24+08:00"
     },
     "sources": {
       "collection": "research/companies/us-amd-advanced-micro-devices/financials-collection.json",
@@ -1263,7 +1263,7 @@
     },
     "industryOutlook": {
       "tam": {
-        "value": 1400000000000,
+        "value": "1.4T",
         "currency": "USD",
         "definition": "AMD 官方口径:AI 加速器(数据中心 AI)TAM,2030 年;2026-07-24 Advancing AI 大会上调,理由为 agentic AI 算力需求;一年内从 $500B(2025 年中)→ >$1T(2025-11 分析师日)→ $1.4T",
         "asOf": "2030(预测),发布于 2026-07-24",
@@ -1275,7 +1275,7 @@
       },
       "tamViews": [
         {
-          "value": 1400000000000,
+          "value": "1.4T",
           "currency": "USD",
           "definition": "AMD 官方口径:AI 加速器(数据中心 AI)TAM,2030 年;2026-07-24 Advancing AI 大会上调,理由为 agentic AI 算力需求;一年内从 $500B(2025 年中)→ >$1T(2025-11 分析师日)→ $1.4T",
           "asOf": "2030(预测),发布于 2026-07-24",
@@ -1286,7 +1286,7 @@
           }
         },
         {
-          "value": 1000000000000,
+          "value": "1T",
           "currency": "USD",
           "definition": "AMD 官方口径(前一版):Lisa Su 在 2025-11-11 金融分析师日称数据中心市场 2030 年将达 $1T",
           "asOf": "2030(预测),发布于 2025-11-11",
@@ -1297,7 +1297,7 @@
           }
         },
         {
-          "value": 220000000000,
+          "value": "220B",
           "currency": "USD",
           "definition": "AMD 官方口径:数据中心处理器(CPU)市场 2030 年 TAM,自数月前的 $120B 上调",
           "asOf": "2030(预测),发布于 2026-07-24",
@@ -1308,7 +1308,7 @@
           }
         },
         {
-          "value": 1300000000000,
+          "value": "1.3T",
           "currency": "USD",
           "definition": "第三方口径(Gartner):2026 年全球半导体总收入 >$1.3T,其中 AI 半导体约占 30%",
           "asOf": "2026(全年预测)",
@@ -1319,7 +1319,7 @@
           }
         },
         {
-          "value": 281000000000,
+          "value": "281B",
           "currency": "USD",
           "definition": "第三方口径(IDC):2026 年'智能数据中心'半导体分部(CPU+AI加速器+GPU+定制ASIC+网络芯片)规模 $281B",
           "asOf": "2026(预测)",
@@ -2314,7 +2314,7 @@
                   "asOf": "2026（估计）",
                   "source": {
                     "name": "第1步采集（供应链估计）",
-                    "url": "unavailable"
+                    "url": ""
                   }
                 },
                 {
@@ -2704,7 +2704,7 @@
                   "asOf": "2026Q2",
                   "source": {
                     "name": "第1步采集",
-                    "url": "unavailable"
+                    "url": ""
                   }
                 }
               ]
@@ -2956,7 +2956,7 @@
               "rating": "★★★☆☆",
               "source": {
                 "name": "第1步采集；无独立事后财务披露",
-                "url": "unavailable"
+                "url": ""
               }
             },
             {
@@ -2996,10 +2996,13 @@
                 "status": "unavailable",
                 "reason": "宣布距今不足一周(数据截止2026-08-05)，无任何事后证据可复盘，不予评分"
               },
-              "rating": "unavailable",
+              "rating": {
+                "status": "not-applicable",
+                "reason": "决策宣布距数据截止（2026-08-05）不足一周，无事后证据可复盘，不予评分"
+              },
               "source": {
                 "name": "第1步采集",
-                "url": "unavailable"
+                "url": ""
               }
             }
           ],
@@ -3179,7 +3182,7 @@
                 "asOf": "2026(第1步采集)",
                 "source": {
                   "name": "第1步采集(TrendForce口径)",
-                  "url": "unavailable"
+                  "url": ""
                 }
               },
               {

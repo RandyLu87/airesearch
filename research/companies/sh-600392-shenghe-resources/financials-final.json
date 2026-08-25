@@ -3,16 +3,16 @@
   "meta": {
     "companyId": "sh-600392-shenghe-resources",
     "companyName": "盛和资源控股股份有限公司",
-    "generatedAt": "2026-08-08T11:01:52+08:00",
+    "generatedAt": "2026-08-25T21:11:23+08:00",
     "dataCutoff": "2026-08-08",
     "validation": {
       "threshold": 7.0,
       "scores": {
-        "collection": 9.9,
+        "collection": 9.5,
         "analysis": 9.7,
-        "summary": 10.0
+        "summary": 9.5
       },
-      "validatedAt": "2026-08-08T11:01:52+08:00"
+      "validatedAt": "2026-08-25T21:11:23+08:00"
     },
     "sources": {
       "collection": "research/companies/sh-600392-shenghe-resources/financials-collection.json",
@@ -101,11 +101,13 @@
                 "value": 141.1
               },
               "source2": {
-                "name": "unavailable",
-                "url": "",
-                "value": "unavailable"
+                "status": "unavailable",
+                "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
               },
-              "deviationPct": "unavailable",
+              "deviationPct": {
+                "status": "not-applicable",
+                "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+              },
               "flag": "ok",
               "note": "Level 2/分部字段，单源（Tushare fina_mainbz），已与利润表总收入对账（差异 0.00%）"
             },
@@ -128,11 +130,13 @@
                 "value": 8.1
               },
               "source2": {
-                "name": "unavailable",
-                "url": "",
-                "value": "unavailable"
+                "status": "unavailable",
+                "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
               },
-              "deviationPct": "unavailable",
+              "deviationPct": {
+                "status": "not-applicable",
+                "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+              },
               "flag": "ok"
             },
             "revenueSharePct": 5.4,
@@ -157,21 +161,21 @@
               "value": 29.92
             },
             "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            },
             "flag": "ok",
             "note": "单季合并利润表原始值，Level 1 字段目前仅 Tushare 单源，年度值已双源验证"
           },
           "yoyGrowthPct": 3.66,
           "segments": [
             {
-              "name": "unavailable",
-              "revenue": "unavailable",
-              "yoyGrowthPct": "unavailable",
-              "note": "分部数据仅按年披露，无季度分部"
+              "status": "unavailable",
+              "reason": "分部数据仅按年披露，无季度分部"
             }
           ]
         },
@@ -187,20 +191,21 @@
               "value": 31.87
             },
             "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            },
             "flag": "ok",
             "note": "单季值 = H1累计61.79亿 - Q1累计29.92亿，经 financial_rigor.py calc 验算"
           },
           "yoyGrowthPct": 24.88,
           "segments": [
             {
-              "name": "unavailable",
-              "revenue": "unavailable",
-              "yoyGrowthPct": "unavailable"
+              "status": "unavailable",
+              "reason": "公司未按季度披露分部收入，该季无分部数据可列示"
             }
           ]
         },
@@ -216,20 +221,21 @@
               "value": 42.77
             },
             "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            },
             "flag": "ok",
             "note": "单季值 = 9M累计104.56亿 - H1累计61.79亿，经 financial_rigor.py calc 验算"
           },
           "yoyGrowthPct": 52.59,
           "segments": [
             {
-              "name": "unavailable",
-              "revenue": "unavailable",
-              "yoyGrowthPct": "unavailable"
+              "status": "unavailable",
+              "reason": "公司未按季度披露分部收入，该季无分部数据可列示"
             }
           ]
         },
@@ -245,20 +251,21 @@
               "value": 45.35
             },
             "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            },
             "flag": "ok",
             "note": "单季值 = FY2025累计149.91亿 - 9M累计104.56亿，经 financial_rigor.py calc 验算"
           },
           "yoyGrowthPct": 44.9,
           "segments": [
             {
-              "name": "unavailable",
-              "revenue": "unavailable",
-              "yoyGrowthPct": "unavailable"
+              "status": "unavailable",
+              "reason": "公司未按季度披露分部收入，该季无分部数据可列示"
             }
           ]
         }
@@ -317,11 +324,13 @@
               "value": 4.3
             },
             "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            },
             "flag": "ok",
             "noteLevel": "FCF 属 Level 1，本次仅取得 Tushare 单源，未做东方财富交叉验证（东方财富未直接披露 FCF，需自行用现金流量表倒算，超出采集时间预算）"
           },
@@ -420,8 +429,8 @@
               "value": -6.5
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           },
@@ -498,8 +507,8 @@
               "value": -2.3
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           },
@@ -577,8 +586,8 @@
               "value": 1.4
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           },
@@ -591,8 +600,8 @@
               "value": 26.2
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           },
@@ -655,8 +664,8 @@
               "value": 7.3
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           },
@@ -669,8 +678,8 @@
               "value": 22.5
             },
             "source2": {
-              "name": "unavailable",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
             "flag": "ok"
           },
@@ -823,7 +832,10 @@
         }
       },
       "ownership": {
-        "economicPct": "unavailable",
+        "economicPct": {
+          "status": "unavailable",
+          "reason": "本次采集未取得管理层/实际控制人合计经济权益比例——公司无 AB 股结构、经济权益即投票权，仅取到十大股东逐项明细（见同一对象的 note 与 topHolders）"
+        },
         "note": "十大股东中王全根持股6.69%、黄平（管理层，持股96,271,094股，占总股本17.53亿股比例约5.49%）；公司无AB股结构，经济权益即投票权。是否存在实际控制人一致行动关系需 Agent 检索确认",
         "topHolders": [
           {
@@ -1022,11 +1034,13 @@
           "value": 23.94
         },
         "source2": {
-          "name": "unavailable",
-          "url": "",
-          "value": "unavailable"
+          "status": "unavailable",
+          "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
         },
-        "deviationPct": "unavailable",
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+        },
         "flag": "ok"
       },
       "sharesOutstanding": {
@@ -2197,8 +2211,8 @@
                 "reason": "同上,未采集"
               },
               "source": {
-                "name": "unavailable",
-                "url": ""
+                "status": "unavailable",
+                "reason": "本次采集未取得可直接引用的来源，该数值不予采用"
               }
             },
             {
@@ -2212,8 +2226,8 @@
                 "reason": "同上,未采集"
               },
               "source": {
-                "name": "unavailable",
-                "url": ""
+                "status": "unavailable",
+                "reason": "本次采集未取得可直接引用的来源，该数值不予采用"
               }
             },
             {
@@ -2227,8 +2241,8 @@
                 "reason": "同上,未采集"
               },
               "source": {
-                "name": "unavailable",
-                "url": ""
+                "status": "unavailable",
+                "reason": "本次采集未取得可直接引用的来源，该数值不予采用"
               }
             }
           ]
