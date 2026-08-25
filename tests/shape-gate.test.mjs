@@ -9,11 +9,12 @@ import path from "node:path";
 /**
  * 写法闸门 — 研究流程第 4 步（docs/research/workflow/04-data-validation.md）。
  *
- * 首屏闸门只看四个字段，写法闸门扫全树，挡两类「页面认得出、读者看到的却是错的」：
- * 裸占位字符串（`"unavailable"` 当值写，百分比列里拼成 `unavailable%`）与未缩写
- * 大数字（`23051044345` 直接渲染成 11 位数字，网易云音乐 hk-9899 就是这样发出去的）。
+ * 首屏闸门只看四个字段，写法闸门扫全树，挡三类「页面认得出、读者看到的却是错的」：
+ * 裸占位字符串（`"unavailable"` 当值写）、未缩写大数字（`23051044345` 直接渲染成 11 位
+ * 数字，网易云音乐 hk-9899 就是这样发出去的），以及量级在 `unit` 与 `currency` 之间
+ * 互相矛盾、渲染层无从判断 value 属于哪个量级的写法。
  *
- * 这两类都不是「取不到数」，而是写法不对——数据已经采到，要改的是形状。
+ * 这三类都不是「取不到数」，而是写法不对——数据已经采到，要改的是形状。
  */
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -137,4 +138,27 @@ test("the shape gate leaves small numbers and provenance copies alone", () => {
     source1: { name: "FMP shares-float", value: 204716202 },
   };
   assert.deepEqual(runGate(fixture).problems, []);
+});
+
+test("a magnitude that only unit carries is not a defect any more", () => {
+  // 腾讯 FY2024 收入原样（OWLL-27 清单里的 160 处同类写法）：量级只写在 unit 里，
+  // 渲染层与 unit_label() 都保留它（`751,766 RMB million`），所以不再计写法问题。
+  const fixture = structuredClone(clean);
+  fixture.revenueStructure.latestFiscalYear.segments[0].revenue = {
+    value: 751766, unit: "RMB million", currency: "RMB",
+  };
+  assert.deepEqual(runGate(fixture).problems, []);
+});
+
+test("the shape gate blocks unit and currency declaring different magnitudes", () => {
+  // 两处各写一个量级，渲染层无从判断 value 是百万还是十亿——只能挡回去让人写清楚。
+  const fixture = structuredClone(clean);
+  fixture.revenueStructure.latestFiscalYear.segments[0].revenue = {
+    value: 751766, unit: "RMB million", currency: "RMB billion",
+  };
+  const { code, problems } = runGate(fixture);
+  assert.deepEqual(problems, [
+    ["unit-overridden-by-currency", "revenueStructure.latestFiscalYear.segments[0].revenue"],
+  ]);
+  assert.equal(code, 1, "an ambiguous magnitude must fail the run");
 });
