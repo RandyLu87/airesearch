@@ -3,16 +3,16 @@
   "meta": {
     "companyId": "hk-1698-tencent-music",
     "companyName": "腾讯音乐娱乐集团 (Tencent Music Entertainment Group)",
-    "generatedAt": "2026-08-12T10:47:23+08:00",
+    "generatedAt": "2026-08-25T21:11:23+08:00",
     "dataCutoff": "2026-08-12（Asia/Shanghai）；最新已披露季报为 2026 年第二季度（截至 2026-06-30，2026-08-11 发布，已纳入本次采集）",
     "validation": {
       "threshold": 7.0,
       "scores": {
         "collection": 9.7,
         "analysis": 9.8,
-        "summary": 10.0
+        "summary": 9.5
       },
-      "validatedAt": "2026-08-12T10:47:23+08:00"
+      "validatedAt": "2026-08-25T21:11:23+08:00"
     },
     "sources": {
       "collection": "research/companies/hk-1698-tencent-music/financials-collection.json",
@@ -1169,7 +1169,7 @@
         ]
       },
       "sharesOutstanding": {
-        "value": 3108803728,
+        "value": "31.088亿",
         "unit": "shares",
         "note": "FY2025全年摊薄口径（A类+B类合计），加权平均；公司自身EPS计算即用此口径",
         "source1": {
@@ -1185,7 +1185,7 @@
       },
       "marketCap": {
         "reported": {
-          "value": 122250000000,
+          "value": "1222.5亿",
           "unit": "HKD",
           "currency": "HKD",
           "note": "stockanalysis.com HKG:1698实时快照",

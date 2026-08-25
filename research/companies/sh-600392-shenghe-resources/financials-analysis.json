@@ -427,9 +427,9 @@
           "source": { "name": "Tushare daily_basic（采集文件currentValuation.valuationRangeOneYear）", "url": "https://tushare.pro" }
         },
         "vsPeers": [
-          { "name": "中国北方稀土（600111.SH）", "pe": { "status": "unavailable", "reason": "采集文件competitiveLandscape仅有营收/净利润/毛利率,未采集PE/PS倍数" }, "ps": { "status": "unavailable", "reason": "同上,未采集" }, "source": { "name": "unavailable", "url": "" } },
-          { "name": "中国稀土集团资源科技（000831.SZ）", "pe": { "status": "unavailable", "reason": "采集文件仅有上市子公司营收/净利润,未采集PE/PS倍数" }, "ps": { "status": "unavailable", "reason": "同上,未采集" }, "source": { "name": "unavailable", "url": "" } },
-          { "name": "广晟有色（600259.SH）", "pe": { "status": "unavailable", "reason": "采集文件仅有2025H1营收/净利润/毛利率,未采集PE/PS倍数" }, "ps": { "status": "unavailable", "reason": "同上,未采集" }, "source": { "name": "unavailable", "url": "" } }
+          { "name": "中国北方稀土（600111.SH）", "pe": { "status": "unavailable", "reason": "采集文件competitiveLandscape仅有营收/净利润/毛利率,未采集PE/PS倍数" }, "ps": { "status": "unavailable", "reason": "同上,未采集" }, "source": { "status": "unavailable", "reason": "本次采集未取得可直接引用的来源，该数值不予采用" } },
+          { "name": "中国稀土集团资源科技（000831.SZ）", "pe": { "status": "unavailable", "reason": "采集文件仅有上市子公司营收/净利润,未采集PE/PS倍数" }, "ps": { "status": "unavailable", "reason": "同上,未采集" }, "source": { "status": "unavailable", "reason": "本次采集未取得可直接引用的来源，该数值不予采用" } },
+          { "name": "广晟有色（600259.SH）", "pe": { "status": "unavailable", "reason": "采集文件仅有2025H1营收/净利润/毛利率,未采集PE/PS倍数" }, "ps": { "status": "unavailable", "reason": "同上,未采集" }, "source": { "status": "unavailable", "reason": "本次采集未取得可直接引用的来源，该数值不予采用" } }
         ]
       },
       "inquiry": {

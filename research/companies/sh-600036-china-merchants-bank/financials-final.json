@@ -3,16 +3,16 @@
   "meta": {
     "companyId": "sh-600036-china-merchants-bank",
     "companyName": "招商银行股份有限公司 (China Merchants Bank)",
-    "generatedAt": "2026-08-10T23:39:07+08:00",
+    "generatedAt": "2026-08-25T21:11:23+08:00",
     "dataCutoff": "2026-08-10（Asia/Shanghai）；最新定期报告为 2026 年一季报（2026-03-31），2026 年中报尚未披露",
     "validation": {
       "threshold": 7.0,
       "scores": {
         "collection": 9.5,
         "analysis": 9.9,
-        "summary": 10.0
+        "summary": 9.6
       },
-      "validatedAt": "2026-08-10T23:39:07+08:00"
+      "validatedAt": "2026-08-25T21:11:23+08:00"
     },
     "sources": {
       "collection": "research/companies/sh-600036-china-merchants-bank/financials-collection.json",
@@ -1115,7 +1115,7 @@
           }
         },
         "sunflowerClients": {
-          "value": 6216100,
+          "value": "621.61万",
           "period": "2026-03-31",
           "unit": "户",
           "definition": "月日均总资产 50 万元及以上零售客户（金葵花及以上）",

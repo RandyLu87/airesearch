@@ -3,16 +3,16 @@
   "meta": {
     "companyId": "sh-601318-ping-an-insurance",
     "companyName": "中国平安保险(集团)股份有限公司",
-    "generatedAt": "2026-08-09T10:56:09+08:00",
+    "generatedAt": "2026-08-25T21:11:24+08:00",
     "dataCutoff": "2026-08-07（最近交易日；2026-08-09为周日，行情取上一交易日）",
     "validation": {
       "threshold": 7.0,
       "scores": {
-        "collection": 9.0,
+        "collection": 8.9,
         "analysis": 9.6,
-        "summary": 10.0
+        "summary": 9.5
       },
-      "validatedAt": "2026-08-09T10:56:09+08:00"
+      "validatedAt": "2026-08-25T21:11:24+08:00"
     },
     "sources": {
       "collection": "research/companies/sh-601318-ping-an-insurance/financials-collection.json",
@@ -60,8 +60,7 @@
       "latestFiscalYear": {
         "period": "FY2025",
         "totalRevenue": {
-          "value": 1050506000000,
-          "unit": "currency",
+          "value": "1.05051万亿",
           "currency": "CNY",
           "source1": {
             "name": "Tushare income(period=20251231, report_type=1, total_revenue)",
@@ -80,8 +79,7 @@
           {
             "name": "保险服务收入（寿险及健康险+财产保险，新保险合同准则口径）",
             "revenue": {
-              "value": 559500000000,
-              "unit": "currency",
+              "value": "5595亿",
               "currency": "CNY",
               "source1": {
                 "name": "Tushare fina_mainbz(type=P, 20251231)",
@@ -89,11 +87,13 @@
                 "value": 559500000000
               },
               "source2": {
-                "name": "status",
-                "url": "",
-                "value": "unavailable"
+                "status": "unavailable",
+                "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
               },
-              "deviationPct": "unavailable",
+              "deviationPct": {
+                "status": "not-applicable",
+                "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+              },
               "flag": "ok"
             },
             "revenueSharePct": "38.6%",
@@ -106,8 +106,7 @@
           {
             "name": "银行业务利息净收入（合计，含多笔明细行）",
             "revenue": {
-              "value": 169700000000,
-              "unit": "currency",
+              "value": "1697亿",
               "currency": "CNY",
               "source1": {
                 "name": "Tushare fina_mainbz(type=P, 20251231)，主表行『银行业务利息净收入：银行业务利』",
@@ -115,15 +114,20 @@
                 "value": 169700000000
               },
               "source2": {
-                "name": "status",
-                "url": "",
-                "value": "unavailable"
+                "status": "unavailable",
+                "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
               },
-              "deviationPct": "unavailable",
+              "deviationPct": {
+                "status": "not-applicable",
+                "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+              },
               "flag": "ok"
             },
             "revenueSharePct": "11.7%",
-            "yoyGrowthPct": "unavailable",
+            "yoyGrowthPct": {
+              "status": "unavailable",
+              "reason": "本次采集未取得可比基期数据，未自行推算以免口径错配"
+            },
             "grossMarginPct": {
               "status": "unavailable",
               "reason": "同上，银行利息净收入不适用毛利率"
@@ -132,8 +136,7 @@
           {
             "name": "投资收益",
             "revenue": {
-              "value": 152860000000,
-              "unit": "currency",
+              "value": "1528.6亿",
               "currency": "CNY",
               "source1": {
                 "name": "Tushare fina_mainbz(type=P, 20251231)",
@@ -141,15 +144,20 @@
                 "value": 152860000000
               },
               "source2": {
-                "name": "status",
-                "url": "",
-                "value": "unavailable"
+                "status": "unavailable",
+                "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
               },
-              "deviationPct": "unavailable",
+              "deviationPct": {
+                "status": "not-applicable",
+                "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+              },
               "flag": "ok"
             },
             "revenueSharePct": "10.5%",
-            "yoyGrowthPct": "unavailable",
+            "yoyGrowthPct": {
+              "status": "unavailable",
+              "reason": "本次采集未取得可比基期数据，未自行推算以免口径错配"
+            },
             "grossMarginPct": {
               "status": "unavailable",
               "reason": "不适用"
@@ -158,8 +166,7 @@
           {
             "name": "非银行业务利息收入（合计，含多笔明细行）",
             "revenue": {
-              "value": 135800000000,
-              "unit": "currency",
+              "value": "1358亿",
               "currency": "CNY",
               "source1": {
                 "name": "Tushare fina_mainbz(type=P, 20251231)",
@@ -167,15 +174,20 @@
                 "value": 135800000000
               },
               "source2": {
-                "name": "status",
-                "url": "",
-                "value": "unavailable"
+                "status": "unavailable",
+                "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
               },
-              "deviationPct": "unavailable",
+              "deviationPct": {
+                "status": "not-applicable",
+                "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+              },
               "flag": "ok"
             },
             "revenueSharePct": "9.4%",
-            "yoyGrowthPct": "unavailable",
+            "yoyGrowthPct": {
+              "status": "unavailable",
+              "reason": "本次采集未取得可比基期数据，未自行推算以免口径错配"
+            },
             "grossMarginPct": {
               "status": "unavailable",
               "reason": "不适用"
@@ -196,8 +208,7 @@
         {
           "fiscalYear": "FY2021",
           "revenue": {
-            "value": 1180440000000,
-            "unit": "currency",
+            "value": "1.18044万亿",
             "currency": "CNY",
             "source1": {
               "name": "Tushare income(period=20211231, report_type=1)",
@@ -213,8 +224,7 @@
             "flag": "ok"
           },
           "netProfit": {
-            "value": 101620000000,
-            "unit": "currency",
+            "value": "1016.2亿",
             "currency": "CNY",
             "source1": {
               "name": "Tushare income(n_income_attr_p)",
@@ -238,8 +248,7 @@
             "reason": "cnstock_data.py fina_indicator 未返回该标的 operating margin 字段；集团层面『营业利润/营业总收入』受保险准备金评估利率波动影响极大，公司年报未单列该比率，本次未自行推算"
           },
           "freeCashFlow": {
-            "value": 77930000000,
-            "unit": "currency",
+            "value": "779.3亿",
             "currency": "CNY",
             "note": "口径为『经营活动现金流净额-资本支出』，来自 Tushare fina_indicator/cashflow；对保险集团而言，经营现金流主要反映保费流入与赔付/退保流出的净额，含大量保险浮存金（float），与工业企业『自由现金流』概念含义不同，不宜直接类比制造业估值",
             "source1": {
@@ -248,16 +257,17 @@
               "value": 77930000000
             },
             "source2": {
-              "name": "status",
-              "url": "",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            },
             "flag": "ok"
           },
           "cashReserves": {
-            "value": 535070000000,
-            "unit": "currency",
+            "value": "5350.7亿",
             "currency": "CNY",
             "source1": {
               "name": "Tushare balancesheet（货币资金）",
@@ -276,8 +286,7 @@
         {
           "fiscalYear": "FY2022",
           "revenue": {
-            "value": 1110570000000,
-            "unit": "currency",
+            "value": "1.11057万亿",
             "currency": "CNY",
             "source1": {
               "name": "Tushare income(period=20221231, report_type=1)，与官方2022年报『营业收入11,105.68亿元』一致",
@@ -293,8 +302,7 @@
             "flag": "major-diff-resolved"
           },
           "netProfit": {
-            "value": 83774000000,
-            "unit": "currency",
+            "value": "837.74亿",
             "currency": "CNY",
             "source1": {
               "name": "Tushare income(n_income_attr_p)，与官方年报一致",
@@ -318,8 +326,7 @@
             "reason": "同 FY2021"
           },
           "freeCashFlow": {
-            "value": 477030000000,
-            "unit": "currency",
+            "value": "4770.3亿",
             "currency": "CNY",
             "note": "同 FY2021 口径说明",
             "source1": {
@@ -328,16 +335,17 @@
               "value": 477030000000
             },
             "source2": {
-              "name": "status",
-              "url": "",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            },
             "flag": "ok"
           },
           "cashReserves": {
-            "value": 612590000000,
-            "unit": "currency",
+            "value": "6125.9亿",
             "currency": "CNY",
             "source1": {
               "name": "Tushare balancesheet",
@@ -356,8 +364,7 @@
         {
           "fiscalYear": "FY2023",
           "revenue": {
-            "value": 913790000000,
-            "unit": "currency",
+            "value": "9137.9亿",
             "currency": "CNY",
             "source1": {
               "name": "Tushare income(period=20231231, report_type=1)",
@@ -374,8 +381,7 @@
             "note": "2023年起执行新保险合同准则(I17)，与2022年及以前数据口径不完全可比，公司年报已就此专门说明，本报告不直接计算2022→2023同比增速"
           },
           "netProfit": {
-            "value": 85660000000,
-            "unit": "currency",
+            "value": "856.6亿",
             "currency": "CNY",
             "source1": {
               "name": "Tushare income(n_income_attr_p)",
@@ -399,8 +405,7 @@
             "reason": "同 FY2021"
           },
           "freeCashFlow": {
-            "value": 352590000000,
-            "unit": "currency",
+            "value": "3525.9亿",
             "currency": "CNY",
             "note": "同 FY2021 口径说明",
             "source1": {
@@ -409,16 +414,17 @@
               "value": 352590000000
             },
             "source2": {
-              "name": "status",
-              "url": "",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            },
             "flag": "ok"
           },
           "cashReserves": {
-            "value": 577210000000,
-            "unit": "currency",
+            "value": "5772.1亿",
             "currency": "CNY",
             "source1": {
               "name": "Tushare balancesheet",
@@ -437,8 +443,7 @@
         {
           "fiscalYear": "FY2024",
           "revenue": {
-            "value": 1028920000000,
-            "unit": "currency",
+            "value": "1.02892万亿",
             "currency": "CNY",
             "source1": {
               "name": "Tushare income(period=20241231, report_type=1)",
@@ -454,8 +459,7 @@
             "flag": "ok"
           },
           "netProfit": {
-            "value": 126610000000,
-            "unit": "currency",
+            "value": "1266.1亿",
             "currency": "CNY",
             "source1": {
               "name": "Tushare income(n_income_attr_p)",
@@ -479,8 +483,7 @@
             "reason": "同 FY2021"
           },
           "freeCashFlow": {
-            "value": 375800000000,
-            "unit": "currency",
+            "value": "3758亿",
             "currency": "CNY",
             "note": "同 FY2021 口径说明",
             "source1": {
@@ -489,16 +492,17 @@
               "value": 375800000000
             },
             "source2": {
-              "name": "status",
-              "url": "",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            },
             "flag": "ok"
           },
           "cashReserves": {
-            "value": 683430000000,
-            "unit": "currency",
+            "value": "6834.3亿",
             "currency": "CNY",
             "source1": {
               "name": "Tushare balancesheet",
@@ -517,8 +521,7 @@
         {
           "fiscalYear": "FY2025",
           "revenue": {
-            "value": 1050510000000,
-            "unit": "currency",
+            "value": "1.05051万亿",
             "currency": "CNY",
             "source1": {
               "name": "Tushare income(period=20251231, report_type=1)",
@@ -534,8 +537,7 @@
             "flag": "ok"
           },
           "netProfit": {
-            "value": 134780000000,
-            "unit": "currency",
+            "value": "1347.8亿",
             "currency": "CNY",
             "source1": {
               "name": "Tushare income(n_income_attr_p)",
@@ -559,8 +561,7 @@
             "reason": "同 FY2021"
           },
           "freeCashFlow": {
-            "value": 650280000000,
-            "unit": "currency",
+            "value": "6502.8亿",
             "currency": "CNY",
             "note": "同 FY2021 口径说明；同比+73.03%主要受保险资金运用与银行同业存款季节性波动影响，非核心承保业务改善的直接反映，需结合寿险及健康险营运利润（1,033亿，+7.5%YoY，来源见 revenueStructure note）综合判断",
             "source1": {
@@ -569,16 +570,17 @@
               "value": 650280000000
             },
             "source2": {
-              "name": "status",
-              "url": "",
-              "value": "unavailable"
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+            },
             "flag": "ok"
           },
           "cashReserves": {
-            "value": 745680000000,
-            "unit": "currency",
+            "value": "7456.8亿",
             "currency": "CNY",
             "source1": {
               "name": "Tushare balancesheet",
@@ -959,7 +961,10 @@
           },
           "asOf": "2024年3月发布（前瞻性预测，非2025年最新一份sigma报告）"
         },
-        "horizon": "unavailable"
+        "horizon": {
+          "status": "unavailable",
+          "reason": "未采用统一的行业 CAGR 预测（原因见同一对象的 cagrPct），对应的预测区间无从填写"
+        }
       }
     },
     "riskFactors": {
@@ -1009,11 +1014,14 @@
           "url": "",
           "value": "unavailable（同日盘口价，未另行核对第二行情源，A股收盘价为公开唯一权威数据，风险极低）"
         },
-        "deviationPct": "unavailable",
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "仅单源，无第二来源数值可比对，偏差率不适用"
+        },
         "flag": "ok"
       },
       "sharesOutstanding": {
-        "value": 18107641995,
+        "value": "181.076亿",
         "unit": "shares",
         "source1": {
           "name": "Tushare daily_basic(total_share，20260807)",
@@ -1730,13 +1738,8 @@
           ],
           "historicalAnalogies": [
             {
-              "company": "unavailable",
-              "similarity": "unavailable",
-              "outcome": "unavailable",
-              "source": {
-                "status": "unavailable",
-                "reason": "采集文件未提供可直接引用、带具体来源数据的历史类比公司；仅可基于常识给出定性逻辑（保险/金融集团在长端利率下行周期普遍面临利差损压力），不编造具体历史类比公司的精确数字或伪造来源"
-              }
+              "status": "unavailable",
+              "reason": "采集文件未提供可直接引用、带具体来源数据的历史类比公司；仅可基于常识给出定性逻辑（保险/金融集团在长端利率下行周期普遍面临利差损压力），不编造具体历史类比公司的精确数字或伪造来源"
             }
           ],
           "crossDisciplinaryChecks": [

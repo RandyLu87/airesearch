@@ -14,12 +14,16 @@
 三个文件参数均可省略，只校验给出的文件。
 退出码：0 = 全部放行；1 = 存在未放行的文件；2 = 参数或文件错误。
 
-两道闸门，任一不过都拒绝放行：
+三道闸门，任一不过都拒绝放行：
 
     1. 完整性分数 —— 模板槽位的填写率，低于阈值不放行；
     2. 首屏可渲染性 —— 页头摘要条与首页卡片直读的四个字段（市值 / 股价 / PE /
        数据截止）必须能解析成一句话。分数只看填没填，看不出「填了但页面显示不出来」，
-       这道闸门专门挡这种：字段写成页面认不出的形状时，读者看到的是破折号。
+       这道闸门专门挡这种：字段写成页面认不出的形状时，读者看到的是破折号；
+    3. 写法闸门（全量叶子扫描）—— 首屏四格之外的字段同样会被读到。两类写法页面
+       认得出、但读者看到的是错的：裸占位字符串（`"unavailable"` 当值写，页面原样
+       输出，5 年趋势表里拼出 `unavailable%`）与未缩写大数字（`23051044345` 直接
+       渲染成 11 位数字）。见 scan_shape。
 
 打分规则（模板驱动）：
     - 「槽位」= 模板中值含 __TODO__ 的叶子字段，或形如 "A | B | C" 的枚举提示字段；
@@ -28,6 +32,8 @@
     - 规范的 { "status": "unavailable" | "not-applicable", "reason": "..." } 计 0.5 分权重——
       「取不到并写明已查范围」「算不出并写明为什么」都是合法结果，但完整性弱于取到；
     - 缺键、残留 __TODO__、空值、枚举未选、unavailable 未写 reason 计 0 分并记入缺口清单；
+    - 写法闸门命中的字段（裸占位字符串 / 未缩写大数字）同样计 0 分权重并记入缺口清单——
+      这类字段有值，但读者看到的那句话是错的，按「没填」算；
     - 得分 = 10 × (已填 + 0.5 × unavailable) / 槽位总数，四舍五入到 1 位小数。
 
 数组规则：模板数组为空（如 dataGaps: []）表示允许为空，跳过；模板数组含 N 个条目时，
@@ -38,6 +44,7 @@
 import argparse
 import json
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -137,6 +144,77 @@ def resolve_multi_field(value):
     return "%s（%s）" % (legs[0], " / ".join(legs[1:])) if len(legs) > 1 else legs[0]
 
 
+# 量级词表：`unit` 里可能出现的量级，**长的先匹配**（`万亿` 必须排在 `亿` 与 `万` 前面，
+# 否则 `万亿元` 会被读成 `万`）。field-text.ts 的 MAGNITUDES 是同一张表。
+MAGNITUDES = (
+    ("万亿", 1e12), ("trillion", 1e12),
+    ("十亿", 1e9), ("billion", 1e9), ("bn", 1e9),
+    ("亿", 1e8),
+    ("千万", 1e7),
+    ("百万", 1e6), ("million", 1e6), ("mn", 1e6),
+    ("万", 1e4),
+    ("千", 1e3), ("thousand", 1e3),
+)
+
+# 占位币种：`-` / `N/A` 这类「没写」的写法，拼进单位串只会变成 `140.19 million ADS N/A`。
+PLACEHOLDER_LABEL = re.compile(r"^(?:[-—–]+|n/?a|未?披露|\?+)$", re.I)
+
+
+def magnitude_of(label):
+    """单位串里声明的量级；没有量级词返回 None（`"HKD"`、`"股"`、`"currency"`）。"""
+    lower = label.lower()
+    for token, scale in MAGNITUDES:
+        if token in lower:
+            return scale
+    return None
+
+
+def magnitude_rest(label):
+    """单位串去掉量级词后剩下的部分：`"百万"` → `""`，`"RMB million"` → `"RMB"`，
+    `"亿股"` → `"股"`。剩下东西就说明这个单位自己点明了计量对象，不需要 currency 补。"""
+    lower = label.lower()
+    for token, _ in MAGNITUDES:
+        at = lower.find(token)
+        if at >= 0:
+            return re.sub(r"[\s,，/·]+", " ", label[:at] + label[at + len(token):]).strip()
+    return label.strip()
+
+
+def annotation(value):
+    """注解键（unit / currency）取成字符串：对象与 None 当作没写。"""
+    if isinstance(value, str):
+        return value.strip()
+    if value is None or isinstance(value, (dict, list, bool)):
+        return ""
+    return str(value)
+
+
+def unit_label(field):
+    """校验对象的单位串——field-text.ts 的 unitLabel() 的镜像。
+
+    默认取 currency，例外是「量级只写在 unit 里」：
+    `{value: 751766, unit: "RMB million", currency: "RMB"}` 按 currency 优先会渲染成
+    `751,766 RMB`，比真实值小 6 个量级。这种字段的语义是「数值 + 量级 + 币种」三元组，
+    量级词不能被纯币种压掉，所以保留 unit；unit 只写量级不写币种（`"百万"`）时把
+    currency 接在后面。只在 value 是裸数字时这么做（缩写过的 value 再叠一次量级就是
+    乘两次），currency 自己也带量级（`"RMB百万"`）时照旧取 currency。
+
+    currency 只补给**纯量级** unit（`"百万"`）：unit 去掉量级词后还剩东西，它自己就点明了
+    计量对象——`"RMB million"` 的币种、`"亿股"` 的股数、`"million ADS"` 的凭证数——再接
+    currency 会拼出 `252.2 亿股 CNY`（招行 sharesOutstanding）这种读不通的串。
+    """
+    unit, currency = annotation(field.get("unit")), annotation(field.get("currency"))
+    if not unit or not currency:
+        return currency or unit
+    if not is_bare_number(field.get("value")):
+        return currency
+    if magnitude_of(unit) is None or magnitude_of(currency) is not None:
+        return currency
+    if magnitude_rest(unit) != "" or PLACEHOLDER_LABEL.match(currency):
+        return unit
+    return "%s %s" % (unit, currency)
+
+
 def resolve_field(value):
     """把字段解析成页面会显示的文本；页面显示不出来时返回 None。"""
     if value is None or value == "":
@@ -153,8 +231,7 @@ def resolve_field(value):
         reason = value.get("reason")
         return "%s：%s" % (ABSENT_STATUSES[absent], reason) if reason else None
     if "value" in value:
-        unit = value.get("currency") or value.get("unit") or ""
-        return ("%s %s" % (value["value"], unit)).strip()
+        return ("%s %s" % (value["value"], unit_label(value))).strip()
     return resolve_multi_field(value)
 
 
@@ -206,11 +283,172 @@ def check_headline(instance):
     return problems
 
 
+# ---------------------------------------------------------------------------
+# 写法闸门（全量叶子扫描）
+#
+# 首屏闸门只看四个字段，但报告里被读到的字段远不止四个。这里扫全树，挡两类
+# 「页面认得出、读者看到的却是错的」写法——三类都发生过：
+#
+#   1. 裸占位字符串：`grossMarginPct: "unavailable"` 而不是
+#      { "status": "unavailable", "reason": … }。渲染层 text() 对字符串原样输出，
+#      百分比列再拼一个后缀，页面上就是 `unavailable%`。resolve_field() 也会把它
+#      str() 成非 None，分数上被当作「已填」——所以必须单独挡。
+#   2. 未缩写大数字：`{ "value": 23051044345, "currency": "HKD" }`。缩写是采集/分析
+#      文件的约定（`"230.51亿"` / `"23.05B"`），渲染层不猜量级（field-text.ts 的
+#      formatNumeric 只加千分位），漏写就是页头一串 11 位数字。
+#   3. 量级被币种压掉：`{ "value": 751766, "unit": "RMB million", "currency": "RMB" }`。
+#      量级只写在 unit 里，旧的 `currency ?? unit` 取值规则把它丢了，页面显示
+#      `751,766 RMB`（腾讯 FY2024 收入，实为 7,517.66 亿元）。渲染层与 unit_label()
+#      现在都保留 unit 的量级；这条检测挡的是两侧规则再次漂移，以及 unit 与 currency
+#      各自声明不同量级、渲染层无法判断的写法。
+#
+# 注意：这三条不改 resolve_field() / text() 的解析规则——两边的解析规则仍是镜像，
+# 这里加的是「解析得出来但不该这么写」的前置拦截。
+# ---------------------------------------------------------------------------
+
+# 大数字缩写阈值：百万起就该缩写。财报量级的数字（收入、市值、股本）一律超过它，
+# 而股价、倍数、百分比这些天然的小数值不会被误伤。
+ABBREV_THRESHOLD = 1e6
+
+# 纯数字字符串：`"23051044345"` / `"23,051,044,345"` / `"1234.5"`。
+# 渲染层的 formatNumeric 只作用于 number，字符串一律原样输出——「stringify 了但没缩写」
+# 在页面上和裸数字完全一样，所以同样命中。
+NUMERIC_STRING = re.compile(r"^-?\d[\d,]*(\.\d+)?$")
+
+SHAPE_LABELS = {
+    "bare-absent-string": "裸占位字符串",
+    "unabbreviated-number": "大数字未缩写",
+    "unit-overridden-by-currency": "量级被币种压掉",
+}
+
+SHAPE_HINTS = {
+    "bare-absent-string":
+        "「取不到 / 不适用」必须写成完整对象 "
+        "{ \"status\": \"unavailable\" | \"not-applicable\", \"reason\": \"缺失原因 + 已查范围\" }；"
+        "裸字符串会被原样渲染（百分比列里拼成 unavailable%）。",
+    "unabbreviated-number":
+        "大额数字按采集/分析约定写成缩写字符串（\"230.51亿\" / \"23.05B\"）；"
+        "货币之外的计数单位（股 / 辆 / 户 / MAU）同样要缩写（\"2.05亿\"）。"
+        "渲染层不猜量级，裸数字会整串拼进页面——只加引号不缩写（\"23051044345\"）"
+        "渲染出来一模一样，同样算没改。",
+    "unit-overridden-by-currency":
+        "`unit` 与 `currency` 各自声明了不同的量级（如 unit \"RMB million\" 对 "
+        "currency \"RMB billion\"），渲染层无法判断哪个才是 value 的量级。"
+        "把量级只留在一处：unit 写全（\"RMB million\"）、currency 只写币种（\"RMB\"），"
+        "或者干脆把量级折进 value 的缩写字符串（\"7517.66亿\"）。",
+}
+
+
+def is_bare_absent(value):
+    """值本身就是 `"unavailable"` / `"not-applicable"` 字符串（而不是规范占位对象）。"""
+    return isinstance(value, str) and value.strip() in ABSENT_STATUSES
+
+
+def is_unabbreviated_number(node):
+    """标了 currency/unit 的校验对象，value 却是裸大数字。"""
+    if not isinstance(node, dict) or "value" not in node:
+        return False
+    if not (node.get("currency") or node.get("unit")):
+        return False
+    return is_unabbreviated_value(node["value"])
+
+
+def is_bare_number(value):
+    """未缩写的裸数字：Python 数字，或只 stringify 过的纯数字串（`"751,766"`）。
+    缩写过的 `"7517.66亿"` / `"23.05B"` 不算。"""
+    if isinstance(value, bool):
+        return False
+    if isinstance(value, str):
+        return bool(NUMERIC_STRING.match(value.strip()))
+    return isinstance(value, (int, float))
+
+
+def is_unabbreviated_value(value):
+    """裸大数字：裸数字且已经到了该缩写的量级。"""
+    if not is_bare_number(value):
+        return False
+    number = float(value.strip().replace(",", "")) if isinstance(value, str) else value
+    return abs(number) >= ABBREV_THRESHOLD
+
+
+def is_unit_magnitude_dropped(node):
+    """量级只写在 `unit` 里，渲染出来的文本却没带上它。
+
+    `{value: 751766, unit: "RMB million", currency: "RMB"}` 在旧的 `currency ?? unit`
+    取值规则下渲染成 `751,766 RMB`，比真实值小 6 个量级（腾讯 FY2024 收入，全仓库同类
+    写法 160 处）。渲染层与本文件的 `unit_label()` 现在都保留 unit 的量级，所以这条
+    检测既是那次改动的回归闸门（两侧解析规则一旦再次漂移就报），也挡住剩下那种渲染层
+    无法判断的写法：unit 与 currency 各自声明了**不同**的量级。
+    """
+    if not isinstance(node, dict) or "value" not in node:
+        return False
+    unit, currency = annotation(node.get("unit")), annotation(node.get("currency"))
+    if not (unit and currency and is_bare_number(node["value"])):
+        return False
+    scale = magnitude_of(unit)
+    if scale is None:
+        return False
+    return magnitude_of(unit_label(node)) != scale
+
+
+def scan_shape(node, path="", problems=None):
+    """全量扫描写法问题，返回 [{path, type, found}]。"""
+    if problems is None:
+        problems = []
+    if isinstance(node, dict):
+        if is_unit_magnitude_dropped(node):
+            problems.append({
+                "path": path,
+                "type": "unit-overridden-by-currency",
+                "found": "%s（unit %s / currency %s）" % (node["value"], node.get("unit"),
+                                                        node.get("currency")),
+            })
+        if is_unabbreviated_number(node):
+            problems.append({
+                "path": path,
+                "type": "unabbreviated-number",
+                "found": ("%s %s" % (node["value"],
+                                     node.get("currency") or node.get("unit"))).strip(),
+            })
+        for key, value in node.items():
+            if key in META_KEYS:
+                continue
+            # `status: "unavailable"` 是规范占位对象的一部分，不是裸占位；
+            # 缺 reason 的情况由 walk() / resolve_field() 管。
+            if key == "status" and is_bare_absent(value):
+                continue
+            scan_shape(value, "%s.%s" % (path, key) if path else key, problems)
+    elif isinstance(node, list):
+        for i, item in enumerate(node):
+            scan_shape(item, "%s[%d]" % (path, i), problems)
+    elif is_bare_absent(node):
+        problems.append({"path": path, "type": "bare-absent-string", "found": node})
+    return problems
+
+
 class Tally:
     def __init__(self):
         self.filled = 0
         self.unavailable = 0
         self.gaps = []  # 每条: {path, type, expected}
+        self.filled_paths = set()  # 计了满权重的槽位，写法闸门要按 path 收回
+
+    def fill(self, path):
+        self.filled += 1
+        self.filled_paths.add(path)
+
+    def demote(self, *paths):
+        """写法闸门命中一个已计满权重的槽位：收回那 1 分，返回被收回的 path。
+
+        模板把校验对象写成标量槽位时（`marketCap.reported: "__TODO__（校验对象…）"`），
+        walk() 记的是父 path；模板展开到 value 时记的是 `<path>.value`。两种都试。
+        """
+        for path in paths:
+            if path in self.filled_paths:
+                self.filled_paths.discard(path)
+                self.filled -= 1
+                return path
+        return None
 
     @property
     def required(self):
@@ -303,8 +541,12 @@ def walk(template, instance, path, tally):
                 tally.unavailable += 1
             else:
                 tally.gap(path, "unavailable-without-reason", template)
+        elif is_bare_absent(instance):
+            # 裸 "unavailable" 有值但不是占位对象：resolve_field() 会 str() 出非 None，
+            # 不在这里拦就会当作「已填」计 1 分。写法闸门另有一条同 path 的记录，check_file 去重。
+            tally.gap(path, "bare-absent-string", template)
         else:
-            tally.filled += 1
+            tally.fill(path)
 
 
 def load_json(path, what):
@@ -325,6 +567,20 @@ def check_file(step, instance_path):
     instance = load_json(instance_path, STEP_LABELS[step])
     tally = Tally()
     walk(template, instance, "", tally)
+    # 写法问题独立于模板：命中的字段可能根本不在模板槽位上（如 source2.name），
+    # 一律补记为 0 分权重缺口；walk() 已记过的同一 path 不重复计。
+    shape_problems = scan_shape(instance)
+    recorded = {(g["path"], g["type"]) for g in tally.gaps}
+    for problem in shape_problems:
+        key = (problem["path"], problem["type"])
+        if key in recorded:
+            continue
+        recorded.add(key)
+        # 命中的字段 walk() 多半已按「已填」记过满权重：先把那 1 分收回再记缺口，
+        # 分母不变、分子 -1，落到「命中即计 0 分权重」；没记过的（如 source2.name
+        # 这类模板外字段）才是净增一个 0 分槽位。
+        demoted = tally.demote(problem["path"], "%s.value" % problem["path"])
+        tally.gap(demoted or problem["path"], problem["type"], SHAPE_HINTS[problem["type"]])
     return {
         "step": step,
         "stepLabel": STEP_LABELS[step],
@@ -337,12 +593,15 @@ def check_file(step, instance_path):
         "gaps": tally.gaps,
         # 首屏字段只存在于采集文件里；它是独立于分数的硬闸门，见 check_headline。
         "headlineProblems": check_headline(instance) if step == "collection" else [],
+        "shapeProblems": shape_problems,
     }
 
 
 def blocked(result, threshold):
-    """是否拒绝放行：分数不足，或首屏字段渲染不出来。"""
-    return result["score"] < threshold or bool(result["headlineProblems"])
+    """是否拒绝放行：分数不足、首屏字段渲染不出来，或存在写法问题。"""
+    return (result["score"] < threshold
+            or bool(result["headlineProblems"])
+            or bool(result["shapeProblems"]))
 
 
 def print_report(results, threshold):
@@ -362,11 +621,23 @@ def print_report(results, threshold):
         for problem in res["headlineProblems"]:
             print("   - [首屏渲染不出] %s ← %s：%s"
                   % (problem["label"], problem["path"], problem["found"]))
+        for problem in res["shapeProblems"][:10]:
+            print("   - [%s] %s ← %s"
+                  % (SHAPE_LABELS[problem["type"]], problem["path"], problem["found"]))
+        if len(res["shapeProblems"]) > 10:
+            print("   ... 其余 %d 处写法问题见 --gaps-out / --json"
+                  % (len(res["shapeProblems"]) - 10))
     print("-" * 60)
     failing = [r for r in results if blocked(r, threshold)]
     unrenderable = [r for r in results if r["headlineProblems"]]
     if unrenderable:
         print("❌ 首屏字段渲染不出，页头与首页卡片会是空白。%s" % HEADLINE_HINT)
+    for gap_type in ("bare-absent-string", "unabbreviated-number",
+                     "unit-overridden-by-currency"):
+        hits = sum(len([p for p in r["shapeProblems"] if p["type"] == gap_type])
+                   for r in results)
+        if hits:
+            print("❌ %d 处%s。%s" % (hits, SHAPE_LABELS[gap_type], SHAPE_HINTS[gap_type]))
     if failing:
         print("❌ %d 份文件未放行，进入关键信息补全流程（用 --gaps-out 导出缺口清单）。"
               % len(failing))
@@ -407,9 +678,12 @@ def main():
                        "分析缺口按第 2 步统一信封，总结缺口按第 3 步评分与策略规则）。"
                        "确实取不到的信息写 { \"status\": \"unavailable\", \"reason\": \"缺失原因 + 已查范围\" }，"
                        "算不出来的（分母为负等）写 { \"status\": \"not-applicable\", \"reason\": \"…\" }，不得编造。"
-                       "headlineProblems 是首屏字段的形状问题：数据往往已经采到，要改的是写法而不是再去取数。",
+                       "headlineProblems 是首屏字段的形状问题：数据往往已经采到，要改的是写法而不是再去取数。"
+                       "shapeProblems 同理是写法问题（裸占位字符串 / 大数字未缩写 / 量级被币种压掉），"
+                       "按 shapeHints 改写，不要重新取数。",
             "threshold": args.threshold,
             "headlineHint": HEADLINE_HINT,
+            "shapeHints": SHAPE_HINTS,
             "files": [
                 {
                     "step": r["step"],
@@ -418,6 +692,7 @@ def main():
                     "score": r["score"],
                     "gaps": r["gaps"],
                     "headlineProblems": r["headlineProblems"],
+                    "shapeProblems": r["shapeProblems"],
                 }
                 for r in failing
             ],
@@ -444,6 +719,7 @@ def main():
         scores={r["step"]: r["score"] for r in results},
         gapCounts={r["step"]: r["gapCount"] for r in results},
         headlineProblems=sum(len(r["headlineProblems"]) for r in results),
+        shapeProblems=sum(len(r["shapeProblems"]) for r in results),
     )
     sys.exit(exit_code)
 

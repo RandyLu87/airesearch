@@ -27,7 +27,7 @@ python3 docs/research/tools/build_final.py \
   --out        research/companies/<company-id>/financials-final.json
 ```
 
-合并脚本内部复用 `data_validator.py` 重新校验三份输入：**任一低于阈值（默认 7 分）拒绝生成**，回到第 4 步补全；三份文件的 `meta.companyId` 不一致同样拒绝。校验闸门只在这里，渲染层无条件信任 `financials-final.json`。最终 JSON 原样嵌入三份产出（`collection` / `analysis` / `summary` 三个子树），并在 `meta.validation` 记录三份得分与校验时间——页面上「数据完整性」一格由此而来。**这份文件由脚本生成，不手写。**
+合并脚本内部复用 `data_validator.py` 重新校验三份输入：**任一低于阈值（默认 7 分）、首屏字段渲染不出、或写法闸门有命中（裸占位字符串 / 大数字未缩写）都拒绝生成**，回到第 4 步补全或改写；三份文件的 `meta.companyId` 不一致同样拒绝。校验闸门只在这里，渲染层无条件信任 `financials-final.json`。最终 JSON 原样嵌入三份产出（`collection` / `analysis` / `summary` 三个子树），并在 `meta.validation` 记录三份得分与校验时间——页面上「数据完整性」一格由此而来。**这份文件由脚本生成，不手写。**
 
 ## 2. 渲染 HTML
 

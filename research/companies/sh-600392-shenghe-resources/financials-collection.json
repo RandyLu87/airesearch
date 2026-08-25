@@ -46,8 +46,8 @@
           "revenue": {
             "value": 141.1, "unit": "亿元", "currency": "CNY",
             "source1": { "name": "Tushare fina_mainbz（type=P，剔除合计行）", "url": "https://tushare.pro", "value": 141.1 },
-            "source2": { "name": "unavailable", "url": "", "value": "unavailable" },
-            "deviationPct": "unavailable", "flag": "ok",
+            "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" },
+            "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源数值可比对，偏差率不适用" }, "flag": "ok",
             "note": "Level 2/分部字段，单源（Tushare fina_mainbz），已与利润表总收入对账（差异 0.00%）"
           },
           "revenueSharePct": 94.1,
@@ -59,8 +59,8 @@
           "revenue": {
             "value": 8.1, "unit": "亿元", "currency": "CNY",
             "source1": { "name": "Tushare fina_mainbz（type=P）", "url": "https://tushare.pro", "value": 8.1 },
-            "source2": { "name": "unavailable", "url": "", "value": "unavailable" },
-            "deviationPct": "unavailable", "flag": "ok"
+            "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" },
+            "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源数值可比对，偏差率不适用" }, "flag": "ok"
           },
           "revenueSharePct": 5.4,
           "yoyGrowthPct": { "status": "unavailable", "reason": "同上，分部同比未在采集范围内取得" },
@@ -74,48 +74,48 @@
         "totalRevenue": {
           "value": 29.92, "unit": "亿元", "currency": "CNY",
           "source1": { "name": "Tushare income period=20250331", "url": "https://tushare.pro", "value": 29.92 },
-          "source2": { "name": "unavailable", "url": "", "value": "unavailable" },
-          "deviationPct": "unavailable", "flag": "ok",
+          "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" },
+          "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源数值可比对，偏差率不适用" }, "flag": "ok",
           "note": "单季合并利润表原始值，Level 1 字段目前仅 Tushare 单源，年度值已双源验证"
         },
         "yoyGrowthPct": 3.66,
-        "segments": [{ "name": "unavailable", "revenue": "unavailable", "yoyGrowthPct": "unavailable", "note": "分部数据仅按年披露，无季度分部" }]
+        "segments": [{ "status": "unavailable", "reason": "分部数据仅按年披露，无季度分部" }]
       },
       {
         "period": "2025Q2",
         "totalRevenue": {
           "value": 31.87, "unit": "亿元", "currency": "CNY",
           "source1": { "name": "Tushare income period=20250630 累计值倒算", "url": "https://tushare.pro", "value": 31.87 },
-          "source2": { "name": "unavailable", "url": "", "value": "unavailable" },
-          "deviationPct": "unavailable", "flag": "ok",
+          "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" },
+          "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源数值可比对，偏差率不适用" }, "flag": "ok",
           "note": "单季值 = H1累计61.79亿 - Q1累计29.92亿，经 financial_rigor.py calc 验算"
         },
         "yoyGrowthPct": 24.88,
-        "segments": [{ "name": "unavailable", "revenue": "unavailable", "yoyGrowthPct": "unavailable" }]
+        "segments": [{ "status": "unavailable", "reason": "公司未按季度披露分部收入，该季无分部数据可列示" }]
       },
       {
         "period": "2025Q3",
         "totalRevenue": {
           "value": 42.77, "unit": "亿元", "currency": "CNY",
           "source1": { "name": "Tushare income period=20250930 累计值倒算", "url": "https://tushare.pro", "value": 42.77 },
-          "source2": { "name": "unavailable", "url": "", "value": "unavailable" },
-          "deviationPct": "unavailable", "flag": "ok",
+          "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" },
+          "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源数值可比对，偏差率不适用" }, "flag": "ok",
           "note": "单季值 = 9M累计104.56亿 - H1累计61.79亿，经 financial_rigor.py calc 验算"
         },
         "yoyGrowthPct": 52.59,
-        "segments": [{ "name": "unavailable", "revenue": "unavailable", "yoyGrowthPct": "unavailable" }]
+        "segments": [{ "status": "unavailable", "reason": "公司未按季度披露分部收入，该季无分部数据可列示" }]
       },
       {
         "period": "2025Q4",
         "totalRevenue": {
           "value": 45.35, "unit": "亿元", "currency": "CNY",
           "source1": { "name": "Tushare income period=20251231 累计值倒算", "url": "https://tushare.pro", "value": 45.35 },
-          "source2": { "name": "unavailable", "url": "", "value": "unavailable" },
-          "deviationPct": "unavailable", "flag": "ok",
+          "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" },
+          "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源数值可比对，偏差率不适用" }, "flag": "ok",
           "note": "单季值 = FY2025累计149.91亿 - 9M累计104.56亿，经 financial_rigor.py calc 验算"
         },
         "yoyGrowthPct": 44.90,
-        "segments": [{ "name": "unavailable", "revenue": "unavailable", "yoyGrowthPct": "unavailable" }]
+        "segments": [{ "status": "unavailable", "reason": "公司未按季度披露分部收入，该季无分部数据可列示" }]
       }
     ]
   },
@@ -141,8 +141,8 @@
         "freeCashFlow": {
           "value": 4.3, "unit": "亿元", "currency": "CNY", "note": "口径 = 经营活动现金流净额 - 购建固定资产等支付的现金，不含并购支出",
           "source1": { "name": "Tushare cashflow（cnstock_data.py 计算）", "url": "https://tushare.pro", "value": 4.3 },
-          "source2": { "name": "unavailable", "url": "", "value": "unavailable" },
-          "deviationPct": "unavailable", "flag": "ok",
+          "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" },
+          "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源数值可比对，偏差率不适用" }, "flag": "ok",
           "noteLevel": "FCF 属 Level 1，本次仅取得 Tushare 单源，未做东方财富交叉验证（东方财富未直接披露 FCF，需自行用现金流量表倒算，超出采集时间预算）"
         },
         "cashReserves": {
@@ -180,7 +180,7 @@
         },
         "grossMarginPct": 5.2,
         "operatingMarginPct": 2.74,
-        "freeCashFlow": { "value": -6.5, "unit": "亿元", "currency": "CNY", "source1": { "name": "Tushare cashflow", "value": -6.5 }, "source2": { "name": "unavailable", "value": "unavailable" }, "flag": "ok" },
+        "freeCashFlow": { "value": -6.5, "unit": "亿元", "currency": "CNY", "source1": { "name": "Tushare cashflow", "value": -6.5 }, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "flag": "ok" },
         "cashReserves": { "value": 25.26, "unit": "亿元", "currency": "CNY",
           "source1": { "name": "Tushare balancesheet", "value": 25.26 },
           "source2": { "name": "东方财富", "value": 25.26 },
@@ -193,7 +193,7 @@
         "netProfit": { "value": 3.33, "unit": "亿元", "currency": "CNY", "note": "归母净利润", "source1": { "name": "Tushare", "value": 3.3 }, "source2": { "name": "东方财富", "value": 3.327 }, "deviationPct": 0.8, "flag": "ok" },
         "grossMarginPct": 4.3,
         "operatingMarginPct": 2.53,
-        "freeCashFlow": { "value": -2.3, "unit": "亿元", "currency": "CNY", "source1": { "name": "Tushare cashflow", "value": -2.3 }, "source2": { "name": "unavailable", "value": "unavailable" }, "flag": "ok" },
+        "freeCashFlow": { "value": -2.3, "unit": "亿元", "currency": "CNY", "source1": { "name": "Tushare cashflow", "value": -2.3 }, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "flag": "ok" },
         "cashReserves": { "value": 23.34, "unit": "亿元", "currency": "CNY", "source1": { "name": "Tushare", "value": 23.3 }, "source2": { "name": "东方财富", "value": 23.34 }, "deviationPct": 0.17, "flag": "ok" },
         "roePct": { "value": 3.6, "source1": { "name": "Tushare", "value": 3.6 }, "source2": { "name": "东方财富", "value": 3.56 }, "deviationPct": 1.1, "flag": "minor-diff", "resolution": "Tushare fina_indicator期末摊薄口径 vs 东方财富加权平均口径，均属常见ROE计算口径差异，非数据错误" }
       },
@@ -203,8 +203,8 @@
         "netProfit": { "value": 15.94, "unit": "亿元", "currency": "CNY", "note": "归母净利润", "source1": { "name": "Tushare", "value": 15.9 }, "source2": { "name": "东方财富", "value": 15.935 }, "deviationPct": 0.22, "flag": "ok" },
         "grossMarginPct": 16.6,
         "operatingMarginPct": 11.41,
-        "freeCashFlow": { "value": 1.4, "unit": "亿元", "currency": "CNY", "source1": { "name": "Tushare cashflow", "value": 1.4 }, "source2": { "name": "unavailable", "value": "unavailable" }, "flag": "ok" },
-        "cashReserves": { "value": 26.2, "unit": "亿元", "currency": "CNY", "source1": { "name": "Tushare", "value": 26.2 }, "source2": { "name": "unavailable", "value": "unavailable" }, "flag": "ok" },
+        "freeCashFlow": { "value": 1.4, "unit": "亿元", "currency": "CNY", "source1": { "name": "Tushare cashflow", "value": 1.4 }, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "flag": "ok" },
+        "cashReserves": { "value": 26.2, "unit": "亿元", "currency": "CNY", "source1": { "name": "Tushare", "value": 26.2 }, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "flag": "ok" },
         "roePct": { "value": 17.1, "source1": { "name": "Tushare fina_indicator（期末摊薄）", "value": 17.1 }, "source2": { "name": "东方财富 WEIGHTAVG_ROE（加权平均）", "value": 15.82 }, "deviationPct": 8.1, "flag": "minor-diff", "resolution": "口径差异（期末摊薄 vs 加权平均），2022年因中报后有增发摊薄股本，两种口径差异被放大至约1.3个百分点，非数据错误，采用Tushare期末摊薄口径" }
       },
       {
@@ -213,8 +213,8 @@
         "netProfit": { "value": 10.76, "unit": "亿元", "currency": "CNY", "note": "归母净利润", "source1": { "name": "Tushare", "value": 10.8 }, "source2": { "name": "东方财富", "value": 10.76 }, "deviationPct": 0.37, "flag": "ok" },
         "grossMarginPct": 18.7,
         "operatingMarginPct": 12.37,
-        "freeCashFlow": { "value": 7.3, "unit": "亿元", "currency": "CNY", "source1": { "name": "Tushare cashflow", "value": 7.3 }, "source2": { "name": "unavailable", "value": "unavailable" }, "flag": "ok" },
-        "cashReserves": { "value": 22.5, "unit": "亿元", "currency": "CNY", "source1": { "name": "Tushare", "value": 22.5 }, "source2": { "name": "unavailable", "value": "unavailable" }, "flag": "ok" },
+        "freeCashFlow": { "value": 7.3, "unit": "亿元", "currency": "CNY", "source1": { "name": "Tushare cashflow", "value": 7.3 }, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "flag": "ok" },
+        "cashReserves": { "value": 22.5, "unit": "亿元", "currency": "CNY", "source1": { "name": "Tushare", "value": 22.5 }, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "flag": "ok" },
         "roePct": { "value": 12.7, "source1": { "name": "Tushare期末摊薄", "value": 12.7 }, "source2": { "name": "东方财富加权平均", "value": 13.34 }, "deviationPct": 4.9, "flag": "minor-diff", "resolution": "口径差异（期末摊薄 vs 加权平均），非数据错误" }
       }
     ]
@@ -314,7 +314,7 @@
       "source": { "name": "百度百科/21财经/每日经济新闻", "url": "https://baike.baidu.com/item/%E7%8E%8B%E5%85%A8%E6%A0%B9/14472456；https://m.21jingji.com/article/20200405/herald/5d2c82a9c3d669c10aee1faab31ab9ba.html；https://www.nbd.com.cn/articles/2024-09-19/3562271.html" }
     },
     "ownership": {
-      "economicPct": "unavailable",
+      "economicPct": { "status": "unavailable", "reason": "本次采集未取得管理层/实际控制人合计经济权益比例——公司无 AB 股结构、经济权益即投票权，仅取到十大股东逐项明细（见同一对象的 note 与 topHolders）" },
       "note": "十大股东中王全根持股6.69%、黄平（管理层，持股96,271,094股，占总股本17.53亿股比例约5.49%）；公司无AB股结构，经济权益即投票权。是否存在实际控制人一致行动关系需 Agent 检索确认",
       "topHolders": [
         { "name": "中国地质科学院矿产综合利用研究所", "pct": 14.06 },
@@ -387,8 +387,8 @@
     "sharePrice": {
       "value": 23.94, "unit": "元", "currency": "CNY",
       "source1": { "name": "Tushare daily", "url": "https://tushare.pro", "value": 23.94 },
-      "source2": { "name": "unavailable", "url": "", "value": "unavailable" },
-      "deviationPct": "unavailable", "flag": "ok"
+      "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" },
+      "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源数值可比对，偏差率不适用" }, "flag": "ok"
     },
     "sharesOutstanding": {
       "value": 17.53, "unit": "亿股",

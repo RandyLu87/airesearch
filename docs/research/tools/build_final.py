@@ -52,7 +52,7 @@ def main():
 
     targets = [("collection", args.collection), ("analysis", args.analysis), ("summary", args.summary)]
 
-    # 1) 复用第 4 步的两道闸门（完整性分数 + 首屏可渲染性），任一不过拒绝合并
+    # 1) 复用第 4 步的三道闸门（完整性分数 + 首屏可渲染性 + 写法），任一不过拒绝合并
     results = [data_validator.check_file(step, path) for step, path in targets]
     failing = [r for r in results if data_validator.blocked(r, args.threshold)]
     for res in results:
@@ -61,6 +61,9 @@ def main():
         for problem in res["headlineProblems"]:
             print("   ❌ 首屏渲染不出：%s ← %s：%s"
                   % (problem["label"], problem["path"], problem["found"]))
+        for problem in res["shapeProblems"]:
+            print("   ❌ %s：%s ← %s"
+                  % (data_validator.SHAPE_LABELS[problem["type"]], problem["path"], problem["found"]))
     merge_company = evals_log.company_from_paths(*[path for _, path in targets], args.out)
     scores = {r["step"]: r["score"] for r in results}
     unrenderable = [p for r in results for p in r["headlineProblems"]]
@@ -68,13 +71,22 @@ def main():
         # 数据通常已经采到了，缺的是形状：直接说清楚该写成什么，别把人打发去重新取数。
         sys.stderr.write("拒绝合并：%d 个首屏字段渲染不出来，页头与首页卡片会是空白。%s\n"
                          % (len(unrenderable), data_validator.HEADLINE_HINT))
+    misshaped = [p for r in results for p in r["shapeProblems"]]
+    for gap_type in ("bare-absent-string", "unabbreviated-number"):
+        hits = [p for p in misshaped if p["type"] == gap_type]
+        if hits:
+            # 同样是形状问题：数据已经采到，要改的是写法。
+            sys.stderr.write("拒绝合并：%d 处%s。%s\n"
+                             % (len(hits), data_validator.SHAPE_LABELS[gap_type],
+                                data_validator.SHAPE_HINTS[gap_type]))
     if failing:
-        if not unrenderable:
+        if not unrenderable and not misshaped:
             sys.stderr.write("拒绝合并：%d 份文件低于阈值。先回到第 4 步跑关键信息补全流程"
                              "（data_validator.py --gaps-out），达标后再来。\n" % len(failing))
         evals_log.log_event("build_final", "merge", company=merge_company, exit_code=1,
                             threshold=args.threshold, scores=scores,
-                            reason="unrenderable-headline" if unrenderable else "below-threshold")
+                            reason="unrenderable-headline" if unrenderable
+                            else ("misshaped-field" if misshaped else "below-threshold"))
         sys.exit(1)
 
     # 2) 三份文件必须属于同一家公司
