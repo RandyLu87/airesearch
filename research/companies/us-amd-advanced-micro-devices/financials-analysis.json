@@ -443,7 +443,7 @@
                 "asOf": "2026（估计）",
                 "source": {
                   "name": "第1步采集（供应链估计）",
-                  "url": "unavailable"
+                  "url": ""
                 }
               },
               {
@@ -833,7 +833,7 @@
                 "asOf": "2026Q2",
                 "source": {
                   "name": "第1步采集",
-                  "url": "unavailable"
+                  "url": ""
                 }
               }
             ]
@@ -1085,7 +1085,7 @@
             "rating": "★★★☆☆",
             "source": {
               "name": "第1步采集；无独立事后财务披露",
-              "url": "unavailable"
+              "url": ""
             }
           },
           {
@@ -1125,10 +1125,10 @@
               "status": "unavailable",
               "reason": "宣布距今不足一周(数据截止2026-08-05)，无任何事后证据可复盘，不予评分"
             },
-            "rating": "unavailable",
+            "rating": { "status": "not-applicable", "reason": "决策宣布距数据截止（2026-08-05）不足一周，无事后证据可复盘，不予评分" },
             "source": {
               "name": "第1步采集",
-              "url": "unavailable"
+              "url": ""
             }
           }
         ],
@@ -1308,7 +1308,7 @@
               "asOf": "2026(第1步采集)",
               "source": {
                 "name": "第1步采集(TrendForce口径)",
-                "url": "unavailable"
+                "url": ""
               }
             },
             {

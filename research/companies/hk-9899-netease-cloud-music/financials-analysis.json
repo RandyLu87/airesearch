@@ -333,7 +333,7 @@
           "metric": "PE（TTM，报表口径）",
           "currentValue": "11.99x",
           "historicalRange": {"status": "unavailable", "reason": "financials-collection.json全文、公司目录下历史存档文件均未记录52周股价区间或历史PE区间字段；本维度不允许联网检索核实"},
-          "source": {"name": "unavailable", "url": ""}
+          "source": { "status": "unavailable", "reason": "本次采集未取得可直接引用的来源，该数值不予采用" }
         },
         "vsPeers": [
           {

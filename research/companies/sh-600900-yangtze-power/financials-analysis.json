@@ -331,21 +331,21 @@
     {
       "field": "三情景目标价（乐观/中性/悲观）",
       "source1": { "name": "financial_rigor.py three-scenario 工具输出", "value": "36.4 / 29.7 / 22.9 CNY" },
-      "source2": { "name": "不适用（工具唯一计算源，禁止心算复核）", "value": "not-applicable" },
-      "deviationPct": "not-applicable", "flag": "ok", "resolution": "按工具精确输出采用，输入假设（增速5.5%/3.5%/0.5%，PE 22x/19x/16x）见threeScenario.assumptionBasis"
+      "source2": { "status": "not-applicable", "reason": "工具输出是唯一计算源，按规范禁止心算复核，无第二来源数值可比对" },
+      "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源数值可比对，偏差率不适用" }, "flag": "ok", "resolution": "按工具精确输出采用，输入假设（增速5.5%/3.5%/0.5%，PE 22x/19x/16x）见threeScenario.assumptionBasis"
     },
     {
       "field": "华能水电FY2025毛利率（用于同业对比）",
       "source1": { "name": "华源证券研报（2026-05-29）", "value": "56.98%" },
       "source2": { "name": "东方财富股票数据页（时点未明确标注）", "value": "51.99%" },
-      "deviationPct": "not-applicable", "flag": "minor-diff",
+      "deviationPct": { "status": "not-applicable", "reason": "两来源时点不一致（研报为2026-05-29，东方财富页面未标注报告期），按 Metadata 闸门记为不可比，不计算偏差率" }, "flag": "minor-diff",
       "resolution": "口径/时点可能不一致（东方财富未标注具体报告期），采用有明确FY2025年报口径标注的华源证券数据"
     },
     {
       "field": "国投电力FY2025毛利率（用于同业对比）",
       "source1": { "name": "界面新闻转引2025年年报（整体口径）", "value": "41.14%" },
       "source2": { "name": "股百科转引2025年年报（电力主业口径）", "value": "44.72%" },
-      "deviationPct": "not-applicable", "flag": "minor-diff",
+      "deviationPct": { "status": "not-applicable", "reason": "两来源口径不一致（整体口径 vs 电力主业口径），按 Metadata 闸门记为不可比，不计算偏差率" }, "flag": "minor-diff",
       "resolution": "口径差异（整体 vs 电力主业），非数据冲突，两个数字均在分析中列出并注明口径"
     }
   ]

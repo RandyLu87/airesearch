@@ -112,11 +112,7 @@
               "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf",
               "value": 1765450
             },
-            "source2": {
-              "name": "unavailable",
-              "url": "",
-              "value": null
-            },
+            "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" },
             "deviationPct": null,
             "flag": "minor-diff"
           },

@@ -41,8 +41,8 @@
             "value": "1465亿",
             "currency": "CNY",
             "source1": { "name": "公司2025年年度报告", "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf", "value": 146499906480.49 },
-            "source2": { "name": "unavailable", "url": "", "value": "unavailable" },
-            "deviationPct": "unavailable",
+            "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" },
+            "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源数值可比对，偏差率不适用" },
             "flag": "ok"
           },
           "revenueSharePct": "86.81%",
@@ -55,8 +55,8 @@
             "value": "222.747亿",
             "currency": "CNY",
             "source1": { "name": "公司2025年年度报告", "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf", "value": 22274678707.16 },
-            "source2": { "name": "unavailable", "url": "", "value": "unavailable" },
-            "deviationPct": "unavailable",
+            "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" },
+            "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源数值可比对，偏差率不适用" },
             "flag": "ok"
           },
           "revenueSharePct": "13.19%",
@@ -79,9 +79,9 @@
         },
         "yoyGrowthPct": "unavailable（未重新取2024H1基期）",
         "segments": [
-          { "name": "茅台酒", "revenue": 75590000000, "yoyGrowthPct": "unavailable" },
-          { "name": "系列酒", "revenue": 13760000000, "yoyGrowthPct": "unavailable" },
-          { "name": "国外", "revenue": 2900000000, "yoyGrowthPct": "unavailable" }
+          { "name": "茅台酒", "revenue": 75590000000, "yoyGrowthPct": { "status": "unavailable", "reason": "本次采集未取得可比基期数据，未自行推算以免口径错配" } },
+          { "name": "系列酒", "revenue": 13760000000, "yoyGrowthPct": { "status": "unavailable", "reason": "本次采集未取得可比基期数据，未自行推算以免口径错配" } },
+          { "name": "国外", "revenue": 2900000000, "yoyGrowthPct": { "status": "unavailable", "reason": "本次采集未取得可比基期数据，未自行推算以免口径错配" } }
         ]
       },
       {
@@ -96,8 +96,8 @@
         },
         "yoyGrowthPct": "6.54%",
         "segments": [
-          { "name": "茅台酒", "revenue": 46005000000, "yoyGrowthPct": "unavailable" },
-          { "name": "系列酒", "revenue": 7881000000, "yoyGrowthPct": "unavailable" },
+          { "name": "茅台酒", "revenue": 46005000000, "yoyGrowthPct": { "status": "unavailable", "reason": "本次采集未取得可比基期数据，未自行推算以免口径错配" } },
+          { "name": "系列酒", "revenue": 7881000000, "yoyGrowthPct": { "status": "unavailable", "reason": "本次采集未取得可比基期数据，未自行推算以免口径错配" } },
           { "name": "i茅台", "revenue": 21553000000, "yoyGrowthPct": "267.16%" }
         ]
       },
@@ -113,9 +113,9 @@
         },
         "yoyGrowthPct": "-5.23%（financial_rigor.py calc 验算：37,575,159,697.98 vs 2025Q2推算39,650,311,970.20；研报口径-5.2%一致）",
         "segments": [
-          { "name": "茅台酒", "revenue": "unavailable", "yoyGrowthPct": "-1.0%（研报口径，未逐项验算，公司未披露单季分产品数据）" },
-          { "name": "系列酒", "revenue": "unavailable", "yoyGrowthPct": "-25.0%（研报口径，未逐项验算，主因茅台1935调价叠加竞品价格下探）" },
-          { "name": "海外", "revenue": "unavailable", "yoyGrowthPct": "-50.2%（研报口径，未逐项验算）" }
+          { "name": "茅台酒", "revenue": { "status": "unavailable", "reason": "本次采集未取得该口径下的收入数字" }, "yoyGrowthPct": "-1.0%（研报口径，未逐项验算，公司未披露单季分产品数据）" },
+          { "name": "系列酒", "revenue": { "status": "unavailable", "reason": "本次采集未取得该口径下的收入数字" }, "yoyGrowthPct": "-25.0%（研报口径，未逐项验算，主因茅台1935调价叠加竞品价格下探）" },
+          { "name": "海外", "revenue": { "status": "unavailable", "reason": "本次采集未取得该口径下的收入数字" }, "yoyGrowthPct": "-50.2%（研报口径，未逐项验算）" }
         ],
         "note": "单季净利润172.74亿元（=H1累计445.17亿-Q1 272.43亿，financial_rigor.py calc 验算），同比-6.90%（vs 2025Q2推算185.55亿）；直营占比同比+17.8pct至61.1%，i茅台单季收入187.1亿元(+282.6%)，占比环比+10.9pct至50.9%"
       },
@@ -149,8 +149,8 @@
         "netProfit": { "value": "524.36亿", "currency": "CNY", "source1": { "name": "公司年度报告（归母净利润）", "url": "https://www.moutaichina.com/mtgf/articleFileDir/2024-05/07/e7471b99e4e84c7e9dcf1e591174c08e.pdf", "value": 52436000000 }, "source2": { "name": "东方财富 datacenter", "url": "https://data.eastmoney.com/bbsj/600519.html", "value": 52460144378.16 }, "deviationPct": "0.05%", "flag": "ok" },
         "grossMarginPct": { "status": "unavailable", "reason": "2021年报原文未在本次会话中逐字段核对毛利率，已查2023/2025年报的三年对比表未覆盖2021，需单独检索2021或2022年报" },
         "operatingMarginPct": { "status": "unavailable", "reason": "同上，未在本次检索范围内取得" },
-        "freeCashFlow": { "value": "606.199亿", "currency": "CNY", "note": "经营活动现金流净额640.29亿 - 购建固定资产等支付现金34.09亿，均取自东方财富 datacenter 现金流量表（单源，官方年报现金流量表原文未逐字段核对）", "source1": { "name": "东方财富 datacenter（经营现金流-资本支出）", "url": "https://data.eastmoney.com/bbsj/600519.html", "value": 60619891615.36 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
-        "cashReserves": { "value": "518.102亿", "currency": "CNY", "source1": { "name": "东方财富 datacenter（货币资金，资产负债表）", "url": "https://data.eastmoney.com/bbsj/600519.html", "value": 51810243607.11 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" }
+        "freeCashFlow": { "value": "606.199亿", "currency": "CNY", "note": "经营活动现金流净额640.29亿 - 购建固定资产等支付现金34.09亿，均取自东方财富 datacenter 现金流量表（单源，官方年报现金流量表原文未逐字段核对）", "source1": { "name": "东方财富 datacenter（经营现金流-资本支出）", "url": "https://data.eastmoney.com/bbsj/600519.html", "value": 60619891615.36 }, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源数值可比对，偏差率不适用" }, "flag": "ok" },
+        "cashReserves": { "value": "518.102亿", "currency": "CNY", "source1": { "name": "东方财富 datacenter（货币资金，资产负债表）", "url": "https://data.eastmoney.com/bbsj/600519.html", "value": 51810243607.11 }, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源数值可比对，偏差率不适用" }, "flag": "ok" }
       },
       {
         "fiscalYear": "FY2022",
@@ -158,14 +158,14 @@
         "netProfit": { "value": "627.17亿", "currency": "CNY", "source1": { "name": "公司年度报告（归母净利润，追溯调整后）", "url": "https://www.moutaichina.com/mtgf/articleFileDir/2024-05/07/e7471b99e4e84c7e9dcf1e591174c08e.pdf", "value": 62717000000 }, "source2": { "name": "东方财富 datacenter", "url": "https://data.eastmoney.com/bbsj/600519.html", "value": 62717467870.12 }, "deviationPct": "0.001%", "flag": "ok" },
         "grossMarginPct": { "status": "unavailable", "reason": "同 FY2021，2022年报未在本次检索范围内逐字段核对" },
         "operatingMarginPct": { "status": "unavailable", "reason": "同上" },
-        "freeCashFlow": { "value": "313.92亿", "currency": "CNY", "note": "经营现金流366.99亿 - 资本支出53.07亿，取自东方财富 datacenter，单源", "source1": { "name": "东方财富 datacenter", "url": "https://data.eastmoney.com/bbsj/600519.html", "value": 31392049413.49 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
-        "cashReserves": { "value": "582.743亿", "currency": "CNY", "source1": { "name": "东方财富 datacenter", "url": "https://data.eastmoney.com/bbsj/600519.html", "value": 58274318733.23 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" }
+        "freeCashFlow": { "value": "313.92亿", "currency": "CNY", "note": "经营现金流366.99亿 - 资本支出53.07亿，取自东方财富 datacenter，单源", "source1": { "name": "东方财富 datacenter", "url": "https://data.eastmoney.com/bbsj/600519.html", "value": 31392049413.49 }, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源数值可比对，偏差率不适用" }, "flag": "ok" },
+        "cashReserves": { "value": "582.743亿", "currency": "CNY", "source1": { "name": "东方财富 datacenter", "url": "https://data.eastmoney.com/bbsj/600519.html", "value": 58274318733.23 }, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源数值可比对，偏差率不适用" }, "flag": "ok" }
       },
       {
         "fiscalYear": "FY2023",
         "revenue": { "value": "1476.94亿", "currency": "CNY", "source1": { "name": "公司2023年年度报告", "url": "https://www.moutaichina.com/mtgf/articleFileDir/2024-05/07/e7471b99e4e84c7e9dcf1e591174c08e.pdf", "value": 147694000000 }, "source2": { "name": "东方财富 datacenter（营业总收入）", "url": "https://data.eastmoney.com/bbsj/600519.html", "value": 150560330316.45 }, "deviationPct": "1.94%", "flag": "minor-diff" },
         "netProfit": { "value": "747.341亿", "currency": "CNY", "source1": { "name": "公司2023年年度报告", "url": "https://www.moutaichina.com/mtgf/articleFileDir/2024-05/07/e7471b99e4e84c7e9dcf1e591174c08e.pdf", "value": 74734071550.75 }, "source2": { "name": "东方财富 datacenter", "url": "https://data.eastmoney.com/bbsj/600519.html", "value": 74734071550.75 }, "deviationPct": "0.00%", "flag": "ok" },
-        "grossMarginPct": { "value": "92.11%", "unit": "pct", "source1": { "name": "公司2023年年度报告", "url": "https://www.moutaichina.com/mtgf/articleFileDir/2024-05/07/e7471b99e4e84c7e9dcf1e591174c08e.pdf", "value": "92.11%" }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
+        "grossMarginPct": { "value": "92.11%", "unit": "pct", "source1": { "name": "公司2023年年度报告", "url": "https://www.moutaichina.com/mtgf/articleFileDir/2024-05/07/e7471b99e4e84c7e9dcf1e591174c08e.pdf", "value": "92.11%" }, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源数值可比对，偏差率不适用" }, "flag": "ok" },
         "operatingMarginPct": { "status": "unavailable", "reason": "年报未单列合并口径经营利润率，需另用营业利润/营业收入自行推算，本次未完成" },
         "freeCashFlow": { "value": "639.735亿", "currency": "CNY", "note": "经营现金流665.93亿 - 资本支出26.20亿，两来源一致", "source1": { "name": "公司2023年年度报告", "url": "https://www.moutaichina.com/mtgf/articleFileDir/2024-05/07/e7471b99e4e84c7e9dcf1e591174c08e.pdf", "value": 63973491832.3 }, "source2": { "name": "东方财富 datacenter", "url": "https://data.eastmoney.com/bbsj/600519.html", "value": 63973491832.3 }, "deviationPct": "0.00%", "flag": "ok" },
         "cashReserves": { "value": "690.701亿", "currency": "CNY", "source1": { "name": "公司2023年年度报告", "url": "https://www.moutaichina.com/mtgf/articleFileDir/2024-05/07/e7471b99e4e84c7e9dcf1e591174c08e.pdf", "value": 69070136376.12 }, "source2": { "name": "东方财富 datacenter", "url": "https://data.eastmoney.com/bbsj/600519.html", "value": 69070136376.12 }, "deviationPct": "0.00%", "flag": "ok" }
@@ -174,7 +174,7 @@
         "fiscalYear": "FY2024",
         "revenue": { "value": "1708.99亿", "currency": "CNY", "source1": { "name": "公司2025年年度报告（三年对比）", "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf", "value": 170899000000 }, "source2": { "name": "东方财富 datacenter（营业总收入）", "url": "https://data.eastmoney.com/bbsj/600519.html", "value": 174144069958.25 }, "deviationPct": "1.90%", "flag": "minor-diff" },
         "netProfit": { "value": "862.281亿", "currency": "CNY", "source1": { "name": "公司2025年年度报告（三年对比）", "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf", "value": 86228146421.62 }, "source2": { "name": "东方财富 datacenter", "url": "https://data.eastmoney.com/bbsj/600519.html", "value": 86228146421.62 }, "deviationPct": "0.00%", "flag": "ok" },
-        "grossMarginPct": { "value": "92.01%", "unit": "pct", "source1": { "name": "公司2025年年度报告（推算，酒类口径三年对比）", "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf", "value": "92.01%" }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
+        "grossMarginPct": { "value": "92.01%", "unit": "pct", "source1": { "name": "公司2025年年度报告（推算，酒类口径三年对比）", "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf", "value": "92.01%" }, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源数值可比对，偏差率不适用" }, "flag": "ok" },
         "operatingMarginPct": { "status": "unavailable", "reason": "同 FY2023，未完成自行推算" },
         "freeCashFlow": { "value": "877.85亿", "currency": "CNY", "note": "经营现金流924.64亿 - 资本支出46.79亿，两来源一致", "source1": { "name": "公司2025年年度报告", "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf", "value": 87784980114.87 }, "source2": { "name": "东方财富 datacenter", "url": "https://data.eastmoney.com/bbsj/600519.html", "value": 87784980114.87 }, "deviationPct": "0.00%", "flag": "ok" },
         "cashReserves": { "value": "592.958亿", "currency": "CNY", "source1": { "name": "公司2025年年度报告", "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf", "value": 59295822956.89 }, "source2": { "name": "东方财富 datacenter", "url": "https://data.eastmoney.com/bbsj/600519.html", "value": 59295822956.89 }, "deviationPct": "0.00%", "flag": "ok" }
@@ -183,8 +183,8 @@
         "fiscalYear": "FY2025",
         "revenue": { "value": "1688.38亿", "currency": "CNY", "source1": { "name": "公司2025年年度报告（审计）", "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf", "value": 168838102514.79 }, "source2": { "name": "东方财富 datacenter（营业总收入，口径更宽含财务公司利息净收入）", "url": "https://data.eastmoney.com/bbsj/600519.html", "value": 172054171890.91 }, "deviationPct": "1.90%", "flag": "minor-diff" },
         "netProfit": { "value": "823.201亿", "currency": "CNY", "source1": { "name": "公司2025年年度报告（审计）", "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf", "value": 82320067101.68 }, "source2": { "name": "东方财富 datacenter", "url": "https://data.eastmoney.com/bbsj/600519.html", "value": 82320067101.68 }, "deviationPct": "0.00%", "flag": "ok" },
-        "grossMarginPct": { "value": "91.23%", "unit": "pct", "source1": { "name": "公司2025年年度报告（酒类合计）", "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf", "value": "91.23%" }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
-        "operatingMarginPct": { "value": "68.02%", "unit": "pct", "note": "营业利润114,808,950,164.24元 / 营业总收入172,054,171,890.91元，工具验算", "source1": { "name": "东方财富 datacenter（营业利润/营业总收入，主会话验算）", "url": "https://data.eastmoney.com/bbsj/600519.html", "value": "68.02%" }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
+        "grossMarginPct": { "value": "91.23%", "unit": "pct", "source1": { "name": "公司2025年年度报告（酒类合计）", "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf", "value": "91.23%" }, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源数值可比对，偏差率不适用" }, "flag": "ok" },
+        "operatingMarginPct": { "value": "68.02%", "unit": "pct", "note": "营业利润114,808,950,164.24元 / 营业总收入172,054,171,890.91元，工具验算", "source1": { "name": "东方财富 datacenter（营业利润/营业总收入，主会话验算）", "url": "https://data.eastmoney.com/bbsj/600519.html", "value": "68.02%" }, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源数值可比对，偏差率不适用" }, "flag": "ok" },
         "freeCashFlow": { "value": "583.946亿", "currency": "CNY", "note": "经营现金流615.22亿（同比-33.46%，管理层解释为财务公司同业存款变动，非主业下滑）- 资本支出31.28亿，两来源一致", "source1": { "name": "公司2025年年度报告", "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf", "value": 58394610072.94 }, "source2": { "name": "东方财富 datacenter", "url": "https://data.eastmoney.com/bbsj/600519.html", "value": 58394610072.94 }, "deviationPct": "0.00%", "flag": "ok" },
         "cashReserves": { "value": "516.906亿", "currency": "CNY", "source1": { "name": "公司2025年年度报告（审计）", "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf", "value": 51690610946.5 }, "source2": { "name": "东方财富 datacenter", "url": "https://data.eastmoney.com/bbsj/600519.html", "value": 51690610946.5 }, "deviationPct": "0.00%", "flag": "ok" }
       }
@@ -199,10 +199,10 @@
       "source": { "name": "中国酒业协会（经新浪财经转引）", "url": "https://finance.sina.com.cn/roll/2025-03-07/doc-inenvfqm2592067.shtml" }
     },
     "competitors": [
-      { "name": "五粮液", "ticker": "000858.SZ", "marketSharePct": "10.11%", "revenue": "40,529,000,000元（FY2025，-54.55% YoY，公司披露前期会计差错更正/收入确认口径大幅收紧，与历史数据可比性存疑）", "grossMarginPct": "unavailable", "note": "二手新闻转述（cls.cn），未逐一核对cninfo原始年报PDF，FY2025数字因口径调整不宜直接同比" },
-      { "name": "泸州老窖", "ticker": "000568.SZ", "marketSharePct": "3.98%", "revenue": "25,731,000,000元（FY2025，-17.5% YoY）", "grossMarginPct": "unavailable", "note": "二手新闻转述，未核对原文" },
-      { "name": "洋河股份", "ticker": "002304.SZ", "marketSharePct": "4.28%", "revenue": "19,211,000,000元（FY2025，-33.47% YoY，Q4单季亏损）", "grossMarginPct": "unavailable", "note": "二手新闻转述（新浪财经），未核对原文" },
-      { "name": "山西汾酒", "ticker": "600809.SH", "marketSharePct": "4.20%", "revenue": "unavailable", "grossMarginPct": "unavailable", "note": "本次仅取得2023年市场份额数据，FY2025财务数据未检索" }
+      { "name": "五粮液", "ticker": "000858.SZ", "marketSharePct": "10.11%", "revenue": "40,529,000,000元（FY2025，-54.55% YoY，公司披露前期会计差错更正/收入确认口径大幅收紧，与历史数据可比性存疑）", "grossMarginPct": { "status": "unavailable", "reason": "本次采集未取得该口径下的毛利率——对应主体未单独披露毛利行项目" }, "note": "二手新闻转述（cls.cn），未逐一核对cninfo原始年报PDF，FY2025数字因口径调整不宜直接同比" },
+      { "name": "泸州老窖", "ticker": "000568.SZ", "marketSharePct": "3.98%", "revenue": "25,731,000,000元（FY2025，-17.5% YoY）", "grossMarginPct": { "status": "unavailable", "reason": "本次采集未取得该口径下的毛利率——对应主体未单独披露毛利行项目" }, "note": "二手新闻转述，未核对原文" },
+      { "name": "洋河股份", "ticker": "002304.SZ", "marketSharePct": "4.28%", "revenue": "19,211,000,000元（FY2025，-33.47% YoY，Q4单季亏损）", "grossMarginPct": { "status": "unavailable", "reason": "本次采集未取得该口径下的毛利率——对应主体未单独披露毛利行项目" }, "note": "二手新闻转述（新浪财经），未核对原文" },
+      { "name": "山西汾酒", "ticker": "600809.SH", "marketSharePct": "4.20%", "revenue": { "status": "unavailable", "reason": "本次采集未取得该口径下的收入数字" }, "grossMarginPct": { "status": "unavailable", "reason": "本次采集未取得该口径下的毛利率——对应主体未单独披露毛利行项目" }, "note": "本次仅取得2023年市场份额数据，FY2025财务数据未检索" }
     ]
   },
   "businessModelMoat": {
@@ -219,7 +219,7 @@
   "technology": {
     "_dimension": "5. 技术能力：核心技术栈、研发投入",
     "coreTechStack": ["酱香型白酒『12987』传统固态发酵工艺", "三合土窖泥培育技术", "微生物菌群研究与绿色酿造技术"],
-    "rdExpense": { "value": "8.03132亿", "currency": "CNY", "source1": { "name": "公司2025年年度报告", "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf", "value": 803132232.31 }, "source2": { "name": "status", "url": "", "value": "unavailable" }, "deviationPct": "unavailable", "flag": "ok" },
+    "rdExpense": { "value": "8.03132亿", "currency": "CNY", "source1": { "name": "公司2025年年度报告", "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf", "value": 803132232.31 }, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源数值可比对，偏差率不适用" }, "flag": "ok" },
     "rdIntensityPct": "0.48%",
     "rdTrend": "2023年6.22亿元（占营收0.42%）→ 2025年8.03亿元（占营收0.48%），绝对额与强度均小幅上升，但相较营收体量占比极低",
     "note": "白酒企业研发主要投向酿造工艺优化与微生物菌群研究，非传统科技企业意义的『技术能力』；2025年研发人员806人（占比2.30%，含博士88人/硕士193人），资本化比例16.00%（2023年23.10%）"
@@ -249,20 +249,8 @@
   },
   "industryOutlook": {
     "_dimension": "7. 行业前景：TAM（总可寻址市场）、增长预测",
-    "tam": {
-      "value": "unavailable",
-      "currency": "CNY",
-      "definition": "unavailable",
-      "asOf": "unavailable",
-      "source": { "name": "unavailable", "url": "" },
-      "reason": "不同研报给出2030年6500亿-1.2万亿元不等的目标区间，方法论不透明、口径不一致，未找到单一权威来源，故不采用具体数字，仅作方向性参考（已查：前瞻产业研究院等多篇行业研报）"
-    },
-    "growthForecast": {
-      "cagrPct": "unavailable",
-      "horizon": "unavailable",
-      "source": { "name": "unavailable", "url": "" },
-      "reason": "同上，各研报CAGR预测在3.98%-6.5%区间不等，未采用；已确认的硬数据是2025年上半年全国规上白酒行业销售收入同比仅+0.19%，行业已进入存量竞争深度调整期（来源：中国酒业协会，经新华网转引）"
-    }
+    "tam": { "status": "unavailable", "reason": "不同研报给出2030年6500亿-1.2万亿元不等的目标区间，方法论不透明、口径不一致，未找到单一权威来源，故不采用具体数字，仅作方向性参考（已查：前瞻产业研究院等多篇行业研报）" },
+    "growthForecast": { "status": "unavailable", "reason": "同上，各研报CAGR预测在3.98%-6.5%区间不等，未采用；已确认的硬数据是2025年上半年全国规上白酒行业销售收入同比仅+0.19%，行业已进入存量竞争深度调整期（来源：中国酒业协会，经新华网转引）" }
   },
   "riskFactors": {
     "_dimension": "8. 风险因素：地缘政治、监管、供应链等",
@@ -289,9 +277,9 @@
     },
     "pe": { "value": "20.28x（TTM）/ 20.38x（静态）", "note": "Tushare daily_basic 直接给出，TTM净利润=FY2025 823.20亿-2025H1 454.03亿+2026H1 445.17亿=814.34亿（financial_rigor.py calc 验算），TTM EPS≈65.14元，PE(TTM)手工验算20.60x与Tushare 20.28x存在约1.6%差异，推测为基本股数与期末股数口径不同所致，未进一步拆解；两者均支持『PE处于近一年中等偏上分位（58%）』的结论", "basis": "TTM" },
     "ps": { "value": "9.75x（TTM，Tushare daily_basic ps_ttm）/ 9.68x（主会话用TTM营业总收入172,054,171,890.91+92,278,072,083.21-91,093,762,553.97手工验算）", "note": "市值1,677,597,006,384.19 / TTM营业总收入173,238,481,420.15，financial_rigor.py calc 验算，与Tushare ps_ttm偏差0.7%（EPS/营收TTM滚动口径细节差异）" },
-    "peg": { "value": "unavailable", "reason": "2026H1归母净利润同比转为下滑(-1.95%)，历史2021-2025营收/利润CAGR已不能代表当前趋势，且暂无券商一致预期FY2026-2028复合增速的多源交叉验证，PEG在当前拐点环境下参考价值低，故不采用单一数字（西部证券研报给出FY2026-2028净利润+2%/4%/7%预测，为单一来源，未做PEG交叉验证）" },
+    "peg": { "status": "unavailable", "reason": "2026H1归母净利润同比转为下滑(-1.95%)，历史2021-2025营收/利润CAGR已不能代表当前趋势，且暂无券商一致预期FY2026-2028复合增速的多源交叉验证，PEG在当前拐点环境下参考价值低，故不采用单一数字（西部证券研报给出FY2026-2028净利润+2%/4%/7%预测，为单一来源，未做PEG交叉验证）" },
     "evToRevenue": { "value": "9.42x", "note": "EV = 市值1,677,597,006,384.19 - 2026H1末货币资金535.19亿（Tushare balancesheet 20260630，仅扣货币资金，公司几乎零有息负债）；EV/TTM营业总收入173,238,481,420.15，financial_rigor.py calc 验算", "asOf": "2026-08-14价格 / 2026-06-30资产负债表" },
-    "pb": { "value": "6.19x", "note": "Tushare daily_basic pb字段（股价/最新一期每股净资产），2026-08-14；主会话另用bvps=200.99元手工验算得6.68x，偏差7.9%，推测bvps取数时点与股价日期不完全一致，未定位bvps确切来源，故以Tushare pb为准", "source1": { "name": "Tushare Pro daily_basic", "url": "https://tushare.pro", "value": "6.19" }, "source2": { "name": "status", "url": "", "value": "unavailable（仅单源，第二来源未逐一核对东方财富展示口径）" }, "deviationPct": "unavailable", "flag": "ok" },
+    "pb": { "value": "6.19x", "note": "Tushare daily_basic pb字段（股价/最新一期每股净资产），2026-08-14；主会话另用bvps=200.99元手工验算得6.68x，偏差7.9%，推测bvps取数时点与股价日期不完全一致，未定位bvps确切来源，故以Tushare pb为准", "source1": { "name": "Tushare Pro daily_basic", "url": "https://tushare.pro", "value": "6.19" }, "source2": { "name": "status", "url": "", "value": "unavailable（仅单源，第二来源未逐一核对东方财富展示口径）" }, "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源数值可比对，偏差率不适用" }, "flag": "ok" },
     "roe": { "value": "17.95%（2026H1未年化，Tushare fina_indicator roe字段）／TTM约33.25%（financial_rigor.py calc：TTM净利润81,433,985,225.44 / 2026H1末与2025H1末净资产均值(251,253,594,419.5+238,646,536,390.48)/2）", "note": "口径：分子为归母净利润，分母为期末净资产（Tushare roe字段）或TTM净利润/期初期末平均净资产（主会话验算）；仅单源（Tushare），未与东方财富交叉验证", "asOf": "2026-06-30" },
     "roa": { "value": "8.51%（2026H1未年化，H1净利润44,516,880,421.86/2026H1末总资产309,050,784,569.31）／TTM约26.35%（TTM净利润81,433,985,225.44/2026H1末总资产，financial_rigor.py calc验算）", "note": "分母取期末总资产（非期初期末平均），仅单源（Tushare balancesheet+income），未交叉验证", "asOf": "2026-06-30" },
     "dividendYieldPct": { "value": "3.88%（TTM，Tushare daily_basic dv_ttm字段，2026-08-14）", "note": "含税/税后口径与是否含中期分红未在Tushare字段说明中明确，仅单源，未交叉验证；FY2025年度分红预案10派280.2423元（含税）为基础", "asOf": "2026-08-14" },
