@@ -1326,7 +1326,7 @@
     "sharesOutstanding": {
       "value": "61.7548亿",
       "unit": "股",
-      "currency": "n/a",
+      "currency": null,
       "note": "截至 2026-07-31：A 类 579,152,986 股（未上市，每股 10 票）+ B 类 5,596,322,556 股（每股 1 票）。库存股 0；另有 2,924,800 股已回购待注销的 B 类股未计入注销。",
       "source1": {
         "name": "港交所 股份发行人的证券变动月报表（截至 2026-07-31，2026-08-06 刊发）",
@@ -1846,7 +1846,7 @@
         {
           "metric": "覆盖机构总数 / 共识目标价",
           "value": "38 家 / 108.33 港元（区间 57.15–140.29）",
-          "unit": "—",
+          "unit": null,
           "period": "2026-08-11",
           "source": {
             "name": "stockanalysis.com Forecast",
@@ -1859,7 +1859,7 @@
             "status": "unavailable",
             "reason": "Yahoo 仅到 2027；stockanalysis 2027/2028 为付费项；MarketScreener 公开页仅有收入/EBIT/EBITDA。已查该三源。"
           },
-          "unit": "—",
+          "unit": null,
           "period": "FY2028E",
           "source": {
             "name": "已查范围见 value.reason",
@@ -1979,7 +1979,7 @@
         {
           "metric": "RSU 归属条件（年报原文）",
           "value": "All of the grant of RSUs mentioned above during the Reporting Period were made without any performance targets.",
-          "unit": "—",
+          "unit": null,
           "period": "FY2025",
           "source": {
             "name": "美团 FY2025 年报 董事会报告 注(5)",
@@ -1989,7 +1989,7 @@
         {
           "metric": "购股权归属条件（年报原文）",
           "value": "vest in tranches ... on condition that participants remain in service without any performance targets",
-          "unit": "—",
+          "unit": null,
           "period": "截至 2025-12-31",
           "source": {
             "name": "美团 FY2025 年报 附注 33",
@@ -2012,7 +2012,7 @@
             "status": "unavailable",
             "reason": "二人均非董事，港交所披露规则不要求逐名披露；已查 FY2025 年报附注 8(b)/8(c)、企业管治报告薪酬分档、董事会报告股份计划章节，仅有匿名合计或分档口径。"
           },
-          "unit": "—",
+          "unit": null,
           "period": "FY2025",
           "source": {
             "name": "美团 FY2025 年报",
@@ -2080,7 +2080,7 @@
             "status": "unavailable",
             "reason": "已查 FY2025 年报（截至授权日 2026-03-26 无额外披露）、hkexnews 一手公告检索、中英双语两轮检索。Simply Wall St 页面提示 2026-04-21 联合创始人售股约 2,300 万港元，但无一手申报可核对且该页返回 403，不予采信。"
           },
-          "unit": "—",
+          "unit": null,
           "period": "2026-01-01 至 2026-08-11",
           "source": {
             "name": "已查范围见 value.reason",
@@ -2138,7 +2138,7 @@
             "status": "unavailable",
             "reason": "两次检索未找到覆盖 FY2025 实际期的到店酒旅三项拆分测算；已有券商模型均止于 2024 年或为补贴战前预测。已查范围：FY2025 年报附注 5 分部报告、2026Q1 业绩公告分部表、中文券商研报检索。"
           },
-          "unit": "—",
+          "unit": null,
           "period": "FY2025",
           "source": {
             "name": "已查范围见 value.reason",
@@ -2268,7 +2268,7 @@
         {
           "metric": "2026Q1 业绩公告中的用户/商户数字",
           "value": "无。全文未出现年交易用户数或活跃商户数的任何数值，仅有定性表述与词汇表定义条目",
-          "unit": "—",
+          "unit": null,
           "period": "2026Q1",
           "source": {
             "name": "美团 2026Q1 业绩公告（全文检索）",
@@ -2281,7 +2281,7 @@
             "status": "unavailable",
             "reason": "已查 FY2025 年报全文、2026Q1 公告全文、公司新闻中心财报稿列表，历史上从未以数字口径披露过留存率或复购率。"
           },
-          "unit": "—",
+          "unit": null,
           "period": "FY2022 至今",
           "source": {
             "name": "已查范围见 value.reason",
@@ -2371,7 +2371,7 @@
         {
           "metric": "商誉来源（年报原文）",
           "value": "The goodwill balance mainly arose from the strategic transaction of Meituan and Dianping and business combination of Mobike.",
-          "unit": "—",
+          "unit": null,
           "period": "截至 2025-12-31",
           "source": {
             "name": "美团 FY2025 年报 附注 16",
@@ -2381,7 +2381,7 @@
         {
           "metric": "减值测试结论（年报原文）",
           "value": "Management had not identified any reasonably possible change in key assumptions that could cause carrying amounts of CGUs to exceed the recoverable amounts.",
-          "unit": "—",
+          "unit": null,
           "period": "2025-12-31",
           "source": {
             "name": "美团 FY2025 年报 附注 16",
@@ -2404,7 +2404,7 @@
             "status": "unavailable",
             "reason": "FY2025 年报仅以文字提及大众点评与摩拜两笔来源，未给对价；CGU 分配表是唯一的逐笔残值代理。逐笔对价需回 2018 年招股书与 2018 年报，超出本轮检索预算。"
           },
-          "unit": "—",
+          "unit": null,
           "period": "2015–2018",
           "source": {
             "name": "已查范围见 value.reason",
@@ -2472,7 +2472,7 @@
             "status": "unavailable",
             "reason": "两次检索仅找到单边折算系数与比例式表述，未找到任何机构给出两家核销后交易额绝对值并据此计算份额。口径警示：各机构对「到店 GTV」是否含泛娱乐、亲子、近场零售无统一标准。"
           },
-          "unit": "—",
+          "unit": null,
           "period": "FY2025",
           "source": {
             "name": "已查范围见 value.reason",

@@ -367,8 +367,14 @@
     {
       "field": "三情景估值（three-scenario）",
       "source1": {"name": "docs/research/tools/financial_rigor.py three-scenario --price 112.6 --eps 9.389438479813142 --shares 2.04716202 --growth 15 8 -5 --pe 15 12 9 --years 3 --currency HKD", "value": "乐观214.2 HKD(+90.2%) / 中性141.9 HKD(+26.1%) / 悲观72.5 HKD(-35.7%)"},
-      "source2": {"name": "不适用（工具计算无需第二来源交叉验证，计算逻辑透明可复现）", "value": "N/A"},
-      "deviationPct": null,
+      "source2": {
+        "status": "not-applicable",
+        "reason": "工具计算无需第二来源交叉验证，计算逻辑透明可复现"
+      },
+      "deviationPct": {
+        "status": "not-applicable",
+        "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+      },
       "flag": "ok",
       "resolution": "工具原始输出直接采用，assumptionBasis已说明三档增速与PE取值依据"
     },
@@ -383,8 +389,14 @@
     {
       "field": "研发强度（2026H1）",
       "source1": {"name": "网易云音乐2026中期业绩公告：研发费用391,011千元 / 收入3,958,706千元", "value": "9.88%"},
-      "source2": {"name": "不适用，单一算术换算", "value": "N/A"},
-      "deviationPct": null,
+      "source2": {
+        "status": "not-applicable",
+        "reason": "单一算术换算"
+      },
+      "deviationPct": {
+        "status": "not-applicable",
+        "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+      },
       "flag": "ok",
       "resolution": "简单比例计算，两个分子分母均来自同一份官方公告，无交叉验证必要性"
     }

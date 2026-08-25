@@ -2,6 +2,10 @@
 .DS_Store
 **/.DS_Store
 
+# Python 字节码：docs/research/tools 里的脚本被 import 时会生成
+__pycache__/
+*.pyc
+
 # Temporary work and generated review artifacts
 tmp/
 **/tmp/

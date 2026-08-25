@@ -125,6 +125,6 @@
   },
   "crossValidationLog": [
     { "field": "三情景估值模型输入（价格/EPS/股本）", "source1": { "name": "financial_rigor.py three-scenario", "value": "price=115.81, eps=10.17, shares=1.4002亿" }, "source2": { "name": "financials-collection.json currentValuation", "value": "同上" }, "deviationPct": 0, "flag": "ok", "resolution": "输入值与第1步采集文件一致，工具输出已记入本文件valuation.threeScenario.toolOutput" },
-    { "field": "PE历史区间（FY2021-FY2025年末）", "source1": { "name": "stockanalysis.com financials/ratios", "value": "17.62/15.08/13.92/15.74/15.70" }, "source2": { "name": "unavailable（未逐年回官方年报核对年末PE，视为单源）", "value": "" }, "deviationPct": "unavailable，仅单源", "flag": "ok", "resolution": "PE历史序列为Level 2/3性质的辅助参考数据，单源使用并标注" }
+    { "field": "PE历史区间（FY2021-FY2025年末）", "source1": { "name": "stockanalysis.com financials/ratios", "value": "17.62/15.08/13.92/15.74/15.70" }, "source2": { "status": "unavailable", "reason": "仅单源：未逐年回官方年报核对年末PE，视为单源" }, "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）" }, "flag": "ok", "resolution": "PE历史序列为Level 2/3性质的辅助参考数据，单源使用并标注" }
   ]
 }

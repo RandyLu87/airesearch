@@ -3,7 +3,7 @@
   "meta": {
     "companyId": "hk-1024-kuaishou",
     "companyName": "快手科技 / Kuaishou Technology",
-    "generatedAt": "2026-08-25T21:11:23+08:00",
+    "generatedAt": "2026-08-25T23:08:55+08:00",
     "dataCutoff": "2026-08-20（Asia/Shanghai）。最新已披露季度为2026Q2/中期（截至2026-06-30，2026-08-19港股收盘后发布，为本轮更新的核心新增数据）；上一轮采集截止2026-08-09。",
     "validation": {
       "threshold": 7.0,
@@ -12,7 +12,7 @@
         "analysis": 9.6,
         "summary": 10.0
       },
-      "validatedAt": "2026-08-25T21:11:23+08:00"
+      "validatedAt": "2026-08-25T23:08:55+08:00"
     },
     "sources": {
       "collection": "research/companies/hk-1024-kuaishou/financials-collection.json",
@@ -1325,7 +1325,7 @@
       "sharesOutstanding": {
         "value": "43.3亿",
         "unit": "股",
-        "currency": "-",
+        "currency": null,
         "source1": {
           "name": "stockanalysis.com",
           "value": 4330000000
@@ -3283,10 +3283,13 @@
           "value": "乐观96.5/中性60.2/悲观40.7 HKD"
         },
         "source2": {
-          "name": "-",
-          "value": "-"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": "不适用（工具计算非交叉验证）",
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "工具精确十进制计算，非心算，已用--help确认参数单位（shares为亿股，growth为小数）"
       },

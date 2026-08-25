@@ -506,7 +506,7 @@
     "sharesOutstanding": {
       "value": "43.3亿",
       "unit": "股",
-      "currency": "-",
+      "currency": null,
       "source1": { "name": "stockanalysis.com", "value": 4330000000 },
       "source2": { "name": "官方财报2026Q2加权平均股数（4,313百万，基本每股盈利口径，非期末在外股数，量级互证）", "value": 4313000000 },
       "deviationPct": 0.39,

@@ -2,7 +2,7 @@
   "_spec": {
     "purpose": "公司数据采集产出模板。采集范围以 docs/model/financial-model.md 的 10 个维度为唯一清单，数据源与交叉验证规范以 docs/model/financial-data.md 为唯一正文。",
     "todoSentinel": "所有待填值写 \"__TODO__\"；取不到的字段不删除，改写 { \"status\": \"unavailable\", \"reason\": \"缺失原因 + 已查范围\" }；取到了但算不出来的（分母为负、口径不成立，如亏损公司的 PE）改写 { \"status\": \"not-applicable\", \"reason\": \"为什么不适用 + 支撑数字\" }。两者都必须带 reason——只写 status 的字段在页面上等于这个字段不存在。",
-    "verifiedValue": "关键数值统一用校验对象：{ value, unit, currency, source1: {name, url, value}, source2: {name, url, value}, deviationPct, flag }。flag 取值：ok（误差≤1%，取 source1 数值）/ minor-diff（1%~5%，注明可能原因如汇率或会计口径）/ major-diff（>5%，必须回原始财报核实后才能使用）。",
+    "verifiedValue": "关键数值统一用校验对象：{ value, unit, currency, source1: {name, url, value}, source2: {name, url, value}, deviationPct, flag }。flag 取值：ok（误差≤1%，取 source1 数值）/ minor-diff（1%~5%，注明可能原因如汇率或会计口径）/ major-diff（>5%，必须回原始财报核实后才能使用）。没有第二来源时 source2 与 deviationPct 各写一个占位对象——source2 写 { \"status\": \"unavailable\" | \"not-applicable\", \"reason\": \"仅单源：… / 口径不可比：… / 工具验算，非多源交叉验证\" }，deviationPct 写 { \"status\": \"not-applicable\", \"reason\": \"…不计算偏差率（见 source2.reason）\" }；不写 null，也不用 { \"name\": \"—\" } 之类的占位符（写法与判定见 docs/model/financial-data.md「只有单源时怎么写」）。",
     "estimates": "只有一手来源、无法双源验证的数值（如未上市对手），value 前置 \"[估计]\" 并在 note 说明依据，不执行交叉验证。",
     "calculation": "一切除法、乘法、增速、估值倍数必须用 docs/research/tools/financial_rigor.py 验算，禁止心算；工具输出记入 crossValidationLog。",
     "multiListing": "双重上市（H 股 + 美股 ADS / ADR）或交易币种≠报告币种时，股价与市值仍是一个字段，写成 { \"primary\": <校验对象>, \"alt\": [<校验对象>] }：primary 是公司目录前缀对应的主上市地（hk- 取港股、us- 取美股、sh|sz|bj- 取 A 股），alt 放其余口径。不要按上市地或币种拆成自定义键（如 { \"hk\": …, \"us_ads\": … }、{ \"hk_hkd\": 101219774273 }）：把币种编进键名的写法没有单位可读，页面渲染不出来，第 4/5 步的首屏闸门会拒绝放行。",

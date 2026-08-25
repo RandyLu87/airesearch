@@ -3,7 +3,7 @@
   "meta": {
     "companyId": "us-futu-futu-holdings",
     "companyName": "富途控股 Futu Holdings Limited",
-    "generatedAt": "2026-08-25T21:13:36+08:00",
+    "generatedAt": "2026-08-25T23:08:56+08:00",
     "dataCutoff": "2026-08-25（Asia/Shanghai）；最新披露为 2026Q2（截至2026-06-30）未经审计财报，2026-08-20 发布",
     "validation": {
       "threshold": 7.0,
@@ -12,7 +12,7 @@
         "analysis": 9.8,
         "summary": 10.0
       },
-      "validatedAt": "2026-08-25T21:13:36+08:00"
+      "validatedAt": "2026-08-25T23:08:56+08:00"
     },
     "sources": {
       "collection": "research/companies/us-futu-futu-holdings/financials-collection.json",
@@ -543,7 +543,10 @@
               "status": "unavailable",
               "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": "unavailable（仅单源，官方资产负债表）",
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，官方资产负债表，不计算偏差率（见 source2.reason）"
+            },
             "flag": "ok"
           }
         },
@@ -826,7 +829,7 @@
       "sharesOutstanding": {
         "value": 140.19,
         "unit": "million ADS",
-        "currency": "N/A",
+        "currency": null,
         "source1": {
           "name": "stockanalysis.com Statistics（Shares Out）",
           "url": "https://stockanalysis.com/stocks/futu/statistics",
@@ -1734,10 +1737,13 @@
           "value": "17.62/15.08/13.92/15.74/15.70"
         },
         "source2": {
-          "name": "unavailable（未逐年回官方年报核对年末PE，视为单源）",
-          "value": ""
+          "status": "unavailable",
+          "reason": "仅单源：未逐年回官方年报核对年末PE，视为单源"
         },
-        "deviationPct": "unavailable，仅单源",
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "PE历史序列为Level 2/3性质的辅助参考数据，单源使用并标注"
       }

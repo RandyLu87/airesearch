@@ -48,7 +48,10 @@
             "value": "19.9572B", "currency": "USD",
             "source1": { "name": "FMP revenue-geographic-segments", "url": "https://financialmodelingprep.com", "value": 19957152000 },
             "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" },
-            "deviationPct": null, "flag": "仅单源（地区分部为公司10-K原始披露，FMP直接摘录，未做第二源交叉验证）"
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+            }, "flag": "仅单源（地区分部为公司10-K原始披露，FMP直接摘录，未做第二源交叉验证）"
           },
           "revenueSharePct": 44.17,
           "yoyGrowthPct": 14.96,
@@ -60,7 +63,10 @@
             "value": "14.5146B", "currency": "USD",
             "source1": { "name": "FMP revenue-geographic-segments", "url": "https://financialmodelingprep.com", "value": 14514646000 },
             "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" },
-            "deviationPct": null, "flag": "仅单源"
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+            }, "flag": "仅单源"
           },
           "revenueSharePct": 32.12,
           "yoyGrowthPct": 17.18,
@@ -72,7 +78,10 @@
             "value": "5.35752B", "currency": "USD",
             "source1": { "name": "FMP revenue-geographic-segments", "url": "https://financialmodelingprep.com", "value": 5357521000 },
             "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" },
-            "deviationPct": null, "flag": "仅单源"
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+            }, "flag": "仅单源"
           },
           "revenueSharePct": 11.86,
           "yoyGrowthPct": 10.70,
@@ -84,7 +93,10 @@
             "value": "5.35372B", "currency": "USD",
             "source1": { "name": "FMP revenue-geographic-segments", "url": "https://financialmodelingprep.com", "value": 5353717000 },
             "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" },
-            "deviationPct": null, "flag": "仅单源"
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+            }, "flag": "仅单源"
           },
           "revenueSharePct": 11.85,
           "yoyGrowthPct": 21.27,
@@ -132,7 +144,10 @@
           "value": "12.5599B", "currency": "USD",
           "source1": { "name": "FMP income-statement(quarter)", "url": "https://financialmodelingprep.com", "value": 12559938000 },
           "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" },
-          "deviationPct": null, "flag": "仅单源（stockanalysis 季度页截至采集时尚未更新到 2026Q2，已查该页面确认最新为 2026Q1）"
+          "deviationPct": {
+            "status": "not-applicable",
+            "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+          }, "flag": "仅单源（stockanalysis 季度页截至采集时尚未更新到 2026Q2，已查该页面确认最新为 2026Q1）"
         },
         "yoyGrowthPct": 13.37,
         "segments": []
@@ -149,7 +164,7 @@
         "grossMarginPct": 41.64,
         "operatingMarginPct": 20.86,
         "freeCashFlow": { "value": "-131.975M", "currency": "USD", "note": "资本支出口径为PP&E购置，不含内容资产投资；2021年为疫情后制作复工年，FCF转负", "source1": {"name":"FMP cashflow-statement","url":"https://financialmodelingprep.com","value":-131975000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/cash-flow-statement/","value":-131980000}, "deviationPct": 0.0, "flag": "ok" },
-        "cashReserves": { "value": "6.0278B", "currency": "USD", "note": "现金及等价物，不含短期投资(2021年短期投资为0)", "source1": {"name":"FMP balance-sheet-statement","url":"https://financialmodelingprep.com","value":6027804000}, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "deviationPct": null, "flag": "仅单源" }
+        "cashReserves": { "value": "6.0278B", "currency": "USD", "note": "现金及等价物，不含短期投资(2021年短期投资为0)", "source1": {"name":"FMP balance-sheet-statement","url":"https://financialmodelingprep.com","value":6027804000}, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）" }, "flag": "仅单源" }
       },
       {
         "fiscalYear": "2022",
@@ -158,7 +173,7 @@
         "grossMarginPct": 39.37,
         "operatingMarginPct": 17.82,
         "freeCashFlow": { "value": "1.61853B", "currency": "USD", "note": "资本支出口径为PP&E购置", "source1": {"name":"FMP cashflow-statement","url":"https://financialmodelingprep.com","value":1618528000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/cash-flow-statement/","value":1619000000}, "deviationPct": 0.0, "flag": "ok" },
-        "cashReserves": { "value": "6.05845B", "currency": "USD", "note": "现金+短期投资", "source1": {"name":"FMP balance-sheet-statement","url":"https://financialmodelingprep.com","value":6058452000}, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "deviationPct": null, "flag": "仅单源" }
+        "cashReserves": { "value": "6.05845B", "currency": "USD", "note": "现金+短期投资", "source1": {"name":"FMP balance-sheet-statement","url":"https://financialmodelingprep.com","value":6058452000}, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）" }, "flag": "仅单源" }
       },
       {
         "fiscalYear": "2023",
@@ -167,7 +182,7 @@
         "grossMarginPct": 41.54,
         "operatingMarginPct": 20.62,
         "freeCashFlow": { "value": "6.92575B", "currency": "USD", "note": "资本支出口径为PP&E购置", "source1": {"name":"FMP cashflow-statement","url":"https://financialmodelingprep.com","value":6925749000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/cash-flow-statement/","value":6926000000}, "deviationPct": 0.0, "flag": "ok" },
-        "cashReserves": { "value": "7.13789B", "currency": "USD", "note": "现金+短期投资", "source1": {"name":"FMP balance-sheet-statement","url":"https://financialmodelingprep.com","value":7137886000}, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "deviationPct": null, "flag": "仅单源" }
+        "cashReserves": { "value": "7.13789B", "currency": "USD", "note": "现金+短期投资", "source1": {"name":"FMP balance-sheet-statement","url":"https://financialmodelingprep.com","value":7137886000}, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）" }, "flag": "仅单源" }
       },
       {
         "fiscalYear": "2024",
@@ -176,7 +191,7 @@
         "grossMarginPct": 46.06,
         "operatingMarginPct": 26.71,
         "freeCashFlow": { "value": "6.92183B", "currency": "USD", "note": "资本支出口径为PP&E购置", "source1": {"name":"FMP cashflow-statement","url":"https://financialmodelingprep.com","value":6921826000}, "source2": {"name":"stockanalysis.com","url":"https://stockanalysis.com/stocks/NFLX/financials/cash-flow-statement/","value":6922000000}, "deviationPct": 0.0, "flag": "ok" },
-        "cashReserves": { "value": "9.58374B", "currency": "USD", "note": "现金+短期投资", "source1": {"name":"FMP balance-sheet-statement","url":"https://financialmodelingprep.com","value":9583739000}, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "deviationPct": null, "flag": "仅单源" }
+        "cashReserves": { "value": "9.58374B", "currency": "USD", "note": "现金+短期投资", "source1": {"name":"FMP balance-sheet-statement","url":"https://financialmodelingprep.com","value":9583739000}, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）" }, "flag": "仅单源" }
       },
       {
         "fiscalYear": "2025",
@@ -471,7 +486,10 @@
       "value": "6.49x（TTM，仅单源）", "note": "TTM口径 (EV=3139.2亿 / TTM收入483.7亿)",
       "source1": { "name": "FMP metrics-ratios-ttm (evToSalesTTM)", "url": "https://financialmodelingprep.com", "value": "6.49x" },
       "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" },
-      "deviationPct": null, "flag": "仅单源"
+      "deviationPct": {
+        "status": "not-applicable",
+        "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+      }, "flag": "仅单源"
     }
   },
   "bullBearCase": {
@@ -529,14 +547,14 @@
     { "field": "现金储备 FY2025", "source1": {"name":"FMP","value":9062359000}, "source2": {"name":"stockanalysis.com","value":9062000000}, "deviationPct": 0.00, "flag": "ok", "resolution": "一致" },
     { "field": "总负债 FY2025", "source1": {"name":"FMP","value":14462836000}, "source2": {"name":"stockanalysis.com","value":14463000000}, "deviationPct": 0.00, "flag": "ok", "resolution": "一致" },
     { "field": "总股本", "source1": {"name":"FMP shares-float","value":4163939999}, "source2": {"name":"stockanalysis.com","value":4160000000}, "deviationPct": 0.05, "flag": "ok", "resolution": "一致（四舍五入差异）" },
-    { "field": "季度营收YoY增速（2026Q2/2025Q2）", "source1": {"name":"financial_rigor.py calc","value":"13.37%"}, "source2": {"name":"—","value":"—"}, "deviationPct": null, "flag": "ok", "resolution": "工具精确计算，非心算" },
-    { "field": "R&D费用率 FY2025", "source1": {"name":"financial_rigor.py calc","value":"7.51%"}, "source2": {"name":"—","value":"—"}, "deviationPct": null, "flag": "ok", "resolution": "工具精确计算" },
+    { "field": "季度营收YoY增速（2026Q2/2025Q2）", "source1": {"name":"financial_rigor.py calc","value":"13.37%"}, "source2": { "status": "not-applicable", "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源" }, "deviationPct": { "status": "not-applicable", "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）" }, "flag": "ok", "resolution": "工具精确计算，非心算" },
+    { "field": "R&D费用率 FY2025", "source1": {"name":"financial_rigor.py calc","value":"7.51%"}, "source2": { "status": "not-applicable", "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源" }, "deviationPct": { "status": "not-applicable", "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）" }, "flag": "ok", "resolution": "工具精确计算" },
     { "field": "创始人持股比例", "source1": {"name":"SEC Form 4 (2026-06-01)","value":"21,164,244股/0.51%"}, "source2": {"name":"gurufocus.com","value":"21,163,516股（口径接近，采集时点略早）"}, "deviationPct": 0.003, "flag": "ok", "resolution": "一致，采用SEC官方Form 4最新数字" },
-    { "field": "Netflix占全球流媒体订阅收入份额", "source1": {"name":"financial_rigor.py calc","value":"45183036000/160000000000*100=28.24%"}, "source2": {"name":"—","value":"—"}, "deviationPct": null, "flag": "ok", "resolution": "工具精确计算，分母为Ampere Analysis单源估计，口径较粗仅供数量级参考" },
-    { "field": "Disney DTC分部FY2025 Q4经营利润率", "source1": {"name":"financial_rigor.py calc","value":"352/6248*100=5.63%"}, "source2": {"name":"—","value":"—"}, "deviationPct": null, "flag": "ok", "resolution": "工具精确计算，基于Disney官方财报新闻稿数字" },
-    { "field": "WBD Streaming分部FY2025 EBITDA利润率", "source1": {"name":"financial_rigor.py calc","value":"1.37/10.9*100=12.57%"}, "source2": {"name":"—","value":"—"}, "deviationPct": null, "flag": "ok", "resolution": "工具精确计算，基于WBD官方财报新闻稿数字" },
-    { "field": "Netflix FY2025内容现金投入占营收比例", "source1": {"name":"financial_rigor.py calc","value":"17.1/45.183*100=37.85%"}, "source2": {"name":"—","value":"—"}, "deviationPct": null, "flag": "ok", "resolution": "工具精确计算，内容现金投入数字来自第三方(ibinterviewquestions.com)对公司披露的转引，标记为近似值" },
-    { "field": "PwC全球OTT行业2030年规模推算", "source1": {"name":"financial_rigor.py calc","value":"226.6*(1.061**5)=304.68"}, "source2": {"name":"—","value":"—"}, "deviationPct": null, "flag": "ok", "resolution": "工具精确计算，基于PwC披露的2025基数与2025-2030 CAGR推算，PwC原文未直接给出2030年终值" },
-    { "field": "分析师一致预期隐含Netflix 2025-2030营收CAGR", "source1": {"name":"financial_rigor.py calc","value":"(72.2/45.183)**(1/5)-1=9.83%"}, "source2": {"name":"—","value":"—"}, "deviationPct": null, "flag": "ok", "resolution": "工具精确计算，基于FMP分析师一致预期2030E收入722亿美元与公司FY2025实际收入451.83亿美元" }
+    { "field": "Netflix占全球流媒体订阅收入份额", "source1": {"name":"financial_rigor.py calc","value":"45183036000/160000000000*100=28.24%"}, "source2": { "status": "not-applicable", "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源" }, "deviationPct": { "status": "not-applicable", "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）" }, "flag": "ok", "resolution": "工具精确计算，分母为Ampere Analysis单源估计，口径较粗仅供数量级参考" },
+    { "field": "Disney DTC分部FY2025 Q4经营利润率", "source1": {"name":"financial_rigor.py calc","value":"352/6248*100=5.63%"}, "source2": { "status": "not-applicable", "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源" }, "deviationPct": { "status": "not-applicable", "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）" }, "flag": "ok", "resolution": "工具精确计算，基于Disney官方财报新闻稿数字" },
+    { "field": "WBD Streaming分部FY2025 EBITDA利润率", "source1": {"name":"financial_rigor.py calc","value":"1.37/10.9*100=12.57%"}, "source2": { "status": "not-applicable", "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源" }, "deviationPct": { "status": "not-applicable", "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）" }, "flag": "ok", "resolution": "工具精确计算，基于WBD官方财报新闻稿数字" },
+    { "field": "Netflix FY2025内容现金投入占营收比例", "source1": {"name":"financial_rigor.py calc","value":"17.1/45.183*100=37.85%"}, "source2": { "status": "not-applicable", "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源" }, "deviationPct": { "status": "not-applicable", "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）" }, "flag": "ok", "resolution": "工具精确计算，内容现金投入数字来自第三方(ibinterviewquestions.com)对公司披露的转引，标记为近似值" },
+    { "field": "PwC全球OTT行业2030年规模推算", "source1": {"name":"financial_rigor.py calc","value":"226.6*(1.061**5)=304.68"}, "source2": { "status": "not-applicable", "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源" }, "deviationPct": { "status": "not-applicable", "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）" }, "flag": "ok", "resolution": "工具精确计算，基于PwC披露的2025基数与2025-2030 CAGR推算，PwC原文未直接给出2030年终值" },
+    { "field": "分析师一致预期隐含Netflix 2025-2030营收CAGR", "source1": {"name":"financial_rigor.py calc","value":"(72.2/45.183)**(1/5)-1=9.83%"}, "source2": { "status": "not-applicable", "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源" }, "deviationPct": { "status": "not-applicable", "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）" }, "flag": "ok", "resolution": "工具精确计算，基于FMP分析师一致预期2030E收入722亿美元与公司FY2025实际收入451.83亿美元" }
   ]
 }

@@ -86,7 +86,7 @@
         "grossMarginPct": { "status": "unavailable", "reason": "同FY2021说明" },
         "operatingMarginPct": 55.32,
         "freeCashFlow": { "status": "not-applicable", "reason": "算术FCF≈30828.48百万港元（经营现金流30996-资本支出167.52），当年客户资金大幅净流入（应付账款变动+52146百万港元）是主因，不代表可持续自由现金流水平" },
-        "cashReserves": { "value": 11688.383, "unit": "HK$ million", "currency": "HKD", "source1": { "name": "Futu 6-K FY2025业绩新闻稿（资产负债表，2024-12-31，公司自有现金及现金等价物，不含代客户持有现金）", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926026621/tm268330d1_ex99-1.htm", "value": 11688.383 }, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "deviationPct": "unavailable（仅单源，官方资产负债表）", "flag": "ok" }
+        "cashReserves": { "value": 11688.383, "unit": "HK$ million", "currency": "HKD", "source1": { "name": "Futu 6-K FY2025业绩新闻稿（资产负债表，2024-12-31，公司自有现金及现金等价物，不含代客户持有现金）", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926026621/tm268330d1_ex99-1.htm", "value": 11688.383 }, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "deviationPct": { "status": "not-applicable", "reason": "仅单源，官方资产负债表，不计算偏差率（见 source2.reason）" }, "flag": "ok" }
       },
       {
         "fiscalYear": "FY2025",
@@ -216,7 +216,7 @@
     "_dimension": "9. 当前估值：市值、股息率、负债率、PE、PS、PB、ROA、ROE、PEG、EV/Revenue",
     "priceAsOf": "2026-08-24 收盘（Asia/Shanghai 2026-08-25 采集）",
     "sharePrice": { "value": 115.81, "unit": "USD/ADS", "currency": "USD", "source1": { "name": "stockanalysis.com（2026-08-24收盘价）", "url": "https://stockanalysis.com/stocks/futu/financials/ratios", "value": 115.81 }, "source2": { "name": "stockanalysis.com市值页交叉核对（16.24B/140.19M≈115.85，四舍五入误差）", "url": "https://stockanalysis.com/stocks/futu/market-cap", "value": 115.85 }, "deviationPct": 0.03, "flag": "ok" },
-    "sharesOutstanding": { "value": 140.19, "unit": "million ADS", "currency": "N/A", "source1": { "name": "stockanalysis.com Statistics（Shares Out）", "url": "https://stockanalysis.com/stocks/futu/statistics", "value": 140.19 }, "source2": { "name": "Futu 6-K Q2 2026业绩新闻稿（diluted weighted avg ordinary shares 1,120,132,347 ÷ 8/ADS）", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926098911/tm2623384d1_ex99-1.htm", "value": 140.02 }, "deviationPct": 0.12, "flag": "ok" },
+    "sharesOutstanding": { "value": 140.19, "unit": "million ADS", "currency": null, "source1": { "name": "stockanalysis.com Statistics（Shares Out）", "url": "https://stockanalysis.com/stocks/futu/statistics", "value": 140.19 }, "source2": { "name": "Futu 6-K Q2 2026业绩新闻稿（diluted weighted avg ordinary shares 1,120,132,347 ÷ 8/ADS）", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926098911/tm2623384d1_ex99-1.htm", "value": 140.02 }, "deviationPct": 0.12, "flag": "ok" },
     "marketCap": {
       "reported": { "value": "16.236B", "unit": "USD", "currency": "USD", "source1": { "name": "stockanalysis.com Ratios（Market Capitalization, 2026-08-24）", "url": "https://stockanalysis.com/stocks/futu/financials/ratios", "value": 16236 }, "source2": { "name": "stockanalysis.com Market Cap专页", "url": "https://stockanalysis.com/stocks/futu/market-cap", "value": 16240 }, "deviationPct": 0.02, "flag": "ok" },
       "computed": "16.2363B USD（原采集值 16,236.34 US$ million）",

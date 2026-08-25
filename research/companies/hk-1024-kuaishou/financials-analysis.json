@@ -1614,10 +1614,13 @@
         "value": "乐观96.5/中性60.2/悲观40.7 HKD"
       },
       "source2": {
-        "name": "-",
-        "value": "-"
+        "status": "not-applicable",
+        "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
       },
-      "deviationPct": "不适用（工具计算非交叉验证）",
+      "deviationPct": {
+        "status": "not-applicable",
+        "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+      },
       "flag": "ok",
       "resolution": "工具精确十进制计算，非心算，已用--help确认参数单位（shares为亿股，growth为小数）"
     },

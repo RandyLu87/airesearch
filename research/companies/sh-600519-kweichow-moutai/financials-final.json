@@ -3,16 +3,16 @@
   "meta": {
     "companyId": "sh-600519-kweichow-moutai",
     "companyName": "贵州茅台酒股份有限公司",
-    "generatedAt": "2026-08-25T22:01:07+08:00",
+    "generatedAt": "2026-08-25T23:08:56+08:00",
     "dataCutoff": "2026-08-17",
     "validation": {
       "threshold": 7.0,
       "scores": {
         "collection": 9.6,
-        "analysis": 9.8,
+        "analysis": 9.6,
         "summary": 10.0
       },
-      "validatedAt": "2026-08-25T22:01:07+08:00"
+      "validatedAt": "2026-08-25T23:08:56+08:00"
     },
     "sources": {
       "collection": "research/companies/sh-600519-kweichow-moutai/financials-collection.json",
@@ -2567,10 +2567,13 @@
           "value": "48.76%"
         },
         "source2": {
-          "name": "N/A（单一计算验算，非双源交叉）",
-          "value": "N/A"
+          "status": "not-applicable",
+          "reason": "单一计算验算，非双源交叉"
         },
-        "deviationPct": "N/A",
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "精确十进制计算，用于businessEssence.profitabilityTrend5y"
       },
@@ -2581,10 +2584,13 @@
           "value": "营收+19.01%/+15.71%/-1.21%；净利润+19.16%/+15.38%/-4.53%"
         },
         "source2": {
-          "name": "N/A",
-          "value": "N/A"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": "N/A",
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "用于businessEssence.operatingLeverage负经营杠杆判断"
       },
@@ -2595,10 +2601,13 @@
           "value": "目标价 2184.8/1435.0/844.4元；涨跌幅 +67.2%/+9.8%/-35.4%"
         },
         "source2": {
-          "name": "N/A",
-          "value": "N/A"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": "N/A",
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "增速与PE假设见valuation.threeScenario.assumptionBasis，完整工具输出见toolOutput字段"
       },
@@ -2609,10 +2618,13 @@
           "value": "[估计] 4.3%（r=8%）/ [估计] 5.2%（r=9%）"
         },
         "source2": {
-          "name": "N/A",
-          "value": "N/A"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": "N/A",
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "简化单阶段模型，非精确多阶段DCF，仅作隐含增长预期参考"
       },
@@ -2623,10 +2635,13 @@
           "value": "首期均价1527.66元 较公告日收盘价1263.92元 溢价20.87%；二期均价1370.73元 较当前价1306.45元 溢价[估计]4.92%"
         },
         "source2": {
-          "name": "N/A",
-          "value": "N/A"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": "N/A",
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "用于management.capitalAllocation.buybackTiming判断回购未在低点精准择时"
       },
@@ -2665,10 +2680,13 @@
           "value": "目标价 1755.6/1208.0/659.4元；涨跌幅 +30.8%/-10.0%/-50.9%"
         },
         "source2": {
-          "name": "N/A",
-          "value": "N/A"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": "N/A",
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "较前次(2026-08-06)假设显著下修增速与目标PE，反映H1增收不增利后中性情景转负；完整工具输出见valuation.threeScenario.toolOutput"
       },
@@ -2679,10 +2697,13 @@
           "value": "[估计] 4.37%（r=8%）/ [估计] 5.33%（r=9%）"
         },
         "source2": {
-          "name": "N/A",
-          "value": "N/A"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": "N/A",
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "FCF基数沿用FY2025年度值（2026H1经营现金流暴增系非经常性因素不可用），与前次(4.3%/5.2%)基本持平，说明当前股价对H1利润转负尚未明显消化"
       },
