@@ -175,11 +175,15 @@ function annotation(value: Json): string {
  */
 function unitLabel(field: Json): string {
   const unit = annotation(field.unit);
-  const currency = annotation(field.currency);
+  // 占位币种当成没写：`-` / `n/a` 非空，会在下面每一条「取 currency」的分支里压过真正
+  // 的单位——快手 sharesOutstanding（`43.3亿` / unit `股` / currency `-`）渲染成
+  // `43.3亿 -`，读者看不出计量的是股数。
+  const declared = annotation(field.currency);
+  const currency = PLACEHOLDER_LABEL.test(declared) ? "" : declared;
   if (!unit || !currency) return currency || unit;
   if (!isBareNumber(field.value)) return currency;
   if (magnitudeOf(unit) === null || magnitudeOf(currency) !== null) return currency;
-  if (magnitudeRest(unit) !== "" || PLACEHOLDER_LABEL.test(currency)) return unit;
+  if (magnitudeRest(unit) !== "") return unit;
   return `${unit} ${currency}`;
 }
 

@@ -49,6 +49,8 @@ const fields = {
   "计数单位不接币种": [{ value: 252.2, unit: "亿股", currency: "CNY" }, "252.2 亿股"],
   "计数单位配占位币种": [{ value: 140.19, unit: "million ADS", currency: "N/A" }, "140.19 million ADS"],
   "纯量级 unit 配占位币种": [{ value: 751766, unit: "百万", currency: "-" }, "751,766 百万"],
+  "已缩写 value 配占位币种": [{ value: "43.3亿", unit: "股", currency: "-" }, "43.3亿 股"],
+  "无量级 unit 配占位币种": [{ value: "61.7548亿", unit: "股", currency: "n/a" }, "61.7548亿 股"],
   "没有量级词": [{ value: 44.18, currency: "HKD" }, "44.18 HKD"],
   "只写了 unit": [{ value: 12.9, unit: "USD" }, "12.9 USD"],
   "多市场字段": [
@@ -76,6 +78,13 @@ test("a counting unit is not suffixed with a currency", () => {
   assert.equal(text(fields["计数单位不接币种"][0]), "252.2 亿股");
   assert.equal(text(fields["计数单位配占位币种"][0]), "140.19 million ADS");
   assert.equal(text(fields["纯量级 unit 配占位币种"][0]), "751,766 百万");
+});
+
+test("a placeholder currency never overrides the real unit", () => {
+  // 快手 / 美团 sharesOutstanding：`currency: "-"` / `"n/a"` 非空，修复前压过 unit，
+  // 渲染成 `43.3亿 -`、`61.7548亿 n/a`，读者看不出计量的是股数。
+  assert.equal(text(fields["已缩写 value 配占位币种"][0]), "43.3亿 股");
+  assert.equal(text(fields["无量级 unit 配占位币种"][0]), "61.7548亿 股");
 });
 
 test("field-text.ts and the python gate resolve every fixture the same way", () => {

@@ -202,15 +202,21 @@ def unit_label(field):
     currency 只补给**纯量级** unit（`"百万"`）：unit 去掉量级词后还剩东西，它自己就点明了
     计量对象——`"RMB million"` 的币种、`"亿股"` 的股数、`"million ADS"` 的凭证数——再接
     currency 会拼出 `252.2 亿股 CNY`（招行 sharesOutstanding）这种读不通的串。
+
+    `-` / `n/a` 这类占位 currency 一律当成没写，否则它非空、会压过真正的 unit。
     """
-    unit, currency = annotation(field.get("unit")), annotation(field.get("currency"))
+    unit = annotation(field.get("unit"))
+    # 占位币种当成没写：`-` / `n/a` 非空，会在下面每一条「取 currency」的分支里压过
+    # 真正的单位——快手 sharesOutstanding 渲染成 `43.3亿 -`，读者看不出计量的是股数。
+    declared = annotation(field.get("currency"))
+    currency = "" if PLACEHOLDER_LABEL.match(declared) else declared
     if not unit or not currency:
         return currency or unit
     if not is_bare_number(field.get("value")):
         return currency
     if magnitude_of(unit) is None or magnitude_of(currency) is not None:
         return currency
-    if magnitude_rest(unit) != "" or PLACEHOLDER_LABEL.match(currency):
+    if magnitude_rest(unit) != "":
         return unit
     return "%s %s" % (unit, currency)
 

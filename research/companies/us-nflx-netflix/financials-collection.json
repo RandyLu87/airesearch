@@ -439,7 +439,7 @@
       "deviationPct": 0.0, "flag": "ok"
     },
     "sharesOutstanding": {
-      "value": "41.6394亿", "unit": "shares", "currency": null,
+      "value": "4.16394B", "unit": "shares", "currency": null,
       "source1": { "name": "FMP shares-float", "url": "https://financialmodelingprep.com", "value": 4163939999 },
       "source2": { "name": "stockanalysis.com", "url": "https://stockanalysis.com/stocks/NFLX/", "value": 4160000000 },
       "deviationPct": 0.05, "flag": "ok"
