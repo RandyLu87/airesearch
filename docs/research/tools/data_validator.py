@@ -44,6 +44,7 @@
 import argparse
 import json
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -234,6 +235,11 @@ def check_headline(instance):
 # 而股价、倍数、百分比这些天然的小数值不会被误伤。
 ABBREV_THRESHOLD = 1e6
 
+# 纯数字字符串：`"23051044345"` / `"23,051,044,345"` / `"1234.5"`。
+# 渲染层的 formatNumeric 只作用于 number，字符串一律原样输出——「stringify 了但没缩写」
+# 在页面上和裸数字完全一样，所以同样命中。
+NUMERIC_STRING = re.compile(r"^-?\d[\d,]*(\.\d+)?$")
+
 SHAPE_LABELS = {
     "bare-absent-string": "裸占位字符串",
     "unabbreviated-number": "大数字未缩写",
@@ -245,8 +251,10 @@ SHAPE_HINTS = {
         "{ \"status\": \"unavailable\" | \"not-applicable\", \"reason\": \"缺失原因 + 已查范围\" }；"
         "裸字符串会被原样渲染（百分比列里拼成 unavailable%）。",
     "unabbreviated-number":
-        "大额数字按采集/分析约定写成缩写字符串（\"230.51亿\" / \"23.05B\"），"
-        "渲染层不猜量级，裸数字会整串拼进页面。",
+        "大额数字按采集/分析约定写成缩写字符串（\"230.51亿\" / \"23.05B\"）；"
+        "货币之外的计数单位（股 / 辆 / 户 / MAU）同样要缩写（\"2.05亿\"）。"
+        "渲染层不猜量级，裸数字会整串拼进页面——只加引号不缩写（\"23051044345\"）"
+        "渲染出来一模一样，同样算没改。",
 }
 
 
@@ -261,8 +269,19 @@ def is_unabbreviated_number(node):
         return False
     if not (node.get("currency") or node.get("unit")):
         return False
-    value = node["value"]
-    if isinstance(value, bool) or not isinstance(value, (int, float)):
+    return is_unabbreviated_value(node["value"])
+
+
+def is_unabbreviated_value(value):
+    """裸大数字：Python 数字，或没缩写只是 stringify 过的纯数字串。"""
+    if isinstance(value, bool):
+        return False
+    if isinstance(value, str):
+        text = value.strip()
+        if not NUMERIC_STRING.match(text):
+            return False
+        value = float(text.replace(",", ""))
+    elif not isinstance(value, (int, float)):
         return False
     return abs(value) >= ABBREV_THRESHOLD
 
@@ -300,6 +319,24 @@ class Tally:
         self.filled = 0
         self.unavailable = 0
         self.gaps = []  # 每条: {path, type, expected}
+        self.filled_paths = set()  # 计了满权重的槽位，写法闸门要按 path 收回
+
+    def fill(self, path):
+        self.filled += 1
+        self.filled_paths.add(path)
+
+    def demote(self, *paths):
+        """写法闸门命中一个已计满权重的槽位：收回那 1 分，返回被收回的 path。
+
+        模板把校验对象写成标量槽位时（`marketCap.reported: "__TODO__（校验对象…）"`），
+        walk() 记的是父 path；模板展开到 value 时记的是 `<path>.value`。两种都试。
+        """
+        for path in paths:
+            if path in self.filled_paths:
+                self.filled_paths.discard(path)
+                self.filled -= 1
+                return path
+        return None
 
     @property
     def required(self):
@@ -397,7 +434,7 @@ def walk(template, instance, path, tally):
             # 不在这里拦就会当作「已填」计 1 分。写法闸门另有一条同 path 的记录，check_file 去重。
             tally.gap(path, "bare-absent-string", template)
         else:
-            tally.filled += 1
+            tally.fill(path)
 
 
 def load_json(path, what):
@@ -424,9 +461,14 @@ def check_file(step, instance_path):
     recorded = {(g["path"], g["type"]) for g in tally.gaps}
     for problem in shape_problems:
         key = (problem["path"], problem["type"])
-        if key not in recorded:
-            recorded.add(key)
-            tally.gap(problem["path"], problem["type"], SHAPE_HINTS[problem["type"]])
+        if key in recorded:
+            continue
+        recorded.add(key)
+        # 命中的字段 walk() 多半已按「已填」记过满权重：先把那 1 分收回再记缺口，
+        # 分母不变、分子 -1，落到「命中即计 0 分权重」；没记过的（如 source2.name
+        # 这类模板外字段）才是净增一个 0 分槽位。
+        demoted = tally.demote(problem["path"], "%s.value" % problem["path"])
+        tally.gap(demoted or problem["path"], problem["type"], SHAPE_HINTS[problem["type"]])
     return {
         "step": step,
         "stepLabel": STEP_LABELS[step],
