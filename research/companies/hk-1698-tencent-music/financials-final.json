@@ -3,7 +3,7 @@
   "meta": {
     "companyId": "hk-1698-tencent-music",
     "companyName": "腾讯音乐娱乐集团 (Tencent Music Entertainment Group)",
-    "generatedAt": "2026-08-25T21:11:23+08:00",
+    "generatedAt": "2026-08-25T23:08:55+08:00",
     "dataCutoff": "2026-08-12（Asia/Shanghai）；最新已披露季报为 2026 年第二季度（截至 2026-06-30，2026-08-11 发布，已纳入本次采集）",
     "validation": {
       "threshold": 7.0,
@@ -12,7 +12,7 @@
         "analysis": 9.8,
         "summary": 9.5
       },
-      "validatedAt": "2026-08-25T21:11:23+08:00"
+      "validatedAt": "2026-08-25T23:08:55+08:00"
     },
     "sources": {
       "collection": "research/companies/hk-1698-tencent-music/financials-collection.json",
@@ -326,8 +326,14 @@
               "name": "TME 官方新闻稿（2022-03-21）",
               "value": 24690
             },
-            "source2": null,
-            "deviationPct": null,
+            "source2": {
+              "status": "unavailable",
+              "reason": "仅单源（公司原始披露，属 Official 层，未做二次交叉验证）"
+            },
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+            },
             "flag": "仅单源（公司原始披露，属 Official 层，未做二次交叉验证）"
           }
         },
@@ -390,8 +396,14 @@
               "name": "TME 官方新闻稿",
               "value": 27400
             },
-            "source2": null,
-            "deviationPct": null,
+            "source2": {
+              "status": "unavailable",
+              "reason": "仅单源（公司原始披露）"
+            },
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+            },
             "flag": "仅单源（公司原始披露）"
           }
         },
@@ -454,8 +466,14 @@
               "name": "TME 官方新闻稿（2024-03-19）",
               "value": 32220
             },
-            "source2": null,
-            "deviationPct": null,
+            "source2": {
+              "status": "unavailable",
+              "reason": "仅单源（公司原始披露）"
+            },
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+            },
             "flag": "仅单源（公司原始披露）"
           }
         },
@@ -518,8 +536,14 @@
               "name": "TME 官方新闻稿",
               "value": 37580
             },
-            "source2": null,
-            "deviationPct": null,
+            "source2": {
+              "status": "unavailable",
+              "reason": "仅单源（公司原始披露）"
+            },
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+            },
             "flag": "仅单源（公司原始披露）"
           }
         },
@@ -582,8 +606,14 @@
               "name": "TME 官方新闻稿",
               "value": 38040
             },
-            "source2": null,
-            "deviationPct": null,
+            "source2": {
+              "status": "unavailable",
+              "reason": "仅单源（公司原始披露）"
+            },
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+            },
             "flag": "仅单源（公司原始披露）"
           }
         }
@@ -934,8 +964,14 @@
             "url": "https://finance.sina.com.cn/tech/csj/2026-05-05/doc-inhwvivp4239765.shtml",
             "value": 57.2
           },
-          "source2": null,
-          "deviationPct": null,
+          "source2": {
+            "status": "unavailable",
+            "reason": "单源（Level 3 定性/结构性披露，转引自公司官方年报，未做二次检索交叉验证——已查HKEX 2026-06-30 Company Information Sheet 作为口径对照，见 votingPct 字段）"
+          },
+          "deviationPct": {
+            "status": "not-applicable",
+            "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+          },
           "flag": "单源（Level 3 定性/结构性披露，转引自公司官方年报，未做二次检索交叉验证——已查HKEX 2026-06-30 Company Information Sheet 作为口径对照，见 votingPct 字段）"
         },
         "votingPct": {
@@ -2569,8 +2605,14 @@
           "name": "financial_rigor.py three-scenario 工具计算",
           "value": "乐观85.2/中性53.3/悲观32.1（RMB，目标股价）"
         },
-        "source2": null,
-        "deviationPct": null,
+        "source2": {
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
+        },
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "单一权威计算工具输出，禁止心算规则已满足；三组增速与PE假设见threeScenario.assumptionBasis"
       },

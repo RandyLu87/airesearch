@@ -135,7 +135,11 @@ python3 docs/research/tools/financial_rigor.py verify-valuation \
   - ✅ `"sharesOutstanding": { "value": "43.3亿", "unit": "股", "currency": null }`
 - **「取不到 / 不适用」只写完整占位对象，不写裸字符串**：裸 `"unavailable"` 会被渲染层原样输出（百分比列里拼成 `unavailable%`），校验也会把它当作「已填」——第 4 步的写法闸门专门挡这种（`[裸占位字符串]`）：
   - ❌ `"grossMarginPct": "unavailable"`，`"source2": { "name": "unavailable" }`
-  - ✅ `"grossMarginPct": { "status": "unavailable", "reason": "年报未按分部披露毛利率，已查 2025 年报与 2026 中报" }`；确实只有单源时按上文 Level 2 规则在字段里注明「仅单源」，不要用 `unavailable` 占位 `source2`；
+  - ✅ `"grossMarginPct": { "status": "unavailable", "reason": "年报未按分部披露毛利率，已查 2025 年报与 2026 中报" }`
+- **没有第二来源时，`source2` 与 `deviationPct` 各写一个占位对象**：完整写法表在 `docs/model/financial-data.md`「只有单源时怎么写」。`null` 与 `{ "name": "—" }` / `{ "name": "unavailable，仅单源" }` 都不算——同一件事五种形状，读的人要一种一种认才能看出这个数经过了几道核对，闸门报 `[第二来源缺失态写法不规范]`：
+  - ❌ `"source2": null, "deviationPct": null`（腾讯 `hk-0700` 的现金储备就是这样写的）
+  - ✅ `"source2": { "status": "unavailable", "reason": "仅单源：官方未披露现金+短期投资加总口径，仅披露净现金/净债务" }`、`"deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）" }`
+  - 有第二来源但口径不可比时 `source2` 写 `not-applicable` + 差异项，不要把它退化成「没有来源」——那会丢掉「查过、但不可比」这条信息；
 - FCF 口径：不同来源对资本支出的定义可能不同（是否含租赁、收购等）；
 - 债务口径：是否包含经营租赁负债；
 - 持股比例：AB 股公司的经济权益 ≠ 投票权。

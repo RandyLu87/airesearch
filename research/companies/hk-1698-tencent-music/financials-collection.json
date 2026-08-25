@@ -102,7 +102,7 @@
         "grossMarginPct": 30.1,
         "operatingMarginPct": 12.16,
         "freeCashFlow": { "value": 10450, "unit": "RMB million", "currency": "RMB", "note": "经营现金流 RMB106.09亿 - 资本支出 RMB1.59亿，不含租赁/并购支出", "source1": { "name": "stockanalysis.com", "value": 10450 }, "source2": { "name": "macrotrends.net", "value": 10450 }, "deviationPct": 0, "flag": "ok" },
-        "cashReserves": { "value": 24690, "unit": "RMB million", "currency": "RMB", "note": "现金及现金等价物+定期存款+短期投资，截至2021-12-31官方披露", "source1": { "name": "TME 官方新闻稿（2022-03-21）", "value": 24690 }, "source2": null, "deviationPct": null, "flag": "仅单源（公司原始披露，属 Official 层，未做二次交叉验证）" }
+        "cashReserves": { "value": 24690, "unit": "RMB million", "currency": "RMB", "note": "现金及现金等价物+定期存款+短期投资，截至2021-12-31官方披露", "source1": { "name": "TME 官方新闻稿（2022-03-21）", "value": 24690 }, "source2": { "status": "unavailable", "reason": "仅单源（公司原始披露，属 Official 层，未做二次交叉验证）" }, "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）" }, "flag": "仅单源（公司原始披露，属 Official 层，未做二次交叉验证）" }
       },
       {
         "fiscalYear": "FY2022",
@@ -111,7 +111,7 @@
         "grossMarginPct": 30.96,
         "operatingMarginPct": 15.68,
         "freeCashFlow": { "value": 15023, "unit": "RMB million", "currency": "RMB", "source1": { "name": "stockanalysis.com", "value": 15023 }, "source2": { "name": "macrotrends.net", "value": 15023 }, "deviationPct": 0, "flag": "ok" },
-        "cashReserves": { "value": 27400, "unit": "RMB million", "currency": "RMB", "note": "截至2022-12-31官方披露", "source1": { "name": "TME 官方新闻稿", "value": 27400 }, "source2": null, "deviationPct": null, "flag": "仅单源（公司原始披露）" }
+        "cashReserves": { "value": 27400, "unit": "RMB million", "currency": "RMB", "note": "截至2022-12-31官方披露", "source1": { "name": "TME 官方新闻稿", "value": 27400 }, "source2": { "status": "unavailable", "reason": "仅单源（公司原始披露）" }, "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）" }, "flag": "仅单源（公司原始披露）" }
       },
       {
         "fiscalYear": "FY2023",
@@ -120,7 +120,7 @@
         "grossMarginPct": 35.29,
         "operatingMarginPct": 21.83,
         "freeCashFlow": { "value": 7172, "unit": "RMB million", "currency": "RMB", "source1": { "name": "stockanalysis.com", "value": 7172 }, "source2": { "name": "macrotrends.net", "value": 7175 }, "deviationPct": 0.04, "flag": "ok" },
-        "cashReserves": { "value": 32220, "unit": "RMB million", "currency": "RMB", "note": "现金+现金等价物+定期存款（不含短期投资单列），截至2023-12-31官方披露", "source1": { "name": "TME 官方新闻稿（2024-03-19）", "value": 32220 }, "source2": null, "deviationPct": null, "flag": "仅单源（公司原始披露）" }
+        "cashReserves": { "value": 32220, "unit": "RMB million", "currency": "RMB", "note": "现金+现金等价物+定期存款（不含短期投资单列），截至2023-12-31官方披露", "source1": { "name": "TME 官方新闻稿（2024-03-19）", "value": 32220 }, "source2": { "status": "unavailable", "reason": "仅单源（公司原始披露）" }, "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）" }, "flag": "仅单源（公司原始披露）" }
       },
       {
         "fiscalYear": "FY2024",
@@ -129,7 +129,7 @@
         "grossMarginPct": 42.3,
         "operatingMarginPct": 30.67,
         "freeCashFlow": { "value": 9956, "unit": "RMB million", "currency": "RMB", "source1": { "name": "stockanalysis.com", "value": 9956 }, "source2": { "name": "macrotrends.net", "value": 9955 }, "deviationPct": 0.01, "flag": "ok" },
-        "cashReserves": { "value": 37580, "unit": "RMB million", "currency": "RMB", "note": "截至2024-12-31官方披露", "source1": { "name": "TME 官方新闻稿", "value": 37580 }, "source2": null, "deviationPct": null, "flag": "仅单源（公司原始披露）" }
+        "cashReserves": { "value": 37580, "unit": "RMB million", "currency": "RMB", "note": "截至2024-12-31官方披露", "source1": { "name": "TME 官方新闻稿", "value": 37580 }, "source2": { "status": "unavailable", "reason": "仅单源（公司原始披露）" }, "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）" }, "flag": "仅单源（公司原始披露）" }
       },
       {
         "fiscalYear": "FY2025",
@@ -138,7 +138,7 @@
         "grossMarginPct": 44.2,
         "operatingMarginPct": 40.62,
         "freeCashFlow": { "value": 9926, "unit": "RMB million", "currency": "RMB", "source1": { "name": "stockanalysis.com", "value": 9926 }, "source2": { "name": "macrotrends.net", "value": 9647 }, "deviationPct": 2.89, "flag": "minor-diff（原因：macrotrends以USD折算年度平均汇率与公司披露的期末汇率不同）" },
-        "cashReserves": { "value": 38040, "unit": "RMB million", "currency": "RMB", "note": "截至2025-12-31官方披露", "source1": { "name": "TME 官方新闻稿", "value": 38040 }, "source2": null, "deviationPct": null, "flag": "仅单源（公司原始披露）" }
+        "cashReserves": { "value": 38040, "unit": "RMB million", "currency": "RMB", "note": "截至2025-12-31官方披露", "source1": { "name": "TME 官方新闻稿", "value": 38040 }, "source2": { "status": "unavailable", "reason": "仅单源（公司原始披露）" }, "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）" }, "flag": "仅单源（公司原始披露）" }
       }
     ],
     "note": "operatingMarginPct 采用公司利润表原始列示的「经营利润 Operating profit」口径（= 毛利 - 经营开支 + 利息收入 + 其他收益净额），2025年该口径含一次性UMG处置收益RMB23.7亿，人为推高至40.6%；若按 macrotrends 独立重算的「核心经营利润」口径（剔除利息收入与其他收益/损失），2025年核心经营利润率约29.4%（TTM至2025-12-31）。两口径差异是方法论不同，非数据错误，详见 crossValidationLog。"
@@ -314,7 +314,7 @@
       "source2": { "name": "TME 2021-04-14官方公告 Announces Leadership Changes", "url": "https://ir.tencentmusic.com/2021-04-14-Tencent-Music-Entertainment-Group-Announces-Leadership-Changes" }
     },
     "ownership": {
-      "economicPct": { "value": 57.2, "unit": "%", "note": "腾讯控股合计持股比例，截至2026-03-31（FY2025年报口径）：持A类股10.8%（159,996,879股）+ B类股98.5%（1,640,456,882股）", "source1": { "name": "雷递网转引TME 2025年报/20-F", "url": "https://finance.sina.com.cn/tech/csj/2026-05-05/doc-inhwvivp4239765.shtml", "value": 57.2 }, "source2": null, "deviationPct": null, "flag": "单源（Level 3 定性/结构性披露，转引自公司官方年报，未做二次检索交叉验证——已查HKEX 2026-06-30 Company Information Sheet 作为口径对照，见 votingPct 字段）" },
+      "economicPct": { "value": 57.2, "unit": "%", "note": "腾讯控股合计持股比例，截至2026-03-31（FY2025年报口径）：持A类股10.8%（159,996,879股）+ B类股98.5%（1,640,456,882股）", "source1": { "name": "雷递网转引TME 2025年报/20-F", "url": "https://finance.sina.com.cn/tech/csj/2026-05-05/doc-inhwvivp4239765.shtml", "value": 57.2 }, "source2": { "status": "unavailable", "reason": "单源（Level 3 定性/结构性披露，转引自公司官方年报，未做二次检索交叉验证——已查HKEX 2026-06-30 Company Information Sheet 作为口径对照，见 votingPct 字段）" }, "deviationPct": { "status": "not-applicable", "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）" }, "flag": "单源（Level 3 定性/结构性披露，转引自公司官方年报，未做二次检索交叉验证——已查HKEX 2026-06-30 Company Information Sheet 作为口径对照，见 votingPct 字段）" },
       "votingPct": { "value": 93.6, "asOf": "2026-03-31", "altValue": 90.4, "altAsOf": "2026-06-30", "note": "AB股加权投票权结构：A类股1票/股，B类股10票/股（2024年年报口径为15票/股，后续可能调整，需在分析阶段核实）。两个时点的投票权比例（93.6% vs 90.4%）存在约3.2个百分点差异，可能与Spotify投票权代理安排(Tencent Voting Undertaking)在不同披露文件中的计入方式不同有关，非数据错误，分析阶段需进一步核实", "source1": { "name": "雷递网转引TME FY2025年报，as of 2026-03-31", "value": 93.6 }, "source2": { "name": "HKEX Company Information Sheet, as of 2026-06-30", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0630/2026063001610.pdf", "value": 90.4 }, "deviationPct": null, "flag": "口径存在时点/计入范围差异，不计算误差率" },
       "source": { "name": "雷递网 / HKEX Company Information Sheet", "url": "https://finance.sina.com.cn/tech/csj/2026-05-05/doc-inhwvivp4239765.shtml" }
     },

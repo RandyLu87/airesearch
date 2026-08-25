@@ -295,7 +295,7 @@
     }
   },
   "crossValidationLog": [
-    { "field": "三情景估值(three-scenario)", "source1": { "name": "financial_rigor.py three-scenario 工具计算", "value": "乐观85.2/中性53.3/悲观32.1（RMB，目标股价）" }, "source2": null, "deviationPct": null, "flag": "ok", "resolution": "单一权威计算工具输出，禁止心算规则已满足；三组增速与PE假设见threeScenario.assumptionBasis" },
+    { "field": "三情景估值(three-scenario)", "source1": { "name": "financial_rigor.py three-scenario 工具计算", "value": "乐观85.2/中性53.3/悲观32.1（RMB，目标股价）" }, "source2": { "status": "not-applicable", "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源" }, "deviationPct": { "status": "not-applicable", "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）" }, "flag": "ok", "resolution": "单一权威计算工具输出，禁止心算规则已满足；三组增速与PE假设见threeScenario.assumptionBasis" },
     { "field": "PE(TTM)", "source1": { "name": "主会话据官方季报数据验算", "value": 12.35 }, "source2": { "name": "stockanalysis.com HKG:1698", "value": 11.87 }, "deviationPct": 3.9, "flag": "minor-diff", "resolution": "TTM窗口切分与股价快照时点不同导致的正常差异，延续自collection文件" },
     { "field": "EV/Revenue", "source1": { "name": "主会话据financial_rigor.py calc验算(市值1222.5亿HKD口径)", "value": 2.80 }, "source2": { "name": "主会话据financial_rigor.py calc验算(市值1198.76亿HKD口径)", "value": 2.73 }, "deviationPct": 2.5, "flag": "minor-diff", "resolution": "两个市值口径来自collection文件已记录的market cap验算差异（1.94%），非独立新误差" }
   ]

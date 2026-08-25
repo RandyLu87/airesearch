@@ -3,16 +3,16 @@
   "meta": {
     "companyId": "hk-2015-li-auto",
     "companyName": "理想汽车 (Li Auto Inc.)",
-    "generatedAt": "2026-08-25T22:55:09+08:00",
+    "generatedAt": "2026-08-25T23:08:55+08:00",
     "dataCutoff": "2026-08-07",
     "validation": {
       "threshold": 7.0,
       "scores": {
-        "collection": 9.6,
-        "analysis": 10.0,
+        "collection": 9.5,
+        "analysis": 9.9,
         "summary": 9.6
       },
-      "validatedAt": "2026-08-25T22:55:09+08:00"
+      "validatedAt": "2026-08-25T23:08:55+08:00"
     },
     "sources": {
       "collection": "research/companies/hk-2015-li-auto/financials-collection.json",
@@ -1003,10 +1003,13 @@
           "value": "0.82x"
         },
         "source2": {
-          "name": "N/A(单一计算结果，非交叉验证)",
-          "value": "—"
+          "status": "not-applicable",
+          "reason": "单一计算结果，非交叉验证"
         },
-        "deviationPct": 0,
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "股价42.9312 RMB(49.92 HKD按0.86 HKD/CNY折算) ÷ TTM每股营收52.2655 RMB = 0.82x，精确十进制计算，无浮点误差"
       },
@@ -1017,10 +1020,13 @@
           "value": "-0.017x"
         },
         "source2": {
-          "name": "N/A",
-          "value": "—"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": 0,
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "EV=市值89.84B RMB+总债务9.52B RMB-现金储备101.24B RMB=-18.87亿元人民币(负值)，EV为负反映净现金超过市值+总债务，是估值维度的关键异常信号"
       }
@@ -2071,10 +2077,13 @@
           "value": "乐观43.6/中性16.1/悲观3.3 (CNY)"
         },
         "source2": {
-          "name": "N/A(单一工具计算，非跨源交叉验证)",
-          "value": "—"
+          "status": "not-applicable",
+          "reason": "单一工具计算，非跨源交叉验证"
         },
-        "deviationPct": 0,
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "基准EPS取FY2025全年GAAP口径0.53元人民币，股本20.93亿股，精确十进制计算，结果可审计复现；因TTM为负无法用TTM EPS做基准，已在threeScenario.assumptionBasis中说明"
       },
@@ -2085,10 +2094,13 @@
           "value": "-0.017x"
         },
         "source2": {
-          "name": "N/A",
-          "value": "—"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": 0,
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "沿用第1步采集文件crossValidationLog中已验算的EV=-18.87亿元人民币结果，EV为负反映净现金超过市值+总债务，是本次估值维度的关键异常信号"
       }

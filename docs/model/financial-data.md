@@ -250,6 +250,22 @@ income = tushare("income", {"ts_code": "600519.SH", "start_date": "20200101",
 
 Level 1 与 `docs/research/workflow/01-data-collection.md`「程序化交叉验证」的必验清单（总股本、股价与市值、最近财年收入与净利润、现金储备/净现金、管理层持股比例）对应。Level 3 对应采集维度 4/5/6 的定性叙述——找到一个可靠来源即可，不为「再验证一次」重复检索。
 
+### 只有单源时怎么写
+
+Level 2/3 允许单源，Level 1 也会撞上「第二来源确实不存在」（官方口径独有、第三方站不拆分该分部），
+以及「这一行本来就不是多源核对」（`financial_rigor.py` 的工具验算行）。这两种情况都**不留空、不留占位符**，
+`source2` 与 `deviationPct` 各写一个占位对象：
+
+| 情形 | `source2` | `deviationPct` |
+| ------ | ------ | ------ |
+| 只取到一个来源 | `{ "status": "unavailable", "reason": "仅单源：<为什么只有一个来源 + 已查范围>" }` | `{ "status": "not-applicable", "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）" }` |
+| 有第二来源但口径不可比 | `{ "status": "not-applicable", "reason": "口径不可比：<差异项>" }` | `{ "status": "not-applicable", "reason": "口径不可比，不计算偏差率（见 source2.reason）" }` |
+| 工具验算行，本无第二来源 | `{ "status": "not-applicable", "reason": "工具验算（financial_rigor.py），非多源交叉验证" }` | `{ "status": "not-applicable", "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）" }` |
+
+`null`、`{ "name": "—" }`、`{ "name": "unavailable，仅单源" }` 这几种旧写法语义相同、形状不同——
+读的人要一种一种认，才能看出这个数经过了几道核对。第 4 步的写法闸门按
+`[第二来源缺失态写法不规范]` / `[缺第二来源却没说明偏差率为何不适用]` 挡回去。
+
 ### 第三步：误差计算与标记
 
 程序化验算一律用 `docs/research/tools/financial_rigor.py cross-validate`，**禁止心算**。工具以**多来源中位数**为参照计算偏差（不以来源1为基准，任一来源偏离都会被标记）：

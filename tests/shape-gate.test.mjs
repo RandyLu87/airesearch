@@ -202,3 +202,56 @@ test("the notation check leaves counts and quoted source values alone", () => {
   };
   assert.deepEqual(runGate(fixture).problems, []);
 });
+
+/** 带双源的校验对象：source2 的缺失态是这一组用例要挡的写法。 */
+function withSource2(source2, deviationPct) {
+  const fixture = structuredClone(clean);
+  fixture.revenueStructure.latestFiscalYear.segments[0].revenue = {
+    value: "59.94亿",
+    currency: "RMB",
+    source1: { name: "公司 FY2025 年报", value: "59.94亿" },
+    source2,
+    deviationPct,
+  };
+  return fixture;
+}
+
+const REVENUE = "revenueStructure.latestFiscalYear.segments[0].revenue";
+
+test("the shape gate blocks a null second source", () => {
+  // 腾讯 hk-0700 原样：`source2: null` 与 `deviationPct: null` 并存，读的人看不出
+  // 这个数是「只有单源」还是「忘了填」。
+  const { code, problems } = runGate(withSource2(null, null));
+  assert.deepEqual(problems, [["absent-source2-shape", `${REVENUE}.source2`]]);
+  assert.equal(code, 1, "a null second source must fail the run");
+});
+
+test("the shape gate blocks the placeholder and prose forms of a missing second source", () => {
+  // 网易云音乐 `{ name: "unavailable，仅单源" }`、Netflix 交叉验证记录 `{ name: "—" }`。
+  for (const source2 of [{ name: "—", value: "—" }, { name: "unavailable，仅单源", url: "", value: null }]) {
+    const { problems } = runGate(withSource2(source2, null));
+    assert.deepEqual(problems, [["absent-source2-shape", `${REVENUE}.source2`]],
+      `未挡住的写法：${JSON.stringify(source2)}`);
+  }
+});
+
+test("the shape gate blocks a stale deviationPct next to an absent second source", () => {
+  // source2 已是规范占位对象，deviationPct 还是 null——「没有第二个数」这件事只说了一半。
+  const absent = { status: "unavailable", reason: "本次采集只取得单一独立来源" };
+  const { code, problems } = runGate(withSource2(absent, null));
+  assert.deepEqual(problems, [["deviation-without-source2", `${REVENUE}.deviationPct`]]);
+  assert.equal(code, 1, "a null deviationPct without a second source must fail the run");
+});
+
+test("the shape gate accepts the canonical pair", () => {
+  const fixture = withSource2(
+    { status: "unavailable", reason: "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" },
+    { status: "not-applicable", reason: "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）" },
+  );
+  assert.deepEqual(runGate(fixture).problems, []);
+});
+
+test("a real second source with a computed deviation stays untouched", () => {
+  const fixture = withSource2({ name: "stockanalysis.com", value: "59.9亿" }, 0.07);
+  assert.deepEqual(runGate(fixture).problems, []);
+});

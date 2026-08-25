@@ -981,10 +981,13 @@
         "value": "0.82x"
       },
       "source2": {
-        "name": "N/A(单一计算结果，非交叉验证)",
-        "value": "—"
+        "status": "not-applicable",
+        "reason": "单一计算结果，非交叉验证"
       },
-      "deviationPct": 0,
+      "deviationPct": {
+        "status": "not-applicable",
+        "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+      },
       "flag": "ok",
       "resolution": "股价42.9312 RMB(49.92 HKD按0.86 HKD/CNY折算) ÷ TTM每股营收52.2655 RMB = 0.82x，精确十进制计算，无浮点误差"
     },
@@ -995,10 +998,13 @@
         "value": "-0.017x"
       },
       "source2": {
-        "name": "N/A",
-        "value": "—"
+        "status": "not-applicable",
+        "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
       },
-      "deviationPct": 0,
+      "deviationPct": {
+        "status": "not-applicable",
+        "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+      },
       "flag": "ok",
       "resolution": "EV=市值89.84B RMB+总债务9.52B RMB-现金储备101.24B RMB=-18.87亿元人民币(负值)，EV为负反映净现金超过市值+总债务，是估值维度的关键异常信号"
     }

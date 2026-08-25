@@ -113,7 +113,10 @@
               "value": 1765450
             },
             "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" },
-            "deviationPct": null,
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+            },
             "flag": "minor-diff"
           },
           "revenueSharePct": 22.75,
@@ -318,8 +321,14 @@
           "unit": "RMB（现金及现金等价物 4,020,400 + 银行存款(流动) 5,484,688 + 银行存款(非流动) 0，明细数字为原披露的千元口径）",
           "currency": "RMB",
           "source1": {"name": "网易云音乐 FY2024 年度业绩公告（比较期资产负债表）", "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0220/2025022000338_c.pdf", "value": 9505088},
-          "source2": {"name": "unavailable，仅单源", "url": "", "value": null},
-          "deviationPct": null,
+          "source2": {
+            "status": "unavailable",
+            "reason": "仅单源——本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
+          },
+          "deviationPct": {
+            "status": "not-applicable",
+            "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+          },
           "flag": "ok"
         }
       },
@@ -350,8 +359,14 @@
           "unit": "RMB（经营活动所得现金净额 1,774,620 - 购买物业厂房及设备 3,709，明细数字为原披露的千元口径）",
           "currency": "RMB",
           "source1": {"name": "网易云音乐 2025 年年报合并现金流量表", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf", "value": 1770911},
-          "source2": {"name": "unavailable，仅单源；资本开支口径不含经营租赁本金偿还（已单独列示于融资活动）", "url": "", "value": null},
-          "deviationPct": null,
+          "source2": {
+            "status": "unavailable",
+            "reason": "仅单源；资本开支口径不含经营租赁本金偿还（已单独列示于融资活动）"
+          },
+          "deviationPct": {
+            "status": "not-applicable",
+            "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+          },
           "flag": "ok"
         },
         "cashReserves": {
@@ -359,8 +374,14 @@
           "unit": "RMB（现金及现金等价物 3,795,210 + 银行存款(流动) 6,420,669 + 银行存款(非流动) 1,400,000，明细数字为原披露的千元口径）",
           "currency": "RMB",
           "source1": {"name": "网易云音乐 2025 年年报合并资产负债表", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf", "value": 11615879},
-          "source2": {"name": "unavailable，仅单源", "url": "", "value": null},
-          "deviationPct": null,
+          "source2": {
+            "status": "unavailable",
+            "reason": "仅单源——本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
+          },
+          "deviationPct": {
+            "status": "not-applicable",
+            "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+          },
           "flag": "ok"
         }
       },
@@ -392,8 +413,14 @@
           "unit": "RMB（经营活动所得现金净额 1,618,081 - 购买物业厂房及设备 11,203，明细数字为原披露的千元口径）",
           "currency": "RMB",
           "source1": {"name": "网易云音乐 2025 年年报合并现金流量表", "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041501037_c.pdf", "value": 1606878},
-          "source2": {"name": "unavailable，仅单源", "url": "", "value": null},
-          "deviationPct": null,
+          "source2": {
+            "status": "unavailable",
+            "reason": "仅单源——本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
+          },
+          "deviationPct": {
+            "status": "not-applicable",
+            "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+          },
           "flag": "ok"
         },
         "cashReserves": {
@@ -508,11 +535,13 @@
         "value": 390967
       },
       "source2": {
-        "name": "unavailable，仅单源",
-        "url": "",
-        "value": null
+        "status": "unavailable",
+        "reason": "仅单源——本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
       },
-      "deviationPct": null,
+      "deviationPct": {
+        "status": "not-applicable",
+        "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+      },
       "flag": "ok",
       "note": "2026H1研发费用人民币391.0百万元，较2025H1的378.9百万元增加3.2%，主要由于期内AI相关支出增加；2025全年研发费用同比下降2.3%（据媒体转引年报数据，公司官方未见单独列示年度研发费用绝对值原文，仅有同比百分比）"
     },

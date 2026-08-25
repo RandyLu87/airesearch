@@ -326,6 +326,8 @@ SHAPE_LABELS = {
     "unabbreviated-number": "大数字未缩写",
     "unit-overridden-by-currency": "量级被币种压掉",
     "placeholder-unit-label": "单位写成占位符",
+    "absent-source2-shape": "第二来源缺失态写法不规范",
+    "deviation-without-source2": "缺第二来源却没说明偏差率为何不适用",
     "mixed-notation": "同一文件内记数法混用",
 }
 
@@ -348,6 +350,15 @@ SHAPE_HINTS = {
         "`unit` / `currency` 只写真单位，没有就写 null——`\"-\"` / `\"n/a\"` / `\"—\"` 这类占位符"
         "字符串非空，渲染层拿它当单位拼在数值后面（`43.3亿 -`）；currency 位上的占位符还会"
         "压过真正的 unit，读者看不出计量的是股数还是钱。",
+    "absent-source2-shape":
+        "「没有第二来源」写成占位对象 { \"status\": \"unavailable\" | \"not-applicable\", "
+        "\"reason\": \"为什么只有单源 / 为什么不做交叉验证\" }——`null`、`{ \"name\": \"—\" }`、"
+        "`{ \"name\": \"unavailable，仅单源\" }` 这几种写法在数据里等价，读的人却要一种一种认，"
+        "闸门也只能挡住其中一种。",
+    "deviation-without-source2":
+        "第二来源是缺失态时，`deviationPct` 要写成 { \"status\": \"not-applicable\", "
+        "\"reason\": \"…\" }：没有第二个数就没有偏差率，`null` 与 `\"N/A\"` 说不出是「仅单源」"
+        "还是「口径不可比」，读的人无法判断这个数经过了几道核对。",
     "mixed-notation":
         "同一份公司文件里的金额数字只用一套记数法：中文量级（\"1044.61亿\"）或英文缩写"
         "（\"104.46B\"）。两套并存不是错值，但同一页里两种量级要读者自己换算——"
@@ -406,6 +417,56 @@ def is_unit_magnitude_dropped(node):
     if scale is None:
         return False
     return magnitude_of(unit_label(node)) != scale
+
+
+# ---------------------------------------------------------------------------
+# 第二来源的缺失态
+#
+# 「这个字段只有单源」历史上有五种写法并存：`null`、`{ "name": "—" }`、
+# `{ "name": "unavailable，仅单源" }`、规范的 `{ status, reason }`，以及有第二来源但
+# 标着「口径不可比」的。语义相同、形状不同，闸门只能挡住其中一种（裸占位字符串那条），
+# 读的人也没法一眼看出这个数经过了几道核对。统一成占位对象后，`deviationPct` 也要跟着
+# 说明为什么算不出偏差率——没有第二个数就没有偏差率，`null` 说不出是「仅单源」还是
+# 「口径不可比」。
+# ---------------------------------------------------------------------------
+
+# 「没写」的 source2 名字：占位符，或以 unavailable / N/A / 不适用 开头的一句说明。
+# 后面必须是分隔符或结尾，否则 `n/?a` 会咬掉 "Nasdaq" 这类真来源名的开头。
+ABSENT_SOURCE_NAME = re.compile(r"^(unavailable|n/?a|不适用)(?:[\s，,：:（(]|$)", re.I)
+
+
+def absent_object(value):
+    """是不是带 reason 的规范占位对象。"""
+    return bool(absent_status(value)) and bool(str(value.get("reason", "")).strip())
+
+
+def source2_absent_shape(node):
+    """source2 是「没有第二来源」但没写成规范占位对象时，返回当前写法的简述。"""
+    if not isinstance(node, dict) or "source2" not in node:
+        return None
+    source2 = node["source2"]
+    if source2 is None:
+        return "null"
+    if not isinstance(source2, dict) or absent_status(source2):
+        return None
+    name = annotation(source2.get("name"))
+    if not name or name == TODO:
+        return None
+    if PLACEHOLDER_LABEL.match(name) or ABSENT_SOURCE_NAME.match(name):
+        return "source2.name: %r" % name
+    return None
+
+
+def deviation_without_source2(node):
+    """source2 已是缺失态，deviationPct 却没说明为什么算不出偏差率。"""
+    if not isinstance(node, dict) or "deviationPct" not in node:
+        return None
+    if not absent_object(node.get("source2")):
+        return None
+    deviation = node["deviationPct"]
+    if absent_object(deviation):
+        return None
+    return "deviationPct: %s" % json.dumps(deviation, ensure_ascii=False)[:60]
 
 
 def placeholder_unit_labels(node):
@@ -521,6 +582,20 @@ def scan_shape(node, path="", problems=None):
                 "type": "unit-overridden-by-currency",
                 "found": "%s（unit %s / currency %s）" % (node["value"], node.get("unit"),
                                                         node.get("currency")),
+            })
+        absent_shape = source2_absent_shape(node)
+        if absent_shape:
+            problems.append({
+                "path": "%s.source2" % path if path else "source2",
+                "type": "absent-source2-shape",
+                "found": absent_shape,
+            })
+        stale_deviation = deviation_without_source2(node)
+        if stale_deviation:
+            problems.append({
+                "path": "%s.deviationPct" % path if path else "deviationPct",
+                "type": "deviation-without-source2",
+                "found": stale_deviation,
             })
         for key in placeholder_unit_labels(node):
             problems.append({

@@ -3,16 +3,16 @@
   "meta": {
     "companyId": "hk-9899-netease-cloud-music",
     "companyName": "网易云音乐股份有限公司 (NetEase Cloud Music Inc.)",
-    "generatedAt": "2026-08-25T22:01:07+08:00",
+    "generatedAt": "2026-08-25T23:08:56+08:00",
     "dataCutoff": "2026-08-20（Asia/Shanghai）；最新已披露财报为 2026 年中期业绩（截至 2026-06-30，2026-08-20 发布，已纳入本次采集，为本次研究触发的最新财报）",
     "validation": {
       "threshold": 7.0,
       "scores": {
         "collection": 9.4,
-        "analysis": 9.6,
+        "analysis": 9.5,
         "summary": 10.0
       },
-      "validatedAt": "2026-08-25T22:01:07+08:00"
+      "validatedAt": "2026-08-25T23:08:56+08:00"
     },
     "sources": {
       "collection": "research/companies/hk-9899-netease-cloud-music/financials-collection.json",
@@ -138,7 +138,10 @@
                 "status": "unavailable",
                 "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
               },
-              "deviationPct": null,
+              "deviationPct": {
+                "status": "not-applicable",
+                "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+              },
               "flag": "minor-diff"
             },
             "revenueSharePct": 22.75,
@@ -410,11 +413,13 @@
               "value": 9505088
             },
             "source2": {
-              "name": "unavailable，仅单源",
-              "url": "",
-              "value": null
+              "status": "unavailable",
+              "reason": "仅单源——本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": null,
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+            },
             "flag": "ok"
           }
         },
@@ -466,11 +471,13 @@
               "value": 1770911
             },
             "source2": {
-              "name": "unavailable，仅单源；资本开支口径不含经营租赁本金偿还（已单独列示于融资活动）",
-              "url": "",
-              "value": null
+              "status": "unavailable",
+              "reason": "仅单源；资本开支口径不含经营租赁本金偿还（已单独列示于融资活动）"
             },
-            "deviationPct": null,
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+            },
             "flag": "ok"
           },
           "cashReserves": {
@@ -483,11 +490,13 @@
               "value": 11615879
             },
             "source2": {
-              "name": "unavailable，仅单源",
-              "url": "",
-              "value": null
+              "status": "unavailable",
+              "reason": "仅单源——本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": null,
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+            },
             "flag": "ok"
           }
         },
@@ -540,11 +549,13 @@
               "value": 1606878
             },
             "source2": {
-              "name": "unavailable，仅单源",
-              "url": "",
-              "value": null
+              "status": "unavailable",
+              "reason": "仅单源——本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": null,
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+            },
             "flag": "ok"
           },
           "cashReserves": {
@@ -679,11 +690,13 @@
           "value": 390967
         },
         "source2": {
-          "name": "unavailable，仅单源",
-          "url": "",
-          "value": null
+          "status": "unavailable",
+          "reason": "仅单源——本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
         },
-        "deviationPct": null,
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "note": "2026H1研发费用人民币391.0百万元，较2025H1的378.9百万元增加3.2%，主要由于期内AI相关支出增加；2025全年研发费用同比下降2.3%（据媒体转引年报数据，公司官方未见单独列示年度研发费用绝对值原文，仅有同比百分比）"
       },
@@ -1950,10 +1963,13 @@
           "value": "乐观214.2 HKD(+90.2%) / 中性141.9 HKD(+26.1%) / 悲观72.5 HKD(-35.7%)"
         },
         "source2": {
-          "name": "不适用（工具计算无需第二来源交叉验证，计算逻辑透明可复现）",
-          "value": "N/A"
+          "status": "not-applicable",
+          "reason": "工具计算无需第二来源交叉验证，计算逻辑透明可复现"
         },
-        "deviationPct": null,
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "工具原始输出直接采用，assumptionBasis已说明三档增速与PE取值依据"
       },
@@ -1978,10 +1994,13 @@
           "value": "9.88%"
         },
         "source2": {
-          "name": "不适用，单一算术换算",
-          "value": "N/A"
+          "status": "not-applicable",
+          "reason": "单一算术换算"
         },
-        "deviationPct": null,
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "简单比例计算，两个分子分母均来自同一份官方公告，无交叉验证必要性"
       }

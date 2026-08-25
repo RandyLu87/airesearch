@@ -3,16 +3,16 @@
   "meta": {
     "companyId": "sh-600392-shenghe-resources",
     "companyName": "盛和资源控股股份有限公司",
-    "generatedAt": "2026-08-25T21:11:23+08:00",
+    "generatedAt": "2026-08-25T23:08:56+08:00",
     "dataCutoff": "2026-08-08",
     "validation": {
       "threshold": 7.0,
       "scores": {
         "collection": 9.5,
-        "analysis": 9.7,
+        "analysis": 9.5,
         "summary": 9.5
       },
-      "validatedAt": "2026-08-25T21:11:23+08:00"
+      "validatedAt": "2026-08-25T23:08:56+08:00"
     },
     "sources": {
       "collection": "research/companies/sh-600392-shenghe-resources/financials-collection.json",
@@ -2267,10 +2267,13 @@
           "value": "5.60%"
         },
         "source2": {
-          "name": "N/A（单一计算工具验算，非多源对比）",
-          "value": "N/A"
+          "status": "not-applicable",
+          "reason": "单一计算工具验算，非多源对比"
         },
-        "deviationPct": "N/A",
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "工具精确计算，采纳5.60%用于businessEssence.profitabilityTrend5y"
       },
@@ -2295,10 +2298,13 @@
           "value": "31.83%"
         },
         "source2": {
-          "name": "N/A",
-          "value": "N/A"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": "N/A",
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "工具精确计算，采纳31.83%"
       },
@@ -2309,10 +2315,13 @@
           "value": "32.7 / 15.1 / 3.7 元"
         },
         "source2": {
-          "name": "N/A（单一模型工具计算）",
-          "value": "N/A"
+          "status": "not-applicable",
+          "reason": "单一模型工具计算"
         },
-        "deviationPct": "N/A",
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "工具原始输出见 valuation.analysis.threeScenario.toolOutput，增速与PE假设依据见 assumptionBasis"
       }

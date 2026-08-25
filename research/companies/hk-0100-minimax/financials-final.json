@@ -3,16 +3,16 @@
   "meta": {
     "companyId": "hk-0100-minimax",
     "companyName": "MiniMax Group Inc.（稀宇科技，同股不同权，A/B 双层股权架构）",
-    "generatedAt": "2026-08-25T21:11:23+08:00",
+    "generatedAt": "2026-08-25T23:08:54+08:00",
     "dataCutoff": "2026-08-09（Asia/Shanghai）；行情数据截至最近交易日 2026-08-07 收盘",
     "validation": {
       "threshold": 7.0,
       "scores": {
         "collection": 9.3,
-        "analysis": 9.7,
+        "analysis": 9.6,
         "summary": 9.5
       },
-      "validatedAt": "2026-08-25T21:11:23+08:00"
+      "validatedAt": "2026-08-25T23:08:54+08:00"
     },
     "sources": {
       "collection": "research/companies/hk-0100-minimax/financials-collection.json",
@@ -2205,10 +2205,13 @@
           "value": "873.30 HKD"
         },
         "source2": {
-          "name": "不适用（方法论适配计算，非多源交叉验证）",
-          "value": "n/a"
+          "status": "not-applicable",
+          "reason": "方法论适配计算，非多源交叉验证"
         },
-        "deviationPct": "不适用",
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "因公司持续亏损无正EPS，标准three-scenario(EPS×PE)命令不适用，改用financial_rigor.py calc逐步验算PS倍数法：起点ARR3亿美元×三年复合增速×目标PS20倍÷总股本÷汇率=873.30港元，较现价326.4港元+167.55%；计算过程全部记录于dimensions.valuation.analysis.threeScenario.toolOutput"
       },
@@ -2219,10 +2222,13 @@
           "value": "262.80 HKD"
         },
         "source2": {
-          "name": "不适用",
-          "value": "n/a"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": "不适用",
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "起点ARR3亿美元×三年复合增速(100%/50%/30%)×目标PS10倍÷总股本÷汇率=262.80港元，较现价-19.49%，计算过程见toolOutput"
       },
@@ -2233,10 +2239,13 @@
           "value": "66.71 HKD"
         },
         "source2": {
-          "name": "不适用",
-          "value": "n/a"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": "不适用",
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "起点ARR3亿美元×三年复合增速(50%/20%/10%)×目标PS5倍÷总股本÷汇率=66.71港元，较现价-79.56%，计算过程见toolOutput"
       },

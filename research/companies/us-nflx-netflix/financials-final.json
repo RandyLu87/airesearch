@@ -3,16 +3,16 @@
   "meta": {
     "companyId": "us-nflx-netflix",
     "companyName": "Netflix, Inc.",
-    "generatedAt": "2026-08-25T22:26:45+08:00",
+    "generatedAt": "2026-08-25T23:08:56+08:00",
     "dataCutoff": "2026-08-09（Asia/Shanghai）",
     "validation": {
       "threshold": 7.0,
       "scores": {
-        "collection": 8.5,
-        "analysis": 9.8,
+        "collection": 8.4,
+        "analysis": 9.7,
         "summary": 9.4
       },
-      "validatedAt": "2026-08-25T22:26:45+08:00"
+      "validatedAt": "2026-08-25T23:08:56+08:00"
     },
     "sources": {
       "collection": "research/companies/us-nflx-netflix/financials-collection.json",
@@ -100,7 +100,10 @@
                 "status": "unavailable",
                 "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
               },
-              "deviationPct": null,
+              "deviationPct": {
+                "status": "not-applicable",
+                "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+              },
               "flag": "仅单源（地区分部为公司10-K原始披露，FMP直接摘录，未做第二源交叉验证）"
             },
             "revenueSharePct": 44.17,
@@ -124,7 +127,10 @@
                 "status": "unavailable",
                 "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
               },
-              "deviationPct": null,
+              "deviationPct": {
+                "status": "not-applicable",
+                "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+              },
               "flag": "仅单源"
             },
             "revenueSharePct": 32.12,
@@ -148,7 +154,10 @@
                 "status": "unavailable",
                 "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
               },
-              "deviationPct": null,
+              "deviationPct": {
+                "status": "not-applicable",
+                "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+              },
               "flag": "仅单源"
             },
             "revenueSharePct": 11.86,
@@ -172,7 +181,10 @@
                 "status": "unavailable",
                 "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
               },
-              "deviationPct": null,
+              "deviationPct": {
+                "status": "not-applicable",
+                "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+              },
               "flag": "仅单源"
             },
             "revenueSharePct": 11.85,
@@ -262,7 +274,10 @@
               "status": "unavailable",
               "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": null,
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+            },
             "flag": "仅单源（stockanalysis 季度页截至采集时尚未更新到 2026Q2，已查该页面确认最新为 2026Q1）"
           },
           "yoyGrowthPct": 13.37,
@@ -340,7 +355,10 @@
               "status": "unavailable",
               "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": null,
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+            },
             "flag": "仅单源"
           }
         },
@@ -411,7 +429,10 @@
               "status": "unavailable",
               "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": null,
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+            },
             "flag": "仅单源"
           }
         },
@@ -482,7 +503,10 @@
               "status": "unavailable",
               "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": null,
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+            },
             "flag": "仅单源"
           }
         },
@@ -553,7 +577,10 @@
               "status": "unavailable",
               "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
             },
-            "deviationPct": null,
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+            },
             "flag": "仅单源"
           }
         },
@@ -1106,7 +1133,10 @@
           "status": "unavailable",
           "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
         },
-        "deviationPct": null,
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+        },
         "flag": "仅单源"
       }
     },
@@ -1263,10 +1293,13 @@
           "value": "13.37%"
         },
         "source2": {
-          "name": "—",
-          "value": "—"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": null,
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "工具精确计算，非心算"
       },
@@ -1277,10 +1310,13 @@
           "value": "7.51%"
         },
         "source2": {
-          "name": "—",
-          "value": "—"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": null,
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "工具精确计算"
       },
@@ -1305,10 +1341,13 @@
           "value": "45183036000/160000000000*100=28.24%"
         },
         "source2": {
-          "name": "—",
-          "value": "—"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": null,
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "工具精确计算，分母为Ampere Analysis单源估计，口径较粗仅供数量级参考"
       },
@@ -1319,10 +1358,13 @@
           "value": "352/6248*100=5.63%"
         },
         "source2": {
-          "name": "—",
-          "value": "—"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": null,
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "工具精确计算，基于Disney官方财报新闻稿数字"
       },
@@ -1333,10 +1375,13 @@
           "value": "1.37/10.9*100=12.57%"
         },
         "source2": {
-          "name": "—",
-          "value": "—"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": null,
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "工具精确计算，基于WBD官方财报新闻稿数字"
       },
@@ -1347,10 +1392,13 @@
           "value": "17.1/45.183*100=37.85%"
         },
         "source2": {
-          "name": "—",
-          "value": "—"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": null,
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "工具精确计算，内容现金投入数字来自第三方(ibinterviewquestions.com)对公司披露的转引，标记为近似值"
       },
@@ -1361,10 +1409,13 @@
           "value": "226.6*(1.061**5)=304.68"
         },
         "source2": {
-          "name": "—",
-          "value": "—"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": null,
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "工具精确计算，基于PwC披露的2025基数与2025-2030 CAGR推算，PwC原文未直接给出2030年终值"
       },
@@ -1375,10 +1426,13 @@
           "value": "(72.2/45.183)**(1/5)-1=9.83%"
         },
         "source2": {
-          "name": "—",
-          "value": "—"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": null,
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "工具精确计算，基于FMP分析师一致预期2030E收入722亿美元与公司FY2025实际收入451.83亿美元"
       }
@@ -2496,10 +2550,13 @@
           "value": "17.23%/14.21%/16.04%/22.34%/24.30%"
         },
         "source2": {
-          "name": "—",
-          "value": "—"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": null,
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "工具精确计算，非心算"
       },
@@ -2510,10 +2567,13 @@
           "value": "-9.06% / +23.43% / +49.81% / +27.91%"
         },
         "source2": {
-          "name": "—",
-          "value": "—"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": null,
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "工具精确计算，用于经营杠杆判断"
       },
@@ -2524,10 +2584,13 @@
           "value": "200/180-1=11.11%"
         },
         "source2": {
-          "name": "—",
-          "value": "—"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": null,
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "工具精确计算，内容投入数字为第三方转引估计"
       },
@@ -2538,10 +2601,13 @@
           "value": "600-451.83=148.17亿美元"
         },
         "source2": {
-          "name": "—",
-          "value": "—"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": null,
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "工具精确计算"
       },
@@ -2552,10 +2618,13 @@
           "value": "9.83-6.1=3.73个百分点"
         },
         "source2": {
-          "name": "—",
-          "value": "—"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": null,
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "工具精确计算"
       },
@@ -2608,10 +2677,13 @@
           "value": "乐观$120.9(+63.1%) / 中性$84.2(+13.6%) / 悲观$53.2(-28.3%)"
         },
         "source2": {
-          "name": "—",
-          "value": "—"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": null,
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "工具精确计算，禁止心算；假设依据见valuation.threeScenario.assumptionBasis"
       },
@@ -2622,10 +2694,13 @@
           "value": "352/6248=5.63%"
         },
         "source2": {
-          "name": "—",
-          "value": "—"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": null,
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "工具精确计算，用于同业定性对比"
       },
@@ -2636,10 +2711,13 @@
           "value": "1.37/10.9=12.57%"
         },
         "source2": {
-          "name": "—",
-          "value": "—"
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
         },
-        "deviationPct": null,
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
         "flag": "ok",
         "resolution": "工具精确计算，用于同业定性对比"
       }

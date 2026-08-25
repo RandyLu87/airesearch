@@ -86,7 +86,7 @@
         "grossMarginPct": { "status": "unavailable", "reason": "同FY2021说明" },
         "operatingMarginPct": 55.32,
         "freeCashFlow": { "status": "not-applicable", "reason": "算术FCF≈30828.48百万港元（经营现金流30996-资本支出167.52），当年客户资金大幅净流入（应付账款变动+52146百万港元）是主因，不代表可持续自由现金流水平" },
-        "cashReserves": { "value": 11688.383, "unit": "HK$ million", "currency": "HKD", "source1": { "name": "Futu 6-K FY2025业绩新闻稿（资产负债表，2024-12-31，公司自有现金及现金等价物，不含代客户持有现金）", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926026621/tm268330d1_ex99-1.htm", "value": 11688.383 }, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "deviationPct": "unavailable（仅单源，官方资产负债表）", "flag": "ok" }
+        "cashReserves": { "value": 11688.383, "unit": "HK$ million", "currency": "HKD", "source1": { "name": "Futu 6-K FY2025业绩新闻稿（资产负债表，2024-12-31，公司自有现金及现金等价物，不含代客户持有现金）", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926026621/tm268330d1_ex99-1.htm", "value": 11688.383 }, "source2": { "status": "unavailable", "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源" }, "deviationPct": { "status": "not-applicable", "reason": "仅单源，官方资产负债表，不计算偏差率（见 source2.reason）" }, "flag": "ok" }
       },
       {
         "fiscalYear": "FY2025",

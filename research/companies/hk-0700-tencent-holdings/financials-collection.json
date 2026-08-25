@@ -156,8 +156,14 @@
               "name": "官方FY2025新闻稿",
               "value": 8077
             },
-            "source2": null,
-            "deviationPct": null,
+            "source2": {
+              "status": "unavailable",
+              "reason": "本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
+            },
+            "deviationPct": {
+              "status": "not-applicable",
+              "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+            },
             "flag": "官方单一口径"
           },
           "revenueSharePct": 1.07,
@@ -404,8 +410,14 @@
             "name": "stockanalysis.com",
             "value": 253528
           },
-          "source2": null,
-          "deviationPct": null,
+          "source2": {
+            "status": "unavailable",
+            "reason": "仅单源（官方未披露对应的现金+短期投资加总口径，仅披露净现金/净债务）"
+          },
+          "deviationPct": {
+            "status": "not-applicable",
+            "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+          },
           "flag": "仅单源（官方未披露对应的现金+短期投资加总口径，仅披露净现金/净债务）"
         }
       },
@@ -454,8 +466,14 @@
             "name": "stockanalysis.com",
             "value": 123412
           },
-          "source2": null,
-          "deviationPct": null,
+          "source2": {
+            "status": "unavailable",
+            "reason": "仅单源——本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
+          },
+          "deviationPct": {
+            "status": "not-applicable",
+            "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+          },
           "flag": "仅单源"
         },
         "cashReserves": {
@@ -467,8 +485,14 @@
             "name": "stockanalysis.com",
             "value": 262793
           },
-          "source2": null,
-          "deviationPct": null,
+          "source2": {
+            "status": "unavailable",
+            "reason": "仅单源——本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
+          },
+          "deviationPct": {
+            "status": "not-applicable",
+            "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+          },
           "flag": "仅单源"
         }
       },
@@ -516,8 +540,14 @@
             "name": "stockanalysis.com",
             "value": 200954
           },
-          "source2": null,
-          "deviationPct": null,
+          "source2": {
+            "status": "unavailable",
+            "reason": "仅单源——本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
+          },
+          "deviationPct": {
+            "status": "not-applicable",
+            "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+          },
           "flag": "仅单源"
         },
         "cashReserves": {
@@ -529,8 +559,14 @@
             "name": "stockanalysis.com",
             "value": 364252
           },
-          "source2": null,
-          "deviationPct": null,
+          "source2": {
+            "status": "unavailable",
+            "reason": "仅单源——本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
+          },
+          "deviationPct": {
+            "status": "not-applicable",
+            "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+          },
           "flag": "仅单源"
         }
       },
@@ -578,8 +614,14 @@
             "name": "stockanalysis.com",
             "value": 195594
           },
-          "source2": null,
-          "deviationPct": null,
+          "source2": {
+            "status": "unavailable",
+            "reason": "仅单源（官方FY2024年报未在本次采集范围内单独抓取自由现金流headline）"
+          },
+          "deviationPct": {
+            "status": "not-applicable",
+            "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+          },
           "flag": "仅单源（官方FY2024年报未在本次采集范围内单独抓取自由现金流headline）"
         },
         "cashReserves": {
@@ -644,8 +686,14 @@
             "name": "官方FY2025新闻稿",
             "value": 182600
           },
-          "source2": null,
-          "deviationPct": null,
+          "source2": {
+            "status": "not-applicable",
+            "reason": "口径不可比（见note，采用官方口径）"
+          },
+          "deviationPct": {
+            "status": "not-applicable",
+            "reason": "口径不可比，不计算偏差率（见 source2.reason）"
+          },
           "flag": "口径不可比（见note，采用官方口径）"
         },
         "cashReserves": {
@@ -1056,8 +1104,14 @@
         "name": "主会话据financial_rigor.py verify-valuation验算",
         "value": 3.05
       },
-      "source2": null,
-      "deviationPct": null,
+      "source2": {
+        "status": "not-applicable",
+        "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
+      },
+      "deviationPct": {
+        "status": "not-applicable",
+        "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+      },
       "flag": "仅单源计算（未找到第三方同期同口径PB快照，建议第4步复核）"
     },
     "roe": {
@@ -1068,8 +1122,14 @@
         "name": "主会话据官方财报数据验算",
         "value": 20.57
       },
-      "source2": null,
-      "deviationPct": null,
+      "source2": {
+        "status": "unavailable",
+        "reason": "仅单源计算（Level 2，建议双源，本次未获取第三方ROE快照）"
+      },
+      "deviationPct": {
+        "status": "not-applicable",
+        "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+      },
       "flag": "仅单源计算（Level 2，建议双源，本次未获取第三方ROE快照）"
     },
     "roa": {
@@ -1080,8 +1140,14 @@
         "name": "主会话据官方财报数据验算",
         "value": 11.22
       },
-      "source2": null,
-      "deviationPct": null,
+      "source2": {
+        "status": "unavailable",
+        "reason": "仅单源计算——本次采集只取得单一独立来源，未找到可用于交叉验证的第二来源"
+      },
+      "deviationPct": {
+        "status": "not-applicable",
+        "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+      },
       "flag": "仅单源计算"
     },
     "dividendYieldPct": {
