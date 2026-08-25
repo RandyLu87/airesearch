@@ -14,12 +14,16 @@
 三个文件参数均可省略，只校验给出的文件。
 退出码：0 = 全部放行；1 = 存在未放行的文件；2 = 参数或文件错误。
 
-两道闸门，任一不过都拒绝放行：
+三道闸门，任一不过都拒绝放行：
 
     1. 完整性分数 —— 模板槽位的填写率，低于阈值不放行；
     2. 首屏可渲染性 —— 页头摘要条与首页卡片直读的四个字段（市值 / 股价 / PE /
        数据截止）必须能解析成一句话。分数只看填没填，看不出「填了但页面显示不出来」，
-       这道闸门专门挡这种：字段写成页面认不出的形状时，读者看到的是破折号。
+       这道闸门专门挡这种：字段写成页面认不出的形状时，读者看到的是破折号；
+    3. 写法闸门（全量叶子扫描）—— 首屏四格之外的字段同样会被读到。两类写法页面
+       认得出、但读者看到的是错的：裸占位字符串（`"unavailable"` 当值写，页面原样
+       输出，5 年趋势表里拼出 `unavailable%`）与未缩写大数字（`23051044345` 直接
+       渲染成 11 位数字）。见 scan_shape。
 
 打分规则（模板驱动）：
     - 「槽位」= 模板中值含 __TODO__ 的叶子字段，或形如 "A | B | C" 的枚举提示字段；
@@ -28,6 +32,8 @@
     - 规范的 { "status": "unavailable" | "not-applicable", "reason": "..." } 计 0.5 分权重——
       「取不到并写明已查范围」「算不出并写明为什么」都是合法结果，但完整性弱于取到；
     - 缺键、残留 __TODO__、空值、枚举未选、unavailable 未写 reason 计 0 分并记入缺口清单；
+    - 写法闸门命中的字段（裸占位字符串 / 未缩写大数字）同样计 0 分权重并记入缺口清单——
+      这类字段有值，但读者看到的那句话是错的，按「没填」算；
     - 得分 = 10 × (已填 + 0.5 × unavailable) / 槽位总数，四舍五入到 1 位小数。
 
 数组规则：模板数组为空（如 dataGaps: []）表示允许为空，跳过；模板数组含 N 个条目时，
@@ -206,6 +212,89 @@ def check_headline(instance):
     return problems
 
 
+# ---------------------------------------------------------------------------
+# 写法闸门（全量叶子扫描）
+#
+# 首屏闸门只看四个字段，但报告里被读到的字段远不止四个。这里扫全树，挡两类
+# 「页面认得出、读者看到的却是错的」写法——两类都发生过：
+#
+#   1. 裸占位字符串：`grossMarginPct: "unavailable"` 而不是
+#      { "status": "unavailable", "reason": … }。渲染层 text() 对字符串原样输出，
+#      百分比列再拼一个后缀，页面上就是 `unavailable%`。resolve_field() 也会把它
+#      str() 成非 None，分数上被当作「已填」——所以必须单独挡。
+#   2. 未缩写大数字：`{ "value": 23051044345, "currency": "HKD" }`。缩写是采集/分析
+#      文件的约定（`"230.51亿"` / `"23.05B"`），渲染层不猜量级（field-text.ts 的
+#      formatNumeric 只加千分位），漏写就是页头一串 11 位数字。
+#
+# 注意：这两条不改 resolve_field() / text() 的解析规则——两边的解析规则仍是镜像，
+# 这里加的是「解析得出来但不该这么写」的前置拦截。
+# ---------------------------------------------------------------------------
+
+# 大数字缩写阈值：百万起就该缩写。财报量级的数字（收入、市值、股本）一律超过它，
+# 而股价、倍数、百分比这些天然的小数值不会被误伤。
+ABBREV_THRESHOLD = 1e6
+
+SHAPE_LABELS = {
+    "bare-absent-string": "裸占位字符串",
+    "unabbreviated-number": "大数字未缩写",
+}
+
+SHAPE_HINTS = {
+    "bare-absent-string":
+        "「取不到 / 不适用」必须写成完整对象 "
+        "{ \"status\": \"unavailable\" | \"not-applicable\", \"reason\": \"缺失原因 + 已查范围\" }；"
+        "裸字符串会被原样渲染（百分比列里拼成 unavailable%）。",
+    "unabbreviated-number":
+        "大额数字按采集/分析约定写成缩写字符串（\"230.51亿\" / \"23.05B\"），"
+        "渲染层不猜量级，裸数字会整串拼进页面。",
+}
+
+
+def is_bare_absent(value):
+    """值本身就是 `"unavailable"` / `"not-applicable"` 字符串（而不是规范占位对象）。"""
+    return isinstance(value, str) and value.strip() in ABSENT_STATUSES
+
+
+def is_unabbreviated_number(node):
+    """标了 currency/unit 的校验对象，value 却是裸大数字。"""
+    if not isinstance(node, dict) or "value" not in node:
+        return False
+    if not (node.get("currency") or node.get("unit")):
+        return False
+    value = node["value"]
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return False
+    return abs(value) >= ABBREV_THRESHOLD
+
+
+def scan_shape(node, path="", problems=None):
+    """全量扫描写法问题，返回 [{path, type, found}]。"""
+    if problems is None:
+        problems = []
+    if isinstance(node, dict):
+        if is_unabbreviated_number(node):
+            problems.append({
+                "path": path,
+                "type": "unabbreviated-number",
+                "found": ("%s %s" % (node["value"],
+                                     node.get("currency") or node.get("unit"))).strip(),
+            })
+        for key, value in node.items():
+            if key in META_KEYS:
+                continue
+            # `status: "unavailable"` 是规范占位对象的一部分，不是裸占位；
+            # 缺 reason 的情况由 walk() / resolve_field() 管。
+            if key == "status" and is_bare_absent(value):
+                continue
+            scan_shape(value, "%s.%s" % (path, key) if path else key, problems)
+    elif isinstance(node, list):
+        for i, item in enumerate(node):
+            scan_shape(item, "%s[%d]" % (path, i), problems)
+    elif is_bare_absent(node):
+        problems.append({"path": path, "type": "bare-absent-string", "found": node})
+    return problems
+
+
 class Tally:
     def __init__(self):
         self.filled = 0
@@ -303,6 +392,10 @@ def walk(template, instance, path, tally):
                 tally.unavailable += 1
             else:
                 tally.gap(path, "unavailable-without-reason", template)
+        elif is_bare_absent(instance):
+            # 裸 "unavailable" 有值但不是占位对象：resolve_field() 会 str() 出非 None，
+            # 不在这里拦就会当作「已填」计 1 分。写法闸门另有一条同 path 的记录，check_file 去重。
+            tally.gap(path, "bare-absent-string", template)
         else:
             tally.filled += 1
 
@@ -325,6 +418,15 @@ def check_file(step, instance_path):
     instance = load_json(instance_path, STEP_LABELS[step])
     tally = Tally()
     walk(template, instance, "", tally)
+    # 写法问题独立于模板：命中的字段可能根本不在模板槽位上（如 source2.name），
+    # 一律补记为 0 分权重缺口；walk() 已记过的同一 path 不重复计。
+    shape_problems = scan_shape(instance)
+    recorded = {(g["path"], g["type"]) for g in tally.gaps}
+    for problem in shape_problems:
+        key = (problem["path"], problem["type"])
+        if key not in recorded:
+            recorded.add(key)
+            tally.gap(problem["path"], problem["type"], SHAPE_HINTS[problem["type"]])
     return {
         "step": step,
         "stepLabel": STEP_LABELS[step],
@@ -337,12 +439,15 @@ def check_file(step, instance_path):
         "gaps": tally.gaps,
         # 首屏字段只存在于采集文件里；它是独立于分数的硬闸门，见 check_headline。
         "headlineProblems": check_headline(instance) if step == "collection" else [],
+        "shapeProblems": shape_problems,
     }
 
 
 def blocked(result, threshold):
-    """是否拒绝放行：分数不足，或首屏字段渲染不出来。"""
-    return result["score"] < threshold or bool(result["headlineProblems"])
+    """是否拒绝放行：分数不足、首屏字段渲染不出来，或存在写法问题。"""
+    return (result["score"] < threshold
+            or bool(result["headlineProblems"])
+            or bool(result["shapeProblems"]))
 
 
 def print_report(results, threshold):
@@ -362,11 +467,22 @@ def print_report(results, threshold):
         for problem in res["headlineProblems"]:
             print("   - [首屏渲染不出] %s ← %s：%s"
                   % (problem["label"], problem["path"], problem["found"]))
+        for problem in res["shapeProblems"][:10]:
+            print("   - [%s] %s ← %s"
+                  % (SHAPE_LABELS[problem["type"]], problem["path"], problem["found"]))
+        if len(res["shapeProblems"]) > 10:
+            print("   ... 其余 %d 处写法问题见 --gaps-out / --json"
+                  % (len(res["shapeProblems"]) - 10))
     print("-" * 60)
     failing = [r for r in results if blocked(r, threshold)]
     unrenderable = [r for r in results if r["headlineProblems"]]
     if unrenderable:
         print("❌ 首屏字段渲染不出，页头与首页卡片会是空白。%s" % HEADLINE_HINT)
+    for gap_type in ("bare-absent-string", "unabbreviated-number"):
+        hits = sum(len([p for p in r["shapeProblems"] if p["type"] == gap_type])
+                   for r in results)
+        if hits:
+            print("❌ %d 处%s。%s" % (hits, SHAPE_LABELS[gap_type], SHAPE_HINTS[gap_type]))
     if failing:
         print("❌ %d 份文件未放行，进入关键信息补全流程（用 --gaps-out 导出缺口清单）。"
               % len(failing))
@@ -407,9 +523,11 @@ def main():
                        "分析缺口按第 2 步统一信封，总结缺口按第 3 步评分与策略规则）。"
                        "确实取不到的信息写 { \"status\": \"unavailable\", \"reason\": \"缺失原因 + 已查范围\" }，"
                        "算不出来的（分母为负等）写 { \"status\": \"not-applicable\", \"reason\": \"…\" }，不得编造。"
-                       "headlineProblems 是首屏字段的形状问题：数据往往已经采到，要改的是写法而不是再去取数。",
+                       "headlineProblems 是首屏字段的形状问题：数据往往已经采到，要改的是写法而不是再去取数。"
+                       "shapeProblems 同理是写法问题（裸占位字符串 / 大数字未缩写），按 shapeHints 改写，不要重新取数。",
             "threshold": args.threshold,
             "headlineHint": HEADLINE_HINT,
+            "shapeHints": SHAPE_HINTS,
             "files": [
                 {
                     "step": r["step"],
@@ -418,6 +536,7 @@ def main():
                     "score": r["score"],
                     "gaps": r["gaps"],
                     "headlineProblems": r["headlineProblems"],
+                    "shapeProblems": r["shapeProblems"],
                 }
                 for r in failing
             ],
@@ -444,6 +563,7 @@ def main():
         scores={r["step"]: r["score"] for r in results},
         gapCounts={r["step"]: r["gapCount"] for r in results},
         headlineProblems=sum(len(r["headlineProblems"]) for r in results),
+        shapeProblems=sum(len(r["shapeProblems"]) for r in results),
     )
     sys.exit(exit_code)
 
