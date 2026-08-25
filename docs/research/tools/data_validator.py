@@ -156,8 +156,8 @@ MAGNITUDES = (
     ("千", 1e3), ("thousand", 1e3),
 )
 
-# 单位串自己是否已经点明币种：`亿元` / `千美元` / `RMB million` 都不用再补 currency。
-CURRENCY_BEARING = re.compile(r"元|币|RMB|CNY|USD|HKD|EUR|JPY|GBP|TWD|SGD|[$￥€£]", re.I)
+# 占位币种：`-` / `N/A` 这类「没写」的写法，拼进单位串只会变成 `140.19 million ADS N/A`。
+PLACEHOLDER_LABEL = re.compile(r"^(?:[-—–]+|n/?a|未?披露|\?+)$", re.I)
 
 
 def magnitude_of(label):
@@ -167,6 +167,17 @@ def magnitude_of(label):
         if token in lower:
             return scale
     return None
+
+
+def magnitude_rest(label):
+    """单位串去掉量级词后剩下的部分：`"百万"` → `""`，`"RMB million"` → `"RMB"`，
+    `"亿股"` → `"股"`。剩下东西就说明这个单位自己点明了计量对象，不需要 currency 补。"""
+    lower = label.lower()
+    for token, _ in MAGNITUDES:
+        at = lower.find(token)
+        if at >= 0:
+            return re.sub(r"[\s,，/·]+", " ", label[:at] + label[at + len(token):]).strip()
+    return label.strip()
 
 
 def annotation(value):
@@ -187,6 +198,10 @@ def unit_label(field):
     量级词不能被纯币种压掉，所以保留 unit；unit 只写量级不写币种（`"百万"`）时把
     currency 接在后面。只在 value 是裸数字时这么做（缩写过的 value 再叠一次量级就是
     乘两次），currency 自己也带量级（`"RMB百万"`）时照旧取 currency。
+
+    currency 只补给**纯量级** unit（`"百万"`）：unit 去掉量级词后还剩东西，它自己就点明了
+    计量对象——`"RMB million"` 的币种、`"亿股"` 的股数、`"million ADS"` 的凭证数——再接
+    currency 会拼出 `252.2 亿股 CNY`（招行 sharesOutstanding）这种读不通的串。
     """
     unit, currency = annotation(field.get("unit")), annotation(field.get("currency"))
     if not unit or not currency:
@@ -195,7 +210,7 @@ def unit_label(field):
         return currency
     if magnitude_of(unit) is None or magnitude_of(currency) is not None:
         return currency
-    if CURRENCY_BEARING.search(unit) or currency.lower() in unit.lower():
+    if magnitude_rest(unit) != "" or PLACEHOLDER_LABEL.match(currency):
         return unit
     return "%s %s" % (unit, currency)
 

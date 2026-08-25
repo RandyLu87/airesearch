@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { isValidElement, type ReactNode } from "react";
 import { existsSync } from "node:fs";
 import { finalPath, listFinalCompanies, loadFinal } from "../../../lib/final-report";
-import { headline, isUnavailable, pctText, stripNote, text, type Json } from "../../../lib/field-text";
+import { headline, pctText, stripNote, text, type Json } from "../../../lib/field-text";
 
 /**
  * 公司分析页 — 研究流程第 5 步（docs/research/workflow/05-render-site.md）。

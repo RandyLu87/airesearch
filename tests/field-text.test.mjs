@@ -46,6 +46,9 @@ const fields = {
   "中文量级单位自带币种": [{ value: 2611, unit: "亿元", currency: "CNY" }, "2,611 亿元"],
   "currency 自己带量级": [{ value: 751766, unit: "RMB million", currency: "RMB百万" }, "751,766 RMB百万"],
   "value 已缩写": [{ value: "7517.66亿", unit: "RMB million", currency: "RMB" }, "7517.66亿 RMB"],
+  "计数单位不接币种": [{ value: 252.2, unit: "亿股", currency: "CNY" }, "252.2 亿股"],
+  "计数单位配占位币种": [{ value: 140.19, unit: "million ADS", currency: "N/A" }, "140.19 million ADS"],
+  "纯量级 unit 配占位币种": [{ value: 751766, unit: "百万", currency: "-" }, "751,766 百万"],
   "没有量级词": [{ value: 44.18, currency: "HKD" }, "44.18 HKD"],
   "只写了 unit": [{ value: 12.9, unit: "USD" }, "12.9 USD"],
   "多市场字段": [
@@ -68,6 +71,13 @@ test("an already abbreviated value is not stacked with the unit magnitude", () =
   assert.equal(text(fields["value 已缩写"][0]), "7517.66亿 RMB");
 });
 
+test("a counting unit is not suffixed with a currency", () => {
+  // 招行 sharesOutstanding / 富途 ADS 数：`252.2 亿股 CNY`、`140.19 million ADS N/A` 都读不通。
+  assert.equal(text(fields["计数单位不接币种"][0]), "252.2 亿股");
+  assert.equal(text(fields["计数单位配占位币种"][0]), "140.19 million ADS");
+  assert.equal(text(fields["纯量级 unit 配占位币种"][0]), "751,766 百万");
+});
+
 test("field-text.ts and the python gate resolve every fixture the same way", () => {
   for (const [name, [field, expected]] of Object.entries(fields)) {
     const rendered = text(field);
@@ -86,6 +96,13 @@ test("a percentage with a trailing note gets exactly one % sign", () => {
 test("a percentage note does not swallow the % suffix either", () => {
   // 注释前那段是纯数字：后缀补在注释前面，不是整串末尾。
   assert.equal(pctText("41.8（含一次性版权摊销）"), "41.8%（含一次性版权摊销）");
+});
+
+test("a note in front of the number still gets its % suffix", () => {
+  // 注释在前时没有「注释前那一段」可判断，退回按整串末尾补，不能整个丢掉 `%`。
+  assert.equal(pctText("（同比口径）12.5"), "（同比口径）12.5%");
+  assert.equal(pctText("（同比口径）12.5%"), "（同比口径）12.5%");
+  assert.equal(pctText("（口径不详）不适用"), "（口径不详）不适用");
 });
 
 test("pctText leaves absent placeholders and non-numeric text alone", () => {
