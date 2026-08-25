@@ -3,7 +3,7 @@
   "meta": {
     "companyId": "sh-600519-kweichow-moutai",
     "companyName": "贵州茅台酒股份有限公司",
-    "generatedAt": "2026-08-25T21:11:23+08:00",
+    "generatedAt": "2026-08-25T22:01:07+08:00",
     "dataCutoff": "2026-08-17",
     "validation": {
       "threshold": 7.0,
@@ -12,7 +12,7 @@
         "analysis": 9.8,
         "summary": 10.0
       },
-      "validatedAt": "2026-08-25T21:11:23+08:00"
+      "validatedAt": "2026-08-25T22:01:07+08:00"
     },
     "sources": {
       "collection": "research/companies/sh-600519-kweichow-moutai/financials-collection.json",
@@ -2423,7 +2423,7 @@
           "currentMultiples": {
             "_hint": "全部经 docs/research/tools/financial_rigor.py 验算，与第 1 步采集值对账",
             "marketCap": {
-              "value": "1,677,597,006,384.19",
+              "value": "1.6776万亿",
               "currency": "CNY",
               "asOf": "2026-08-14",
               "source": {
