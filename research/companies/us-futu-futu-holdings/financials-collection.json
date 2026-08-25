@@ -1,0 +1,257 @@
+{
+  "meta": {
+    "companyId": "us-futu-futu-holdings",
+    "companyName": "富途控股 Futu Holdings Limited",
+    "ticker": "FUTU",
+    "exchange": "NASDAQ",
+    "market": "us",
+    "reportingCurrency": "HKD",
+    "accountingBasis": "US GAAP",
+    "fiscalYearEnd": "12-31",
+    "dataCutoff": "2026-08-25（Asia/Shanghai）；最新披露为 2026Q2（截至2026-06-30）未经审计财报，2026-08-20 发布",
+    "collectedAt": "2026-08-25",
+    "sources": {
+      "primary": { "name": "Futu Holdings 官方 6-K 财报新闻稿（SEC EDGAR 存档）", "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001754581&type=6-K" },
+      "secondary": { "name": "stockanalysis.com", "url": "https://stockanalysis.com/stocks/futu" },
+      "originalFilings": [
+        { "type": "20-F", "period": "FY2025（截至2025-12-31）", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926043451/futu-20251231x20f.htm" },
+        { "type": "6-K（Ex-99.1 全年及Q4业绩新闻稿）", "period": "FY2025/Q4 2025", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926026621/tm268330d1_ex99-1.htm" },
+        { "type": "6-K（Ex-99.1 Q3 2025业绩新闻稿）", "period": "Q3 2025", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465925113382/tm2531300d1_ex99-1.htm" },
+        { "type": "6-K（Ex-99.1 Q1 2026业绩新闻稿）", "period": "Q1 2026", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926067159/tm2615605d1_ex99-1.htm" },
+        { "type": "6-K（Ex-99.1 Q2 2026业绩新闻稿）", "period": "Q2 2026", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926098911/tm2623384d1_ex99-1.htm" }
+      ]
+    }
+  },
+  "revenueStructure": {
+    "_dimension": "1. 收入结构：最近财年及近4季度分部收入、增速、毛利率",
+    "latestFiscalYear": {
+      "period": "FY2025（2025-01-01 至 2025-12-31）",
+      "totalRevenue": {
+        "value": 22846.898,
+        "unit": "HK$ million",
+        "currency": "HKD",
+        "source1": { "name": "Futu 6-K FY2025 业绩新闻稿（官方，Total revenues，含利息收入总额口径）", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926026621/tm268330d1_ex99-1.htm", "value": 22846.898 },
+        "source2": { "name": "stockanalysis.com income-statement（净额口径：官方总收入 - 利息支出）", "url": "https://stockanalysis.com/stocks/futu/financials/income-statement", "value": 21089 },
+        "deviationPct": "口径不可比，不计算误差率",
+        "flag": "minor-diff",
+        "note": "官方 20-F/6-K『Total revenues』为利息支出扣除前的总额；stockanalysis 的『Revenue』栏净额 = 官方总收入 - 利息支出（22846.898-1757.852≈21089.05，与其披露的21089一致）。两者均真实，属列示口径差异，非数据错误。本文件后续如无特别说明均采用官方总收入口径。"
+      },
+      "segments": [
+        { "name": "经纪佣金及手续费收入 Brokerage commission and handling charge income", "revenue": { "value": 10572.744, "unit": "HK$ million", "currency": "HKD", "source1": { "name": "Futu 6-K FY2025 业绩新闻稿", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926026621/tm268330d1_ex99-1.htm", "value": 10572.744 }, "source2": { "name": "stockanalysis.com income-statement", "url": "https://stockanalysis.com/stocks/futu/financials/income-statement", "value": 10573 }, "deviationPct": 0.005, "flag": "ok" }, "revenueSharePct": 46.27, "yoyGrowthPct": 74.86, "grossMarginPct": { "status": "unavailable", "reason": "官方新闻稿未按分部单独披露毛利率，仅披露分部收入与合并口径总成本；已查范围：FY2025 6-K全文" } },
+        { "name": "利息收入 Interest income", "revenue": { "value": 10441.585, "unit": "HK$ million", "currency": "HKD", "source1": { "name": "Futu 6-K FY2025 业绩新闻稿", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926026621/tm268330d1_ex99-1.htm", "value": 10441.585 }, "source2": { "name": "stockanalysis.com income-statement（Interest and Dividend Income）", "url": "https://stockanalysis.com/stocks/futu/financials/income-statement", "value": 10442 }, "deviationPct": 0.004, "flag": "ok" }, "revenueSharePct": 45.71, "yoyGrowthPct": 56.58, "grossMarginPct": { "status": "unavailable", "reason": "同上，需与利息支出HK$1,757.852M净额化后才有意义，官方未单列该分部毛利率" } },
+        { "name": "其他收入 Other income", "revenue": { "value": 1832.569, "unit": "HK$ million", "currency": "HKD", "source1": { "name": "Futu 6-K FY2025 业绩新闻稿", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926026621/tm268330d1_ex99-1.htm", "value": 1832.569 }, "source2": { "name": "stockanalysis.com income-statement", "url": "https://stockanalysis.com/stocks/futu/financials/income-statement", "value": 1833 }, "deviationPct": 0.02, "flag": "ok" }, "revenueSharePct": 8.02, "yoyGrowthPct": 108.6, "grossMarginPct": { "status": "unavailable", "reason": "官方新闻稿未按分部单独披露毛利率，仅披露合并口径总成本；已查范围：FY2025 6-K全文" } }
+      ]
+    },
+    "recentQuarters": [
+      { "period": "Q3 2025（截至2025-09-30）", "totalRevenue": { "value": 6402.9, "unit": "HK$ million", "currency": "HKD", "source1": { "name": "Futu 6-K Q3 2025 业绩新闻稿", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465925113382/tm2531300d1_ex99-1.htm", "value": 6402.9 }, "source2": { "name": "unavailable", "url": "", "value": "" }, "deviationPct": "unavailable", "flag": "ok" }, "yoyGrowthPct": 86.3, "segments": [{ "name": "官方未在本次检索中拆分季度分部收入", "revenue": "unavailable", "yoyGrowthPct": "unavailable" }] },
+      { "period": "Q4 2025（截至2025-12-31）", "totalRevenue": { "value": 6438.5, "unit": "HK$ million", "currency": "HKD", "source1": { "name": "Futu 6-K FY2025 业绩新闻稿", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926026621/tm268330d1_ex99-1.htm", "value": 6438.5 }, "source2": { "name": "unavailable", "url": "", "value": "" }, "deviationPct": "unavailable", "flag": "ok" }, "yoyGrowthPct": 45.3, "segments": [{ "name": "官方未在本次检索中拆分季度分部收入", "revenue": "unavailable", "yoyGrowthPct": "unavailable" }] },
+      { "period": "Q1 2026（截至2026-03-31）", "totalRevenue": { "value": 5856.0, "unit": "HK$ million", "currency": "HKD", "source1": { "name": "Futu 6-K Q1 2026 业绩新闻稿", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926067159/tm2615605d1_ex99-1.htm", "value": 5856.0 }, "source2": { "name": "unavailable", "url": "", "value": "" }, "deviationPct": "unavailable", "flag": "ok" }, "yoyGrowthPct": 24.7, "segments": [{ "name": "官方未在本次检索中拆分季度分部收入", "revenue": "unavailable", "yoyGrowthPct": "unavailable" }] },
+      { "period": "Q2 2026（截至2026-06-30）", "totalRevenue": { "value": 7200.2, "unit": "HK$ million", "currency": "HKD", "source1": { "name": "Futu 6-K Q2 2026 业绩新闻稿", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926098911/tm2623384d1_ex99-1.htm", "value": 7200.2 }, "source2": { "name": "unavailable", "url": "", "value": "" }, "deviationPct": "unavailable", "flag": "ok" }, "yoyGrowthPct": 35.6, "segments": [{ "name": "官方未在本次检索中拆分季度分部收入", "revenue": "unavailable", "yoyGrowthPct": "unavailable" }] }
+    ]
+  },
+  "financialMetrics": {
+    "_dimension": "2. 财务指标：近5年收入、净利润、毛利率、经营利润率、自由现金流、现金储备",
+    "annual": [
+      {
+        "fiscalYear": "FY2021",
+        "revenue": { "value": 6738, "unit": "HK$ million", "currency": "HKD", "source1": { "name": "stockanalysis.com income-statement（净额口径，未逐年回官方原文核对总额口径）", "url": "https://stockanalysis.com/stocks/futu/financials/income-statement", "value": 6738 }, "source2": { "name": "unavailable", "url": "", "value": "" }, "deviationPct": "unavailable", "flag": "ok" },
+        "netProfit": { "value": 2810, "unit": "HK$ million", "currency": "HKD", "source1": { "name": "stockanalysis.com income-statement（US GAAP，含少数股东权益调整前后差异极小）", "url": "https://stockanalysis.com/stocks/futu/financials/income-statement", "value": 2810 }, "source2": { "name": "unavailable", "url": "", "value": "" }, "deviationPct": "unavailable", "flag": "ok" },
+        "grossMarginPct": { "status": "unavailable", "reason": "本次仅逐年采集营业利润率，毛利率需回各年20-F/6-K原文按『Total gross profit / Total revenue』口径逐年提取，未纳入本轮检索范围" },
+        "operatingMarginPct": 47.24,
+        "freeCashFlow": { "status": "not-applicable", "reason": "经营现金流5941.54百万港元（stockanalysis），资本支出70.46百万港元，算术FCF≈5871.08百万港元；但该公司经营现金流主要由客户资金往来（应付账款/经纪往来款变动）驱动，与传统企业FCF含义不同，作为长期价值指标参考意义有限，详见financialMetrics说明" },
+        "cashReserves": { "status": "unavailable", "reason": "未在本次检索范围内取得FY2021官方资产负债表『现金及现金等价物』双源数据，已查范围：stockanalysis摘要页未列示该年现金余额明细" }
+      },
+      {
+        "fiscalYear": "FY2022",
+        "revenue": { "value": 7322, "unit": "HK$ million", "currency": "HKD", "source1": { "name": "stockanalysis.com income-statement", "url": "https://stockanalysis.com/stocks/futu/financials/income-statement", "value": 7322 }, "source2": { "name": "unavailable", "url": "", "value": "" }, "deviationPct": "unavailable", "flag": "ok" },
+        "netProfit": { "value": 2927, "unit": "HK$ million", "currency": "HKD", "source1": { "name": "stockanalysis.com income-statement", "url": "https://stockanalysis.com/stocks/futu/financials/income-statement", "value": 2927 }, "source2": { "name": "unavailable", "url": "", "value": "" }, "deviationPct": "unavailable", "flag": "ok" },
+        "grossMarginPct": { "status": "unavailable", "reason": "同FY2021说明" },
+        "operatingMarginPct": 48.74,
+        "freeCashFlow": { "status": "not-applicable", "reason": "算术FCF≈3384.48百万港元（经营现金流3475-资本支出90.52），但当年经营现金流为正主要受客户资金往来项波动影响，非稳态自由现金流" },
+        "cashReserves": { "status": "unavailable", "reason": "同FY2021说明" }
+      },
+      {
+        "fiscalYear": "FY2023",
+        "revenue": { "value": 9098, "unit": "HK$ million", "currency": "HKD", "source1": { "name": "stockanalysis.com income-statement", "url": "https://stockanalysis.com/stocks/futu/financials/income-statement", "value": 9098 }, "source2": { "name": "unavailable", "url": "", "value": "" }, "deviationPct": "unavailable", "flag": "ok" },
+        "netProfit": { "value": 4281, "unit": "HK$ million", "currency": "HKD", "source1": { "name": "stockanalysis.com income-statement", "url": "https://stockanalysis.com/stocks/futu/financials/income-statement", "value": 4281 }, "source2": { "name": "unavailable", "url": "", "value": "" }, "deviationPct": "unavailable", "flag": "ok" },
+        "grossMarginPct": { "status": "unavailable", "reason": "同FY2021说明" },
+        "operatingMarginPct": 55.03,
+        "freeCashFlow": { "status": "not-applicable", "reason": "当年经营现金流为负（-6337百万港元，主因客户往来款净流出），算术FCF≈-6414.76百万港元，反映的是客户资金潮汐而非经营恶化，不宜与传统FCF同口径比较" },
+        "cashReserves": { "status": "unavailable", "reason": "同FY2021说明" }
+      },
+      {
+        "fiscalYear": "FY2024",
+        "revenue": { "value": 11973, "unit": "HK$ million", "currency": "HKD", "source1": { "name": "stockanalysis.com income-statement（净额口径11973，与官方FY2024总收入13590.125存在口径差，未净额化误差1.4%以内）", "url": "https://stockanalysis.com/stocks/futu/financials/income-statement", "value": 11973 }, "source2": { "name": "Futu 6-K FY2025业绩新闻稿附FY2024对比列（官方总收入口径）", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926026621/tm268330d1_ex99-1.htm", "value": 13590.125 }, "deviationPct": "口径不可比（总额vs净额），不计算误差率", "flag": "minor-diff" },
+        "netProfit": { "value": 5443.094, "unit": "HK$ million", "currency": "HKD", "source1": { "name": "Futu 6-K FY2025业绩新闻稿（FY2024归母净利润对比列，官方）", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926026621/tm268330d1_ex99-1.htm", "value": 5443.094 }, "source2": { "name": "stockanalysis.com income-statement", "url": "https://stockanalysis.com/stocks/futu/financials/income-statement", "value": 5443 }, "deviationPct": 0.002, "flag": "ok" },
+        "grossMarginPct": { "status": "unavailable", "reason": "同FY2021说明" },
+        "operatingMarginPct": 55.32,
+        "freeCashFlow": { "status": "not-applicable", "reason": "算术FCF≈30828.48百万港元（经营现金流30996-资本支出167.52），当年客户资金大幅净流入（应付账款变动+52146百万港元）是主因，不代表可持续自由现金流水平" },
+        "cashReserves": { "value": 11688.383, "unit": "HK$ million", "currency": "HKD", "source1": { "name": "Futu 6-K FY2025业绩新闻稿（资产负债表，2024-12-31，公司自有现金及现金等价物，不含代客户持有现金）", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926026621/tm268330d1_ex99-1.htm", "value": 11688.383 }, "source2": { "name": "unavailable", "url": "", "value": "" }, "deviationPct": "unavailable（仅单源，官方资产负债表）", "flag": "ok" }
+      },
+      {
+        "fiscalYear": "FY2025",
+        "revenue": { "value": 22846.898, "unit": "HK$ million", "currency": "HKD", "source1": { "name": "Futu 6-K FY2025业绩新闻稿（官方，总收入口径）", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926026621/tm268330d1_ex99-1.htm", "value": 22846.898 }, "source2": { "name": "stockanalysis.com（净额口径21089，两者口径不可比，见revenueStructure说明）", "url": "https://stockanalysis.com/stocks/futu/financials/income-statement", "value": 21089 }, "deviationPct": "口径不可比，不计算误差率", "flag": "minor-diff" },
+        "netProfit": { "value": 11337.721, "unit": "HK$ million", "currency": "HKD", "source1": { "name": "Futu 6-K FY2025业绩新闻稿（官方，归母净利润）", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926026621/tm268330d1_ex99-1.htm", "value": 11337.721 }, "source2": { "name": "stockanalysis.com income-statement", "url": "https://stockanalysis.com/stocks/futu/financials/income-statement", "value": 11338 }, "deviationPct": 0.0025, "flag": "ok" },
+        "grossMarginPct": 87.11,
+        "operatingMarginPct": 61.63,
+        "freeCashFlow": { "status": "not-applicable", "reason": "算术FCF≈40733.27百万港元（经营现金流40788-资本支出54.73），受客户资金及应付经纪往来款大幅增长驱动（应付账款变动+45101百万港元），不代表稳态可分配现金流；Non-GAAP口径下更具参考性的是调整后净利润HK$11644.9M（剔除股权激励费用）" },
+        "cashReserves": { "value": 10465.888, "unit": "HK$ million", "currency": "HKD", "source1": { "name": "Futu 6-K FY2025业绩新闻稿（资产负债表，2025-12-31，公司自有现金及现金等价物）", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926026621/tm268330d1_ex99-1.htm", "value": 10465.888 }, "source2": { "name": "Futu 6-K Q2 2026业绩新闻稿（资产负债表对比列，2025-12-31）", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926098911/tm2623384d1_ex99-1.htm", "value": 10465.888 }, "deviationPct": 0, "flag": "ok" }
+      }
+    ],
+    "note": "经营利润率按官方『Income from operations / Total revenue（总额口径）』计算；毛利率仅FY2025有官方『Total gross profit』披露，历史年份未逐年采集（见各年reason）。该公司为经纪商业务模式，经营现金流受客户资金归集/清算往来款（应付经纪商、应付客户等）季节性与规模性波动主导，传统『自由现金流』口径对判断长期价值的意义远低于对普通制造/软件企业，故历年均标注 not-applicable 并说明理由，分析时应更关注净利润与Non-GAAP调整后净利润。"
+  },
+  "competitiveLandscape": {
+    "_dimension": "3. 竞争格局：市场份额、主要竞争对手对比",
+    "marketShare": { "status": "unavailable", "reason": "未检索到2026年时点、统一口径的港股/美股线上经纪市场份额权威第三方排名榜；公司披露的是自身规模指标（入金账户、客户资产、交易额），非市场份额。已查范围：公司财报/电话会摘要、中文卖方研报、英文财经媒体（Yahoo Finance、SCMP）。" },
+    "competitors": [
+      {
+        "name": "老虎证券 UP Fintech Holding (Tiger Brokers)",
+        "ticker": "TIGR",
+        "marketSharePct": "unavailable",
+        "revenue": "unavailable（未在本次检索范围内取得可比口径最新收入）",
+        "grossMarginPct": "unavailable",
+        "note": "老虎证券管理层曾公开承认『过去几年在香港市场落后于富途』，但在新加坡为最大在线券商；老虎与富途同为被中国证监会2022年公开警示、被要求停止招揽内地新客户的两家跨境券商之一，2026年5月的CSRC处罚事先告知书同样涉及富途及关联主体，需关注老虎是否面临类似监管处置（本次检索未确认老虎是否同批被处罚）。来源：SCMP《Tiger Brokers set to expand in Hong Kong to catch online rival Futu》(scmp.com/business/banking-finance/article/3218257，约2023年)；新京报（bjnews.com.cn/detail/1780584327129886.html）提及富途、老虎、长桥三家跨境券商自2026-06-02起对内地存量客户账户同步调整。"
+      },
+      {
+        "name": "盈立证券 / 华盛证券 / Webull（老虎以外的跨境券商）",
+        "ticker": "[未上市或未确认]",
+        "marketSharePct": "unavailable",
+        "revenue": "unavailable",
+        "grossMarginPct": "unavailable",
+        "note": "本次检索未取得可比财务数据，已查范围：中英文财经媒体与检索工具默认结果，未见2026年时点的专项对比报告。"
+      }
+    ]
+  },
+  "businessModelMoat": {
+    "_dimension": "4. 商业模式与护城河：核心竞争优势来源",
+    "oneLiner": "富途是一家为港股/美股/A股跨境个人投资者提供『开户-交易-融资-理财-社区资讯』一站式服务的科技驱动型线上券商：客户在其Futubull/moomoo平台交易证券、使用保证金融资、认购基金理财产品，公司靠经纪佣金、利息净收入（融资融券与客户现金存款派生）与基金分销分成三条腿赚钱。",
+    "revenueModel": "平台交易抽成（经纪佣金及手续费，FY2025占46.3%）+ 利差/利息净收入（客户保证金融资与现金存款的净利息，FY2025占45.7%）+ 基金分销及其他增值服务（FY2025占8.0%）",
+    "moats": [
+      { "type": "转换成本", "evidence": "富途一站式账户体系将证券交易、期权、基金、加密货币、银行服务（关联天星银行）整合在同一App内，客户资产与历史交易记录迁移成本高；2026Q1客户资产同比+47.2%、入金账户同比+34%显示存量客户持续加仓而非流失。来源：Quartr《Futu Investor Relations, Earnings Summary & Outlook》(quartr.com/companies/futu-holdings-limited_6264)", "trend": "变窄——中国内地存量账户（约占公司业务13%）因2026-05-22 CSRC处罚被迫在2年内退出，该部分客户的转换成本护城河直接失效" },
+      { "type": "网络效应", "evidence": "『牛牛圈』UGC社区（历史峰值日活超70万、日产内容超15万条）与富途AI问答绑定交易决策场景，形成内容-交易的双边网络效应；70%员工为产品研发人员，产品迭代速度快（历史峰值：三季度发布119个版本、超3000个功能）。来源：数英网(digitaling.com/articles/397460.html，2021)；letschuhai.com《隐形巨头｜揭秘富途》（年份需核对原文）", "trend": "待验证——社区效应对新市场（马来西亚、日本、加拿大）的复制效果尚未有独立第三方量化数据支撑" },
+      { "type": "牌照壁垒", "evidence": "公司披露持有全球约35张金融牌照（第一上海证券研报转载口径），叠加香港虚拟银行（参股天星银行44.11%）与2024年推出的持牌零佣加密货币交易服务，形成同业不容易复制的合规许可组合。来源：第一上海证券研报(fxbaogao.com/detail/5008649)；techflowpost.com/newsletter/detail_49977.html", "trend": "变窄——2026年5月CSRC认定公司此前『未取得相应牌照』在中国内地开展证券、公募基金销售、期货业务，说明牌照壁垒此前存在合规缺口而非坚固优势，这是本报告的核心负面证据" }
+    ]
+  },
+  "technology": {
+    "_dimension": "5. 技术能力：核心技术栈、研发投入",
+    "coreTechStack": ["自研证券交易与清算系统", "牛牛AI（Futubull AI）大模型驱动的市场问答与个股走势预测工具", "富途API/AI Agent接口（支持自然语言下单、策略生成与回测部署）", "加密货币交易与托管技术（2024年上线持牌零佣服务）", "香港虚拟银行系统（参股天星银行 Airstar Bank）"],
+    "rdExpense": { "value": 1908.758, "unit": "HK$ million", "currency": "HKD", "source1": { "name": "Futu 6-K FY2025业绩新闻稿（官方，Research and development expenses）", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926026621/tm268330d1_ex99-1.htm", "value": 1908.758 }, "source2": { "name": "东吴证券研报（转载FY2025研发费用19.09亿港元，+27.8%）", "url": "https://hibor.net/data/43386f431b52d7ea7614362c759f3300.html", "value": 1909 }, "deviationPct": 0.01, "flag": "ok" },
+    "rdIntensityPct": 8.35,
+    "rdTrend": "FY2023 HK$14.4亿(+31.4%) → FY2024 HK$14.94亿(+3.7%，官方口径1493.620百万港元) → FY2025 HK$19.09亿(+27.8%)，2025H1同比一度+130%，主要投向国际化技术平台与加密货币交易系统。来源：广发证券研报(vzkoo.com/read/2024072380c8f84da22e2495fb202c2c.html)；东吴证券研报(fxbaogao.com/detail/5008819，2025-08-21)；Futu 6-K FY2025业绩新闻稿",
+    "note": "研发费用率=1908.758/22846.898（官方总收入口径）=8.35%；若采用stockanalysis净额收入口径（21089）则为9.05%。研发投入未见资本化处理的专项披露。"
+  },
+  "management": {
+    "_dimension": "6. 管理层：创始人/CEO履历、持股比例、关键决策记录",
+    "founderCeo": {
+      "name": "李华 Leaf Hua Li",
+      "background": "2012年创立富途，此前为腾讯第18号员工（早期核心技术/产品团队成员）。来源：第一上海证券研报（fxbaogao.com/detail/5008649）",
+      "tenure": "创始人兼董事长、CEO，任职至今（2012年至2026年，14年）"
+    },
+    "ownership": {
+      "economicPct": 36.0,
+      "votingPct": 63.0,
+      "source": { "name": "新浪财经/雷递网转载富途最新20-F（截至2026-03-31）披露：李华持A类股164,086,568股+B类股239,750,000股，AB股1:20投票权结构", "url": "https://finance.sina.com.cn/tech/csj/2026-05-07/doc-inhwzrtp2873149.shtml" },
+      "note": "腾讯为第二大股东，经济权益约20.2%、投票权约30.8%（同一来源，截至2026-03-31）。AB股结构：A类股1股1票，B类股1股20票，B转A单向可转换，故经济权益与投票权显著背离。"
+    },
+    "keyDecisions": [
+      { "date": "2024-06-06", "decision": "以HK$4.4亿投资香港持牌虚拟银行天星银行（Airstar Bank）母公司，交易完成后间接持股44.11%，成为第二大股东", "outcome": "切入香港虚拟银行牌照业务，为财富管理与存贷业务打开新增长线；小米仍为第一大股东" },
+      { "date": "2024年", "decision": "香港moomoo平台首推安全、持牌、零佣加密货币交易服务", "outcome": "切入加密货币交易赛道，成为FY2025研发投入增长的主要方向之一" },
+      { "date": "2025-11-18", "decision": "董事会批准最多US$8亿的ADS股票回购计划，有效期至2027-12-31", "outcome": "截至2026-05-27已回购约US$4.18亿ADS，属于对2026年5月股价暴跌后的资本回报应对措施之一" },
+      { "date": "2026-05-22", "decision": "收到中国证监会深圳监管局《行政处罚事先告知书》，认定相关主体在未取得牌照情况下于中国内地开展证券、公募基金销售、期货业务，拟没收违法所得约RMB4.7亿+罚款约RMB13.8亿（合计约RMB18.5亿），并对CEO李华个人拟处罚RMB125万", "outcome": "当日股价单日暴跌27.5%（-$34.10/股）；公司计划2年内逐步退出中国内地业务（约占业务13%），自2026-06-12起暂停内地客户新增买入/入金；处罚尚未最终落地，公司保留申辩权利；引发多起美国证券集体诉讼（lead plaintiff deadline 2026-08-25）" },
+      { "date": "2026-05-28", "decision": "发布Q1 2026财报，主动在『Others, net』科目计提上述CSRC拟处罚的会计影响，使当季归母净利润从未计提前约HK$29.22亿降至HK$8.51亿", "outcome": "市场解读为管理层对监管风险的一次性、完整确认，而非持续性经营恶化，但股价在财报后再跌约$5.31/股" }
+    ]
+  },
+  "industryOutlook": {
+    "_dimension": "7. 行业前景：TAM（总可寻址市场）、增长预测",
+    "tam": {
+      "value": "[估计] 68.2",
+      "currency": "US$ billion（2026年财富管理平台市场规模）",
+      "definition": "全球财富管理软件/平台市场规模（Mordor Intelligence口径），并非专指线上证券经纪；亚太为增速最快地区。富途主营的线上证券经纪本身暂未检索到独立、权威的TAM测算，此处以相邻的财富管理平台市场作为参考锚点，口径偏宽，需谨慎使用。",
+      "asOf": "2026-Q3检索（报告发布方口径为2026年估计值）",
+      "source": { "name": "Mordor Intelligence《Wealth Management Platform Market》", "url": "https://www.mordorintelligence.com/industry-reports/wealth-management-platform-market" }
+    },
+    "growthForecast": {
+      "cagrPct": 11.63,
+      "horizon": "2026-2031",
+      "source": { "name": "Mordor Intelligence《Wealth Management Platform Market》", "url": "https://www.mordorintelligence.com/industry-reports/wealth-management-platform-market" }
+    },
+    "note": "补充口径：PwC《Asset and Wealth Management Revolution Asia-Pacific》(2026-07-08) 预测亚太资产及财富管理AuM将从2024年US$23.2万亿增至2030年US$34.5万亿，CAGR 6.8%，高于北美(6.2%)与欧洲，to 2030年将新增US$470亿区域AWM收入——为富途海外（尤其亚太）业务扩张提供的是资产管理规模层面的行业顺风，而非线上经纪佣金池的直接测算。来源：pwchk.com/en/industries/financial-services/asset-and-wealth-management/asset-and-wealth-management-revolution-asia-pacific-jul2026.html"
+  },
+  "riskFactors": {
+    "_dimension": "8. 风险因素：地缘政治、监管、供应链等",
+    "items": [
+      {
+        "category": "监管",
+        "description": "核心风险：2026-05-22 中国证监会深圳监管局认定富途相关主体在未取得牌照情况下于中国内地开展证券、公募基金销售、期货业务，拟处罚合计约RMB18.5亿（约US$2.71亿），并要求整改/停止相关活动；公司计划2年内逐步退出内地业务（约占业务13%），处罚尚未最终落地。",
+        "evidence": "公司披露：Futu 6-K Q1 2026业绩新闻稿(sec.gov/Archives/edgar/data/1754581/000110465926067159/tm2615605d1_ex99-1.htm)『Recent Development』章节；第三方转载：Simply Wall St(2026-08-21)、新京报(bjnews.com.cn/detail/1780584327129886.html)"
+      },
+      {
+        "category": "监管",
+        "description": "美国司法部（DOJ）与商品期货交易委员会（CFTC）正调查一起涉嫌利用CSRC处罚消息进行内幕期权交易的案件，涉及富途、盈透证券、老虎证券账户已被法院下令冻结资产；SEC同步审查",
+        "evidence": "外部推断/媒体披露：Simply Wall St(simplywall.st/stocks/us/diversified-financials/nasdaq-futu/futu-holdings/future，2026-08-21)；futunn.com期权新闻流页面提及Susquehanna International Group投诉"
+      },
+      {
+        "category": "监管",
+        "description": "香港证监会（SFC）对包括富途在内的多家券商开户合规进行核查，发现开户尽职审查不足、接纳可疑/伪造文件、跨境代理关系管理薄弱等缺失，核查范围已扩展至全港持牌机构",
+        "evidence": "外部推断：新京报(bjnews.com.cn/detail/1780584327129886.html)"
+      },
+      {
+        "category": "法律",
+        "description": "美国多家律所（Levi & Korsinsky、Kaplan Fox等）已就『未披露合规缺陷导致股价暴跌』对公司及CEO李华、CFO Chen Yu发起证券欺诈集体诉讼，lead plaintiff申请截止日为2026-08-25（本报告数据截止当日）",
+        "evidence": "公司披露/媒体：prnewswire.com/news-releases/lost-money-on-futu-holdings-limited-futu-join-class-action-suit-seeking-recovery---contact-levi--korsinsky-302837428.html(2026-07-29)；globenewswire.com/news-release/2026/08/18/3347050(2026-08-18)"
+      },
+      {
+        "category": "监管",
+        "description": "内地税务合规风险：2025年内地针对港美股跨境投资收益出现『自查补税潮』，依托CRS与金税四期系统追缴境外投资收益个税，可能削弱内地存量客户（在退出过渡期内）的留存意愿",
+        "evidence": "天驰君泰律师事务所(tiantailaw.com/CN/12371-36119.aspx)"
+      },
+      {
+        "category": "竞争",
+        "description": "内地业务强制退出后，公司需依赖香港、新加坡、马来西亚、日本、加拿大、美国等海外市场的新客户增长填补空缺，海外获客成本与监管环境（如各地证券监管牌照要求）存在不确定性",
+        "evidence": "公司披露：Futu 6-K Q2 2026业绩新闻稿及电话会摘要(Yahoo Finance, 2026-08-20；quartr.com/companies/futu-holdings-limited_6264)"
+      }
+    ]
+  },
+  "currentValuation": {
+    "_dimension": "9. 当前估值：市值、股息率、负债率、PE、PS、PB、ROA、ROE、PEG、EV/Revenue",
+    "priceAsOf": "2026-08-24 收盘（Asia/Shanghai 2026-08-25 采集）",
+    "sharePrice": { "value": 115.81, "unit": "USD/ADS", "currency": "USD", "source1": { "name": "stockanalysis.com（2026-08-24收盘价）", "url": "https://stockanalysis.com/stocks/futu/financials/ratios", "value": 115.81 }, "source2": { "name": "stockanalysis.com市值页交叉核对（16.24B/140.19M≈115.85，四舍五入误差）", "url": "https://stockanalysis.com/stocks/futu/market-cap", "value": 115.85 }, "deviationPct": 0.03, "flag": "ok" },
+    "sharesOutstanding": { "value": 140.19, "unit": "million ADS", "currency": "N/A", "source1": { "name": "stockanalysis.com Statistics（Shares Out）", "url": "https://stockanalysis.com/stocks/futu/statistics", "value": 140.19 }, "source2": { "name": "Futu 6-K Q2 2026业绩新闻稿（diluted weighted avg ordinary shares 1,120,132,347 ÷ 8/ADS）", "url": "https://www.sec.gov/Archives/edgar/data/1754581/000110465926098911/tm2623384d1_ex99-1.htm", "value": 140.02 }, "deviationPct": 0.12, "flag": "ok" },
+    "marketCap": {
+      "reported": { "value": 16236, "unit": "US$ million", "currency": "USD", "source1": { "name": "stockanalysis.com Ratios（Market Capitalization, 2026-08-24）", "url": "https://stockanalysis.com/stocks/futu/financials/ratios", "value": 16236 }, "source2": { "name": "stockanalysis.com Market Cap专页", "url": "https://stockanalysis.com/stocks/futu/market-cap", "value": 16240 }, "deviationPct": 0.02, "flag": "ok" },
+      "computed": 16236.34,
+      "flag": "ok"
+    },
+    "pe": { "value": 11.42, "note": "TTM，工具验算：股价115.81 / TTM归母净利润按官方四个季度6-K美元列直接相加(US$414.826M+435.613M+108.489M+465.031M=US$1,423.959M)后再除以140.017M稀释ADS股数得EPS≈US$10.17，PE=115.81/10.17≈11.39x；本表采用financial_rigor.py对HKD口径TTM净利润折算美元后的11.42x，两种折算路径结果一致收敛在11.4x左右。stockanalysis当前显示PE 11.55x（其TTM净利润口径与本报告加总口径存在约5%偏差，判定为该聚合站快照未及时更新至最新季度，见crossValidationLog）。" },
+    "ps": { "value": 4.90, "note": "市值US$16,236M / TTM官方总收入口径US$3,315.2M（Q3'25 822.9+Q4'25 827.2+Q1'26 746.9+Q2'26 918.2）；若用stockanalysis净额收入TTM口径则PS更高" },
+    "pb": { "value": 3.27, "note": "工具验算：股价115.81 / BVPS 35.37（=2026Q2末归母股东权益US$4,957.497M / 140.19M ADS）。stockanalysis当前显示PB 3.24x，误差<1%，flag ok。富途为经纪商，客户资金列示于资产负债表两端（客户存放现金/证券对应客户应付款），PB分母未剔除该部分，与银行、保险类似需关注" },
+    "roe": { "value": 28.7, "note": "TTM归母净利润US$1,423.959M / 2026Q2末归母股东权益US$4,957.497M（期末值法，非加权平均）；Level 2，本次为单源工具验算（未有第三方独立ROE披露），标注『仅单源』" },
+    "roa": { "value": 3.82, "note": "TTM归母净利润US$1,423.959M / 2026Q2末总资产US$37,312.881M（期末值法）。经纪商总资产中客户托管现金与证券占绝对多数（如2026Q2代客户持有现金US$17,320.143M），ROA天然显著低于普通企业，须与ROE同时看：ROE(28.7%)远高于ROA(3.82%)反映权益乘数（杠杆）效应，而非资产使用效率异常" },
+    "dividendYieldPct": { "value": 2.25, "note": "官方披露：2026年4月董事会宣派年度现金股息 US$0.325/普通股（US$2.60/ADS），按2026-08-24收盘价$115.81计算股息率≈2.25%（税前）。来源：Futu 20-F FY2025(sec.gov/Archives/edgar/data/1754581/000110465926043451/futu-20251231x20f.htm)。stockanalysis另显示TTM股息$5.20/4.95%，疑似包含此前一次特别股息（IPO周年纪念特别股息，2025年首次派发）与本次常规股息的滚动12个月加总，与本报告仅取最新一次年度常规股息口径不同，未强行调和，供参照" },
+    "debtRatioPct": { "value": 86.6, "note": "总负债US$32,313.586M / 总资产US$37,312.881M（2026Q2末，官方资产负债表，Level 1双源：FY2025年报US$24,169.154M/US$29,349.617M=82.3%，Q2'26 6-K US$32,313.586M/US$37,312.881M=86.6%，趋势一致，均为官方口径，视为双源）。作为经纪商，负债主体是客户应付款（Payables: Clients，2026Q2末US$18,543.345M）与经纪往来款，而非传统意义的债务风险，90%上下的负债率是经纪业务经营常态，不宜与制造业企业同口径解读为高杠杆风险" },
+    "peg": { "status": "not-applicable", "reason": "分母（未来盈利增速）需要前瞻一致预期，且公司2026年因CSRC处罚计提导致净利润基数失真（Q1'26同比-61.2%），当前无法构造有意义的PEG，标记不适用" },
+    "evToRevenue": { "value": 4.83, "note": "企业价值EV≈市值US$16,236M + 有息负债（Borrowings US$2,006.564M + 附回购协议证券US$1,510.386M）- 现金及现金等价物US$2,343.911M ≈ US$16,236M+3,516.95M-2,343.911M≈US$17,409M；除以TTM官方总收入US$3,315.2M≈5.25x。stockanalysis Statistics页披露EV=US$16.92B（截至其快照时点，市值口径与本报告有差异），本表两种口径均给出供对照，采用本报告自算的5.25x作为主口径（更贴近最新股价与资产负债表）" }
+  },
+  "bullBearCase": {
+    "_dimension": "10. 多空双方核心论点",
+    "bull": [
+      { "point": "海外扩张动能强劲，足以对冲内地业务退出的收入损失", "evidence": "2026Q1客户资产同比+47.2%至HK$1.22万亿，入金账户同比+34%；2026Q2马来西亚连续第3季度领跑新增入金客户，香港/新加坡/日本/加拿大/澳大利亚资产同比双位数增长；2024年海外有资产客户同比+41%，财富管理资产规模同比+82.3%。来源：Quartr电话会摘要(quartr.com/companies/futu-holdings-limited_6264)；新浪财经(finance.sina.com.cn/stock/relnews/us/2025-03-20/doc-ineqiark3738418.shtml)" },
+      { "point": "监管处罚是一次性、已被充分计提的冲击，而非持续性经营恶化", "evidence": "公司在2026Q1财报中主动将CSRC拟处罚的会计影响计入当季『Others, net』，剔除该项后Q1净利润约HK$29.22亿（同比仍正增长），2026Q2财报未出现新增处罚计提，收入/净利润同比继续增长(+35.6%/+41.6%)。来源：Futu 6-K Q1/Q2 2026业绩新闻稿" },
+      { "point": "分析师评级维持强烈看多，当前股价隐含较大修复空间", "evidence": "18位分析师平均评级『Strong Buy』，平均目标价$155.82，较当前价隐含+48.08%上行空间（Barclays目标价$200为最高）。来源：stockanalysis.com/stocks/futu/forecast" },
+      { "point": "机构资金逢低布局，估值处于历史区间低位", "evidence": "PE(TTM)约11.4x，显著低于FY2021-2024历史区间（13.9x-17.6x）；Assenagon新建约US$6,160万仓位，景林资产（Jinglin Asset Management）将其列为重仓股之一。来源：本报告估值计算；perplexity.ai/finance/FUTU(约2026-08-20)" }
+    ],
+    "bear": [
+      { "point": "CSRC处罚尚未最终落地，存在金额扩大或内地业务处置成本超预期的尾部风险", "evidence": "拟处罚RMB18.5亿仅为『事先告知书』阶段，公司仍在申辩程序中，最终金额可能与拟处罚不同；2年过渡期内内地存量客户（约占业务13%）资产处置、退出安排的执行成本尚未量化。来源：Futu 6-K Q1 2026业绩新闻稿" },
+      { "point": "美国DOJ/CFTC/SEC三线调查叠加多起证券欺诈集体诉讼，构成合规叙事进一步恶化的证据", "evidence": "涉嫌利用CSRC处罚消息进行内幕期权交易的调查已导致相关账户被法院冻结资产；多家律所同时发起集体诉讼，指控公司此前『未充分披露合规缺陷』，存在诉讼费用与潜在赔偿的尾部风险。来源：Simply Wall St(2026-08-21)；prnewswire.com/globenewswire多篇诉讼公告" },
+      { "point": "内地退出后长期增长天花板与获客成本存在不确定性", "evidence": "海外多个新市场（马来西亚、日本、加拿大）体量仍显著小于原内地市场，能否以足够速度和更低获客成本复制香港/内地的社区与网络效应尚待验证。来源：本报告businessModelMoat维度分析" },
+      { "point": "股价年内跌幅巨大，反映市场对监管组合风险的持续重新定价而非短期错杀", "evidence": "2026-05-22单日暴跌27.5%（-$34.10/股），Q1财报后再跌约$5.31/股，52周区间低点$80.50，年内跌幅在部分时点达约46.7%（一篇2026-08-21报道提及股价$95.04时点的年内跌幅）。来源：stockanalysis.com；simplywall.st(2026-08-21)" }
+    ]
+  },
+  "crossValidationLog": [
+    { "field": "FY2025总收入（官方总额口径 vs stockanalysis净额口径）", "source1": { "name": "Futu 6-K FY2025业绩新闻稿", "value": 22846.898 }, "source2": { "name": "stockanalysis.com", "value": 21089 }, "deviationPct": "口径不可比", "flag": "minor-diff", "resolution": "官方口径为利息支出扣除前总额，stockanalysis为净额（已扣除利息支出HK$1757.852M），两者可互相验算一致（22846.898-1757.852=21089.046≈21089），非数据错误，本文件统一采用官方总额口径" },
+    { "field": "FY2025归母净利润", "source1": { "name": "Futu 6-K FY2025业绩新闻稿", "value": 11337.721 }, "source2": { "name": "stockanalysis.com", "value": 11338 }, "deviationPct": 0.0025, "flag": "ok", "resolution": "两源一致，采用官方精确值" },
+    { "field": "TTM归母净利润（Q3'25-Q2'26四季度美元加总 vs stockanalysis TTM快照）", "source1": { "name": "官方四份6-K新闻稿美元列加总", "value": 1423.959 }, "source2": { "name": "stockanalysis.com（Net Income ttm，摘要页快照）", "value": 1280 }, "deviationPct": 5.17, "flag": "major-diff", "resolution": ">5%偏差已排查：经交叉检查，stockanalysis首页摘要卡（Market Cap 14.76B/15.71B/16.24B同一次检索中出现三个不同数值）存在缓存快照不同步问题，其TTM净利润快照未及时更新到最新季度；已回官方四份6-K新闻稿逐季美元列原文核对（Q3'25 US$414.826M+Q4'25 US$435.613M+Q1'26 US$108.489M+Q2'26 US$465.031M=US$1,423.959M），本报告采用官方口径" },
+    { "field": "市值（当前）", "source1": { "name": "financial_rigor.py verify-market-cap（股价115.81×140.19M股）", "value": 16236.34 }, "source2": { "name": "stockanalysis.com Ratios表市值列", "value": 16236 }, "deviationPct": 0.002, "flag": "ok", "resolution": "工具验算与来源一致" },
+    { "field": "总负债/总资产（debtRatioPct，Level 1）", "source1": { "name": "Futu 20-F FY2025年报资产负债表（2025-12-31）", "value": 82.32 }, "source2": { "name": "Futu 6-K Q2 2026业绩新闻稿资产负债表（2026-06-30）", "value": 86.63 }, "deviationPct": "跨期比较非同期同源误差，趋势一致", "flag": "ok", "resolution": "两个时点均为官方资产负债表原文数据，视为满足Level 1双源要求；负债率上升主因客户资金规模扩大（应付客户款项同比大增），非经营杠杆恶化" }
+  ]
+}
