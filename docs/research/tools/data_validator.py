@@ -144,6 +144,62 @@ def resolve_multi_field(value):
     return "%s（%s）" % (legs[0], " / ".join(legs[1:])) if len(legs) > 1 else legs[0]
 
 
+# 量级词表：`unit` 里可能出现的量级，**长的先匹配**（`万亿` 必须排在 `亿` 与 `万` 前面，
+# 否则 `万亿元` 会被读成 `万`）。field-text.ts 的 MAGNITUDES 是同一张表。
+MAGNITUDES = (
+    ("万亿", 1e12), ("trillion", 1e12),
+    ("十亿", 1e9), ("billion", 1e9), ("bn", 1e9),
+    ("亿", 1e8),
+    ("千万", 1e7),
+    ("百万", 1e6), ("million", 1e6), ("mn", 1e6),
+    ("万", 1e4),
+    ("千", 1e3), ("thousand", 1e3),
+)
+
+# 单位串自己是否已经点明币种：`亿元` / `千美元` / `RMB million` 都不用再补 currency。
+CURRENCY_BEARING = re.compile(r"元|币|RMB|CNY|USD|HKD|EUR|JPY|GBP|TWD|SGD|[$￥€£]", re.I)
+
+
+def magnitude_of(label):
+    """单位串里声明的量级；没有量级词返回 None（`"HKD"`、`"股"`、`"currency"`）。"""
+    lower = label.lower()
+    for token, scale in MAGNITUDES:
+        if token in lower:
+            return scale
+    return None
+
+
+def annotation(value):
+    """注解键（unit / currency）取成字符串：对象与 None 当作没写。"""
+    if isinstance(value, str):
+        return value.strip()
+    if value is None or isinstance(value, (dict, list, bool)):
+        return ""
+    return str(value)
+
+
+def unit_label(field):
+    """校验对象的单位串——field-text.ts 的 unitLabel() 的镜像。
+
+    默认取 currency，例外是「量级只写在 unit 里」：
+    `{value: 751766, unit: "RMB million", currency: "RMB"}` 按 currency 优先会渲染成
+    `751,766 RMB`，比真实值小 6 个量级。这种字段的语义是「数值 + 量级 + 币种」三元组，
+    量级词不能被纯币种压掉，所以保留 unit；unit 只写量级不写币种（`"百万"`）时把
+    currency 接在后面。只在 value 是裸数字时这么做（缩写过的 value 再叠一次量级就是
+    乘两次），currency 自己也带量级（`"RMB百万"`）时照旧取 currency。
+    """
+    unit, currency = annotation(field.get("unit")), annotation(field.get("currency"))
+    if not unit or not currency:
+        return currency or unit
+    if not is_bare_number(field.get("value")):
+        return currency
+    if magnitude_of(unit) is None or magnitude_of(currency) is not None:
+        return currency
+    if CURRENCY_BEARING.search(unit) or currency.lower() in unit.lower():
+        return unit
+    return "%s %s" % (unit, currency)
+
+
 def resolve_field(value):
     """把字段解析成页面会显示的文本；页面显示不出来时返回 None。"""
     if value is None or value == "":
@@ -160,8 +216,7 @@ def resolve_field(value):
         reason = value.get("reason")
         return "%s：%s" % (ABSENT_STATUSES[absent], reason) if reason else None
     if "value" in value:
-        unit = value.get("currency") or value.get("unit") or ""
-        return ("%s %s" % (value["value"], unit)).strip()
+        return ("%s %s" % (value["value"], unit_label(value))).strip()
     return resolve_multi_field(value)
 
 
@@ -217,7 +272,7 @@ def check_headline(instance):
 # 写法闸门（全量叶子扫描）
 #
 # 首屏闸门只看四个字段，但报告里被读到的字段远不止四个。这里扫全树，挡两类
-# 「页面认得出、读者看到的却是错的」写法——两类都发生过：
+# 「页面认得出、读者看到的却是错的」写法——三类都发生过：
 #
 #   1. 裸占位字符串：`grossMarginPct: "unavailable"` 而不是
 #      { "status": "unavailable", "reason": … }。渲染层 text() 对字符串原样输出，
@@ -226,8 +281,13 @@ def check_headline(instance):
 #   2. 未缩写大数字：`{ "value": 23051044345, "currency": "HKD" }`。缩写是采集/分析
 #      文件的约定（`"230.51亿"` / `"23.05B"`），渲染层不猜量级（field-text.ts 的
 #      formatNumeric 只加千分位），漏写就是页头一串 11 位数字。
+#   3. 量级被币种压掉：`{ "value": 751766, "unit": "RMB million", "currency": "RMB" }`。
+#      量级只写在 unit 里，旧的 `currency ?? unit` 取值规则把它丢了，页面显示
+#      `751,766 RMB`（腾讯 FY2024 收入，实为 7,517.66 亿元）。渲染层与 unit_label()
+#      现在都保留 unit 的量级；这条检测挡的是两侧规则再次漂移，以及 unit 与 currency
+#      各自声明不同量级、渲染层无法判断的写法。
 #
-# 注意：这两条不改 resolve_field() / text() 的解析规则——两边的解析规则仍是镜像，
+# 注意：这三条不改 resolve_field() / text() 的解析规则——两边的解析规则仍是镜像，
 # 这里加的是「解析得出来但不该这么写」的前置拦截。
 # ---------------------------------------------------------------------------
 
@@ -243,6 +303,7 @@ NUMERIC_STRING = re.compile(r"^-?\d[\d,]*(\.\d+)?$")
 SHAPE_LABELS = {
     "bare-absent-string": "裸占位字符串",
     "unabbreviated-number": "大数字未缩写",
+    "unit-overridden-by-currency": "量级被币种压掉",
 }
 
 SHAPE_HINTS = {
@@ -255,6 +316,11 @@ SHAPE_HINTS = {
         "货币之外的计数单位（股 / 辆 / 户 / MAU）同样要缩写（\"2.05亿\"）。"
         "渲染层不猜量级，裸数字会整串拼进页面——只加引号不缩写（\"23051044345\"）"
         "渲染出来一模一样，同样算没改。",
+    "unit-overridden-by-currency":
+        "`unit` 与 `currency` 各自声明了不同的量级（如 unit \"RMB million\" 对 "
+        "currency \"RMB billion\"），渲染层无法判断哪个才是 value 的量级。"
+        "把量级只留在一处：unit 写全（\"RMB million\"）、currency 只写币种（\"RMB\"），"
+        "或者干脆把量级折进 value 的缩写字符串（\"7517.66亿\"）。",
 }
 
 
@@ -272,18 +338,42 @@ def is_unabbreviated_number(node):
     return is_unabbreviated_value(node["value"])
 
 
-def is_unabbreviated_value(value):
-    """裸大数字：Python 数字，或没缩写只是 stringify 过的纯数字串。"""
+def is_bare_number(value):
+    """未缩写的裸数字：Python 数字，或只 stringify 过的纯数字串（`"751,766"`）。
+    缩写过的 `"7517.66亿"` / `"23.05B"` 不算。"""
     if isinstance(value, bool):
         return False
     if isinstance(value, str):
-        text = value.strip()
-        if not NUMERIC_STRING.match(text):
-            return False
-        value = float(text.replace(",", ""))
-    elif not isinstance(value, (int, float)):
+        return bool(NUMERIC_STRING.match(value.strip()))
+    return isinstance(value, (int, float))
+
+
+def is_unabbreviated_value(value):
+    """裸大数字：裸数字且已经到了该缩写的量级。"""
+    if not is_bare_number(value):
         return False
-    return abs(value) >= ABBREV_THRESHOLD
+    number = float(value.strip().replace(",", "")) if isinstance(value, str) else value
+    return abs(number) >= ABBREV_THRESHOLD
+
+
+def is_unit_magnitude_dropped(node):
+    """量级只写在 `unit` 里，渲染出来的文本却没带上它。
+
+    `{value: 751766, unit: "RMB million", currency: "RMB"}` 在旧的 `currency ?? unit`
+    取值规则下渲染成 `751,766 RMB`，比真实值小 6 个量级（腾讯 FY2024 收入，全仓库同类
+    写法 160 处）。渲染层与本文件的 `unit_label()` 现在都保留 unit 的量级，所以这条
+    检测既是那次改动的回归闸门（两侧解析规则一旦再次漂移就报），也挡住剩下那种渲染层
+    无法判断的写法：unit 与 currency 各自声明了**不同**的量级。
+    """
+    if not isinstance(node, dict) or "value" not in node:
+        return False
+    unit, currency = annotation(node.get("unit")), annotation(node.get("currency"))
+    if not (unit and currency and is_bare_number(node["value"])):
+        return False
+    scale = magnitude_of(unit)
+    if scale is None:
+        return False
+    return magnitude_of(unit_label(node)) != scale
 
 
 def scan_shape(node, path="", problems=None):
@@ -291,6 +381,13 @@ def scan_shape(node, path="", problems=None):
     if problems is None:
         problems = []
     if isinstance(node, dict):
+        if is_unit_magnitude_dropped(node):
+            problems.append({
+                "path": path,
+                "type": "unit-overridden-by-currency",
+                "found": "%s（unit %s / currency %s）" % (node["value"], node.get("unit"),
+                                                        node.get("currency")),
+            })
         if is_unabbreviated_number(node):
             problems.append({
                 "path": path,
@@ -520,7 +617,8 @@ def print_report(results, threshold):
     unrenderable = [r for r in results if r["headlineProblems"]]
     if unrenderable:
         print("❌ 首屏字段渲染不出，页头与首页卡片会是空白。%s" % HEADLINE_HINT)
-    for gap_type in ("bare-absent-string", "unabbreviated-number"):
+    for gap_type in ("bare-absent-string", "unabbreviated-number",
+                     "unit-overridden-by-currency"):
         hits = sum(len([p for p in r["shapeProblems"] if p["type"] == gap_type])
                    for r in results)
         if hits:
@@ -566,7 +664,8 @@ def main():
                        "确实取不到的信息写 { \"status\": \"unavailable\", \"reason\": \"缺失原因 + 已查范围\" }，"
                        "算不出来的（分母为负等）写 { \"status\": \"not-applicable\", \"reason\": \"…\" }，不得编造。"
                        "headlineProblems 是首屏字段的形状问题：数据往往已经采到，要改的是写法而不是再去取数。"
-                       "shapeProblems 同理是写法问题（裸占位字符串 / 大数字未缩写），按 shapeHints 改写，不要重新取数。",
+                       "shapeProblems 同理是写法问题（裸占位字符串 / 大数字未缩写 / 量级被币种压掉），"
+                       "按 shapeHints 改写，不要重新取数。",
             "threshold": args.threshold,
             "headlineHint": HEADLINE_HINT,
             "shapeHints": SHAPE_HINTS,

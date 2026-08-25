@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { isValidElement, type ReactNode } from "react";
 import { existsSync } from "node:fs";
 import { finalPath, listFinalCompanies, loadFinal } from "../../../lib/final-report";
-import { headline, isUnavailable, stripNote, text, type Json } from "../../../lib/field-text";
+import { headline, isUnavailable, pctText, stripNote, text, type Json } from "../../../lib/field-text";
 
 /**
  * 公司分析页 — 研究流程第 5 步（docs/research/workflow/05-render-site.md）。
@@ -45,17 +45,6 @@ function SummaryCell({ label, field, note }: { label: string; field: Json; note?
       {cell.note ?? note ? <small title={cell.title}>{cell.note ?? note}</small> : null}
     </div>
   );
-}
-
-/**
- * 百分比字段渲染：value 按规范本身可能已带 `%`（见
- * docs/research/workflow/02-multi-dimension-analysis.md「数字纯净」规则），
- * 缺失 / 不适用说明或 `—` 占位更不该被拼接单位——仅当结果是纯数字结尾时才补 `%`。
- */
-function pctText(value: Json): string {
-  const raw = text(value);
-  if (raw === "—" || isUnavailable(value) || raw.endsWith("%")) return raw;
-  return `${raw}%`;
 }
 
 /**
