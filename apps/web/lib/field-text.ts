@@ -126,8 +126,21 @@ function magnitudeOf(label: string): number | null {
   return null;
 }
 
-/** 单位串自己是否已经点明币种：`亿元` / `千美元` / `RMB million` 都不需要再补 currency。 */
-const CURRENCY_BEARING = /元|币|RMB|CNY|USD|HKD|EUR|JPY|GBP|TWD|SGD|[$￥€£]/i;
+/**
+ * 单位串去掉量级词后剩下的部分：`"百万"` → `""`，`"RMB million"` → `"RMB"`，
+ * `"亿股"` → `"股"`。剩下东西就说明这个单位自己点明了计量对象，不需要 currency 补。
+ */
+function magnitudeRest(label: string): string {
+  const lower = label.toLowerCase();
+  for (const [token] of MAGNITUDES) {
+    const at = lower.indexOf(token);
+    if (at >= 0) return `${label.slice(0, at)}${label.slice(at + token.length)}`.replace(/[\s,，/·]+/g, " ").trim();
+  }
+  return label.trim();
+}
+
+/** 占位币种：`-` / `N/A` 这类「没写」的写法，拼进单位串只会变成 `140.19 million ADS N/A`。 */
+const PLACEHOLDER_LABEL = /^(?:[-—–]+|n\/?a|未?披露|\?+)$/i;
 
 /** 未缩写的裸数字：`751766` / `"751,766"`（缩写过的 `"7517.66亿"` 不算）。 */
 const BARE_NUMBER = /^-?\d[\d,]*(\.\d+)?$/;
@@ -155,6 +168,10 @@ function annotation(value: Json): string {
  * 只在 `value` 是裸数字时这么做：`value` 已经是缩写字符串（`"7517.66亿"`）时再叠一个
  * `unit` 的量级就是乘两次。currency 自己也带量级（`"RMB百万"`，仓库里真实存在）时
  * 照旧取 currency——那本来就没丢量级。
+ *
+ * currency 只补给**纯量级** unit（`"百万"`）：`unit` 去掉量级词后还剩东西，它自己就点明了
+ * 计量对象——`"RMB million"` 的币种、`"亿股"` 的股数、`"million ADS"` 的凭证数——再接
+ * currency 会拼出 `252.2 亿股 CNY`（招行 sharesOutstanding）这种读不通的串。
  */
 function unitLabel(field: Json): string {
   const unit = annotation(field.unit);
@@ -162,9 +179,8 @@ function unitLabel(field: Json): string {
   if (!unit || !currency) return currency || unit;
   if (!isBareNumber(field.value)) return currency;
   if (magnitudeOf(unit) === null || magnitudeOf(currency) !== null) return currency;
-  return CURRENCY_BEARING.test(unit) || unit.toLowerCase().includes(currency.toLowerCase())
-    ? unit
-    : `${unit} ${currency}`;
+  if (magnitudeRest(unit) !== "" || PLACEHOLDER_LABEL.test(currency)) return unit;
+  return `${unit} ${currency}`;
 }
 
 /** 把任意值渲染成文本：校验对象取 value，缺失 / 不适用如实给原因，不吞字段。 */
@@ -211,8 +227,11 @@ export function pctText(value: Json): string {
   if (raw === "—" || isUnavailable(value)) return raw;
   const cut = noteIndex(raw);
   const head = raw.slice(0, cut).trimEnd();
-  if (head.endsWith("%") || !/\d$/.test(head)) return raw;
-  return `${head}%${raw.slice(cut)}`;
+  // 注释排在数字前面（`（同比口径）12.5`）时 head 是空的，没有「注释前那一段」可判断，
+  // 退回按整串末尾补——否则该补的 `%` 会整个丢掉。
+  const anchor = head === "" ? raw.trimEnd() : head;
+  if (anchor.endsWith("%") || !/\d$/.test(anchor)) return raw;
+  return head === "" ? `${anchor}%` : `${head}%${raw.slice(cut)}`;
 }
 
 export function clampText(raw: string, limit: number): string {
