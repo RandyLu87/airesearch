@@ -76,6 +76,54 @@ class EdgeTTSEngine:
 
 ENGINES = {EdgeTTSEngine.name: EdgeTTSEngine}
 
+# MPEG Layer III 帧头解析用表：[版本][比特率索引] kbps，[版本][采样率索引] Hz。
+_MP3_BITRATES = {
+    1: (0, 32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320, 0),
+    2: (0, 8, 16, 24, 32, 40, 48, 56, 64, 80, 96, 112, 128, 144, 160, 0),
+}
+_MP3_SAMPLE_RATES = {1: (44100, 48000, 32000), 2: (22050, 24000, 16000), 25: (11025, 12000, 8000)}
+_MP3_VERSIONS = {0b00: 25, 0b10: 2, 0b11: 1}
+
+
+def mp3_duration_seconds(path: Path) -> float | None:
+    """逐帧累加得到的容器时长；解析不出来返回 None。
+
+    引擎给的 `duration_seconds` 来自边界事件，停在最后一句收尾处，尾部静音不计，
+    比实际文件短最多约 0.07s。stage 3 真去拼 mp3 时按这个容器时长对齐才不会累积漂移。
+    纯 stdlib 解析帧头，不依赖 ffprobe（本机 PATH 上没有 ffmpeg，只有 Remotion 自带的）。
+    """
+    data = path.read_bytes()
+    pos = 0
+    if data[:3] == b"ID3" and len(data) >= 10:
+        pos = 10 + int.from_bytes(bytes(b & 0x7F for b in data[6:10]), "big")
+
+    total = 0.0
+    end = len(data)
+    while pos + 4 <= end:
+        if data[pos] != 0xFF or (data[pos + 1] & 0xE0) != 0xE0:
+            pos += 1
+            continue
+        header, rates = data[pos + 1], data[pos + 2]
+        version = _MP3_VERSIONS.get((header >> 3) & 0b11)
+        if version is None or (header >> 1) & 0b11 != 0b01:  # 只认 Layer III
+            pos += 1
+            continue
+        bitrate = _MP3_BITRATES[1 if version == 1 else 2][(rates >> 4) & 0b1111]
+        rate_index = (rates >> 2) & 0b11
+        if not bitrate or rate_index == 0b11:
+            pos += 1
+            continue
+        sample_rate = _MP3_SAMPLE_RATES[version][rate_index]
+        samples = 1152 if version == 1 else 576
+        frame_bytes = int(samples // 8 * bitrate * 1000 / sample_rate) + ((rates >> 1) & 1)
+        if frame_bytes <= 0:
+            pos += 1
+            continue
+        total += samples / sample_rate
+        pos += frame_bytes
+
+    return round(total, 3) if total else None
+
 
 def get_engine(name: str, voice: str, rate: str):
     if name not in ENGINES:
@@ -85,6 +133,7 @@ def get_engine(name: str, voice: str, rate: str):
 
 def synthesize_to_file(engine, text: str, out_path: Path, attempts: int = 3, backoff: float = 2.0) -> SynthesisResult:
     """带退避重试的合成；全部失败时抛 TTSError，绝不写出半截或空的音频文件。"""
+    attempts = max(1, attempts)  # --retries 0 至少也要试一次，否则报 "重试 0 次仍失败：None"
     last: Exception | None = None
     for attempt in range(1, attempts + 1):
         try:

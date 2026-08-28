@@ -11,22 +11,51 @@ from __future__ import annotations
 
 import json
 import re
+from decimal import Decimal
 from pathlib import Path
 
 LEXICON_PATH = Path(__file__).with_name("tts_lexicon.json")
 
-# 规范化后仍残留的英文串（长度 ≥2）大概率是词表没覆盖的缩写，逐条报出来让人补词表。
-_RESIDUAL_LATIN = re.compile(r"(?<![A-Za-z])[A-Za-z]{2,}(?![A-Za-z])")
+# 规范化后仍残留的英文串大概率是词表没覆盖的缩写，逐条报出来让人补词表。单字母也要收
+# （"2026年Q2" 里的 Q 就是这么漏掉的）；词表展开本身产出的字母另行放行，见 _allowed_latin。
+_RESIDUAL_LATIN = re.compile(r"(?<![A-Za-z])[A-Za-z]+(?![A-Za-z])")
 _CJK_UNIT = "万亿|千亿|百亿|十亿|亿|千万|百万|十万|万|千"
+_MAGNITUDES = {"B": 10**9, "M": 10**6, "K": 10**3}
 
 
 def load_lexicon(path: Path = LEXICON_PATH) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def _allowed_latin(lex: dict) -> set[str]:
+    """不该报进 unknownTokens 的英文串：词表键、词表展开结果里的字母（"IP" → "I P"），
+    以及 allowedLatin 里手工放行的（"A股" 的 A）。"""
+    acronyms = lex.get("acronyms", {})
+    allowed = set(acronyms)
+    for value in acronyms.values():
+        allowed.update(re.findall(r"[A-Za-z]+", value))
+    allowed.update(lex.get("allowedLatin", []))
+    return allowed
+
+
 def _acronym_pattern(key: str) -> re.Pattern:
     # 前边界挡住字母数字（避免 "2026Q2" 里误伤），后边界只挡字母（"PE35.11x" 仍需命中）。
     return re.compile(rf"(?<![A-Za-z0-9]){re.escape(key)}(?![A-Za-z])")
+
+
+def _expand_magnitude(match: re.Match) -> str:
+    """8.5B → 85亿；读作"八点五B"或"八点五十亿"都不对，换算成中文量级词再读。"""
+    value = Decimal(match.group(1)) * _MAGNITUDES[match.group(2).upper()]
+    if value >= 10**8:
+        return f"{_plain(value / 10**8)}亿"
+    if value >= 10**4:
+        return f"{_plain(value / 10**4)}万"
+    return _plain(value)
+
+
+def _plain(value: Decimal) -> str:
+    text = format(value.normalize(), "f")
+    return text.rstrip("0").rstrip(".") if "." in text else text
 
 
 def normalize(text: str, lexicon: dict | None = None) -> tuple[str, list[str]]:
@@ -42,7 +71,10 @@ def normalize(text: str, lexicon: dict | None = None) -> tuple[str, list[str]]:
     for key in sorted(lex.get("acronyms", {}), key=len, reverse=True):
         out = _acronym_pattern(key).sub(lex["acronyms"][key], out)
 
-    # 3) 货币前缀后置：US$3亿 → 3亿美元
+    # 3) 量级后缀：US$8.5B → US$85亿（先于货币规则，让 85亿 落进货币规则的数量词里）
+    out = re.sub(r"(?<![A-Za-z0-9.])(\d+(?:\.\d+)?)\s*([BMK])(?![A-Za-z0-9])", _expand_magnitude, out)
+
+    # 4) 货币前缀后置：US$3亿 → 3亿美元
     for symbol in sorted(lex.get("currencies", {}), key=len, reverse=True):
         word = lex["currencies"][symbol]
         out = re.sub(
@@ -51,32 +83,39 @@ def normalize(text: str, lexicon: dict | None = None) -> tuple[str, list[str]]:
             out,
         )
 
-    # 4) 财报期写法：FY2025 → 2025财年，2026Q2 → 2026年第二季度，2026H1 → 2026年上半年
+    # 5) 财报期写法：FY2025 → 2025财年，2026Q2 → 2026年第二季度，2026H1 → 2026年上半年
     quarters = {"1": "一", "2": "二", "3": "三", "4": "四"}
     out = re.sub(r"(?<![A-Za-z0-9])FY\s*(\d{4})", r"\1财年", out)
     out = re.sub(r"(\d{4})\s*[Qq]([1-4])(?![\d])", lambda m: f"{m.group(1)}年第{quarters[m.group(2)]}季度", out)
     out = re.sub(r"(\d{4})\s*[Hh]([12])(?![\d])", lambda m: f"{m.group(1)}年{'上' if m.group(2) == '1' else '下'}半年", out)
 
-    # 5) 区间要先于正负号处理，否则 "22-28%" 会被读成 "22 负 28"；
+    # 6) ISO 日期要先于区间规则，否则 "2026-06-30" 会被读成 "2026到06到30"
+    out = re.sub(
+        r"(?<!\d)(\d{4})-(\d{1,2})-(\d{1,2})(?!\d)",
+        lambda m: f"{int(m.group(1))}年{int(m.group(2))}月{int(m.group(3))}日",
+        out,
+    )
+
+    # 7) 区间要先于正负号处理，否则 "22-28%" 会被读成 "22 负 28"；
     #    百分比区间的百分号只管到区间末尾，"22-28%" 应读成 "百分之22到28"
     out = re.sub(r"([\d.]+)\s*[-–~～]\s*([\d.]+)\s*(?:%|％)", r"百分之\1到\2", out)
     out = re.sub(r"(\d)\s*[-–~～]\s*(?=\d)", r"\1到", out)
 
-    # 6) 倍数：35.11x → 35.11倍
+    # 8) 倍数：35.11x → 35.11倍
     out = re.sub(r"([\d.]+)\s*[xX×](?![A-Za-z0-9])", r"\1倍", out)
 
-    # 7) 百分号前置：-63.4% → 负百分之63.4
+    # 9) 百分号前置：-63.4% → 负百分之63.4
     out = re.sub(r"([+-])?([\d.]+)\s*(?:%|％)", lambda m: f"{_sign(m.group(1))}百分之{m.group(2)}", out)
 
-    # 8) 剩余数字前的正负号
+    # 10) 剩余数字前的正负号
     out = re.sub(r"(?<![\w.])([+-])(?=[\d.])", lambda m: _sign(m.group(1)), out)
 
-    # 9) 规范化留下的多余空白；缩写展开后中文之间的空格会被读成停顿，去掉
+    # 11) 规范化留下的多余空白；缩写展开后中文之间的空格会被读成停顿，去掉
     out = re.sub(r"(?<=[\u4e00-\u9fff])[ \t]+(?=[\u4e00-\u9fff])", "", out)
     out = re.sub(r"[ \t]{2,}", " ", out).strip()
 
-    known = set(lex.get("acronyms", {}))
-    unknown = sorted({m.group(0) for m in _RESIDUAL_LATIN.finditer(out) if m.group(0) not in known})
+    allowed = _allowed_latin(lex)
+    unknown = sorted({m.group(0) for m in _RESIDUAL_LATIN.finditer(out) if m.group(0) not in allowed})
     return out, unknown
 
 

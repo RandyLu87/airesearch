@@ -9,7 +9,7 @@
 - **OWLL-45** — Remotion / FFmpeg / edge-tts 最小可运行环境
 - **OWLL-47** — 分镜文案 JSON → 逐条音频 + 时长清单（见「批量合成」一节）
 
-报告模板（stage 3）按 `manifest.json` 的 `durationSeconds` 对齐画面。
+报告模板（stage 3）按 `manifest.json` 的时长字段对齐画面。
 
 ## 依赖
 
@@ -54,8 +54,8 @@ npm run tts -- --text-file path/to/script.txt --voice zh-CN-XiaoxiaoNeural --out
 }
 ```
 
-`duration_seconds` 与 `cues` 供后续分镜对齐使用，直接取自 edge-tts 的边界事件，
-不需要额外的 ffprobe 调用（需要复核时：`npx remotion ffprobe out/tts/smoke.mp3`）。
+`duration_seconds` 与 `cues` 取自 edge-tts 的边界事件，`container_duration_seconds` 是解析
+mp3 帧头得到的文件实际长度，两者都不需要 ffprobe（需要复核时：`npx remotion ffprobe out/tts/smoke.mp3`）。
 
 ## 批量合成：分镜文案 → 音频清单
 
@@ -74,13 +74,23 @@ npm run tts:batch -- --storyboard fixtures/bilibili-storyboard.json \
   "voice": "zh-CN-XiaoxiaoNeural",
   "sceneCount": 11,
   "totalDurationSeconds": 200.85,
+  "totalContainerDurationSeconds": 201.528,
   "unknownTokens": [],
   "scenes": [
     { "index": 1, "id": "opening", "audio": "01-opening.mp3", "durationSeconds": 12.012,
+      "containerDurationSeconds": 12.072,
       "text": "…原文…", "normalizedText": "…朗读改写后…", "cues": [] }
   ]
 }
 ```
+
+两个时长字段不一样，stage 3 要挑对：`durationSeconds` 来自引擎边界事件，停在最后一句收尾处、
+不含尾部静音；`containerDurationSeconds` 是 mp3 文件本身的长度（解析帧头得到，与 `afinfo` /
+ffprobe 逐条一致）。**真去拼接音频时按 `containerDurationSeconds` 对齐**，否则每条少算的
+0.05~0.07s 会累积成漂移（本样例 11 条共 0.68s）；只是给单条画面配时长，用哪个都可以。
+
+输出目录不会在跑之前清空——OWLL-46 换掉 fixture、分镜 id 变了以后，旧的 `NN-<old-id>.mp3`
+会留在原地。stage 3 一律按 `manifest.json` 里的 `audio` 字段取文件，不要 glob 目录。
 
 常用参数：`--voice` / `--rate` 调音色语速，`--engine` 换引擎，`--retries`（默认 3）调重试次数，
 `--no-normalize` 关掉朗读改写。
@@ -96,7 +106,10 @@ npm run tts:batch -- --storyboard fixtures/bilibili-storyboard.json \
 字段名做了兼容：分镜数组键接受 `scenes` / `shots` / `storyboard` / `segments`，顶层也可以直接是
 数组；文案键接受 `text` / `narration` / `script` / `content` / `voiceover`；id 键接受 `id` /
 `sceneId` / `scene_id` / `shotId`，缺 id 时兜底为 `scene-01`。**认不出的结构会带非零退出码明确
-报错**（读取失败 exit 2，合成失败 exit 1），不会静默跳过分镜。
+报错**（读取失败——路径不存在、JSON 非法、结构认不出——exit 2，合成失败 exit 1），不会静默跳过分镜。
+
+id 字段给了但不是非空字符串（例如 `"id": 3`）也走 `scene-NN` 兜底，只在 stderr 提示一次；
+manifest 与文件名仍然自洽，但生成器最好直接给字符串 id。
 
 `fixtures/bilibili-storyboard.json` 是链路验证用的临时样例，文案由
 `us-bili-bilibili/financials-summary.json` 原文转述；OWLL-46 落地后替换为脚本生成的真实分镜。
@@ -110,12 +123,15 @@ npm run tts:batch -- --storyboard fixtures/bilibili-storyboard.json \
 | --- | --- |
 | `PE 35.11x` | 市盈率35.11倍 |
 | `FY2025` / `2026Q2` / `2026H1` | 2025财年 / 2026年第二季度 / 2026年上半年 |
-| `US$3亿` | 3亿美元 |
+| `US$3亿` / `US$8.5B` | 3亿美元 / 85亿美元 |
+| `2026-06-30` | 2026年6月30日 |
 | `+119.0%` / `-63.4%` | 正百分之119.0 / 负百分之63.4 |
 | `22-28%` | 百分之22到28 |
 
-词表在 `scripts/tts_lexicon.json`，加缩写不用改代码。改写后仍残留的英文串会记进 manifest 的
-`unknownTokens` 并打到 stderr，提示补词表 —— 不会因为漏配就悄悄读错。
+词表在 `scripts/tts_lexicon.json`，加缩写不用改代码。改写后仍残留的英文串（含单个字母，
+`2026年Q2` 里漏掉的 `Q` 就是这么抓出来的）会记进 manifest 的 `unknownTokens` 并打到 stderr，
+提示补词表 —— 不会因为漏配就悄悄读错。中文音色本来就读得对的（`A股` / `B站` / `H股`，以及
+词表展开自己产出的 `I P`）在词表 `allowedLatin` 里放行，不算残留。
 
 规则的回归测试（不联网）：`npm test`。
 
@@ -130,9 +146,9 @@ npm run tts:batch -- --storyboard fixtures/bilibili-storyboard.json \
 - `npm run render` → `out/hello.mp4` 336.5 kB，150 帧渲染 + 编码通过。
 - `npm run tts` → `smoke.mp3` 8.0s；`npx remotion ffprobe` 读到 8.02s，两者一致。
 - `npx remotion ffmpeg -version` → ffmpeg n7.1（Remotion 自带，系统 PATH 上无 ffmpeg）。
-- `npm run tts:batch`（哔哩哔哩样例）→ 11 个 mp3 + manifest，总时长 200.85s；逐条时长与
-  `afinfo` 读到的文件时长最大差 0.07s（边界事件停在最后一句收尾处，尾部静音不计）。
-- `npm test` → 朗读改写规则 5 组用例通过。
+- `npm run tts:batch`（哔哩哔哩样例）→ 11 个 mp3 + manifest，朗读总时长 200.85s、文件总长
+  201.528s；`containerDurationSeconds` 与 `afinfo` 逐条完全一致（11/11 差 0.000s）。
+- `npm test` → 朗读改写规则 8 组用例通过。
 
 ## 已知限制
 

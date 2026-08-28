@@ -35,10 +35,24 @@ class NormalizeTest(unittest.TestCase):
         self.assertNormalized("增速22-28%", "增速百分之22到28")
         self.assertNormalized("-17.1%→-14.3%", "负百分之17.1，负百分之14.3")
 
+    def test_iso_dates_survive_the_range_rule(self):
+        self.assertNormalized("数据截至2026-06-30", "数据截至2026年6月30日")
+        self.assertNormalized("区间22-28%不受影响", "区间百分之22到28不受影响")
+
+    def test_magnitude_suffixes(self):
+        self.assertNormalized("市值US$8.5B", "市值85亿美元")
+        self.assertNormalized("回购US$250M", "回购2.5亿美元")
+        self.assertNormalized("订阅3.2K户", "订阅3200户")
+
     def test_unknown_latin_tokens_are_reported_not_swallowed(self):
         spoken, unknown = normalize("公司披露 XYZS 指标")
         self.assertIn("XYZS", spoken)
         self.assertEqual(unknown, ["XYZS"])
+
+    def test_single_letter_leftovers_are_reported(self):
+        self.assertEqual(normalize("2026年Q2营收")[1], ["Q"])
+        self.assertEqual(normalize("A股、B站与H股")[1], [])  # 词表放行，中文音色本来就读得对
+        self.assertEqual(normalize("公司持有IP与UP主资源")[1], [])  # 词表展开产出的字母不算残留
 
 
 if __name__ == "__main__":
