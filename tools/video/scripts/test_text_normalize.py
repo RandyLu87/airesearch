@@ -24,6 +24,9 @@ class NormalizeTest(unittest.TestCase):
         self.assertNormalized("FY2025", "2025财年")
         self.assertNormalized("2026Q2", "2026年第二季度")
         self.assertNormalized("2026H1", "2026年上半年")
+        self.assertNormalized("26Q2收入", "2026年第二季度收入")  # 两位数年份也要展开
+        self.assertNormalized("26H1仅$221M", "2026年上半年仅2.21亿美元")
+        self.assertNormalized("512张H800", "512张H800")  # 不误伤型号
 
     def test_currency_prefix_moves_after_amount(self):
         self.assertNormalized("US$3亿回购", "3亿美元回购")
@@ -42,7 +45,10 @@ class NormalizeTest(unittest.TestCase):
     def test_magnitude_suffixes(self):
         self.assertNormalized("市值US$8.5B", "市值85亿美元")
         self.assertNormalized("回购US$250M", "回购2.5亿美元")
-        self.assertNormalized("订阅3.2K户", "订阅3200户")
+        self.assertNormalized("FY2025收入34,639M", "2025财年收入346.39亿")  # 千分位要整段吃掉
+        self.assertNormalized("现金储备10,552M", "现金储备105.52亿")
+        self.assertNormalized("约HKD72B", "约720亿港元")  # 字母货币码不挡住量级换算
+        self.assertNormalized("原生4K视频直出", "原生4K视频直出")  # K 不是量级后缀
 
     def test_unknown_latin_tokens_are_reported_not_swallowed(self):
         spoken, unknown = normalize("公司披露 XYZS 指标")
@@ -52,6 +58,7 @@ class NormalizeTest(unittest.TestCase):
     def test_single_letter_leftovers_are_reported(self):
         self.assertEqual(normalize("2026年Q2营收")[1], ["Q"])
         self.assertEqual(normalize("A股、B站与H股")[1], [])  # 词表放行，中文音色本来就读得对
+        self.assertEqual(normalize("B端开放平台")[1], ["B"])  # 放行只在 "B站" 这个上下文里成立
         self.assertEqual(normalize("公司持有IP与UP主资源")[1], [])  # 词表展开产出的字母不算残留
 
 

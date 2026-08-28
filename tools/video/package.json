@@ -8,7 +8,7 @@
     "studio": "remotion studio src/index.ts",
     "tts": "bash scripts/py.sh tts.py",
     "tts:batch": "bash scripts/py.sh tts_batch.py",
-    "test": "python3 scripts/test_text_normalize.py",
+    "test": "python3 -m unittest discover -s scripts -p 'test_*.py' -t scripts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

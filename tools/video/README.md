@@ -88,6 +88,8 @@ npm run tts:batch -- --storyboard fixtures/bilibili-storyboard.json \
 不含尾部静音；`containerDurationSeconds` 是 mp3 文件本身的长度（解析帧头得到，与 `afinfo` /
 ffprobe 逐条一致）。**真去拼接音频时按 `containerDurationSeconds` 对齐**，否则每条少算的
 0.05~0.07s 会累积成漂移（本样例 11 条共 0.68s）；只是给单条画面配时长，用哪个都可以。
+帧头解析不出来时 `containerDurationSeconds` 会是 `null`（顶层 `totalContainerDurationSeconds`
+同理），stage 3 取值时按 `containerDurationSeconds ?? durationSeconds` 兜底。
 
 输出目录不会在跑之前清空——OWLL-46 换掉 fixture、分镜 id 变了以后，旧的 `NN-<old-id>.mp3`
 会留在原地。stage 3 一律按 `manifest.json` 里的 `audio` 字段取文件，不要 glob 目录。
@@ -122,8 +124,8 @@ manifest 与文件名仍然自洽，但生成器最好直接给字符串 id。
 | 原文 | 朗读文本 |
 | --- | --- |
 | `PE 35.11x` | 市盈率35.11倍 |
-| `FY2025` / `2026Q2` / `2026H1` | 2025财年 / 2026年第二季度 / 2026年上半年 |
-| `US$3亿` / `US$8.5B` | 3亿美元 / 85亿美元 |
+| `FY2025` / `2026Q2` / `26H1` | 2025财年 / 2026年第二季度 / 2026年上半年 |
+| `US$3亿` / `US$8.5B` / `34,639M` | 3亿美元 / 85亿美元 / 346.39亿 |
 | `2026-06-30` | 2026年6月30日 |
 | `+119.0%` / `-63.4%` | 正百分之119.0 / 负百分之63.4 |
 | `22-28%` | 百分之22到28 |
@@ -131,7 +133,11 @@ manifest 与文件名仍然自洽，但生成器最好直接给字符串 id。
 词表在 `scripts/tts_lexicon.json`，加缩写不用改代码。改写后仍残留的英文串（含单个字母，
 `2026年Q2` 里漏掉的 `Q` 就是这么抓出来的）会记进 manifest 的 `unknownTokens` 并打到 stderr，
 提示补词表 —— 不会因为漏配就悄悄读错。中文音色本来就读得对的（`A股` / `B站` / `H股`，以及
-词表展开自己产出的 `I P`）在词表 `allowedLatin` 里放行，不算残留。
+词表展开自己产出的 `I P`）在词表 `allowedLatin` 里放行，不算残留；带中文后缀的放行条目只在
+那个上下文里生效，`B端` 的 `B` 照样报出来。
+
+量级后缀只认 `B` / `M`：研究数据里没有一处 `K` 是量级写法，`4K视频` / `2K分辨率` 才是常态，
+认了反而会把它们读成 `4000视频`。真出现 `3.2K` 会进 `unknownTokens` 提示补词表。
 
 规则的回归测试（不联网）：`npm test`。
 

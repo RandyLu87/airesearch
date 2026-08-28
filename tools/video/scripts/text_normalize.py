@@ -20,22 +20,29 @@ LEXICON_PATH = Path(__file__).with_name("tts_lexicon.json")
 # （"2026年Q2" 里的 Q 就是这么漏掉的）；词表展开本身产出的字母另行放行，见 _allowed_latin。
 _RESIDUAL_LATIN = re.compile(r"(?<![A-Za-z])[A-Za-z]+(?![A-Za-z])")
 _CJK_UNIT = "万亿|千亿|百亿|十亿|亿|千万|百万|十万|万|千"
-_MAGNITUDES = {"B": 10**9, "M": 10**6, "K": 10**3}
+# K 只在 "4K视频"/"2K分辨率" 这类词里出现，研究数据里没有一处是量级后缀，故不认 K。
+_MAGNITUDES = {"B": 10**9, "M": 10**6}
+_NUMBER = r"\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?"
 
 
 def load_lexicon(path: Path = LEXICON_PATH) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def _allowed_latin(lex: dict) -> set[str]:
-    """不该报进 unknownTokens 的英文串：词表键、词表展开结果里的字母（"IP" → "I P"），
-    以及 allowedLatin 里手工放行的（"A股" 的 A）。"""
+def _allowed_latin(lex: dict) -> tuple[set[str], set[str]]:
+    """不该报进 unknownTokens 的英文串，分两类返回 (无条件放行, 带后缀才放行)。
+
+    无条件的是词表键和词表展开结果里的字母（"IP" → "I P"）；allowedLatin 里带中文后缀的
+    条目（"B站"）只在那个上下文里放行，否则 "26H1" 的 H 会被 "H股" 的放行顺带盖住。
+    """
     acronyms = lex.get("acronyms", {})
     allowed = set(acronyms)
     for value in acronyms.values():
         allowed.update(re.findall(r"[A-Za-z]+", value))
-    allowed.update(lex.get("allowedLatin", []))
-    return allowed
+    contextual = set()
+    for entry in lex.get("allowedLatin", []):
+        (contextual if re.fullmatch(r"[A-Za-z]+", entry) is None else allowed).add(entry)
+    return allowed, contextual
 
 
 def _acronym_pattern(key: str) -> re.Pattern:
@@ -44,13 +51,18 @@ def _acronym_pattern(key: str) -> re.Pattern:
 
 
 def _expand_magnitude(match: re.Match) -> str:
-    """8.5B → 85亿；读作"八点五B"或"八点五十亿"都不对，换算成中文量级词再读。"""
-    value = Decimal(match.group(1)) * _MAGNITUDES[match.group(2).upper()]
+    """8.5B → 85亿；读作"八点五B"或"八点五十亿"都不对，换算成中文量级词再读。
+
+    千分位要连着一起吃掉：只匹配尾组的话 "34,639M" 会被改写成 "34,6.39亿"，
+    量级差 100 倍还不进 unknownTokens。货币前缀原样带回，交给后面的货币规则后置。
+    """
+    prefix, digits, suffix = match.group(1) or "", match.group(2), match.group(3)
+    value = Decimal(digits.replace(",", "")) * _MAGNITUDES[suffix.upper()]
     if value >= 10**8:
-        return f"{_plain(value / 10**8)}亿"
+        return f"{prefix}{_plain(value / 10**8)}亿"
     if value >= 10**4:
-        return f"{_plain(value / 10**4)}万"
-    return _plain(value)
+        return f"{prefix}{_plain(value / 10**4)}万"
+    return f"{prefix}{_plain(value)}"
 
 
 def _plain(value: Decimal) -> str:
@@ -71,8 +83,14 @@ def normalize(text: str, lexicon: dict | None = None) -> tuple[str, list[str]]:
     for key in sorted(lex.get("acronyms", {}), key=len, reverse=True):
         out = _acronym_pattern(key).sub(lex["acronyms"][key], out)
 
-    # 3) 量级后缀：US$8.5B → US$85亿（先于货币规则，让 85亿 落进货币规则的数量词里）
-    out = re.sub(r"(?<![A-Za-z0-9.])(\d+(?:\.\d+)?)\s*([BMK])(?![A-Za-z0-9])", _expand_magnitude, out)
+    # 3) 量级后缀：US$8.5B → US$85亿（先于货币规则，让 85亿 落进货币规则的数量词里）。
+    #    货币前缀一并纳入匹配，否则 "HKD72B" 的数字被前面的字母挡在 lookbehind 外面不会展开。
+    prefixes = "|".join(re.escape(c) for c in sorted(lex.get("currencies", {}), key=len, reverse=True)) or "(?!)"
+    out = re.sub(
+        rf"(?<![A-Za-z0-9.,])({prefixes})?\s*({_NUMBER})\s*([BM])(?![A-Za-z0-9])",
+        _expand_magnitude,
+        out,
+    )
 
     # 4) 货币前缀后置：US$3亿 → 3亿美元
     for symbol in sorted(lex.get("currencies", {}), key=len, reverse=True):
@@ -88,6 +106,13 @@ def normalize(text: str, lexicon: dict | None = None) -> tuple[str, list[str]]:
     out = re.sub(r"(?<![A-Za-z0-9])FY\s*(\d{4})", r"\1财年", out)
     out = re.sub(r"(\d{4})\s*[Qq]([1-4])(?![\d])", lambda m: f"{m.group(1)}年第{quarters[m.group(2)]}季度", out)
     out = re.sub(r"(\d{4})\s*[Hh]([12])(?![\d])", lambda m: f"{m.group(1)}年{'上' if m.group(2) == '1' else '下'}半年", out)
+    # 研究数据里两位数年份同样常见（"26Q2"、"26H1"），不补这两条就会被逐字母读成 "二六 Q 二"
+    out = re.sub(r"(?<![\dA-Za-z])(\d{2})\s*[Qq]([1-4])(?![\d])", lambda m: f"20{m.group(1)}年第{quarters[m.group(2)]}季度", out)
+    out = re.sub(
+        r"(?<![\dA-Za-z])(\d{2})\s*[Hh]([12])(?![\d])",
+        lambda m: f"20{m.group(1)}年{'上' if m.group(2) == '1' else '下'}半年",
+        out,
+    )
 
     # 6) ISO 日期要先于区间规则，否则 "2026-06-30" 会被读成 "2026到06到30"
     out = re.sub(
@@ -114,8 +139,15 @@ def normalize(text: str, lexicon: dict | None = None) -> tuple[str, list[str]]:
     out = re.sub(r"(?<=[\u4e00-\u9fff])[ \t]+(?=[\u4e00-\u9fff])", "", out)
     out = re.sub(r"[ \t]{2,}", " ", out).strip()
 
-    allowed = _allowed_latin(lex)
-    unknown = sorted({m.group(0) for m in _RESIDUAL_LATIN.finditer(out) if m.group(0) not in allowed})
+    allowed, contextual = _allowed_latin(lex)
+    unknown = sorted(
+        {
+            m.group(0)
+            for m in _RESIDUAL_LATIN.finditer(out)
+            if m.group(0) not in allowed
+            and not any(out.startswith(entry, m.start()) for entry in contextual)
+        }
+    )
     return out, unknown
 
 

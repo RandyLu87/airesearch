@@ -95,7 +95,9 @@ def mp3_duration_seconds(path: Path) -> float | None:
     data = path.read_bytes()
     pos = 0
     if data[:3] == b"ID3" and len(data) >= 10:
-        pos = 10 + int.from_bytes(bytes(b & 0x7F for b in data[6:10]), "big")
+        # ID3v2 的长度字段是 syncsafe：每字节只用低 7 位，按 8 位解会把 127 字节以上的
+        # 标签算短，偏移落进音频里，前几帧被当噪声丢掉。
+        pos = 10 + ((data[6] << 21) | (data[7] << 14) | (data[8] << 7) | data[9])
 
     total = 0.0
     end = len(data)
