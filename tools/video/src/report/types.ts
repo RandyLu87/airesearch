@@ -10,7 +10,7 @@ export type SceneKind =
   | 'closing'
   /** 详解版：商业模式（收入结构 / 经济特征两屏）与护城河（清单 / 趋势 / 十年之问三屏） */
   | 'business-model'
-  | 'moat-checklist'
+  | 'moat-overview'
   | 'moat-trend'
   | 'inquiry';
 
@@ -29,6 +29,40 @@ export type Beat = {
   from: number;
 };
 
+/**
+ * 一个主数字：这一屏最该被记住的那个指标。
+ *
+ * `value` 已经是画面上要显示的那串字（`1688.38亿元` / `20.28`），模板不做任何换算——
+ * 单位换算与口径闸门都在 scripts/visuals.py 一处，这边只负责把字放大。
+ */
+export type Hero = {
+  label: string;
+  value: string;
+  unit?: string;
+  /** 同比等变化量，已带正负号（`-1.2%`） */
+  delta?: string;
+  deltaNote?: string;
+  /** 口径括注（`TTM`）与时点，小字跟在主数字旁边，不能省 */
+  note?: string;
+};
+
+export type SeriesPoint = {x: string; y: number; label: string};
+export type Series = {name: string; points: SeriesPoint[]};
+export type DeltaItem = {name: string; valuePct: number; label: string; note?: string};
+/** 一条失败路径在「概率 × 影响」上的落点；两轴取值都只有 低/中/高 三档 */
+export type RiskCell = {probability: string; impact: string; label: string};
+
+/** 画面上的图。`type` 决定用哪个组件渲染，认不出的 type 整块不画。 */
+export type Chart =
+  | {type: 'kpi-grid'; items: Hero[]}
+  | {type: 'line-series'; series: Series[]; axisUnit: string; zeroBaseline: boolean}
+  | {type: 'delta-bars'; items: DeltaItem[]; period?: string}
+  | {type: 'range-band'; items: DeltaItem[]}
+  /** `omitted` 是落不了格的路径条数，画面上要如实说，不能只画剩下的当作全部 */
+  | {type: 'risk-matrix'; cells: RiskCell[]; omitted: number; total: number};
+
+export type Visuals = {hero?: Hero; chart?: Chart};
+
 export type Scene = {
   id: string;
   kind: SceneKind;
@@ -36,6 +70,8 @@ export type Scene = {
   narration: string;
   /** 分镜文案生成器写的结构化字段，按 kind 取用；模板不新增判断也不重算数字 */
   data: Record<string, unknown>;
+  /** 由 scripts/visuals.py 从采集数据抽出的图表与主数字；没有就是这一屏没有可画的数 */
+  visuals: Visuals | null;
   /** 由 scripts/report_props.mjs 按 TTS 句级边界事件换算，模板只负责按帧号显示 */
   captions: Caption[];
   beats: Beat[];

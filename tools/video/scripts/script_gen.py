@@ -16,7 +16,7 @@
 两种模式的差别只在**素材来源与目标区间**，规矩完全一样：
 
   summary-only  只有总结          目标 120-180s   分镜 kind：opening/dimension/strategy/closing
-  detailed      总结 + 维度分析   目标 240-300s   另加 business-model / moat-checklist /
+  detailed      总结 + 维度分析   目标 240-300s   另加 business-model / moat-overview /
                                                   moat-trend / inquiry 四种深讲分镜
 
 三条硬规矩，和 docs/research/tools/ 下的脚本一致：
@@ -51,6 +51,7 @@ from pathlib import Path
 
 from amount_format import format_amount
 from text_normalize import load_lexicon, normalize
+from visuals import build_visuals
 
 TODO_SENTINEL = "__TODO__"
 
@@ -96,6 +97,19 @@ LAYER_FRAME = "frame"
 # 侧 `mapsTo: "dimensions.<key>"` 指向的目标——两边对不上时以 mapsTo 为准。
 DEEP_BUSINESS_KEY = "businessEssence"
 DEEP_MOAT_KEY = "moat"
+DEEP_INVERSION_KEY = "inversion"
+
+# 逆向思考屏的问题固定用这一句。
+#
+# 契约里 `inversion.inquiry.question` 的原文是「我最可能在哪里犯错？聪明人为什么会不买/
+# 做空这家公司？」——前半句是研究者写给自己的自问，念给观众听会变成「我」是谁的疑问；
+# 后半句才是观众要听的那个问题。这里只覆盖标题，`answer` 一个字不动。
+INVERSION_QUESTION = "聪明人为什么会不买/做空这家公司？"
+
+# 提问屏的开场连接词。片子里现在有两个提问屏（十年之问、逆向思考），
+# 每屏都说「最后一个问题」就会前后打架，所以按出现顺序发：最后一屏才是「最后一个」。
+INQUIRY_LEAD_LAST = "最后一个问题"
+INQUIRY_LEAD_MORE = "再问一个问题"
 
 
 # ---------------------------------------------------------------- 字段读取
@@ -788,8 +802,9 @@ class ScriptBuilder:
         趋势屏的预算是分别作用在过去/未来两组上的，拿两组之和当上限会先空转好几级
         （`beats:6` 对每组各 3 条的素材毫无作用），把裁剪机会浪费在原地踏步上。
         """
-        if kind == "moat-checklist":
-            return 2  # 清单只有「带检验问题」与「只报判定」两档，条目数不裁
+        if kind == "moat-overview":
+            # 整体判定就一句话，没有可裁的条数——它已经是最省的形态了
+            return 1
         if kind == "moat-trend":
             return max((len(side["points"]) for side in payload.values() if isinstance(side, dict)), default=1)
         if kind == "inquiry":
@@ -931,9 +946,9 @@ class ScriptBuilder:
         analysis = block.get("analysis") if isinstance(block.get("analysis"), dict) else {}
 
         scenes = []
-        checklist = self._build_checklist_payload(analysis, base)
-        if checklist is not None:
-            scenes.append(self._register_deep("moat-checklist", "moat-checklist", "护城河逐条检验", checklist))
+        types_payload = self._build_moat_types_payload(analysis, base)
+        if types_payload is not None:
+            scenes.append(self._register_deep("moat-overview", "moat-overview", "护城河整体判定", types_payload))
 
         trend = self._build_trend_payload(analysis, base)
         if trend is not None:
@@ -944,7 +959,23 @@ class ScriptBuilder:
             scenes.append(self._register_deep("moat-inquiry", "inquiry", "十年之问", inquiry))
         return scenes
 
-    def _build_checklist_payload(self, analysis: dict, base: str) -> dict | None:
+    def build_inversion_scenes(self) -> list[dict]:
+        """逆向思考：「聪明人为什么会不买/做空这家公司？」
+
+        与十年之问共用 `inquiry` 这个 kind——两屏是同一种形状（一个问题 + 若干回答要点），
+        差别只在问题本身和挂在哪一维之后，不值得为它新开一种分镜类型。
+        """
+        base = f"dimensions.{DEEP_INVERSION_KEY}"
+        block = self.analysis_dimension(DEEP_INVERSION_KEY)
+        if block is None:
+            self.note_omission(base, block, "跳过逆向思考分镜", "维度分析里没有这一块")
+            return []
+        payload = self._build_inquiry_payload(block, base, question=INVERSION_QUESTION)
+        if payload is None:
+            return []
+        return [self._register_deep("inversion-inquiry", "inquiry", "逆向思考", payload)]
+
+    def _build_moat_types_payload(self, analysis: dict, base: str) -> dict | None:
         path = f"{base}.analysis.types"
         items = []
         for index, item in enumerate(analysis.get("types") or []):
@@ -981,15 +1012,32 @@ class ScriptBuilder:
             return None
         return sides
 
-    def _build_inquiry_payload(self, block: dict, base: str) -> dict | None:
+    def _build_inquiry_payload(self, block: dict, base: str, question: str | None = None) -> dict | None:
+        """提问屏的素材。`question` 给了就用它当问题，不读原文的 `inquiry.question`。
+
+        覆盖问题要记账：画面上问的那句和报告里写的那句不一样，是必须留痕的事，
+        哪怕改动本身是有意为之。
+        """
         raw = block.get("inquiry") if isinstance(block.get("inquiry"), dict) else {}
         path = f"{base}.inquiry"
-        question = self.field(raw.get("question"), f"{path}.question", "十年之问不播问题原文")
-        points = self.points_of(raw.get("answer"), f"{path}.answer", "十年之问不播回答")
+        if question is None:
+            question = self.field(raw.get("question"), f"{path}.question", "不播问题原文")
+        else:
+            original = text_of(raw.get("question"))
+            if original and original != question:
+                self.note_omission(
+                    f"{path}.question",
+                    raw.get("question"),
+                    f"画面与解说统一用「{question}」提问，回答原文照播",
+                    f"原文「{original}」前半句是研究者的自问，念给听众会变成『我是谁』的疑问",
+                )
+        points = self.points_of(raw.get("answer"), f"{path}.answer", "不播回答")
         if not points:
-            self.note_omission(path, raw, "跳过十年之问分镜", "原文没有可播的回答")
+            self.note_omission(path, raw, "跳过该提问分镜", "原文没有可播的回答")
             return None
-        return {"question": question, "points": points}
+        # lead 由 generate() 在分镜排定顺序后回填：哪一屏是「最后一个问题」，
+        # 取决于它在成片里排第几，builder 在这里还不知道。
+        return {"question": question, "points": points, "lead": INQUIRY_LEAD_LAST}
 
     # -- 深讲分镜的渲染与裁剪 -------------------------------------------
 
@@ -1000,8 +1048,8 @@ class ScriptBuilder:
             if payload["focus"] == "revenue":
                 return self._render_revenue(payload, detail)
             return self._render_economics(payload, detail)
-        if kind == "moat-checklist":
-            return self._render_checklist(payload, detail)
+        if kind == "moat-overview":
+            return self._render_overview(payload, detail)
         if kind == "moat-trend":
             return self._render_trend(payload, detail)
         return self._render_inquiry(payload, detail)
@@ -1074,24 +1122,54 @@ class ScriptBuilder:
             "detail": detail,
         }
 
-    def _render_checklist(self, payload: dict, detail: str) -> tuple[str, dict]:
-        # 清单的条目数不裁——五类壁垒少一条就是另一张图；压时长只压检验问题那半句。
-        terse = detail == "minimal" or detail.startswith("beats:")
+    def _render_overview(self, payload: dict, detail: str) -> tuple[str, dict]:
+        """护城河整体判定：一句话给出全貌，不再一条一条念。
+
+        原来这屏是「五类壁垒逐条检验」——每条念一遍类型、检验问题和判定，五条走完
+        三十多秒，而听众真正要的只是「哪几类成立、哪几类不成立」。检验问题本身
+        （「是否能在不损失销量的情况下提价？」）是研究方法的一部分，不是结论，
+        念出来占的是时间、给的是过程。省下来的时间挪给「过去与未来」讲清未来那个判断。
+
+        画面仍然给全部类型与判定：屏幕能承载的比耳朵多，一眼扫完五个标签不费时间。
+        """
+        items = payload["items"]
+        groups: dict[str, list[str]] = {}
+        for item in items:
+            groups.setdefault(item["verdict"] or "暂无判定", []).append(item["type"])
+
         speech = NarrationBuilder()
-        speech.say("护城河逐条检验")
-        beats = []
-        for item in payload["items"]:
-            verdict = item["verdict"] or "暂无判定"
-            line = f"{item['type']}，判定为{verdict}" if terse or not item["test"] else f"{item['type']}：{item['test']}判定为{verdict}"
-            beats.append(speech.beat("type", line))
+        speech.say("先看护城河整体")
+        # 判定词一律用原文的「存在」，不改说成「成立」：换一个词就是替研究者下结论，
+        # 和「『待验证』不是『不存在』」是同一条纪律。
+        established = groups.get("存在", [])
+        summary = f"{len(items)}类壁垒里，{len(established)}类存在"
+        # 例外逐个点名——「4类成立」不说清剩下那一类是哪一类，等于把结论说了一半
+        exceptions = [f"{'、'.join(names)}{verdict}" for verdict, names in groups.items() if verdict != "存在"]
+        if exceptions:
+            summary += f"，{'；'.join(exceptions)}"
+        speech.say(summary)
+
         return speech.text, {
-            "items": payload["items"],
-            "beats": beats,
-            "spokenTest": not terse,
+            # 画面只留类型与判定，检验问题不再上屏：它是过程，这一屏要的是结论
+            "items": [{"type": item["type"], "verdict": item["verdict"]} for item in items],
+            "summary": summary,
+            # 整体陈述没有逐条节奏，不给 beats——模板据此让五个标签一起亮，不做逐条点亮
+            "beats": [],
             "detail": detail,
         }
 
     def _render_trend(self, payload: dict, detail: str) -> tuple[str, dict]:
+        """过去与未来的方向判断。**重心在未来那一侧。**
+
+        过去五年是已经发生的事，方向本身就说完了大半；未来五年是这一屏真正的结论，
+        而一个方向判断没有依据就只是个断言。所以两侧不对称处理：
+
+          * 过去最多念两条依据，控时先从这边扣（`minimal=0`，可以只报方向）；
+          * 未来**至少念一条**（`minimal=1`），且第一条永远在内——契约里 ①②③④ 是按
+            重要性写的，第一条就是得出这个方向的核心依据，它被裁掉这屏就白讲了。
+
+        「核心依据」只认第一条，不做语义挑选：挑哪条更重要是研究者的判断，不是模板的。
+        """
         speech = NarrationBuilder()
         speech.say("这条护城河这五年怎么走，未来五年又会怎么走")
         beats = []
@@ -1100,11 +1178,23 @@ class ScriptBuilder:
             block = payload.get(side)
             if block is None:
                 continue
+            is_next = side == "next"
             direction = block["direction"] or "暂无判断"
             speech.say(f"{block['label']}，方向是{direction}")
-            points = block["points"][: self._budget(detail, len(block["points"]), minimal=0)]
-            for point in points:
-                beats.append(speech.beat(side, point))
+            # 未来那侧的下限是 2 条，**对所有裁剪级别生效**，不只是 `minimal`。
+            # 只在 `minimal` 上设下限是不够的：阶梯要先走完 `beats:3`→`beats:1` 才到 minimal，
+            # 而 `beats:1` 已经把这屏裁成「变窄」两个字加一条孤证了。
+            # 过去那侧封顶 2 且下限为 0，控时优先从这边扣。
+            budget = self._budget(detail, len(block["points"]), minimal=2 if is_next else 0)
+            if is_next:
+                budget = min(len(block["points"]), max(2, budget))
+            else:
+                budget = min(budget, 2)
+            points = block["points"][:budget]
+            for index, point in enumerate(points):
+                # 核心依据与它的引子并成一句，别断成「核心依据是。」加一句无主语的正文
+                text = f"得出这个判断的核心依据是，{point}" if is_next and index == 0 else point
+                beats.append(speech.beat(side, text))
             sides[side] = {
                 "label": block["label"],
                 "direction": block["direction"],
@@ -1113,13 +1203,15 @@ class ScriptBuilder:
                 "points": block["points"],
                 "spokenCount": len(points),
                 "pointsAvailable": len(block["points"]),
+                # 模板据此把未来那一侧的第一条依据加重显示
+                "emphasis": is_next,
             }
         return speech.text, {**sides, "beats": beats, "detail": detail}
 
     def _render_inquiry(self, payload: dict, detail: str) -> tuple[str, dict]:
         points = payload["points"][: max(1, self._budget(detail, len(payload["points"]), minimal=1))]
         speech = NarrationBuilder()
-        speech.say("最后一个问题")
+        speech.say(payload.get("lead") or INQUIRY_LEAD_LAST)
         if payload["question"]:
             speech.say(payload["question"])
         beats = [speech.beat("answer", point) for point in points]
@@ -1457,6 +1549,53 @@ def fit_duration(
 # ---------------------------------------------------------------- 入口
 
 
+def number_inquiries(builder: "ScriptBuilder", scenes: list[dict]) -> None:
+    """按成片顺序给每个提问屏发开场连接词：只有排在最后的那一屏才说「最后一个问题」。
+
+    必须在分镜顺序排定之后做——哪一屏是最后一个提问，取决于它排第几，
+    build 阶段的 builder 还不知道。写回 payload 而不是直接改 narration，
+    是因为 `fit_duration` 之后还会按裁剪级别重渲染，改 narration 会被覆盖掉。
+    """
+    ids = [scene["id"] for scene in scenes if scene["kind"] == "inquiry"]
+    for position, scene_id in enumerate(ids):
+        source = builder.deep_sources.get(scene_id)
+        if source is None:
+            continue
+        source["payload"]["lead"] = INQUIRY_LEAD_LAST if position == len(ids) - 1 else INQUIRY_LEAD_MORE
+    for scene in scenes:
+        if scene["kind"] == "inquiry" and scene["id"] in builder.deep_sources:
+            builder.rewrite_deep(scene, scene["data"]["detail"])
+
+
+def attach_visuals(builder: "ScriptBuilder", scenes: list[dict], collection: dict | None, analysis: dict | None) -> None:
+    """给分镜挂上 `visuals`（图表 + 主数字），并把抽取过程中的取舍并进 omissions。
+
+    没给 `--collection` 就整体降级成原来的纯文字画面——这条链路上不少公司还没有
+    第 1 步的采集产物，缺它不该让整支片子生不出来，但也不该悄悄少一半画面。
+    """
+    if collection is None:
+        builder.note_omission(
+            "collection",
+            None,
+            "画面不出图表与主数字，各屏退回纯文字卡",
+            "未提供 --collection（第 1 步采集产物或第 5 步合并产物）",
+        )
+        return
+
+    dimension_ids = [
+        text_of(item.get("dimensionId"))
+        for item in (builder.summary.get("dimensionSummary") or [])
+        if text_of(item.get("dimensionId"))
+    ]
+    payloads, notes = build_visuals(collection, analysis, dimension_ids)
+    for scene in scenes:
+        payload = payloads.get(scene["id"])
+        if payload:
+            scene["visuals"] = payload
+    for note in notes:
+        builder.note_omission(note["path"], None, note["handling"], note["reason"])
+
+
 def generate(
     summary: dict,
     rate: float,
@@ -1464,6 +1603,7 @@ def generate(
     max_seconds: float,
     strategy_ids: list[str] | None,
     analysis: dict | None = None,
+    collection: dict | None = None,
 ) -> dict:
     builder = ScriptBuilder(summary, rate, analysis)
     detailed = builder.analysis is not None
@@ -1490,6 +1630,7 @@ def generate(
         for analysis_key, factory in (
             (DEEP_BUSINESS_KEY, builder.build_business_model_scenes),
             (DEEP_MOAT_KEY, builder.build_moat_scenes),
+            (DEEP_INVERSION_KEY, builder.build_inversion_scenes),
         ):
             dimension_id = builder.dimension_id_for(analysis_key)
             if dimension_id is None:
@@ -1514,9 +1655,16 @@ def generate(
             scenes.append(scene)
     scenes.append(builder.build_closing())
 
+    # 先定连接词再控时：连接词是解说词的一部分，得进时长账
+    number_inquiries(builder, scenes)
+
     scenes, total = fit_duration(builder, scenes, min_seconds, max_seconds)
     builder.reconcile_strategy_omissions(scenes)
     within = min_seconds <= total <= max_seconds
+
+    # 视觉层挂在控时之后：`fit_duration` 裁的是解说词，图表与主数字不参与控时，
+    # 但被整条裁掉的分镜（比如只留一类策略）不该再挂画面数据。
+    attach_visuals(builder, scenes, collection, analysis)
 
     meta = summary.get("meta") or {}
     company_id = text_of(meta.get("companyId"))
@@ -1533,6 +1681,7 @@ def generate(
             "speechRate": rate,
             "targetRange": [min_seconds, max_seconds],
             "mode": "detailed" if detailed else "summary-only",
+            "visuals": any("visuals" in scene for scene in scenes),
             "generator": "tools/video/scripts/script_gen.py",
         },
         "scenes": scenes,
@@ -1568,6 +1717,14 @@ def main() -> int:
         "--analysis",
         type=Path,
         help="第 2 步产出 financials-analysis.json 的路径；给了就走详解版（商业模式与护城河深讲）",
+    )
+    parser.add_argument(
+        "--collection",
+        type=Path,
+        help=(
+            "第 1 步 financials-collection.json 或第 5 步 financials-final.json 的路径；"
+            "给了才有图表与主数字（画面的数字全部来自它，解说词一个字都不受影响）"
+        ),
     )
     parser.add_argument("--out", type=Path, help="输出路径；省略则写 stdout")
     parser.add_argument("--rate", type=float, default=DEFAULT_RATE, help=f"朗读语速，字/秒（默认 {DEFAULT_RATE}）")
@@ -1615,6 +1772,27 @@ def main() -> int:
             print(f"{args.analysis} 不符合 financials—analysis 契约：缺少 dimensions 对象", file=sys.stderr)
             return 2
 
+    # --collection 同理：路径写错就静默产出一支没有任何图表的片子，是同一类难发现的错。
+    # 第 5 步的 financials-final.json 把采集内容套在 `collection` 键下，两种入参都认。
+    collection = None
+    if args.collection is not None:
+        try:
+            collection = json.loads(args.collection.read_text(encoding="utf-8"))
+        except OSError as exc:
+            print(f"读不了 {args.collection}：{exc}", file=sys.stderr)
+            return 2
+        except json.JSONDecodeError as exc:
+            print(f"{args.collection} 不是合法 JSON：{exc}", file=sys.stderr)
+            return 2
+        if isinstance(collection, dict) and isinstance(collection.get("collection"), dict):
+            collection = collection["collection"]
+        if not isinstance(collection, dict) or "financialMetrics" not in collection:
+            print(
+                f"{args.collection} 不符合 financials—collection 契约：缺少 financialMetrics",
+                file=sys.stderr,
+            )
+            return 2
+
     # 目标区间跟着可用素材走：没有维度分析就没有 4-5 分钟的料，硬撑只能靠注水。
     default_min, default_max = DETAILED_RANGE if analysis is not None else SUMMARY_ONLY_RANGE
     min_seconds = default_min if args.min_seconds is None else args.min_seconds
@@ -1645,7 +1823,7 @@ def main() -> int:
             print(f"未知策略类别：{'、'.join(unknown)}；可选 {'、'.join(STRATEGY_ORDER)}", file=sys.stderr)
             return 2
 
-    result = generate(summary, args.rate, min_seconds, max_seconds, strategy_ids, analysis)
+    result = generate(summary, args.rate, min_seconds, max_seconds, strategy_ids, analysis, collection)
     payload = json.dumps(result, ensure_ascii=False, indent=2) + "\n"
 
     if args.out:

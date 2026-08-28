@@ -51,19 +51,11 @@ export const Report: React.FC<ReportProps> = ({
       {scenes.map((scene, index) => (
         <Sequence key={`${scene.id}-${index}`} from={scene.from} durationInFrames={scene.durationInFrames} name={scene.id}>
           <SceneFrame
-            header={companyName}
-            footer={`${index + 1} / ${totals.sceneCount}　·　数据截止 ${dataCutoff ?? '未标注'}`}
             progress={Math.min(1, (scene.from + scene.durationInFrames) / durationInFrames)}
             centered={scene.kind === 'closing'}
             captions={scene.captions ?? []}
           >
-            <SceneBody
-              scene={scene}
-              dimensions={dimensions}
-              companyName={companyName}
-              companyId={companyId}
-              dataCutoff={dataCutoff}
-            />
+            <SceneBody scene={scene} dimensions={dimensions} companyName={companyName} dataCutoff={dataCutoff} />
           </SceneFrame>
         </Sequence>
       ))}

@@ -13,12 +13,16 @@ import type {DimensionRef} from './types';
 export const DimensionChart: React.FC<{
   dimensions: DimensionRef[];
   activeId: string | null;
-}> = ({dimensions, activeId}) => {
+  /** 这一屏还有别的图要放时收窄：标签与条形都缩一档，分数列去掉，只留「现在讲第几条」。 */
+  compact?: boolean;
+}> = ({dimensions, activeId, compact = false}) => {
   const frame = useCurrentFrame();
   const grow = interpolate(frame, [0, 18], [0, 1], {extrapolateRight: 'clamp'});
+  const labelWidth = compact ? 150 : 190;
+  const barWidth = compact ? 210 : 520;
 
   return (
-    <div style={{display: 'flex', flexDirection: 'column', gap: 18}}>
+    <div style={{display: 'flex', flexDirection: 'column', gap: compact ? 14 : 18}}>
       {dimensions.map((dimension) => {
         const active = dimension.id === activeId;
         const hasScore = dimension.score !== null;
@@ -26,19 +30,19 @@ export const DimensionChart: React.FC<{
         return (
           // 非当前维度压到 0.68 而不是深色时的 0.5：浅色下「淡」本来就更容易糊成一片，
           // 再叠上浅色轨道，七条里会只剩点亮的那条看得清，全景图就失去意义了。
-          <div key={dimension.id} style={{display: 'flex', alignItems: 'center', gap: 20, opacity: active ? 1 : 0.68}}>
+          <div key={dimension.id} style={{display: 'flex', alignItems: 'center', gap: compact ? 14 : 20, opacity: active ? 1 : 0.68}}>
             <div
               style={{
-                width: 190,
+                width: labelWidth,
                 textAlign: 'right',
-                fontSize: 30,
+                fontSize: compact ? 24 : 30,
                 fontWeight: active ? 700 : 500,
                 color: active ? theme.text : theme.textDim,
               }}
             >
               {dimension.title}
             </div>
-            <div style={{position: 'relative', width: 520, height: 26, borderRadius: 13, backgroundColor: theme.muted}}>
+            <div style={{position: 'relative', width: barWidth, height: compact ? 20 : 26, borderRadius: 13, backgroundColor: theme.muted}}>
               {hasScore ? (
                 <div
                   style={{
@@ -51,16 +55,19 @@ export const DimensionChart: React.FC<{
                 />
               ) : null}
             </div>
-            <div
-              style={{
-                width: 190,
-                fontSize: 28,
-                fontWeight: active ? 700 : 500,
-                color: hasScore ? (active ? theme.accent : theme.textDim) : theme.warn,
-              }}
-            >
-              {dimension.scoreLabel}
-            </div>
+            {/* 收窄模式下分数列让给右边的图：当前维度的分数已经被那一屏的主数字放大显示了 */}
+            {compact ? null : (
+              <div
+                style={{
+                  width: 190,
+                  fontSize: 28,
+                  fontWeight: active ? 700 : 500,
+                  color: hasScore ? (active ? theme.accent : theme.textDim) : theme.warn,
+                }}
+              >
+                {dimension.scoreLabel}
+              </div>
+            )}
           </div>
         );
       })}

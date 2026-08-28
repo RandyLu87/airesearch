@@ -1,4 +1,5 @@
 import {AbsoluteFill, interpolate, useCurrentFrame} from 'remotion';
+import {ChartView, HeroMetric} from './Charts';
 import {DimensionChart} from './DimensionChart';
 import {theme} from './theme';
 import {
@@ -10,11 +11,31 @@ import {
   trendSide,
   type Beat,
   type Caption,
+  type Chart,
   type DimensionRef,
+  type Hero,
   type MoatType,
   type RevenueItem,
   type Scene,
 } from './types';
+
+/**
+ * 屏幕不复述解说词。
+ *
+ * 底部字幕条已经逐句显示着正在念的那段话，正文区再把同一段结论抄一遍，就是同一句话
+ * 在一屏上出现两次——这是原来「文本太多」最大的一处来源。所以正文区只在两种情况下出字：
+ *
+ *   1. 这段文字**比解说词多**（`detail !== 'full'`，即本片按控时没念全），压暗显示，
+ *      让人看得到报告里还有什么；
+ *   2. 它本来就是一份可扫读的清单（护城河逐条检验、触发条件），耳朵记不住、眼睛能。
+ *
+ * 大段结论散文两条都不占，交给字幕条。
+ */
+const carriesMoreThanSpoken = (scene: Scene): boolean => (str(scene.data.detail) ?? 'full') !== 'full';
+
+/** 一屏最多列几条要点；超出的部分靠 SpokenNote 如实说明，不静默截断。 */
+const MAX_POINTS_PER_SCREEN = 4;
+const MAX_POINTS_PER_GROUP = 2;
 
 const FadeIn: React.FC<{children: React.ReactNode; style?: React.CSSProperties}> = ({children, style}) => {
   const frame = useCurrentFrame();
@@ -58,43 +79,123 @@ const Reveal: React.FC<{from: number | null; children: React.ReactNode; style?: 
 const beatFrom = (beats: Beat[], index: number): number | null => beats[index]?.from ?? null;
 
 /**
- * 「原报告共 N 条，本片按控时只念了前 M 条」——只在真的没念全时出现。
+ * 「原报告共 N 条，画面列了几条、本片念了几条」——三个数不一样时才出现，且必须说全。
  *
- * M 为 0 要单独说：「只播报前 0 条」是句病句，而且会让人以为原报告是空的。
+ * 画面列不下而少列的那几条，和按控时没念的那几条，是两回事：前者眼睛也看不到，
+ * 后者压暗摆着还能看。把两者混成一句「只播报前 M 条」，等于把「画面上没有」说成了
+ * 「画面上有、只是没念」。M 为 0 也要单独说——「只播报前 0 条」是句病句。
  */
-const SpokenNote: React.FC<{available: number; spoken: number; unit: string}> = ({available, spoken, unit}) => {
-  if (available <= spoken) return null;
+const SpokenNote: React.FC<{available: number; shown: number; spoken: number; unit: string}> = ({
+  available,
+  shown,
+  spoken,
+  unit,
+}) => {
+  if (available <= shown && available <= spoken) return null;
+  const tail =
+    available > shown
+      ? `画面列出前 ${shown} 条，其余见报告`
+      : spoken === 0
+        ? '本片按控时都没有播报，仅画面压暗显示'
+        : `本片按控时只播报前 ${spoken} 条（其余压暗显示）`;
   return (
-    <div style={{fontSize: 23, color: theme.textDim, marginTop: 6}}>
-      {spoken === 0
-        ? `原报告共 ${available} ${unit}，本片按控时都没有播报，仅画面压暗显示`
-        : `原报告共 ${available} ${unit}，本片按控时只播报前 ${spoken} ${unit}（其余压暗显示）`}
+    <div style={{fontSize: 22, color: theme.textDim, marginTop: 6}}>
+      原报告共 {available} {unit}，{tail}
     </div>
   );
 };
 
-/** 底部字幕条：按帧号显示当前这一句解说词原文。 */
+/**
+ * 字幕的版面常量。**改任何一个都必须让 `CAPTION_ZONE` 跟着重算**，
+ * 所以这里不写死高度，而是从字号、行高、行数上限推出来——手写一个数迟早会和字号对不上。
+ */
+const CAPTION_FONT = 38;
+const CAPTION_LINE_HEIGHT = 1.5;
+const CAPTION_PADDING_Y = 12;
+/** 字幕框底边离画面底的距离：进度条（6px）+ 外框下内边距（48px）之上再留 18px 呼吸。 */
+const CAPTION_BOTTOM = 72;
+/**
+ * 按几行来预留高度。观察值：茅台这条片子最长的一句 84 字，在下面的 `CAPTION_MAX_WIDTH`
+ * 下占 2 行；留到 3 行是给别家公司更长的句子留的余量——字幕是从底部往上长的，
+ * 真长出第三行时会往正文里挤，与其到时候悄悄压住一行正文，不如现在就把位置让出来。
+ */
+const CAPTION_MAX_LINES = 3;
+const CAPTION_MAX_WIDTH = 1680;
+
+/**
+ * 正文区的底部安全距，从进度条上沿（离画面底 54px）往上量。
+ *
+ * = 字幕框底边高度 + 最高时的框高 − 进度条上沿高度，再留 4px 余量。
+ * 有了它，正文的垂直居中位置与「当前有没有字幕、字幕几行」完全无关。
+ */
+const CAPTION_ZONE =
+  CAPTION_BOTTOM + Math.round(CAPTION_FONT * CAPTION_LINE_HEIGHT * CAPTION_MAX_LINES) + CAPTION_PADDING_Y * 2 - 54 + 4;
+
+/** 出入场过渡的帧数上限（约 0.2 秒）；短句会按自身时长等比缩短，见下。 */
+const CAPTION_FADE = 6;
+
+/**
+ * 底部字幕条：按帧号显示当前这一句解说词原文。
+ *
+ * **绝对定位，完全不参与版面流**。它原来是 flex 列里的一个子元素，`minHeight: 68` 只保得住
+ * 单行；一旦某句话长到换成两行，这一格就撑到 90 多像素，把上面整屏正文顶起来——
+ * 于是每换一句字幕，画面就抖一下。现在它浮在正文之上，出现与消失都不动别人一个像素，
+ * 正文区改用固定的 `CAPTION_ZONE` 预留安全距，两边各管各的。
+ *
+ * 垂直方向从底部对齐（`bottom` 固定、`top` 不设）：多出来的行往上长，而不是把自己顶下去
+ * 压住进度条。
+ *
+ * 过渡：每句自己淡入、淡出，并带 10px 的上浮。相邻两句是**首尾相接**的（上一句的结束帧
+ * 就是下一句的起始帧），所以两段渐变拼起来正好是一次「旧句褪去 → 新句浮起」的交接，
+ * 而不是硬切。交接点上不透明度为 0，此时换文字、框宽突变都看不见。
+ */
 const CaptionBar: React.FC<{captions: Caption[]}> = ({captions}) => {
   const frame = useCurrentFrame();
   const active = captions.find((caption) => frame >= caption.from && frame < caption.from + caption.durationInFrames);
+  if (!active) return null;
+
+  // 极短的句子（「判定为存在。」这类）不能用满 6 帧淡入淡出，否则整句都在渐变里、
+  // 没有一帧是完全清晰的。按自身时长的四分之一封顶，至少留 2 帧。
+  const fade = Math.max(2, Math.min(CAPTION_FADE, Math.floor(active.durationInFrames / 4)));
+  const local = frame - active.from;
+  const appear = interpolate(local, [0, fade], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const vanish = interpolate(local, [active.durationInFrames - fade, active.durationInFrames], [1, 0], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
+
   return (
-    <div style={{minHeight: 68, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 40px'}}>
-      {active ? (
-        <div
-          style={{
-            fontSize: 30,
-            lineHeight: 1.45,
-            color: theme.text,
-            textAlign: 'center',
-            backgroundColor: theme.captionBg,
-            padding: '10px 26px',
-            borderRadius: 10,
-            maxWidth: 1560,
-          }}
-        >
-          {active.text}
-        </div>
-      ) : null}
+    <div
+      style={{
+        position: 'absolute',
+        left: 88,
+        right: 88,
+        bottom: CAPTION_BOTTOM,
+        display: 'flex',
+        justifyContent: 'center',
+        // 淡入与淡出取较小值：句子短到两段渐变重叠时，自然收敛成一次轻微的呼吸
+        opacity: Math.min(appear, vanish),
+        // 上浮只跟淡入走：进场时往上托一下，退场是原地褪去，不再动一次
+        transform: `translateY(${(1 - appear) * 10}px)`,
+      }}
+    >
+      <div
+        style={{
+          fontSize: CAPTION_FONT,
+          lineHeight: CAPTION_LINE_HEIGHT,
+          // 500 而不是常规字重：字幕是压在图表和正文之上的，细一档就会和背后的线条纠缠
+          fontWeight: 500,
+          color: theme.text,
+          textAlign: 'center',
+          backgroundColor: theme.captionBg,
+          border: `1px solid ${theme.captionBorder}`,
+          padding: `${CAPTION_PADDING_Y}px 30px`,
+          borderRadius: 12,
+          maxWidth: CAPTION_MAX_WIDTH,
+        }}
+      >
+        {active.text}
+      </div>
     </div>
   );
 };
@@ -119,92 +220,127 @@ const VerdictTag: React.FC<{verdict: string | null}> = ({verdict}) => {
   );
 };
 
-/** 标题卡：公司名 + 代码 + 数据截止日期 + 一句话定位。 */
-const OpeningCard: React.FC<{scene: Scene; companyId: string | null; dataCutoff: string | null}> = ({
-  scene,
-  companyId,
-  dataCutoff,
-}) => {
+/** 分镜的小标题（眼睛用来定位「现在这屏在讲什么」），统一样式。 */
+const SlideTitle: React.FC<{eyebrow?: string; title: string}> = ({eyebrow, title}) => (
+  <FadeIn>
+    {eyebrow ? <div style={{fontSize: 26, color: theme.textDim}}>{eyebrow}</div> : null}
+    <div style={{fontSize: 56, fontWeight: 800, color: theme.text, marginTop: eyebrow ? 6 : 0}}>{title}</div>
+  </FadeIn>
+);
+
+/** 压暗的补充正文：本片没念全时才出现，说明报告里还有什么。 */
+const Supplement: React.FC<{text: string}> = ({text}) => (
+  <div style={{fontSize: 26, lineHeight: 1.55, color: theme.textDim, opacity: 0.85, maxWidth: 1500}}>
+    <span style={{color: theme.warn}}>报告原文　</span>
+    {text}
+  </div>
+);
+
+const heroOf = (scene: Scene): Hero | null => scene.visuals?.hero ?? null;
+const chartOf = (scene: Scene): Chart | null => scene.visuals?.chart ?? null;
+
+/**
+ * 标题卡：公司名 + 数据截止 + 一句话定位 + 关键指标。
+ *
+ * 不显示 `companyId`（`sh-600519-kweichow-moutai`）——那是仓库里的目录名，
+ * 是给渲染层认文件用的内部编号，不是观众需要看到的东西。
+ */
+const OpeningCard: React.FC<{scene: Scene; dataCutoff: string | null}> = ({scene, dataCutoff}) => {
   const positioning = str(scene.data.positioning) ?? scene.narration;
+  const hero = heroOf(scene);
+  const chart = chartOf(scene);
   return (
-    <FadeIn style={{display: 'flex', flexDirection: 'column', gap: 28, maxWidth: 1480}}>
-      <div style={{display: 'flex', alignItems: 'baseline', gap: 24}}>
-        <div style={{fontSize: 84, fontWeight: 800, color: theme.text, lineHeight: 1.15}}>{scene.title}</div>
-        {companyId ? (
-          <div style={{fontSize: 34, color: theme.accent, fontFamily: 'ui-monospace, monospace'}}>{companyId}</div>
-        ) : null}
-      </div>
-      <div style={{fontSize: 32, color: theme.textDim}}>
-        长期价值调研 · 数据截止 {dataCutoff ?? '未标注'}
-      </div>
-      <div style={{height: 4, width: 240, backgroundColor: theme.accent}} />
-      <div style={{fontSize: 40, lineHeight: 1.6, color: theme.text}}>{positioning}</div>
-    </FadeIn>
+    <div style={{display: 'flex', flexDirection: 'column', gap: 26, width: '100%'}}>
+      <FadeIn style={{display: 'flex', flexDirection: 'column', gap: 16}}>
+        <div style={{fontSize: 78, fontWeight: 800, color: theme.text, lineHeight: 1.15}}>{scene.title}</div>
+        <div style={{fontSize: 28, color: theme.textDim}}>长期价值调研 · 数据截止 {dataCutoff ?? '未标注'}</div>
+        <div style={{height: 4, width: 240, backgroundColor: theme.accent}} />
+      </FadeIn>
+      {hero ? (
+        <FadeIn>
+          <HeroMetric hero={hero} />
+        </FadeIn>
+      ) : (
+        // 没有可画的数就把定位语放大顶上——开场屏不能是空的
+        <FadeIn style={{fontSize: 36, lineHeight: 1.6, color: theme.text, maxWidth: 1560}}>{positioning}</FadeIn>
+      )}
+      {chart ? <ChartView chart={chart} /> : null}
+    </div>
   );
 };
 
-/** 维度分镜：左边七维度全景图（点亮当前维度），右边当前维度的分数与理由原文。 */
+/**
+ * 维度分镜：左边七维度全景图（点亮当前维度），右边这一维的分数与图。
+ *
+ * 不再显示「维度 3 / 7」这类序号：左边的全景图本来就把「七条里点亮的是哪条」画出来了，
+ * 再写一遍序号是同一件事说两次。结论正文交给字幕条，只有没念全时才压暗补出来。
+ */
 const DimensionSlide: React.FC<{scene: Scene; dimensions: DimensionRef[]}> = ({scene, dimensions}) => {
   const activeId = str(scene.data.dimensionId) ?? scene.id;
   const active = dimensions.find((item) => item.id === activeId);
   const conclusion = str(scene.data.conclusion);
   const hasScore = (active?.score ?? null) !== null;
+  const hero = heroOf(scene);
+  const chart = chartOf(scene);
 
   return (
-    <div style={{display: 'flex', gap: 64, alignItems: 'center', width: '100%'}}>
-      <DimensionChart dimensions={dimensions} activeId={activeId} />
-      <FadeIn style={{flex: 1, display: 'flex', flexDirection: 'column', gap: 24}}>
-        <div style={{fontSize: 28, color: theme.textDim}}>
-          维度 {typeof scene.data.ordinal === 'number' ? scene.data.ordinal : '?'} / {dimensions.length}
+    <div style={{display: 'flex', gap: chart ? 48 : 64, alignItems: 'center', width: '100%'}}>
+      <DimensionChart dimensions={dimensions} activeId={activeId} compact={chart !== null} />
+      <FadeIn style={{flex: 1, display: 'flex', flexDirection: 'column', gap: chart ? 16 : 24}}>
+        <div style={{fontSize: 56, fontWeight: 800, color: theme.text}}>{scene.title}</div>
+        {/* 信心度就是这一维的主数字：把它放大，而不是混在一行小字里 */}
+        <div style={{display: 'flex', alignItems: 'baseline', gap: 14}}>
+          <div style={{fontSize: 26, color: theme.textDim}}>信心度</div>
+          <div style={{fontSize: 64, fontWeight: 800, color: hasScore ? theme.accent : theme.warn, lineHeight: 1}}>
+            {active?.scoreLabel ?? '暂无数据'}
+          </div>
         </div>
-        <div style={{fontSize: 68, fontWeight: 800, color: theme.text}}>{scene.title}</div>
-        <div style={{fontSize: 40, fontWeight: 700, color: hasScore ? theme.accent : theme.warn}}>
-          信心度 {active?.scoreLabel ?? '暂无数据'}
-        </div>
-        {conclusion ? (
-          <div style={{fontSize: 31, lineHeight: 1.65, color: theme.text}}>{conclusion}</div>
-        ) : (
-          <div style={{fontSize: 31, color: theme.warn}}>暂无数据（原报告该维度结论缺失）</div>
-        )}
+        {hero ? <HeroMetric hero={hero} size="medium" /> : null}
+        {chart ? <ChartView chart={chart} width={880} /> : null}
+        {conclusion === null ? (
+          <div style={{fontSize: 29, color: theme.warn}}>暂无数据（原报告该维度结论缺失）</div>
+        ) : !chart && carriesMoreThanSpoken(scene) ? (
+          <Supplement text={conclusion} />
+        ) : null}
       </FadeIn>
     </div>
   );
 };
 
-/** 策略要点卡：适用人群 + 建议正文 + 触发条件逐条。 */
+/** 策略要点卡：触发条件逐条。建议正文归字幕条，只有没念全时才压暗补出来。 */
 const StrategySlide: React.FC<{scene: Scene}> = ({scene}) => {
   const advice = str(scene.data.advice);
   const items = strategyItems(scene.data.items);
   const available = typeof scene.data.itemsAvailable === 'number' ? scene.data.itemsAvailable : items.length;
+  const shown = items.slice(0, MAX_POINTS_PER_SCREEN);
 
   return (
-    <FadeIn style={{display: 'flex', flexDirection: 'column', gap: 30, maxWidth: 1560}}>
-      <div style={{fontSize: 28, color: theme.textDim}}>策略建议</div>
-      <div style={{fontSize: 72, fontWeight: 800, color: theme.text}}>给「{scene.title}」的建议</div>
-      {advice ? (
-        <div style={{fontSize: 33, lineHeight: 1.65, color: theme.text}}>{advice}</div>
-      ) : (
-        <div style={{fontSize: 33, color: theme.warn}}>暂无建议正文（原报告未填写）</div>
-      )}
-      {items.length > 0 ? (
-        <div style={{display: 'flex', flexDirection: 'column', gap: 18, marginTop: 6}}>
-          {items.map((item, index) => (
+    <FadeIn style={{display: 'flex', flexDirection: 'column', gap: 26, maxWidth: 1620, width: '100%'}}>
+      <SlideTitle eyebrow="策略建议" title={`给「${scene.title}」的建议`} />
+      {advice === null ? (
+        <div style={{fontSize: 30, color: theme.warn}}>暂无建议正文（原报告未填写）</div>
+      ) : carriesMoreThanSpoken(scene) ? (
+        <Supplement text={advice} />
+      ) : null}
+      {shown.length > 0 ? (
+        <div style={{display: 'flex', flexDirection: 'column', gap: 16}}>
+          {shown.map((item, index) => (
             <Reveal key={index} from={beatFrom(scene.beats, index)}>
               <div
                 style={{
                   display: 'flex',
                   gap: 22,
-                  padding: '22px 28px',
+                  padding: '20px 26px',
                   borderRadius: 14,
                   backgroundColor: theme.bgSoft,
                   borderLeft: `6px solid ${theme.accent}`,
                 }}
               >
-                <div style={{flex: 1, fontSize: 29, lineHeight: 1.5, color: theme.text}}>
+                <div style={{flex: 1, fontSize: 27, lineHeight: 1.5, color: theme.text}}>
                   <span style={{color: theme.accent}}>触发条件　</span>
                   {str(item.condition) ?? '—'}
                 </div>
-                <div style={{flex: 1, fontSize: 29, lineHeight: 1.5, color: theme.text}}>
+                <div style={{flex: 1, fontSize: 27, lineHeight: 1.5, color: theme.text}}>
                   <span style={{color: theme.accent}}>应对　</span>
                   {str(item.action) ?? '—'}
                 </div>
@@ -214,56 +350,55 @@ const StrategySlide: React.FC<{scene: Scene}> = ({scene}) => {
         </div>
       ) : available > 0 ? (
         // 原报告有触发条件、只是被控时裁光了——说成「暂无」就是把裁剪讲成了事实缺失。
-        <div style={{fontSize: 29, color: theme.warn}}>原报告共 {available} 条触发条件，本片按控时未播报</div>
+        <div style={{fontSize: 28, color: theme.warn}}>原报告共 {available} 条触发条件，本片按控时未播报</div>
       ) : (
-        <div style={{fontSize: 29, color: theme.warn}}>暂无触发条件</div>
+        <div style={{fontSize: 28, color: theme.warn}}>暂无触发条件</div>
       )}
-      {items.length > 0 && available > items.length ? (
-        <div style={{fontSize: 24, color: theme.textDim}}>
-          原报告共 {available} 条触发条件，本片按控时只播报前 {items.length} 条
-        </div>
+      {shown.length > 0 ? (
+        <SpokenNote available={available} shown={shown.length} spoken={items.length} unit="条触发条件" />
       ) : null}
     </FadeIn>
   );
 };
 
-/** 收入结构卡：各业务线的金额与占比，占比同时画成条形；逐条随语音点亮。 */
+/** 收入结构卡：总收入主数字 + 各业务线占比条 + 分部同比。 */
 const RevenueSlide: React.FC<{scene: Scene}> = ({scene}) => {
   const items = objectList<RevenueItem>(scene.data.items);
   const available = typeof scene.data.itemsAvailable === 'number' ? scene.data.itemsAvailable : items.length;
   const spokenCount = typeof scene.data.spokenCount === 'number' ? scene.data.spokenCount : items.length;
-  const period = str(scene.data.period);
-  const canvas = [
-    str(scene.data.salesModel) ? `销售模式 ${str(scene.data.salesModel)}` : null,
-    str(scene.data.productForm) ? `产品形态 ${str(scene.data.productForm)}` : null,
-  ].filter(Boolean);
+  const hero = heroOf(scene);
+  const chart = chartOf(scene);
+  const shown = items.slice(0, MAX_POINTS_PER_SCREEN);
+  // 占比条和同比柱一起放得下才一起放：两块都超过四行就会顶到字幕条上
+  const withChart = chart !== null && shown.length <= MAX_POINTS_PER_SCREEN;
 
   return (
-    <div style={{display: 'flex', flexDirection: 'column', gap: 22, width: '100%', maxWidth: 1620}}>
-      <FadeIn>
-        <div style={{fontSize: 28, color: theme.textDim}}>收入结构{period ? `　·　${period}` : ''}</div>
-        <div style={{fontSize: 62, fontWeight: 800, color: theme.text, marginTop: 8}}>钱从哪里来</div>
-      </FadeIn>
-      {canvas.length > 0 ? (
-        <FadeIn style={{fontSize: 27, color: theme.textDim}}>{canvas.join('　·　')}</FadeIn>
-      ) : null}
-      <div style={{display: 'flex', flexDirection: 'column', gap: 16, marginTop: 4}}>
-        {items.map((item, index) => {
+    <div style={{display: 'flex', flexDirection: 'column', gap: 20, width: '100%', maxWidth: 1680}}>
+      <div style={{display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 40}}>
+        <SlideTitle eyebrow="收入结构" title="钱从哪里来" />
+        {hero ? (
+          <FadeIn>
+            <HeroMetric hero={hero} size="medium" />
+          </FadeIn>
+        ) : null}
+      </div>
+      <div style={{display: 'flex', flexDirection: 'column', gap: 14}}>
+        {shown.map((item, index) => {
           const ratio = shareRatio(item.sharePct);
           return (
             <Reveal key={index} from={beatFrom(scene.beats, index)}>
               <div style={{display: 'flex', alignItems: 'center', gap: 22}}>
-                <div style={{width: 470}}>
-                  <div style={{fontSize: 29, color: theme.text}}>{str(item.segment) ?? '—'}</div>
+                <div style={{width: 430}}>
+                  <div style={{fontSize: 28, color: theme.text}}>{str(item.segment) ?? '—'}</div>
                   {/* 口径括注：金额/占比列只放数值，否则一条「（占茅台酒+系列酒合计口径）」
                       就能把两列撑成三行。信息不丢，只是挪到名称底下当附注。 */}
                   {str(item.note) ? (
-                    <div style={{fontSize: 21, color: theme.textDim, lineHeight: 1.35, marginTop: 4}}>
+                    <div style={{fontSize: 20, color: theme.textDim, lineHeight: 1.35, marginTop: 4}}>
                       {str(item.note)}
                     </div>
                   ) : null}
                 </div>
-                <div style={{position: 'relative', flex: 1, height: 30, borderRadius: 15, backgroundColor: theme.muted}}>
+                <div style={{position: 'relative', flex: 1, height: 28, borderRadius: 14, backgroundColor: theme.muted}}>
                   {/* 占比认不出来就不画条，只留灰轨——和分数缺失时的处理同一个口径 */}
                   {ratio === null ? null : (
                     <div
@@ -271,16 +406,16 @@ const RevenueSlide: React.FC<{scene: Scene}> = ({scene}) => {
                         position: 'absolute',
                         inset: 0,
                         width: `${ratio * 100}%`,
-                        borderRadius: 15,
+                        borderRadius: 14,
                         backgroundColor: theme.accent,
                       }}
                     />
                   )}
                 </div>
-                <div style={{width: 200, fontSize: 27, color: theme.accent, textAlign: 'right'}}>
+                <div style={{width: 180, fontSize: 26, color: theme.accent, textAlign: 'right'}}>
                   {str(item.sharePct) ?? '占比暂无'}
                 </div>
-                <div style={{width: 300, fontSize: 26, color: theme.textDim, textAlign: 'right'}}>
+                <div style={{width: 260, fontSize: 25, color: theme.textDim, textAlign: 'right'}}>
                   {str(item.revenue) ?? '金额暂无'}
                 </div>
               </div>
@@ -288,96 +423,139 @@ const RevenueSlide: React.FC<{scene: Scene}> = ({scene}) => {
           );
         })}
       </div>
-      <SpokenNote available={available} spoken={spokenCount} unit="条业务线" />
+      <SpokenNote available={available} shown={shown.length} spoken={spokenCount} unit="条业务线" />
+      {withChart ? (
+        <FadeIn style={{marginTop: 8, borderTop: `2px solid ${theme.line}`, paddingTop: 18}}>
+          <ChartView chart={chart!} />
+        </FadeIn>
+      ) : null}
     </div>
   );
 };
 
-/** 经济特征卡：粘性判定 + 粘性机制与经营杠杆的要点，逐条随语音点亮。 */
+/** 经济特征卡：利润率趋势图在左，粘性机制与经营杠杆的要点在右。 */
 const EconomicsSlide: React.FC<{scene: Scene}> = ({scene}) => {
   const level = str(scene.data.level);
+  const chart = chartOf(scene);
   const groups: Array<[string, string, string[]]> = [
     ['mechanism', '粘性靠什么', stringList(scene.data.mechanism)],
     ['leverage', '经营杠杆', stringList(scene.data.leverage)],
   ];
 
-  return (
-    <div style={{display: 'flex', flexDirection: 'column', gap: 22, width: '100%', maxWidth: 1620}}>
-      <FadeIn style={{display: 'flex', alignItems: 'baseline', gap: 26}}>
-        <div style={{fontSize: 62, fontWeight: 800, color: theme.text}}>这门生意的经济特征</div>
-        <div style={{fontSize: 32, color: level ? theme.accent : theme.warn}}>
-          用户粘性 {level ?? '暂无判定'}
-        </div>
-      </FadeIn>
-      {groups.map(([group, label, points]) => {
-        if (points.length === 0) return null;
+  const points = (
+    <div style={{flex: 1, display: 'flex', flexDirection: 'column', gap: 18, minWidth: 0}}>
+      {groups.map(([group, label, all]) => {
+        if (all.length === 0) return null;
         const beats = scene.beats.filter((beat) => beat.group === group);
+        const shown = all.slice(0, MAX_POINTS_PER_GROUP);
         return (
-          <div key={group} style={{display: 'flex', flexDirection: 'column', gap: 12}}>
-            <div style={{fontSize: 26, color: theme.textDim}}>{label}</div>
-            {points.map((point, index) => (
+          <div key={group} style={{display: 'flex', flexDirection: 'column', gap: 10}}>
+            <div style={{fontSize: 25, color: theme.textDim}}>{label}</div>
+            {shown.map((point, index) => (
               <Reveal key={index} from={beatFrom(beats, index)}>
                 <div
                   style={{
-                    fontSize: 28,
-                    lineHeight: 1.5,
+                    fontSize: 25,
+                    lineHeight: 1.45,
                     color: theme.text,
                     backgroundColor: theme.bgSoft,
                     borderLeft: `6px solid ${theme.accent}`,
                     borderRadius: 12,
-                    padding: '14px 24px',
+                    padding: '12px 20px',
                   }}
                 >
                   {point}
                 </div>
               </Reveal>
             ))}
-            <SpokenNote available={points.length} spoken={beats.length} unit={`条${label}`} />
+            {/* 单位写「条要点」而不是「条粘性靠什么」：分组名已经在上一行的小标题里了，
+                再塞进计量单位里会读成「原报告共 3 条粘性靠什么」这样的病句 */}
+            <SpokenNote available={all.length} shown={shown.length} spoken={beats.length} unit="条要点" />
           </div>
         );
       })}
     </div>
   );
-};
-
-/** 护城河清单卡：五类壁垒逐条给出判定，随语音一行行点亮。 */
-const MoatChecklistSlide: React.FC<{scene: Scene}> = ({scene}) => {
-  const items = objectList<MoatType>(scene.data.items);
-  const spokenTest = scene.data.spokenTest !== false;
 
   return (
-    <div style={{display: 'flex', flexDirection: 'column', gap: 20, width: '100%', maxWidth: 1620}}>
-      <FadeIn>
-        <div style={{fontSize: 28, color: theme.textDim}}>护城河</div>
-        <div style={{fontSize: 62, fontWeight: 800, color: theme.text, marginTop: 8}}>逐条检验</div>
-      </FadeIn>
-      {items.map((item, index) => (
-        <Reveal key={index} from={beatFrom(scene.beats, index)}>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 26,
-              backgroundColor: theme.bgSoft,
-              borderRadius: 12,
-              padding: '16px 26px',
-            }}
-          >
-            <div style={{width: 260, fontSize: 30, fontWeight: 700, color: theme.text}}>{str(item.type) ?? '—'}</div>
-            {/* 检验问题即使因控时没念，画面上仍然给着：屏幕能承载的比耳朵多。
-                没念到就压暗，和别的卡片里「没念到的要点」用同一种亮度语言。 */}
-            <div style={{flex: 1, fontSize: 26, color: theme.textDim, lineHeight: 1.45, opacity: spokenTest ? 1 : 0.55}}>
-              {str(item.test) ?? ''}
-            </div>
-            <VerdictTag verdict={str(item.verdict)} />
-          </div>
-        </Reveal>
-      ))}
+    <div style={{display: 'flex', flexDirection: 'column', gap: 20, width: '100%', maxWidth: 1700}}>
+      <div style={{display: 'flex', alignItems: 'flex-end', gap: 26}}>
+        <SlideTitle title="这门生意的经济特征" />
+        <div style={{fontSize: 30, color: level ? theme.accent : theme.warn, paddingBottom: 8}}>
+          用户粘性 {level ?? '暂无判定'}
+        </div>
+      </div>
+      <div style={{display: 'flex', gap: 44, alignItems: 'flex-start', width: '100%'}}>
+        {chart ? (
+          <FadeIn>
+            <ChartView chart={chart} width={780} />
+          </FadeIn>
+        ) : null}
+        {points}
+      </div>
     </div>
   );
 };
 
-/** 护城河趋势卡：过去五年与未来五年并排，方向 + 判断依据逐条点亮。 */
+/**
+ * 护城河整体判定：五类壁垒的结论并排给出，一眼扫完。
+ *
+ * 这屏原来是「逐条检验」——每类壁垒占一行，行里还带着检验问题
+ * （「是否能在不损失销量的情况下提价？」），解说也一条一条念过去。检验问题是**研究方法**，
+ * 不是结论；把它搬上屏又念一遍，等于用三十多秒讲了一遍流程。现在只留结论：
+ * 五张卡并排，判定各自成色，解说一句话给全貌，省下的时间挪给「过去与未来」那一屏。
+ *
+ * 没有 `beats`（整体陈述没有逐条节奏），所以不套 `Reveal`——五张卡随屏一起淡入。
+ */
+const MoatOverviewSlide: React.FC<{scene: Scene}> = ({scene}) => {
+  const items = objectList<MoatType>(scene.data.items);
+
+  return (
+    <div style={{display: 'flex', flexDirection: 'column', gap: 30, width: '100%', maxWidth: 1680}}>
+      <SlideTitle eyebrow="护城河" title="整体判定" />
+      <FadeIn style={{display: 'flex', gap: 18, width: '100%'}}>
+        {items.map((item, index) => {
+          const verdict = str(item.verdict);
+          // 与 VerdictTag 同一套口径：颜色只是冗余编码，判定原文始终写在卡里
+          const color = verdict === '存在' ? theme.accent : verdict === '待验证' ? theme.warn : theme.textDim;
+          return (
+            <div
+              key={index}
+              style={{
+                flex: 1,
+                backgroundColor: theme.bgSoft,
+                borderRadius: 14,
+                borderTop: `5px solid ${color}`,
+                padding: '30px 26px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 18,
+                // 这一屏只有五张卡，撑不满就会显得没做完；卡片本身做大是最省事的填充方式
+                minHeight: 230,
+              }}
+            >
+              <div style={{fontSize: 30, fontWeight: 700, color: theme.text, lineHeight: 1.3}}>
+                {str(item.type) ?? '—'}
+              </div>
+              <div style={{fontSize: 42, fontWeight: 800, color, marginTop: 'auto'}}>{verdict ?? '暂无判定'}</div>
+            </div>
+          );
+        })}
+      </FadeIn>
+    </div>
+  );
+};
+
+/**
+ * 护城河趋势卡：过去五年与未来五年并排。
+ *
+ * **重心明确偏向未来那一栏**：过去是已经发生的事，未来才是这屏的结论。
+ * 所以未来栏占更宽的份额、加一道强调描边，并把它的**第一条依据单独提出来当「核心依据」**——
+ * 一个方向判断没有依据就只是个断言，而混在一串并列句里的依据等于没有强调。
+ *
+ * 「核心依据」只认第一条，与 script_gen 的 `_render_trend` 同一个口径：契约里 ①②③④
+ * 是按重要性写的。挑哪条更重要是研究者的判断，模板不做语义挑选。
+ */
 const MoatTrendSlide: React.FC<{scene: Scene}> = ({scene}) => {
   const sides: Array<[string, ReturnType<typeof trendSide>]> = [
     ['past', trendSide(scene.data.past)],
@@ -385,37 +563,71 @@ const MoatTrendSlide: React.FC<{scene: Scene}> = ({scene}) => {
   ];
 
   return (
-    <div style={{display: 'flex', flexDirection: 'column', gap: 24, width: '100%', maxWidth: 1620}}>
-      <FadeIn style={{fontSize: 62, fontWeight: 800, color: theme.text}}>护城河的过去与未来</FadeIn>
-      <div style={{display: 'flex', gap: 34, alignItems: 'stretch'}}>
+    <div style={{display: 'flex', flexDirection: 'column', gap: 22, width: '100%', maxWidth: 1680}}>
+      <SlideTitle title="护城河的过去与未来" />
+      <div style={{display: 'flex', gap: 30, alignItems: 'stretch'}}>
         {sides.map(([key, side]) => {
           if (side === null) return null;
+          const isNext = key === 'next';
           const beats = scene.beats.filter((beat) => beat.group === key);
-          const points = stringList(side.points);
-          const spoken = typeof side.spokenCount === 'number' ? side.spokenCount : points.length;
+          const all = stringList(side.points);
+          const spoken = typeof side.spokenCount === 'number' ? side.spokenCount : all.length;
+          const shown = all.slice(0, isNext ? MAX_POINTS_PER_SCREEN : MAX_POINTS_PER_GROUP);
           return (
             <div
               key={key}
+              // 未来栏拿到 1.45 倍宽度：它要装下核心依据卡，也是想让人先看它
               style={{
-                flex: 1,
+                flex: isNext ? 1.45 : 1,
                 display: 'flex',
                 flexDirection: 'column',
-                gap: 16,
+                gap: 14,
                 backgroundColor: theme.bgSoft,
                 borderRadius: 14,
-                padding: '26px 30px',
+                border: isNext ? `2px solid ${theme.accent}` : `1px solid ${theme.line}`,
+                padding: '24px 28px',
               }}
             >
-              <div style={{fontSize: 28, color: theme.textDim}}>{str(side.label) ?? ''}</div>
-              <div style={{fontSize: 46, fontWeight: 800, color: side.direction ? theme.accent : theme.warn}}>
+              <div style={{fontSize: 26, color: theme.textDim}}>{str(side.label) ?? ''}</div>
+              {/* 方向判断就是这一栏的主数字：变宽还是变窄，是这屏唯一要记住的事 */}
+              <div
+                style={{
+                  fontSize: isNext ? 58 : 42,
+                  fontWeight: 800,
+                  color: side.direction ? theme.accent : theme.warn,
+                  lineHeight: 1.1,
+                }}
+              >
                 {str(side.direction) ?? '暂无判断'}
               </div>
-              {points.map((point, index) => (
-                <Reveal key={index} from={beatFrom(beats, index)}>
-                  <div style={{fontSize: 26, lineHeight: 1.55, color: theme.text}}>{point}</div>
-                </Reveal>
-              ))}
-              <SpokenNote available={points.length} spoken={spoken} unit="条依据" />
+              {shown.map((point, index) => {
+                const isCore = isNext && index === 0;
+                return (
+                  <Reveal key={index} from={beatFrom(beats, index)}>
+                    <div
+                      style={
+                        isCore
+                          ? {
+                              fontSize: 26,
+                              lineHeight: 1.5,
+                              color: theme.text,
+                              backgroundColor: theme.bg,
+                              borderLeft: `6px solid ${theme.accent}`,
+                              borderRadius: 10,
+                              padding: '14px 20px',
+                            }
+                          : {fontSize: 24, lineHeight: 1.5, color: theme.text}
+                      }
+                    >
+                      {isCore ? (
+                        <div style={{fontSize: 21, fontWeight: 700, color: theme.accent, marginBottom: 6}}>核心依据</div>
+                      ) : null}
+                      {point}
+                    </div>
+                  </Reveal>
+                );
+              })}
+              <SpokenNote available={all.length} shown={shown.length} spoken={spoken} unit="条依据" />
             </div>
           );
         })}
@@ -424,27 +636,50 @@ const MoatTrendSlide: React.FC<{scene: Scene}> = ({scene}) => {
   );
 };
 
-/** 十年之问卡：问题在上，回答要点逐条点亮。 */
+/**
+ * 提问卡：问题在上，回答要点逐条点亮。
+ *
+ * 片子里有两屏用它——护城河的「十年之问」和逆向思考的「聪明人为什么会不买/做空这家公司？」。
+ * 所以眉标题取 `scene.title` 而不是写死：写死过一次「十年之问」，第二屏挂上来就会
+ * 顶着别人的标题讲自己的内容。
+ */
 const InquirySlide: React.FC<{scene: Scene}> = ({scene}) => {
   const question = str(scene.data.question);
-  const points = stringList(scene.data.points);
-  const spokenCount = typeof scene.data.spokenCount === 'number' ? scene.data.spokenCount : points.length;
+  const all = stringList(scene.data.points);
+  const spokenCount = typeof scene.data.spokenCount === 'number' ? scene.data.spokenCount : all.length;
+  const chart = chartOf(scene);
+  // 有图的那屏只是变窄，没有变矮——矩阵有五百多像素高，右栏放两条要点会空掉大半屏。
+  // 所以条数不减，只把字号收一档让它们在窄栏里排得开。
+  const shown = all.slice(0, MAX_POINTS_PER_SCREEN);
 
-  return (
-    <div style={{display: 'flex', flexDirection: 'column', gap: 22, width: '100%', maxWidth: 1560}}>
-      <FadeIn>
-        <div style={{fontSize: 28, color: theme.textDim}}>十年之问</div>
-        <div style={{fontSize: 50, fontWeight: 800, color: theme.text, marginTop: 10, lineHeight: 1.3}}>
-          {question ?? '原报告未记录这一问'}
-        </div>
-        <div style={{height: 4, width: 240, backgroundColor: theme.accent, marginTop: 18}} />
-      </FadeIn>
-      {points.map((point, index) => (
+  const points = (
+    <div style={{flex: 1, display: 'flex', flexDirection: 'column', gap: 18, minWidth: 0}}>
+      {shown.map((point, index) => (
         <Reveal key={index} from={beatFrom(scene.beats, index)}>
-          <div style={{fontSize: 29, lineHeight: 1.55, color: theme.text}}>{point}</div>
+          <div style={{fontSize: chart ? 26 : 28, lineHeight: 1.5, color: theme.text}}>{point}</div>
         </Reveal>
       ))}
-      <SpokenNote available={points.length} spoken={spokenCount} unit="条回答要点" />
+      <SpokenNote available={all.length} shown={shown.length} spoken={spokenCount} unit="条回答要点" />
+    </div>
+  );
+
+  return (
+    <div style={{display: 'flex', flexDirection: 'column', gap: 22, width: '100%', maxWidth: chart ? 1700 : 1560}}>
+      {/* 与收入结构、护城河等屏共用同一个标题组件，头部字号与间距全片一致 */}
+      <SlideTitle eyebrow={scene.title} title={question ?? '原报告未记录这一问'} />
+      <FadeIn>
+        <div style={{height: 4, width: 240, backgroundColor: theme.accent}} />
+      </FadeIn>
+      {chart ? (
+        <div style={{display: 'flex', gap: 46, alignItems: 'flex-start', width: '100%'}}>
+          <FadeIn>
+            <ChartView chart={chart} />
+          </FadeIn>
+          {points}
+        </div>
+      ) : (
+        points
+      )}
     </div>
   );
 };
@@ -466,12 +701,11 @@ export const SceneBody: React.FC<{
   scene: Scene;
   dimensions: DimensionRef[];
   companyName: string;
-  companyId: string | null;
   dataCutoff: string | null;
-}> = ({scene, dimensions, companyName, companyId, dataCutoff}) => {
+}> = ({scene, dimensions, companyName, dataCutoff}) => {
   switch (scene.kind) {
     case 'opening':
-      return <OpeningCard scene={scene} companyId={companyId} dataCutoff={dataCutoff} />;
+      return <OpeningCard scene={scene} dataCutoff={dataCutoff} />;
     case 'dimension':
       return <DimensionSlide scene={scene} dimensions={dimensions} />;
     case 'strategy':
@@ -479,8 +713,8 @@ export const SceneBody: React.FC<{
     case 'business-model':
       // 一个 kind 两屏：收入结构与经济特征，靠 data.focus 分流
       return scene.data.focus === 'economics' ? <EconomicsSlide scene={scene} /> : <RevenueSlide scene={scene} />;
-    case 'moat-checklist':
-      return <MoatChecklistSlide scene={scene} />;
+    case 'moat-overview':
+      return <MoatOverviewSlide scene={scene} />;
     case 'moat-trend':
       return <MoatTrendSlide scene={scene} />;
     case 'inquiry':
@@ -490,20 +724,20 @@ export const SceneBody: React.FC<{
   }
 };
 
-/** 每个分镜共用的外框：顶部公司名/截止日期，底部字幕条与整片进度条。 */
+/**
+ * 每个分镜共用的外框：正文区 + 字幕条 + 整片进度条。
+ *
+ * 顶部那一行（公司名 + 「3 / 16 · 数据截止 …」）已经去掉：公司名在开场卡和结尾卡各出现
+ * 一次就够，每屏都顶着一行等于每屏都少一行正文；分镜序号是内部编号，观众要的是
+ * 「还有多久」而不是「第几段」，那件事底部的进度条已经在做了。
+ */
 export const SceneFrame: React.FC<{
   children: React.ReactNode;
-  header: string;
-  footer: string;
   progress: number;
   centered: boolean;
   captions: Caption[];
-}> = ({children, header, footer, progress, centered, captions}) => (
-  <AbsoluteFill style={{backgroundColor: theme.bg, fontFamily: theme.fontFamily, padding: '56px 88px 48px'}}>
-    <div style={{display: 'flex', justifyContent: 'space-between', fontSize: 26, color: theme.textDim}}>
-      <div>{header}</div>
-      <div>{footer}</div>
-    </div>
+}> = ({children, progress, centered, captions}) => (
+  <AbsoluteFill style={{backgroundColor: theme.bg, fontFamily: theme.fontFamily, padding: '52px 88px 48px'}}>
     <div
       style={{
         flex: 1,
@@ -511,15 +745,17 @@ export const SceneFrame: React.FC<{
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: centered ? 'center' : 'flex-start',
-        // 正文区和字幕条之间留出固定间距，字幕出现时正文不会被顶得跳动
-        paddingBottom: 12,
+        // 给浮在上面的字幕留出固定安全距。这个值是常量、与当前有没有字幕无关，
+        // 所以正文的垂直居中位置在整条分镜里始终不变——字幕来去不会带动版面。
+        paddingBottom: CAPTION_ZONE,
       }}
     >
       {children}
     </div>
-    <CaptionBar captions={captions} />
-    <div style={{height: 6, borderRadius: 3, backgroundColor: theme.line, marginTop: 14}}>
+    <div style={{height: 6, borderRadius: 3, backgroundColor: theme.line}}>
       <div style={{height: 6, borderRadius: 3, width: `${progress * 100}%`, backgroundColor: theme.accent}} />
     </div>
+    {/* 最后渲染、绝对定位：盖在正文之上，不占任何版面高度 */}
+    <CaptionBar captions={captions} />
   </AbsoluteFill>
 );

@@ -13,13 +13,26 @@ const FPS = 30;
 const fakeBeats = (texts: string[], group: string) =>
   texts.map((text, index) => ({group, text, sentenceIndex: index, from: Math.round(index * 1.5 * FPS)}));
 
-const raw: Array<Omit<Scene, 'from'>> = [
+// `visuals` 在这里可省：只有需要预览图表的分镜才写，其余补 null。
+const raw: Array<Omit<Scene, 'from' | 'visuals'> & {visuals?: Scene['visuals']}> = [
   {
     id: 'opening',
     kind: 'opening',
     title: '示例公司 (Demo Inc.)',
     narration: '',
     data: {positioning: '这是模板预览用的假数据，用来检查排版与空态，不代表任何真实公司。'},
+    visuals: {
+      hero: {label: '总市值', value: '1234.5亿元', note: '0000-00-00'},
+      chart: {
+        type: 'kpi-grid',
+        items: [
+          {label: 'FY0000 营业收入', value: '500亿元', delta: '+12.3%', deltaNote: '同比'},
+          {label: '净利润', value: '80亿元', delta: '-4.5%', deltaNote: '同比'},
+          {label: '毛利率', value: '45.6%'},
+          {label: '市盈率', value: '15.4倍', note: 'TTM'},
+        ],
+      },
+    },
     captions: [{text: '这是模板预览用的假数据。', from: 0, durationInFrames: 3 * FPS}],
     beats: [],
     durationInFrames: 5 * FPS,
@@ -31,6 +44,33 @@ const raw: Array<Omit<Scene, 'from'>> = [
     title: '生意质量',
     narration: '',
     data: {dimensionId: 'businessQuality', ordinal: 1, score: 6.5, scoreLabel: '6.5 分', conclusion: '示例结论文本。'},
+    visuals: {
+      hero: {label: '毛利率', value: '45.6', unit: '%', note: 'FY0000'},
+      chart: {
+        type: 'line-series',
+        axisUnit: '亿元',
+        zeroBaseline: true,
+        series: [
+          {
+            name: '营业收入',
+            points: [
+              {x: 'FY0001', y: 300, label: '300亿元'},
+              {x: 'FY0002', y: 380, label: '380亿元'},
+              {x: 'FY0003', y: 500, label: '500亿元'},
+            ],
+          },
+          {
+            // 由负转正：零轴是这条线唯一要说清楚的事，预览里必须能看到
+            name: '净利润',
+            points: [
+              {x: 'FY0001', y: -40, label: '-40亿元'},
+              {x: 'FY0002', y: -10, label: '-10亿元'},
+              {x: 'FY0003', y: 80, label: '80亿元'},
+            ],
+          },
+        ],
+      },
+    },
     captions: [],
     beats: [],
     durationInFrames: 5 * FPS,
@@ -74,8 +114,8 @@ const raw: Array<Omit<Scene, 'from'>> = [
     audioSeconds: null,
   },
   {
-    id: 'moat-checklist',
-    kind: 'moat-checklist',
+    id: 'moat-overview',
+    kind: 'moat-overview',
     title: '护城河逐条检验',
     narration: '',
     data: {
@@ -158,7 +198,7 @@ let cursor = 0;
 const scenes: Scene[] = raw.map((scene) => {
   const from = cursor;
   cursor += scene.durationInFrames;
-  return {...scene, from};
+  return {...scene, visuals: scene.visuals ?? null, from};
 });
 
 export const demoProps: ReportProps = {

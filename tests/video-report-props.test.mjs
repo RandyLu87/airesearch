@@ -248,7 +248,7 @@ const threeCues = [
 ];
 
 test("四种深讲 kind 都认，帧数换算与其他分镜一视同仁", () => {
-  const kinds = ["business-model", "moat-checklist", "moat-trend", "inquiry"];
+  const kinds = ["business-model", "moat-overview", "moat-trend", "inquiry"];
   const { props } = buildReportProps({
     storyboard: storyboardOf(kinds.map((kind) => deepScene(`s-${kind}`, kind))),
     manifest: manifestOf(
@@ -310,9 +310,9 @@ test("字幕文本用 narration 原文，不用 TTS 的口播改写稿", () => {
 
 test("要点的点亮帧号落在念它的那一句上", () => {
   const { props } = buildReportProps({
-    storyboard: storyboardOf([deepScene("moat-checklist", "moat-checklist")]),
+    storyboard: storyboardOf([deepScene("moat-overview", "moat-overview")]),
     manifest: manifestOf([
-      { index: 1, id: "moat-checklist", audio: "01.mp3", containerDurationSeconds: 9, cues: threeCues },
+      { index: 1, id: "moat-overview", audio: "01.mp3", containerDurationSeconds: 9, cues: threeCues },
     ]),
     fps: 30,
     scenePadSeconds: 0,
@@ -379,4 +379,27 @@ test("没有 beats 的分镜照样有字幕，beats 为空数组而不是缺字�
   });
   assert.deepEqual(props.scenes[0].beats, []);
   assert.ok(props.scenes[0].captions.length >= 1);
+});
+
+test("图表与主数字整块透传，模板拿到的就是 visuals.py 写的那份", () => {
+  const visuals = {
+    hero: { label: "总市值", value: "1.68万亿元" },
+    chart: { type: "line-series", axisUnit: "亿元", zeroBaseline: true, series: [{ name: "营业收入", points: [] }] },
+  };
+  const { props } = buildReportProps({
+    storyboard: storyboardOf([dimensionScene("businessQuality", 6.5, { visuals })]),
+    manifest: manifestOf([{ index: 1, id: "dimension-businessQuality", audio: "01.mp3", containerDurationSeconds: 6 }]),
+    fps: 30,
+  });
+  // 深比较而不是逐字段挑：换算层对 visuals 不该做任何改写，多一处改写就是多一处能对不上的地方
+  assert.deepEqual(props.scenes[0].visuals, visuals);
+});
+
+test("没有 visuals 的分镜给 null 而不是缺字段——模板按 null 走纯文字卡", () => {
+  const { props } = buildReportProps({
+    storyboard: storyboardOf([dimensionScene("moat", 6)]),
+    manifest: manifestOf([{ index: 1, id: "dimension-moat", audio: "01.mp3", containerDurationSeconds: 6 }]),
+    fps: 30,
+  });
+  assert.equal(props.scenes[0].visuals, null);
 });

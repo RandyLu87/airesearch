@@ -72,6 +72,10 @@ function parseArgs(argv) {
  * 同目录下有 `financials-analysis.json` 就一起带上，走 4-5 分钟的详解版；没有就只用总结，
  * script_gen 会降级成 2-3 分钟并把这件事记进 omissions。缺分析文件不是错误——18 个公司
  * 目录里就有没跑完第 2 步的，整批渲染不该为此中断。
+ *
+ * 采集数据（画面上图表与主数字的唯一来源）优先取第 5 步的 `financials-final.json`：
+ * 它是过了校验闸门的合并产物，比直接读第 1 步的原件多一道保障；没有才退回
+ * `financials-collection.json`。两个都没有就是一支没有图表的纯文字片，同样记账不中断。
  */
 function resolveCompany(value) {
   const candidates = value.includes(path.sep)
@@ -82,10 +86,14 @@ function resolveCompany(value) {
     die(`找不到 financials-summary.json，试过：\n  ${candidates.map((c) => path.join(c, 'financials-summary.json')).join('\n  ')}`);
   }
   const analysis = path.join(dir, 'financials-analysis.json');
+  const collection = [path.join(dir, 'financials-final.json'), path.join(dir, 'financials-collection.json')].find(
+    existsSync,
+  );
   return {
     id: path.basename(dir),
     summary: path.join(dir, 'financials-summary.json'),
     analysis: existsSync(analysis) ? analysis : null,
+    collection: collection ?? null,
   };
 }
 
@@ -153,7 +161,12 @@ function artifact(file) {
 
 function main() {
   const opts = parseArgs(process.argv.slice(2));
-  const {id, summary, analysis} = resolveCompany(opts.company);
+  const {id, summary, analysis, collection} = resolveCompany(opts.company);
+  if (!collection) {
+    process.stderr.write(
+      `提示：${id} 没有 financials-final.json / financials-collection.json，本片画面不出图表与主数字（纯文字卡）\n`,
+    );
+  }
   if (!analysis) {
     process.stderr.write(
       `提示：${id} 没有 financials-analysis.json，本片按纯总结模式产出（2-3 分钟，无商业模式与护城河深讲）\n`,
@@ -181,6 +194,7 @@ function main() {
       '--summary',
       summary,
       ...(analysis ? ['--analysis', analysis] : []),
+      ...(collection ? ['--collection', collection] : []),
       '--out',
       scriptFile,
     ],
@@ -215,6 +229,7 @@ function main() {
     companyId: id,
     summary: path.relative(repoRoot, summary),
     analysis: analysis ? path.relative(repoRoot, analysis) : null,
+    collection: collection ? path.relative(repoRoot, collection) : null,
     mode: analysis ? 'detailed' : 'summary-only',
     totalSeconds: Number(totalSeconds),
     steps,

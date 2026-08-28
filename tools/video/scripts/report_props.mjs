@@ -20,7 +20,7 @@ const KINDS = new Set([
   "closing",
   // 详解版的四种深讲分镜
   "business-model",
-  "moat-checklist",
+  "moat-overview",
   "moat-trend",
   "inquiry",
 ]);
@@ -190,6 +190,9 @@ export function buildReportProps({ storyboard, manifest = null, fps = 30, sceneP
       title: typeof scene.title === "string" ? scene.title : id,
       narration: typeof scene.narration === "string" ? scene.narration : "",
       data: scene.data && typeof scene.data === "object" ? scene.data : {},
+      // 图表与主数字整块透传，不在这里重算也不校验形状：数值口径的闸门在
+      // scripts/visuals.py 一处守着，这里再判一次只会多出一个能和它对不上的地方。
+      visuals: scene.visuals && typeof scene.visuals === "object" ? scene.visuals : null,
       // 字幕与要点的帧号都相对分镜起点，模板里直接当 Sequence 内的 frame 用
       captions,
       beats,

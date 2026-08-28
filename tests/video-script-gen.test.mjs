@@ -297,9 +297,10 @@ test("详解版：时长落进 4-5 分钟，商业模式与护城河深讲分镜
   assert.equal(script.meta.mode, "detailed");
 
   assert.equal(kindsOf(script, "business-model").length, 2);
-  assert.equal(kindsOf(script, "moat-checklist").length, 1);
+  assert.equal(kindsOf(script, "moat-overview").length, 1);
   assert.equal(kindsOf(script, "moat-trend").length, 1);
-  assert.equal(kindsOf(script, "inquiry").length, 1);
+  // 两屏提问：护城河的十年之问，逆向思考的「聪明人为什么会不买/做空这家公司？」
+  assert.equal(kindsOf(script, "inquiry").length, 2);
   // 七维度一条不少：深讲是加料，不是替换
   assert.equal(kindsOf(script, "dimension").length, 7);
 });
@@ -312,8 +313,8 @@ test("深讲分镜紧跟它对应的维度分镜，观众先听结论再听展�
   assert.ok(at("dimension-businessQuality") < at("business-model-revenue"));
   assert.ok(at("business-model-revenue") < at("business-model-economics"));
   assert.ok(at("business-model-economics") < at("dimension-moat"));
-  assert.ok(at("dimension-moat") < at("moat-checklist"));
-  assert.ok(at("moat-checklist") < at("moat-trend"));
+  assert.ok(at("dimension-moat") < at("moat-overview"));
+  assert.ok(at("moat-overview") < at("moat-trend"));
   assert.ok(at("moat-trend") < at("moat-inquiry"));
   // 其余五维排在核心段落之后
   assert.ok(at("moat-inquiry") < at("dimension-management"));
@@ -388,7 +389,7 @@ test("控时裁的是解说时间，不是画面内容：没念到的要点仍�
 test("护城河清单逐条取自 analysis 的判定，不自己下结论", () => {
   const analysis = biliDeep();
   const types = analysis.dimensions.moat.analysis.types;
-  const scene = sceneById(runDeep().script, "moat-checklist");
+  const scene = sceneById(runDeep().script, "moat-overview");
 
   assert.equal(scene.data.items.length, types.length);
   for (const [index, item] of scene.data.items.entries()) {
@@ -513,9 +514,10 @@ test("analysis 在但护城河整块缺失：只跳过护城河深讲，商业�
   delete analysis.dimensions.moat;
 
   const { script } = runDeep(bili(), ["--min-seconds", "120", "--max-seconds", "300"], analysis);
-  assert.equal(kindsOf(script, "moat-checklist").length, 0);
-  assert.equal(kindsOf(script, "inquiry").length, 0);
+  assert.equal(kindsOf(script, "moat-overview").length, 0);
   assert.equal(kindsOf(script, "business-model").length, 2);
+  // 十年之问跟着护城河一起没了，但逆向思考挂在 inversion 上，不受牵连
+  assert.deepEqual(kindsOf(script, "inquiry").map((scene) => scene.id), ["inversion-inquiry"]);
   assert.ok(script.omissions.some((item) => item.path.startsWith("dimensions.moat")));
 });
 
@@ -543,7 +545,7 @@ test("控时压力下先裁快讲层与策略，核心层最后才动", () => {
 
   // 无论怎么裁，五条深讲分镜都还在——核心层可以变短，不能整块消失
   assert.equal(kindsOf(script, "business-model").length, 2);
-  assert.equal(kindsOf(script, "moat-checklist").length, 1);
+  assert.equal(kindsOf(script, "moat-overview").length, 1);
 });
 
 test("详解版同一份输入两次生成完全一致（确定性）", () => {
@@ -593,4 +595,151 @@ test("策略的触发条件也逐条带点亮锚点，和深讲分镜一视同�
       assert.ok(sentences[beat.sentenceIndex].includes("触发条件"), `${scene.id} 的锚点没指向触发条件那一句`);
     }
   }
+});
+
+/**
+ * 画面数据层（--collection）。
+ *
+ * 这一层的价值全在「该画才画」：给了采集数据就把图表挂上去，没给就整体退回文字卡并
+ * 记账。两条都要有用例守着——静默少一半画面和静默多画一张错图一样难发现。
+ */
+const moatiFinal = path.join(companyDir("sh-600519-kweichow-moutai"), "financials-final.json");
+
+const runWithFiles = (extra = []) => {
+  const result = spawnSync(
+    "python3",
+    [
+      generator,
+      "--summary",
+      path.join(companyDir("sh-600519-kweichow-moutai"), "financials-summary.json"),
+      "--analysis",
+      path.join(companyDir("sh-600519-kweichow-moutai"), "financials-analysis.json"),
+      ...extra,
+    ],
+    { encoding: "utf8", maxBuffer: 32 * 1024 * 1024 },
+  );
+  return { code: result.status, script: JSON.parse(result.stdout) };
+};
+
+test("给了 --collection：开场与维度分镜挂上图表与主数字，解说词一个字不变", () => {
+  const without = runWithFiles();
+  const with_ = runWithFiles(["--collection", moatiFinal]);
+
+  assert.equal(with_.script.meta.visuals, true);
+  const opening = with_.script.scenes.find((scene) => scene.id === "opening");
+  assert.equal(opening.visuals.chart.type, "kpi-grid");
+  assert.ok(opening.visuals.hero.value.length > 0);
+  const trend = with_.script.scenes.find((scene) => scene.id === "dimension-businessQuality");
+  assert.equal(trend.visuals.chart.type, "line-series");
+
+  // 视觉层不碰解说词：同一份输入，两次跑出来的每一句话必须逐字相同，否则音画就会对不上
+  assert.deepEqual(
+    with_.script.scenes.map((scene) => scene.narration),
+    without.script.scenes.map((scene) => scene.narration),
+  );
+});
+
+test("没给 --collection：一个分镜都不挂图表，并把这件事记进 omissions", () => {
+  const { script } = runWithFiles();
+  assert.equal(script.meta.visuals, false);
+  assert.ok(script.scenes.every((scene) => scene.visuals === undefined));
+  assert.ok(script.omissions.some((item) => item.path === "collection"));
+});
+
+test("--collection 路径写错直接退 2，不静默产出一支没有图表的片子", () => {
+  const result = spawnSync(
+    "python3",
+    [
+      generator,
+      "--summary",
+      path.join(companyDir("sh-600519-kweichow-moutai"), "financials-summary.json"),
+      "--collection",
+      path.join(companyDir("sh-600519-kweichow-moutai"), "does-not-exist.json"),
+    ],
+    { encoding: "utf8" },
+  );
+  assert.equal(result.status, 2);
+});
+
+/**
+ * 逆向思考屏（「聪明人为什么会不买/做空这家公司？」）。
+ *
+ * 它与十年之问共用 inquiry 这种分镜，所以两件事必须守住：两屏的开场连接词不能都说
+ * 「最后一个问题」，以及画面上问的那句与报告原文不一致时要留痕。
+ */
+test("两屏提问的开场连接词按顺序发，只有最后一屏说「最后一个问题」", () => {
+  const { script } = runDeep();
+  const inquiries = kindsOf(script, "inquiry");
+  assert.equal(inquiries.length, 2);
+  const leads = inquiries.map((scene) => scene.narration.slice(0, 6));
+  assert.deepEqual(leads, ["再问一个问题", "最后一个问题"]);
+});
+
+test("逆向思考屏用固定提问，且把「改了原文问题」这件事记进 omissions", () => {
+  const { script } = runDeep();
+  const scene = script.scenes.find((item) => item.id === "inversion-inquiry");
+  assert.equal(scene.title, "逆向思考");
+  assert.equal(scene.data.question, "聪明人为什么会不买/做空这家公司？");
+  // 回答要点仍是报告原文，只有提问被替换
+  assert.ok(scene.data.points.length > 0);
+  assert.ok(
+    script.omissions.some((item) => item.path === "dimensions.inversion.inquiry.question"),
+    "覆盖问题原文必须留痕",
+  );
+});
+
+test("逆向思考屏挂在最大风险维度之后：先听风险结论，再听反面质询", () => {
+  const { script } = runDeep();
+  const order = script.scenes.map((scene) => scene.id);
+  assert.ok(order.indexOf("dimension-keyRisk") < order.indexOf("inversion-inquiry"));
+  assert.equal(order.indexOf("inversion-inquiry") - order.indexOf("dimension-keyRisk"), 1);
+});
+
+test("inversion 整块缺失时只少这一屏，十年之问与其余分镜照常", () => {
+  const analysis = biliDeep();
+  delete analysis.dimensions.inversion;
+  const { script } = runDeep(bili(), ["--min-seconds", "120", "--max-seconds", "300"], analysis);
+  assert.deepEqual(kindsOf(script, "inquiry").map((scene) => scene.id), ["moat-inquiry"]);
+  // 只剩一屏提问时，它就是最后一个问题
+  assert.ok(script.scenes.find((s) => s.id === "moat-inquiry").narration.startsWith("最后一个问题"));
+});
+
+/**
+ * 护城河两屏的分工：整体判定只给结论，趋势屏承担未来那个判断的论证。
+ */
+test("护城河整体判定一句话说完，不再逐条念检验问题", () => {
+  const scene = sceneById(runDeep().script, "moat-overview");
+  // 检验问题是研究方法不是结论，既不进解说也不上屏
+  const types = biliDeep().dimensions.moat.analysis.types;
+  for (const item of types) {
+    assert.ok(!scene.narration.includes(item.test), `检验问题不该进解说：${item.test}`);
+  }
+  assert.ok(scene.data.items.every((item) => !("test" in item)), "检验问题不该进画面数据");
+  // 整体陈述没有逐条节奏，不给 beats——模板据此让五张卡一起亮
+  assert.deepEqual(scene.data.beats, []);
+});
+
+test("整体判定点名每一个非「存在」的壁垒，不只报个数", () => {
+  const scene = sceneById(runDeep().script, "moat-overview");
+  const types = biliDeep().dimensions.moat.analysis.types;
+  for (const item of types.filter((t) => t.verdict !== "存在")) {
+    assert.ok(scene.narration.includes(item.type), `例外要点名：${item.type}`);
+  }
+});
+
+test("趋势屏把未来的核心依据点破了说，且它永远不会被控时裁掉", () => {
+  const trend = sceneById(runDeep().script, "moat-trend");
+  const next = biliDeep().dimensions.moat.analysis.trendNext5y;
+  assert.ok(trend.narration.includes("核心依据"));
+  // 未来侧下限为 2：裁到最狠也留得住核心依据加一条
+  assert.ok(trend.data.next.spokenCount >= 2, `实际 ${trend.data.next.spokenCount}`);
+  assert.equal(trend.data.next.emphasis, true);
+  assert.equal(trend.data.past.emphasis, false);
+  // 第一条依据取原文顺序，模板与生成器同一个口径：契约里 ①②③ 是按重要性写的
+  assert.ok(next.basis.startsWith("①") || trend.data.next.points[0].length > 0);
+});
+
+test("控时优先扣过去那一侧：过去最多两条依据，未来不受这条限制", () => {
+  const trend = sceneById(runDeep().script, "moat-trend");
+  assert.ok(trend.data.past.spokenCount <= 2, `实际 ${trend.data.past.spokenCount}`);
 });

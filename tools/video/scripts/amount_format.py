@@ -86,6 +86,52 @@ def _trim(value: Decimal) -> str:
     return text.rstrip("0").rstrip(".") if "." in text else text
 
 
+def parse_amount(raw: str) -> tuple[Decimal, str] | None:
+    """把一条金额原文解析成 `(以元/美元为单位的数值, 币种)`；认不出来返回 `None`。
+
+    与 `format_amount` 共用同一条正则和同一条硬规矩——**量级或币种缺任何一个都不认**。
+    图表要用的是数值本身（画条形、画折线），所以这里返回 Decimal 而不是字符串；
+    但「认不出来就放弃」的口径必须和改写侧完全一致，否则画面上会出现一条按
+    「16635 可能是亿」画出来的假曲线，比一个难看的单位危险得多。
+
+    >>> parse_amount("11928.29百万元CNY")[0]
+    Decimal('11928290000')
+    >>> parse_amount("16635") is None
+    True
+    """
+    if not isinstance(raw, str) or not raw.strip():
+        return None
+
+    matched = _AMOUNT.match(raw)
+    if not matched:
+        return None
+
+    magnitude = matched.group("magnitude")
+    currency = _currency_of(matched.group("prefix") or "", matched.group("suffix") or "")
+    if not magnitude or not currency:
+        return None
+
+    try:
+        value = Decimal(matched.group("value").replace(",", ""))
+    except InvalidOperation:
+        return None
+
+    return value * MAGNITUDES[magnitude], currency
+
+
+def scale_series(values: list[Decimal]) -> tuple[Decimal, str]:
+    """给一整条序列选同一个中文量级：按**最大绝对值**定档，返回 `(除数, 量级词)`。
+
+    整条序列共用一档是刻意的——折线图上 FY2021 写「1061.9亿」、FY2025 写「1.69万亿」
+    会让人以为两根点不在一个坐标系里。轴单位只写一次，点上只留数值。
+    """
+    peak = max((abs(value) for value in values), default=Decimal(0))
+    for factor, label in OUTPUT_UNITS:
+        if peak >= factor:
+            return factor, label
+    return Decimal(1), ""
+
+
 def format_amount(raw: str) -> str:
     """把一条金额原文改写成 `<数值><量级><币种>`；认不出来就原样返回。
 
