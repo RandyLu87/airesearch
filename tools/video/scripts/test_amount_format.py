@@ -58,6 +58,34 @@ class FormatAmountTest(unittest.TestCase):
     def test_不足一万时不硬套量级词(self):
         self.assertEqual(format_amount("5千元"), "5000元")
 
+    # --- 以下是仓库里还没出现、但后续报告很可能写成的形态 ---
+
+    def test_英文量级后缀(self):
+        self.assertEqual(format_amount("12.3B美元"), "123亿美元")
+        self.assertEqual(format_amount("US$8.5B"), "85亿美元")
+        self.assertEqual(format_amount("3,500mn USD"), "35亿美元")
+
+    def test_不认K免得吃掉分辨率(self):
+        # 研究数据里 K 的常态是 4K视频 / 2K分辨率，认成「千」会把它们变成金额
+        self.assertEqual(format_amount("4K视频"), "4K视频")
+        self.assertEqual(format_amount("3.2K美元"), "3.2K美元")
+
+    def test_限定词原样带回去(self):
+        # 把「约」抹掉等于把估算值说成精确值
+        self.assertEqual(format_amount("约1,234百万元"), "约12.34亿元")
+        self.assertEqual(format_amount("近500百万美元"), "近5亿美元")
+
+    def test_万亿(self):
+        self.assertEqual(format_amount("12000亿元"), "1.2万亿元")
+        self.assertEqual(format_amount("1.2万亿元"), "1.2万亿元")
+        # 「万亿」必须排在「万」前面匹配，否则会被当成 1.2 万
+        self.assertEqual(format_amount("2万亿美元"), "2万亿美元")
+
+    def test_币种写在前面(self):
+        self.assertEqual(format_amount("USD 12.5亿"), "12.5亿美元")
+        self.assertEqual(format_amount("¥3,200百万"), "32亿元")
+        self.assertEqual(format_amount("7,890千港元"), "789万港元")
+
 
 if __name__ == "__main__":
     unittest.main()
