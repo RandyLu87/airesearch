@@ -5,6 +5,7 @@
   "description": "研究报告视频化 MVP：Remotion + FFmpeg + 免费 TTS 的最小可运行环境",
   "scripts": {
     "render": "remotion render src/index.ts Hello out/hello.mp4",
+    "render:report": "node scripts/render.mjs",
     "studio": "remotion studio src/index.ts",
     "script": "python3 scripts/script_gen.py",
     "tts": "bash scripts/py.sh tts.py",
