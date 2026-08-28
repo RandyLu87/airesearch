@@ -1,0 +1,2327 @@
+{
+  "finalVersion": "1.0.0",
+  "meta": {
+    "companyId": "us-bili-bilibili",
+    "companyName": "哔哩哔哩 (Bilibili Inc.)",
+    "generatedAt": "2026-08-28T09:22:26+08:00",
+    "dataCutoff": "2026-08-27（Asia/Shanghai）；最新已披露季报为 2026 年第二季度（截至 2026-06-30，2026-08-27 美股开盘前发布，已纳入本次采集）",
+    "validation": {
+      "threshold": 7.0,
+      "scores": {
+        "collection": 9.8,
+        "analysis": 9.8,
+        "summary": 10.0
+      },
+      "validatedAt": "2026-08-28T09:22:26+08:00"
+    },
+    "sources": {
+      "collection": "research/companies/us-bili-bilibili/financials-collection.json",
+      "analysis": "research/companies/us-bili-bilibili/financials-analysis.json",
+      "summary": "research/companies/us-bili-bilibili/financials-summary.json"
+    }
+  },
+  "collection": {
+    "meta": {
+      "companyId": "us-bili-bilibili",
+      "companyName": "哔哩哔哩 (Bilibili Inc.)",
+      "ticker": "BILI（Nasdaq，ADS，1 ADS = 1 Class Z 普通股）；9626.HK（香港联交所第二上市，Class Z 普通股）",
+      "exchange": "Nasdaq Global Select Market（主要上市地，2018-03-28 IPO）；香港联合交易所主板（第二上市，2021-03-29；公司官方 20-F/6-K 披露 Nasdaq 仍为主要上市地）",
+      "market": "us",
+      "reportingCurrency": "RMB (CNY)，财报同时披露美元换算（按披露当期汇率）",
+      "accountingBasis": "US GAAP；财报同时披露 Non-GAAP 调整后净利润（剔除股权激励等）",
+      "fiscalYearEnd": "12月31日",
+      "dataCutoff": "2026-08-27（Asia/Shanghai）；最新已披露季报为 2026 年第二季度（截至 2026-06-30，2026-08-27 美股开盘前发布，已纳入本次采集）",
+      "collectedAt": "2026-08-27",
+      "sources": {
+        "primary": {
+          "name": "stockanalysis.com (BILI / HKG:9626)——FMP 港股与美股 statements 端点在当前订阅层级 ACCESS DENIED（三大报表/estimtes 均返回 403），按 docs/model/financial-data.md 规则降级为 stockanalysis 结构化数据",
+          "url": "https://stockanalysis.com/stocks/bili/financials"
+        },
+        "secondary": {
+          "name": "macrotrends.net (BILI)",
+          "url": "https://www.macrotrends.net/stocks/charts/BILI/bilibili/revenue"
+        },
+        "originalFilings": [
+          {
+            "type": "6-K/PR",
+            "period": "2026Q2（截至2026-06-30）",
+            "url": "https://www.globenewswire.com/news-release/2026/08/27/3351838/0/en/bilibili-inc-announces-second-quarter-2026-financial-results.html"
+          },
+          {
+            "type": "6-K/PR",
+            "period": "2026Q1（截至2026-03-31）",
+            "url": "https://www.globenewswire.com/news-release/2026/05/19/3297243/0/en/bilibili-inc-announces-first-quarter-2026-financial-results.html"
+          },
+          {
+            "type": "6-K/PR",
+            "period": "2025Q4 及 FY2025（截至2025-12-31）",
+            "url": "https://www.globenewswire.com/news-release/2026/03/05/3249914/0/en/bilibili-inc-announces-fourth-quarter-and-fiscal-year-2025-financial-results.html"
+          },
+          {
+            "type": "20-F",
+            "period": "FY2024（2025-04 提交）",
+            "url": "https://www.sec.gov/Archives/edgar/data/1723690/000119312525061847/d930276d20f.htm"
+          },
+          {
+            "type": "招股书 424(b)(4)",
+            "period": "IPO（2018-03）",
+            "url": "https://www.sec.gov/Archives/edgar/data/1723690/000104746918002254/a2235099z424b4.htm"
+          }
+        ]
+      }
+    },
+    "revenueStructure": {
+      "_dimension": "1. 收入结构：最近财年及近4季度分部收入、增速、毛利率",
+      "latestFiscalYear": {
+        "period": "FY2025（截至2025-12-31）",
+        "totalRevenue": {
+          "value": 30348.01,
+          "unit": "百万元",
+          "currency": "CNY",
+          "source1": {
+            "name": "stockanalysis.com",
+            "url": "https://stockanalysis.com/stocks/bili/financials",
+            "value": 30348
+          },
+          "source2": {
+            "name": "FMP revenue-product-segmentation（分部求和）",
+            "url": "https://financialmodelingprep.com",
+            "value": 30348.03
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "segments": [
+          {
+            "name": "增值服务 VAS（直播打赏、大会员等）",
+            "revenue": {
+              "value": 11928.29,
+              "unit": "百万元",
+              "currency": "CNY",
+              "source1": {
+                "name": "公司官方新闻稿 (globenewswire)",
+                "value": 11928.29
+              },
+              "source2": {
+                "name": "FMP revenue-product-segmentation",
+                "value": 11928.286
+              },
+              "deviationPct": 0.0,
+              "flag": "ok"
+            },
+            "revenueSharePct": 39.31,
+            "yoyGrowthPct": 8.45,
+            "grossMarginPct": {
+              "status": "unavailable",
+              "reason": "公司仅披露整体毛利率，不按分部拆分毛利率；已查FY2025/Q4财报正文与20-F均未见分部毛利率"
+            }
+          },
+          {
+            "name": "广告",
+            "revenue": {
+              "value": 10058.43,
+              "unit": "百万元",
+              "currency": "CNY",
+              "source1": {
+                "name": "公司官方新闻稿",
+                "value": 10058.43
+              },
+              "source2": {
+                "name": "FMP revenue-product-segmentation",
+                "value": 10058.43
+              },
+              "deviationPct": 0.0,
+              "flag": "ok"
+            },
+            "revenueSharePct": 33.14,
+            "yoyGrowthPct": 22.83,
+            "grossMarginPct": {
+              "status": "unavailable",
+              "reason": "同上，公司不披露分部毛利率"
+            }
+          },
+          {
+            "name": "移动游戏",
+            "revenue": {
+              "value": 6394.64,
+              "unit": "百万元",
+              "currency": "CNY",
+              "source1": {
+                "name": "公司官方新闻稿",
+                "value": 6394.64
+              },
+              "source2": {
+                "name": "FMP revenue-product-segmentation",
+                "value": 6394.638
+              },
+              "deviationPct": 0.0,
+              "flag": "ok"
+            },
+            "revenueSharePct": 21.07,
+            "yoyGrowthPct": 13.98,
+            "grossMarginPct": {
+              "status": "unavailable",
+              "reason": "同上，公司不披露分部毛利率"
+            }
+          },
+          {
+            "name": "IP衍生品及其他",
+            "revenue": {
+              "value": 1966.41,
+              "unit": "百万元",
+              "currency": "CNY",
+              "source1": {
+                "name": "公司官方新闻稿",
+                "value": 1966.41
+              },
+              "source2": {
+                "name": "FMP revenue-product-segmentation（总收入-其余三项，工具验算）",
+                "value": 1966.65
+              },
+              "deviationPct": 0.01,
+              "flag": "ok"
+            },
+            "revenueSharePct": 6.48,
+            "yoyGrowthPct": -3.27,
+            "grossMarginPct": {
+              "status": "unavailable",
+              "reason": "同上，公司不披露分部毛利率"
+            }
+          }
+        ]
+      },
+      "recentQuarters": [
+        {
+          "period": "2025Q3（截至2025-09-30）",
+          "totalRevenue": {
+            "value": 7685.46,
+            "unit": "百万元",
+            "currency": "CNY",
+            "source1": {
+              "name": "公司官方新闻稿",
+              "value": 7685.46
+            },
+            "source2": {
+              "name": "stockanalysis.com（quarterly income statement）",
+              "value": 7690
+            },
+            "deviationPct": 0.06,
+            "flag": "ok"
+          },
+          "yoyGrowthPct": 5.21,
+          "segments": [
+            {
+              "name": "增值服务 VAS",
+              "revenue": 3022.53,
+              "yoyGrowthPct": 7.13
+            },
+            {
+              "name": "广告",
+              "revenue": 2569.93,
+              "yoyGrowthPct": 22.68
+            },
+            {
+              "name": "移动游戏",
+              "revenue": 1510.74,
+              "yoyGrowthPct": -17.11
+            },
+            {
+              "name": "IP衍生品及其他",
+              "revenue": 582.27,
+              "yoyGrowthPct": 2.64
+            }
+          ]
+        },
+        {
+          "period": "2025Q4（截至2025-12-31）",
+          "totalRevenue": {
+            "value": 8321.37,
+            "unit": "百万元",
+            "currency": "CNY",
+            "source1": {
+              "name": "公司官方新闻稿",
+              "value": 8321.37
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "value": 8320
+            },
+            "deviationPct": 0.02,
+            "flag": "ok"
+          },
+          "yoyGrowthPct": 7.59,
+          "segments": [
+            {
+              "name": "增值服务 VAS",
+              "revenue": 3261.82,
+              "yoyGrowthPct": 5.81
+            },
+            {
+              "name": "广告",
+              "revenue": 3041.98,
+              "yoyGrowthPct": 27.4
+            },
+            {
+              "name": "移动游戏",
+              "revenue": 1540.41,
+              "yoyGrowthPct": -14.3
+            },
+            {
+              "name": "IP衍生品及其他",
+              "revenue": 477.16,
+              "yoyGrowthPct": 2.64
+            }
+          ]
+        },
+        {
+          "period": "2026Q1（截至2026-03-31）",
+          "totalRevenue": {
+            "value": 7472.04,
+            "unit": "百万元",
+            "currency": "CNY",
+            "source1": {
+              "name": "公司官方新闻稿",
+              "value": 7472.04
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "value": 7470
+            },
+            "deviationPct": 0.03,
+            "flag": "ok"
+          },
+          "yoyGrowthPct": 6.69,
+          "segments": [
+            {
+              "name": "增值服务 VAS",
+              "revenue": 2912.49,
+              "yoyGrowthPct": 3.75
+            },
+            {
+              "name": "广告",
+              "revenue": 2588.79,
+              "yoyGrowthPct": 29.61
+            },
+            {
+              "name": "移动游戏",
+              "revenue": 1522.55,
+              "yoyGrowthPct": -12.06
+            },
+            {
+              "name": "IP衍生品及其他",
+              "revenue": 448.21,
+              "yoyGrowthPct": -4.03
+            }
+          ]
+        },
+        {
+          "period": "2026Q2（截至2026-06-30）",
+          "totalRevenue": {
+            "value": 7939.92,
+            "unit": "百万元",
+            "currency": "CNY",
+            "source1": {
+              "name": "公司官方新闻稿",
+              "value": 7939.92
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "value": 7940
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "yoyGrowthPct": 8.21,
+          "segments": [
+            {
+              "name": "增值服务 VAS",
+              "revenue": 2967.42,
+              "yoyGrowthPct": 4.61,
+              "note": "官方新闻稿正文表述为约5%增长；此处为总收入减其余三项分部后工具验算得出的精确值"
+            },
+            {
+              "name": "广告",
+              "revenue": 3130.76,
+              "yoyGrowthPct": 27.86
+            },
+            {
+              "name": "移动游戏",
+              "revenue": 1391.9,
+              "yoyGrowthPct": -13.68
+            },
+            {
+              "name": "IP衍生品及其他",
+              "revenue": 449.85,
+              "yoyGrowthPct": 2.27
+            }
+          ]
+        }
+      ]
+    },
+    "financialMetrics": {
+      "_dimension": "2. 财务指标：近5年收入、净利润、毛利率、经营利润率、自由现金流、现金储备",
+      "annual": [
+        {
+          "fiscalYear": "FY2021",
+          "revenue": {
+            "value": 19383.99,
+            "unit": "百万元",
+            "currency": "CNY",
+            "source1": {
+              "name": "stockanalysis.com",
+              "value": 19384
+            },
+            "source2": {
+              "name": "macrotrends（按当年平均汇率折算）",
+              "value": 19365
+            },
+            "deviationPct": 0.1,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": -6789,
+            "unit": "百万元",
+            "currency": "CNY",
+            "note": "US GAAP口径，含股权激励等费用",
+            "source1": {
+              "name": "stockanalysis.com",
+              "value": -6789
+            },
+            "source2": {
+              "name": "macrotrends",
+              "value": -6809
+            },
+            "deviationPct": 0.29,
+            "flag": "ok"
+          },
+          "grossMarginPct": 20.86,
+          "operatingMarginPct": -33.17,
+          "freeCashFlow": {
+            "value": -3612,
+            "unit": "百万元",
+            "currency": "CNY",
+            "note": "经营现金流-资本支出口径，不含租赁/收购",
+            "source1": {
+              "name": "stockanalysis.com",
+              "value": -3612
+            }
+          },
+          "cashReserves": {
+            "value": 30323,
+            "unit": "百万元",
+            "currency": "CNY",
+            "note": "现金及现金等价物+短期投资",
+            "source1": {
+              "name": "stockanalysis.com",
+              "value": 30323
+            }
+          }
+        },
+        {
+          "fiscalYear": "FY2022",
+          "revenue": {
+            "value": 21899,
+            "unit": "百万元",
+            "currency": "CNY",
+            "source1": {
+              "name": "stockanalysis.com",
+              "value": 21899
+            },
+            "source2": {
+              "name": "FMP revenue-product-segmentation求和",
+              "value": 21899.17
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": -7497,
+            "unit": "百万元",
+            "currency": "CNY",
+            "note": "US GAAP口径",
+            "source1": {
+              "name": "stockanalysis.com",
+              "value": -7497
+            }
+          },
+          "grossMarginPct": 17.58,
+          "operatingMarginPct": -38.17,
+          "freeCashFlow": {
+            "value": -4672,
+            "unit": "百万元",
+            "currency": "CNY",
+            "source1": {
+              "name": "stockanalysis.com",
+              "value": -4672
+            }
+          },
+          "cashReserves": {
+            "value": 19595,
+            "unit": "百万元",
+            "currency": "CNY",
+            "source1": {
+              "name": "stockanalysis.com",
+              "value": 19595
+            }
+          }
+        },
+        {
+          "fiscalYear": "FY2023",
+          "revenue": {
+            "value": 22528,
+            "unit": "百万元",
+            "currency": "CNY",
+            "source1": {
+              "name": "stockanalysis.com",
+              "value": 22528
+            },
+            "source2": {
+              "name": "FMP revenue-product-segmentation求和",
+              "value": 22527.99
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": -4822,
+            "unit": "百万元",
+            "currency": "CNY",
+            "note": "US GAAP口径",
+            "source1": {
+              "name": "stockanalysis.com",
+              "value": -4822
+            },
+            "source2": {
+              "name": "macrotrends",
+              "value": -4812
+            },
+            "deviationPct": 0.21,
+            "flag": "ok"
+          },
+          "grossMarginPct": 24.16,
+          "operatingMarginPct": -22.48,
+          "freeCashFlow": {
+            "value": 84.73,
+            "unit": "百万元",
+            "currency": "CNY",
+            "source1": {
+              "name": "stockanalysis.com",
+              "value": 84.73
+            }
+          },
+          "cashReserves": {
+            "value": 15117,
+            "unit": "百万元",
+            "currency": "CNY",
+            "source1": {
+              "name": "stockanalysis.com",
+              "value": 15117
+            }
+          }
+        },
+        {
+          "fiscalYear": "FY2024",
+          "revenue": {
+            "value": 26831.53,
+            "unit": "百万元",
+            "currency": "CNY",
+            "source1": {
+              "name": "stockanalysis.com",
+              "value": 26831.53
+            },
+            "source2": {
+              "name": "公司官方新闻稿",
+              "value": 26831.53
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": -1347,
+            "unit": "百万元",
+            "currency": "CNY",
+            "note": "US GAAP口径，2024Q4单季首次GAAP盈利",
+            "source1": {
+              "name": "stockanalysis.com",
+              "value": -1347
+            },
+            "source2": {
+              "name": "macrotrends",
+              "value": -1364
+            },
+            "deviationPct": 0.63,
+            "flag": "ok"
+          },
+          "grossMarginPct": 32.7,
+          "operatingMarginPct": -5.01,
+          "freeCashFlow": {
+            "value": 5549,
+            "unit": "百万元",
+            "currency": "CNY",
+            "source1": {
+              "name": "stockanalysis.com",
+              "value": 5549
+            }
+          },
+          "cashReserves": {
+            "value": 16683,
+            "unit": "百万元",
+            "currency": "CNY",
+            "source1": {
+              "name": "stockanalysis.com",
+              "value": 16683
+            }
+          }
+        },
+        {
+          "fiscalYear": "FY2025",
+          "revenue": {
+            "value": 30348.01,
+            "unit": "百万元",
+            "currency": "CNY",
+            "source1": {
+              "name": "公司官方新闻稿（globenewswire, 2026-03-05）",
+              "value": 30347.77
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "value": 30348
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": 1194,
+            "unit": "百万元",
+            "currency": "CNY",
+            "note": "US GAAP口径，首个GAAP盈利完整财年；Non-GAAP调整后净利润另行披露、高于GAAP口径",
+            "source1": {
+              "name": "stockanalysis.com",
+              "value": 1194
+            },
+            "source2": {
+              "name": "macrotrends（按当年平均汇率折算USD倒推）",
+              "value": 1197
+            },
+            "deviationPct": 0.15,
+            "flag": "ok"
+          },
+          "grossMarginPct": 36.62,
+          "operatingMarginPct": 3.7,
+          "freeCashFlow": {
+            "value": 6634,
+            "unit": "百万元",
+            "currency": "CNY",
+            "note": "经营现金流-资本支出，不含租赁/收购；工具计算经营利润率3.70%见crossValidationLog",
+            "source1": {
+              "name": "stockanalysis.com",
+              "value": 6634
+            }
+          },
+          "cashReserves": {
+            "value": 24324,
+            "unit": "百万元",
+            "currency": "CNY",
+            "note": "现金及等价物+定期存款+短期投资",
+            "source1": {
+              "name": "公司官方新闻稿（现金+定期存款+短期投资=RMB24.15亿；口径与stockanalysis现金+短期投资合计口径存在约0.7%差异，均<1%）",
+              "value": 24150
+            },
+            "source2": {
+              "name": "stockanalysis.com",
+              "value": 24324
+            },
+            "deviationPct": 0.72,
+            "flag": "ok"
+          }
+        }
+      ]
+    },
+    "competitiveLandscape": {
+      "_dimension": "3. 竞争格局：市场份额、主要竞争对手对比",
+      "marketShare": {
+        "status": "unavailable",
+        "reason": "已用『QuestMobile 泛二次元 市场份额』『艾瑞咨询 长视频 市场份额』『B站 二次元 市场份额 2025 2026』『中国长视频行业格局』等关键词检索，中国泛内容社区/中长视频赛道缺乏第三方机构公认的统一『市场份额%』统计口径（各机构多以DAU/MAU/使用时长/广告收入规模对比呈现，而非份额百分比），未在ir.bilibili.com官方披露或QuestMobile/艾瑞咨询公开报告引用中找到单一份额数字；已改用下方competitors数组中的DAU、广告收入、毛利率等可比指标呈现竞争格局"
+      },
+      "competitors": [
+        {
+          "name": "抖音（字节跳动，未上市）",
+          "ticker": "unavailable（字节跳动未上市，无股票代码）",
+          "marketSharePct": "unavailable（未查到统一份额口径）",
+          "revenue": "广告收入(含抖音+西瓜/头条)2025年约人民币3,800亿元，占字节跳动总收入60%以上；抖音电商2025年GMV突破4万亿元，同比增速20%以上",
+          "grossMarginPct": "unavailable（未上市，不披露分部毛利率）",
+          "note": "DAU约8.3-8.5亿(2026年初，第三方估算)，用户规模及广告收入规模远超B站，是挤占年轻用户时长与广告预算的最主要竞争对手；来源：新浪财经《视频号与快手B站数据对比分析》(cj.sina.cn，2026-03-20)、36氪《快手新老铁，不愿天天见》(m.36kr.com，2026)"
+        },
+        {
+          "name": "快手 Kuaishou",
+          "ticker": "HKEX:1024",
+          "marketSharePct": "unavailable（未查到统一份额口径）",
+          "revenue": "2026Q1总收入人民币337.16亿元(+3.4%YoY)，其中线上营销服务(广告)收入196.43亿元(+9.3%YoY)",
+          "grossMarginPct": "51.2%（2026Q1，同比下降4.1个百分点，2025Q1为54.6%，主因带宽/服务器成本及AI(可灵)投入增加）",
+          "note": "DAU 4.127亿、MAU 7.717亿(2026Q1官方财报)；直播收入占比持续收缩(2026Q1同比-13.5%)，广告与AI(可灵)业务成为新增长点，但2026Q1经调整净利润同比-26.3%；来源：腾讯新闻/伯虎财经《快手一季报，分拆可灵的“紧迫感”》(news.qq.com，2026-06-04)"
+        },
+        {
+          "name": "微信视频号（腾讯控股旗下，非独立上市实体）",
+          "ticker": "不适用（视频号是腾讯(HKEX:0700)微信生态内产品，无独立股票代码）",
+          "marketSharePct": "unavailable（未查到统一份额口径）",
+          "revenue": "广告收入2025年约人民币420亿元(+65%YoY)，2026年预计800-900亿元，占腾讯营销服务收入约47%",
+          "grossMarginPct": "unavailable（腾讯未单独披露视频号分部毛利率）",
+          "note": "DAU约6.3亿(2025年12月)-6.7亿(2026年7月)，广告加载率已达5.5%(2026年7月)，用户规模已超越快手；来源：虎嗅《腾讯亦喜亦忧》(huxiu.com，2026-03-19)、凤凰网转载文章(h5.ifeng.com，2026)"
+        },
+        {
+          "name": "爱奇艺 iQIYI",
+          "ticker": "Nasdaq:IQ",
+          "marketSharePct": "unavailable（未查到统一份额口径）",
+          "revenue": "FY2025会员服务收入人民币168.1亿元，占总收入61.6%(-5%YoY)；在线广告服务收入人民币51.9亿元(-9%YoY)",
+          "grossMarginPct": "21.1%（FY2025，stocktitan.com财务分析；4Q24单季毛利率24.5%，同比-3.7个百分点）",
+          "note": "传统长视频付费会员龙头，近两年会员与广告收入同步下滑，反映长视频付费模式增长乏力，与B站四大分部(尤其广告)增长形成对比；来源：iQIYI FY2025财报(ir.iqiyi.com)、stocktitan.com财务分析"
+        },
+        {
+          "name": "小红书 Xiaohongshu（未上市）",
+          "ticker": "unavailable（未上市，无股票代码）",
+          "marketSharePct": "unavailable（未查到统一份额口径）",
+          "revenue": "2025年广告收入约人民币320亿元；MAU约3.5亿，单MAU广告价值约91元(接近快手两倍)",
+          "grossMarginPct": "unavailable（未上市，不披露）",
+          "note": "MAU不到快手一半但广告单用户价值更高，因用户带搜索/购买意图进入平台；在年轻女性用户与生活方式内容社区定位上与B站部分用户群体重叠；来源：36氪《快手新老铁，不愿天天见》(m.36kr.com，2026)"
+        }
+      ]
+    },
+    "businessModelMoat": {
+      "_dimension": "4. 商业模式与护城河：核心竞争优势来源",
+      "oneLiner": "B站的商业模式本质是『社区留住年轻用户注意力，再分层变现』：直播打赏/大会员向核心粉丝收费，广告向品牌主收费换取Z世代用户心智，游戏联运/自研向重度玩家收费，IP衍生品向粉丝经济收费；UP主生态是流量与内容供给的核心资产，是其余变现方式的上游供给壁垒。",
+      "revenueModel": "四条收入线各自付费方与逻辑（FY2025占比与增速，来源：公司官方新闻稿，本文件revenueStructure字段）：①增值服务VAS(占39.3%,+8.5%YoY)——核心用户为直播打赏与大会员付费，付费逻辑是粉丝经济(为UP主/主播充电打赏)与会员专享内容权益；②广告(占33.1%,+22.8%YoY)——品牌主为触达Z世代/年轻用户群体付费，含效果类与品牌类广告，前五大广告行业为游戏/数码家电/网络服务/电商/汽车(来源：知乎《B站、热门、算法与时代》,2026)；③移动游戏(占21.1%,+14.0%YoY，但2026Q2转为-13.7%YoY)——联运代理游戏抽成分成+自研游戏(如《三国：谋定天下》《三国：百将牌》)，付费方为重度游戏玩家；④IP衍生品及其他(占6.5%,-3.3%YoY)——电商/周边商品，付费方为IP粉丝。",
+      "moats": [
+        {
+          "type": "社区网络效应/用户粘性",
+          "evidence": "用户日均使用时长从2024Q4的99分钟增至2026Q1的119分钟，两年内增长20分钟(来源：知乎《B站、热门、算法与时代》引用公司财报口径,2026；ir.bilibili.com 1Q2026财报稿,2026-05-19：DAU同比+8%至1.152亿，日均使用时长同比+11分钟至119分钟)；正式会员数超2.8亿，12个月留存率超79-80%(来源同上)",
+          "trend": "变宽（用户粘性与使用时长持续创历史新高）"
+        },
+        {
+          "type": "UP主生态/内容供给壁垒",
+          "evidence": "月活UP主400万，月均投稿2400万条，近300万UP主获得收入，人均收入同比+21%，充电(打赏)收入同比+71.1%(来源：知乎《B站、热门、算法与时代》引用公司财报口径,2026)",
+          "trend": "稳定至变宽（创作者规模、活跃度与收入同步增长，供给侧壁垒尚未被削弱）"
+        },
+        {
+          "type": "Z世代用户心智/年轻化定位",
+          "evidence": "用户平均年龄26岁，新用户平均年龄23岁(来源：维基百科『哔哩哔哩』条目引用李旎2026-01-13发言：DAU达1.17亿、MAU达3.76亿)；Z世代(18-24岁)历史上长期占比约58%(2024年数据，蓝狮问道引用QuestMobile/易观分析,2024-08)",
+          "trend": "稳定（30岁以上用户占比提升即『破圈』但仍保持年轻化社区定位与调性）"
+        },
+        {
+          "type": "游戏联运稀缺内容IP/二次元游戏渠道优势",
+          "evidence": "移动游戏收入连续多季度同比下滑：2025Q3 -17.1%、2025Q4 -14.3%、2026Q1 -12.1%、2026Q2 -13.7%(来源：公司官方新闻稿，本文件revenueStructure字段数据)，反映现有联运游戏生命周期老化、新游储备(如《三国：百将牌》2026年3月开启付费测试)尚待验证对护城河的实际支撑力",
+          "trend": "变窄（游戏联运收入持续负增长，是四大分部中唯一收缩的板块，短期内该护城河在被侵蚀）"
+        }
+      ]
+    },
+    "technology": {
+      "_dimension": "5. 技术能力：核心技术栈、研发投入",
+      "coreTechStack": [
+        "推荐算法（内容分发与广告投放定向）——20-F(FY2025,SEC EDGAR)原文披露公司『leverage AI in content discovery and distribution, advertising targeting and delivery』",
+        "AI辅助内容生产工具，含『数字分身』技术（输入文本/录音5分钟内生成1:1数字人形象，服务UP主内容创作）——来源：东吴证券研究所《传媒行业深度报告：国产AI视频大模型应用落地先行》(2024-08-08)",
+        "AIGC多元创意与内容审核（两级内容审核体系+24小时内容筛查团队）——20-F(FY2025)原文：『We maintain two levels of content management and review procedures...Our content screening team screens and monitors the content uploaded on our platform on a 24-hour, seven-day basis』",
+        "云基础设施（与第三方合作而非自建，2022年与腾讯签订Cloud Services Agreement作为持续关连交易）——来源：SEC EX-99.2《APPLICATION FOR CONVERSION TO PRIMARY LISTING...》(2022-04-29公告,ir.bilibili.com/media/.../d235203dex992.htm)"
+      ],
+      "rdExpense": {
+        "value": 3533,
+        "unit": "百万元",
+        "currency": "CNY",
+        "note": "FY2025研发费用",
+        "source1": {
+          "name": "stockanalysis.com",
+          "value": 3533
+        }
+      },
+      "rdIntensityPct": 11.64,
+      "rdTrend": "研发投入强度并非单向变化，而是经历『扩张-收缩-再扩张』三阶段：2021年全年研发费用同比+88%(来源：Bilibili 2021Q4及FY2021财报新闻稿，tools.eurolandir.com)，2020-2022年处于游戏自研与内容技术高投入期；2023-2024年因降本增效大幅收缩——2024H1研发费用同比-10%(源于研发人员裁减)、2024Q4研发费用同比-31%(主因终止部分游戏项目)(来源：Bilibili 2024年6-K/PR系列，SEC EDGAR d866336dex991.htm及staticpacific.blob.core.windows.net财报稿)；2025-2026年在AI战略驱动下研发投入重新回升——2026Q1研发费用同比+9%，公司财报明确注明『primarily due to expanded AI investments，partially offset by spending controls』，同期adjusted净利润同比+62%，显示AI投入与降本效率并行(来源：ir.bilibili.com 1Q2026财报电话会议实录，2026-05-19)。FY2025研发费用RMB35.33亿、占收入11.64%，是该三阶段收缩后再回升趋势中的最新读数。",
+      "note": "分析师视角佐证AI投入回升方向：Macquarie分析师Ellie Jiang(2026-05-19)将目标价上调至$30并维持Outperform评级，指出『AI相关研发投入回升，部分被成本管控抵消』(来源：finance.yahoo.com引用Insider Monkey报道)；Simplywall.st(2026-05-09)Narrative更新称『analysts have nudged Bilibili's price target higher...citing...increased AI investments』。风险面：20-F(FY2025)风险因素章节亦指出，随着公司在内容发现分发、广告定向、内容创作翻译等场景加大AI应用，将面临生成式AI相关的版权、deepfake、错误信息、数据隐私等新型合规风险(SEC EDGAR d91984d20f.htm)。"
+    },
+    "management": {
+      "_dimension": "6. 管理层：创始人/CEO履历、持股比例、关键决策记录",
+      "founderCeo": {
+        "name": "陈睿（Rui Chen，董事长兼CEO）；公司创始人为徐逸（Yi Xu，现任总裁）",
+        "background": "陈睿(Rui Chen)：连续创业者，在中国互联网与科技行业有20余年经验。2011年以时任猎豹移动(Cheetah Mobile)副总裁身份，出于对二次元文化的热爱天使投资B站，2014年11月起任董事长兼CEO，主导『社区先行(community first)』战略，推动B站从二次元弹幕网站发展为全内容频谱视频社区。加入B站前：2001-2008年任金山软件(Kingsoft Corporation Limited)网络安全研发总经理；2009-2010年创立贝壳网际安全(Beike Internet Security Co., Ltd.)；联合创立猎豹移动(NYSE: CMCM)。教育背景：2001年毕业于成都信息工程大学(Chengdu University of Information Technology)，学士学位。（来源：ir.bilibili.com/en/corporate-information，2026-08-27检索）  徐逸(Yi Xu)：公司创始人，现任总裁及执行董事(自2013年12月起任总裁)。16岁考入北京邮电大学，2010年获该校专科(associate degree)学位。2009年6月作为AcFun早期会员，因不满A站服务器不稳定、宕机，创建名为『Mikufans』的小站用于备存A站资源，2010年1月24日正式更名为bilibili，2010年徐逸辞职全职投入创业。主导B站早期弹幕功能等技术产品开发与社区文化建设，是公司社区文化的意见领袖。（来源：ir.bilibili.com/en/corporate-information；m.trjcn.com人物简介，2026-08-27检索）",
+        "tenure": "陈睿：2011年以天使投资人身份加入，2014年11月起任董事长兼CEO，至本次采集(2026-08)已任职约12年；徐逸：2009年创立公司前身（Mikufans/bilibili），2013年12月起任总裁，为公司创始人、全程参与；李旎(Ni Li)：2014年11月起任COO，2015年1月起任副董事长，2021年起兼任公司ESG委员会主席，2026年1Q财报电话会议中对外亦用英文名『Carly Li』并称『Vice Chairwoman of the Board and Chief Operating Officer』（来源：ir.bilibili.com/en/corporate-information；ir.bilibili.com 1Q26 conference call transcript, 2026-05-19）"
+      },
+      "ownership": {
+        "economicPct": {
+          "value": 21.2,
+          "unit": "%",
+          "source1": {
+            "name": "Bilibili FY2025 Form 20-F（2026年提交，SEC EDGAR）『Major Shareholders』章节",
+            "url": "https://www.sec.gov/Archives/edgar/data/1723690/000119312526157842/d91984d20f.htm",
+            "value": "『All Directors and Executive Officers as a Group』合计Beneficial Ownership 21.2%（其中Rui Chen 12.5%、Ni Li 2.2%、Yi Xu 6.6%，截至2026-03-31）"
+          },
+          "note": "较IPO时(2018年招股书)披露的30.7%经济权益已被此后历次增发新股(如2025年5月新发行的1,028万股Class Z股份)、股票回购与股权激励摊薄约9.5个百分点。20-F披露口径为『全体董事及高管合计』而非单独列示陈睿/徐逸/李旎三人之和，但公司仅陈睿/李旎/徐逸三人持有全部Class Y普通股，故该合计口径实质上主要即为三人持股之和（21.2% = 12.5%+2.2%+6.6%，加总一致）。"
+        },
+        "votingPct": {
+          "value": 70.3,
+          "unit": "%",
+          "source1": {
+            "name": "Bilibili FY2025 Form 20-F（2026年提交，SEC EDGAR）『Major Shareholders』章节",
+            "url": "https://www.sec.gov/Archives/edgar/data/1723690/000119312526157842/d91984d20f.htm",
+            "value": "『All Directors and Executive Officers as a Group』合计Aggregate Voting Power 70.3%（其中Rui Chen 42.4%、Ni Li 6.3%、Yi Xu 21.6%，截至2026-03-31）"
+          },
+          "source2": {
+            "name": "Bilibili 2026年股东特别大会通函 Explanatory Statement on Share Repurchase Mandate（SEC EX-99.2）",
+            "url": "https://www.sec.gov/Archives/edgar/data/1723690/000119312526158009/d579325dex992.htm",
+            "value": "『WVR Beneficiaries』（陈睿/李旎/徐逸）合计持有79,700,010股Class Y普通股，代表70.29%投票权（截至Latest Practicable Date，2026年）"
+          },
+          "note": "较IPO时(2018年招股书)披露的81.6%投票权已下降约11.3个百分点，主要因历次增发新Class Z股份摊薄投票权占比（Class Y股份数量本身未变，均为79,700,010股）；两个独立来源（FY2025 20-F与2026年股东通函）互相印证70.3%/70.29%，数据可信度高。"
+        },
+        "source": {
+          "name": "Bilibili IPO招股书 424(b)(4), 2018-03",
+          "url": "https://www.sec.gov/Archives/edgar/data/1723690/000104746918002254/a2235099z424b4.htm"
+        }
+      },
+      "executiveCompensation": {
+        "note": "FY2025年报披露的现金薪酬（不含股权激励）",
+        "items": [
+          {
+            "name": "陈睿 Rui Chen",
+            "title": "董事长兼CEO",
+            "cashPay": 338671,
+            "unit": "元",
+            "currency": "CNY"
+          },
+          {
+            "name": "徐逸 Yi Xu",
+            "title": "创始人、总裁、董事",
+            "cashPay": 186448,
+            "unit": "元",
+            "currency": "CNY"
+          },
+          {
+            "name": "李旎 Ni Li",
+            "title": "副董事长兼COO",
+            "cashPay": 421107,
+            "unit": "元",
+            "currency": "CNY"
+          }
+        ],
+        "source": {
+          "name": "FMP company-executives",
+          "url": "https://financialmodelingprep.com"
+        }
+      },
+      "keyDecisions": [
+        {
+          "date": "2018-03-28",
+          "decision": "纳斯达克IPO",
+          "outcome": "发行4,200万股ADS(1ADS=1 Class Z普通股)；Class Y股份(陈睿/徐逸/李旎持有)占IPO完成后总股本约30.7%、投票权约81.6%（来源：SEC 424(b)(4)招股书, a2235099z424b4.htm）"
+        },
+        {
+          "date": "2021-03-29",
+          "decision": "港交所第二上市",
+          "outcome": "在Nasdaq主要上市基础上完成港股第二上市(股票代码9626.HK)，拓宽融资渠道与亚洲投资者基础（来源：本文件meta.sources.originalFilings字段及公司公告）"
+        },
+        {
+          "date": "2022-04-29公告，2022-10-03生效",
+          "decision": "由港股第二上市转换为香港联交所与纳斯达克两地『双重主要上市(dual primary listing)』",
+          "outcome": "完成转换，公司同时以香港联交所与纳斯达克两地为主要上市地，降低单一交易所监管/摘牌风险（来源：SEC EX-99.2, d235203dex992.htm）"
+        },
+        {
+          "date": "2022年3月",
+          "decision": "首次大规模股票回购计划授权",
+          "outcome": "董事会授权未来24个月内回购至多US$5亿ADS（来源：Bilibili 2022Q3财报港股公告, ir.bilibili.com/media/ptbnqcag/2022-q3-hk.pdf）"
+        },
+        {
+          "date": "2024年11月",
+          "decision": "启动『2024计划』——两年期US$2亿股票回购计划",
+          "outcome": "截至2026年5月19日已完成，累计回购990万股公司证券；2026Q1单季回购250万股，耗资US$6,030万（来源：ir.bilibili.com 1Q2026财报稿及电话会议实录, 2026-05-19）"
+        },
+        {
+          "date": "2025年5月21-23日",
+          "decision": "发行US$6亿(后增至US$6.9亿)可转换优先票据(2030年到期，票息0.625%)，同步增发1,028.124万股Class Z普通股用于对冲交易安排",
+          "outcome": "补充现金储备以支持股票回购与业务投资，同时通过对冲交易限制潜在稀释（来源：SEC EX-1.1承销协议, d930326dex11.htm；ir.bilibili.com新闻稿 2025-05-23）"
+        },
+        {
+          "date": "2026年6月24日",
+          "decision": "启动『2026计划』——新的两年期US$3亿股票回购计划",
+          "outcome": "截至2026年6月30日(2026Q2末)已回购190万股，耗资约US$3,130万；2026年年初至2026-08-27财报发布日，合计(含2024计划尾款+2026计划)已回购580万股，耗资约US$1.18亿（来源：Bilibili 2026Q2财报新闻稿, globenewswire.com, 2026-08-27）"
+        },
+        {
+          "date": "2024-2026年",
+          "decision": "AI战略投入加码：展示自研AIGC技术、『数字分身』内容创作工具，并在2026年将研发预算明确向AI倾斜",
+          "outcome": "2024年世界人工智能大会展示AI辅助内容创作、内容审核等自研成果(东吴证券研究所报告,2024-08-08)；2026Q1研发费用同比+9%，公司财报明确注明『主要因AI投入扩大，部分被成本管控抵消』，同期adjusted净利润同比+62%，显示AI投入与降本效率并行推进（来源：ir.bilibili.com 1Q2026财报电话会议实录, 2026-05-19）"
+        }
+      ]
+    },
+    "industryOutlook": {
+      "_dimension": "7. 行业前景：TAM（总可寻址市场）、增长预测",
+      "tam": {
+        "value": "2025年中国互联网广告市场规模约人民币7,257亿元(+11.5%YoY)；另一细分口径，QuestMobile数据显示2026年上半年中国互联网广告市场规模为人民币3,853.4亿元(+7.1%YoY)",
+        "currency": "CNY",
+        "definition": "中国互联网广告市场总规模（媒体广告收入口径，即广告主为触达用户投放给各媒体/平台的总支出）；此为B站广告业务(FY2025占收入33.1%)所处的上位总市场，并非专指『年轻人内容社区营销』的独立细分TAM——检索『年轻人营销 TAM 艾瑞咨询』『Z世代营销市场规模』等关键词未找到该细分口径的第三方统计数字，已查域名包含iresearch.com.cn(艾瑞)引用文章及QuestMobile相关转载报告",
+        "asOf": "2025年度 / 2026年上半年",
+        "source": {
+          "name": "imz-lab.com《2025年中国互联网广告营销核心数据解读》引用第三方统计；钛媒体《2026年互联网广告市场半年报告》引用QuestMobile数据",
+          "url": "https://www.imz-lab.com/articlelist.html; https://www.tmtpost.com/8107188.html"
+        }
+      },
+      "growthForecast": {
+        "cagrPct": "约10%（预测口径：《2026年网络营销行业分析报告》预计未来三年中国网络广告市场将以年均约10%的复合增长率扩张，到2026年市场规模有望接近人民币9,000亿元；另据2023年艾瑞咨询预测口径，2023年中国网络广告市场规模同比+12.9%至11,368.6亿元，此后增速趋于平稳）",
+        "horizon": "未来三年（约2024-2026年展望区间）",
+        "source": {
+          "name": "新浪财经引用《2026年网络营销行业分析报告：趋势、竞争与数据洞察》；华鑫证券研究所《中国营销市场季度动态监测报告》引用艾瑞咨询预测",
+          "url": "https://cj.sina.cn/articles/view/8342914820/1f146c70400101jjay; https://pdf.dfcfw.com/pdf/H3_AP202305081586350770_1.pdf"
+        }
+      }
+    },
+    "riskFactors": {
+      "_dimension": "8. 风险因素：地缘政治、监管、供应链等",
+      "items": [
+        {
+          "category": "监管-内容审核",
+          "description": "B站作为PUGV/OGV内容分发平台，需对海量UGC内容进行两级审核，若未能识别全部违规内容（涉政、低俗、暴力等），可能面临平台罚款、内容下架乃至业务牌照吊销风险",
+          "evidence": "公司自身披露：Bilibili FY2025 Form 20-F(SEC EDGAR)风险因素章节原文：『We maintain two levels of content management and review procedures to monitor the content uploaded to our platform...Our content screening team screens and monitors the content uploaded on our platform on a 24-hour, seven-day basis...there can be no assurance that we can identify all the videos or other content that may violate relevant laws and regulations due to the large amount of content uploaded to our platform every day.』(https://www.sec.gov/Archives/edgar/data/1723690/000119312526157842/d91984d20f.htm)"
+        },
+        {
+          "category": "监管-游戏版号",
+          "description": "移动游戏业务(FY2025占收入21.1%)依赖国家新闻出版署(NPPA)对游戏注册及出版物号的审批；历史上曾发生审批全面暂停，若再次发生将直接影响新游上线与收入",
+          "evidence": "公司自身披露：同上20-F原文：『The National Press and Publication Administration at the national level had suspended the approval of game registration and issuance of publication numbers for online games starting from March [2018]...We cannot assure you that the suspension of the approval procedure of game registration and issuance of publication numbers would not occur again in the future.』"
+        },
+        {
+          "category": "竞争-短视频挤占用户时长",
+          "description": "抖音(DAU约8.3-8.5亿,2026年初)、快手(DAU 4.127亿,2026Q1)、微信视频号(DAU约6.3-6.7亿,2025年末-2026年7月)等平台持续争夺年轻用户注意力与广告主预算；B站DAU(1.152亿,2026Q1)规模显著小于上述平台，长期存在被动挤占用户时长与广告预算份额的结构性风险",
+          "evidence": "外部推断（第三方媒体/行业分析）：36氪《快手新老铁，不愿天天见》(m.36kr.com,2026)对比DAU与广告收入数据；虎嗅《腾讯亦喜亦忧》(huxiu.com,2026-03-19)披露视频号DAU 6.3亿、广告加载率5%等数据"
+        },
+        {
+          "category": "宏观-广告主预算周期性",
+          "description": "B站广告收入(FY2025占33.1%,+22.8%YoY)高度依赖游戏、数码家电、电商、汽车等行业广告主的营销预算，若宏观经济下行或消费复苏放缓，广告主可能收缩预算并优先向抖音等大盘平台倾斜的风险，可参照同业爱奇艺2025年广告收入同比下滑的经验",
+          "evidence": "外部推断（同业可比案例）：iQIYI FY2025财报『Online advertising services revenue was RMB5.19 billion, down 9% year-on-year』(ir.iqiyi.com FY2025财报新闻稿)；B站前五大广告行业为游戏/数码家电/网络服务/电商/汽车(知乎《B站、热门、算法与时代》,2026，引用公司财报口径)"
+        },
+        {
+          "category": "技术-AI版权与生成内容合规",
+          "description": "公司在内容发现分发、广告投放定向、内容创作与翻译工具中日益依赖AI，面临生成式AI相关的版权侵权、deepfake、错误信息、数据隐私等新型监管与法律风险；中国监管机构近年加速对生成式AI/算法推荐/深度合成技术立法",
+          "evidence": "公司自身披露：Bilibili FY2025 Form 20-F(SEC EDGAR)原文：『The PRC government authorities have gradually accelerated the pace of legislation for generative AI related technologies including algorithm recommendation and deep synthesis in recent years...we face risks and challeng[es]...including...misinformation and deepfakes...bias, discrimination, toxicity, consumer protection, intellectual property infringement or misappropriation, defamation, data privacy, cybersecurity』(https://www.sec.gov/Archives/edgar/data/1723690/000119312526157842/d91984d20f.htm)"
+        }
+      ]
+    },
+    "currentValuation": {
+      "_dimension": "9. 当前估值：市值、股息率、负债率、PE、PS、PB、ROA、ROE、PEG、EV/Revenue",
+      "priceAsOf": "2026-08-26收盘（美股）/2026-08-26收盘（港股，2026-08-27美股开盘前发布Q2财报，尚未反映在本次价格中）",
+      "sharePrice": {
+        "primary": {
+          "value": 16.15,
+          "unit": "元/股",
+          "currency": "USD",
+          "source1": {
+            "name": "FMP quote",
+            "value": 16.15
+          },
+          "source2": {
+            "name": "stockanalysis.com",
+            "value": 16.57
+          },
+          "deviationPct": 2.54,
+          "flag": "minor-diff",
+          "note": "差异为FMP实时报价与stockanalysis前一交易日收盘价的时点差，非数据错误"
+        },
+        "alt": [
+          {
+            "value": 127.5,
+            "unit": "元/股",
+            "currency": "HKD",
+            "source1": {
+              "name": "stockanalysis.com (HKG:9626)",
+              "value": 127.5
+            }
+          }
+        ]
+      },
+      "sharesOutstanding": {
+        "value": "4.1946亿",
+        "unit": "股",
+        "note": "含Class Y与Class Z普通股合计（ADS 1:1 对应Class Z）",
+        "source1": {
+          "name": "FMP shares-float",
+          "value": 419460680
+        },
+        "source2": {
+          "name": "stockanalysis.com filing shares (418.46M~419M区间)",
+          "value": 418460000
+        },
+        "deviationPct": 0.24,
+        "flag": "ok"
+      },
+      "marketCap": {
+        "reported": {
+          "primary": {
+            "value": "67.74亿",
+            "unit": "元",
+            "currency": "USD",
+            "source1": {
+              "name": "FMP company market-cap",
+              "value": 6774289982
+            }
+          },
+          "alt": [
+            {
+              "value": "529.82亿",
+              "unit": "元",
+              "currency": "HKD",
+              "note": "9626.HK，2026-08-26收盘口径",
+              "source1": {
+                "name": "stockanalysis.com",
+                "value": 52982000000
+              }
+            }
+          ]
+        },
+        "computed": 6774289958.6,
+        "flag": "ok"
+      },
+      "pe": {
+        "value": 35.11,
+        "note": "TTM，工具验算 价格16.15USD / EPS 0.46USD(TTM diluted)",
+        "source1": {
+          "name": "financial_rigor.py verify-valuation 工具验算",
+          "value": 35.11
+        },
+        "source2": {
+          "name": "stockanalysis.com ratios (当前PE 35.93)",
+          "value": 35.93
+        },
+        "deviationPct": 2.28,
+        "flag": "minor-diff"
+      },
+      "ps": 2.35,
+      "pb": {
+        "value": 3.3,
+        "note": "工具验算 价格16.15USD / BVPS 4.90USD（BVPS由FY2025期末股东权益15,548.8百万元÷FY2025期末稀释股本、按期末汇率折算USD得出）；仅单源（stockanalysis口径下现值PB为3.06，差异源于股本与汇率取值时点不同）",
+        "source1": {
+          "name": "financial_rigor.py verify-valuation 工具验算",
+          "value": 3.3
+        }
+      },
+      "roe": {
+        "value": 7.68,
+        "note": "FY2025，归母净利润1,194百万元÷期末股东权益15,548.8百万元（期末值法，非加权平均），工具验算；口径为GAAP净利润",
+        "source1": {
+          "name": "financial_rigor.py calc 工具验算",
+          "value": 7.68
+        }
+      },
+      "roa": {
+        "value": 2.9,
+        "note": "FY2025，归母净利润1,194百万元÷期末总资产41,168百万元，工具验算",
+        "source1": {
+          "name": "financial_rigor.py calc 工具验算",
+          "value": 2.9
+        }
+      },
+      "dividendYieldPct": {
+        "status": "not-applicable",
+        "reason": "公司自上市以来未派发现金股息，资本回报以股票回购为主（2024-2026年累计回购计划金额US$200M+US$300M）"
+      },
+      "debtRatioPct": {
+        "value": 62.23,
+        "note": "FY2025期末，总负债25,619.2百万元÷总资产41,168百万元，工具验算；总负债中含递延收入(4,568.5百万)、应付账款及其他payables等经营性负债，非全部为有息负债——有息负债(短期借款+长期借款)合计约9,566-9,820百万元，有息负债率约23-24%，互联网内容平台高比例经营性负债（预收会员费、应付分成款）是常态而非偿债风险信号",
+        "source1": {
+          "name": "公司官方新闻稿资产负债表（globenewswire, 2026-05-19，Dec 2025列）",
+          "value": 25619.2
+        },
+        "source2": {
+          "name": "stockanalysis.com（总资产41,168百万元）",
+          "value": 41168
+        },
+        "flag": "ok"
+      },
+      "peg": {
+        "status": "unavailable",
+        "reason": "PEG需要未来3-5年一致预期盈利增速；FMP估值端点(DCF/estimates)在当前订阅层级ACCESS DENIED，stockanalysis forecast页面显示分析师一致预期EPS增速25.5%(3年)但未给出标准PEG计算，需Agent在定性维度10(多空论点)补充分析师一致预期后由主会话工具验算"
+      },
+      "evToRevenue": 1.9
+    },
+    "bullBearCase": {
+      "_dimension": "10. 多空双方核心论点",
+      "bull": [
+        {
+          "point": "广告业务持续超预期增长且连续多季度提速，成为收入结构再平衡的核心驱动",
+          "evidence": "广告收入已连续13个季度保持同比增长(36kr.com《快手新老铁，不愿天天见》,2026)；2026Q1广告收入同比+29.6%、2026Q2同比+27.9%(公司官方财报，本文件revenueStructure字段数据)；Macquarie分析师Ellie Jiang(2026-05-19)因『广告快速增长和多元行业贡献』将目标价上调至US$30并维持Outperform评级(finance.yahoo.com)"
+        },
+        {
+          "point": "多家大行近期上调评级和目标价，反映买方对盈利拐点后估值重估的认可",
+          "evidence": "Morgan Stanley于2026-04-13将评级由Equal-Weight上调至Overweight，目标价由$25上调至$31，理由为『2026年游戏业务反弹与AI驱动收益』(finimize.com)；Citigroup于2026-03-27由Neutral上调至Buy；JPMorgan于2026-03-17由Neutral上调至Overweight(chartmill.com评级追踪页面)"
+        },
+        {
+          "point": "用户粘性与使用时长持续创新高，社区基本盘尚未被短视频平台侵蚀",
+          "evidence": "日均使用时长从2024Q4的99分钟增至2026Q1的119分钟，两年内增长20分钟(知乎《B站、热门、算法与时代》引用公司财报口径,2026)；36氪评论称『B站是中视频社区,用户不需要每天打开，但日活、时长和广告收入都在增长』，对比快手『月活上涨、日活停滞』(m.36kr.com,2026)"
+        },
+        {
+          "point": "AI投入已开始转化为效率与利润率改善，而非单纯拖累盈利",
+          "evidence": "2026Q1毛利率37.1%(同比+0.8个百分点)，adjusted净利润同比+62%，同期研发费用同比+9%(主要因AI投入扩大)(ir.bilibili.com 1Q2026财报稿,2026-05-19)——与快手『AI(可灵)投入拖累毛利率(51.2%,同比-4.1个百分点)、经调整净利润同比-26.3%』的模式形成对比(news.qq.com,2026-06-04)"
+        }
+      ],
+      "bear": [
+        {
+          "point": "移动游戏收入连续多个季度两位数下滑，联运游戏生命周期老化、新游储备验证期未过",
+          "evidence": "移动游戏收入同比增速：2025Q3 -17.1%、2025Q4 -14.3%、2026Q1 -12.1%、2026Q2 -13.7%(公司官方财报，本文件revenueStructure字段数据)；FY2025移动游戏收入占比21.1%，是四大分部中唯一持续负增长的分部"
+        },
+        {
+          "point": "与短视频/内容大盘平台的用户规模差距巨大，长期存在被动挤占注意力与广告预算份额的结构性风险",
+          "evidence": "B站DAU 1.152亿(2026Q1)对比抖音DAU约8.3-8.5亿(2026年初)、快手DAU 4.127亿(2026Q1)、微信视频号DAU约6.3-6.7亿(2025年末-2026年7月)(新浪财经《视频号与快手B站数据对比分析》cj.sina.cn,2026-03-20；虎嗅《腾讯亦喜亦忧》huxiu.com,2026-03-19)"
+        },
+        {
+          "point": "游戏版号审批与内容监管存在不可预测的政策收紧风险，历史上曾发生审批全面暂停",
+          "evidence": "Bilibili FY2025 Form 20-F(SEC EDGAR)风险因素章节披露：国家新闻出版署曾自2018年3月起暂停游戏注册审批与出版物号发放，且公司『无法保证该暂停不会再次发生』(https://www.sec.gov/Archives/edgar/data/1723690/000119312526157842/d91984d20f.htm)"
+        },
+        {
+          "point": "股权结构高度集中于创始团队的加权投票权架构，经济权益与投票权错配幅度大，中小股东治理话语权有限",
+          "evidence": "陈睿/李旎/徐逸三人合计持有Class Y股份对应70.3%投票权(FY2025 20-F)，但经济权益仅21.2%(本文件management.ownership字段)，权益-投票权错配幅度约49个百分点，是同类『AB股/加权投票权』架构公司中较常见的治理关注点"
+        },
+        {
+          "point": "分析师目标价虽普遍上调，但当前估值已隐含较高盈利改善预期，若游戏或广告增速不及预期估值存在回调压力",
+          "evidence": "本文件currentValuation字段：PE(TTM) 35.11x、PS 2.35x、EV/Revenue 1.90x(financial_rigor.py工具验算)；stockanalysis.com显示52周股价区间为$15.79-$36.40；Simplywall.st(2026)披露BILI股价年内(YTD)下跌37.4%，反映市场对增长持续性存在分歧"
+        }
+      ]
+    },
+    "crossValidationLog": [
+      {
+        "field": "市值验算（verify-market-cap）",
+        "source1": {
+          "name": "FMP quote",
+          "value": "价格16.15 USD"
+        },
+        "source2": {
+          "name": "FMP shares-float",
+          "value": "总股本419,460,680股"
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "计算市值6.77B USD 与报告市值6.77B USD 完全一致"
+      },
+      {
+        "field": "FY2025营业收入",
+        "source1": {
+          "name": "公司官方新闻稿",
+          "value": 30347.77
+        },
+        "source2": {
+          "name": "stockanalysis.com / FMP分部求和",
+          "value": 30348.03
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "两来源一致"
+      },
+      {
+        "field": "FY2025净利润",
+        "source1": {
+          "name": "stockanalysis.com",
+          "value": 1194
+        },
+        "source2": {
+          "name": "macrotrends（USD倒推）",
+          "value": 1197
+        },
+        "deviationPct": 0.15,
+        "flag": "ok",
+        "resolution": "两来源一致，差异来自汇率折算"
+      },
+      {
+        "field": "FY2025现金储备",
+        "source1": {
+          "name": "公司官方新闻稿",
+          "value": 24150
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "value": 24324
+        },
+        "deviationPct": 0.72,
+        "flag": "ok",
+        "resolution": "均<1%，差异为口径细微差别（是否含全部短期投资子项）"
+      },
+      {
+        "field": "FY2025毛利率/经营利润率/ROE/ROA/负债率",
+        "source1": {
+          "name": "financial_rigor.py calc 工具验算",
+          "value": "36.62% / 3.70% / 7.68% / 2.90% / 62.23%"
+        },
+        "source2": {
+          "name": "stockanalysis.com ratios（毛利率36.62%一致；经营利润率3.71%基本一致）",
+          "value": "36.62% / 3.71%"
+        },
+        "deviationPct": 0.03,
+        "flag": "ok",
+        "resolution": "工具验算与stockanalysis比率页基本一致，误差在四舍五入范围内"
+      },
+      {
+        "field": "总负债(Dec 2025)交叉核对",
+        "source1": {
+          "name": "公司官方资产负债表明细(短期借款+长期借款+递延收入+应付款等分项相加)",
+          "value": 25619.2
+        },
+        "source2": {
+          "name": "PB反推法（市值/PB=权益，总资产-权益=总负债）",
+          "value": 25619.0
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "官方分项相加与PB反推法完全吻合，交叉确认总负债与股东权益数字可靠"
+      }
+    ]
+  },
+  "analysis": {
+    "meta": {
+      "companyId": "us-bili-bilibili",
+      "companyName": "哔哩哔哩 (Bilibili Inc.)",
+      "analyzedAt": "2026-08-27",
+      "dataCutoff": "2026-08-27（Asia/Shanghai）",
+      "basedOnCollection": "research/companies/us-bili-bilibili/financials-collection.json"
+    },
+    "dimensions": {
+      "businessEssence": {
+        "title": "生意本质",
+        "conclusion": "B站以二次元/年轻人社区留存注意力，向粉丝、广告主、玩家分层变现，UP主生态是护城河核心",
+        "analysis": {
+          "revenueBreakdown": {
+            "period": "FY2025（截至2025-12-31）",
+            "items": [
+              {
+                "segment": "增值服务VAS（直播打赏、大会员等）",
+                "revenue": "11928.29百万元CNY",
+                "sharePct": "39.31%",
+                "source": {
+                  "name": "公司官方新闻稿（2025Q4及FY2025财报）",
+                  "url": "https://www.globenewswire.com/news-release/2026/03/05/3249914/0/en/bilibili-inc-announces-fourth-quarter-and-fiscal-year-2025-financial-results.html"
+                }
+              },
+              {
+                "segment": "广告",
+                "revenue": "10058.43百万元CNY",
+                "sharePct": "33.14%",
+                "source": {
+                  "name": "公司官方新闻稿（2025Q4及FY2025财报）",
+                  "url": "https://www.globenewswire.com/news-release/2026/03/05/3249914/0/en/bilibili-inc-announces-fourth-quarter-and-fiscal-year-2025-financial-results.html"
+                }
+              },
+              {
+                "segment": "移动游戏",
+                "revenue": "6394.64百万元CNY",
+                "sharePct": "21.07%",
+                "source": {
+                  "name": "公司官方新闻稿（2025Q4及FY2025财报）",
+                  "url": "https://www.globenewswire.com/news-release/2026/03/05/3249914/0/en/bilibili-inc-announces-fourth-quarter-and-fiscal-year-2025-financial-results.html"
+                }
+              },
+              {
+                "segment": "IP衍生品及其他",
+                "revenue": "1966.41百万元CNY",
+                "sharePct": "6.48%",
+                "source": {
+                  "name": "公司官方新闻稿（2025Q4及FY2025财报）",
+                  "url": "https://www.globenewswire.com/news-release/2026/03/05/3249914/0/en/bilibili-inc-announces-fourth-quarter-and-fiscal-year-2025-financial-results.html"
+                }
+              }
+            ]
+          },
+          "profitabilityTrend5y": {
+            "series": [
+              {
+                "fiscalYear": "FY2021",
+                "grossMarginPct": "20.86%",
+                "operatingMarginPct": "-33.17%",
+                "netMarginPct": "-35.02%",
+                "source": {
+                  "name": "stockanalysis.com",
+                  "url": "https://stockanalysis.com/stocks/bili/financials"
+                }
+              },
+              {
+                "fiscalYear": "FY2022",
+                "grossMarginPct": "17.58%",
+                "operatingMarginPct": "-38.17%",
+                "netMarginPct": "-34.23%",
+                "source": {
+                  "name": "stockanalysis.com",
+                  "url": "https://stockanalysis.com/stocks/bili/financials"
+                }
+              },
+              {
+                "fiscalYear": "FY2023",
+                "grossMarginPct": "24.16%",
+                "operatingMarginPct": "-22.48%",
+                "netMarginPct": "-21.41%",
+                "source": {
+                  "name": "stockanalysis.com",
+                  "url": "https://stockanalysis.com/stocks/bili/financials"
+                }
+              },
+              {
+                "fiscalYear": "FY2024",
+                "grossMarginPct": "32.70%",
+                "operatingMarginPct": "-5.01%",
+                "netMarginPct": "-5.02%",
+                "source": {
+                  "name": "stockanalysis.com",
+                  "url": "https://stockanalysis.com/stocks/bili/financials"
+                }
+              },
+              {
+                "fiscalYear": "FY2025",
+                "grossMarginPct": "36.62%",
+                "operatingMarginPct": "3.70%",
+                "netMarginPct": "3.93%",
+                "source": {
+                  "name": "stockanalysis.com",
+                  "url": "https://stockanalysis.com/stocks/bili/financials"
+                }
+              }
+            ]
+          },
+          "businessModelCanvas": {
+            "salesModel": "混合",
+            "productForm": "混合",
+            "note": "①VAS(大会员/打赏)为订阅+复购，广告为循环采买，游戏含道具内购复购型，四线中三线均复购属性强；②仅IP衍生品(占比6.48%)接近一次性销售；③产品形态以平台+服务为主(内容社区、广告位、联运游戏)，衍生品含少量实物/硬件属性；④公司不披露分部毛利率，无法量化各模式盈利差异。"
+          },
+          "stickiness": {
+            "level": "强",
+            "mechanism": "①社区网络效应：日均使用时长两年内从99分钟增至119分钟，DAU同比+8%至1.152亿；②UP主生态供给壁垒：月活UP主400万、月均投稿2400万条，近300万UP主获得收入；③会员制锁定：正式会员数超2.8亿，12个月留存率超79-80%；④Z世代心智定位使年轻用户习惯难被短视频平台简单替代。",
+            "evidence": [
+              {
+                "metric": "DAU",
+                "value": "1.152亿（同比+8%）",
+                "asOf": "2026Q1",
+                "source": {
+                  "name": "ir.bilibili.com 1Q2026财报稿",
+                  "url": "https://www.globenewswire.com/news-release/2026/05/19/3297243/0/en/bilibili-inc-announces-first-quarter-2026-financial-results.html"
+                }
+              },
+              {
+                "metric": "日均使用时长",
+                "value": "119分钟（同比+11分钟）",
+                "asOf": "2026Q1",
+                "source": {
+                  "name": "ir.bilibili.com 1Q2026财报稿",
+                  "url": "https://www.globenewswire.com/news-release/2026/05/19/3297243/0/en/bilibili-inc-announces-first-quarter-2026-financial-results.html"
+                }
+              },
+              {
+                "metric": "正式会员12个月留存率",
+                "value": "超79-80%",
+                "asOf": "2026Q1",
+                "source": {
+                  "name": "ir.bilibili.com 1Q2026财报稿",
+                  "url": "https://www.globenewswire.com/news-release/2026/05/19/3297243/0/en/bilibili-inc-announces-first-quarter-2026-financial-results.html"
+                }
+              }
+            ]
+          },
+          "grossMarginVsPeers": {
+            "companyPct": "36.62%（FY2025）",
+            "peers": [
+              {
+                "name": "快手 Kuaishou（HKEX:1024）",
+                "grossMarginPct": "51.2%（2026Q1，同比-4.1pp）",
+                "source": {
+                  "name": "腾讯新闻/伯虎财经《快手一季报，分拆可灵的“紧迫感”》",
+                  "url": "https://news.qq.com"
+                }
+              },
+              {
+                "name": "爱奇艺 iQIYI（Nasdaq:IQ）",
+                "grossMarginPct": "21.1%（FY2025）",
+                "source": {
+                  "name": "stocktitan.com财务分析",
+                  "url": "https://stocktitan.com"
+                }
+              }
+            ],
+            "whyHigherOrLower": "①B站毛利率(36.62%)低于快手(51.2%)、高于爱奇艺(21.1%)，处于同业中间水平；②低于快手主因B站带宽/服务器/内容成本占收入比重更高且规模效应尚未充分释放；③高于爱奇艺主因B站广告与增值服务增速更快、版权内容购买等重成本模式占比更低；④B站毛利率近五年持续修复(FY2021 20.86%→FY2025 36.62%)反映收入结构从游戏联运向广告/VAS再平衡。"
+          },
+          "operatingLeverage": {
+            "observation": "①FY2021-FY2025收入从193.84亿增至303.48亿(累计+56.6%)，经营利润率同期从-33.17%修复至3.70%，成本增速慢于收入增速，呈正向经营杠杆；②2026Q1毛利率37.1%(同比+0.8pp)同时adjusted净利润同比+62%，利润增速远超收入增速(同期收入+6.7%)；③研发/成本管控与收入增长共同驱动利润率拐点，而非单靠收入规模扩张。",
+            "evidence": [
+              {
+                "metric": "经营利润率(FY2021→FY2025)",
+                "value": "-33.17%→3.70%",
+                "asOf": "FY2021-FY2025",
+                "source": {
+                  "name": "stockanalysis.com",
+                  "url": "https://stockanalysis.com/stocks/bili/financials"
+                }
+              },
+              {
+                "metric": "毛利率/adjusted净利润同比",
+                "value": "毛利率37.1%(+0.8pp)，adjusted净利润+62%YoY",
+                "asOf": "2026Q1",
+                "source": {
+                  "name": "ir.bilibili.com 1Q2026财报稿",
+                  "url": "https://www.globenewswire.com/news-release/2026/05/19/3297243/0/en/bilibili-inc-announces-first-quarter-2026-financial-results.html"
+                }
+              }
+            ]
+          }
+        },
+        "inquiry": {
+          "question": "这门生意好在哪？如果只能用一句话描述，是什么？",
+          "answer": "好在用社区粘性把年轻人的注意力转化为多元、可持续增长的现金流。①UP主生态形成内容供给端壁垒，外部平台难以复制；②广告收入连续多季度提速、增速最快(2026Q2+27.9%)成为再平衡引擎；③毛利率与经营利润率五年持续修复，规模效应正在兑现；④VAS与广告的复购/循环属性使收入波动性低于单纯游戏联运模式。"
+        },
+        "dataGaps": [
+          {
+            "path": "analysis.revenueBreakdown.items[].source",
+            "reason": "公司仅披露整体毛利率，未按分部拆分毛利率，故收入结构中未包含分部毛利率"
+          },
+          {
+            "path": "analysis.grossMarginVsPeers.peers[].source.url",
+            "reason": "collection.json中快手/爱奇艺毛利率数据仅标注来源媒体域名，未记录完整文章URL路径"
+          }
+        ]
+      },
+      "moat": {
+        "title": "护城河评估",
+        "conclusion": "社区网络效应与UP主生态壁垒稳固增宽，但游戏联运护城河因收入连续多季度双位数下滑而明显变窄。",
+        "analysis": {
+          "types": [
+            {
+              "type": "品牌/定价权",
+              "test": "是否能在不损失销量的情况下提价？",
+              "verdict": "待验证",
+              "evidence": [
+                {
+                  "metric": "增值服务(VAS)收入及增速",
+                  "value": "FY2025收入人民币119.28亿元，同比+8.45%",
+                  "asOf": "FY2025",
+                  "source": {
+                    "name": "公司官方新闻稿",
+                    "url": "https://www.globenewswire.com/news-release/2026/03/05/3249914/0/en/bilibili-inc-announces-fourth-quarter-and-fiscal-year-2025-financial-results.html"
+                  }
+                },
+                {
+                  "metric": "广告收入及增速",
+                  "value": "FY2025收入人民币100.58亿元，同比+22.83%",
+                  "asOf": "FY2025",
+                  "source": {
+                    "name": "公司官方新闻稿",
+                    "url": "https://www.globenewswire.com/news-release/2026/03/05/3249914/0/en/bilibili-inc-announces-fourth-quarter-and-fiscal-year-2025-financial-results.html"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "转换成本",
+              "test": "客户迁移到竞品的成本有多高？",
+              "verdict": "存在",
+              "evidence": [
+                {
+                  "metric": "DAU同比增速与日均使用时长",
+                  "value": "DAU同比+8%至1.152亿，日均使用时长同比+11分钟至119分钟",
+                  "asOf": "2026Q1",
+                  "source": {
+                    "name": "公司官方新闻稿",
+                    "url": "https://www.globenewswire.com/news-release/2026/05/19/3297243/0/en/bilibili-inc-announces-first-quarter-2026-financial-results.html"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "网络效应",
+              "test": "用户越多产品越好吗？",
+              "verdict": "存在",
+              "evidence": [
+                {
+                  "metric": "DAU规模与增速",
+                  "value": "1.152亿，同比+8%",
+                  "asOf": "2026Q1",
+                  "source": {
+                    "name": "公司官方新闻稿",
+                    "url": "https://www.globenewswire.com/news-release/2026/05/19/3297243/0/en/bilibili-inc-announces-first-quarter-2026-financial-results.html"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "规模效应",
+              "test": "规模带来的成本优势有多大？",
+              "verdict": "存在",
+              "evidence": [
+                {
+                  "metric": "毛利率变化(FY2021→FY2025)",
+                  "value": "20.86%→36.62%",
+                  "asOf": "FY2021-FY2025",
+                  "source": {
+                    "name": "stockanalysis.com",
+                    "url": "https://stockanalysis.com/stocks/bili/financials"
+                  }
+                },
+                {
+                  "metric": "经营利润率变化(FY2021→FY2025)",
+                  "value": "-33.17%→3.70%（FY2025首次转正）",
+                  "asOf": "FY2021-FY2025",
+                  "source": {
+                    "name": "stockanalysis.com",
+                    "url": "https://stockanalysis.com/stocks/bili/financials"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "技术/专利壁垒",
+              "test": "技术领先几年？能否被复制？",
+              "verdict": "待验证",
+              "evidence": [
+                {
+                  "metric": "研发费用及研发强度",
+                  "value": "FY2025研发费用人民币35.33亿元，占收入11.64%；同期20-F披露公司将AI应用于内容分发、广告定向及内容创作",
+                  "asOf": "FY2025",
+                  "source": {
+                    "name": "SEC 20-F(FY2025)",
+                    "url": "https://www.sec.gov/Archives/edgar/data/1723690/000119312526157842/d91984d20f.htm"
+                  }
+                }
+              ]
+            }
+          ],
+          "trendPast5y": {
+            "direction": "变宽",
+            "basis": "①毛利率从FY2021的20.86%升至FY2025的36.62%，经营利润率首次转正，规模效应持续兑现；②用户日均使用时长两年增20分钟至119分钟，社区网络效应增强；③UP主生态月活400万、创作者收入同比+21%，供给壁垒稳固；④但移动游戏联运收入自2025Q3起连续四季度同比双位数下滑(-17.1%→-14.3%→-12.1%→-13.7%)，该细分护城河明显收窄，是四大分部中唯一收缩板块。"
+          },
+          "trendNext5y": {
+            "direction": "变宽",
+            "basis": "①广告与VAS增长动能强劲(FY2025分别+22.8%、+8.5%)，AI驱动内容分发与商业化有望延续；②GAAP盈利拐点确立后现金流转正，为内容与AI投入提供资金支持；③前提假设：游戏联运需依赖新游验证能否扭转连续多季度双位数下滑趋势，否则该分部护城河将持续侵蚀整体商业模式；④若新游未能接续，护城河扩宽速度将放缓甚至局部倒退。"
+          }
+        },
+        "inquiry": {
+          "question": "10年后这条护城河还在吗？什么能摧毁它？",
+          "answer": "社区网络效应与UP主生态护城河大概率仍存在，但游戏联运护城河若不改善可能已消失。①核心风险是抖音、微信视频号、小红书等更大流量平台以算法与内容投入持续挤占年轻用户时长与广告预算，侵蚀B站的注意力入口地位；②生成式AI大幅降低内容创作门槛，可能稀释UP主稀缺性这一核心供给壁垒；③移动游戏联运收入已连续多季度双位数下滑，证明单一细分护城河可被内容生命周期老化与新游缺位快速摧毁，若VAS/广告增长同时放缓，商业模式脆弱性将暴露；④内容审核、未成年人保护、游戏版号等监管政策收紧可能持续压缩商业化空间与用户增长天花板。"
+        },
+        "dataGaps": [
+          {
+            "path": "moat.analysis.types",
+            "reason": "分部毛利率(VAS/广告/游戏/IP衍生品)公司未单独披露，无法量化各业务线的规模效应/定价权差异"
+          },
+          {
+            "path": "competitiveLandscape.marketShare",
+            "reason": "缺乏第三方统一口径的市场份额百分比数据，竞争格局仅能以DAU/收入规模等指标间接比较"
+          },
+          {
+            "path": "moat.analysis.types[1].evidence",
+            "reason": "UP主/用户迁移成本、留存率等关键网络效应/转换成本数据主要来自二手研究文章转述公司财报口径，未见公司原始文件中的对应URL"
+          }
+        ]
+      },
+      "inversion": {
+        "title": "逆向思考与风险清单",
+        "conclusion": "游戏收入结构性萎缩与大盘平台挤占时长是最现实的失败路径，监管暂停与治理错配是尾部风险。",
+        "analysis": {
+          "failurePaths": [
+            {
+              "path": "抖音/快手/视频号持续挤占年轻用户时长与广告预算，B站广告增长逐步失速",
+              "probability": "中",
+              "impact": "高",
+              "evidence": [
+                {
+                  "metric": "B站DAU vs 抖音/视频号/快手DAU",
+                  "value": "B站1.152亿 vs 抖音8.3-8.5亿、视频号6.3-6.7亿、快手4.127亿",
+                  "asOf": "2026Q1/2026年初",
+                  "source": {
+                    "name": "虎嗅《腾讯亦喜亦忧》",
+                    "url": "https://huxiu.com"
+                  }
+                },
+                {
+                  "metric": "广告收入增速",
+                  "value": "2026Q1 +29.61%、2026Q2 +27.86%（尚未失速，但基数低、依赖前五大行业主预算）",
+                  "asOf": "2026Q2",
+                  "source": {
+                    "name": "公司官方新闻稿",
+                    "url": "https://www.globenewswire.com/news-release/2026/08/27/3351838/0/en/bilibili-inc-announces-second-quarter-2026-financial-results.html"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "移动游戏联运依赖存量老IP，新游储备验证期未过，收入持续两位数下滑拖累整体盈利",
+              "probability": "高",
+              "impact": "中",
+              "evidence": [
+                {
+                  "metric": "移动游戏收入同比增速",
+                  "value": "2025Q3 -17.1%、2025Q4 -14.3%、2026Q1 -12.1%、2026Q2 -13.7%",
+                  "asOf": "2026Q2",
+                  "source": {
+                    "name": "公司官方新闻稿",
+                    "url": "https://www.globenewswire.com/news-release/2026/08/27/3351838/0/en/bilibili-inc-announces-second-quarter-2026-financial-results.html"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "国家游戏版号审批政策再次全面暂停，新游上线与联运收入直接受冲击",
+              "probability": "低",
+              "impact": "高",
+              "evidence": [
+                {
+                  "metric": "历史先例",
+                  "value": "2018年3月起NPPA曾暂停游戏注册及出版物号审批，公司称无法保证不再发生",
+                  "asOf": "FY2025 20-F披露",
+                  "source": {
+                    "name": "Bilibili FY2025 Form 20-F",
+                    "url": "https://www.sec.gov/Archives/edgar/data/1723690/000119312526157842/d91984d20f.htm"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "两级内容审核未能识别全部违规UGC内容，触发平台罚款、下架乃至牌照风险",
+              "probability": "低",
+              "impact": "高",
+              "evidence": [
+                {
+                  "metric": "审核机制局限性自述",
+                  "value": "『there can be no assurance that we can identify all the videos or other content that may violate relevant laws』",
+                  "asOf": "FY2025 20-F",
+                  "source": {
+                    "name": "Bilibili FY2025 Form 20-F",
+                    "url": "https://www.sec.gov/Archives/edgar/data/1723690/000119312526157842/d91984d20f.htm"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "AI生成内容/deepfake版权与合规争议加剧，监管加速立法带来新型法律成本",
+              "probability": "中",
+              "impact": "中",
+              "evidence": [
+                {
+                  "metric": "监管加速立法自述",
+                  "value": "『PRC government authorities have gradually accelerated the pace of legislation for generative AI...deepfakes...intellectual property infringement』",
+                  "asOf": "FY2025 20-F",
+                  "source": {
+                    "name": "Bilibili FY2025 Form 20-F",
+                    "url": "https://www.sec.gov/Archives/edgar/data/1723690/000119312526157842/d91984d20f.htm"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "创始团队经济权益21.2%却掌握70.3%投票权，资本配置（回购/并购）可能偏离中小股东利益",
+              "probability": "低",
+              "impact": "中",
+              "evidence": [
+                {
+                  "metric": "经济权益/投票权错配",
+                  "value": "经济权益21.2% vs 投票权70.3%，错配约49个百分点",
+                  "asOf": "FY2025 20-F（截至2026-03-31）",
+                  "source": {
+                    "name": "Bilibili FY2025 Form 20-F",
+                    "url": "https://www.sec.gov/Archives/edgar/data/1723690/000119312526157842/d91984d20f.htm"
+                  }
+                }
+              ]
+            }
+          ],
+          "historicalAnalogies": [
+            {
+              "company": "MySpace",
+              "similarity": "曾是年轻用户主导的UGC社区先行者，社区调性鲜明，后被更主流社交平台挤占用户时长",
+              "outcome": "未能在移动化与算法分发上跟上Facebook，用户与广告主大量流失，最终边缘化",
+              "source": {
+                "name": "公开报道/行业共识（未做双源交叉验证的定性历史类比，非collection.json数据点）",
+                "url": "https://en.wikipedia.org/wiki/Myspace"
+              }
+            },
+            {
+              "company": "人人网（校内网）",
+              "similarity": "以年轻学生用户为核心的社区平台，早期粘性高，后被微博/移动互联网内容平台分流",
+              "outcome": "用户与内容供给持续萎缩，商业化未能跟上，最终转型/边缘化",
+              "source": {
+                "name": "公开报道/行业共识（未做双源交叉验证的定性历史类比，非collection.json数据点）",
+                "url": "https://zh.wikipedia.org/wiki/人人网"
+              }
+            },
+            {
+              "company": "Digg",
+              "similarity": "社区驱动的内容分发平台，核心用户群与内容生产者高度重叠，依赖社区文化壁垒",
+              "outcome": "改版失误加上Reddit/Facebook竞争分流用户，社区壁垒未能转化为持续商业价值，迅速衰落",
+              "source": {
+                "name": "公开报道/行业共识（未做双源交叉验证的定性历史类比，非collection.json数据点）",
+                "url": "https://en.wikipedia.org/wiki/Digg"
+              }
+            }
+          ],
+          "crossDisciplinaryChecks": [
+            {
+              "model": "网络效应理论",
+              "finding": "①B站的UP主-粉丝双边网络效应仍在变宽：月活UP主400万、月均投稿2400万条、充电收入同比+71.1%，供给侧未被削弱。②但网络效应强度是相对的——抖音/视频号的用户基数是B站的5-7倍，广告主预算天然向流量更大平台集中，B站的『小而深』网络效应可能长期只能支撑差异化定位而非份额扩张。③游戏联运分部缺乏自身网络效应，仅是渠道抽成生意，因此最先出现结构性下滑，验证了『非核心网络效应业务率先失速』的假设。"
+            },
+            {
+              "model": "技术采纳曲线",
+              "finding": "①B站用户已从早期二次元极客(early adopter)向泛内容大众用户『破圈』，平均年龄26岁、新用户23岁，处于跨越鸿沟(chasm)后期。②AI辅助内容生产/数字分身工具仍处于早期采纳阶段，公司2026年将研发预算向AI倾斜，能否转化为持续的内容供给效率优势尚待验证。③若B站在AI内容生产采纳曲线上落后于抖音/快手，可能在下一轮技术红利中掉队。"
+            },
+            {
+              "model": "竞争博弈",
+              "finding": "①B站与抖音/视频号并非直接零和竞争而是错位竞争——中长视频陪伴属性 vs 短视频冲动消费，但博弈的公共资源（用户总时长、广告主预算）是共享且有限的。②快手『AI投入拖累毛利率与利润』与B站『AI投入+利润率提升并行』的对比显示不同参与者在同一轮AI军备竞赛中支付的代价不同，B站当前处于相对有利位置，但这是动态博弈。③游戏联运抽成博弈中，B站对头部游戏厂商议价权有限，联运游戏生命周期结束后能否持续拿到优质新游是核心不确定性。"
+            }
+          ],
+          "biasSelfCheck": [
+            {
+              "bias": "叙事偏差",
+              "check": "『AI投入转化为利润率改善』的叙事仅有2026Q1一个季度的正面数据支撑，需警惕将单季度改善过度叙事化为长期趋势，游戏分部持续负增长的『反叙事』证据同样重要，不应被AI利好叙事掩盖。"
+            },
+            {
+              "bias": "锚定效应",
+              "check": "近期大行集中上调目标价，容易锚定在『盈利拐点后估值重估』的乐观叙事上，需对照52周区间$15.79-$36.40及YTD下跌37.4%的事实，避免仅采信最新分析师观点而忽视股价本身反映的分歧。"
+            },
+            {
+              "bias": "幸存者偏差",
+              "check": "历史类比选取的MySpace/人人网/Digg均为衰落案例，但也存在同为UGC社区却成功转型的反例（如Reddit的持续存续），仅挑选衰落案例会高估失败概率，需承认B站与这些案例在商业模式、股权结构、监管环境上的差异不可完全对应。"
+            }
+          ],
+          "bearCase": [
+            {
+              "point": "移动游戏收入连续多个季度两位数下滑，联运游戏生命周期老化、新游储备验证期未过",
+              "holder": "空方投资者/谨慎分析师",
+              "evidence": [
+                {
+                  "metric": "移动游戏收入同比增速",
+                  "value": "2025Q3 -17.1%、2025Q4 -14.3%、2026Q1 -12.1%、2026Q2 -13.7%",
+                  "asOf": "2026Q2",
+                  "source": {
+                    "name": "公司官方财报",
+                    "url": "https://www.globenewswire.com/news-release/2026/08/27/3351838/0/en/bilibili-inc-announces-second-quarter-2026-financial-results.html"
+                  }
+                }
+              ]
+            },
+            {
+              "point": "与短视频/内容大盘平台的用户规模差距巨大，长期存在被动挤占注意力与广告预算份额的结构性风险",
+              "holder": "空方投资者/谨慎分析师",
+              "evidence": [
+                {
+                  "metric": "DAU对比",
+                  "value": "B站1.152亿 vs 抖音8.3-8.5亿、快手4.127亿、视频号6.3-6.7亿",
+                  "asOf": "2026Q1/2026年初",
+                  "source": {
+                    "name": "新浪财经/虎嗅",
+                    "url": "https://huxiu.com"
+                  }
+                }
+              ]
+            },
+            {
+              "point": "游戏版号审批与内容监管存在不可预测的政策收紧风险，历史上曾发生审批全面暂停",
+              "holder": "空方投资者/谨慎分析师",
+              "evidence": [
+                {
+                  "metric": "历史暂停事件",
+                  "value": "NPPA自2018年3月起暂停游戏注册审批，公司无法保证不再发生",
+                  "asOf": "FY2025 20-F",
+                  "source": {
+                    "name": "Bilibili FY2025 Form 20-F",
+                    "url": "https://www.sec.gov/Archives/edgar/data/1723690/000119312526157842/d91984d20f.htm"
+                  }
+                }
+              ]
+            },
+            {
+              "point": "股权结构高度集中于创始团队的加权投票权架构，经济权益与投票权错配幅度大，中小股东治理话语权有限",
+              "holder": "治理关注型投资者/空方",
+              "evidence": [
+                {
+                  "metric": "经济权益/投票权",
+                  "value": "21.2% / 70.3%，错配约49个百分点",
+                  "asOf": "FY2025 20-F",
+                  "source": {
+                    "name": "Bilibili FY2025 Form 20-F",
+                    "url": "https://www.sec.gov/Archives/edgar/data/1723690/000119312526157842/d91984d20f.htm"
+                  }
+                }
+              ]
+            },
+            {
+              "point": "分析师目标价虽普遍上调，但当前估值已隐含较高盈利改善预期，若游戏或广告增速不及预期估值存在回调压力",
+              "holder": "空方投资者/谨慎分析师",
+              "evidence": [
+                {
+                  "metric": "PE(TTM)/PS/EV-Revenue",
+                  "value": "35.11x / 2.35x / 1.90x；52周区间$15.79-$36.40，YTD下跌37.4%",
+                  "asOf": "2026-08-26",
+                  "source": {
+                    "name": "financial_rigor.py工具验算/stockanalysis.com",
+                    "url": "https://stockanalysis.com/stocks/bili/financials"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "inquiry": {
+          "question": "我最可能在哪里犯错？聪明人为什么会不买/做空这家公司？",
+          "answer": "最可能的错误是把2026Q1单季AI利润率改善外推为长期趋势，低估游戏分部持续萎缩与大盘平台挤占时长的结构性压力。①游戏收入已连续四个季度两位数下滑且新游未过验证期，若继续下滑，会侵蚀广告增长贡献的利润改善。②B站DAU仅为抖音的约1/7、视频号的约1/6，广告预算长期存在被动被大盘平台分流的风险，当前广告高增速部分建立在低基数上，不宜线性外推。③股价年内已下跌37.4%且52周区间跨度大，说明市场本身对增长持续性存在分歧，当前PE(TTM)35倍已隐含较高预期。④加权投票权结构下中小股东话语权有限，若管理层资本配置偏离股东利益，外部投资者纠偏能力弱，这是治理型空头持有的核心理由。"
+        },
+        "dataGaps": [
+          {
+            "path": "inversion.analysis.historicalAnalogies",
+            "reason": "历史类比（MySpace/人人网/Digg）在collection.json中无直接数据来源支撑，仅基于公开报道/行业共识，未能提供可查证URL"
+          }
+        ]
+      },
+      "management": {
+        "title": "管理层评估",
+        "conclusion": "创始团队任职超12年、投票权70.3%高度集中，资本配置总体稳健，但并购记录与接班人计划均缺乏披露。",
+        "analysis": {
+          "keyDecisions": [
+            {
+              "date": "2018-03-28",
+              "decision": "纳斯达克IPO并保留AB股加权投票权结构",
+              "outcome": "成功融资，创始团队保留81.6%投票权但仅30.7%经济权益",
+              "rating": "★4",
+              "source": {
+                "name": "SEC 424(b)(4)招股书",
+                "url": "https://www.sec.gov/Archives/edgar/data/1723690/000104746918002254/a2235099z424b4.htm"
+              }
+            },
+            {
+              "date": "2021-03-29",
+              "decision": "完成港交所第二上市",
+              "outcome": "拓宽融资渠道与亚洲投资者基础，为后续双重主要上市铺路",
+              "rating": "★4",
+              "source": {
+                "name": "Bilibili FY2025 Form 20-F",
+                "url": "https://www.sec.gov/Archives/edgar/data/1723690/000119312526157842/d91984d20f.htm"
+              }
+            },
+            {
+              "date": "2022-04-29公告/2022-10-03生效",
+              "decision": "由港股第二上市转换为港股与纳斯达克两地双重主要上市",
+              "outcome": "降低单一交易所监管及摘牌风险，完成两地主要上市地位",
+              "rating": "★4",
+              "source": {
+                "name": "Bilibili FY2025 Form 20-F",
+                "url": "https://www.sec.gov/Archives/edgar/data/1723690/000119312526157842/d91984d20f.htm"
+              }
+            },
+            {
+              "date": "2022年3月",
+              "decision": "首次授权未来24个月回购至多US$5亿ADS",
+              "outcome": "授权时机处于股价调整期，但collection未见该轮回购完成进度披露",
+              "rating": "★3",
+              "source": {
+                "name": "Bilibili FY2025 Form 20-F",
+                "url": "https://www.sec.gov/Archives/edgar/data/1723690/000119312526157842/d91984d20f.htm"
+              }
+            },
+            {
+              "date": "2024年11月",
+              "decision": "启动『2024计划』两年期US$2亿股票回购",
+              "outcome": "截至2026年5月完成，累计回购990万股，执行节奏稳定",
+              "rating": "★4",
+              "source": {
+                "name": "Bilibili 1Q2026财报稿",
+                "url": "https://www.globenewswire.com/news-release/2026/05/19/3297243/0/en/bilibili-inc-announces-first-quarter-2026-financial-results.html"
+              }
+            },
+            {
+              "date": "2025年5月21-23日",
+              "decision": "发行US$6.9亿可转债并增发1,028万股Class Z股份对冲",
+              "outcome": "补充现金储备支持回购与投资，但经济权益与投票权同步被摊薄",
+              "rating": "★3",
+              "source": {
+                "name": "Bilibili FY2025 Form 20-F",
+                "url": "https://www.sec.gov/Archives/edgar/data/1723690/000119312526157842/d91984d20f.htm"
+              }
+            },
+            {
+              "date": "2026年6月24日",
+              "decision": "启动『2026计划』两年期US$3亿股票回购",
+              "outcome": "年内已累计回购580万股耗资约US$1.18亿，在股价年内下跌期加码",
+              "rating": "★4",
+              "source": {
+                "name": "Bilibili 2026Q2财报新闻稿",
+                "url": "https://www.globenewswire.com/news-release/2026/08/27/3351838/0/en/bilibili-inc-announces-second-quarter-2026-financial-results.html"
+              }
+            },
+            {
+              "date": "2024-2026年",
+              "decision": "研发预算向AI战略加码倾斜",
+              "outcome": "2026Q1研发费用同比+9%的同时adjusted净利润同比+62%，投入与效率并行",
+              "rating": "★4",
+              "source": {
+                "name": "Bilibili 1Q2026财报稿",
+                "url": "https://www.globenewswire.com/news-release/2026/05/19/3297243/0/en/bilibili-inc-announces-first-quarter-2026-financial-results.html"
+              }
+            }
+          ],
+          "capitalAllocation": {
+            "rdReturn": "研发经历2020-2022高投入、2023-2024收缩、2025-2026再扩张三阶段，近期AI投入与adjusted净利润+62%同步改善",
+            "maTrackRecord": {
+              "status": "unavailable",
+              "reason": "collection.json中management维度未记录任何并购事件，公司近年资本配置以自主研发与回购为主"
+            },
+            "buybackTiming": "2022年低位授权US$5亿、2024年US$2亿如期完成、2026年股价年内跌37.4%时再加码US$3亿，整体偏逆周期",
+            "evidence": [
+              {
+                "metric": "FY2025研发费用",
+                "value": "人民币3,533百万元，占收入11.64%",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "stockanalysis.com",
+                  "url": "https://stockanalysis.com/stocks/bili/financials"
+                }
+              },
+              {
+                "metric": "2026计划回购金额",
+                "value": "US$3亿两年期计划，年内已耗资约US$1.18亿",
+                "asOf": "2026-06-24至2026-08-27",
+                "source": {
+                  "name": "Bilibili 2026Q2财报新闻稿",
+                  "url": "https://www.globenewswire.com/news-release/2026/08/27/3351838/0/en/bilibili-inc-announces-second-quarter-2026-financial-results.html"
+                }
+              }
+            ]
+          },
+          "alignment": {
+            "ownership": "陈睿/徐逸/李旎三人经济权益合计21.2%，但因Class Y加权投票权持有投票权70.3%，AB股架构下控制权与现金流权分离",
+            "compensation": "collection仅披露三人FY2025现金薪酬，未见与经营KPI或股权激励挂钩条款的具体披露",
+            "insiderSelling": {
+              "status": "unavailable",
+              "reason": "collection.json未记录管理层减持数据，仅有增发新股用于对冲交易的摊薄记录"
+            },
+            "evidence": [
+              {
+                "metric": "陈睿现金薪酬",
+                "value": "人民币338,671元",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "FMP company-executives",
+                  "url": "https://financialmodelingprep.com"
+                }
+              },
+              {
+                "metric": "李旎现金薪酬",
+                "value": "人民币421,107元",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "FMP company-executives",
+                  "url": "https://financialmodelingprep.com"
+                }
+              },
+              {
+                "metric": "全体董事高管经济权益/投票权",
+                "value": "21.2% / 70.3%",
+                "asOf": "2026-03-31",
+                "source": {
+                  "name": "Bilibili FY2025 Form 20-F",
+                  "url": "https://www.sec.gov/Archives/edgar/data/1723690/000119312526157842/d91984d20f.htm"
+                }
+              }
+            ]
+          },
+          "organization": {
+            "teamStability": "①陈睿2011年天使投资加入、2014年11月起任董事长兼CEO，至2026-08已任职约12年，是『社区先行』战略主导者；②徐逸2009年创立公司前身，2013年12月起任总裁，为创始人全程参与，负责社区文化与早期产品；③李旎2014年11月起任COO、2015年1月起任副董事长兼ESG委员会主席，负责日常运营。三名核心高管任期均超10年，collection未见近年高管更替记录，团队稳定性较高。",
+            "keyPersonRisk": "①陈睿单独持有42.4%投票权，是控制权与战略方向的核心，若其离任对公司治理与外部信任影响最大；②徐逸是社区文化与二次元用户心智的意见领袖象征，其角色难以完全由制度替代；③三人合计控制70.3%投票权但经济权益仅21.2%，权益/投票权错配下若发生管理层变动，接班安排与治理透明度存在不确定性；collection.json未披露正式接班人计划。"
+          },
+          "culture": "①陈睿主导『社区先行(community first)』战略，公司官方口径将其列为发展主线；②月活UP主400万、月均投稿2400万条，近300万UP主获得收入且充电(打赏)收入同比+71.1%，创作者生态活跃度高；③用户日均使用时长两年内从99分钟增至119分钟，正式会员12个月留存率超79-80%，反映社区粘性文化持续被验证。"
+        },
+        "inquiry": {
+          "question": "如果CEO（陈睿）退休，这家公司还能保持竞争力吗？",
+          "answer": "短期内业务运营可基本维持，但战略延续性与治理透明度存在不确定性。①徐逸(创始人、总裁，任职超12年)与李旎(COO兼副董事长，任职超12年)构成经营梯队，且分别单独持有一定投票权，具备一定接班基础，日常运营不会因单一人事变动骤然失速；②但陈睿单独持有42.4%投票权，是『社区先行』战略与公司治理的核心决策者，其离任对董事会控制权归属与战略方向的影响远大于普通职业经理人更替；③陈睿与徐逸是B站社区文化与二次元用户心智的人格化象征，创始团队色彩浓厚，突然退休可能冲击核心用户与UP主生态的情感认同和信任；④近期广告增长、AI投入、回购节奏等关键经营决策已呈现董事会授权、财报电话会议披露等制度化特征，非完全依赖陈睿个人判断，但collection.json中未见公司披露任何正式接班人计划，这是治理层面的明确缺口。"
+        },
+        "dataGaps": [
+          {
+            "path": "management.analysis.capitalAllocation.maTrackRecord",
+            "reason": "collection.json未记录任何并购事件"
+          },
+          {
+            "path": "management.analysis.alignment.insiderSelling",
+            "reason": "collection.json无管理层减持记录披露"
+          },
+          {
+            "path": "management.analysis.alignment.compensation",
+            "reason": "仅披露现金薪酬数字，未见考核条款"
+          },
+          {
+            "path": "management.analysis.organization.keyPersonRisk",
+            "reason": "collection.json未披露正式接班人计划"
+          }
+        ]
+      },
+      "industryTrend": {
+        "title": "行业与长期趋势",
+        "conclusion": "行业处于AI工具化渗透而非范式重构阶段，B站广告业务跑赢大盘但用户规模远逊巨头，游戏联运护城河正被侵蚀。",
+        "analysis": {
+          "paradigmShift": {
+            "verdict": "部分",
+            "reasoning": "①AI正嵌入内容生产(数字分身)、分发算法、广告定向与内容审核，属工具层渗透而非商业模式重构；②社区+UP主供给的核心壁垒尚未被AI原生平台颠覆，PUGV仍以人类创作为主；③真正范式转移发生在短视频/直播赛道(抖音、视频号)，长视频同业爱奇艺份额萎缩即为佐证，B站所处细分定位受冲击相对较小但非零。"
+          },
+          "historicalAnalogy": "①对标互联网范式(Web2.0内容社区)，B站是移动互联网时代年轻世代文化基础设施，而非AI原生颠覆者；②当前AI浪潮中B站更像『电力时代的工厂』——用AI做效率工具(数字分身、算法分发)而非重新定义商业模式；③相较抖音/视频号以算法+短视频重构分发范式并虹吸广告预算，B站仍以社区+中长视频+UP主内容为核心，处于范式追随者而非引领者位置。",
+          "tam": {
+            "current": {
+              "value": "7,257亿元（另一细分口径QuestMobile：2026H1为3,853.4亿元+7.1%YoY）",
+              "currency": "CNY",
+              "asOf": "2025年度",
+              "source": {
+                "name": "imz-lab.com《2025年中国互联网广告营销核心数据解读》引用第三方统计",
+                "url": "https://www.imz-lab.com/articlelist.html"
+              }
+            },
+            "ceiling": "天花板由宏观广告主预算总量与平台间份额分配共同决定：预测CAGR约10%，2026年市场规模有望接近9,000亿元；B站FY2025广告收入1,005.8亿元仅占该总市场约13.9%，理论份额提升空间大，但绝对天花板受制于抖音与腾讯生态对预算的虹吸效应。",
+            "growthCurve": "分层判断：B站广告分部处于成长期(增速22-28%YoY，远超大盘10-11%)；行业TAM整体处于成熟期(个位数至低双位数增长)；移动游戏分部处于衰退期(连续4个季度两位数下滑)。"
+          },
+          "valueChainPosition": "①相对UP主(上游内容供给)：议价力中等，月活UP主400万、近300万实现变现，充电(打赏)收入同比+71.1%，双方绑定加深而非单向压价；②相对广告主(下游需求方)：议价力偏弱，DAU仅1.15亿远小于抖音8.5亿/视频号6.7亿，广告预算天然向大盘平台倾斜；③相对游戏发行商：议价力偏弱，移动游戏收入以联运分成为主，依赖NPPA版号审批与外部游戏供给，该分部收入连续4季度下滑反映渠道稀缺性正在减弱。",
+          "techRouteRisk": "①机会：AI辅助创作工具(数字分身)可降低UP主创作门槛、扩大内容供给，2026Q1研发费用同比+9%明确投向AI且同期毛利率同步改善；②风险：20-F风险因素章节明确列示AI生成内容的版权侵权、deepfake、错误信息等合规风险，若监管收紧或深度合成内容泛滥可能侵蚀社区内容真实性与用户信任；③风险：若AI原生内容生成/分发平台率先重构UGC生产范式，B站现行『人工审核+人类创作』两级模式可能面临效率劣势。",
+          "concentration": {
+            "customers": {
+              "status": "unavailable",
+              "reason": "collection仅披露广告主所属行业方向(游戏/数码家电/网络服务/电商/汽车)，未见具体广告主集中度%数据"
+            },
+            "suppliers": "云基础设施依赖腾讯单一供应商(2022年Cloud Services Agreement关连交易)，未披露占总采购比例，属集中度风险但非量化数据",
+            "evidence": [
+              {
+                "metric": "中国互联网广告市场规模",
+                "value": "7,257亿元(+11.5%YoY)",
+                "asOf": "2025年度",
+                "source": {
+                  "name": "imz-lab.com《2025年中国互联网广告营销核心数据解读》",
+                  "url": "https://www.imz-lab.com/articlelist.html"
+                }
+              },
+              {
+                "metric": "B站广告收入占行业TAM比例",
+                "value": "约13.9%(1,005.8亿元/7,257亿元)",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "公司官方新闻稿(FY2025财报)",
+                  "url": "https://www.globenewswire.com/news-release/2026/03/05/3249914/0/en/bilibili-inc-announces-fourth-quarter-and-fiscal-year-2025-financial-results.html"
+                }
+              },
+              {
+                "metric": "云基础设施供应商",
+                "value": "腾讯(关连交易，Cloud Services Agreement)",
+                "asOf": "2022-04-29",
+                "source": {
+                  "name": "SEC EX-99.2申报文件",
+                  "url": "https://ir.bilibili.com"
+                }
+              }
+            ]
+          }
+        },
+        "inquiry": {
+          "question": "站在20年后回看，这家公司是「这个时代的标准石油」还是「昙花一现的3Com」？",
+          "answer": "更接近被巨头挤压却存活的细分文化基础设施，非标准石油亦非3Com。①与标准石油的差距：DAU仅1.15亿，远小于抖音8.5亿/视频号6.7亿，缺乏全网垄断与定价权，广告业务是行业追随者而非规则制定者；②与3Com的差异：社区壁垒(UP主生态+Z世代心智)持续变宽而非被技术直接淘汰，FY2025首次GAAP盈利、自由现金流转正，具备穿越周期的基础；③结构性风险仍存：移动游戏连续4季度下滑、AI内容与版号监管风险、加权投票权治理集中，限制其从『细分护城河』跃升为『行业基础设施』；④20年维度看，更可能演变为存活但规模有限的垂直文化平台，而非行业级基础设施或彻底消亡的技术弃儿。"
+        },
+        "dataGaps": [
+          {
+            "path": "industryTrend.analysis.concentration.customers",
+            "reason": "collection仅有行业方向(游戏/数码家电/网络服务/电商/汽车)，无具体集中度百分比"
+          },
+          {
+            "path": "industryTrend.analysis.concentration.suppliers",
+            "reason": "仅知来自腾讯关连交易，未披露占总采购比例"
+          }
+        ]
+      },
+      "valuation": {
+        "title": "估值分析",
+        "conclusion": "35.11x PE隐含较高盈利改善预期，三情景显示上涨/下跌不对称，游戏企稳与广告增速是关键变量。",
+        "analysis": {
+          "currentMultiples": {
+            "marketCap": {
+              "value": "67.74亿美元",
+              "currency": "USD",
+              "asOf": "2026-08-26",
+              "source": {
+                "name": "collection.json currentValuation.marketCap（FMP验算）",
+                "url": "https://financialmodelingprep.com"
+              }
+            },
+            "pe": {
+              "value": "35.11x（TTM，价格16.15USD/EPS 0.46USD diluted）",
+              "asOf": "2026-08-26",
+              "source": {
+                "name": "collection.json currentValuation.pe（financial_rigor.py验算，沿用第1步验算结果）",
+                "url": "https://stockanalysis.com/stocks/bili/financials"
+              }
+            },
+            "ps": {
+              "value": "2.35x",
+              "asOf": "2026-08-26",
+              "source": {
+                "name": "collection.json currentValuation.ps",
+                "url": "https://stockanalysis.com/stocks/bili/financials"
+              }
+            },
+            "peg": {
+              "status": "unavailable",
+              "reason": "collection.json currentValuation.peg标注unavailable：FMP估值端点（DCF/estimates）在当前订阅层级ACCESS DENIED，stockanalysis forecast页面仅给出3年一致预期EPS增速25.5%、未给出标准PEG计算值，第1步未采集到可用PEG"
+            },
+            "evToRevenue": {
+              "value": "1.90x",
+              "asOf": "2026-08-26",
+              "source": {
+                "name": "collection.json currentValuation.evToRevenue",
+                "url": "https://stockanalysis.com/stocks/bili/financials"
+              }
+            }
+          },
+          "reverseDcf": {
+            "impliedGrowth": "①当前35.11x PE、1.90x EV/Revenue隐含市场预期未来数年盈利维持较高增速（大致对应20%-30%区间的持续复合增长假设，而非仅FY2025的个位数环比改善）；②这与分析师一致预期的3年EPS增速25.5%大致吻合，说明股价并非低估，而是已price-in广告业务加速与游戏企稳的乐观假设；③若广告增速回落或游戏跌幅未能收窄，当前倍数下修风险高于上修空间（详见三情景）。",
+            "assumptions": "未使用精确DCF模型（超出本步骤要求），仅做方向性判断：假设分析师一致预期25.5%的3年EPS增速大致反映市场隐含增长预期，未单独设定贴现率/永续增长率；精确终值假设需完整DCF模型，本步骤未运行，标注为定性判断。"
+          },
+          "threeScenario": {
+            "inputs": {
+              "price": 16.15,
+              "eps": 0.46,
+              "sharesHundredMillion": 4.1946,
+              "growth": [
+                "30%",
+                "15%",
+                "-5%"
+              ],
+              "pe": [
+                35,
+                25,
+                15
+              ],
+              "years": 3,
+              "currency": "USD"
+            },
+            "optimistic": {
+              "targetPrice": "35.4 USD",
+              "impliedReturnPct": "+119.0%"
+            },
+            "neutral": {
+              "targetPrice": "17.5 USD",
+              "impliedReturnPct": "+8.3%"
+            },
+            "pessimistic": {
+              "targetPrice": "5.9 USD",
+              "impliedReturnPct": "-63.4%"
+            },
+            "assumptionBasis": "①乐观：广告收入近4季度同比增速22.8%→29.6%→27.9%持续加速，若带动整体盈利维持30%增速且市场给予35x（当前PE水平），对应AI效率红利与游戏止跌预期充分实现；②中性：整体盈利增速回落至15%（低于分析师一致预期25.5%，因移动游戏拖累尚未完全消退），给25x（低于当前35x，反映估值均值回归）；③悲观：移动游戏收入连续4季度两位数下滑（-17.1%→-14.3%→-12.1%→-13.7%）若未企稳且拖累整体转为-5%盈利增速，给15x（对标爱奇艺等传统长视频平台倍数水平）。",
+            "toolOutput": "============================================================\n三情景估值模型 (Three-Scenario Valuation)\n============================================================\n  当前股价: 16.15 USD\n  当前EPS:  0.46\n  预测期:   3年\n\n  情景                年增速     目标PE      目标EPS       目标股价      涨跌幅\n  ------------ -------- -------- ---------- ---------- --------\n  乐观 (Bull)         30%      35x       1.01      35.4  +119.0%\n  中性 (Base)         15%      25x       0.70      17.5    +8.3%\n  悲观 (Bear)         -5%      15x       0.39       5.9   -63.4%\n\n  ✅ 所有计算使用精确十进制, 结果可审计复现"
+          },
+          "vsOwnHistory": {
+            "metric": "PS（市值/营收，工具推算）",
+            "currentValue": "2.35x（TTM）",
+            "historicalRange": "collection.json未采集到精确历史市值/PS时间序列；仅知FY2021-2025收入从193.84亿元增至303.48亿元(CAGR约11.9%)，期间股价52周区间15.79-36.40美元、YTD跌37.4%，波动剧烈导致缺乏稳定可比历史PS分位区间",
+            "source": {
+              "name": "collection.json financialMetrics.annual",
+              "url": "https://stockanalysis.com/stocks/bili/financials"
+            }
+          },
+          "vsPeers": [
+            {
+              "name": "爱奇艺 iQIYI（Nasdaq:IQ）",
+              "pe": "—",
+              "ps": "—",
+              "source": {
+                "name": "collection.json competitiveLandscape仅披露爱奇艺FY2025毛利率21.1%、会员/广告收入同比下滑，未采集PE/PS估值倍数；已查范围限于第1步采集清单，未联网补充检索",
+                "url": "https://stocktitan.com"
+              }
+            },
+            {
+              "name": "快手 Kuaishou（HKEX:1024）",
+              "pe": "—",
+              "ps": "—",
+              "source": {
+                "name": "collection.json competitiveLandscape仅披露快手2026Q1毛利率51.2%、DAU/MAU及收入数据，未采集PE/PS估值倍数；已查范围限于第1步采集清单，未联网补充检索",
+                "url": "https://news.qq.com"
+              }
+            },
+            {
+              "name": "抖音/微信视频号/小红书",
+              "pe": "—",
+              "ps": "—",
+              "source": {
+                "name": "均未上市或非独立上市实体，无公开PE/PS",
+                "url": "https://www.imz-lab.com/articlelist.html"
+              }
+            }
+          ]
+        },
+        "inquiry": {
+          "question": "如果股市明天关闭5年，你愿意以这个价格持有吗？",
+          "answer": "愿意持有，但仓位需谨慎，因基本面拐点已现但增长确定性未完全验证。①广告业务连续13个季度增长且持续加速（FY2025+22.8%，2026Q2+27.9%），社区用户时长/留存持续创新高，长期基本盘未见侵蚀；②公司FY2025首次实现GAAP全年盈利，现金储备243亿元、有息负债率仅约23-24%，财务风险可控；③但移动游戏收入连续4季度两位数下滑尚未企稳，35.11x TTM PE已充分price-in乐观预期，5年封闭期内若游戏持续拖累或广告增速回落，当前估值存在明显下修风险（三情景悲观情形对应-63.4%）；④加权投票权高度集中是长期治理关注点，但不构成持有的决定性障碍。"
+        },
+        "dataGaps": [
+          {
+            "path": "valuation.analysis.currentMultiples.peg",
+            "reason": "需分析师3-5年一致预期盈利增速的标准化计算，FMP估值端点ACCESS DENIED，第1步未采集到"
+          },
+          {
+            "path": "valuation.analysis.vsOwnHistory",
+            "reason": "collection.json financialMetrics.annual未采集各年末市值/股价数据，无法给出精确历史PE/PS时间序列"
+          },
+          {
+            "path": "valuation.analysis.vsPeers",
+            "reason": "第1步采集清单不含同行估值倍数，仅有毛利率与收入数据"
+          }
+        ]
+      }
+    },
+    "crossValidationLog": [
+      {
+        "field": "当前估值倍数（PE/PS/EV-Revenue）",
+        "source1": {
+          "name": "collection.json currentValuation（第1步financial_rigor.py verify-valuation验算）",
+          "value": "PE 35.11x / PS 2.35x / EV-Revenue 1.90x"
+        },
+        "source2": {
+          "status": "not-applicable",
+          "reason": "沿用第1步已验算结果，本步骤不做二次交叉验证"
+        },
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "无第二来源，不计算偏差率"
+        },
+        "flag": "ok",
+        "resolution": "沿用第1步验算结果，本步骤不重复验算"
+      },
+      {
+        "field": "三情景估值",
+        "source1": {
+          "name": "financial_rigor.py three-scenario 工具输出",
+          "value": "乐观35.4USD(+119.0%) / 中性17.5USD(+8.3%) / 悲观5.9USD(-63.4%)"
+        },
+        "source2": {
+          "status": "not-applicable",
+          "reason": "三情景为工具精确计算的假设推演，非可交叉验证的历史事实数据点"
+        },
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "无第二来源，不计算偏差率"
+        },
+        "flag": "ok",
+        "resolution": "工具精确计算（--growth 0.30 0.15 -0.05 小数格式），非心算"
+      }
+    ]
+  },
+  "summary": {
+    "meta": {
+      "companyId": "us-bili-bilibili",
+      "companyName": "哔哩哔哩 (Bilibili Inc.)",
+      "summarizedAt": "2026-08-27",
+      "dataCutoff": "2026-08-27（Asia/Shanghai）",
+      "basedOnCollection": "research/companies/us-bili-bilibili/financials-collection.json",
+      "basedOnAnalysis": "research/companies/us-bili-bilibili/financials-analysis.json"
+    },
+    "dimensionSummary": [
+      {
+        "dimensionId": "businessQuality",
+        "title": "生意质量",
+        "mapsTo": "dimensions.businessEssence",
+        "conclusion": "B站以社区粘性把年轻人注意力转化为VAS、广告、游戏三条复购型现金流，毛利率与经营利润率五年持续修复，FY2025首次经营利润转正，规模效应正在兑现。",
+        "confidence": 6.5,
+        "scoreBasis": "①revenueBreakdown显示VAS39.31%/广告33.14%/游戏21.07%三足鼎立，多数为订阅或循环采买而非一次性销售；②profitabilityTrend5y毛利率FY2021 20.86%→FY2025 36.62%、经营利润率-33.17%→3.70%，operatingLeverage显示2026Q1毛利率37.1%同时adjusted净利润+62%，利润增速远超收入增速+6.7%；③stickiness显示DAU1.152亿(+8%)、日均时长119分钟(+11分钟)、会员12个月留存超79-80%，粘性证据充分；④公司不披露分部毛利率（dataGaps），无法验证各业务线真实盈利差异，故未给更高分。"
+      },
+      {
+        "dimensionId": "moat",
+        "title": "护城河",
+        "mapsTo": "dimensions.moat",
+        "conclusion": "社区网络效应与UP主生态壁垒持续变宽，规模效应与转换成本证据充分，但移动游戏联运护城河因连续四季度双位数下滑而明显收窄，是四条护城河中唯一收缩的一条。",
+        "confidence": 6,
+        "scoreBasis": "①moat.analysis.types中网络效应、转换成本、规模效应均判定为『存在』，品牌定价权与技术壁垒判定为『待验证』；②trendPast5y指出毛利率20.86%→36.62%、创作者收入+21%支撑供给壁垒稳固，但移动游戏收入-17.1%→-14.3%→-12.1%→-13.7%连续四季度双位数下滑；③trendNext5y判断方向仍为『变宽』，但前提假设明确写明游戏联运若不能靠新游扭转下滑趋势，护城河扩宽将放缓甚至局部倒退；④inquiry部分承认生成式AI可能稀释UP主稀缺性这一核心供给壁垒，构成中长期不确定性。"
+      },
+      {
+        "dimensionId": "management",
+        "title": "管理层",
+        "mapsTo": "dimensions.management",
+        "conclusion": "创始团队任职均超12年、稳定性高，回购节奏偏逆周期且研发投入与利润率改善并行，但并购记录、高管考核条款与接班人计划均未披露，治理透明度存在明确缺口。",
+        "confidence": 6,
+        "scoreBasis": "①keyDecisions显示2024计划US$2亿回购如期完成、2026计划US$3亿回购在股价年内跌37.4%时加码，评级多为★4，capitalAllocation.buybackTiming判断『整体偏逆周期』；②alignment显示陈睿/徐逸/李旎经济权益合计21.2%却持有70.3%投票权，错配约49个百分点；③maTrackRecord、insiderSelling、compensation考核条款、正式接班人计划均标注unavailable，是management.dataGaps中列出的四项明确缺口；④organization.keyPersonRisk指出陈睿单独持有42.4%投票权，是治理与战略核心，其接班安排不确定性是主要减分项。"
+      },
+      {
+        "dimensionId": "keyRisk",
+        "title": "最大风险",
+        "mapsTo": "dimensions.inversion",
+        "conclusion": "最大风险是移动游戏联运收入连续四季度两位数下滑且新游未过验证期，叠加抖音/视频号/快手以数倍DAU规模持续挤占年轻用户时长与广告预算，二者共同侵蚀盈利拐点的可持续性，是概率高、影响直接的现实失败路径。",
+        "confidence": 4.5,
+        "scoreBasis": "①failurePaths中移动游戏路径概率『高』影响『中』，具体数据为2025Q3 -17.1%、2025Q4 -14.3%、2026Q1 -12.1%、2026Q2 -13.7%连续四季度两位数下滑；②大盘平台挤占路径概率『中』影响『高』，B站DAU1.152亿仅为抖音8.3-8.5亿的约1/7、视频号6.3-6.7亿的约1/6；③版号审批全面暂停(概率低影响高)、内容审核合规风险(概率低影响高)属尾部风险，权重低于上述两项；④按风险可控程度打分，游戏下滑趋势已持续四季度且尚未验证新游能否接续，可控性偏低，故信心度向下方收敛。"
+      },
+      {
+        "dimensionId": "civilizationTrend",
+        "title": "文明趋势",
+        "mapsTo": "dimensions.industryTrend",
+        "conclusion": "行业处于AI工具化渗透阶段而非商业模式重构，B站广告业务增速(22-28%)远超行业大盘(10-11%)，但用户规模远逊短视频巨头，长期更可能演变为存活但规模有限的垂直文化平台而非行业级基础设施。",
+        "confidence": 6,
+        "scoreBasis": "①paradigmShift判定『部分』，AI嵌入内容分发/广告定向/内容审核属工具层渗透，真正范式转移发生在抖音/视频号的短视频赛道；②tam显示B站广告收入占行业TAM约13.9%，行业CAGR约10%、B站广告分部增速22-28%，分层增长曲线清晰；③valueChainPosition指出相对广告主议价力偏弱(DAU仅为抖音1/7)、相对游戏发行商议价力偏弱，仅相对UP主议价力中等；④inquiry判断B站『更接近被巨头挤压却存活的细分文化基础设施』，非标准石油亦非彻底消亡的3Com，中性偏正但天花板有限。"
+      },
+      {
+        "dimensionId": "valuation",
+        "title": "估值",
+        "mapsTo": "dimensions.valuation",
+        "conclusion": "35.11x TTM PE已充分price-in广告加速与游戏企稳的乐观预期，三情景显示上涨空间(+119.0%)与下跌空间(-63.4%)高度不对称，中性情形仅+8.3%，当前价格吸引力有限。",
+        "confidence": 4,
+        "scoreBasis": "①currentMultiples显示PE35.11x、PS2.35x、EV-Revenue1.90x，reverseDcf判断隐含增长与分析师一致预期25.5%的3年EPS增速大致吻合，即股价非低估而是已计入乐观假设；②threeScenario显示乐观35.4美元(+119.0%)、中性17.5美元(+8.3%)、悲观5.9美元(-63.4%)，风险收益比明显偏向下行；③悲观情形直接对应moat/keyRisk维度已确认的移动游戏连续四季度两位数下滑路径，非孤立假设；④PEG因FMP估值端点ACCESS DENIED而unavailable、vsPeers同业PE/PS缺失，估值横向比较证据不足，向中性收敛但不改变纵向三情景结论。"
+      },
+      {
+        "dimensionId": "corporateCulture",
+        "title": "企业文化",
+        "mapsTo": "dimensions.management.analysis.culture",
+        "conclusion": "公司官方口径将『社区先行』列为发展主线，创作者生态活跃、充电收入同比+71.1%，用户时长与会员留存持续走高，反映社区粘性文化在数据上被反复验证。",
+        "confidence": 6,
+        "scoreBasis": "①culture字段引用陈睿主导『社区先行(community first)』战略为公司官方口径发展主线；②月活UP主400万、月均投稿2400万条、近300万UP主获得收入，充电(打赏)收入同比+71.1%，创作者生态活跃度数据充分；③用户日均使用时长两年内从99分钟增至119分钟、正式会员12个月留存率超79-80%，为文化转化为用户行为的可观察证据；④culture字段本身信息量有限（仅3点），且均为第2步已落盘的量化侧写而非独立文化访谈或员工调研，证据来源单一，故信心度收敛至中性区间。"
+      }
+    ],
+    "strategies": {
+      "noPosition": {
+        "title": "空仓者",
+        "advice": "①当前35.11x PE已price-in乐观预期，不建议现价追高建仓；②可等待移动游戏收入环比降幅收窄或价格回落到中性目标价附近后分批建仓；③若选择建仓，仓位应控制在可承受悲观情形-63.4%波动的范围内。",
+        "triggers": [
+          {
+            "condition": "股价回落至17.5美元中性目标价附近或以下",
+            "action": "可视为风险收益比改善，考虑小仓位分批建仓",
+            "basis": "①引用dimensions.valuation.analysis.threeScenario中性情形17.5美元(+8.3%)，该价位对应盈利增速回落至15%的保守假设，安全边际优于当前16.15美元下的乐观定价；②同时需核对移动游戏收入是否止跌，避免在基本面继续恶化时误判为便宜；③广告收入增速若维持22%以上（如dimensions.inversion.analysis.failurePaths所述广告增长引擎），可提升建仓信心。"
+          }
+        ]
+      },
+      "holding": {
+        "title": "持仓者",
+        "advice": "①持有理由是广告业务连续多季度加速且首次GAAP年度盈利，短期不建议因单季波动而清仓；②密切跟踪移动游戏收入同比降幅是否收窄，这是护城河能否止跌的关键先行指标；③加权投票权治理集中是长期关注点但非现阶段减仓触发条件。",
+        "triggers": [
+          {
+            "condition": "移动游戏收入同比降幅连续两季度未收窄或继续扩大",
+            "action": "应重新评估持仓比例，考虑逐步减持",
+            "basis": "①引用dimensions.inversion.analysis.failurePaths中『移动游戏联运依赖存量老IP，新游储备验证期未过』路径，probability标注为『高』；②当前已连续四季度两位数下滑(-17.1%→-14.3%→-12.1%→-13.7%)，若第五、六季度仍无收窄，说明新游未能接续；③该路径impact标注为『中』但会直接拖累已确立的GAAP盈利拐点，是持仓者最需要监控的基本面变量。"
+          }
+        ]
+      },
+      "sellSignals": {
+        "title": "卖出信号",
+        "signals": [
+          {
+            "signal": "股价上涨至35.4美元乐观目标价附近而基本面未同步兑现",
+            "observable": "股价接近乐观情形目标价但游戏与广告数据未同步改善",
+            "basis": "①引用dimensions.valuation.analysis.threeScenario乐观情形35.4美元(+119.0%)，该情形要求整体盈利维持30%增速且游戏止跌，若股价先行到位而业绩未跟上应考虑获利了结；②reverseDcf指出当前估值已隐含25.5%的3年EPS增速预期，进一步上涨需要更强验证；③threeScenario.assumptionBasis明确将乐观情形与『AI效率红利与游戏止跌预期充分实现』绑定，未兑现则估值透支。"
+          },
+          {
+            "signal": "广告收入同比增速从27-29%区间回落至个位数或转负",
+            "observable": "季度广告收入yoyGrowthPct跌破10%",
+            "basis": "①引用dimensions.inversion.analysis.failurePaths『抖音/快手/视频号持续挤占年轻用户时长与广告预算，B站广告增长逐步失速』路径，probability『中』impact『高』；②当前广告增速2026Q1+29.61%、2026Q2+27.86%尚未失速，但B站DAU仅为抖音1/7、视频号1/6，存在被动挤占的结构性风险；③广告是当前利润率改善的核心引擎，一旦失速将直接冲击valuation.analysis.reverseDcf隐含的增长假设，触发估值下修。"
+          },
+          {
+            "signal": "国家游戏版号审批政策再次全面暂停",
+            "observable": "官方公告或权威媒体报道版号审批暂停或大幅收紧",
+            "basis": "①引用dimensions.inversion.analysis.failurePaths『国家游戏版号审批政策再次全面暂停』路径，probability『低』impact『高』；②20-F披露历史先例为2018年3月NPPA曾暂停审批，公司称无法保证不再发生；③该事件将直接冲击已在下滑的移动游戏分部，加速悲观情形5.9美元(-63.4%)的实现概率。"
+          }
+        ]
+      },
+      "addSignals": {
+        "title": "加仓信号",
+        "signals": [
+          {
+            "signal": "移动游戏收入同比降幅连续两季度收窄或转正",
+            "observable": "移动游戏收入yoyGrowthPct由-13.7%逐步收窄至个位数负值或转正",
+            "basis": "①引用dimensions.moat.analysis.trendNext5y前提假设『游戏联运需依赖新游验证能否扭转连续多季度双位数下滑趋势』，若验证成功将支撑护城河判断由『收窄』转回『变宽』；②同时呼应dimensions.inversion.analysis.failurePaths中该路径的解除，probability将由『高』下修；③游戏企稳是valuation.analysis.threeScenario乐观情形35.4美元(+119.0%)兑现的关键前提之一。"
+          },
+          {
+            "signal": "股价回落至中性目标价17.5美元以下且广告增速维持20%以上",
+            "observable": "股价低于17.5美元同时广告收入yoyGrowthPct保持在20%以上",
+            "basis": "①引用dimensions.valuation.analysis.threeScenario中性情形17.5美元(+8.3%)，低于该价位意味着市场定价比中性假设更保守，安全边际提升；②广告增速维持高位（参考2026Q2+27.86%）说明核心引擎未失速；③management.analysis.capitalAllocation.buybackTiming显示公司自身在2026年股价下跌期加码回购至US$3亿，管理层行为与该加仓信号方向一致。"
+          },
+          {
+            "signal": "公司回购执行力度在股价弱势期进一步加大",
+            "observable": "季度回购金额或股数环比明显提升且股价处于52周区间下半段",
+            "basis": "①引用management.analysis.capitalAllocation.buybackTiming『2022年低位授权US$5亿、2024年US$2亿如期完成、2026年股价年内跌37.4%时再加码US$3亿，整体偏逆周期』；②keyDecisions中2026计划评级★4，年内已耗资约US$1.18亿，显示管理层资本配置与股东利益方向一致；③但需注意该信号仅为辅助佐证，不能替代游戏企稳与广告增速两项核心基本面触发条件。"
+          }
+        ]
+      }
+    },
+    "disclaimer": "本总结基于公开信息与数据截止时点的分析生成，仅供研究参考，不构成个性化投资建议。"
+  }
+}
