@@ -106,18 +106,21 @@ def normalize(text: str, lexicon: dict | None = None) -> tuple[str, list[str]]:
     out = re.sub(r"(?<![A-Za-z0-9])FY\s*(\d{4})", r"\1财年", out)
     out = re.sub(r"(\d{4})\s*[Qq]([1-4])(?![\d])", lambda m: f"{m.group(1)}年第{quarters[m.group(2)]}季度", out)
     out = re.sub(r"(\d{4})\s*[Hh]([12])(?![\d])", lambda m: f"{m.group(1)}年{'上' if m.group(2) == '1' else '下'}半年", out)
-    # 研究数据里两位数年份同样常见（"26Q2"、"26H1"），不补这两条就会被逐字母读成 "二六 Q 二"
-    out = re.sub(r"(?<![\dA-Za-z])(\d{2})\s*[Qq]([1-4])(?![\d])", lambda m: f"20{m.group(1)}年第{quarters[m.group(2)]}季度", out)
-    out = re.sub(
-        r"(?<![\dA-Za-z])(\d{2})\s*[Hh]([12])(?![\d])",
-        lambda m: f"20{m.group(1)}年{'上' if m.group(2) == '1' else '下'}半年",
-        out,
-    )
 
     # 6) ISO 日期要先于区间规则，否则 "2026-06-30" 会被读成 "2026到06到30"
     out = re.sub(
         r"(?<!\d)(\d{4})-(\d{1,2})-(\d{1,2})(?!\d)",
         lambda m: f"{int(m.group(1))}年{int(m.group(2))}月{int(m.group(3))}日",
+        out,
+    )
+
+    # 两位数年份的财报期（"26Q2"、"26H1"）要排在 ISO 日期之后：日期里的月/日也是两位数，
+    # 先跑就会把 "2026-08-05 Q2" 的 "05 Q2" 吃成 "2005年第二季度"。lookbehind 同样挡住
+    # "/"，免得 "2026/08/05 H1" 这类未转成中文的日期写法重蹈覆辙。
+    out = re.sub(r"(?<![\dA-Za-z/])(\d{2})\s*[Qq]([1-4])(?![\d])", lambda m: f"20{m.group(1)}年第{quarters[m.group(2)]}季度", out)
+    out = re.sub(
+        r"(?<![\dA-Za-z/])(\d{2})\s*[Hh]([12])(?![\d])",
+        lambda m: f"20{m.group(1)}年{'上' if m.group(2) == '1' else '下'}半年",
         out,
     )
 

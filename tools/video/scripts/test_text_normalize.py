@@ -40,6 +40,9 @@ class NormalizeTest(unittest.TestCase):
 
     def test_iso_dates_survive_the_range_rule(self):
         self.assertNormalized("数据截至2026-06-30", "数据截至2026年6月30日")
+        # 日期里的月/日也是两位数：两位数财报期规则若跑在前面会把 "05 Q2" 吃成 "2005年第二季度"
+        self.assertNormalized("2026-08-05 Q2 财报", "2026年8月5日 Q2 财报")
+        self.assertNormalized("2026/08/05 H1", "2026/08/05 H1")
         self.assertNormalized("区间22-28%不受影响", "区间百分之22到28不受影响")
 
     def test_magnitude_suffixes(self):
@@ -58,7 +61,9 @@ class NormalizeTest(unittest.TestCase):
     def test_single_letter_leftovers_are_reported(self):
         self.assertEqual(normalize("2026年Q2营收")[1], ["Q"])
         self.assertEqual(normalize("A股、B站与H股")[1], [])  # 词表放行，中文音色本来就读得对
-        self.assertEqual(normalize("B端开放平台")[1], ["B"])  # 放行只在 "B站" 这个上下文里成立
+        self.assertEqual(normalize("B端与C端毛利率")[1], [])
+        self.assertEqual(normalize("美国1260H清单")[1], [])
+        self.assertEqual(normalize("B轮融资")[1], ["B"])  # 放行只在词表列出的上下文里成立
         self.assertEqual(normalize("公司持有IP与UP主资源")[1], [])  # 词表展开产出的字母不算残留
 
 

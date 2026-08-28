@@ -40,7 +40,7 @@
     "¥": "人民币",
     "€": "欧元"
   },
-  "allowedLatin": ["A股", "B站", "H股"],
+  "allowedLatin": ["A股", "B站", "H股", "B端", "C端", "H清单"],
   "replacements": {
     "→": "，",
     "①": "",

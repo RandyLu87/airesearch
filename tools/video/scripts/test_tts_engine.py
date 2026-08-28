@@ -35,6 +35,12 @@ class Mp3DurationTest(unittest.TestCase):
         # 长度 > 127 时按 8 位解会短算，偏移落进音频里丢帧——这条就是那个回归。
         self.assertEqual(self._duration(_id3(1000) + _FRAME * 100), 2.4)
 
+    def test_non_syncsafe_size_bytes_are_masked(self):
+        # 不规范的写入器会把长度字节的最高位置上；不掩掉就会把标签算长，偏移跳过开头的帧。
+        tag = bytearray(_id3(1000))
+        tag[6:10] = bytes(b | 0x80 for b in tag[6:10])
+        self.assertEqual(self._duration(bytes(tag) + _FRAME * 100), 2.4)
+
     def test_not_an_mp3_returns_none(self):
         self.assertIsNone(self._duration(b"\x00" * 512))
 
