@@ -7,7 +7,9 @@
     "render": "remotion render src/index.ts Hello out/hello.mp4",
     "studio": "remotion studio src/index.ts",
     "script": "python3 scripts/script_gen.py",
-    "tts": "bash scripts/tts.sh",
+    "tts": "bash scripts/py.sh tts.py",
+    "tts:batch": "bash scripts/py.sh tts_batch.py",
+    "test": "python3 scripts/test_text_normalize.py",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

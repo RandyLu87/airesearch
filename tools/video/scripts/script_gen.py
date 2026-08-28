@@ -4,6 +4,7 @@
 输出是一份分镜 JSON，供 TTS 合成与 Remotion 模板消费：
 
   {
+    "companyId": "...", "companyName": "...",   # 顶层重复一份，tts_batch 的 manifest 只认这里
     "meta":    {companyId, companyName, dataCutoff, source, speechRate, ...},
     "scenes":  [{id, kind, title, narration, estimatedSeconds, data}],
     "totals":  {estimatedSeconds, targetRange, withinTarget, sceneCount},
@@ -584,10 +585,15 @@ def generate(summary: dict, rate: float, min_seconds: float, max_seconds: float,
     within = min_seconds <= total <= max_seconds
 
     meta = summary.get("meta") or {}
+    company_id = text_of(meta.get("companyId"))
+    company_name = text_of(meta.get("companyName"))
     result = {
+        # companyId / companyName 同时放在顶层：tts_batch.py 的 manifest 只认顶层这两个键
+        "companyId": company_id,
+        "companyName": company_name,
         "meta": {
-            "companyId": text_of(meta.get("companyId")),
-            "companyName": text_of(meta.get("companyName")),
+            "companyId": company_id,
+            "companyName": company_name,
             "dataCutoff": text_of(meta.get("dataCutoff")),
             "summarizedAt": text_of(meta.get("summarizedAt")),
             "speechRate": rate,
