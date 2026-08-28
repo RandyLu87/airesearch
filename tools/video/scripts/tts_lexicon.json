@@ -1,5 +1,5 @@
 {
-  "_comment": "中文 TTS 朗读前的文本规范化词表。acronyms 会整体替换（首尾按 ASCII 边界保护），currencies 用于把 US$3亿 改写成 3亿美元，replacements 是纯符号级替换。新增条目直接改这里，不用动代码。",
+  "_comment": "中文 TTS 朗读前的文本规范化词表。acronyms 会整体替换（首尾按 ASCII 边界保护），currencies 用于把 US$3亿 改写成 3亿美元，replacements 是纯符号级替换，allowedLatin 是中文音色本来就读得对、不必报进 unknownTokens 的英文串（带中文后缀的条目只在该上下文里放行）。新增条目直接改这里，不用动代码。",
   "acronyms": {
     "Non-GAAP": "非通用会计准则",
     "GAAP": "通用会计准则",
@@ -33,12 +33,14 @@
   "currencies": {
     "US$": "美元",
     "HK$": "港元",
+    "HKD": "港元",
     "RMB": "人民币",
     "CNY": "人民币",
     "$": "美元",
     "¥": "人民币",
     "€": "欧元"
   },
+  "allowedLatin": ["A股", "B站", "H股"],
   "replacements": {
     "→": "，",
     "①": "",

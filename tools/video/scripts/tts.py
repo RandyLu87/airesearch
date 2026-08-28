@@ -16,7 +16,15 @@ import sys
 from pathlib import Path
 
 from text_normalize import normalize
-from tts_engine import DEFAULT_ENGINE, DEFAULT_VOICE, ENGINES, TTSError, get_engine, synthesize_to_file
+from tts_engine import (
+    DEFAULT_ENGINE,
+    DEFAULT_VOICE,
+    ENGINES,
+    TTSError,
+    get_engine,
+    mp3_duration_seconds,
+    synthesize_to_file,
+)
 
 
 def main() -> int:
@@ -34,11 +42,14 @@ def main() -> int:
     if bool(args.text) == bool(args.text_file):
         parser.error("--text 与 --text-file 必须且只能提供一个")
 
-    text = (args.text if args.text else args.text_file.read_text(encoding="utf-8")).strip()
-    if not text:
-        parser.error("文本为空")
-
-    spoken, unknown = (text, []) if args.no_normalize else normalize(text)
+    try:
+        text = (args.text if args.text else args.text_file.read_text(encoding="utf-8")).strip()
+        if not text:
+            parser.error("文本为空")
+        spoken, unknown = (text, []) if args.no_normalize else normalize(text)
+    except OSError as exc:  # --text-file 或词表读不了，与批量脚本一样按读取失败退出
+        print(f"读取失败：{exc}", file=sys.stderr)
+        return 2
     for token in unknown:
         print(f"提示：{token!r} 未在 scripts/tts_lexicon.json 中登记，将按英文字母朗读", file=sys.stderr)
 
@@ -61,6 +72,7 @@ def main() -> int:
         "normalizedText": spoken,
         "audio": audio_path.name,
         "duration_seconds": result.duration_seconds,
+        "container_duration_seconds": mp3_duration_seconds(audio_path),
         "cues": result.cues,
     }
     meta_path = out_base.with_suffix(".json")
