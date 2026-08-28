@@ -197,3 +197,15 @@ test("形状违约的输入退 2，不与「产出了但超区间」的退 1 混
   assert.equal(code, 2);
   assert.match(stderr, /strategies/);
 });
+
+test("顶层 companyId / companyName 有值且与 meta 一致，tts_batch 的 manifest 才认得出公司", () => {
+  // tts_batch.py 只读顶层这两个键，缺了会静默写出 null 的 manifest，不报错。
+  const summary = bili();
+  const { script } = run(summary);
+
+  assert.equal(script.companyId, summary.meta.companyId);
+  assert.equal(script.companyName, summary.meta.companyName);
+  assert.ok(script.companyId && script.companyName);
+  assert.equal(script.companyId, script.meta.companyId);
+  assert.equal(script.companyName, script.meta.companyName);
+});
