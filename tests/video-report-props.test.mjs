@@ -187,3 +187,36 @@ test("空分镜数组与非法 fps 直接报错", () => {
   assert.throws(() => buildReportProps({ storyboard: storyboardOf([]) }), ReportPropsError);
   assert.throws(() => buildReportProps({ storyboard: storyboardOf([dimensionScene("a", 6)]), fps: 0 }), ReportPropsError);
 });
+
+test("被控时裁光的策略卡仍带着 itemsAvailable，模板才能区分「本来就没有」和「没播报」", () => {
+  const { props } = buildReportProps({
+    storyboard: storyboardOf([
+      {
+        id: "strategy-noPosition",
+        kind: "strategy",
+        title: "尚未建仓",
+        narration: "…",
+        data: { strategyId: "noPosition", advice: "建议。", items: [], itemsAvailable: 4 },
+        estimatedSeconds: 5,
+      },
+    ]),
+    manifest: null,
+  });
+  assert.deepEqual(props.scenes[0].data.items, []);
+  assert.equal(props.scenes[0].data.itemsAvailable, 4);
+});
+
+test("认不出的 kind 与缺 audio 的清单条目都是硬错，不静默兜底", () => {
+  assert.throws(
+    () => buildReportProps({ storyboard: storyboardOf([{ ...dimensionScene("a", 6), kind: "summary" }]) }),
+    (error) => error instanceof ReportPropsError && /summary/.test(error.message),
+  );
+  assert.throws(
+    () =>
+      buildReportProps({
+        storyboard: storyboardOf([dimensionScene("a", 6)]),
+        manifest: manifestOf([{ index: 1, id: "dimension-a", containerDurationSeconds: 3 }]),
+      }),
+    (error) => error instanceof ReportPropsError && /audio/.test(error.message),
+  );
+});

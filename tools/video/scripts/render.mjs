@@ -50,12 +50,13 @@ function parseArgs(argv) {
     propsOnly: false,
     passthrough: [],
   };
+  // 一律按浮点解析，整数参数再单独校验——parseInt 会把 --fps 29.97 悄悄吃成 29。
   const numeric = {
-    '--fps': ['fps', Number.parseInt],
-    '--scene-pad': ['scenePad', Number.parseFloat],
-    '--min-seconds': ['minSeconds', Number.parseFloat],
-    '--max-seconds': ['maxSeconds', Number.parseFloat],
-    '--still': ['still', Number.parseInt],
+    '--fps': ['fps', true],
+    '--scene-pad': ['scenePad', false],
+    '--min-seconds': ['minSeconds', false],
+    '--max-seconds': ['maxSeconds', false],
+    '--still': ['still', true],
   };
   for (let i = 0; i < argv.length; i += 1) {
     const arg = argv[i];
@@ -80,11 +81,15 @@ function parseArgs(argv) {
     }
     const spec = numeric[arg];
     if (!spec) die(`未知参数 ${arg}\n\n${USAGE}`);
-    const parsed = spec[1](value);
+    const parsed = Number.parseFloat(value);
     if (!Number.isFinite(parsed)) die(`${arg} 需要数字，收到 ${value}`);
+    if (spec[1] && !Number.isInteger(parsed)) die(`${arg} 需要整数，收到 ${value}`);
     opts[spec[0]] = parsed;
   }
   if (!opts.storyboard) die(`--storyboard 必填\n\n${USAGE}`);
+  // 参数层的错在这里就报掉，别落到下面「分镜与音频清单对不上」那个 catch 里去
+  if (opts.fps <= 0) die(`--fps 需要正整数，收到 ${opts.fps}`);
+  if (opts.scenePad < 0) die(`--scene-pad 需要 ≥ 0，收到 ${opts.scenePad}`);
   return opts;
 }
 

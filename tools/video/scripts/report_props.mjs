@@ -42,6 +42,8 @@ function claimEntries(manifest) {
     if (!entry || typeof entry !== "object") fail("音频清单的 scenes 里有非对象元素");
     const id = typeof entry.id === "string" ? entry.id : null;
     if (!id) fail(`音频清单第 ${entry.index ?? "?"} 条没有 id`);
+    // audio 缺了要在这里拦住，否则会一路漏到 path.resolve 抛裸 ERR_INVALID_ARG_TYPE
+    if (typeof entry.audio !== "string" || !entry.audio) fail(`音频清单条目 ${id} 没有 audio 文件名`);
     if (!byId.has(id)) byId.set(id, []);
     byId.get(id).push(entry);
   }
@@ -80,7 +82,9 @@ export function buildReportProps({ storyboard, manifest = null, fps = 30, sceneP
   const scenes = rawScenes.map((scene, index) => {
     if (!scene || typeof scene !== "object") fail(`第 ${index + 1} 条分镜不是对象`);
     const id = typeof scene.id === "string" && scene.id ? scene.id : `scene-${String(index + 1).padStart(2, "0")}`;
-    const kind = KINDS.has(scene.kind) ? scene.kind : "closing";
+    // 认不出的 kind 会静默渲染成免责声明卡，画面和文案对不上；跟其他契约不符一样直接报错。
+    if (!KINDS.has(scene.kind)) fail(`分镜 ${id}（第 ${index + 1} 条）的 kind=${JSON.stringify(scene.kind)} 不认识，可选：${[...KINDS].join(" / ")}`);
+    const kind = scene.kind;
 
     const entry = claims ? claims.claim(id) : null;
     if (claims && !entry) fail(`分镜 ${id}（第 ${index + 1} 条）在音频清单里没有对应条目，先重跑 tts:batch`);

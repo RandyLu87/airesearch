@@ -101,10 +101,13 @@ const StrategySlide: React.FC<{scene: Scene}> = ({scene}) => {
             </div>
           ))}
         </div>
+      ) : available > 0 ? (
+        // 原报告有触发条件、只是被控时裁光了——说成「暂无」就是把裁剪讲成了事实缺失。
+        <div style={{fontSize: 29, color: theme.warn}}>原报告共 {available} 条触发条件，本片按控时未播报</div>
       ) : (
         <div style={{fontSize: 29, color: theme.warn}}>暂无触发条件</div>
       )}
-      {available > items.length ? (
+      {items.length > 0 && available > items.length ? (
         <div style={{fontSize: 24, color: theme.textDim}}>
           原报告共 {available} 条触发条件，本片按控时只播报前 {items.length} 条
         </div>
