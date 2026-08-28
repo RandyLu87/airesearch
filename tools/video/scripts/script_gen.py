@@ -95,15 +95,23 @@ def text_of(value) -> str:
 
 def format_score(value) -> str | None:
     """信心度原样播报，不做换算；0-10 之外或非数字视为缺失。"""
-    if is_missing(value):
+    if score_defect(value) is not None:
         return None
+    score = float(value)
+    return str(int(score)) if score.is_integer() else f"{score:g}"
+
+
+def score_defect(value) -> str | None:
+    """None 表示可播报；否则返回不可播报的原因，区分「没填」与「填错」。"""
+    if is_missing(value):
+        return missing_reason(value)
     try:
         score = float(value)
     except (TypeError, ValueError):
-        return None
+        return f"confidence 值 {value!r} 不是数字，不符合 0-10 契约区间"
     if not 0 <= score <= 10:
-        return None
-    return str(int(score)) if score.is_integer() else f"{score:g}"
+        return f"confidence 值 {value!r} 不在 0-10 契约区间"
+    return None
 
 
 # ---------------------------------------------------------------- 文本处理
@@ -193,10 +201,10 @@ class ScriptBuilder:
         self.omissions: list[dict] = []
         self.adjustments: list[dict] = []
 
-    def note_omission(self, path: str, value, note: str) -> None:
+    def note_omission(self, path: str, value, note: str, reason: str | None = None) -> None:
         if any(item["path"] == path for item in self.omissions):
             return  # 同一字段可能被开场与维度分镜各碰一次，只记一条
-        self.omissions.append({"path": path, "reason": missing_reason(value), "handling": note})
+        self.omissions.append({"path": path, "reason": reason or missing_reason(value), "handling": note})
 
     # -- 开场 ---------------------------------------------------------
 
@@ -271,6 +279,7 @@ class ScriptBuilder:
                     f"dimensionSummary[{dimension_id}].confidence",
                     item.get("confidence"),
                     "该维度播报为「暂无评分」",
+                    score_defect(item.get("confidence")),
                 )
 
             conclusion = ""
@@ -341,10 +350,12 @@ class ScriptBuilder:
         raw = block.get("triggers") if key in ADVICE_STRATEGIES else block.get("signals")
         return [item for item in (raw or []) if isinstance(item, dict)]
 
-    def build_strategy(self, key: str, item_limit: int) -> dict | None:
+    def build_strategy(self, key: str, item_limit: int, *, note_missing: bool = True) -> dict | None:
+        """note_missing=False 用于「已在分镜里、只是重新裁剪」的重建：正文空不等于没内容。"""
         block = (self.summary.get("strategies") or {}).get(key)
         if not isinstance(block, dict):
-            self.note_omission(f"strategies.{key}", block, "该类策略未播报")
+            if note_missing:
+                self.note_omission(f"strategies.{key}", block, "该类策略未播报")
             return None
 
         title = text_of(block.get("title")) or STRATEGY_FALLBACK_TITLE.get(key, key)
@@ -363,8 +374,20 @@ class ScriptBuilder:
                 continue
             spoken_items.append({"condition": condition, "action": action})
 
-        if not advice and not spoken_items:
-            self.note_omission(f"strategies.{key}", block, "该类策略无可播报内容，已跳过")
+        if not advice and note_missing:
+            # 正文缺失但触发条件还能播：分镜保留，缺失照样如实记一条。
+            self.note_omission(
+                f"strategies.{key}.advice",
+                block.get("advice"),
+                "该类策略播报为「暂无建议正文」，只播触发条件",
+            )
+
+        if not advice and not spoken_items and note_missing:
+            # 只有「初次构造就没内容」才是真的跳过；item_limit=0 的裁剪要保留分镜。
+            reason = None
+            if not is_missing(block):
+                reason = missing_reason(block.get("advice"))
+            self.note_omission(f"strategies.{key}", block, "该类策略无可播报内容，已跳过", reason)
             return None
 
         return {
@@ -398,10 +421,11 @@ class ScriptBuilder:
         return "".join(parts)
 
     def rewrite_strategy(self, scene: dict, item_limit: int) -> None:
-        rebuilt = self.build_strategy(scene["data"]["strategyId"], item_limit)
-        if rebuilt is not None:
-            scene["narration"] = rebuilt["narration"]
-            scene["data"] = rebuilt["data"]
+        rebuilt = self.build_strategy(scene["data"]["strategyId"], item_limit, note_missing=False)
+        if rebuilt is None:
+            return
+        scene["narration"] = rebuilt["narration"]
+        scene["data"] = rebuilt["data"]
 
     # -- 结尾 ---------------------------------------------------------
 
@@ -545,7 +569,7 @@ def fit_duration(
                 break
             if key in spoken:
                 continue
-            extra = builder.build_strategy(key, 2)
+            extra = builder.build_strategy(key, 2, note_missing=False)
             if extra is None:
                 continue
             closing_index = next((i for i, s in enumerate(scenes) if s["kind"] == "closing"), len(scenes))
@@ -649,6 +673,16 @@ def main() -> int:
 
     if not isinstance(summary, dict) or "dimensionSummary" not in summary:
         print(f"{args.summary} 不符合 financials—summary 契约：缺少 dimensionSummary", file=sys.stderr)
+        return 2
+
+    # 形状不对要在这里退 2（契约违规），不能让下游抛 AttributeError 退 1——
+    # 退 1 是「产出了但时长超区间」的信号，两者不能混。
+    dimensions = summary["dimensionSummary"]
+    if not isinstance(dimensions, list) or any(not isinstance(item, dict) for item in dimensions):
+        print(f"{args.summary} 不符合契约：dimensionSummary 必须是对象数组", file=sys.stderr)
+        return 2
+    if "strategies" in summary and not isinstance(summary["strategies"], dict):
+        print(f"{args.summary} 不符合契约：strategies 必须是对象", file=sys.stderr)
         return 2
 
     strategy_ids = None

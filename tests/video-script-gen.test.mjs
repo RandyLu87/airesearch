@@ -142,3 +142,58 @@ test("对其他公司同样跑通，没有哔哩哔哩专属逻辑", () => {
     assert.equal(script.totals.withinTarget, true, `${company} 时长 ${script.totals.estimatedSeconds}s 未落进区间`);
   }
 });
+
+test("advice 缺失但触发条件在时，裁剪级真的生效且 omissions 不与产出矛盾", () => {
+  const summary = bili();
+  summary.strategies.noPosition.advice = { status: "unavailable", reason: "待补" };
+  const { script } = run(summary, ["--min-seconds", "40", "--max-seconds", "80"]);
+
+  // omissions 不得声称跳过了一个其实播出去了的策略
+  const spokenStrategies = new Set(
+    script.scenes.filter((scene) => scene.kind === "strategy").map((scene) => `strategies.${scene.data.strategyId}`),
+  );
+  for (const item of script.omissions) assert.ok(!spokenStrategies.has(item.path), `${item.path} 既播报又被记为跳过`);
+
+  // 记了 strategy-drop-triggers 就必须真的一条触发条件都不剩
+  if (script.adjustments.some((step) => step.step === "strategy-drop-triggers")) {
+    for (const scene of script.scenes.filter((s) => s.kind === "strategy")) {
+      assert.equal(scene.data.items.length, 0, `${scene.id} 记了裁剪却仍在播触发条件`);
+      assert.ok(!scene.narration.includes("触发条件"));
+    }
+  }
+});
+
+test("advice 缺失仍如实记一条 omission，正文播「暂无建议正文」", () => {
+  const summary = bili();
+  summary.strategies.noPosition.advice = { status: "unavailable", reason: "待补" };
+  const { script } = run(summary);
+
+  const scene = sceneById(script, "strategy-noPosition");
+  assert.ok(scene.narration.includes("暂无建议正文"));
+  const omission = script.omissions.find((item) => item.path === "strategies.noPosition.advice");
+  assert.ok(omission, "advice 缺失未记入 omissions");
+  assert.equal(omission.reason, "待补");
+});
+
+test("confidence 超出 0-10 契约区间时，omission 说的是填错而不是没填", () => {
+  const summary = bili();
+  summary.dimensionSummary.find((d) => d.dimensionId === "valuation").confidence = 12;
+  const { script } = run(summary);
+
+  assert.ok(sceneById(script, "dimension-valuation").narration.includes("暂无评分"));
+  const omission = script.omissions.find((item) => item.path === "dimensionSummary[valuation].confidence");
+  assert.match(omission.reason, /不在 0-10 契约区间/);
+});
+
+test("形状违约的输入退 2，不与「产出了但超区间」的退 1 混淆", () => {
+  for (const broken of [{ dimensionSummary: {} }, { dimensionSummary: ["oops"] }]) {
+    const { code, script } = run(broken);
+    assert.equal(code, 2);
+    assert.equal(script, null);
+  }
+  const summary = bili();
+  summary.strategies = [];
+  const { code, stderr } = run(summary);
+  assert.equal(code, 2);
+  assert.match(stderr, /strategies/);
+});
