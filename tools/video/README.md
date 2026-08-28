@@ -7,6 +7,7 @@
 不影响 `apps/web` 与 `research/` 的构建。已落地：
 
 - **OWLL-45** — Remotion / FFmpeg / edge-tts 最小可运行环境
+- **OWLL-46** — `financials-summary.json` → 分镜解说文案 JSON（见「分镜解说文案」一节）
 - **OWLL-47** — 分镜文案 JSON → 逐条音频 + 时长清单（见「批量合成」一节）
 
 报告模板（stage 3）按 `manifest.json` 的时长字段对齐画面。
@@ -60,7 +61,7 @@ mp3 帧头得到的文件实际长度，两者都不需要 ffprobe（需要复�
 ## 批量合成：分镜文案 → 音频清单
 
 ```bash
-npm run tts:batch -- --storyboard fixtures/bilibili-storyboard.json \
+npm run tts:batch -- --storyboard samples/us-bili-bilibili.script.json \
                      --out-dir out/tts/us-bili-bilibili
 ```
 
@@ -113,8 +114,8 @@ ffprobe 逐条一致）。**真去拼接音频时按 `containerDurationSeconds` 
 id 字段给了但不是非空字符串（例如 `"id": 3`）也走 `scene-NN` 兜底，只在 stderr 提示一次；
 manifest 与文件名仍然自洽，但生成器最好直接给字符串 id。
 
-`fixtures/bilibili-storyboard.json` 是链路验证用的临时样例，文案由
-`us-bili-bilibili/financials-summary.json` 原文转述；OWLL-46 落地后替换为脚本生成的真实分镜。
+`samples/us-bili-bilibili.script.json` 由 `npm run script`（OWLL-46）生成，是链路验证的
+标准输入；它的 `narration` / 顶层 `companyId` / `companyName` 正好落在上面列的兼容键里。
 
 ### 朗读改写（normalize）
 
@@ -156,6 +157,52 @@ manifest 与文件名仍然自洽，但生成器最好直接给字符串 id。
   201.528s；`containerDurationSeconds` 与 `afinfo` 逐条完全一致（11/11 差 0.000s）。
 - `npm test` → 朗读改写规则 8 组用例通过。
 
+## 分镜解说文案（`scripts/script_gen.py`）
+
+把任意一家公司的 `financials-summary.json` 转成分镜 JSON，供 TTS 朗读与 Remotion 模板消费。
+**纯拼接，不调用 LLM**：解说词只转述 `conclusion` / `advice` / `condition` / `action` /
+`disclaimer` 的原文，分数直接取 `confidence` 原值，模板只补「第几、维度名、信心度 X 分」
+这类连接词——原文没有的判断和数字，成片里也不会有。
+
+```bash
+npm run script -- --summary ../../research/companies/us-bili-bilibili/financials-summary.json \
+  --out out/script/us-bili-bilibili.json
+```
+
+省略 `--out` 时写 stdout；`--rate`（默认 4.5 字/秒）、`--min-seconds` / `--max-seconds`
+（默认 120 / 180）、`--strategies`（默认 `noPosition,holding`）可调。
+
+分镜顺序固定为：开场（公司名 + 一句话定位）→ 七维度（维度名 + 信心度 + 理由）→
+1–2 类策略（建议正文 + 触发条件）→ 免责声明。
+
+### 三条硬规矩
+
+| 规矩 | 落地方式 |
+| --- | --- |
+| 不编、不重算 | 只转述原文字段，`confidence` 原样播；`scoreBasis` 与 `triggers[].basis` 刻意不进解说词——它们是给人核对的字段路径，念出来只是噪音 |
+| 缺失如实说 | `unavailable` / `__TODO__` / 空值一律播「暂无数据」「暂无评分」，并连同缺失原因记进 `omissions` |
+| 不静默截断 | 时长调节按固定阶梯走，每一步写进 `adjustments`（步骤、原因、增减秒数）；阶梯走完仍不达标就 `withinTarget: false` + `totals.warning`，退出码 1 |
+
+### 时长怎么控
+
+`estimatedSeconds` 按「中文 1 字 1 拍、数字逐位、拉丁字母半拍 + 标点停顿」估算，只用于
+合成前判断要不要裁剪；**真实时长以 `scripts/tts.py` 输出的 `duration_seconds` 为准**。
+
+超过上限时逐级裁剪，够了就停：维度理由只播第一句 → 只播前 K 个句读（取仍放得下的最大 K）
+→ 开场定位只播第一个句读 → 策略不播触发条件 → 只留一类策略 → 从最长的维度开始只播分数。
+不足下限时反向补：策略播全部触发条件 → 补播卖出/加仓信号，且补完不得重新超上限。
+
+七维度是这份报告的主干，所以策略排在维度之前被裁——契约本身也只要求播 1–2 类策略。
+
+### 验证样本
+
+`samples/us-bili-bilibili.script.json` 是哔哩哔哩的产出（11 个分镜 / 预估 167.18 秒 /
+无缺失字段），随脚本一起提交，既是人工核对的样本，也是 stage 3 Remotion 模板的输入夹具。
+改动脚本后用上面的命令重新生成即可。
+
+仓库内 16 家公司全部跑通且落在 2–3 分钟区间；自动化用例见 `tests/video-script-gen.test.mjs`
+（`npm test` 在仓库根执行）。
+
 ## 已知限制
 
 - **edge-tts 需要联网**调用微软 Edge 朗读接口，非离线方案；接口无官方 SLA，可能限流或变更。
@@ -176,9 +223,10 @@ manifest 与文件名仍然自洽，但生成器最好直接给字符串 id。
 ## 目录
 
 - `src/` — Remotion composition（`Hello` 为自检示例，报告模板在 stage 3 新增）
+- `scripts/script_gen.py` — 分镜解说文案生成（纯标准库，无额外依赖，不走 `py.sh`）
 - `scripts/tts_engine.py` — 引擎抽象与 edge-tts 实现（含重试）
 - `scripts/text_normalize.py` + `scripts/tts_lexicon.json` — 朗读改写规则与词表
 - `scripts/tts.py` — 单段自检；`scripts/tts_batch.py` — 分镜批量合成
 - `scripts/py.sh` — Python 入口（优先 uv 隔离环境）
-- `fixtures/` — 链路验证用的样例分镜文案
+- `samples/` — 随脚本提交的验证样本（哔哩哔哩分镜文案）
 - `out/` — 渲染与合成产物，已 gitignore
