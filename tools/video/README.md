@@ -10,8 +10,13 @@
 - **OWLL-46** — `financials-summary.json` → 分镜解说文案 JSON（见「分镜解说文案」一节）
 - **OWLL-47** — 分镜文案 JSON → 逐条音频 + 时长清单（见「批量合成」一节）
 - **OWLL-48** — 分镜文案 + 音频清单 → 成片 mp4（见「成片渲染」一节）
+- **OWLL-49** — 端到端串联与 MVP 可行性评估（见「端到端」一节与 `MVP-ASSESSMENT.md`）
 
-整条链路：
+整条链路一条命令（等价于下面三步手动跑）：
+
+```bash
+npm run pipeline -- --company us-bili-bilibili -- --concurrency=10
+```
 
 ```bash
 npm run script -- --summary ../../research/companies/<company>/financials-summary.json \
@@ -171,6 +176,11 @@ manifest 与文件名仍然自洽，但生成器最好直接给字符串 id。
 - 音画同步实测：对成片跑 `silencedetect`，10 个画面切点**全部**落在静音间隙内
   （画面 179.167s / 音轨 179.17s），没有一句话被切点截断。
 - 换公司验证：贵州茅台走完 `script → tts:batch → render:report`，未改一行代码。
+- `npm run pipeline`（哔哩哔哩，OWLL-49）→ 端到端 75.3s（文案 0.13s / TTS 7.4s / 渲染 67.9s），
+  成片 `00:02:59.22` / 12.4 MB；同输入两次跑 `props.json` sha256 一致，edge-tts 两次合成 11 条
+  音频时长逐条 0.000s 差。
+- 全仓 16 家有 `financials-summary.json` 的公司走 `script → render --props-only` 全部通过，
+  估时 148.6~177.5s 全落在 2–3 分钟区间。
 
 ## 分镜解说文案（`scripts/script_gen.py`）
 
@@ -282,6 +292,34 @@ remotion（如 `-- --concurrency=10`）。
 分镜与音频清单对不上（少一条、多一条、清单条目缺 `audio`、音频文件不存在）、以及分镜 `kind`
 认不出来，一律带非零退出码报错，不会静默配错音或渲成别的卡片。
 
+## 端到端（`scripts/pipeline.mjs`）
+
+```bash
+npm run pipeline -- --company us-bili-bilibili -- --concurrency=10
+```
+
+只是把上面三步按顺序跑一遍并逐段计时，**不重新实现任何一步**——每步的命令、耗时、退出码原样透
+到终端，任一步非零退出就地中断，不会拿半成品往下走。`--company` 认目录名（按仓库根解析到
+`research/companies/<id>`）也认任意路径。
+
+产物与手动跑完全一致（`out/script/` / `out/tts/<id>/` / `out/render/<id>/`），额外多一份
+`out/pipeline/<id>/run.json` 记录本次各阶段耗时与产物大小，评估报告直接引它：
+
+```json
+{ "companyId": "us-bili-bilibili", "totalSeconds": 75.344,
+  "steps": [{"step": "文案生成", "seconds": 0.128, "exitCode": 0}, ...] }
+```
+
+常用参数：`--voice` / `--rate` 透传给 TTS，`--out` 换成片路径，`--skip-tts` 复用已有
+manifest（改模板时不用反复联网重合成），`--` 之后原样透传给 remotion。
+
+`--skip-tts` 会先拿重新生成的分镜逐条比对 manifest 里的文案：只要文案变过（改了
+`financials-summary.json`、动过 `script_gen.py`），就直接报错中断，不会拿旧音频配新画面
+——分镜 id 是固定的，光靠渲染那步的 id 认领拦不住这种漂移。此时 `--voice` / `--rate`
+不生效（不重新合成），会在 stderr 提示一行。
+
+MVP 阶段的实测耗时、成本、质量评价与规模化前置问题见 **`MVP-ASSESSMENT.md`**。
+
 ## 已知限制
 
 - **edge-tts 需要联网**调用微软 Edge 朗读接口，非离线方案；接口无官方 SLA，可能限流或变更。
@@ -289,7 +327,11 @@ remotion（如 `-- --concurrency=10`）。
   句级不是词级。分镜按句切足够，若后续需要更细的对齐，得把文案拆成更短的句子分多次合成。
 - **Remotion 依赖 headless Chromium**，首次渲染会下载浏览器；无外网的 CI 需要预置缓存或
   自带 Chrome（`--browser-executable`）。
-- 渲染耗时与 CPU 强相关，本机 5 秒 1080p 约数秒；2–3 分钟成片的耗时需在 stage 4 实测。
+- 渲染耗时与 CPU 强相关：14 核 M4 Pro 上 3 分钟 1080p 成片约 68 秒（`--concurrency=10`），
+  冷启动多约 30 秒的 bundle 时间。
+- **朗读里的英文残留还没解决**：16 家公司里 15 家的解说词有拉丁串（公司英文名、`ARR` /
+  `SOTP` / `capex` 等），会被中文音色按英文串读；长江电力的原报告 `advice` 里还内嵌了
+  `moat.analysis.trendNext5y` 这样的字段路径，同样会被念出来。详见 `MVP-ASSESSMENT.md`。
 
 ## 备选方案（edge-tts 不可用时）
 
@@ -304,6 +346,7 @@ remotion（如 `-- --concurrency=10`）。
 - `src/Hello.tsx` — 渲染链路自检示例 composition
 - `src/report/` — 报告模板 composition（`Report.tsx` 主体、`Scenes.tsx` 四类分镜画面、
   `DimensionChart.tsx` 七维度条形图、`demoProps.ts` studio 默认假数据）
+- `scripts/pipeline.mjs` — 端到端入口（串起下面三步并逐段计时）
 - `scripts/render.mjs` — 成片入口（拼音轨 + 生成 props + 调 remotion）
 - `scripts/report_props.mjs` — 音频时长 → 帧数换算（纯函数，测试在仓库根 `tests/`）
 - `scripts/script_gen.py` — 分镜解说文案生成（纯标准库，无额外依赖，不走 `py.sh`）
