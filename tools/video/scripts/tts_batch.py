@@ -27,6 +27,7 @@ from pathlib import Path
 from text_normalize import load_lexicon, normalize
 from tts_engine import (
     DEFAULT_ENGINE,
+    DEFAULT_RATE,
     DEFAULT_VOICE,
     ENGINES,
     TTSError,
@@ -108,8 +109,8 @@ def main() -> int:
     parser.add_argument("--storyboard", type=Path, required=True, help="分镜文案 JSON")
     parser.add_argument("--out-dir", type=Path, required=True, help="音频与 manifest.json 的输出目录")
     parser.add_argument("--engine", default=DEFAULT_ENGINE, choices=sorted(ENGINES), help="TTS 引擎")
-    parser.add_argument("--voice", default=DEFAULT_VOICE, help="音色，默认中文女声")
-    parser.add_argument("--rate", default="+0%", help="语速，如 +10%%")
+    parser.add_argument("--voice", default=DEFAULT_VOICE, help=f"音色，默认 {DEFAULT_VOICE}")
+    parser.add_argument("--rate", default=DEFAULT_RATE, help=f"语速，如 +10%%（默认 {DEFAULT_RATE}）")
     parser.add_argument("--no-normalize", action="store_true", help="跳过缩写/货币/百分号的朗读改写")
     parser.add_argument("--retries", type=int, default=3, help="单条分镜的最大尝试次数")
     args = parser.parse_args()

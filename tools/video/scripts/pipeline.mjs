@@ -25,8 +25,8 @@ const USAGE = `用法：node scripts/pipeline.mjs --company <公司目录或目�
 
   --company <path|id>   必填，research/companies/<id> 的目录名或任意路径
   --out <path>          输出 mp4，默认 out/render/<id>/<id>.mp4
-  --voice <name>        TTS 音色，默认 zh-CN-XiaoxiaoNeural
-  --rate <n>            TTS 语速，如 +10%
+  --voice <name>        TTS 音色，默认 zh-CN-YunyangNeural（沉稳男声）
+  --rate <n>            TTS 语速，如 +10%（默认 -8%）
   --skip-tts            复用已存在的 out/tts/<id>/manifest.json（不联网重合成）；
                         文案若与旧音频对不上会直接报错，不会拿旧音频配新画面
   --                    之后的参数原样透传给 remotion（如 --concurrency=10）

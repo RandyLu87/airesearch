@@ -24,8 +24,9 @@
 1. **不新增判断、不重算数字**。解说词只转述原文：总结侧是 `dimensionSummary[].conclusion`、
    `strategies[].advice/condition/action/signal/observable` 与 `disclaimer`；分析侧是
    `revenueBreakdown` / `stickiness` / `operatingLeverage` / `moat.analysis.types` /
-   `trendPast5y` / `trendNext5y` / `inquiry` 的原值。金额与占比一律照抄，不换算量级、
-   不重算百分比。模板只提供「第几、维度名、信心度 X 分」这类连接词。
+   `trendPast5y` / `trendNext5y` / `inquiry` 的原值。占比一律照抄不重算；金额只做**量级**
+   换算（`amount_format.py`，Decimal 精确运算 + 回归用例，原文另存 `revenueRaw`），
+   不碰汇率也不合并口径。模板只提供「第几、维度名、信心度 X 分」这类连接词。
 2. **缺失如实说**。`unavailable` / `__TODO__` / 空值一律播「暂无数据」并记进 `omissions`，
    不拿别的字段顶替。
 3. **不静默截断**。总时长超出区间时按**分层**阶梯裁剪（快讲层与策略先动，核心层最后动），
@@ -48,6 +49,7 @@ import sys
 from functools import lru_cache
 from pathlib import Path
 
+from amount_format import format_amount
 from text_normalize import load_lexicon, normalize
 
 TODO_SENTINEL = "__TODO__"
@@ -839,11 +841,23 @@ class ScriptBuilder:
             segment = self.field(item.get("segment"), f"{item_path}.segment", "该条业务线未播报")
             if not segment:
                 continue  # 连业务线名字都没有，这一条没什么可播的
+            # 金额换算成中文量级（百万元CNY → 亿元），占比一律照抄不重算。
+            # 换算走 amount_format 的 Decimal 精确运算并带回归用例，认不出的写法原样保留；
+            # 原文同时存一份 revenueRaw，任何时候都能回去核对换算对不对。
+            revenue_raw = self.field(item.get("revenue"), f"{item_path}.revenue", "该条只播业务线与占比")
+            revenue = format_amount(revenue_raw)
+            if revenue_raw and revenue == revenue_raw and not re.search(r"[元币]|美元|港元", revenue_raw):
+                self.note_omission(
+                    f"{item_path}.revenue",
+                    item.get("revenue"),
+                    "金额按原文播报，未换算量级",
+                    f"原文「{revenue_raw}」没写量级或币种，换算过去等于替原报告决定它是百万还是亿",
+                )
             items.append(
                 {
                     "segment": segment,
-                    # 金额与占比一律照抄原文，不换算量级、不重算百分比
-                    "revenue": self.field(item.get("revenue"), f"{item_path}.revenue", "该条只播业务线与占比"),
+                    "revenue": revenue,
+                    "revenueRaw": revenue_raw,
                     "sharePct": self.field(item.get("sharePct"), f"{item_path}.sharePct", "该条只播业务线与金额"),
                 }
             )

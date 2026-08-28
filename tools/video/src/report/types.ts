@@ -44,7 +44,14 @@ export type Scene = {
   audioSeconds: number | null;
 };
 
-export type RevenueItem = {segment?: string; revenue?: string; sharePct?: string};
+export type RevenueItem = {
+  segment?: string;
+  /** 统一成中文量级后的金额（`119.28亿元`）；换算在 scripts/amount_format.py */
+  revenue?: string;
+  /** 换算前的原文（`11928.29百万元CNY`），留着核对用，画面上不显示 */
+  revenueRaw?: string;
+  sharePct?: string;
+};
 export type MoatType = {type?: string; test?: string; verdict?: string};
 export type TrendSide = {
   label?: string;

@@ -13,7 +13,14 @@ from pathlib import Path
 
 TICKS_PER_SECOND = 10_000_000  # edge-tts 的 offset/duration 单位是 100 纳秒
 DEFAULT_ENGINE = "edge-tts"
-DEFAULT_VOICE = "zh-CN-XiaoxiaoNeural"
+# 云扬是新闻播报向的男声，比晓晓沉稳，配长期价值调研这种内容比较合适；
+# 再放慢 8% 让数字与财报期听得清。
+#
+# 改这两个常量会改变成片时长，必须重新校准 script_gen.py 的 DEFAULT_RATE（字/秒），
+# 否则控时会整体偏。本组合实测：哔哩哔哩详解版估时 293.14s / 实际音频 291.576s，
+# 比值 0.995，仍是 4.25 字/秒——云扬本身语速比晓晓快，-8% 之后两者基本持平。
+DEFAULT_VOICE = "zh-CN-YunyangNeural"
+DEFAULT_RATE = "-8%"
 
 
 class TTSError(RuntimeError):
@@ -32,7 +39,7 @@ class EdgeTTSEngine:
 
     name = DEFAULT_ENGINE
 
-    def __init__(self, voice: str = DEFAULT_VOICE, rate: str = "+0%") -> None:
+    def __init__(self, voice: str = DEFAULT_VOICE, rate: str = DEFAULT_RATE) -> None:
         self.voice = voice
         self.rate = rate
 

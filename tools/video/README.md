@@ -59,14 +59,14 @@ npm run studio          # 可选：交互式预览
 
 ```bash
 npm run tts -- --text "哔哩哔哩交出首个 GAAP 盈利的完整财年。" --out out/tts/smoke
-npm run tts -- --text-file path/to/script.txt --voice zh-CN-XiaoxiaoNeural --out out/tts/bili
+npm run tts -- --text-file path/to/script.txt --voice zh-CN-YunyangNeural --out out/tts/bili
 ```
 
 输出 `<out>.mp3` 与 `<out>.json`：
 
 ```json
 {
-  "voice": "zh-CN-XiaoxiaoNeural",
+  "voice": "zh-CN-YunyangNeural",
   "duration_seconds": 8.0,
   "cues": [{ "kind": "SentenceBoundary", "text": "…", "start": 0.1, "end": 8.0 }]
 }
@@ -89,7 +89,7 @@ npm run tts:batch -- --storyboard samples/us-bili-bilibili.script.json \
 {
   "companyId": "us-bili-bilibili",
   "engine": "edge-tts",
-  "voice": "zh-CN-XiaoxiaoNeural",
+  "voice": "zh-CN-YunyangNeural",
   "sceneCount": 11,
   "totalDurationSeconds": 200.85,
   "totalContainerDurationSeconds": 201.528,
@@ -199,7 +199,7 @@ npm run script -- --summary ../../research/companies/us-bili-bilibili/financials
   --out out/script/us-bili-bilibili.json
 ```
 
-省略 `--out` 时写 stdout；`--rate`（默认 4.25 字/秒）、`--strategies`（默认
+省略 `--out` 时写 stdout；`--rate`（朗读估时用的字/秒，默认 4.25）、`--strategies`（默认
 `noPosition,holding`）、`--min-seconds` / `--max-seconds` 可调。
 
 ### 两种模式
@@ -232,7 +232,8 @@ npm run script -- --summary ../../research/companies/us-bili-bilibili/financials
 
 | 规矩 | 落地方式 |
 | --- | --- |
-| 不编、不重算 | 只转述原文字段，`confidence` 原样播，金额与占比照抄不换算量级；`scoreBasis`、`triggers[].basis`、`evidence[].source` 整块不进解说词——它们是给人核对的引用，念出来只是噪音 |
+| 不编、不重算 | 只转述原文字段，`confidence` 与占比原样播；`scoreBasis`、`triggers[].basis`、`evidence[].source` 整块不进解说词——它们是给人核对的引用，念出来只是噪音 |
+| 换算只做量级 | 金额经 `scripts/amount_format.py` 统一成中文量级（`11928.29百万元CNY` → `119.28亿元`），走 `Decimal` 精确运算并带回归用例（`test_amount_format.py`）；原文一并存进 `revenueRaw`，随时能回去核对。**不碰汇率、不合并口径、不重算占比**，认不出量级或币种的（AMD 与富途的原文就是没有单位的纯数字）一律原样保留并记进 `omissions`——猜出来的单位比难看的单位危险得多 |
 | 引用不进解说 | 进解说的正文还要过一道 `strip_speech_noise`：内嵌的 URL、`a.b.c` 字段路径、`latestQuarterUpdate` 这类字段名交叉引用都摘掉并记进 `omissions`。左边界一律用 ASCII 字符类，**不能写 `(?<![\w.])`**——Python3 的 `\w` 连中文一起匹配，紧跟在中文后面的引用会一个都拦不住，而那恰恰是研究正文里最常见的写法 |
 | 缺失如实说 | `unavailable` / `__TODO__` / 空值一律播「暂无数据」「暂无评分」，并连同缺失原因记进 `omissions` |
 | 不静默截断 | 时长调节按固定阶梯走，每一步写进 `adjustments`（步骤、原因、增减秒数）；阶梯走完仍不达标就 `withinTarget: false` + `totals.warning`，退出码 1 |

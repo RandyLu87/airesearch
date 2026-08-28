@@ -329,16 +329,41 @@ test("收入结构逐字取自 analysis，不换算金额也不重算占比", ()
   assert.equal(scene.data.items.length, source.items.length);
   for (const [index, item] of scene.data.items.entries()) {
     assert.equal(item.segment, source.items[index].segment);
-    assert.equal(item.revenue, source.items[index].revenue);
+    // 金额换算成中文量级后，原文仍原样留在 revenueRaw 里，随时能回去核对换算对不对
+    assert.equal(item.revenueRaw, source.items[index].revenue);
+    // 占比不换算也不重算，逐字照抄
     assert.equal(item.sharePct, source.items[index].sharePct);
   }
 
-  // 念到的那几条，金额与占比必须原样出现在解说里，不许被换算成「119.28亿」这类没人核对过的写法
+  // 念到的那几条，金额与占比必须原样出现在解说里
   assert.ok(scene.data.spokenCount > 0 && scene.data.spokenCount <= scene.data.items.length);
   for (const item of scene.data.items.slice(0, scene.data.spokenCount)) {
     assert.ok(scene.narration.includes(item.revenue), `${item.revenue} 没有原样进解说`);
     assert.ok(scene.narration.includes(item.sharePct), `${item.sharePct} 没有原样进解说`);
   }
+});
+
+test("金额换算成中文量级，解说里不再出现「百万元CNY」这种中英混搭", () => {
+  const scene = sceneById(runDeep().script, "business-model-revenue");
+  assert.ok(!scene.narration.includes("百万元CNY"));
+  assert.ok(!scene.narration.includes("CNY"));
+  // 换算结果必须是精确的：11928.29 百万 = 119.28 亿
+  assert.equal(scene.data.items[0].revenue, "119.28亿元");
+  assert.equal(scene.data.items[0].revenueRaw, "11928.29百万元CNY");
+});
+
+test("原文没写量级或币种时不换算，并如实记一条", () => {
+  const analysis = biliDeep();
+  // AMD 与富途的原文就是这样：纯数字，既可能是百万也可能是亿
+  analysis.dimensions.businessEssence.analysis.revenueBreakdown.items[0].revenue = "16635";
+
+  const { script } = runDeep(bili(), ["--min-seconds", "120", "--max-seconds", "300"], analysis);
+  const scene = sceneById(script, "business-model-revenue");
+  assert.equal(scene.data.items[0].revenue, "16635", "没写单位却被猜了一个量级");
+  assert.ok(
+    script.omissions.some((item) => /没写量级或币种/.test(item.reason ?? "")),
+    "没换算这件事没有记账",
+  );
 });
 
 test("控时裁的是解说时间，不是画面内容：没念到的要点仍在 data 里", () => {
