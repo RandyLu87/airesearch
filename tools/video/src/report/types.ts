@@ -51,6 +51,8 @@ export type RevenueItem = {
   /** 换算前的原文（`11928.29百万元CNY`），留着核对用，画面上不显示 */
   revenueRaw?: string;
   sharePct?: string;
+  /** 从金额/占比里拆出来的口径括注，显示在业务线名称下方，不进解说词 */
+  note?: string;
 };
 export type MoatType = {type?: string; test?: string; verdict?: string};
 export type TrendSide = {

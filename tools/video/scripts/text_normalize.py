@@ -114,6 +114,18 @@ def normalize(text: str, lexicon: dict | None = None) -> tuple[str, list[str]]:
     out = re.sub(r"(\d{4})\s*[Qq]([1-4])(?![\d])", lambda m: f"{m.group(1)}年第{quarters[m.group(2)]}季度", out)
     out = re.sub(r"(\d{4})\s*[Hh]([12])(?![\d])", lambda m: f"{m.group(1)}年{'上' if m.group(2) == '1' else '下'}半年", out)
 
+    # 5b) 贴在数字后面的计量单位：20.5pct / 0.8pp / 15bp。**不能靠词表**——缩写展开的
+    #     前边界是 `(?<![A-Za-z0-9])`（挡着 "2026Q2" 的误伤），数字紧跟着的后缀一律匹配
+    #     不上。登记进词表反而更糟：匹配不上照样读成字母，却因为「已登记」不再报进
+    #     unknownTokens，变成静默读错。长的排前面，ppt/bps 不能被 pp/bp 抢先吃掉。
+    unit_suffixes = {"pct": "个百分点", "ppt": "个百分点", "pp": "个百分点", "bps": "个基点", "bp": "个基点"}
+    out = re.sub(
+        r"(?<=\d)\s*(ppt|pct|pp|bps|bp)(?![A-Za-z0-9])",
+        lambda m: unit_suffixes[m.group(1).lower()],
+        out,
+        flags=re.IGNORECASE,
+    )
+
     # 6) 日期要先于区间规则，否则 "2026-06-30" 会被读成 "2026到06到30"。斜杠写法
     #    （"2026/03/18"）走同一条规则，分隔符用反向引用锁死，混用两种分隔符的 URL 路径
     #    （"2026-04/17"）不会命中。末尾可选的 "/20" 是日期区间（"2026-08-19/20"）：只认两位
@@ -134,6 +146,15 @@ def normalize(text: str, lexicon: dict | None = None) -> tuple[str, list[str]]:
         lambda m: f"20{m.group(1)}年{'上' if m.group(2) == '1' else '下'}半年",
         out,
     )
+    #    不带年份的 H1 / H2 / Q1-Q4（"H1营收同比+1.30%"、"2026年Q2"）：上面几条都要求
+    #    紧邻着年份，不命中就剩个字母 H / Q 被逐字母念出来。必须排在带年份的规则之后，
+    #    否则会抢先吃掉 "2026H1" 的尾段。
+    out = re.sub(
+        r"(?<![\dA-Za-z/])[Hh]([12])(?![\d])",
+        lambda m: "上半年" if m.group(1) == "1" else "下半年",
+        out,
+    )
+    out = re.sub(r"(?<![\dA-Za-z/])[Qq]([1-4])(?![\d])", lambda m: f"第{quarters[m.group(1)]}季度", out)
 
     # 7) 区间要先于正负号处理，否则 "22-28%" 会被读成 "22 负 28"；
     #    百分比区间的百分号只管到区间末尾，"22-28%" 应读成 "百分之22到28"
@@ -146,8 +167,10 @@ def normalize(text: str, lexicon: dict | None = None) -> tuple[str, list[str]]:
     # 9) 百分号前置：-63.4% → 负百分之63.4
     out = re.sub(r"([+-])?([\d.]+)\s*(?:%|％)", lambda m: f"{_sign(m.group(1))}百分之{m.group(2)}", out)
 
-    # 10) 剩余数字前的正负号
-    out = re.sub(r"(?<![\w.])([+-])(?=[\d.])", lambda m: _sign(m.group(1)), out)
+    # 10) 剩余数字前的正负号。左边界必须用 ASCII 字符类：Python3 的 `\w` 连中文一起匹配，
+    #     写成 `(?<![\w.])` 会让「同比+0.8个百分点」这种紧跟在中文后面的符号一个都匹配不上
+    #     ——而那恰恰是研究正文里最常见的写法（带 % 的靠上一条规则兜住了，不带的就漏了）。
+    out = re.sub(r"(?<![A-Za-z0-9_.])([+-])(?=[\d.])", lambda m: _sign(m.group(1)), out)
 
     # 11) 规范化留下的多余空白；缩写展开后中文之间的空格会被读成停顿，去掉
     out = re.sub(r"(?<=[\u4e00-\u9fff])[ \t]+(?=[\u4e00-\u9fff])", "", out)

@@ -252,7 +252,16 @@ const RevenueSlide: React.FC<{scene: Scene}> = ({scene}) => {
           return (
             <Reveal key={index} from={beatFrom(scene.beats, index)}>
               <div style={{display: 'flex', alignItems: 'center', gap: 22}}>
-                <div style={{width: 470, fontSize: 29, color: theme.text}}>{str(item.segment) ?? '—'}</div>
+                <div style={{width: 470}}>
+                  <div style={{fontSize: 29, color: theme.text}}>{str(item.segment) ?? '—'}</div>
+                  {/* 口径括注：金额/占比列只放数值，否则一条「（占茅台酒+系列酒合计口径）」
+                      就能把两列撑成三行。信息不丢，只是挪到名称底下当附注。 */}
+                  {str(item.note) ? (
+                    <div style={{fontSize: 21, color: theme.textDim, lineHeight: 1.35, marginTop: 4}}>
+                      {str(item.note)}
+                    </div>
+                  ) : null}
+                </div>
                 <div style={{position: 'relative', flex: 1, height: 30, borderRadius: 15, backgroundColor: theme.muted}}>
                   {/* 占比认不出来就不画条，只留灰轨——和分数缺失时的处理同一个口径 */}
                   {ratio === null ? null : (

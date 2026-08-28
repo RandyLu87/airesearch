@@ -40,14 +40,16 @@ class NormalizeTest(unittest.TestCase):
 
     def test_iso_dates_survive_the_range_rule(self):
         self.assertNormalized("数据截至2026-06-30", "数据截至2026年6月30日")
-        # 日期里的月/日也是两位数：两位数财报期规则若跑在前面会把 "05 Q2" 吃成 "2005年第二季度"
-        self.assertNormalized("2026-08-05 Q2 财报", "2026年8月5日 Q2 财报")
-        self.assertNormalized("2026/08/05 H1", "2026年8月5日 H1")
+        # 日期里的月/日也是两位数：两位数财报期规则若跑在前面会把 "05 Q2" 吃成 "2005年第二季度"。
+        # 这条守的是**日期没被吃掉**；后面孤立的 Q2 / H1 该正常展开成中文，它们单独出现时
+        # 留成字母才会被逐字母念出来。
+        self.assertNormalized("2026-08-05 Q2 财报", "2026年8月5日第二季度财报")
+        self.assertNormalized("2026/08/05 H1", "2026年8月5日上半年")
         self.assertNormalized("区间22-28%不受影响", "区间百分之22到28不受影响")
 
     def test_slash_dates_and_day_ranges(self):
         self.assertNormalized("2026/03/18发布", "2026年3月18日发布")
-        self.assertNormalized("2026-08-19/20 Q2业绩会", "2026年8月19日到20日 Q2业绩会")
+        self.assertNormalized("2026-08-19/20 Q2业绩会", "2026年8月19日到20日第二季度业绩会")
         self.assertNormalized("2026-07-02/03）", "2026年7月2日到3日）")
         # 分隔符必须一致，否则 URL 路径里的 "2026-04/17" 会被当成日期
         self.assertNormalized("articleFileDir/2026-04/17/1b9", "articleFileDir/2026到04/17/1b9")
@@ -70,12 +72,27 @@ class NormalizeTest(unittest.TestCase):
         self.assertEqual(unknown, ["XYZS"])
 
     def test_single_letter_leftovers_are_reported(self):
-        self.assertEqual(normalize("2026年Q2营收")[1], ["Q"])
+        self.assertEqual(normalize("2026年X2营收")[1], ["X"])
         self.assertEqual(normalize("A股、B站与H股")[1], [])  # 词表放行，中文音色本来就读得对
         self.assertEqual(normalize("B端与C端毛利率")[1], [])
         self.assertEqual(normalize("美国1260H清单")[1], [])
         self.assertEqual(normalize("B轮融资")[1], ["B"])  # 放行只在词表列出的上下文里成立
         self.assertEqual(normalize("公司持有IP与UP主资源")[1], [])  # 词表展开产出的字母不算残留
+
+    def test_unit_suffixes_glued_to_numbers(self):
+        """贴在数字后面的计量单位。**词表管不了它们**——缩写展开的前边界挡着数字，
+        登记进词表只会让它「已登记」而不再报进 unknownTokens，变成静默读错。"""
+        self.assertNormalized("增速差达20.5pct", "增速差达20.5个百分点")
+        self.assertNormalized("毛利率同比+0.8pp", "毛利率同比正0.8个百分点")
+        self.assertNormalized("净息差下降15bp", "净息差下降15个基点")
+        self.assertNormalized("同比+12bps", "同比正12个基点")
+
+    def test_bare_fiscal_periods_expand(self):
+        self.assertNormalized("H1营收同比增长", "上半年营收同比增长")
+        self.assertNormalized("2026年Q2", "2026年第二季度")
+        # 带年份的写法仍走原来那两条规则，不能被这条抢走
+        self.assertNormalized("报告期2026H1", "报告期2026年上半年")
+        self.assertNormalized("26Q2", "2026年第二季度")
 
 
 if __name__ == "__main__":

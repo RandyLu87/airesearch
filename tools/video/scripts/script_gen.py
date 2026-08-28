@@ -183,6 +183,9 @@ FIELD_PATH_PATTERN = re.compile(rf"{BOUNDARY}[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_
 # iPhone / iPad / eBay 这类小写开头的商标挡在外面，它们是要正常念出来的专有名词。
 FIELD_NAME_PATTERN = re.compile(rf"{BOUNDARY}[a-z][a-z0-9]*(?:[A-Z][A-Za-z0-9]*)+(?:\[\d+\])*")
 FIELD_NAME_MIN_LENGTH = 8
+# snake_case 标识符：茅台的收入值里内嵌着数据源 API 名「Tushare fina_mainbz口径」。
+# 带下划线的小写串在中文正文里不会自然出现，一律是代码/接口标识符，念出来是噪音。
+SNAKE_CASE_PATTERN = re.compile(rf"{BOUNDARY}[a-z][a-z0-9]*(?:_[a-z0-9]+)+")
 # 公司英文名括注：`哔哩哔哩 (Bilibili Inc.)` 的括号部分对中文听众是冗余的，
 # 念出来还会被中文音色逐字母拼读。只在解说词里摘掉，画面上照旧完整显示。
 LATIN_PARENTHETICAL = re.compile(r"\s*[（(][\sA-Za-z0-9.,:&'’\-/]*[A-Za-z][\sA-Za-z0-9.,:&'’\-/]*[)）]")
@@ -208,6 +211,7 @@ def strip_speech_noise(text: str) -> tuple[str, list[str]]:
     cleaned = URL_PATTERN.sub(take, text)
     cleaned = FIELD_PATH_PATTERN.sub(take, cleaned)
     cleaned = FIELD_NAME_PATTERN.sub(take_field_name, cleaned)
+    cleaned = SNAKE_CASE_PATTERN.sub(take, cleaned)
     if not removed:
         return text, []
 
@@ -290,6 +294,26 @@ def take_clauses(text: str, count: int) -> str:
         return text
     kept = "".join(clauses[:count]).rstrip("，；;")
     return ensure_period(kept)
+
+
+# 数值尾随的口径括注：「777.2亿元（Tushare口径，四舍五入至0.1亿）」「85.73%（占茅台酒+
+# 系列酒合计口径）」。它是必要信息，但塞在数值里会把表格的数值列撑成三行，念出来更啰嗦。
+TRAILING_NOTE = re.compile(r"[（(][^（()）]*[)）]\s*$")
+
+
+def split_note(text: str) -> tuple[str, str]:
+    """把尾随的口径括注从数值里拆出来，返回 (数值, 括注)。
+
+    只拆**结尾**的括注：业务线名字里的括注（「增值服务VAS（直播打赏、大会员等）」）
+    是名称的一部分，不能动。拆出来的括注不丢——画面上作为附注显示，只是不进解说词。
+    """
+    value, note = text.strip(), ""
+    while True:
+        matched = TRAILING_NOTE.search(value)
+        if not matched:
+            return value, note
+        note = matched.group(0).strip() + note
+        value = value[: matched.start()].rstrip()
 
 
 def trim_text(text: str, detail: str) -> str:
@@ -853,12 +877,18 @@ class ScriptBuilder:
                     "金额按原文播报，未换算量级",
                     f"原文「{revenue_raw}」没写量级或币种，换算过去等于替原报告决定它是百万还是亿",
                 )
+            # 口径括注从数值里拆出来：数值列保持干净，括注在画面上做附注，不进解说词
+            revenue_value, revenue_note = split_note(revenue)
+            share_value, share_note = split_note(
+                self.field(item.get("sharePct"), f"{item_path}.sharePct", "该条只播业务线与金额")
+            )
             items.append(
                 {
                     "segment": segment,
-                    "revenue": revenue,
+                    "revenue": revenue_value,
                     "revenueRaw": revenue_raw,
-                    "sharePct": self.field(item.get("sharePct"), f"{item_path}.sharePct", "该条只播业务线与金额"),
+                    "sharePct": share_value,
+                    "note": "　".join(note for note in (revenue_note, share_note) if note),
                 }
             )
         if not items:
