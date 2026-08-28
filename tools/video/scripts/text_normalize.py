@@ -65,6 +65,13 @@ def _expand_magnitude(match: re.Match) -> str:
     return f"{prefix}{_plain(value)}"
 
 
+def _expand_date(match: re.Match) -> str:
+    """2026-06-30 → 2026年6月30日；末尾带 "/20" 的日期区间读成 "到20日"。"""
+    year, _, month, day, through = match.groups()
+    tail = f"到{int(through)}日" if through else ""
+    return f"{int(year)}年{int(month)}月{int(day)}日{tail}"
+
+
 def _plain(value: Decimal) -> str:
     text = format(value.normalize(), "f")
     return text.rstrip("0").rstrip(".") if "." in text else text
@@ -107,16 +114,20 @@ def normalize(text: str, lexicon: dict | None = None) -> tuple[str, list[str]]:
     out = re.sub(r"(\d{4})\s*[Qq]([1-4])(?![\d])", lambda m: f"{m.group(1)}年第{quarters[m.group(2)]}季度", out)
     out = re.sub(r"(\d{4})\s*[Hh]([12])(?![\d])", lambda m: f"{m.group(1)}年{'上' if m.group(2) == '1' else '下'}半年", out)
 
-    # 6) ISO 日期要先于区间规则，否则 "2026-06-30" 会被读成 "2026到06到30"
+    # 6) 日期要先于区间规则，否则 "2026-06-30" 会被读成 "2026到06到30"。斜杠写法
+    #    （"2026/03/18"）走同一条规则，分隔符用反向引用锁死，混用两种分隔符的 URL 路径
+    #    （"2026-04/17"）不会命中。末尾可选的 "/20" 是日期区间（"2026-08-19/20"）：只认两位
+    #    数且后面不接字母、数字、"." 或 "-"，否则 "2023/03/22/8d30…" 的哈希前缀、
+    #    "…/1225047590.PDF" 的文件名和 "2026-07-02/07-06" 的次段都会被当成结束日。
     out = re.sub(
-        r"(?<!\d)(\d{4})-(\d{1,2})-(\d{1,2})(?!\d)",
-        lambda m: f"{int(m.group(1))}年{int(m.group(2))}月{int(m.group(3))}日",
+        r"(?<!\d)(\d{4})([-/])(\d{1,2})\2(\d{1,2})(?:/(\d{2})(?![\dA-Za-z.-]))?(?!\d)",
+        _expand_date,
         out,
     )
 
-    # 两位数年份的财报期（"26Q2"、"26H1"）要排在 ISO 日期之后：日期里的月/日也是两位数，
-    # 先跑就会把 "2026-08-05 Q2" 的 "05 Q2" 吃成 "2005年第二季度"。lookbehind 同样挡住
-    # "/"，免得 "2026/08/05 H1" 这类未转成中文的日期写法重蹈覆辙。
+    #    两位数年份的财报期（"26Q2"、"26H1"）要排在日期之后：日期里的月/日也是两位数，
+    #    先跑就会把 "2026-08-05 Q2" 的 "05 Q2" 吃成 "2005年第二季度"。lookbehind 同样挡住
+    #    "/"，免得斜杠日期的尾段重蹈覆辙。
     out = re.sub(r"(?<![\dA-Za-z/])(\d{2})\s*[Qq]([1-4])(?![\d])", lambda m: f"20{m.group(1)}年第{quarters[m.group(2)]}季度", out)
     out = re.sub(
         r"(?<![\dA-Za-z/])(\d{2})\s*[Hh]([12])(?![\d])",
