@@ -11,6 +11,8 @@ export const theme = {
   // 非当前维度的条形；要比 muted 的轨道明显亮一档，否则七条里只看得清点亮的那条
   barIdle: '#6a83c4',
   warn: '#ffb454',
+  // 字幕底衬：压在深色底上要略亮一档才读得清，又不能亮到把正文压下去
+  captionBg: 'rgba(17, 27, 46, 0.86)',
   fontFamily:
     '"PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Source Han Sans SC", "Microsoft YaHei", -apple-system, sans-serif',
 } as const;

@@ -30,8 +30,8 @@ const USAGE = `用法：node scripts/render.mjs --storyboard <分镜文案.json>
   --out <path>          输出 mp4，默认 out/render/<slug>/<slug>.mp4
   --fps <n>             默认 30
   --scene-pad <sec>     每条分镜句末留白，默认 0.2
-  --min-seconds <sec>   总时长下限，仅告警，默认 120
-  --max-seconds <sec>   总时长上限，仅告警，默认 180
+  --min-seconds <sec>   总时长下限，仅告警，默认取分镜文案的 totals.targetRange
+  --max-seconds <sec>   总时长上限，仅告警，默认取分镜文案的 totals.targetRange
   --still <frame>       只渲染某一帧的 png（排版自检用），不出 mp4
   --props-only          只生成 props.json 与音轨，不调 remotion
   --                    之后的参数原样透传给 remotion（如 --concurrency=4）
@@ -44,8 +44,10 @@ function parseArgs(argv) {
     out: null,
     fps: 30,
     scenePad: 0.2,
-    minSeconds: 120,
-    maxSeconds: 180,
+    // null = 跟随分镜文案自己的 totals.targetRange（详解版 240-300、纯总结 120-180）；
+    // 写死 120-180 会让每一支详解版都无端报一次「超出目标区间」。
+    minSeconds: null,
+    maxSeconds: null,
     still: null,
     propsOnly: false,
     passthrough: [],
@@ -193,9 +195,12 @@ function main() {
     `${sceneCount} 个分镜 · 画面 ${videoSeconds}s（${(videoSeconds / 60).toFixed(2)} 分钟）` +
       `${manifest ? ` · 音频 ${audioSeconds}s · 留白 ${(videoSeconds - audioSeconds).toFixed(3)}s` : ' · 无音轨（估时预览）'}\n`,
   );
-  if (videoSeconds < opts.minSeconds || videoSeconds > opts.maxSeconds) {
+  const targetRange = Array.isArray(storyboard?.totals?.targetRange) ? storyboard.totals.targetRange : [120, 180];
+  const minSeconds = opts.minSeconds ?? Number(targetRange[0]);
+  const maxSeconds = opts.maxSeconds ?? Number(targetRange[1]);
+  if (videoSeconds < minSeconds || videoSeconds > maxSeconds) {
     process.stderr.write(
-      `提示：总时长 ${videoSeconds}s 落在目标区间 [${opts.minSeconds}, ${opts.maxSeconds}] 之外，` +
+      `提示：总时长 ${videoSeconds}s 落在目标区间 [${minSeconds}, ${maxSeconds}] 之外，` +
         '需要控时请回到 script_gen.py 调 --min-seconds / --max-seconds 重出文案。\n',
     );
   }

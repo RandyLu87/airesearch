@@ -66,7 +66,13 @@ function parseArgs(argv) {
   return opts;
 }
 
-/** `us-bili-bilibili` 与 `research/companies/us-bili-bilibili` 都认，前者按仓库根解析。 */
+/**
+ * `us-bili-bilibili` 与 `research/companies/us-bili-bilibili` 都认，前者按仓库根解析。
+ *
+ * 同目录下有 `financials-analysis.json` 就一起带上，走 4-5 分钟的详解版；没有就只用总结，
+ * script_gen 会降级成 2-3 分钟并把这件事记进 omissions。缺分析文件不是错误——18 个公司
+ * 目录里就有没跑完第 2 步的，整批渲染不该为此中断。
+ */
 function resolveCompany(value) {
   const candidates = value.includes(path.sep)
     ? [path.resolve(value)]
@@ -75,7 +81,12 @@ function resolveCompany(value) {
   if (!dir) {
     die(`找不到 financials-summary.json，试过：\n  ${candidates.map((c) => path.join(c, 'financials-summary.json')).join('\n  ')}`);
   }
-  return {id: path.basename(dir), summary: path.join(dir, 'financials-summary.json')};
+  const analysis = path.join(dir, 'financials-analysis.json');
+  return {
+    id: path.basename(dir),
+    summary: path.join(dir, 'financials-summary.json'),
+    analysis: existsSync(analysis) ? analysis : null,
+  };
 }
 
 /** 子进程输出直接透到终端——每一步的告警（unknownTokens、控时提示）都要看得见。 */
@@ -142,7 +153,12 @@ function artifact(file) {
 
 function main() {
   const opts = parseArgs(process.argv.slice(2));
-  const {id, summary} = resolveCompany(opts.company);
+  const {id, summary, analysis} = resolveCompany(opts.company);
+  if (!analysis) {
+    process.stderr.write(
+      `提示：${id} 没有 financials-analysis.json，本片按纯总结模式产出（2-3 分钟，无商业模式与护城河深讲）\n`,
+    );
+  }
 
   const scriptFile = path.join(projectRoot, 'out', 'script', `${id}.json`);
   const ttsDir = path.join(projectRoot, 'out', 'tts', id);
@@ -157,7 +173,19 @@ function main() {
   const steps = [];
   const startedAt = process.hrtime.bigint();
 
-  runStep('文案生成', 'python3', ['scripts/script_gen.py', '--summary', summary, '--out', scriptFile], steps);
+  runStep(
+    '文案生成',
+    'python3',
+    [
+      'scripts/script_gen.py',
+      '--summary',
+      summary,
+      ...(analysis ? ['--analysis', analysis] : []),
+      '--out',
+      scriptFile,
+    ],
+    steps,
+  );
 
   if (opts.skipTts) {
     assertNarrationMatchesAudio(scriptFile, manifestFile);
@@ -186,6 +214,8 @@ function main() {
   const run = {
     companyId: id,
     summary: path.relative(repoRoot, summary),
+    analysis: analysis ? path.relative(repoRoot, analysis) : null,
+    mode: analysis ? 'detailed' : 'summary-only',
     totalSeconds: Number(totalSeconds),
     steps,
     artifacts: {

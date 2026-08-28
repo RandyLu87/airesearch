@@ -11,6 +11,8 @@
 - **OWLL-47** — 分镜文案 JSON → 逐条音频 + 时长清单（见「批量合成」一节）
 - **OWLL-48** — 分镜文案 + 音频清单 → 成片 mp4（见「成片渲染」一节）
 - **OWLL-49** — 端到端串联与 MVP 可行性评估（见「端到端」一节与 `MVP-ASSESSMENT.md`）
+- **#31** — 升级为 4–5 分钟详解版：接入第 2 步的 `financials-analysis.json`，
+  商业模式与护城河展开成五屏核心段落，并加上随语音走的字幕与逐条点亮
 
 整条链路一条命令（等价于下面三步手动跑）：
 
@@ -20,6 +22,7 @@ npm run pipeline -- --company us-bili-bilibili -- --concurrency=10
 
 ```bash
 npm run script -- --summary ../../research/companies/<company>/financials-summary.json \
+                  --analysis ../../research/companies/<company>/financials-analysis.json \
                   --out out/script/<company>.json
 npm run tts:batch -- --storyboard out/script/<company>.json --out-dir out/tts/<company>
 npm run render:report -- --storyboard out/script/<company>.json \
@@ -184,27 +187,53 @@ manifest 与文件名仍然自洽，但生成器最好直接给字符串 id。
 
 ## 分镜解说文案（`scripts/script_gen.py`）
 
-把任意一家公司的 `financials-summary.json` 转成分镜 JSON，供 TTS 朗读与 Remotion 模板消费。
-**纯拼接，不调用 LLM**：解说词只转述 `conclusion` / `advice` / `condition` / `action` /
-`disclaimer` 的原文，分数直接取 `confidence` 原值，模板只补「第几、维度名、信心度 X 分」
-这类连接词——原文没有的判断和数字，成片里也不会有。
+把任意一家公司的 `financials-summary.json`（可选加上第 2 步的 `financials-analysis.json`）
+转成分镜 JSON，供 TTS 朗读与 Remotion 模板消费。
+**纯拼接，不调用 LLM**：解说词只转述原文字段，分数直接取 `confidence` 原值，模板只补
+「第几、维度名、信心度 X 分」这类连接词——原文没有的判断和数字，成片里也不会有。
 
 ```bash
+# 详解版（4–5 分钟）：带上维度分析，商业模式与护城河展开成核心段落
 npm run script -- --summary ../../research/companies/us-bili-bilibili/financials-summary.json \
+  --analysis ../../research/companies/us-bili-bilibili/financials-analysis.json \
   --out out/script/us-bili-bilibili.json
 ```
 
-省略 `--out` 时写 stdout；`--rate`（默认 4.5 字/秒）、`--min-seconds` / `--max-seconds`
-（默认 120 / 180）、`--strategies`（默认 `noPosition,holding`）可调。
+省略 `--out` 时写 stdout；`--rate`（默认 4.25 字/秒）、`--strategies`（默认
+`noPosition,holding`）、`--min-seconds` / `--max-seconds` 可调。
 
-分镜顺序固定为：开场（公司名 + 一句话定位）→ 七维度（维度名 + 信心度 + 理由）→
-1–2 类策略（建议正文 + 触发条件）→ 免责声明。
+### 两种模式
+
+给不给 `--analysis` 决定素材量，目标区间跟着素材走——只有总结时全部念完也就 3 分钟，
+硬拗 4–5 分钟只能靠注水：
+
+| 模式 | 输入 | 目标区间 | 分镜 |
+| --- | --- | --- | --- |
+| `detailed` | 总结 + 维度分析 | 240–300s | 在下面的基础上，另加五屏深讲 |
+| `summary-only` | 只有总结 | 120–180s | 开场 → 七维度 → 1–2 类策略 → 免责声明 |
+
+`--analysis` 路径给错会直接退 2，不会静默降级成短片；文件本来就不存在（该公司没跑完第 2 步）
+则由 `pipeline.mjs` 自行判断，按 `summary-only` 出片并在 `omissions` 里记一条。
+产出的 `meta.mode` 写明走的是哪条路。
+
+详解版的分镜顺序：开场 → 生意质量 → **收入结构** → **生意的经济特征** → 护城河 →
+**护城河逐条检验** → **护城河的过去与未来** → **十年之问** → 其余五维（快讲）→
+1–2 类策略 → 免责声明。深讲分镜紧跟它解释的那个维度（按契约的 `mapsTo` 认），
+观众先听结论再听展开。
+
+### 逐条点亮用的 `beats`
+
+深讲分镜的 `data.beats` 每条带 `sentenceIndex`，指向 `narration` 里念它的那一句。
+渲染层按同一个下标去认 TTS 的句级边界事件，换算出这一条该在第几帧亮起来
+（见 `scripts/report_props.mjs`）。下标由 `NarrationBuilder` 在拼解说词时算出来，
+不写字面量——一段正文自己可能就含好几个句号，手工数迟早会数错。
 
 ### 三条硬规矩
 
 | 规矩 | 落地方式 |
 | --- | --- |
-| 不编、不重算 | 只转述原文字段，`confidence` 原样播；`scoreBasis` 与 `triggers[].basis` 刻意不进解说词——它们是给人核对的字段路径，念出来只是噪音 |
+| 不编、不重算 | 只转述原文字段，`confidence` 原样播，金额与占比照抄不换算量级；`scoreBasis`、`triggers[].basis`、`evidence[].source` 整块不进解说词——它们是给人核对的引用，念出来只是噪音 |
+| 引用不进解说 | 进解说的正文还要过一道 `strip_speech_noise`：内嵌的 URL、`a.b.c` 字段路径、`latestQuarterUpdate` 这类字段名交叉引用都摘掉并记进 `omissions`。左边界一律用 ASCII 字符类，**不能写 `(?<![\w.])`**——Python3 的 `\w` 连中文一起匹配，紧跟在中文后面的引用会一个都拦不住，而那恰恰是研究正文里最常见的写法 |
 | 缺失如实说 | `unavailable` / `__TODO__` / 空值一律播「暂无数据」「暂无评分」，并连同缺失原因记进 `omissions` |
 | 不静默截断 | 时长调节按固定阶梯走，每一步写进 `adjustments`（步骤、原因、增减秒数）；阶梯走完仍不达标就 `withinTarget: false` + `totals.warning`，退出码 1 |
 
@@ -212,20 +241,35 @@ npm run script -- --summary ../../research/companies/us-bili-bilibili/financials
 
 `estimatedSeconds` 按「中文 1 字 1 拍、数字逐位、拉丁字母半拍 + 标点停顿」估算，只用于
 合成前判断要不要裁剪；**真实时长以 `scripts/tts.py` 输出的 `duration_seconds` 为准**。
+估的是**朗读改写之后**的那串字，不是原文——`11928.29百万元CNY` 原文 17 个字符，念出来是
+二十来个音节，按原文估会把含大量金额的深讲分镜系统性低估（实测整片短估约 9%）。
+控时上限还会先扣掉 `分镜数 × RENDER_PAD_PER_SCENE`：成片比解说词长，每条分镜有句末留白。
 
-超过上限时逐级裁剪，够了就停：维度理由只播第一句 → 只播前 K 个句读（取仍放得下的最大 K）
-→ 开场定位只播第一个句读 → 策略不播触发条件 → 只留一类策略 → 从最长的维度开始只播分数。
-不足下限时反向补：策略播全部触发条件 → 补播卖出/加仓信号，且补完不得重新超上限。
+**按层预算裁剪，核心层最后动。** 分镜分四层：`core`（商业模式与护城河，含它们的维度分镜）、
+`fast`（其余五维）、`strategy`、`frame`（开场与免责声明）。开场收尾据实占用，剩下的按
+0.66 / 0.19 / 0.15 分给核心 / 快讲 / 策略；快讲与策略压到各自预算就停手，**核心层的预算在
+它们压完之后重算**，把没用掉的秒数全部让给主线。
 
-七维度是这份报告的主干，所以策略排在维度之前被裁——契约本身也只要求播 1–2 类策略。
+每一层内部都是「**每次只把当前最长的那一屏降一级**，降完重新排序再看下一屏，一放得下就
+收手」，而不是所有分镜一起降到同一级——后者会整步跨过预算线：实测哔哩哔哩的核心层会从
+429s 一步掉到 246s，再由扩展阶梯拿策略把时长填回来，于是核心层被压成骨架、策略反倒成了
+最长的段落，正好和这支片子的主线相反。
+
+还有富余时先补回核心层（深讲分镜逐级恢复），补到上限为止；仍不足才轮到策略播全部触发条件、
+补播卖出/加仓信号。**不会为了几秒钟的超额去砍掉整类策略**：那是一整块内容消失，
+和逐级收紧不是一回事，所以只留在兜底阶梯里，且要先确认砍完不会掉到下限以下。
+
+裁的是**解说时间，不是画面内容**：没念到的业务线、依据、回答要点仍然进 `data`，
+在画面上压暗显示，并注明「原报告共 N 条，本片按控时只播报前 M 条」。屏幕不花时间，耳朵才花。
 
 ### 验证样本
 
-`samples/us-bili-bilibili.script.json` 是哔哩哔哩的产出（11 个分镜 / 预估 167.18 秒 /
-无缺失字段），随脚本一起提交，既是人工核对的样本，也是 stage 3 Remotion 模板的输入夹具。
+`samples/us-bili-bilibili.script.json` 是哔哩哔哩的 `summary-only` 产出（11 个分镜），
+随脚本一起提交，既是人工核对的样本，也是 Remotion 模板的输入夹具。
 改动脚本后用上面的命令重新生成即可。
 
-仓库内 16 家公司全部跑通且落在 2–3 分钟区间；自动化用例见 `tests/video-script-gen.test.mjs`
+仓库内 16 家公司在详解版下全部跑通，预计成片 267–299 秒，核心层占 47–62%；
+解说词里没有任何 URL 与字段路径残留。自动化用例见 `tests/video-script-gen.test.mjs`
 （`npm test` 在仓库根执行）。
 
 ## 成片渲染（`scripts/render.mjs` + `Report` composition）
@@ -275,11 +319,22 @@ remotion（如 `-- --concurrency=10`）。
 | `opening` | 标题卡：公司名 + `companyId` + 数据截止日期 + 一句话定位 |
 | `dimension` | 左侧七维度信心度条形图（点亮当前维度），右侧当前维度的分数与结论原文 |
 | `strategy` | 策略要点卡：适用人群 + 建议正文 + 触发条件/应对逐条 |
+| `business-model` | `data.focus` 分两屏：`revenue` 各业务线金额/占比 + 占比条形图；`economics` 粘性判定 + 粘性机制与经营杠杆要点 |
+| `moat-checklist` | 五类壁垒逐行：类型 + 检验问题 + 判定标签 |
+| `moat-trend` | 过去五年 / 未来五年并排：方向 + 判断依据逐条 |
+| `inquiry` | 十年之问：问题 + 回答要点逐条 |
 | `closing` | 免责声明结尾卡 |
 
-每屏都有顶部公司名/数据截止、底部整片进度条。文字一律取分镜文案里的原文字段
-（`positioning` / `conclusion` / `advice` / `condition` / `action` / `disclaimer`），
-模板不改写也不重算任何数字。
+每屏都有顶部公司名/数据截止、底部字幕条与整片进度条。文字一律取分镜文案里的原文字段，
+模板不改写也不重算任何数字。占比条形图的长度由 `sharePct` 解析而来，**标签始终显示原文那串字**，
+解析不出来就只留灰轨不画条——和分数缺失时的处理同一个口径。
+
+**字幕与逐条点亮**：`captions` 一句一条，文本取 `narration` 原文、时间取 TTS 的句级边界事件；
+字幕不用 manifest 里的 `normalizedText`——那是喂给引擎的口播改写稿（`35.11x PE` →
+`35.11倍市盈率`），念出来对、写在屏幕上却和报告对不上。要点按 `beats[i].from` 逐条亮起；
+**原报告里有、但本片按控时没念到的要点恒定压暗摆着**，用亮度区分「正在讲」和「可查的参考」。
+句数与边界事件对不上时（换引擎、换英文音色）按字数比例兜底，不报错——字幕差半拍是瑕疵，
+整条链路断掉不是。
 
 **空态**：`score` 为 `null`（原文 `unavailable` / `__TODO__` / 缺失）时，条形图只留灰色轨道，
 **不画 0 分的条**——0 分和没有数据是两回事，画出来就是编数字；分数位置改用琥珀色显示生成器
@@ -301,6 +356,10 @@ npm run pipeline -- --company us-bili-bilibili -- --concurrency=10
 只是把上面三步按顺序跑一遍并逐段计时，**不重新实现任何一步**——每步的命令、耗时、退出码原样透
 到终端，任一步非零退出就地中断，不会拿半成品往下走。`--company` 认目录名（按仓库根解析到
 `research/companies/<id>`）也认任意路径。
+
+同目录下有 `financials-analysis.json` 就自动带上、走详解版；没有就只用总结出片，
+并在 stderr 提示一行。缺分析文件不是错误——18 个公司目录里就有没跑完第 2 步的，
+整批渲染不该为此中断。`run.json` 里的 `mode` 记录本次走的是哪条路。
 
 产物与手动跑完全一致（`out/script/` / `out/tts/<id>/` / `out/render/<id>/`），额外多一份
 `out/pipeline/<id>/run.json` 记录本次各阶段耗时与产物大小，评估报告直接引它：
@@ -327,11 +386,16 @@ MVP 阶段的实测耗时、成本、质量评价与规模化前置问题见 **`
   句级不是词级。分镜按句切足够，若后续需要更细的对齐，得把文案拆成更短的句子分多次合成。
 - **Remotion 依赖 headless Chromium**，首次渲染会下载浏览器；无外网的 CI 需要预置缓存或
   自带 Chrome（`--browser-executable`）。
-- 渲染耗时与 CPU 强相关：14 核 M4 Pro 上 3 分钟 1080p 成片约 68 秒（`--concurrency=10`），
+- 渲染耗时与 CPU 强相关：14 核 M4 Pro 上 5 分钟 1080p 成片约 100–110 秒（`--concurrency=10`），
   冷启动多约 30 秒的 bundle 时间。
-- **朗读里的英文残留还没解决**：16 家公司里 15 家的解说词有拉丁串（公司英文名、`ARR` /
-  `SOTP` / `capex` 等），会被中文音色按英文串读；长江电力的原报告 `advice` 里还内嵌了
-  `moat.analysis.trendNext5y` 这样的字段路径，同样会被念出来。详见 `MVP-ASSESSMENT.md`。
+- **朗读里的英文残留只解决了一半**：字段路径与 URL 已经被 `strip_speech_noise` 挡住（16 家
+  全部干净），常见财经缩写已进词表，公司英文名括注在解说里也摘掉了；但产品与机构专名
+  （`YouTube` / `NVIDIA` / `EPYC` / `Kling` 等，16 家合计 76 个 token）仍会被中文音色按
+  字母朗读。这类是真专有名词，要么逐个进词表给中文读法，要么接受字母读法——目前是后者，
+  并在 manifest 的 `unknownTokens` 里逐条报出来。
+- **控时是逐级的，偶尔会留下富余**：深讲分镜一级就是十几二十秒，补到差一点放不下时只能停手，
+  所以成片长度落在 267–299 秒之间而不是齐刷刷贴着 300 秒。
+- **画面动效只有字幕与逐条点亮**，仍然没有配乐、转场与封面图。
 
 ## 备选方案（edge-tts 不可用时）
 

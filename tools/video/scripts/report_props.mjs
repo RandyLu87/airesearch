@@ -13,13 +13,89 @@
  *      于是第 N 段音频的起点恰好落在第 N 个 Sequence 的第一帧上，零漂移。
  */
 
-const KINDS = new Set(["opening", "dimension", "strategy", "closing"]);
+const KINDS = new Set([
+  "opening",
+  "dimension",
+  "strategy",
+  "closing",
+  // 详解版的四种深讲分镜
+  "business-model",
+  "moat-checklist",
+  "moat-trend",
+  "inquiry",
+]);
 
 export class ReportPropsError extends Error {}
 
 const fail = (message) => {
   throw new ReportPropsError(message);
 };
+
+/** 与 script_gen.py 的 split_sentences 同一套切法，字幕才和解说词逐句对得上。 */
+const splitSentences = (text) =>
+  String(text ?? "")
+    .split(/(?<=[。！？!?])/)
+    .map((sentence) => sentence.trim())
+    .filter(Boolean);
+
+/**
+ * 每句话的起止秒数。
+ *
+ * 首选 TTS 的句级边界事件（中文音色一句一条，见 tts_engine.py）：那是**引擎实际念到
+ * 哪里**的时刻，比任何估算都准。只有在句数对不上时才退回按字数比例摊——引擎换了、
+ * 音色换成给 WordBoundary 的英文音色、或者解说词里有引擎不当作句末的标点，都会走到这条。
+ * 兜底不报错是故意的：字幕差半拍是瑕疵，整条链路断掉不是。
+ */
+function sentenceSpans(sentences, cues, totalSeconds) {
+  const boundaries = Array.isArray(cues) ? cues.filter((cue) => cue?.kind === "SentenceBoundary") : [];
+  if (boundaries.length === sentences.length && boundaries.length > 0) {
+    return sentences.map((_, index) => {
+      const start = Number(boundaries[index].start) || 0;
+      const end = index + 1 < boundaries.length ? Number(boundaries[index + 1].start) || start : totalSeconds;
+      return [start, Math.max(start, end)];
+    });
+  }
+
+  const lengths = sentences.map((sentence) => sentence.length);
+  const totalLength = lengths.reduce((sum, length) => sum + length, 0) || 1;
+  let consumed = 0;
+  return sentences.map((_, index) => {
+    const start = (consumed / totalLength) * totalSeconds;
+    consumed += lengths[index];
+    const end = index + 1 === sentences.length ? totalSeconds : (consumed / totalLength) * totalSeconds;
+    return [start, end];
+  });
+}
+
+/**
+ * 一条分镜的字幕轨与要点点亮帧号。
+ *
+ * 字幕**文本取 narration 原文**，时间取边界事件：manifest 里的 `normalizedText` 是喂给
+ * 引擎的口播改写稿（`35.11x PE` → `35.11倍市盈率`），念出来对、写在屏幕上却和报告对不上。
+ */
+function timelineOf(scene, entry, seconds, fps, durationInFrames) {
+  const sentences = splitSentences(scene.narration);
+  const spans = sentenceSpans(sentences, entry?.cues, seconds);
+  const lastFrame = Math.max(0, durationInFrames - 1);
+  const clampFrom = (value) => Math.min(lastFrame, Math.max(0, Math.round(value * fps)));
+
+  const captions = sentences.map((text, index) => {
+    const from = clampFrom(spans[index][0]);
+    // 末句一路铺到分镜结尾：句末到画面切走之间的留白不该是一段没有字幕的空白
+    const until = index + 1 === sentences.length ? durationInFrames : clampFrom(spans[index + 1][0]);
+    return { text, from, durationInFrames: Math.max(1, until - from) };
+  });
+
+  const rawBeats = Array.isArray(scene.data?.beats) ? scene.data.beats : [];
+  const beats = rawBeats.map((beat) => {
+    const index = Number.isInteger(beat?.sentenceIndex) ? beat.sentenceIndex : -1;
+    // 认不出是哪一句就从分镜开头亮着：宁可早亮，也不要因为一条要点错位而整屏空着
+    const from = index >= 0 && index < captions.length ? captions[index].from : 0;
+    return { ...beat, from };
+  });
+
+  return { captions, beats };
+}
 
 /** 拿 scene 的音频秒数：容器长度优先，缺了退回朗读时长，都没有才算没有。 */
 export function audioSecondsOf(entry) {
@@ -107,12 +183,16 @@ export function buildReportProps({ storyboard, manifest = null, fps = 30, sceneP
 
     const from = cursor;
     cursor += durationInFrames;
+    const { captions, beats } = timelineOf(scene, entry, seconds, fps, durationInFrames);
     return {
       id,
       kind,
       title: typeof scene.title === "string" ? scene.title : id,
       narration: typeof scene.narration === "string" ? scene.narration : "",
       data: scene.data && typeof scene.data === "object" ? scene.data : {},
+      // 字幕与要点的帧号都相对分镜起点，模板里直接当 Sequence 内的 frame 用
+      captions,
+      beats,
       from,
       durationInFrames,
       audioSeconds,

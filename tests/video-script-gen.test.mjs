@@ -16,15 +16,28 @@ import path from "node:path";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const generator = path.join(repoRoot, "tools", "video", "scripts", "script_gen.py");
-const biliSummary = path.join(repoRoot, "research", "companies", "us-bili-bilibili", "financials-summary.json");
+const companyDir = (id) => path.join(repoRoot, "research", "companies", id);
+const biliSummary = path.join(companyDir("us-bili-bilibili"), "financials-summary.json");
+const biliAnalysis = path.join(companyDir("us-bili-bilibili"), "financials-analysis.json");
 
-/** 跑一次生成，返回 { code, script }。 */
-function run(summary, args = []) {
+/**
+ * 跑一次生成，返回 { code, script }。
+ *
+ * `analysis` 给了就走详解版（目标 4-5 分钟），不给就是纯总结模式（目标 2-3 分钟）——
+ * 这个分流本身就是契约的一部分，所以两条路都要有测试直接走。
+ */
+function run(summary, args = [], analysis = null) {
   const dir = mkdtempSync(path.join(tmpdir(), "airesearch-script-"));
   try {
     const file = path.join(dir, "financials-summary.json");
     writeFileSync(file, JSON.stringify(summary));
-    const result = spawnSync("python3", [generator, "--summary", file, ...args], { encoding: "utf8" });
+    const extra = [];
+    if (analysis) {
+      const analysisFile = path.join(dir, "financials-analysis.json");
+      writeFileSync(analysisFile, JSON.stringify(analysis));
+      extra.push("--analysis", analysisFile);
+    }
+    const result = spawnSync("python3", [generator, "--summary", file, ...extra, ...args], { encoding: "utf8" });
     return { code: result.status, script: result.stdout.trim() ? JSON.parse(result.stdout) : null, stderr: result.stderr };
   } finally {
     rmSync(dir, { recursive: true, force: true });
@@ -32,9 +45,13 @@ function run(summary, args = []) {
 }
 
 const bili = () => JSON.parse(readFileSync(biliSummary, "utf8"));
+const biliDeep = () => JSON.parse(readFileSync(biliAnalysis, "utf8"));
+/** 详解版跑法：总结 + 维度分析两份都给。 */
+const runDeep = (summary = bili(), args = [], analysis = biliDeep()) => run(summary, args, analysis);
 const sceneById = (script, id) => script.scenes.find((scene) => scene.id === id);
+const kindsOf = (script, kind) => script.scenes.filter((scene) => scene.kind === kind);
 
-test("哔哩哔哩样本：时长落进 2-3 分钟，七个维度一个不少", () => {
+test("纯总结模式：时长落进 2-3 分钟，七个维度一个不少", () => {
   const { code, script } = run(bili());
   assert.equal(code, 0);
   assert.equal(script.totals.withinTarget, true);
@@ -158,7 +175,8 @@ test("advice 缺失但触发条件在时，裁剪级真的生效且 omissions �
   if (script.adjustments.some((step) => step.step === "strategy-drop-triggers")) {
     for (const scene of script.scenes.filter((s) => s.kind === "strategy")) {
       assert.equal(scene.data.items.length, 0, `${scene.id} 记了裁剪却仍在播触发条件`);
-      assert.ok(!scene.narration.includes("触发条件"));
+      // 认模板拼的前缀「触发条件：」，不认裸词——建议正文本身就可能写着「非现阶段减仓触发条件」
+      assert.ok(!scene.narration.includes("触发条件："), `${scene.id} 记了裁剪却仍在念触发条件`);
     }
   }
 });
@@ -256,5 +274,264 @@ test("触发条件被控时裁掉后，omission 的 handling 跟着产出走而�
   if (scene && !scene.data.items.length) {
     assert.ok(!omission.handling.includes("只播触发条件"), "触发条件已裁掉，handling 仍称在播");
     assert.ok(omission.handling.includes("未播报"));
+  }
+});
+
+// ---------------------------------------------------------------- 详解版（--analysis）
+
+/**
+ * 详解版把第 2 步维度分析接进来，商业模式与护城河从「一句结论」变成核心段落。
+ * 这一层最容易出的错不是崩，是**悄悄编内容**或**悄悄把核心裁光**，所以断言集中在
+ * 三件事：深讲分镜的每个字都能在 analysis 原文里找到、控时压力下核心层最后才动、
+ * 逐条点亮用的 sentenceIndex 真的指向 narration 里对应的那句。
+ */
+
+test("详解版：时长落进 4-5 分钟，商业模式与护城河深讲分镜齐全", () => {
+  const { code, script } = runDeep();
+  assert.equal(code, 0);
+  assert.equal(script.totals.withinTarget, true);
+  assert.ok(
+    script.totals.estimatedSeconds >= 240 && script.totals.estimatedSeconds <= 300,
+    `实际 ${script.totals.estimatedSeconds}s`,
+  );
+  assert.equal(script.meta.mode, "detailed");
+
+  assert.equal(kindsOf(script, "business-model").length, 2);
+  assert.equal(kindsOf(script, "moat-checklist").length, 1);
+  assert.equal(kindsOf(script, "moat-trend").length, 1);
+  assert.equal(kindsOf(script, "inquiry").length, 1);
+  // 七维度一条不少：深讲是加料，不是替换
+  assert.equal(kindsOf(script, "dimension").length, 7);
+});
+
+test("深讲分镜紧跟它对应的维度分镜，观众先听结论再听展开", () => {
+  const { script } = runDeep();
+  const order = script.scenes.map((scene) => scene.id);
+  const at = (id) => order.indexOf(id);
+
+  assert.ok(at("dimension-businessQuality") < at("business-model-revenue"));
+  assert.ok(at("business-model-revenue") < at("business-model-economics"));
+  assert.ok(at("business-model-economics") < at("dimension-moat"));
+  assert.ok(at("dimension-moat") < at("moat-checklist"));
+  assert.ok(at("moat-checklist") < at("moat-trend"));
+  assert.ok(at("moat-trend") < at("moat-inquiry"));
+  // 其余五维排在核心段落之后
+  assert.ok(at("moat-inquiry") < at("dimension-management"));
+});
+
+test("收入结构逐字取自 analysis，不换算金额也不重算占比", () => {
+  const analysis = biliDeep();
+  const source = analysis.dimensions.businessEssence.analysis.revenueBreakdown;
+  const scene = sceneById(runDeep().script, "business-model-revenue");
+
+  assert.equal(scene.data.period, source.period);
+  // 画面拿到的是**全部**业务线，一条不少：控时裁的是解说时间，不是报告内容
+  assert.equal(scene.data.items.length, source.items.length);
+  for (const [index, item] of scene.data.items.entries()) {
+    assert.equal(item.segment, source.items[index].segment);
+    assert.equal(item.revenue, source.items[index].revenue);
+    assert.equal(item.sharePct, source.items[index].sharePct);
+  }
+
+  // 念到的那几条，金额与占比必须原样出现在解说里，不许被换算成「119.28亿」这类没人核对过的写法
+  assert.ok(scene.data.spokenCount > 0 && scene.data.spokenCount <= scene.data.items.length);
+  for (const item of scene.data.items.slice(0, scene.data.spokenCount)) {
+    assert.ok(scene.narration.includes(item.revenue), `${item.revenue} 没有原样进解说`);
+    assert.ok(scene.narration.includes(item.sharePct), `${item.sharePct} 没有原样进解说`);
+  }
+});
+
+test("控时裁的是解说时间，不是画面内容：没念到的要点仍在 data 里", () => {
+  const analysis = biliDeep();
+  // 逼到最紧，让深讲全部降到 minimal
+  const { script } = runDeep(bili(), ["--min-seconds", "150", "--max-seconds", "170"], analysis);
+
+  const past = sceneById(script, "moat-trend").data.past;
+  // 画面上的依据条数 = 原报告的条数，与念了几条无关
+  assert.equal(past.points.length, past.pointsAvailable);
+  assert.ok(past.spokenCount < past.pointsAvailable, "没有触发裁剪，这条断言就没意义");
+  // 每一条被念到的依据都必须逐字出现在解说里；没念到的不出现，也不该有点亮时刻
+  const trend = sceneById(script, "moat-trend");
+  const spokenBeats = trend.data.beats.filter((beat) => beat.group === "past");
+  assert.equal(spokenBeats.length, past.spokenCount);
+  for (const beat of spokenBeats) assert.ok(trend.narration.includes(beat.text));
+  for (const point of past.points.slice(past.spokenCount)) {
+    assert.ok(!trend.narration.includes(point), `没念到的依据出现在解说里：${point}`);
+  }
+});
+
+test("护城河清单逐条取自 analysis 的判定，不自己下结论", () => {
+  const analysis = biliDeep();
+  const types = analysis.dimensions.moat.analysis.types;
+  const scene = sceneById(runDeep().script, "moat-checklist");
+
+  assert.equal(scene.data.items.length, types.length);
+  for (const [index, item] of scene.data.items.entries()) {
+    assert.equal(item.type, types[index].type);
+    assert.equal(item.verdict, types[index].verdict);
+    assert.ok(scene.narration.includes(types[index].verdict));
+  }
+});
+
+test("护城河趋势与十年之问取原文方向与回答", () => {
+  const analysis = biliDeep();
+  const moat = analysis.dimensions.moat;
+  const trend = sceneById(runDeep().script, "moat-trend");
+  const inquiry = sceneById(runDeep().script, "moat-inquiry");
+
+  assert.equal(trend.data.past.direction, moat.analysis.trendPast5y.direction);
+  assert.equal(trend.data.next.direction, moat.analysis.trendNext5y.direction);
+  assert.ok(trend.narration.includes(moat.analysis.trendPast5y.direction));
+
+  assert.equal(inquiry.data.question, moat.inquiry.question);
+  // 回答按 ①②③ 拆成要点，每一条都必须是原文的子串
+  assert.ok(inquiry.data.beats.length > 0);
+  const answer = moat.inquiry.answer.replace(/\s+/g, "");
+  for (const beat of inquiry.data.beats) {
+    assert.ok(answer.includes(beat.text.replace(/\s+/g, "").replace(/。$/, "")), `要点不在原文里：${beat.text}`);
+  }
+});
+
+test("每个要点的 sentenceIndex 指向 narration 里真正念它的那一句", () => {
+  const { script } = runDeep();
+  const deep = script.scenes.filter((scene) => Array.isArray(scene.data.beats));
+  assert.ok(deep.length >= 5, "详解版应当有多条带要点的深讲分镜");
+
+  for (const scene of deep) {
+    const sentences = scene.narration.split(/(?<=[。！？!?])/).filter((s) => s.trim());
+    for (const beat of scene.data.beats) {
+      assert.ok(
+        Number.isInteger(beat.sentenceIndex) && beat.sentenceIndex >= 0 && beat.sentenceIndex < sentences.length,
+        `${scene.id} 的要点 sentenceIndex=${beat.sentenceIndex} 越界（共 ${sentences.length} 句）`,
+      );
+      const head = beat.text.replace(/\s+/g, "").slice(0, 8);
+      assert.ok(
+        sentences[beat.sentenceIndex].replace(/\s+/g, "").includes(head),
+        `${scene.id} 的要点「${head}」不在第 ${beat.sentenceIndex} 句里：${sentences[beat.sentenceIndex]}`,
+      );
+    }
+  }
+});
+
+test("URL 与字段路径引用既不进解说词也不进画面正文，且如实记账", () => {
+  const analysis = biliDeep();
+  analysis.dimensions.moat.inquiry.answer =
+    "护城河大概率仍在，详见 https://example.com/report 与 moat.analysis.trendNext5y 的判断。";
+  analysis.dimensions.businessEssence.analysis.stickiness.mechanism =
+    "习惯与生态锁定，见 businessEssence.analysis.stickiness.evidence[0]。";
+
+  const { script } = runDeep(bili(), [], analysis);
+  const spoken = script.scenes.map((scene) => scene.narration).join("");
+  const shown = JSON.stringify(script.scenes.map((scene) => scene.data));
+
+  for (const noise of ["https://example.com/report", "moat.analysis.trendNext5y", "businessEssence.analysis.stickiness"]) {
+    assert.ok(!spoken.includes(noise), `${noise} 被念了出来`);
+    assert.ok(!shown.includes(noise), `${noise} 出现在画面数据里`);
+  }
+  assert.ok(
+    script.omissions.some((item) => /URL|字段路径/.test(item.reason ?? "")),
+    "过滤动作没有记进 omissions",
+  );
+});
+
+test("紧贴在中文后面的字段引用照样摘掉，不靠前面有没有空格", () => {
+  // 研究正文里「另见下方latestQuarterUpdate」这种写法没有分隔符，是最常见的形态。
+  // 用 \w 做左边界会因为中文也算词字符而全部漏掉，这条就是钉住那个回归。
+  const analysis = biliDeep();
+  analysis.dimensions.businessEssence.analysis.revenueBreakdown.period =
+    "FY2025，另见下方latestQuarterUpdate对最新一期的补充分析";
+  analysis.dimensions.moat.analysis.trendPast5y.basis = "参考moat.analysis.trendNext5y的判断，护城河变宽。";
+
+  const { script } = runDeep(bili(), ["--min-seconds", "120", "--max-seconds", "300"], analysis);
+  const spoken = script.scenes.map((scene) => scene.narration).join("");
+  assert.ok(!spoken.includes("latestQuarterUpdate"), "紧跟中文的字段名被念了出来");
+  assert.ok(!spoken.includes("moat.analysis.trendNext5y"), "紧跟中文的字段路径被念了出来");
+  // 同一段里的正常内容不能被误伤
+  assert.ok(spoken.includes("FY2025"));
+});
+
+test("小写开头的商标不当成字段名摘掉", () => {
+  const analysis = biliDeep();
+  analysis.dimensions.moat.inquiry.answer = "iPhone与eBay渠道仍在，护城河大概率还在。";
+  const { script } = runDeep(bili(), ["--min-seconds", "120", "--max-seconds", "300"], analysis);
+  const spoken = script.scenes.map((scene) => scene.narration).join("");
+  assert.ok(spoken.includes("iPhone"), "iPhone 被当成字段名摘掉了");
+  assert.ok(spoken.includes("eBay"), "eBay 被当成字段名摘掉了");
+});
+
+test("公司英文名括注只在解说里摘掉，画面标题保留全称", () => {
+  const { script } = runDeep();
+  const opening = sceneById(script, "opening");
+  assert.ok(opening.title.includes("Bilibili"), "画面标题丢了英文全称");
+  assert.ok(!opening.narration.includes("Bilibili"), "开场把英文全称念了出来");
+  assert.ok(opening.narration.includes("哔哩哔哩"));
+});
+
+test("证据里的 source 与 url 永不进入解说词", () => {
+  const spoken = runDeep().script.scenes.map((scene) => scene.narration).join("");
+  assert.ok(!spoken.includes("http"));
+  assert.ok(!spoken.includes("globenewswire"));
+  assert.ok(!spoken.includes("stockanalysis"));
+});
+
+test("analysis 缺失时降级为纯总结模式：产出照旧、退 0、如实记一条", () => {
+  const { code, script } = run(bili());
+  assert.equal(code, 0);
+  assert.equal(script.meta.mode, "summary-only");
+  assert.deepEqual(script.totals.targetRange, [120, 180]);
+  assert.equal(kindsOf(script, "business-model").length, 0);
+  assert.ok(script.omissions.some((item) => item.path === "analysis"));
+});
+
+test("analysis 在但护城河整块缺失：只跳过护城河深讲，商业模式照常", () => {
+  const analysis = biliDeep();
+  delete analysis.dimensions.moat;
+
+  const { script } = runDeep(bili(), ["--min-seconds", "120", "--max-seconds", "300"], analysis);
+  assert.equal(kindsOf(script, "moat-checklist").length, 0);
+  assert.equal(kindsOf(script, "inquiry").length, 0);
+  assert.equal(kindsOf(script, "business-model").length, 2);
+  assert.ok(script.omissions.some((item) => item.path.startsWith("dimensions.moat")));
+});
+
+test("深讲字段是 __TODO__ 占位时不播，也不拿别的字段顶替", () => {
+  const analysis = biliDeep();
+  analysis.dimensions.moat.analysis.trendNext5y.basis = "__TODO__（预判逻辑与前提）";
+  analysis.dimensions.businessEssence.analysis.revenueBreakdown.items[0].sharePct = "__TODO__";
+
+  const { script } = runDeep(bili(), ["--min-seconds", "120", "--max-seconds", "300"], analysis);
+  const spoken = script.scenes.map((scene) => scene.narration).join("");
+  assert.ok(!spoken.includes("__TODO__"));
+  assert.ok(!spoken.includes("预判逻辑与前提"));
+  assert.ok(script.omissions.some((item) => item.path.includes("trendNext5y")));
+});
+
+test("控时压力下先裁快讲层与策略，核心层最后才动", () => {
+  // 目标区间压到刚好放不下全部素材，逼出裁剪阶梯
+  const { script } = runDeep(bili(), ["--min-seconds", "200", "--max-seconds", "230"]);
+  const steps = script.adjustments.map((item) => item.step);
+  const core = steps.findIndex((step) => step.startsWith("core-"));
+  const fast = steps.findIndex((step) => step.startsWith("fast-"));
+
+  assert.ok(fast >= 0, "快讲层一步都没裁，说明阶梯没走");
+  if (core >= 0) assert.ok(fast < core, `核心层(${steps[core]})先于快讲层(${steps[fast]})被裁`);
+
+  // 无论怎么裁，五条深讲分镜都还在——核心层可以变短，不能整块消失
+  assert.equal(kindsOf(script, "business-model").length, 2);
+  assert.equal(kindsOf(script, "moat-checklist").length, 1);
+});
+
+test("详解版同一份输入两次生成完全一致（确定性）", () => {
+  assert.deepEqual(runDeep().script, runDeep().script);
+});
+
+test("详解版对其他公司同样跑通，没有哔哩哔哩专属逻辑", () => {
+  for (const company of ["hk-0700-tencent-holdings", "sh-600519-kweichow-moutai", "us-nflx-netflix", "sh-600900-yangtze-power"]) {
+    const summary = JSON.parse(readFileSync(path.join(companyDir(company), "financials-summary.json"), "utf8"));
+    const analysis = JSON.parse(readFileSync(path.join(companyDir(company), "financials-analysis.json"), "utf8"));
+    const { script } = run(summary, [], analysis);
+    assert.equal(script.totals.withinTarget, true, `${company} 时长 ${script.totals.estimatedSeconds}s 未落进区间`);
+    assert.ok(kindsOf(script, "business-model").length >= 1, `${company} 没有商业模式深讲`);
+    assert.ok(!script.scenes.map((s) => s.narration).join("").includes("http"), `${company} 解说里有 URL`);
   }
 });

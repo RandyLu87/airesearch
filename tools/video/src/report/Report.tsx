@@ -31,6 +31,7 @@ export const Report: React.FC<ReportProps> = ({
             footer={`${index + 1} / ${totals.sceneCount}　·　数据截止 ${dataCutoff ?? '未标注'}`}
             progress={Math.min(1, (scene.from + scene.durationInFrames) / durationInFrames)}
             centered={scene.kind === 'closing'}
+            captions={scene.captions ?? []}
           >
             <SceneBody
               scene={scene}
