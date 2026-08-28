@@ -24,7 +24,9 @@ export const DimensionChart: React.FC<{
         const hasScore = dimension.score !== null;
         const ratio = hasScore ? Math.max(0, Math.min(1, dimension.score! / SCORE_MAX)) : 0;
         return (
-          <div key={dimension.id} style={{display: 'flex', alignItems: 'center', gap: 20, opacity: active ? 1 : 0.5}}>
+          // 非当前维度压到 0.68 而不是深色时的 0.5：浅色下「淡」本来就更容易糊成一片，
+          // 再叠上浅色轨道，七条里会只剩点亮的那条看得清，全景图就失去意义了。
+          <div key={dimension.id} style={{display: 'flex', alignItems: 'center', gap: 20, opacity: active ? 1 : 0.68}}>
             <div
               style={{
                 width: 190,

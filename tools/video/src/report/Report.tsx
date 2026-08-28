@@ -1,6 +1,29 @@
-import {Audio, Sequence, staticFile, useVideoConfig} from 'remotion';
+import {useEffect, useState} from 'react';
+import {Audio, Sequence, continueRender, delayRender, staticFile, useVideoConfig} from 'remotion';
 import {SceneBody, SceneFrame} from './Scenes';
+import {INTER_FAMILY, INTER_FONT_FILE} from './theme';
 import type {ReportProps} from './types';
+
+/**
+ * 加载站点那份自托管 Inter（拉丁与数字用它，中文仍走 PingFang SC，与研究站点逐字同源）。
+ *
+ * 必须挂 `delayRender`：Remotion 是逐帧截图，字体没加载完就开渲会让开头几帧用回退字形，
+ * 成片里表现为「前两秒字突然变了一下」——这种错只能靠人眼发现。
+ * 取不到字体时同样 `continueRender` 放行：字形回退是瑕疵，整条链路卡死不是。
+ */
+const useReportFont = () => {
+  const [handle] = useState(() => delayRender('加载 Inter 字体'));
+  useEffect(() => {
+    const face = new FontFace(INTER_FAMILY, `url(${staticFile(INTER_FONT_FILE)}) format("woff2-variations")`, {
+      weight: '100 900',
+    });
+    face
+      .load()
+      .then((loaded) => document.fonts.add(loaded))
+      .catch(() => undefined)
+      .finally(() => continueRender(handle));
+  }, [handle]);
+};
 
 /**
  * 报告视频模板。画面结构完全由 props 决定，没有任何一家公司的字面量：
@@ -20,6 +43,7 @@ export const Report: React.FC<ReportProps> = ({
   totals,
 }) => {
   const {durationInFrames} = useVideoConfig();
+  useReportFont();
 
   return (
     <>

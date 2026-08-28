@@ -14,13 +14,14 @@
  */
 
 import {spawnSync} from 'node:child_process';
-import {existsSync, mkdirSync, readFileSync, writeFileSync} from 'node:fs';
+import {copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync} from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 
 import {ReportPropsError, buildReportProps} from './report_props.mjs';
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const repoRoot = path.resolve(projectRoot, '..', '..');
 const remotionBin = path.join(projectRoot, 'node_modules', '.bin', 'remotion');
 
 const USAGE = `用法：node scripts/render.mjs --storyboard <分镜文案.json> [选项]
@@ -158,6 +159,24 @@ function remotion(subcommand, args) {
   if (result.status !== 0) process.exit(result.status ?? 1);
 }
 
+/**
+ * 把研究站点那份自托管 Inter 拷进 public 目录，成片的拉丁字形与公司研究页逐字同源。
+ *
+ * 从 `apps/web/public/assets/fonts/` 拷而不是在本子项目里再存一份：那是唯一的上游件
+ * （子集化脚本与 OFL 许可都在它旁边），多一份副本就多一处会和站点悄悄漂移的地方。
+ * 拿不到就跳过——composition 里的字族链会回退到 PingFang SC，只是拉丁字形变了。
+ */
+function stageFont(publicDir) {
+  const source = path.join(repoRoot, 'apps', 'web', 'public', 'assets', 'fonts', 'InterVariable.woff2');
+  if (!existsSync(source)) {
+    process.stderr.write(`提示：找不到 ${path.relative(repoRoot, source)}，拉丁字形回退到系统字体\n`);
+    return;
+  }
+  const target = path.join(publicDir, 'fonts');
+  mkdirSync(target, {recursive: true});
+  copyFileSync(source, path.join(target, 'InterVariable.woff2'));
+}
+
 function main() {
   const opts = parseArgs(process.argv.slice(2));
   const storyboard = readJson(opts.storyboard);
@@ -167,6 +186,7 @@ function main() {
   const stageDir = path.join(projectRoot, 'out', 'render', slug);
   const publicDir = path.join(stageDir, 'public');
   mkdirSync(publicDir, {recursive: true});
+  stageFont(publicDir);
 
   let built;
   try {

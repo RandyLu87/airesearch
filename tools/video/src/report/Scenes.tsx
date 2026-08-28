@@ -42,8 +42,9 @@ const Reveal: React.FC<{from: number | null; children: React.ReactNode; style?: 
   return (
     <div
       style={{
-        // 未点亮不是隐藏：整屏的排版从第一帧就定下来，点亮时不会跳版
-        opacity: 0.32 + 0.68 * progress,
+        // 未点亮不是隐藏：整屏的排版从第一帧就定下来，点亮时不会跳版。
+        // 浅色下起点要比深色高一档——纸面上 0.3 的墨色已经淡到读不出字了。
+        opacity: 0.45 + 0.55 * progress,
         transform: `translateY(${(1 - progress) * 10}px)`,
         ...style,
       }}
@@ -455,7 +456,7 @@ const ClosingCard: React.FC<{scene: Scene; companyName: string}> = ({scene, comp
     <FadeIn style={{display: 'flex', flexDirection: 'column', gap: 34, maxWidth: 1420, alignItems: 'center', textAlign: 'center'}}>
       <div style={{fontSize: 34, color: theme.accent}}>{scene.title}</div>
       <div style={{fontSize: 40, lineHeight: 1.7, color: theme.text}}>{disclaimer}</div>
-      <div style={{height: 3, width: 200, backgroundColor: theme.muted}} />
+      <div style={{height: 3, width: 200, backgroundColor: theme.line}} />
       <div style={{fontSize: 28, color: theme.textDim}}>{companyName}</div>
     </FadeIn>
   );
@@ -517,7 +518,7 @@ export const SceneFrame: React.FC<{
       {children}
     </div>
     <CaptionBar captions={captions} />
-    <div style={{height: 6, borderRadius: 3, backgroundColor: theme.muted, marginTop: 14}}>
+    <div style={{height: 6, borderRadius: 3, backgroundColor: theme.line, marginTop: 14}}>
       <div style={{height: 6, borderRadius: 3, width: `${progress * 100}%`, backgroundColor: theme.accent}} />
     </div>
   </AbsoluteFill>
