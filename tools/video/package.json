@@ -6,6 +6,7 @@
   "scripts": {
     "render": "remotion render src/index.ts Hello out/hello.mp4",
     "render:report": "node scripts/render.mjs",
+    "pipeline": "node scripts/pipeline.mjs",
     "studio": "remotion studio src/index.ts",
     "script": "python3 scripts/script_gen.py",
     "tts": "bash scripts/py.sh tts.py",
