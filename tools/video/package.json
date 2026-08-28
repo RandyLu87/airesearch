@@ -6,6 +6,7 @@
   "scripts": {
     "render": "remotion render src/index.ts Hello out/hello.mp4",
     "studio": "remotion studio src/index.ts",
+    "script": "python3 scripts/script_gen.py",
     "tts": "bash scripts/tts.sh",
     "typecheck": "tsc --noEmit"
   },
