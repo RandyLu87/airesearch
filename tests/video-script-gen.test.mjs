@@ -535,3 +535,37 @@ test("详解版对其他公司同样跑通，没有哔哩哔哩专属逻辑", ()
     assert.ok(!script.scenes.map((s) => s.narration).join("").includes("http"), `${company} 解说里有 URL`);
   }
 });
+
+test("公司名括注摘掉这件事本身也要记账，不能悄悄摘", () => {
+  const { script } = runDeep();
+  const omission = script.omissions.find((item) => item.path === "meta.companyName");
+  assert.ok(omission, "解说里摘掉了英文括注却一条记录都没有");
+  assert.match(omission.reason, /英文括注/);
+});
+
+test("降级为纯总结模式时，totals 里直接说清楚，而不是只留一条 omission", () => {
+  const { script } = run(bili());
+  // 看时长的人第一眼看 totals，「120-180 且达标」本身不会告诉任何人少了核心段落
+  assert.match(script.totals.note, /纯总结模式/);
+  assert.match(script.totals.note, /没有深讲分镜/);
+  assert.equal(runDeep().script.totals.note, undefined, "详解版不该带降级说明");
+});
+
+test("策略的触发条件也逐条带点亮锚点，和深讲分镜一视同仁", () => {
+  // 哔哩哔哩的建议正文够长，默认区间下触发条件总会被裁掉；把维度结论压短腾出时间，
+  // 让触发条件真的播出来，这条断言才有东西可验。
+  const summary = bili();
+  for (const dimension of summary.dimensionSummary) dimension.conclusion = "结论很短。";
+  const { script } = run(summary, ["--min-seconds", "150", "--max-seconds", "260"]);
+
+  const withTriggers = kindsOf(script, "strategy").filter((scene) => scene.data.items.length > 0);
+  assert.ok(withTriggers.length > 0, "没有一条策略播了触发条件，这条断言就没意义");
+
+  for (const scene of withTriggers) {
+    assert.equal(scene.data.beats.length, scene.data.items.length, `${scene.id} 的锚点与触发条件条数对不上`);
+    const sentences = scene.narration.split(/(?<=[。！？!?])/).filter((s) => s.trim());
+    for (const beat of scene.data.beats) {
+      assert.ok(sentences[beat.sentenceIndex].includes("触发条件"), `${scene.id} 的锚点没指向触发条件那一句`);
+    }
+  }
+});

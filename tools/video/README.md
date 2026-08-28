@@ -268,7 +268,8 @@ npm run script -- --summary ../../research/companies/us-bili-bilibili/financials
 随脚本一起提交，既是人工核对的样本，也是 Remotion 模板的输入夹具。
 改动脚本后用上面的命令重新生成即可。
 
-仓库内 16 家公司在详解版下全部跑通，预计成片 267–299 秒，核心层占 47–62%；
+18 个公司目录里有 16 家跑完了第 2、3 步（另两家还没有 `financials-summary.json`）；
+这 16 家在详解版下全部跑通，预计成片 267–299 秒，核心层占 47–62%；
 解说词里没有任何 URL 与字段路径残留。自动化用例见 `tests/video-script-gen.test.mjs`
 （`npm test` 在仓库根执行）。
 

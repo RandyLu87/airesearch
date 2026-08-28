@@ -234,8 +234,9 @@ def split_points(text: str) -> list[str]:
     if any(char in stripped for char in CIRCLED):
         parts = re.split(f"[{''.join(CIRCLED)}]", stripped)
     else:
-        sentences = split_sentences(stripped)
-        parts = sentences if len(sentences) > 1 else re.split(r"[；;]", stripped)
+        # 句号与分号都算要点边界，且要一起切。只按句号切，会把「总述。第一…；第二…；第三…」
+        # 切成「总述」加一坨没拆开的正文——那一坨在画面上就是一整段密密麻麻的字。
+        parts = re.split(r"(?<=[。！？!?])|(?<=[；;])", stripped)
     points = [part.strip(" 　，、；;。") for part in parts]
     return [point for point in points if point] or [stripped]
 
@@ -259,6 +260,10 @@ class NarrationBuilder:
         start = len(self._sentences)
         self._sentences.extend(split_sentences(piece) or [piece])
         return start
+
+    def beat(self, group: str, text: str) -> dict:
+        """念一条要点，并返回它的点亮锚点——`sentenceIndex` 必须来自刚才那次 `say`。"""
+        return {"group": group, "text": text, "sentenceIndex": self.say(text)}
 
     @property
     def text(self) -> str:
@@ -305,7 +310,7 @@ def text_levels(text: str, current: str, *, floor: str | None = None) -> list[st
     ladder += [f"clauses:{k}" for k in range(len(split_clauses(first_sentence(text))) - 1, 0, -1)]
     if floor:
         ladder.append(floor)
-    return ladder[_ladder_position(ladder, current) :]
+    return ladder[_next_ladder_index(ladder, current) :]
 
 
 def ensure_period(text: str) -> str:
@@ -380,12 +385,8 @@ class ScriptBuilder:
 
     # -- 取词：所有进解说词的正文都从这里过 -------------------------------
 
-    def spoken(self, value, path: str) -> str:
-        """把一个原文字段变成可朗读的正文：缺失返回空串，内嵌 URL/字段路径的摘掉并记账。
-
-        进解说词的每一段正文都必须走这里，包括 summary 侧的结论与建议——长江电力的
-        `advice` 里内嵌 `moat.analysis.trendNext5y` 就是从那条路进来的。
-        """
+    def _strip_noise(self, value, path: str) -> str:
+        """摘掉正文里的 URL 与字段路径引用并记账；不做朗读改写。"""
         raw = text_of(value)
         if not raw:
             return ""
@@ -397,7 +398,15 @@ class ScriptBuilder:
                 "已从解说词与画面正文中移除，其余原文照播",
                 f"正文内嵌 {'、'.join(removed)}，属给人核对的 URL/字段路径引用，朗读为噪音",
             )
-        return normalize_for_speech(cleaned)
+        return cleaned
+
+    def spoken(self, value, path: str) -> str:
+        """把一个原文字段变成可朗读的正文：缺失返回空串，内嵌 URL/字段路径的摘掉并记账。
+
+        进解说词的每一段正文都必须走这里，包括 summary 侧的结论与建议——长江电力的
+        `advice` 里内嵌 `moat.analysis.trendNext5y` 就是从那条路进来的。
+        """
+        return normalize_for_speech(self._strip_noise(value, path))
 
     def analysis_dimension(self, key: str) -> dict | None:
         """按 analysis.dimensions.<key> 取维度块；不存在或形状不对都返回 None。"""
@@ -428,14 +437,26 @@ class ScriptBuilder:
                 "开场省略一句话定位，只报公司名",
             )
 
+        # 画面上的标题保留 `哔哩哔哩 (Bilibili Inc.)` 全称，念的时候只念中文名：括注里的
+        # 英文对中文听众是冗余的，中文音色还会把它逐字母拼出来。摘掉要记账，不能悄悄摘。
+        spoken_name = LATIN_PARENTHETICAL.sub("", name).strip() or name
+        if spoken_name != name:
+            self.note_omission(
+                "meta.companyName",
+                name,
+                "画面标题保留全称，解说只念中文名",
+                f"公司名里的英文括注「{name[len(spoken_name):].strip()}」对中文听众是冗余的，会被逐字母拼读",
+            )
+
         return {
             "id": "opening",
             "kind": "opening",
             "layer": LAYER_FRAME,
             "title": name,
-            "narration": self._opening_narration(name, positioning, cutoff),
+            "narration": self._opening_narration(spoken_name, positioning, cutoff),
             "data": {
                 "companyName": name,
+                "spokenName": spoken_name,
                 "dataCutoff": cutoff_raw,
                 "spokenCutoff": cutoff,
                 "positioning": positioning,
@@ -444,10 +465,7 @@ class ScriptBuilder:
         }
 
     @staticmethod
-    def _opening_narration(name: str, positioning: str, cutoff: str) -> str:
-        # 画面上的标题保留 `哔哩哔哩 (Bilibili Inc.)` 全称，念的时候只念中文名：
-        # 括注里的英文对中文听众是冗余的，中文音色还会把它逐字母拼出来。
-        spoken_name = LATIN_PARENTHETICAL.sub("", name).strip() or name
+    def _opening_narration(spoken_name: str, positioning: str, cutoff: str) -> str:
         parts = [f"本期看的公司是{spoken_name}。"]
         if positioning:
             parts.append(ensure_period(positioning))
@@ -461,7 +479,7 @@ class ScriptBuilder:
         if detail.startswith("clauses:"):
             positioning = take_clauses(positioning, int(detail.split(":", 1)[1]))
         data["detail"] = detail
-        scene["narration"] = self._opening_narration(data["companyName"], positioning, data["spokenCutoff"])
+        scene["narration"] = self._opening_narration(data["spokenName"], positioning, data["spokenCutoff"])
 
     def _dimension(self, dimension_id: str) -> dict | None:
         for item in self.summary.get("dimensionSummary") or []:
@@ -626,39 +644,37 @@ class ScriptBuilder:
                 "该类策略播报为「暂无建议正文」，只播触发条件",
             )
 
+        # 画面给建议正文全文，解说按 advice_detail 只念前几句——和维度分镜同一个口径：
+        # data.conclusion 是全文、narration 是裁过的。屏幕不花时间，耳朵才花。
+        narration, beats = self._strategy_narration(key, title, trim_text(advice, advice_detail), spoken_items)
         return {
             "id": f"strategy-{key}",
             "kind": "strategy",
             "layer": LAYER_STRATEGY,
             "title": title,
-            # 画面给建议正文全文，解说按 advice_detail 只念前几句——和维度分镜同一个口径：
-            # data.conclusion 是全文、narration 是裁过的。屏幕不花时间，耳朵才花。
-            "narration": self._strategy_narration(key, title, trim_text(advice, advice_detail), spoken_items),
+            "narration": narration,
             "data": {
                 "strategyId": key,
                 "advice": advice,
                 "detail": advice_detail,
                 "items": spoken_items,
                 "itemsAvailable": len(items),
+                "beats": beats,
             },
         }
 
     @staticmethod
-    def _strategy_narration(key: str, title: str, advice: str, items: list[dict]) -> str:
-        lead = f"接下来是给{title}的建议。" if key in ADVICE_STRATEGIES else f"接下来是{title}。"
-        parts = [lead]
-        if advice:
-            parts.append(ensure_period(advice))
-        else:
-            parts.append("暂无建议正文。")
+    def _strategy_narration(key: str, title: str, advice: str, items: list[dict]) -> tuple[str, list[dict]]:
+        """返回 (解说词, 逐条点亮锚点)。触发条件一条一个锚点，与 `data.items` 同序对齐。"""
+        speech = NarrationBuilder()
+        speech.say(f"接下来是给{title}的建议" if key in ADVICE_STRATEGIES else f"接下来是{title}")
+        speech.say(advice if advice else "暂无建议正文")
+        beats = []
         for item in items:
-            condition = item["condition"]
-            action = item["action"]
-            if condition and action:
-                parts.append(f"触发条件：{condition}，{ensure_period(action)}")
-            else:
-                parts.append(ensure_period(f"触发条件：{condition or action}"))
-        return "".join(parts)
+            condition, action = item["condition"], item["action"]
+            line = f"触发条件：{condition}，{ensure_period(action)}" if condition and action else f"触发条件：{condition or action}"
+            beats.append(speech.beat("trigger", line))
+        return speech.text, beats
 
     def reconcile_strategy_omissions(self, scenes: list[dict]) -> None:
         """advice 缺失的记账写于构造时；裁剪阶梯可能事后把触发条件也拿掉，handling 要跟上产出。"""
@@ -717,9 +733,16 @@ class ScriptBuilder:
         return self.spoken(value, path)
 
     def points_of(self, value, path: str, note: str) -> list[str]:
-        """取一段多点论述，按 ①②③ 拆成要点；缺失记账并返回空列表。"""
-        text = self.field(value, path, note)
-        return split_points(text) if text else []
+        """取一段多点论述，按 ①②③ 拆成要点；缺失记账并返回空列表。
+
+        **先拆点再做朗读改写**：`normalize_for_speech` 会把 ① 换成「第一，」，
+        跑在前面就等于把作者写下的编号抹掉，拆点只能退回按标点猜。
+        """
+        if is_missing(value):
+            self.note_omission(path, value, note)
+            return []
+        cleaned = self._strip_noise(value, path)
+        return [normalize_for_speech(point) for point in split_points(cleaned)]
 
     def _register_deep(self, scene_id: str, kind: str, title: str, payload: dict) -> dict:
         """素材抽取只做一次（omissions 也只记一次），此后裁剪都从这份 payload 重渲染。"""
@@ -761,7 +784,7 @@ class ScriptBuilder:
         更长的级别，等于把裁剪撤销掉。
         """
         ladder = self.deep_ladder(scene)
-        return ladder[_ladder_position(ladder, scene["data"]["detail"]) :]
+        return ladder[_next_ladder_index(ladder, scene["data"]["detail"]) :]
 
     def restore_deep_one_level(self, scene: dict) -> str | None:
         """把一屏深讲往回升一级（更全），返回升到的级别；已经是最全则返回 None。"""
@@ -964,7 +987,7 @@ class ScriptBuilder:
             if item["sharePct"]:
                 parts.append(f"占{item['sharePct']}")
             line = "，".join(parts)
-            beats.append({"group": "revenue", "text": line, "sentenceIndex": speech.say(line)})
+            beats.append(speech.beat("revenue", line))
         return speech.text, {
             "focus": "revenue",
             "period": payload["period"],
@@ -991,11 +1014,11 @@ class ScriptBuilder:
         if mechanism:
             speech.say("粘性靠什么")
             for point in mechanism:
-                beats.append({"group": "mechanism", "text": point, "sentenceIndex": speech.say(point)})
+                beats.append(speech.beat("mechanism", point))
         if leverage:
             speech.say("再看经营杠杆")
             for point in leverage:
-                beats.append({"group": "leverage", "text": point, "sentenceIndex": speech.say(point)})
+                beats.append(speech.beat("leverage", point))
         return speech.text, {
             "focus": "economics",
             "level": payload["level"],
@@ -1016,7 +1039,7 @@ class ScriptBuilder:
         for item in payload["items"]:
             verdict = item["verdict"] or "暂无判定"
             line = f"{item['type']}，判定为{verdict}" if terse or not item["test"] else f"{item['type']}：{item['test']}判定为{verdict}"
-            beats.append({"group": "type", "text": line, "sentenceIndex": speech.say(line)})
+            beats.append(speech.beat("type", line))
         return speech.text, {
             "items": payload["items"],
             "beats": beats,
@@ -1037,7 +1060,7 @@ class ScriptBuilder:
             speech.say(f"{block['label']}，方向是{direction}")
             points = block["points"][: self._budget(detail, len(block["points"]), minimal=0)]
             for point in points:
-                beats.append({"group": side, "text": point, "sentenceIndex": speech.say(point)})
+                beats.append(speech.beat(side, point))
             sides[side] = {
                 "label": block["label"],
                 "direction": block["direction"],
@@ -1055,7 +1078,7 @@ class ScriptBuilder:
         speech.say("最后一个问题")
         if payload["question"]:
             speech.say(payload["question"])
-        beats = [{"group": "answer", "text": point, "sentenceIndex": speech.say(point)} for point in points]
+        beats = [speech.beat("answer", point) for point in points]
         return speech.text, {
             "question": payload["question"],
             "points": payload["points"],  # 画面给全部回答要点，解说按控时只念前几条
@@ -1086,8 +1109,8 @@ LAYER_WEIGHTS = {LAYER_CORE: 0.66, LAYER_FAST: 0.19, LAYER_STRATEGY: 0.15}
 RENDER_PAD_PER_SCENE = 0.25
 
 
-def _ladder_position(ladder: list[str], detail: str) -> int:
-    """当前 detail 在裁剪阶梯上的下一级下标；认不出的 detail 从第二级（第一次裁剪）接着走。"""
+def _next_ladder_index(ladder: list[str], detail: str) -> int:
+    """当前 detail 在裁剪阶梯上的**下一级**下标；认不出的 detail 从第二级（第一次裁剪）接着走。"""
     return ladder.index(detail) + 1 if detail in ladder else 1
 
 
@@ -1482,6 +1505,14 @@ def generate(
         result["totals"]["warning"] = (
             f"裁剪/扩展阶梯已走完，预估时长 {total}s 仍在目标区间 "
             f"[{min_seconds}, {max_seconds}] 之外，请人工决定取舍"
+        )
+    if not detailed:
+        # 降级得写在 totals 里，不能只留一条 omission：看时长的人第一眼看的是这里，
+        # 而「落在 120-180 且 withinTarget」本身不会告诉任何人这支片子少了核心段落。
+        result["totals"]["note"] = (
+            "本片按纯总结模式产出：没有提供 --analysis，商业模式与护城河没有深讲分镜，"
+            f"目标区间按 [{SUMMARY_ONLY_RANGE[0]:g}, {SUMMARY_ONLY_RANGE[1]:g}] 判定而非详解版的 "
+            f"[{DETAILED_RANGE[0]:g}, {DETAILED_RANGE[1]:g}]"
         )
     return result
 

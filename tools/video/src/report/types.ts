@@ -46,7 +46,14 @@ export type Scene = {
 
 export type RevenueItem = {segment?: string; revenue?: string; sharePct?: string};
 export type MoatType = {type?: string; test?: string; verdict?: string};
-export type TrendSide = {label?: string; direction?: string; points?: string[]};
+export type TrendSide = {
+  label?: string;
+  direction?: string;
+  /** 原报告的全部判断依据；`spokenCount` 之后的那几条本片没念到，画面上压暗显示 */
+  points?: string[];
+  spokenCount?: number;
+  pointsAvailable?: number;
+};
 
 export type DimensionRef = {
   id: string;

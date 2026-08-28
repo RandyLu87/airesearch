@@ -188,26 +188,27 @@ const StrategySlide: React.FC<{scene: Scene}> = ({scene}) => {
       {items.length > 0 ? (
         <div style={{display: 'flex', flexDirection: 'column', gap: 18, marginTop: 6}}>
           {items.map((item, index) => (
-            <div
-              key={index}
-              style={{
-                display: 'flex',
-                gap: 22,
-                padding: '22px 28px',
-                borderRadius: 14,
-                backgroundColor: theme.bgSoft,
-                borderLeft: `6px solid ${theme.accent}`,
-              }}
-            >
-              <div style={{flex: 1, fontSize: 29, lineHeight: 1.5, color: theme.text}}>
-                <span style={{color: theme.accent}}>触发条件　</span>
-                {str(item.condition) ?? '—'}
+            <Reveal key={index} from={beatFrom(scene.beats, index)}>
+              <div
+                style={{
+                  display: 'flex',
+                  gap: 22,
+                  padding: '22px 28px',
+                  borderRadius: 14,
+                  backgroundColor: theme.bgSoft,
+                  borderLeft: `6px solid ${theme.accent}`,
+                }}
+              >
+                <div style={{flex: 1, fontSize: 29, lineHeight: 1.5, color: theme.text}}>
+                  <span style={{color: theme.accent}}>触发条件　</span>
+                  {str(item.condition) ?? '—'}
+                </div>
+                <div style={{flex: 1, fontSize: 29, lineHeight: 1.5, color: theme.text}}>
+                  <span style={{color: theme.accent}}>应对　</span>
+                  {str(item.action) ?? '—'}
+                </div>
               </div>
-              <div style={{flex: 1, fontSize: 29, lineHeight: 1.5, color: theme.text}}>
-                <span style={{color: theme.accent}}>应对　</span>
-                {str(item.action) ?? '—'}
-              </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       ) : available > 0 ? (
@@ -321,6 +322,7 @@ const EconomicsSlide: React.FC<{scene: Scene}> = ({scene}) => {
                 </div>
               </Reveal>
             ))}
+            <SpokenNote available={points.length} spoken={beats.length} unit={`条${label}`} />
           </div>
         );
       })}
@@ -352,9 +354,10 @@ const MoatChecklistSlide: React.FC<{scene: Scene}> = ({scene}) => {
             }}
           >
             <div style={{width: 260, fontSize: 30, fontWeight: 700, color: theme.text}}>{str(item.type) ?? '—'}</div>
-            <div style={{flex: 1, fontSize: 26, color: theme.textDim, lineHeight: 1.45}}>
-              {/* 检验问题即使因控时没念，画面上仍然给着：屏幕能承载的比耳朵多 */}
-              {spokenTest ? str(item.test) ?? '' : str(item.test) ?? ''}
+            {/* 检验问题即使因控时没念，画面上仍然给着：屏幕能承载的比耳朵多。
+                没念到就压暗，和别的卡片里「没念到的要点」用同一种亮度语言。 */}
+            <div style={{flex: 1, fontSize: 26, color: theme.textDim, lineHeight: 1.45, opacity: spokenTest ? 1 : 0.55}}>
+              {str(item.test) ?? ''}
             </div>
             <VerdictTag verdict={str(item.verdict)} />
           </div>
@@ -379,7 +382,7 @@ const MoatTrendSlide: React.FC<{scene: Scene}> = ({scene}) => {
           if (side === null) return null;
           const beats = scene.beats.filter((beat) => beat.group === key);
           const points = stringList(side.points);
-          const spoken = typeof (side as {spokenCount?: number}).spokenCount === 'number' ? (side as {spokenCount: number}).spokenCount : points.length;
+          const spoken = typeof side.spokenCount === 'number' ? side.spokenCount : points.length;
           return (
             <div
               key={key}
