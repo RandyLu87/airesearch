@@ -1,0 +1,31 @@
+{
+  "name": "@airesearch/video",
+  "private": true,
+  "version": "0.1.0",
+  "description": "研究报告视频化 MVP：Remotion + FFmpeg + 免费 TTS 的最小可运行环境",
+  "scripts": {
+    "render": "remotion render src/index.ts Hello out/hello.mp4",
+    "render:report": "node scripts/render.mjs",
+    "pipeline": "node scripts/pipeline.mjs",
+    "studio": "remotion studio src/index.ts",
+    "script": "python3 scripts/script_gen.py",
+    "tts": "bash scripts/py.sh tts.py",
+    "tts:batch": "bash scripts/py.sh tts_batch.py",
+    "test": "python3 -m unittest discover -s scripts -p 'test_*.py' -t scripts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.518",
+    "@remotion/renderer": "4.0.518",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "remotion": "4.0.518"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "typescript": "^5.9.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
