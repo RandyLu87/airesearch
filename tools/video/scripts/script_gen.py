@@ -350,8 +350,11 @@ class ScriptBuilder:
         raw = block.get("triggers") if key in ADVICE_STRATEGIES else block.get("signals")
         return [item for item in (raw or []) if isinstance(item, dict)]
 
-    def build_strategy(self, key: str, item_limit: int, *, note_missing: bool = True) -> dict | None:
-        """note_missing=False 用于「已在分镜里、只是重新裁剪」的重建：正文空不等于没内容。"""
+    def build_strategy(
+        self, key: str, item_limit: int, *, note_missing: bool = True, allow_empty: bool = False
+    ) -> dict | None:
+        """note_missing=False 关掉记账（重建/试探，缺失早已记过）；
+        allow_empty=True 允许返回空正文分镜，只有「已在分镜里、仅重新裁剪」才该开。"""
         block = (self.summary.get("strategies") or {}).get(key)
         if not isinstance(block, dict):
             if note_missing:
@@ -374,6 +377,15 @@ class ScriptBuilder:
                 continue
             spoken_items.append({"condition": condition, "action": action})
 
+        if not advice and not spoken_items and not allow_empty:
+            # 正文与触发条件都没得播：这是真的没内容，只记「已跳过」一条，不再记 advice。
+            if note_missing:
+                reason = None
+                if not is_missing(block):
+                    reason = missing_reason(block.get("advice"))
+                self.note_omission(f"strategies.{key}", block, "该类策略无可播报内容，已跳过", reason)
+            return None
+
         if not advice and note_missing:
             # 正文缺失但触发条件还能播：分镜保留，缺失照样如实记一条。
             self.note_omission(
@@ -381,14 +393,6 @@ class ScriptBuilder:
                 block.get("advice"),
                 "该类策略播报为「暂无建议正文」，只播触发条件",
             )
-
-        if not advice and not spoken_items and note_missing:
-            # 只有「初次构造就没内容」才是真的跳过；item_limit=0 的裁剪要保留分镜。
-            reason = None
-            if not is_missing(block):
-                reason = missing_reason(block.get("advice"))
-            self.note_omission(f"strategies.{key}", block, "该类策略无可播报内容，已跳过", reason)
-            return None
 
         return {
             "id": f"strategy-{key}",
@@ -420,8 +424,23 @@ class ScriptBuilder:
                 parts.append(ensure_period(f"触发条件：{condition or action}"))
         return "".join(parts)
 
+    def reconcile_strategy_omissions(self, scenes: list[dict]) -> None:
+        """advice 缺失的记账写于构造时；裁剪阶梯可能事后把触发条件也拿掉，handling 要跟上产出。"""
+        narrated = {
+            s["data"]["strategyId"]: s for s in scenes if s["kind"] == "strategy"
+        }
+        for item in self.omissions:
+            key = item["path"].removesuffix(".advice")
+            if key == item["path"] or not key.startswith("strategies."):
+                continue
+            scene = narrated.get(key.removeprefix("strategies."))
+            if scene is not None and not scene["data"]["items"]:
+                item["handling"] = "该类策略播报为「暂无建议正文」，触发条件因控时未播报"
+
     def rewrite_strategy(self, scene: dict, item_limit: int) -> None:
-        rebuilt = self.build_strategy(scene["data"]["strategyId"], item_limit, note_missing=False)
+        rebuilt = self.build_strategy(
+            scene["data"]["strategyId"], item_limit, note_missing=False, allow_empty=True
+        )
         if rebuilt is None:
             return
         scene["narration"] = rebuilt["narration"]
@@ -606,6 +625,7 @@ def generate(summary: dict, rate: float, min_seconds: float, max_seconds: float,
     scenes.append(builder.build_closing())
 
     scenes, total = fit_duration(builder, scenes, min_seconds, max_seconds)
+    builder.reconcile_strategy_omissions(scenes)
     within = min_seconds <= total <= max_seconds
 
     meta = summary.get("meta") or {}

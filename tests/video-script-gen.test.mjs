@@ -209,3 +209,52 @@ test("顶层 companyId / companyName 有值且与 meta 一致，tts_batch 的 ma
   assert.equal(script.companyId, script.meta.companyId);
   assert.equal(script.companyName, script.meta.companyName);
 });
+
+test("扩展探针不得插入零内容的策略分镜——记了补播就必须真的补进了内容", () => {
+  const summary = bili();
+  for (const dimension of summary.dimensionSummary) dimension.conclusion = dimension.conclusion.slice(0, 8) + "。";
+  // 契约模板原样的信号占位：块在、条目在，但每个字段都是 __TODO__
+  for (const key of ["sellSignals", "addSignals"]) {
+    summary.strategies[key] = { title: key, signals: [{ signal: "__TODO__", observable: "__TODO__" }] };
+  }
+  const { script } = run(summary, ["--min-seconds", "150", "--max-seconds", "210"]);
+
+  // 反向断言：正文与触发条件都空的分镜不许存在，除非 omissions 指名道姓
+  const named = new Set(script.omissions.map((item) => item.path));
+  for (const scene of script.scenes.filter((s) => s.kind === "strategy")) {
+    if (scene.data.advice || scene.data.items.length) continue;
+    assert.ok(named.has(`strategies.${scene.data.strategyId}`), `${scene.id} 零内容却一条 omission 都没记`);
+  }
+  for (const step of script.adjustments.filter((s) => s.step === "strategy-add-class")) {
+    const key = step.detail.replace("补充播报 ", "");
+    const scene = sceneById(script, `strategy-${key}`);
+    assert.ok(scene.data.advice || scene.data.items.length, `${step.detail} 补的是一条「暂无建议正文」`);
+  }
+});
+
+test("正文与触发条件都缺时只记一条「已跳过」，不再同时声称「只播触发条件」", () => {
+  const summary = bili();
+  summary.strategies.noPosition = {
+    title: "空仓者",
+    advice: "__TODO__",
+    triggers: [{ condition: "__TODO__", action: "__TODO__" }],
+  };
+  const { script } = run(summary);
+
+  assert.equal(sceneById(script, "strategy-noPosition"), undefined);
+  const paths = script.omissions.filter((item) => item.path.startsWith("strategies.noPosition")).map((i) => i.path);
+  assert.deepEqual(paths, ["strategies.noPosition"], "分镜没播出去，却记了一条描述播报方式的 omission");
+});
+
+test("触发条件被控时裁掉后，omission 的 handling 跟着产出走而不是停在构造时", () => {
+  const summary = bili();
+  summary.strategies.noPosition.advice = { status: "unavailable", reason: "待补" };
+  const { script } = run(summary, ["--min-seconds", "40", "--max-seconds", "80"]);
+
+  const scene = sceneById(script, "strategy-noPosition");
+  const omission = script.omissions.find((item) => item.path === "strategies.noPosition.advice");
+  if (scene && !scene.data.items.length) {
+    assert.ok(!omission.handling.includes("只播触发条件"), "触发条件已裁掉，handling 仍称在播");
+    assert.ok(omission.handling.includes("未播报"));
+  }
+});
