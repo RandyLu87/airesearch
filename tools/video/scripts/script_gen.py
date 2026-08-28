@@ -434,7 +434,9 @@ class ScriptBuilder:
             if key == item["path"] or not key.startswith("strategies."):
                 continue
             scene = narrated.get(key.removeprefix("strategies."))
-            if scene is not None and not scene["data"]["items"]:
+            if scene is None:
+                item["handling"] = "该类策略因控时整类未播报"
+            elif not scene["data"]["items"]:
                 item["handling"] = "该类策略播报为「暂无建议正文」，触发条件因控时未播报"
 
     def rewrite_strategy(self, scene: dict, item_limit: int) -> None:

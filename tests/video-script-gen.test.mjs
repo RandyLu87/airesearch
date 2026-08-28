@@ -258,3 +258,18 @@ test("触发条件被控时裁掉后，omission 的 handling 跟着产出走而�
     assert.ok(omission.handling.includes("未播报"));
   }
 });
+
+test("策略整类被控时移除后，omission 的 handling 说的是整类未播报", () => {
+  const amdSummary = path.join(repoRoot, "research", "companies", "us-amd-advanced-micro-devices", "financials-summary.json");
+  const summary = JSON.parse(readFileSync(amdSummary, "utf8"));
+  summary.strategies.holding.advice = "__TODO__";
+  const { script } = run(summary);
+
+  const spoken = new Set(script.scenes.filter((s) => s.kind === "strategy").map((s) => s.data.strategyId));
+  for (const item of script.omissions) {
+    const key = item.path.replace(/^strategies\.(.+)\.advice$/, "$1");
+    if (key === item.path || spoken.has(key)) continue;
+    assert.ok(item.handling.includes("整类未播报"), `${item.path} 已整类移除，handling 仍称在播报`);
+  }
+  assert.ok(!spoken.has("holding"), "复现前提失效：holding 仍在分镜里");
+});
