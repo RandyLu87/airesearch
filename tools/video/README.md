@@ -313,6 +313,11 @@ npm run pipeline -- --company us-bili-bilibili -- --concurrency=10
 常用参数：`--voice` / `--rate` 透传给 TTS，`--out` 换成片路径，`--skip-tts` 复用已有
 manifest（改模板时不用反复联网重合成），`--` 之后原样透传给 remotion。
 
+`--skip-tts` 会先拿重新生成的分镜逐条比对 manifest 里的文案：只要文案变过（改了
+`financials-summary.json`、动过 `script_gen.py`），就直接报错中断，不会拿旧音频配新画面
+——分镜 id 是固定的，光靠渲染那步的 id 认领拦不住这种漂移。此时 `--voice` / `--rate`
+不生效（不重新合成），会在 stderr 提示一行。
+
 MVP 阶段的实测耗时、成本、质量评价与规模化前置问题见 **`MVP-ASSESSMENT.md`**。
 
 ## 已知限制

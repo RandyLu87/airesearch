@@ -14,7 +14,7 @@
  */
 
 import {spawnSync} from 'node:child_process';
-import {existsSync, mkdirSync, statSync, writeFileSync} from 'node:fs';
+import {existsSync, mkdirSync, readFileSync, statSync, writeFileSync} from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 
@@ -27,7 +27,8 @@ const USAGE = `用法：node scripts/pipeline.mjs --company <公司目录或目�
   --out <path>          输出 mp4，默认 out/render/<id>/<id>.mp4
   --voice <name>        TTS 音色，默认 zh-CN-XiaoxiaoNeural
   --rate <n>            TTS 语速，如 +10%
-  --skip-tts            复用已存在的 out/tts/<id>/manifest.json（不联网重合成）
+  --skip-tts            复用已存在的 out/tts/<id>/manifest.json（不联网重合成）；
+                        文案若与旧音频对不上会直接报错，不会拿旧音频配新画面
   --                    之后的参数原样透传给 remotion（如 --concurrency=10）
 `;
 
@@ -52,14 +53,14 @@ function parseArgs(argv) {
       opts.skipTts = true;
       continue;
     }
+    // 先认参数名再取值，否则末位的未知参数会报成「缺少取值」
+    if (arg !== '--company' && arg !== '--out' && arg !== '--voice' && arg !== '--rate') {
+      die(`未知参数 ${arg}\n\n${USAGE}`);
+    }
     const value = argv[i + 1];
     if (value === undefined || value.startsWith('--')) die(`${arg} 缺少取值`);
     i += 1;
-    if (arg === '--company' || arg === '--out' || arg === '--voice' || arg === '--rate') {
-      opts[arg.slice(2)] = value;
-      continue;
-    }
-    die(`未知参数 ${arg}\n\n${USAGE}`);
+    opts[arg.slice(2)] = value;
   }
   if (!opts.company) die(`--company 必填\n\n${USAGE}`);
   return opts;
@@ -92,6 +93,49 @@ function runStep(label, command, args, steps) {
   }
 }
 
+function readJson(file, label) {
+  try {
+    return JSON.parse(readFileSync(file, 'utf8'));
+  } catch (error) {
+    die(`读不了${label} ${path.relative(repoRoot, file)}：${error.message}`);
+  }
+}
+
+/**
+ * --skip-tts 复用旧音频，但第一步刚把分镜重新生成过一遍：只要文案变了（改了
+ * financials-summary.json、动过 script_gen.py），旧音频就配不上新画面，而分镜 id
+ * 是固定的（opening / dimension-* / …），render 那边按 id 认领一个都不会缺，
+ * 于是整条链路会静默产出「念旧稿、放新卡片」的成片。这里按 render 的同一套
+ * 认领规则（同 id 先到先得）逐条比对文案，对不上就报错，不往下渲。
+ */
+function assertNarrationMatchesAudio(scriptFile, manifestFile) {
+  const scenes = readJson(scriptFile, '分镜稿')?.scenes;
+  const entries = readJson(manifestFile, '音频清单')?.scenes;
+  if (!Array.isArray(scenes) || !Array.isArray(entries)) {
+    die('--skip-tts：分镜稿或音频清单里没有 scenes 数组，无法确认音画一致，去掉 --skip-tts 重跑');
+  }
+  const spokenById = new Map();
+  for (const entry of entries) {
+    const id = entry?.id;
+    if (!spokenById.has(id)) spokenById.set(id, []);
+    spokenById.get(id).push(entry?.text);
+  }
+  const drifted = [];
+  for (const [index, scene] of scenes.entries()) {
+    const id = scene?.id ?? `scene-${String(index + 1).padStart(2, '0')}`;
+    const spoken = spokenById.get(id)?.shift();
+    if (spoken !== scene?.narration) drifted.push(id);
+  }
+  const orphaned = [...spokenById.values()].flat().length;
+  if (drifted.length || orphaned) {
+    die(
+      `--skip-tts：分镜文案与已有音频对不上（${drifted.length ? `文案已变：${drifted.join('、')}` : ''}` +
+        `${drifted.length && orphaned ? '；' : ''}${orphaned ? `多出 ${orphaned} 条无主音频` : ''}），` +
+        '复用会念旧稿配新画面，去掉 --skip-tts 重跑',
+    );
+  }
+}
+
 function artifact(file) {
   return existsSync(file) ? {path: path.relative(repoRoot, file), bytes: statSync(file).size} : null;
 }
@@ -116,6 +160,10 @@ function main() {
   runStep('文案生成', 'python3', ['scripts/script_gen.py', '--summary', summary, '--out', scriptFile], steps);
 
   if (opts.skipTts) {
+    assertNarrationMatchesAudio(scriptFile, manifestFile);
+    if (opts.voice || opts.rate) {
+      process.stderr.write('提示：--skip-tts 不重新合成，--voice / --rate 本次不生效\n');
+    }
     process.stdout.write(`\n▸ TTS 合成（跳过，复用 ${path.relative(repoRoot, manifestFile)}）\n`);
     steps.push({step: 'TTS 合成', seconds: 0, exitCode: 0, skipped: true});
   } else {
