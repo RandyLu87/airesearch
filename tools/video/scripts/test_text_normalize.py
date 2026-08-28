@@ -42,8 +42,19 @@ class NormalizeTest(unittest.TestCase):
         self.assertNormalized("数据截至2026-06-30", "数据截至2026年6月30日")
         # 日期里的月/日也是两位数：两位数财报期规则若跑在前面会把 "05 Q2" 吃成 "2005年第二季度"
         self.assertNormalized("2026-08-05 Q2 财报", "2026年8月5日 Q2 财报")
-        self.assertNormalized("2026/08/05 H1", "2026/08/05 H1")
+        self.assertNormalized("2026/08/05 H1", "2026年8月5日 H1")
         self.assertNormalized("区间22-28%不受影响", "区间百分之22到28不受影响")
+
+    def test_slash_dates_and_day_ranges(self):
+        self.assertNormalized("2026/03/18发布", "2026年3月18日发布")
+        self.assertNormalized("2026-08-19/20 Q2业绩会", "2026年8月19日到20日 Q2业绩会")
+        self.assertNormalized("2026-07-02/03）", "2026年7月2日到3日）")
+        # 分隔符必须一致，否则 URL 路径里的 "2026-04/17" 会被当成日期
+        self.assertNormalized("articleFileDir/2026-04/17/1b9", "articleFileDir/2026到04/17/1b9")
+        # 区间尾段只认两位数且后面不接字母/数字/"."/"-"，挡住哈希前缀、文件名和次段日期
+        self.assertNormalized("uploads/2023/03/22/8d30", "uploads/2023年3月22日/8d30")
+        self.assertNormalized("finalpage/2026-03-28/1225047590", "finalpage/2026年3月28日/1225047590")
+        self.assertNormalized("2026-07-02/07-06", "2026年7月2日/07到06")
 
     def test_magnitude_suffixes(self):
         self.assertNormalized("市值US$8.5B", "市值85亿美元")
