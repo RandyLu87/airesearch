@@ -150,6 +150,42 @@ def compact(payload: dict) -> dict:
     return {key: value for key, value in payload.items() if value is not None}
 
 
+# `unit` 里的量级写法 → `parse_amount` 认得的量级词。中文的长词必须排在短词前面，
+# 否则「万亿」会先被「万」吃掉；英文里 billion 是 10^9，中文没有对应的单字量级，
+# 所以映射到 parse_amount 的 `bn` 而不是「亿」（10^8）。
+_UNIT_MAGNITUDES = (
+    ("万亿", "万亿"), ("千万", "千万"), ("百万", "百万"), ("亿", "亿"), ("万", "万"), ("千", "千"),
+    ("trillion", "万亿"), ("billion", "bn"), ("million", "百万"), ("thousand", "千"),
+)
+
+# `unit` 里的币种写法 → 统一叫法。「美元」「港元」必须排在「元」前面，否则
+# 「千美元」会被认成「元」。
+_UNIT_CURRENCIES = (
+    (("美元", "USD", "US$"), "美元"),
+    (("港元", "港币", "HKD", "HK$"), "港元"),
+    (("人民币", "RMB", "CNY", "¥", "元"), "元"),
+)
+
+
+def split_unit(unit) -> tuple[str, str | None]:
+    """`unit` 字符串 → `(量级词, 币种)`，两者都可能取不到。
+
+    研究数据里同一个字段的 `unit` 写法五花八门——`百万元` / `人民币百万元` /
+    `RMB million` / `RMB百万` / `百万USD` / `HK$ million` / `千美元`——但真正的信息只有
+    量级与币种两项。**按子串去认，不穷举写法**：穷举早晚漏一种，而漏掉的表现是整张图
+    悄悄消失（16 家里曾有 7 家因此丢掉营收趋势图），不是报错。
+    """
+    text = str(unit or "").strip()
+    if not text or text == "currency":
+        return "", None
+    magnitude = next((token for probe, token in _UNIT_MAGNITUDES if probe in text), "")
+    currency = next(
+        (name for probes, name in _UNIT_CURRENCIES if any(probe in text for probe in probes)),
+        None,
+    )
+    return magnitude, currency
+
+
 def read_amount(value) -> tuple[Decimal, str] | None:
     """金额字段 → `(以元/美元计的数值, 币种)`；认不出来返回 None。
 
@@ -167,16 +203,27 @@ def read_amount(value) -> tuple[Decimal, str] | None:
     if raw is None:
         return None
 
+    # 量级偶尔被写在 `currency` 位上（`{"unit": "currency", "currency": "RMB百万"}`）。
+    # 那是数据侧的写法问题，但在这里当作认不出来处理的代价是整张图消失，所以对称地也拆一次。
+    code_magnitude, code_currency = split_unit(currency_code)
     suffix = CURRENCY_SUFFIX.get(str(currency_code).upper()) if currency_code else None
+    suffix = suffix or code_currency
 
-    # A：数值和量级分开放，拼回一条完整原文再走同一个解析器，不另写一套换算
+    # A：数值和量级分开放，拼回一条完整原文再走同一个解析器，不另写一套换算。
+    # 拼之前先把 unit 拆成量级 + 币种：`人民币百万元` 原样拼上去是 `364855人民币百万元元`，
+    # 解析器认不出来，整条曲线就没了。
     if isinstance(raw, (int, float)) and not isinstance(raw, bool):
-        if unit and unit != "currency" and suffix:
-            return parse_amount(f"{raw}{unit}{suffix}")
-        # unit 是 "currency" 或没写：数值本身就以元/美元计
-        if suffix:
-            return Decimal(str(raw)), suffix
-        return None
+        magnitude, unit_currency = split_unit(unit)
+        # 币种以字段里声明的为准，unit 里的写法只在没声明时兜底
+        suffix = suffix or unit_currency
+        # unit 没给量级时，才认 currency 位上误写的量级
+        magnitude = magnitude or code_magnitude
+        if suffix is None:
+            return None
+        if magnitude:
+            return parse_amount(f"{raw}{magnitude}{suffix}")
+        # unit 是 "currency"、只写了币种、或没写：数值本身就以元/美元计
+        return Decimal(str(raw)), suffix
 
     if not isinstance(raw, str):
         return None
@@ -215,9 +262,24 @@ def yoy_pct(current: Decimal, previous: Decimal) -> float | None:
 # -- 各张图的抽取，每张自带闸门 ---------------------------------------------
 
 
+_FISCAL_YEAR = re.compile(r"(\d{4})")
+
+
 def _annual(collection: dict) -> list[dict]:
+    """年度序列，**统一按财年升序**返回。
+
+    采集文件两种排法都有（美团是新→旧，哔哩哔哩是旧→新），而下游全都按升序假定：
+    折线图直接按顺序画 X 轴，KPI 拿 `rows[-1]` 当最新一年。拿到降序的文件时，
+    两处都会错得很安静——趋势图把逐年增长画成一路下滑，KPI 显示的是五年前的毛利率。
+
+    年份认不全或有重复时保持原序不动：猜出来的时间轴比没有排序更危险。
+    """
     annual = ((collection.get("financialMetrics") or {}).get("annual")) or []
-    return [item for item in annual if isinstance(item, dict)]
+    rows = [item for item in annual if isinstance(item, dict)]
+    years = [_FISCAL_YEAR.search(str(row.get("fiscalYear") or "")) for row in rows]
+    if len(rows) > 1 and all(years) and len({m.group(1) for m in years}) == len(rows):
+        rows = [row for _, row in sorted(zip((m.group(1) for m in years), rows), key=lambda pair: pair[0])]
+    return rows
 
 
 def amount_series(rows: list[dict], key: str) -> tuple[list[tuple[str, Decimal]], str | None]:

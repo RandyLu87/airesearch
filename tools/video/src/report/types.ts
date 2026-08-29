@@ -90,7 +90,14 @@ export type RevenueItem = {
   /** 从金额/占比里拆出来的口径括注，显示在业务线名称下方，不进解说词 */
   note?: string;
 };
-export type MoatType = {type?: string; test?: string; verdict?: string};
+export type MoatType = {
+  type?: string;
+  test?: string;
+  /** 判定标签（原文前缀，如「存在」「待验证」），进解说也进大号字 */
+  verdict?: string;
+  /** 判定的其余原文，只在卡片里小号显示，不进解说 */
+  verdictNote?: string;
+};
 export type TrendSide = {
   label?: string;
   direction?: string;
@@ -139,6 +146,20 @@ export const objectList = <T,>(value: unknown): T[] =>
 
 export const stringList = (value: unknown): string[] =>
   Array.isArray(value) ? value.map((item) => str(item)).filter((item): item is string => item !== null) : [];
+
+/**
+ * 这一屏的画面要点（1–3 条）。
+ *
+ * 讲稿加工件给的是 `points` 数组；旧契约的单条 `headline` 也认，按一条要点处理。
+ * 之所以是数组而不是一句话：一句话的写法会逼着改写者把维度名和分数塞进去凑成完整句
+ * （「护城河5.5分，已被重新定价」），而那两样画面上方各有一处，等于同屏说三遍。
+ */
+export const headlinePoints = (scene: Scene): string[] => {
+  const points = stringList(scene.data.points);
+  if (points.length > 0) return points;
+  const single = str(scene.data.headline);
+  return single ? [single] : [];
+};
 
 export const trendSide = (value: unknown): TrendSide | null =>
   !!value && typeof value === 'object' ? (value as TrendSide) : null;

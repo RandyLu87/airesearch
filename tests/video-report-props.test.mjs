@@ -403,3 +403,51 @@ test("没有 visuals 的分镜给 null 而不是缺字段——模板按 null �
   });
   assert.equal(props.scenes[0].visuals, null);
 });
+
+test("过长的一句被切成多条字幕：字幕框最多三行，长句会压住正文", () => {
+  // 研究结论本来就是长句：护城河整体判定那一屏原本是一句 250 字的解说，
+  // 整句铺在字幕条上占六行，从底部往上长，直接盖住五张判定卡。
+  const long =
+    "规模效应存在且是本季唯一被硬数据证实的一条，但证据强度受三方同时收手与季节性两项共同因素折价，" +
+    "尚不能证明它在补贴完全正常化后仍有同等幅度；网络效应存在但已降级，从一超的全局网络效应降为双强格局下的密度领先。";
+  const scene = {
+    id: "moat-overview",
+    kind: "moat-overview",
+    title: "整体判定",
+    narration: long,
+    data: { items: [], beats: [] },
+    estimatedSeconds: 20,
+  };
+  const { props } = buildReportProps({ storyboard: storyboardOf([scene]), fps: 30 });
+  const captions = props.scenes[0].captions;
+
+  assert.ok(captions.length > 1, "长句没有被切开");
+  for (const caption of captions) {
+    assert.ok(caption.text.length <= 70, `字幕过长：${caption.text.length} 字`);
+  }
+  // 切开只影响字幕，不影响这条分镜的时间轴：首条从分镜开头起，末条铺到分镜结尾
+  assert.equal(captions[0].from, 0);
+  const last = captions[captions.length - 1];
+  assert.equal(last.from + last.durationInFrames, props.scenes[0].durationInFrames);
+  // 拼回去必须还是原文：只在标点处切，不改一个字
+  assert.equal(captions.map((caption) => caption.text).join(""), long);
+});
+
+test("句子被切成多条字幕后，beats 仍落在它那一句的第一条上", () => {
+  const scene = {
+    id: "moat-trend",
+    kind: "moat-trend",
+    title: "过去与未来",
+    narration:
+      "先看过去五年。" +
+      "护城河在变窄，因为补贴战证明了用户在低客单场景可以被现金买走，份额从一超降到双强，" +
+      "而到店酒旅这块最厚的利润盘已经并入核心本地商业统一列示，外部无法独立跟踪其受损程度。",
+    data: { past: {}, next: {}, beats: [{ group: "past", text: "变窄", sentenceIndex: 1 }] },
+    estimatedSeconds: 20,
+  };
+  const { props } = buildReportProps({ storyboard: storyboardOf([scene]), fps: 30 });
+  const { captions, beats } = props.scenes[0];
+  assert.ok(captions.length > 2, "第二句应当被切成多条");
+  // 第 1 句（下标 1）的第一条字幕，就是这条 beat 该亮起来的帧
+  assert.equal(beats[0].from, captions[1].from);
+});

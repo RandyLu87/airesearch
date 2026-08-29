@@ -199,9 +199,21 @@ const LineSeries: React.FC<{series: Series[]; axisUnit: string; zeroBaseline: bo
                   strokeWidth={2}
                 />
               ))}
-              {/* 起点标注压暗、末点标注加重：读的顺序是「从这儿走到了这儿」 */}
+              {/* 起点标注压暗、末点标注加重：读的顺序是「从这儿走到了这儿」。
+                  起点默认标在点下方，但点本身贴近底部时（净利润转亏那条线就是）
+                  下方正好是 X 轴年份，两串字会叠成一团——这种情况翻到点上方去标。 */}
               {count >= 3 && first ? (
-                <text x={xOf(0, count)} y={yOf(first.y) + 34} fill={theme.textDim} fontSize={22} textAnchor="middle">
+                <text
+                  x={xOf(0, count)}
+                  y={
+                    yOf(first.y) + 34 > CHART_HEIGHT - PAD.bottom
+                      ? yOf(first.y) - 18
+                      : yOf(first.y) + 34
+                  }
+                  fill={theme.textDim}
+                  fontSize={22}
+                  textAnchor="middle"
+                >
                   {first.label}
                 </text>
               ) : null}
@@ -369,7 +381,7 @@ const RiskMatrix: React.FC<{cells: RiskCell[]; omitted: number; total: number}> 
         </div>
       ) : null}
       <div style={{fontSize: 21, color: theme.textDim}}>
-        原报告共 {total} 条失败路径
+        共 {total} 条失败路径
         {omitted > 0 ? `，其中 ${omitted} 条缺概率或影响判定、未落格` : ''}
       </div>
     </div>
