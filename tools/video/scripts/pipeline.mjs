@@ -173,7 +173,21 @@ function main() {
     );
   }
 
+  // 讲稿加工件：有就用，没有就出「纯拼接」的片子。它是唯一一处 LLM 改写的产物，
+  // 所以**用之前必须过 brief.py 的数字白名单校验**——校验不过就地中断，不会拿
+  // 一份可能编了数字的口语稿去合成语音。
+  const briefFile = path.join(projectRoot, 'out', 'brief', `${id}.json`);
+  const hasBrief = existsSync(briefFile);
+  if (!hasBrief) {
+    process.stderr.write(
+      `提示：${id} 没有 out/brief/${id}.json，本片解说词走纯拼接（研究正文的长句会直接念出来）\n`,
+    );
+  }
+
   const scriptFile = path.join(projectRoot, 'out', 'script', `${id}.json`);
+  // 控时基准稿：不带 --brief 跑一次的产出。讲稿校验拿它算每条分镜的字数预算——
+  // 口语稿几乎一定比原文长，不卡预算就会把 292s 的片子写成 634s（美团实测）。
+  const baseScriptFile = path.join(projectRoot, 'out', 'script', `${id}.base.json`);
   const ttsDir = path.join(projectRoot, 'out', 'tts', id);
   const manifestFile = path.join(ttsDir, 'manifest.json');
   const videoFile = opts.out ? path.resolve(opts.out) : path.join(projectRoot, 'out', 'render', id, `${id}.mp4`);
@@ -186,6 +200,41 @@ function main() {
   const steps = [];
   const startedAt = process.hrtime.bigint();
 
+  if (hasBrief) {
+    runStep(
+      '控时基准稿',
+      'python3',
+      [
+        'scripts/script_gen.py',
+        '--summary',
+        summary,
+        ...(analysis ? ['--analysis', analysis] : []),
+        ...(collection ? ['--collection', collection] : []),
+        '--out',
+        baseScriptFile,
+      ],
+      steps,
+    );
+
+    runStep(
+      '讲稿校验',
+      'python3',
+      [
+        'scripts/brief.py',
+        'check',
+        '--brief',
+        briefFile,
+        '--summary',
+        summary,
+        ...(analysis ? ['--analysis', analysis] : []),
+        ...(collection ? ['--collection', collection] : []),
+        '--storyboard',
+        baseScriptFile,
+      ],
+      steps,
+    );
+  }
+
   runStep(
     '文案生成',
     'python3',
@@ -195,6 +244,7 @@ function main() {
       summary,
       ...(analysis ? ['--analysis', analysis] : []),
       ...(collection ? ['--collection', collection] : []),
+      ...(hasBrief ? ['--brief', briefFile] : []),
       '--out',
       scriptFile,
     ],
@@ -230,7 +280,10 @@ function main() {
     summary: path.relative(repoRoot, summary),
     analysis: analysis ? path.relative(repoRoot, analysis) : null,
     collection: collection ? path.relative(repoRoot, collection) : null,
+    brief: hasBrief ? path.relative(repoRoot, briefFile) : null,
     mode: analysis ? 'detailed' : 'summary-only',
+    // 解说词是改写过的口语稿还是逐字转述，看这一项——两者的核对方式不一样
+    narration: hasBrief ? 'brief' : 'verbatim',
     totalSeconds: Number(totalSeconds),
     steps,
     artifacts: {

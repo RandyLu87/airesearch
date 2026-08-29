@@ -39,6 +39,46 @@ const splitSentences = (text) =>
     .filter(Boolean);
 
 /**
+ * 一条字幕最多显示多少字。
+ *
+ * 版面推出来的：字幕框宽 1680px、字号 38px，一行约 44 个汉字，`CAPTION_MAX_LINES` 是 3 行。
+ * 取 70 是留一行余量——超过 3 行时字幕框会从底部往上长，压住正文（护城河那一屏的
+ * 五张判定卡就是这么被盖掉的）。**这个数改了要回去看 Scenes.tsx 的字幕版面常量。**
+ */
+const CAPTION_MAX_CHARS = 70;
+
+/** 断句优先级：分号最靠得住，其次逗号顿号，最后括号收尾。 */
+const CAPTION_BREAKS = ["；", ";", "，", ",", "、", "）", ")"];
+
+/**
+ * 把过长的一句切成几条字幕。**只在标点处切，不改一个字**。
+ *
+ * 解说词里一句话动辄一两百字（研究结论本来就是长句），整句铺在字幕条上会占五六行。
+ * 切开之后每条各自计时，时间轴仍在原句的区间内按字数摊——不动 TTS 的句级对齐。
+ */
+const chunkSentence = (sentence, max = CAPTION_MAX_CHARS) => {
+  const text = String(sentence ?? "");
+  if (text.length <= max) return [text];
+
+  const chunks = [];
+  let rest = text;
+  while (rest.length > max) {
+    // 在上限之内找最靠后的一个断点：越靠后，切出来的每条越接近满行
+    let cut = -1;
+    for (const mark of CAPTION_BREAKS) {
+      cut = Math.max(cut, rest.lastIndexOf(mark, max - 1));
+    }
+    // 上限内没有任何标点（长串数字、连写的专名）就硬切：宁可切在字中间，
+    // 也不要让这一条撑爆字幕框——切错一个词是瑕疵，盖住正文不是
+    const at = cut > 0 ? cut + 1 : max;
+    chunks.push(rest.slice(0, at).trim());
+    rest = rest.slice(at).trim();
+  }
+  if (rest) chunks.push(rest);
+  return chunks.filter(Boolean);
+};
+
+/**
  * 每句话的起止秒数。
  *
  * 首选 TTS 的句级边界事件（中文音色一句一条，见 tts_engine.py）：那是**引擎实际念到
@@ -79,18 +119,35 @@ function timelineOf(scene, entry, seconds, fps, durationInFrames) {
   const lastFrame = Math.max(0, durationInFrames - 1);
   const clampFrom = (value) => Math.min(lastFrame, Math.max(0, Math.round(value * fps)));
 
-  const captions = sentences.map((text, index) => {
+  // 逐句切成字幕条：一句太长就按标点分成几条，各自在**本句的时间区间内**按字数摊。
+  // 切分只影响字幕，不动 TTS 的句级对齐，也不动 beats 认领的句下标。
+  const captions = [];
+  const firstCaptionOfSentence = [];
+  sentences.forEach((text, index) => {
     const from = clampFrom(spans[index][0]);
     // 末句一路铺到分镜结尾：句末到画面切走之间的留白不该是一段没有字幕的空白
     const until = index + 1 === sentences.length ? durationInFrames : clampFrom(spans[index + 1][0]);
-    return { text, from, durationInFrames: Math.max(1, until - from) };
+    const total = Math.max(1, until - from);
+
+    firstCaptionOfSentence.push(captions.length);
+    const chunks = chunkSentence(text);
+    const chars = chunks.reduce((sum, chunk) => sum + chunk.length, 0) || 1;
+    let consumed = 0;
+    chunks.forEach((chunk, chunkIndex) => {
+      const start = from + Math.round((consumed / chars) * total);
+      consumed += chunk.length;
+      const end = chunkIndex + 1 === chunks.length ? from + total : from + Math.round((consumed / chars) * total);
+      captions.push({ text: chunk, from: start, durationInFrames: Math.max(1, end - start) });
+    });
   });
 
   const rawBeats = Array.isArray(scene.data?.beats) ? scene.data.beats : [];
   const beats = rawBeats.map((beat) => {
     const index = Number.isInteger(beat?.sentenceIndex) ? beat.sentenceIndex : -1;
-    // 认不出是哪一句就从分镜开头亮着：宁可早亮，也不要因为一条要点错位而整屏空着
-    const from = index >= 0 && index < captions.length ? captions[index].from : 0;
+    // 认不出是哪一句就从分镜开头亮着：宁可早亮，也不要因为一条要点错位而整屏空着。
+    // 下标认的是**句**，长句被切成几条字幕后要落到它的第一条上，否则要点会晚亮半句。
+    const captionIndex = index >= 0 && index < firstCaptionOfSentence.length ? firstCaptionOfSentence[index] : -1;
+    const from = captionIndex >= 0 ? captions[captionIndex].from : 0;
     return { ...beat, from };
   });
 

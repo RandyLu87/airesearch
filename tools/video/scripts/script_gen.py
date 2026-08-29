@@ -191,11 +191,26 @@ def normalize_for_speech(text: str) -> str:
 # 这类紧贴在中文后面的引用一个都匹配不上——而这恰恰是研究正文里最常见的写法。
 BOUNDARY = r"(?<![A-Za-z0-9_.])"
 URL_PATTERN = re.compile(rf"https?://\S+|{BOUNDARY}www\.\S+")
-FIELD_PATH_PATTERN = re.compile(rf"{BOUNDARY}[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*){{2,}}(?:\[\d+\])*")
+FIELD_PATH_PATTERN = re.compile(
+    rf"{BOUNDARY}[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*){{2,}}(?:\[\d+\])*"
+    # 路径后面常跟着 `=值`（`moat.trendNext5y.direction=稳定`）。只摘路径会留下「（=稳定）」，
+    # 屏幕上比整条引用还费解，连值一起摘。
+    r"(?:\s*=\s*[^\s，。；：、）)】」]+)?"
+)
 # 不带点的字段名交叉引用，如快手 revenueBreakdown.period 里的「另见下方 latestQuarterUpdate」。
 # 判据是 lowerCamelCase（小写开头 + 至少一个内部大写）且**长度 ≥ 8**：长度这一条把
 # iPhone / iPad / eBay 这类小写开头的商标挡在外面，它们是要正常念出来的专有名词。
-FIELD_NAME_PATTERN = re.compile(rf"{BOUNDARY}[a-z][a-z0-9]*(?:[A-Z][A-Za-z0-9]*)+(?:\[\d+\])*")
+# 尾巴要一起吃掉：`paradigmShift.verdict=部分` 只有一个点，进不了 FIELD_PATH_PATTERN
+# （那边要求至少两个点，为的是别把 `Inc.` 和小数点当成路径），于是只摘掉驼峰名本身，
+# 屏幕上留下一句「不是文明级范式转移（.verdict=部分）」。驼峰标识符后面跟 `.字段` 或
+# `=值` 时它一定是字段引用而不是正文，连着摘干净。
+# 长度判据只看**驼峰名本身**（第 1 组），不看尾巴：否则 `iPhone.foo` 会因为算上尾巴
+# 够了 8 个字符而被当成字段引用摘掉，而 iPhone 是要正常念出来的。
+FIELD_NAME_PATTERN = re.compile(
+    rf"{BOUNDARY}([a-z][a-z0-9]*(?:[A-Z][A-Za-z0-9]*)+)"
+    r"(?:\.[A-Za-z_][A-Za-z0-9_]*)*(?:\[\d+\])*"
+    r"(?:\s*=\s*[^\s，。；：、）)】」]+)?"
+)
 FIELD_NAME_MIN_LENGTH = 8
 # snake_case 标识符：茅台的收入值里内嵌着数据源 API 名「Tushare fina_mainbz口径」。
 # 带下划线的小写串在中文正文里不会自然出现，一律是代码/接口标识符，念出来是噪音。
@@ -203,6 +218,65 @@ SNAKE_CASE_PATTERN = re.compile(rf"{BOUNDARY}[a-z][a-z0-9]*(?:_[a-z0-9]+)+")
 # 公司英文名括注：`哔哩哔哩 (Bilibili Inc.)` 的括号部分对中文听众是冗余的，
 # 念出来还会被中文音色逐字母拼读。只在解说词里摘掉，画面上照旧完整显示。
 LATIN_PARENTHETICAL = re.compile(r"\s*[（(][\sA-Za-z0-9.,:&'’\-/]*[A-Za-z][\sA-Za-z0-9.,:&'’\-/]*[)）]")
+# 不带括号的双语对照名：`美团 Meituan`、`核心本地商业 Core Local Commerce（外卖、闪购）`。
+# 中文名后面直接跟一串拉丁词是名称的英文对照，对中文听众冗余、还会被逐字母拼读。
+# **只用在名称字段上**（公司名、业务线名），不能拿去扫正文——正文里「市盈率 PE」
+# 「毛利率 30.43%」这类中文后面跟拉丁串的写法是有意义的，扫过去会把内容删掉。
+# 两种形态都要认，但判据不同：
+#   `美团 Meituan`                中文和英文之间有空格 → 空格就是分隔符，单个词也算对照
+#   `核心本地商业Core Local Commerce` 没有空格 → 只有多词短语才算对照
+# 没有空格的单个词不能碰：`增值服务VAS`、`小米SU7` 里的拉丁串是名称的一部分，
+# 摘掉就把名字念错了。
+_LATIN_WORD = r"[A-Za-z][A-Za-z0-9.&'’\-]*"
+LATIN_GLOSS = re.compile(
+    rf"(?<=[一-鿿])(?:\s+{_LATIN_WORD}(?:\s+{_LATIN_WORD})*|{_LATIN_WORD}(?:\s+{_LATIN_WORD})+)"
+)
+
+
+# 判定与它的说明之间的分界：分号、冒号、逗号、顿号、破折号、括号、句号。
+# 契约里 `verdict` 应当是「存在 | 不存在 | 待验证」三选一，但研究侧经常写成
+# 「存在，且是本季唯一被硬数据证实的一条——但证据强度受……」这样的整段。
+_VERDICT_BREAK = re.compile(r"[；;：:，,、。.（(]|——")
+# 兜底用的判定词，长的排前面（「存在但已降级」要先于「存在」命中）
+_VERDICT_WORDS = ("存在但已降级", "部分存在", "不存在", "待验证", "存在")
+# 标签超过这个长度就说明第一个断句本身还是一整句话，改走关键词兜底
+_VERDICT_LABEL_MAX = 12
+
+
+def split_verdict(text: str | None) -> tuple[str | None, str | None]:
+    """判定原文 → `(标签, 说明)`。
+
+    **只切不改**：标签是原文的前缀，说明是剩下的原文，一个字都不重写——
+    「待验证」不是「不存在」，换个词就是替研究者下结论。
+
+    切的理由是版面：五类壁垒并排成五列，一列宽约 300px，把整段判定用大号字铺进去
+    会撑出卡片、盖住下面的字幕条；而解说词把五段判定串成一句，会变成两百多字的
+    单句字幕，直接糊掉半屏。标签进大号字与解说，说明留在卡片里小号显示。
+    """
+    raw = str(text or "").strip()
+    if not raw:
+        return None, None
+    head = _VERDICT_BREAK.split(raw, 1)[0].strip()
+    if head and len(head) <= _VERDICT_LABEL_MAX:
+        return head, raw[len(head):].lstrip(" ；;：:，,、。.—").strip() or None
+    # 第一个断句还是太长（整段没有标点的判定）：退回找判定词本身
+    for word in _VERDICT_WORDS:
+        index = raw.find(word)
+        if index != -1:
+            return raw[: index + len(word)], raw[index + len(word):].lstrip(" ；;：:，,、。.—").strip() or None
+    # 认不出判定词就整串当标签，交给版面截断——猜一个判定比难看的版面危险得多
+    return raw, None
+
+
+def strip_name_gloss(name: str) -> str:
+    """名称 → 只留中文那部分；没有中文头或本来就没有英文对照时原样返回。
+
+    先摘括号里的（`哔哩哔哩 (Bilibili Inc.)`），再摘不带括号的（`美团 Meituan`）。
+    画面上一律显示全称，摘掉只影响解说词，且调用方要记账。
+    """
+    spoken = LATIN_PARENTHETICAL.sub("", str(name or "")).strip()
+    spoken = LATIN_GLOSS.sub("", spoken).strip()
+    return spoken
 
 
 def strip_speech_noise(text: str) -> tuple[str, list[str]]:
@@ -218,7 +292,8 @@ def strip_speech_noise(text: str) -> tuple[str, list[str]]:
         return " "
 
     def take_field_name(match: re.Match) -> str:
-        if len(match.group(0)) < FIELD_NAME_MIN_LENGTH:
+        # 只按驼峰名本身的长度判，尾巴（`.verdict` / `=部分`）不参与——见 FIELD_NAME_PATTERN
+        if len(match.group(1)) < FIELD_NAME_MIN_LENGTH:
             return match.group(0)
         return take(match)
 
@@ -233,6 +308,10 @@ def strip_speech_noise(text: str) -> tuple[str, list[str]]:
     cleaned = re.sub(r"\s+([，、；：。！？,;:!?）)】」])", r"\1", cleaned)
     cleaned = re.sub(r"([（(【「])\s+", r"\1", cleaned)
     cleaned = re.sub(r"([，、；：,;:])\s*(?=[，、；：。！？,;:!?])", "", cleaned)
+    # 括注里整段都是引用时，删完只剩一对空括号（「（paradigmShift.verdict=部分）」→「（）」）。
+    # 空括号在屏幕上和念出来都是噪音，一并收走。
+    cleaned = re.sub(r"[（(]\s*[)）]", "", cleaned)
+    cleaned = re.sub(r"\s+([，、；：。！？,;:!?）)】」])", r"\1", cleaned)
     return cleaned.strip(), removed
 
 
@@ -479,13 +558,13 @@ class ScriptBuilder:
 
         # 画面上的标题保留 `哔哩哔哩 (Bilibili Inc.)` 全称，念的时候只念中文名：括注里的
         # 英文对中文听众是冗余的，中文音色还会把它逐字母拼出来。摘掉要记账，不能悄悄摘。
-        spoken_name = LATIN_PARENTHETICAL.sub("", name).strip() or name
+        spoken_name = strip_name_gloss(name) or name
         if spoken_name != name:
             self.note_omission(
                 "meta.companyName",
                 name,
                 "画面标题保留全称，解说只念中文名",
-                f"公司名里的英文括注「{name[len(spoken_name):].strip()}」对中文听众是冗余的，会被逐字母拼读",
+                f"公司名「{name}」里的英文对照对中文听众是冗余的，会被逐字母拼读，解说只念「{spoken_name}」",
             )
 
         return {
@@ -886,11 +965,16 @@ class ScriptBuilder:
             revenue_raw = self.field(item.get("revenue"), f"{item_path}.revenue", "该条只播业务线与占比")
             revenue = format_amount(revenue_raw)
             if revenue_raw and revenue == revenue_raw and not re.search(r"[元币]|美元|港元", revenue_raw):
+                # 两种情形要分开说：诊断写错会把人送到错的地方去改数据。
+                # 「2608.26亿」是量级齐、只差币种；「364855」才是量级也没有。
+                has_magnitude = re.search(r"万亿|千万|百万|[亿万]|[BM]\b", revenue_raw)
                 self.note_omission(
                     f"{item_path}.revenue",
                     item.get("revenue"),
                     "金额按原文播报，未换算量级",
-                    f"原文「{revenue_raw}」没写量级或币种，换算过去等于替原报告决定它是百万还是亿",
+                    f"原文「{revenue_raw}」写了量级但没写币种，补币种等于替原报告决定它是人民币还是美元"
+                    if has_magnitude
+                    else f"原文「{revenue_raw}」没写量级或币种，换算过去等于替原报告决定它是百万还是亿",
                 )
             # 口径括注从数值里拆出来：数值列保持干净，括注在画面上做附注，不进解说词
             revenue_value, revenue_note = split_note(revenue)
@@ -985,12 +1069,16 @@ class ScriptBuilder:
             kind = self.field(item.get("type"), f"{item_path}.type", "该条壁垒未播报")
             if not kind:
                 continue
+            # 判定原样转述：「待验证」不是「不存在」，改写一个字就是替研究者下结论。
+            # 只按标点切成「标签 + 说明」两段，两段都是原文。
+            verdict_raw = self.field(item.get("verdict"), f"{item_path}.verdict", "该条判定暂无")
+            verdict, verdict_note = split_verdict(verdict_raw)
             items.append(
                 {
                     "type": kind,
                     "test": self.field(item.get("test"), f"{item_path}.test", "该条只播判定，不播检验问题"),
-                    # 判定原样转述：「待验证」不是「不存在」，改写一个字就是替研究者下结论
-                    "verdict": self.field(item.get("verdict"), f"{item_path}.verdict", "该条判定暂无"),
+                    "verdict": verdict,
+                    "verdictNote": verdict_note,
                 }
             )
         if not items:
@@ -1073,7 +1161,9 @@ class ScriptBuilder:
             speech.say(f"报告期{payload['period']}")
         beats = []
         for item in payload["items"][:budget]:
-            parts = [item["segment"]]
+            # 画面显示业务线全称（`核心本地商业 Core Local Commerce`），念的时候只念中文：
+            # 英文对照会被中文音色逐字母拼读。摘的是解说词，`items` 里的原文不动。
+            parts = [strip_name_gloss(item["segment"]) or item["segment"]]
             if item["revenue"]:
                 parts.append(item["revenue"])
             if item["sharePct"]:
@@ -1151,7 +1241,12 @@ class ScriptBuilder:
 
         return speech.text, {
             # 画面只留类型与判定，检验问题不再上屏：它是过程，这一屏要的是结论
-            "items": [{"type": item["type"], "verdict": item["verdict"]} for item in items],
+            # 画面留类型 + 判定标签 + 说明（说明在卡片里小号显示，不进解说）；
+            # 检验问题不上屏：它是过程，这一屏要的是结论
+            "items": [
+                {"type": item["type"], "verdict": item["verdict"], "verdictNote": item["verdictNote"]}
+                for item in items
+            ],
             "summary": summary,
             # 整体陈述没有逐条节奏，不给 beats——模板据此让五个标签一起亮，不做逐条点亮
             "beats": [],
@@ -1567,6 +1662,178 @@ def number_inquiries(builder: "ScriptBuilder", scenes: list[dict]) -> None:
             builder.rewrite_deep(scene, scene["data"]["detail"])
 
 
+# ---------------------------------------------------------------------------
+# 画面文本收敛：屏幕只放重点，展开交给耳朵
+# ---------------------------------------------------------------------------
+#
+# 研究正文的结论天然是长句（一条要点动辄一两百字，最长的一条 1091 字）。整段搬上屏
+# 有两个后果：观众在 15 秒里读不完，于是既没读也没听；以及版面被文字填满，重点消失。
+#
+# 所以画面一律只显示**前导句**，完整内容由解说播报——耳朵能跟着时间线走，眼睛不能。
+# 裁法与 split_verdict / chunkSentence 同一条纪律：**只在标点处切，不改写一个字**，
+# 截断处补省略号，让读的人知道后面还有。
+
+# 分类上限。宽的一档给「一屏就一句」的位置（定位、结论、建议），窄的一档给并排的要点。
+SCREEN_LEAD_WIDE = 58
+SCREEN_LEAD_NARROW = 42
+SCREEN_LEAD_KEYS = {
+    "positioning": SCREEN_LEAD_WIDE,
+    "conclusion": SCREEN_LEAD_WIDE,
+    "advice": SCREEN_LEAD_WIDE,
+    "answer": SCREEN_LEAD_WIDE,
+    "question": SCREEN_LEAD_WIDE,
+    "summary": SCREEN_LEAD_WIDE,
+    "basis": SCREEN_LEAD_NARROW,
+    "condition": SCREEN_LEAD_NARROW,
+    "action": SCREEN_LEAD_NARROW,
+    "note": SCREEN_LEAD_NARROW,
+    "verdictNote": SCREEN_LEAD_NARROW,
+    "mechanism": SCREEN_LEAD_NARROW,
+    "leverage": SCREEN_LEAD_NARROW,
+    "points": SCREEN_LEAD_NARROW,
+    "items": SCREEN_LEAD_NARROW,
+    "text": SCREEN_LEAD_NARROW,
+    "detail": SCREEN_LEAD_NARROW,
+    # 报告期这类「本该很短」的字段也会长：口径变更的说明整段跟在期间后面
+    "period": SCREEN_LEAD_NARROW,
+    "segment": SCREEN_LEAD_NARROW,
+}
+# 这些子树不动：`beats` 的下标要和解说词的句子对齐，`chart` 里是数值与轴标签，
+# 两者都不是给人读的段落。
+SCREEN_LEAD_SKIP = {"beats", "chart", "captions"}
+# 切点：句末优先，其次分句，最后并列。破折号也算——研究正文里它常引出补充说明。
+_LEAD_BREAKS = "。！？!?；;：:，,、"
+
+
+# 研究流程的自述：「第 2 步」「已落盘」「原报告」「本报告」。
+# 研究正文是写给复核的人看的，所以会交代结论出自流程的哪一步；但**观众不知道有几步**，
+# 屏幕上出现这些词只会让人以为漏看了什么。与 URL、字段路径同一类噪音，同样只删不改。
+_PROCESS_WORDS = r"第\s*[0-9一二三四五六七八九]\s*步|已落盘|原报告|本报告"
+# 整句都是流程交代的开头小句：「仅转述第2步已落盘的可观察证据：」——连同它的冒号一起摘掉
+_PROCESS_CLAUSE = re.compile(rf"^[^，。；：]{{0,24}}(?:{_PROCESS_WORDS})[^，。；：]{{0,24}}[：:，]\s*")
+_PROCESS_INLINE = re.compile(rf"(?:{_PROCESS_WORDS})的?")
+
+
+def strip_process_talk(text: str) -> str:
+    """摘掉研究流程的自述，只做删除。删完收拾一下多余的标点与空白。"""
+    cleaned = _PROCESS_CLAUSE.sub("", str(text or ""))
+    cleaned = _PROCESS_INLINE.sub("", cleaned)
+    cleaned = re.sub(r"[（(]\s*[)）]", "", cleaned)
+    cleaned = re.sub(r"^[，。；：、,;:\s]+", "", cleaned)
+    return re.sub(r"\s{2,}", " ", cleaned).strip()
+
+
+def screen_lead(text: str, limit: int) -> tuple[str, bool]:
+    """长文本 → `(画面上显示的前导句, 是否被截断)`。
+
+    切点只取标点，切出来的一定是原文的前缀；找不到标点才硬切。截断时补 `…`——
+    省略号本身就是「后面还有，听解说」的信号，比无声截断诚实。
+    """
+    raw = str(text or "")
+    if len(raw) <= limit:
+        return raw, False
+    window = raw[:limit]
+    cut = max((window.rfind(mark) for mark in _LEAD_BREAKS), default=-1)
+    cut = max(cut, window.rfind("——"))
+    # 切点太靠前会只剩两三个字，反而看不懂；那种情况宁可硬切到上限
+    lead = window[: cut + 1] if cut >= limit // 3 else window
+    return lead.rstrip("，,、；;：:—").rstrip() + "…", True
+
+
+def apply_screen_leads(builder: "ScriptBuilder", scenes: list[dict]) -> None:
+    """把每条分镜 `data` 里的长文本收成前导句。**必须在解说词定稿之后跑。**
+
+    解说词此时已经是拼好的字符串，这一步只动 `data`（画面数据），
+    所以「画面只给重点、解说完整展开」是同一份素材的两种呈现，不是两份内容。
+    """
+    trimmed = 0
+    nonlocal_process = [0]  # 被摘掉流程自述的字段数；用列表是为了在闭包里累加
+
+    def walk(node, key: str | None):
+        nonlocal trimmed
+        if isinstance(node, dict):
+            return {k: (v if k in SCREEN_LEAD_SKIP else walk(v, k)) for k, v in node.items()}
+        if isinstance(node, list):
+            return [walk(item, key) for item in node]
+        if isinstance(node, str) and key in SCREEN_LEAD_KEYS:
+            # 先摘流程自述，再按重点收敛：不然「仅转述第2步已落盘的…」会占掉前导句的额度
+            cleaned = strip_process_talk(node)
+            nonlocal_process[0] += cleaned != node
+            lead, cut = screen_lead(cleaned, SCREEN_LEAD_KEYS[key])
+            if cut:
+                trimmed += 1
+            return lead
+        return node
+
+    for scene in scenes:
+        if isinstance(scene.get("data"), dict):
+            scene["data"] = walk(scene["data"], None)
+
+    if trimmed:
+        # 记一条总账而不是每个字段一条：46 条同类记录会把 omissions 冲成噪音，
+        # 而这不是内容缺失——完整正文由解说播报，也仍在原报告里
+        builder.note_omission(
+            "scenes[].data",
+            f"{trimmed} 处",
+            "画面显示前导句 + 省略号，完整内容由解说播报",
+            f"画面文本按重点收敛：{trimmed} 处长文本超过上限"
+            f"（一句一屏 {SCREEN_LEAD_WIDE} 字、并排要点 {SCREEN_LEAD_NARROW} 字），"
+            "整段搬上屏观众读不完，也会把重点埋掉；"
+            f"另有 {nonlocal_process[0]} 处摘掉了研究流程自述（「第 2 步」「已落盘」这类词观众看不懂）",
+        )
+
+
+def apply_brief(builder: "ScriptBuilder", scenes: list[dict], brief: dict, rate: float) -> None:
+    """用讲稿加工件覆盖解说与画面重点。**必须在控时之后、画面收敛之前跑。**
+
+    加工件由 LLM 产出（把研究结论改写成口语），但**放行由 `scripts/brief.py` 的确定性
+    校验负责**：数字必须能回溯到研究数据，不许出现 URL 与字段路径。这里只做覆盖，
+    不重新判断内容——调用方（`pipeline.mjs`）在覆盖之前已经跑过校验。
+
+    两处代价，都写在明面上：
+
+    1. **`beats` 一律清空**。逐条点亮靠的是「这条要点由 narration 的第几句念出来」，
+       解说整段换掉之后那个下标就失效了。宁可整屏一起亮，也不要让要点亮在错的句子上。
+    2. **时长要重算**。控时阶梯是按原解说词跑的，换稿之后长度会变；重算之后若掉出
+       目标区间，`totals.withinTarget` 会如实变成 false，不假装达标。
+    """
+    entries = brief.get("scenes") or {}
+    applied = 0
+    for scene in scenes:
+        entry = entries.get(scene["id"])
+        if not isinstance(entry, dict):
+            continue
+        spoken = str(entry.get("spoken") or "").strip()
+        raw_points = entry.get("points")
+        if isinstance(raw_points, list):
+            points = [str(item).strip() for item in raw_points if str(item or "").strip()]
+        else:
+            single = str(entry.get("headline") or "").strip()
+            points = [single] if single else []
+        if not spoken or not points:
+            continue
+        scene["narration"] = spoken
+        # 画面要点：1–3 条短句。写成数组而不是一句话，是为了让改写者不必为了凑成
+        # 完整句子而把维度名和分数塞回去——那两样画面上方各有一处。
+        scene["data"]["points"] = points
+        # 原解说词留一份：画面上不显示，但人核对「改写有没有走样」时要能对照
+        scene["data"]["narrationSource"] = "brief"
+        scene["beats"] = []
+        if isinstance(scene["data"].get("beats"), list):
+            scene["data"]["beats"] = []
+        applied += 1
+
+    if applied:
+        measure(scenes, rate)
+        builder.note_omission(
+            "scenes[].narration",
+            f"{applied} 条",
+            "解说改用讲稿加工件的口语稿，画面改用其 1–3 条要点；逐条点亮关闭",
+            f"{applied} 条分镜的解说词由讲稿加工件覆盖（研究正文的长句念出来听不懂）；"
+            "加工件已过 scripts/brief.py 的数字白名单校验，数字均可回溯到研究数据",
+        )
+
+
 def attach_visuals(builder: "ScriptBuilder", scenes: list[dict], collection: dict | None, analysis: dict | None) -> None:
     """给分镜挂上 `visuals`（图表 + 主数字），并把抽取过程中的取舍并进 omissions。
 
@@ -1604,6 +1871,7 @@ def generate(
     strategy_ids: list[str] | None,
     analysis: dict | None = None,
     collection: dict | None = None,
+    brief: dict | None = None,
 ) -> dict:
     builder = ScriptBuilder(summary, rate, analysis)
     detailed = builder.analysis is not None
@@ -1664,7 +1932,18 @@ def generate(
 
     # 视觉层挂在控时之后：`fit_duration` 裁的是解说词，图表与主数字不参与控时，
     # 但被整条裁掉的分镜（比如只留一类策略）不该再挂画面数据。
+    # 讲稿覆盖在控时之后、画面收敛之前：控时按原稿跑完，换稿之后重算时长；
+    # 画面收敛还要对 headline 之外的字段生效，所以它排在更后面
+    if brief is not None:
+        apply_brief(builder, scenes, brief, rate)
+        total = round(sum(scene["estimatedSeconds"] for scene in scenes), 2)
+        within = min_seconds <= total <= max_seconds
+
     attach_visuals(builder, scenes, collection, analysis)
+
+    # 画面文本收敛放在最后：解说词此时已定稿，这一步只动 data，
+    # 于是「画面给重点、解说给展开」用的是同一份素材的两种呈现
+    apply_screen_leads(builder, scenes)
 
     meta = summary.get("meta") or {}
     company_id = text_of(meta.get("companyId"))
@@ -1724,6 +2003,15 @@ def main() -> int:
         help=(
             "第 1 步 financials-collection.json 或第 5 步 financials-final.json 的路径；"
             "给了才有图表与主数字（画面的数字全部来自它，解说词一个字都不受影响）"
+        ),
+    )
+    parser.add_argument(
+        "--brief",
+        type=Path,
+        help=(
+            "讲稿加工件（LLM 把研究结论改写成口语稿与画面重点）的路径；"
+            "给了就用它覆盖解说与画面重点。**必须先过 scripts/brief.py check**——"
+            "那道校验保证改写没有引入研究数据里没有的数字"
         ),
     )
     parser.add_argument("--out", type=Path, help="输出路径；省略则写 stdout")
@@ -1823,7 +2111,22 @@ def main() -> int:
             print(f"未知策略类别：{'、'.join(unknown)}；可选 {'、'.join(STRATEGY_ORDER)}", file=sys.stderr)
             return 2
 
-    result = generate(summary, args.rate, min_seconds, max_seconds, strategy_ids, analysis, collection)
+    # --brief 与 --analysis 同一口径：路径写错就退 2，不静默出一支没加工过的片子
+    brief = None
+    if args.brief is not None:
+        try:
+            brief = json.loads(args.brief.read_text(encoding="utf-8"))
+        except OSError as exc:
+            print(f"读不了 {args.brief}：{exc}", file=sys.stderr)
+            return 2
+        except json.JSONDecodeError as exc:
+            print(f"{args.brief} 不是合法 JSON：{exc}", file=sys.stderr)
+            return 2
+        if not isinstance(brief, dict) or not isinstance(brief.get("scenes"), dict):
+            print(f"{args.brief} 不符合讲稿契约：缺少 scenes 对象", file=sys.stderr)
+            return 2
+
+    result = generate(summary, args.rate, min_seconds, max_seconds, strategy_ids, analysis, collection, brief)
     payload = json.dumps(result, ensure_ascii=False, indent=2) + "\n"
 
     if args.out:

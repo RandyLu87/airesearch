@@ -49,6 +49,64 @@ class ReadValues(unittest.TestCase):
     def test_amount_self_contained_string(self):
         self.assertEqual(visuals.read_amount("RMB815亿")[0], Decimal("81500000000"))
 
+    def test_annual_rows_are_sorted_ascending(self):
+        """采集文件新→旧、旧→新两种排法都有，下游一律按升序假定。
+
+        回归的是一个画得出来、但画反了的错：降序文件会把逐年增长画成一路下滑，
+        KPI 还会拿五年前那一年当「最新」。比图没画出来更难发现。
+        """
+        descending = {
+            "financialMetrics": {
+                "annual": [
+                    {"fiscalYear": "FY2025", "grossMarginPct": 30.43},
+                    {"fiscalYear": "FY2024", "grossMarginPct": 38.44},
+                    {"fiscalYear": "FY2023", "grossMarginPct": 35.05},
+                ]
+            }
+        }
+        rows = visuals._annual(descending)
+        self.assertEqual([row["fiscalYear"] for row in rows], ["FY2023", "FY2024", "FY2025"])
+        self.assertEqual(rows[-1]["grossMarginPct"], 30.43, "rows[-1] 必须是最新一年")
+
+    def test_annual_rows_keep_order_when_years_unreadable(self):
+        """年份认不全就别排：猜出来的时间轴比不排序更危险。"""
+        rows = visuals._annual(
+            {"financialMetrics": {"annual": [{"fiscalYear": "最近一期"}, {"fiscalYear": "上一期"}]}}
+        )
+        self.assertEqual([row["fiscalYear"] for row in rows], ["最近一期", "上一期"])
+
+    def test_amount_unit_writings_across_companies(self):
+        """`unit` 的写法在 16 家里就有七八种，量级不能只认 `百万元` 一种。
+
+        回归的是一个只会悄悄发生的错：认不出来时整条曲线消失、退回文字卡，
+        没有任何报错——曾经 16 家里有 7 家因此丢掉营收趋势图。
+        """
+        expected = Decimal("19383990000.00")
+        for unit in ("百万元", "人民币百万元", "RMB million", "RMB百万", "百万USD", "HK$ million", "百万"):
+            with self.subTest(unit=unit):
+                parsed = visuals.read_amount({"value": 19383.99, "unit": unit, "currency": "CNY"})
+                self.assertIsNotNone(parsed, f"{unit} 应当认得出量级")
+                self.assertEqual(parsed[0], expected)
+
+    def test_amount_magnitude_written_on_currency_key(self):
+        """理想汽车形态：量级被写在 `currency` 位上（`{"unit": "currency", "currency": "RMB百万"}`）。
+
+        那是数据侧的写法问题，但在这里判废的代价是整张图消失，所以对称地也拆一次。
+        """
+        parsed = visuals.read_amount({"value": 27009.779, "unit": "currency", "currency": "RMB百万"})
+        self.assertEqual(parsed, (Decimal("27009779000.00"), "元"))
+
+    def test_unit_currency_does_not_override_declared_currency(self):
+        """`unit` 里的币种只在 `currency` 没声明时兜底，不能盖过声明的那个。"""
+        parsed = visuals.read_amount({"value": 100, "unit": "百万元", "currency": "USD"})
+        self.assertEqual(parsed, (Decimal("100000000.00"), "美元"))
+
+    def test_split_unit_reads_magnitude_and_currency(self):
+        self.assertEqual(visuals.split_unit("千美元"), ("千", "美元"))
+        self.assertEqual(visuals.split_unit("人民币百万元"), ("百万", "元"))
+        self.assertEqual(visuals.split_unit("currency"), ("", None))
+        self.assertEqual(visuals.split_unit(None), ("", None))
+
     def test_amount_without_magnitude_is_refused(self):
         """没有量级就认不出是百万还是亿——猜出来的单位比没有图危险得多。"""
         self.assertIsNone(visuals.read_amount({"value": 16635}))

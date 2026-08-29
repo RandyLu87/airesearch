@@ -566,8 +566,33 @@ test("详解版对其他公司同样跑通，没有哔哩哔哩专属逻辑", ()
 test("公司名括注摘掉这件事本身也要记账，不能悄悄摘", () => {
   const { script } = runDeep();
   const omission = script.omissions.find((item) => item.path === "meta.companyName");
-  assert.ok(omission, "解说里摘掉了英文括注却一条记录都没有");
-  assert.match(omission.reason, /英文括注/);
+  assert.ok(omission, "解说里摘掉了英文对照却一条记录都没有");
+  assert.match(omission.reason, /英文对照/);
+});
+
+test("不带括号的中英对照名同样只在解说里摘掉：`美团 Meituan` 念作「美团」", () => {
+  // 括注版（`哔哩哔哩 (Bilibili Inc.)`）早就摘了，但仓库里更常见的是不带括号的
+  // `美团 Meituan` / `核心本地商业 Core Local Commerce`——中文音色会把它逐字母拼读。
+  const summary = bili();
+  summary.meta.companyName = "美团 Meituan";
+  const { script } = run(summary);
+  const opening = sceneById(script, "opening");
+  assert.ok(opening.title.includes("Meituan"), "画面标题丢了英文全称");
+  assert.ok(!opening.narration.includes("Meituan"), "开场把英文对照念了出来");
+  assert.ok(opening.narration.includes("美团"));
+});
+
+test("没有空格的中英对照名按词数判：多词短语是对照，单个词是名字的一部分", () => {
+  // `核心本地商业Core Local Commerce` 是对照，`增值服务VAS` / `小米SU7` 不是——
+  // 后两者摘掉就把名字念错了，比念出英文更糟。
+  const summary = bili();
+  summary.meta.companyName = "核心本地商业Core Local Commerce";
+  const spokenA = sceneById(run(summary).script, "opening").narration;
+  assert.ok(!spokenA.includes("Core"), "多词英文对照没摘掉");
+
+  summary.meta.companyName = "增值服务VAS";
+  const spokenB = sceneById(run(summary).script, "opening").narration;
+  assert.ok(spokenB.includes("VAS"), "把名字自带的单个缩写当成对照摘掉了");
 });
 
 test("降级为纯总结模式时，totals 里直接说清楚，而不是只留一条 omission", () => {
@@ -742,4 +767,106 @@ test("趋势屏把未来的核心依据点破了说，且它永远不会被控�
 test("控时优先扣过去那一侧：过去最多两条依据，未来不受这条限制", () => {
   const trend = sceneById(runDeep().script, "moat-trend");
   assert.ok(trend.data.past.spokenCount <= 2, `实际 ${trend.data.past.spokenCount}`);
+});
+
+test("护城河判定切成「标签 + 说明」：大号字只放标签，整段说明进小号字", () => {
+  // 契约里 verdict 是「存在 | 不存在 | 待验证」三选一，但研究侧经常写成一整段。
+  // 整段用 42px 铺进五列之一会撑出卡片、盖住字幕条，解说也会变成两百多字的单句字幕。
+  const summary = bili();
+  const analysis = biliDeep();
+  analysis.dimensions.moat.analysis.types = [
+    {
+      type: "规模效应",
+      test: "规模带来的成本优势有多大？",
+      verdict: "存在，且是本季唯一被硬数据证实的一条——但证据强度受「三方同时收手」与「季节性」两项共同因素折价",
+    },
+    {
+      type: "网络效应",
+      test: "用户越多产品越好吗？",
+      verdict: "存在但已降级：从「一超」的全局网络效应降为「双强格局下的密度领先」",
+    },
+  ];
+  const { script } = run(summary, [], analysis);
+  const scene = script.scenes.find((item) => item.kind === "moat-overview");
+  assert.ok(scene, "没有护城河整体判定分镜");
+
+  const [scale, network] = scene.data.items;
+  assert.equal(scale.verdict, "存在");
+  assert.match(scale.verdictNote, /^且是本季唯一被硬数据证实的一条/);
+  assert.equal(network.verdict, "存在但已降级");
+  assert.ok(network.verdictNote.includes("双强格局下的密度领先"));
+
+  // 标签与说明都必须是原文的前缀/子串——说明可能被画面收敛截断，尾部的省略号先去掉
+  for (const item of scene.data.items) {
+    const original = analysis.dimensions.moat.analysis.types.find((type) => type.type === item.type).verdict;
+    assert.ok(original.startsWith(item.verdict), `${item.type} 的标签不是原文前缀`);
+    assert.ok(original.includes(item.verdictNote.replace(/…$/, "")), `${item.type} 的说明不是原文子串`);
+  }
+
+  // 解说只念标签：整段判定串进一句话就是那条两百多字的字幕
+  assert.ok(!scene.narration.includes("三方同时收手"), "解说把判定说明也念了");
+});
+
+test("单个点的字段引用连同 `=值` 一起摘掉，不留下「（.verdict=部分）」", () => {
+  // `paradigmShift.verdict=部分` 只有一个点，进不了「至少两个点」的路径规则，
+  // 于是只摘掉驼峰名本身，屏幕上留下一句读不懂的「（.verdict=部分）」。
+  const summary = bili();
+  const trend = summary.dimensionSummary.find((item) => item.dimensionId === "civilizationTrend");
+  trend.conclusion = "即时零售是渠道级重构（paradigmShift.verdict=部分），不是文明级范式转移。";
+  const { script } = run(summary);
+  const spoken = script.scenes.map((scene) => scene.narration).join("");
+  assert.ok(!spoken.includes(".verdict"), "字段引用的尾巴还留在解说里");
+  assert.ok(!spoken.includes("=部分"), "字段引用的值还留在解说里");
+  assert.ok(!spoken.includes("（）"), "摘完留下一对空括号");
+  assert.ok(spoken.includes("渠道级重构"), "把正文也一起摘掉了");
+});
+
+test("画面文本一律收成前导句：屏幕只放重点，展开交给解说", () => {
+  // 研究正文的结论天然是长句（最长一条 1091 字）。整段搬上屏观众读不完，
+  // 于是既没读也没听；重点也会被文字埋掉。
+  const { script } = runDeep();
+  const overlong = [];
+  const walk = (node, key) => {
+    if (Array.isArray(node)) return node.forEach((item) => walk(item, key));
+    if (node && typeof node === "object") {
+      for (const [k, v] of Object.entries(node)) {
+        if (k === "beats" || k === "chart" || k === "captions") continue;
+        walk(v, k);
+      }
+      return;
+    }
+    if (typeof node === "string" && node.length > 60) overlong.push(`${key}(${node.length}字)`);
+  };
+  for (const scene of script.scenes) walk(scene.data, null);
+  assert.deepEqual(overlong, [], `画面上还有长文本：${overlong.join("、")}`);
+
+  // 截断处必须留省略号——无声截断会让人以为原文就到这里
+  const trimmed = script.omissions.find((item) => item.path === "scenes[].data");
+  if (trimmed) assert.match(trimmed.handling, /省略号/);
+});
+
+test("画面收敛不动解说词：同一份素材，眼睛看重点、耳朵听展开", () => {
+  const { script } = runDeep();
+  // 解说词里必须还留着被画面截掉的那些内容，否则就是真的丢了内容而不是换了呈现
+  const spoken = script.scenes.map((scene) => scene.narration).join("");
+  const screen = JSON.stringify(script.scenes.map((scene) => scene.data));
+  assert.ok(spoken.length > 600, "解说词被一起裁掉了");
+  assert.ok(!screen.includes("……"), "画面文本出现了双省略号，说明截断被叠加了两次");
+});
+
+test("研究流程的自述不上屏：「第 2 步」「已落盘」「原报告」这类词观众看不懂", () => {
+  // 研究正文是写给复核的人看的，会交代结论出自流程的哪一步；观众不知道有几步，
+  // 屏幕上出现这些词只会让人以为漏看了什么。
+  const summary = bili();
+  const culture = summary.dimensionSummary.find((item) => item.dimensionId === "corporateCulture");
+  culture.conclusion = "仅转述第2步已落盘的可观察证据：长期投入优先于当期利润，研发连续三年跑赢收入。";
+  summary.strategies.noPosition.advice = "不要一次性建仓。第2步的算术很清楚：中性目标价没有空间。";
+
+  const { script } = run(summary);
+  const screen = JSON.stringify(script.scenes.map((scene) => scene.data));
+  for (const word of ["第2步", "已落盘", "原报告", "本报告"]) {
+    assert.ok(!screen.includes(word), `画面上还留着流程自述「${word}」`);
+  }
+  // 摘的是流程交代，不是内容：实质结论必须还在
+  assert.ok(screen.includes("长期投入优先于当期利润"), "把正文也一起摘掉了");
 });

@@ -7,6 +7,7 @@ import {
   shareRatio,
   str,
   strategyItems,
+  headlinePoints,
   stringList,
   trendSide,
   type Beat,
@@ -33,7 +34,8 @@ import {
  */
 const carriesMoreThanSpoken = (scene: Scene): boolean => (str(scene.data.detail) ?? 'full') !== 'full';
 
-/** 一屏最多列几条要点；超出的部分靠 SpokenNote 如实说明，不静默截断。 */
+/** 一屏最多列几条要点。超出的部分画面不列、也不作说明——「原报告共 N 条」是制作
+ *  过程的自述，不该上屏；这层账记在分镜稿的 `itemsAvailable` 里。 */
 const MAX_POINTS_PER_SCREEN = 4;
 const MAX_POINTS_PER_GROUP = 2;
 
@@ -56,7 +58,7 @@ const Reveal: React.FC<{from: number | null; children: React.ReactNode; style?: 
   style,
 }) => {
   const frame = useCurrentFrame();
-  // from === null：这一条原报告里有、但本片按控时没念到。恒定压暗摆着，不参与点亮——
+  // from === null：这一条报告里有、但本片按控时没念到。恒定压暗摆着，不参与点亮——
   // 它在画面上是可查的参考，不是正在讲的内容，用亮度把这个区别说清楚。
   const progress =
     from === null ? 0 : interpolate(frame, [from, from + 10], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
@@ -78,32 +80,17 @@ const Reveal: React.FC<{from: number | null; children: React.ReactNode; style?: 
 /** 第 index 条要点的点亮帧号；没念到的返回 null（恒定压暗）。 */
 const beatFrom = (beats: Beat[], index: number): number | null => beats[index]?.from ?? null;
 
-/**
- * 「原报告共 N 条，画面列了几条、本片念了几条」——三个数不一样时才出现，且必须说全。
+/*
+ * 这里原来有一个 `SpokenNote`：在画面上写「原报告共 N 条，本片按控时只播报前 M 条」。
+ * 已经删掉——**那是制作过程的自述，不是内容**。观众不需要知道这支片子怎么排的时长，
+ * 屏幕上多一行这样的字，只会把真正要看的东西挤下去。
  *
- * 画面列不下而少列的那几条，和按控时没念的那几条，是两回事：前者眼睛也看不到，
- * 后者压暗摆着还能看。把两者混成一句「只播报前 M 条」，等于把「画面上没有」说成了
- * 「画面上有、只是没念」。M 为 0 也要单独说——「只播报前 0 条」是句病句。
+ * 「没念到的那几条」这层信息并没有丢，只是搬回了它该在的地方：分镜稿的
+ * `itemsAvailable` / `spokenCount` 与 `omissions`。那是给人核对用的账，本来就不该上屏。
+ *
+ * 注意仍然守住一条：**不能把裁剪讲成缺失**。被控时裁光时画面什么都不说（不作断言），
+ * 只有原报告本来就没有时才写「暂无」。
  */
-const SpokenNote: React.FC<{available: number; shown: number; spoken: number; unit: string}> = ({
-  available,
-  shown,
-  spoken,
-  unit,
-}) => {
-  if (available <= shown && available <= spoken) return null;
-  const tail =
-    available > shown
-      ? `画面列出前 ${shown} 条，其余见报告`
-      : spoken === 0
-        ? '本片按控时都没有播报，仅画面压暗显示'
-        : `本片按控时只播报前 ${spoken} 条（其余压暗显示）`;
-  return (
-    <div style={{fontSize: 22, color: theme.textDim, marginTop: 6}}>
-      原报告共 {available} {unit}，{tail}
-    </div>
-  );
-};
 
 /**
  * 字幕的版面常量。**改任何一个都必须让 `CAPTION_ZONE` 跟着重算**，
@@ -228,13 +215,42 @@ const SlideTitle: React.FC<{eyebrow?: string; title: string}> = ({eyebrow, title
   </FadeIn>
 );
 
-/** 压暗的补充正文：本片没念全时才出现，说明报告里还有什么。 */
+/** 压暗的补充正文：本片没念全时才出现。不加「报告原文」这类前缀——
+ *  屏幕上出现「报告」两个字就是在讲制作过程，观众要看的是内容本身。 */
 const Supplement: React.FC<{text: string}> = ({text}) => (
   <div style={{fontSize: 26, lineHeight: 1.55, color: theme.textDim, opacity: 0.85, maxWidth: 1500}}>
-    <span style={{color: theme.warn}}>报告原文　</span>
     {text}
   </div>
 );
+
+/**
+ * 画面重点：讲稿加工件给这一屏写的一句话（`data.headline`，上限 24 字）。
+ *
+ * 它替代的是「把研究结论整段搬上屏」那种做法——那样观众在十几秒里读不完，
+ * 于是既没读也没听。一句话能读完，剩下的交给解说展开。
+ *
+ * 没有加工件时返回 null，各屏退回原来的排版，不留空档。
+ */
+const Headline: React.FC<{scene: Scene}> = ({scene}) => {
+  const points = headlinePoints(scene);
+  if (points.length === 0) return null;
+  // 一条时不加项目符号：单点加个圆点像是列表只写了一半
+  if (points.length === 1) {
+    return (
+      <div style={{fontSize: 38, fontWeight: 700, lineHeight: 1.4, color: theme.text, maxWidth: 1200}}>{points[0]}</div>
+    );
+  }
+  return (
+    <div style={{display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 1200}}>
+      {points.map((point, index) => (
+        <div key={index} style={{display: 'flex', alignItems: 'baseline', gap: 14}}>
+          <div style={{width: 10, height: 10, borderRadius: 5, backgroundColor: theme.accent, flexShrink: 0}} />
+          <div style={{fontSize: 34, fontWeight: 700, lineHeight: 1.35, color: theme.text}}>{point}</div>
+        </div>
+      ))}
+    </div>
+  );
+};
 
 const heroOf = (scene: Scene): Hero | null => scene.visuals?.hero ?? null;
 const chartOf = (scene: Scene): Chart | null => scene.visuals?.chart ?? null;
@@ -295,11 +311,13 @@ const DimensionSlide: React.FC<{scene: Scene; dimensions: DimensionRef[]}> = ({s
             {active?.scoreLabel ?? '暂无数据'}
           </div>
         </div>
+        <Headline scene={scene} />
         {hero ? <HeroMetric hero={hero} size="medium" /> : null}
         {chart ? <ChartView chart={chart} width={880} /> : null}
+        {/* 有 headline 就不再补原文摘要：一屏两段文字，观众两段都读不完 */}
         {conclusion === null ? (
-          <div style={{fontSize: 29, color: theme.warn}}>暂无数据（原报告该维度结论缺失）</div>
-        ) : !chart && carriesMoreThanSpoken(scene) ? (
+          <div style={{fontSize: 29, color: theme.warn}}>暂无数据</div>
+        ) : !chart && headlinePoints(scene).length === 0 && carriesMoreThanSpoken(scene) ? (
           <Supplement text={conclusion} />
         ) : null}
       </FadeIn>
@@ -317,9 +335,11 @@ const StrategySlide: React.FC<{scene: Scene}> = ({scene}) => {
   return (
     <FadeIn style={{display: 'flex', flexDirection: 'column', gap: 26, maxWidth: 1620, width: '100%'}}>
       <SlideTitle eyebrow="策略建议" title={`给「${scene.title}」的建议`} />
+      <Headline scene={scene} />
+      {/* 有 headline 就不再补建议正文：一屏两段文字，观众两段都读不完 */}
       {advice === null ? (
-        <div style={{fontSize: 30, color: theme.warn}}>暂无建议正文（原报告未填写）</div>
-      ) : carriesMoreThanSpoken(scene) ? (
+        <div style={{fontSize: 30, color: theme.warn}}>暂无建议</div>
+      ) : headlinePoints(scene).length === 0 && carriesMoreThanSpoken(scene) ? (
         <Supplement text={advice} />
       ) : null}
       {shown.length > 0 ? (
@@ -349,14 +369,13 @@ const StrategySlide: React.FC<{scene: Scene}> = ({scene}) => {
           ))}
         </div>
       ) : available > 0 ? (
-        // 原报告有触发条件、只是被控时裁光了——说成「暂无」就是把裁剪讲成了事实缺失。
-        <div style={{fontSize: 28, color: theme.warn}}>原报告共 {available} 条触发条件，本片按控时未播报</div>
+        // 有触发条件、只是被控时裁光了：**什么都不写**。
+        // 写「暂无」是把裁剪讲成事实缺失，写「本片未播报」又是把制作过程搬上屏——
+        // 不作断言才是对的，这层信息在分镜稿的 itemsAvailable 里留着。
+        null
       ) : (
         <div style={{fontSize: 28, color: theme.warn}}>暂无触发条件</div>
       )}
-      {shown.length > 0 ? (
-        <SpokenNote available={available} shown={shown.length} spoken={items.length} unit="条触发条件" />
-      ) : null}
     </FadeIn>
   );
 };
@@ -423,7 +442,6 @@ const RevenueSlide: React.FC<{scene: Scene}> = ({scene}) => {
           );
         })}
       </div>
-      <SpokenNote available={available} shown={shown.length} spoken={spokenCount} unit="条业务线" />
       {withChart ? (
         <FadeIn style={{marginTop: 8, borderTop: `2px solid ${theme.line}`, paddingTop: 18}}>
           <ChartView chart={chart!} />
@@ -468,9 +486,6 @@ const EconomicsSlide: React.FC<{scene: Scene}> = ({scene}) => {
                 </div>
               </Reveal>
             ))}
-            {/* 单位写「条要点」而不是「条粘性靠什么」：分组名已经在上一行的小标题里了，
-                再塞进计量单位里会读成「原报告共 3 条粘性靠什么」这样的病句 */}
-            <SpokenNote available={all.length} shown={shown.length} spoken={beats.length} unit="条要点" />
           </div>
         );
       })}
@@ -516,8 +531,15 @@ const MoatOverviewSlide: React.FC<{scene: Scene}> = ({scene}) => {
       <FadeIn style={{display: 'flex', gap: 18, width: '100%'}}>
         {items.map((item, index) => {
           const verdict = str(item.verdict);
-          // 与 VerdictTag 同一套口径：颜色只是冗余编码，判定原文始终写在卡里
-          const color = verdict === '存在' ? theme.accent : verdict === '待验证' ? theme.warn : theme.textDim;
+          const note = str(item.verdictNote);
+          // 与 VerdictTag 同一套口径：颜色只是冗余编码，判定原文始终写在卡里。
+          // 用 startsWith 而不是全等：`存在但已降级` / `商户侧待验证` 这类带限定语的判定
+          // 也要拿到对应的成色，否则五张卡里只有写得最规整的那张有颜色。
+          const color = verdict?.startsWith('存在')
+            ? theme.accent
+            : verdict?.includes('待验证')
+              ? theme.warn
+              : theme.textDim;
           return (
             <div
               key={index}
@@ -537,7 +559,41 @@ const MoatOverviewSlide: React.FC<{scene: Scene}> = ({scene}) => {
               <div style={{fontSize: 30, fontWeight: 700, color: theme.text, lineHeight: 1.3}}>
                 {str(item.type) ?? '—'}
               </div>
-              <div style={{fontSize: 42, fontWeight: 800, color, marginTop: 'auto'}}>{verdict ?? '暂无判定'}</div>
+              {/* 判定标签用大号字，但**必须封顶行数**：研究侧偶尔把整段判定写进 verdict，
+                  script_gen 已经切掉了说明部分，认不出判定词时仍可能是一长串——
+                  没有这道 clamp，它会撑出卡片盖住下面的字幕条。 */}
+              <div
+                style={{
+                  fontSize: 42,
+                  fontWeight: 800,
+                  color,
+                  marginTop: 'auto',
+                  lineHeight: 1.25,
+                  display: '-webkit-box',
+                  WebkitBoxOrient: 'vertical',
+                  WebkitLineClamp: 2,
+                  overflow: 'hidden',
+                }}
+              >
+                {verdict ?? '暂无判定'}
+              </div>
+              {/* 说明压暗、小号、封三行：它是「可查的参考」，不是这一屏的结论。
+                  屏幕不花时间，但也不能花掉版面。 */}
+              {note ? (
+                <div
+                  style={{
+                    fontSize: 21,
+                    lineHeight: 1.45,
+                    color: theme.textDim,
+                    display: '-webkit-box',
+                    WebkitBoxOrient: 'vertical',
+                    WebkitLineClamp: 3,
+                    overflow: 'hidden',
+                  }}
+                >
+                  {note}
+                </div>
+              ) : null}
             </div>
           );
         })}
@@ -627,7 +683,6 @@ const MoatTrendSlide: React.FC<{scene: Scene}> = ({scene}) => {
                   </Reveal>
                 );
               })}
-              <SpokenNote available={all.length} shown={shown.length} spoken={spoken} unit="条依据" />
             </div>
           );
         })}
@@ -659,14 +714,13 @@ const InquirySlide: React.FC<{scene: Scene}> = ({scene}) => {
           <div style={{fontSize: chart ? 26 : 28, lineHeight: 1.5, color: theme.text}}>{point}</div>
         </Reveal>
       ))}
-      <SpokenNote available={all.length} shown={shown.length} spoken={spokenCount} unit="条回答要点" />
     </div>
   );
 
   return (
     <div style={{display: 'flex', flexDirection: 'column', gap: 22, width: '100%', maxWidth: chart ? 1700 : 1560}}>
       {/* 与收入结构、护城河等屏共用同一个标题组件，头部字号与间距全片一致 */}
-      <SlideTitle eyebrow={scene.title} title={question ?? '原报告未记录这一问'} />
+      <SlideTitle eyebrow={question ? scene.title : undefined} title={question ?? scene.title} />
       <FadeIn>
         <div style={{height: 4, width: 240, backgroundColor: theme.accent}} />
       </FadeIn>
