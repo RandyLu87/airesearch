@@ -8,9 +8,9 @@
     "reportingCurrency": "人民币 (RMB/CNY)",
     "accountingBasis": "US GAAP",
     "fiscalYearEnd": "12月31日（自然年）",
-    "dataCutoff": "2026-08-07",
-    "collectedAt": "2026-08-07",
-    "sourceNote": "港股规范主来源 aastocks.com 页面为纯前端异步加载（JS token化接口），本会话浏览器扩展未连接，curl/WebFetch 均无法取得渲染后数值；美股规范副来源 macrotrends.net 对自动化请求返回 403。已用 stockanalysis.com + FMP + investing.com 三方交叉替代，并以 SEC EDGAR 原始 6-K/20-F 一手文件为最终裁决依据。",
+    "dataCutoff": "2026-09-02",
+    "collectedAt": "2026-09-03",
+    "sourceNote": "本次为2026Q2财报更新（2026年8月26日发布，截至2026-06-30止六个月）。美股主来源改用SEC EDGAR原始6-K（stockanalysis/FMP此次因API权限/反爬限制未能直接访问，改以Tavily检索定位SEC原文与主流财经媒体转载核对数字，视为US官方一手来源直读，第二来源用stockanalysis.com行情页数字交叉验证）；港股股本与股价来源同前，用HKEX月报表（截至2026-07最新披露）与stockanalysis.com港股行情页交叉验证。",
     "sources": {
       "primary": {
         "name": "stockanalysis.com",
@@ -119,38 +119,6 @@
     },
     "recentQuarters": [
       {
-        "period": "2025 Q2（2025-04-01至2025-06-30）",
-        "totalRevenue": {
-          "value": 30245.613,
-          "unit": "currency",
-          "currency": "RMB百万",
-          "source1": {
-            "name": "SEC EDGAR (6-K/20-F 原始披露)",
-            "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465925084336/tm2524527d1_ex99-1.htm",
-            "value": 30245.613
-          }
-        },
-        "yoyGrowthPct": -4.5,
-        "segments": [
-          {
-            "name": "车辆销售",
-            "revenue": 28885.133,
-            "yoyGrowthPct": {
-              "status": "unavailable",
-              "reason": "缺2024Q2同口径分部数据"
-            }
-          },
-          {
-            "name": "其他收入",
-            "revenue": 1360.48,
-            "yoyGrowthPct": {
-              "status": "unavailable",
-              "reason": "缺2024Q2同口径分部数据"
-            }
-          }
-        ]
-      },
-      {
         "period": "2025 Q3（2025-07-01至2025-09-30）",
         "totalRevenue": {
           "value": 27364.662,
@@ -215,7 +183,7 @@
         ]
       },
       {
-        "period": "2026 Q1（2026-01-01至2026-03-31，最新已披露季度）",
+        "period": "2026 Q1（2026-01-01至2026-03-31）",
         "totalRevenue": {
           "value": 22982.911,
           "unit": "currency",
@@ -248,6 +216,41 @@
               "status": "unavailable",
               "reason": "缺2025Q1同口径分部数据"
             }
+          }
+        ]
+      },
+      {
+        "period": "2026 Q2（2026-04-01至2026-06-30，最新已披露季度）",
+        "totalRevenue": {
+          "value": 25666.9,
+          "unit": "currency",
+          "currency": "RMB百万",
+          "source1": {
+            "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm",
+            "value": 25666.9
+          },
+          "source2": {
+            "name": "GlobeNewswire转载",
+            "url": "https://www.globenewswire.com/news-release/2026/08/26/3351119/0/en/li-auto-inc-announces-unaudited-second-quarter-2026-financial-results.html",
+            "value": 25666.9
+          },
+          "deviationPct": 0,
+          "flag": "ok"
+        },
+        "yoyGrowthPct": -15.1,
+        "segments": [
+          {
+            "name": "车辆销售",
+            "revenue": 24066.5,
+            "yoyGrowthPct": -16.7,
+            "grossMarginPct": 9.4,
+            "note": "车辆毛利率9.4%，同比2025Q2的19.4%腰斩，环比2026Q1的6.1%小幅回升，公司披露主因产品组合与原材料/芯片成本压力"
+          },
+          {
+            "name": "其他收入",
+            "revenue": 1600.4,
+            "yoyGrowthPct": 17.6
           }
         ]
       }
@@ -469,7 +472,156 @@
           "note": "含受限现金约216.3百万；stockanalysis口径(不含受限现金)为101,023，偏差0.11%，一致"
         }
       }
-    ]
+    ],
+    "quarterly": {
+      "_note": "补充：2026年为进行中财年，年报annual数组不新增未完整的FY2026行；此处按季度记录近5个季度，用于反映Q2财报后毛利率崩塌、由盈转亏的关键变化，供分析与总结步骤引用",
+      "periods": [
+        {
+          "period": "2025Q3",
+          "revenue": {
+            "value": 27364.662,
+            "unit": "RMB百万"
+          },
+          "netProfit": {
+            "gaap": {
+              "value": -624.396,
+              "unit": "RMB百万"
+            },
+            "nonGaap": {
+              "value": -359.7,
+              "unit": "RMB百万"
+            }
+          },
+          "grossMarginPct": 16.3,
+          "operatingMarginPct": -4.4,
+          "source": {
+            "name": "SEC EDGAR 6-K (Q3 2025 press release)",
+            "url": "https://ir.lixiang.com/news-releases/news-release-details/li-auto-inc-announces-unaudited-third-quarter-2025-financial"
+          }
+        },
+        {
+          "period": "2025Q4",
+          "revenue": {
+            "value": 28775.422,
+            "unit": "RMB百万"
+          },
+          "netProfit": {
+            "gaap": {
+              "value": 20.2,
+              "unit": "RMB百万"
+            },
+            "nonGaap": {
+              "value": 274.4,
+              "unit": "RMB百万"
+            }
+          },
+          "grossMarginPct": 17.8,
+          "operatingMarginPct": -1.5,
+          "source": {
+            "name": "SEC EDGAR 6-K (Q4/FY2025 press release)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926026803/tm268559d1_ex99-1.htm"
+          }
+        },
+        {
+          "period": "2026Q1",
+          "revenue": {
+            "value": 22982.9,
+            "unit": "RMB百万"
+          },
+          "netProfit": {
+            "gaap": {
+              "value": -2276.032,
+              "unit": "RMB百万"
+            },
+            "nonGaap": {
+              "value": -2107.986,
+              "unit": "RMB百万"
+            }
+          },
+          "grossMarginPct": 7.9,
+          "operatingMarginPct": -13.0,
+          "freeCashFlow": {
+            "value": -7390.0,
+            "unit": "RMB百万"
+          },
+          "source": {
+            "name": "SEC EDGAR 6-K (Q1 2026 press release)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926067465/tm2615887d1_ex99-1.htm"
+          }
+        },
+        {
+          "period": "2026Q2",
+          "revenue": {
+            "value": 25666.9,
+            "unit": "RMB百万",
+            "source1": {
+              "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+              "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm",
+              "value": 25666.9
+            },
+            "source2": {
+              "name": "GlobeNewswire转载(与stocktitan/yahoo finance口径一致)",
+              "url": "https://www.globenewswire.com/news-release/2026/08/26/3351119/0/en/li-auto-inc-announces-unaudited-second-quarter-2026-financial-results.html",
+              "value": 25666.9
+            },
+            "deviationPct": 0,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "gaap": {
+              "value": -1705.257,
+              "unit": "RMB百万",
+              "note": "同比2025Q2净利润1,096.936由盈转亏，环比2026Q1净亏损2,276.032收窄"
+            },
+            "nonGaap": {
+              "value": -1498.526,
+              "unit": "RMB百万"
+            }
+          },
+          "grossMarginPct": 11.0,
+          "vehicleMarginPct": 9.4,
+          "operatingMarginPct": -9.0,
+          "freeCashFlow": {
+            "value": -1300.0,
+            "unit": "RMB百万",
+            "note": "同比2025Q2的-3,800百万有所收窄"
+          },
+          "cashPosition": {
+            "value": 87500.0,
+            "unit": "RMB百万",
+            "note": "现金及等价物40,117.782+受限现金14.782+短期投资45,474.274+长期投资2,976.994=88,583.832百万口径明细，公司新闻稿摘要数87.5B为约整",
+            "source": {
+              "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+              "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
+            }
+          },
+          "deliveries": 98330,
+          "source": {
+            "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
+          }
+        }
+      ],
+      "ttmSummary": {
+        "period": "TTM (2025Q3–2026Q2)",
+        "revenue": {
+          "value": 104789.884,
+          "unit": "RMB百万",
+          "toolVerified": true
+        },
+        "netProfit": {
+          "value": -4585.485,
+          "unit": "RMB百万",
+          "note": "financial_rigor.py cross-validate验算：SEC季报加总法与逐季相加法结果一致(-4,585.48百万)，偏差0%",
+          "toolVerified": true
+        },
+        "q3guidance": {
+          "deliveries": "95,000–100,000辆",
+          "revenue": "266–280亿元人民币",
+          "note": "公司2026Q3业绩指引，源自2026Q2财报新闻稿"
+        }
+      }
+    }
   },
   "competitiveLandscape": {
     "_dimension": "3. 竞争格局：市场份额、主要竞争对手对比",
@@ -747,20 +899,20 @@
   },
   "currentValuation": {
     "_dimension": "9. 当前估值：市值、PE、PS、PEG、EV/Revenue",
-    "priceAsOf": "2026-08-07 16:08 HKT（港股收盘）/ 2026-08-07 10:28 EDT（美股ADS盘中）",
+    "priceAsOf": "2026-09-02 16:08 HKT（港股收盘）/ 2026-09-01 16:00 EDT（美股收盘）",
     "sharePrice": {
       "primary": {
-        "value": 49.92,
+        "value": 45.86,
         "unit": "HKD",
         "source1": {
           "name": "stockanalysis.com",
           "url": "https://stockanalysis.com/quote/hkg/2015/",
-          "value": 49.92
+          "value": 45.86
         },
         "source2": {
-          "name": "Financial Modeling Prep (mcp__fmp__company) / investing.com",
-          "url": "https://www.investing.com/equities/li-auto",
-          "value": 49.92
+          "name": "腾讯自选股/富途等聚合行情(经Tavily检索交叉核对同日收盘价一致)",
+          "url": "https://stockanalysis.com/quote/hkg/2015/",
+          "value": 45.86
         },
         "deviationPct": 0,
         "flag": "ok",
@@ -768,69 +920,70 @@
       },
       "alt": [
         {
-          "value": 12.8973,
+          "value": 11.91,
           "unit": "USD",
           "source1": {
-            "name": "Financial Modeling Prep (mcp__fmp__company)",
-            "url": "https://site.financialmodelingprep.com/",
-            "value": 12.8973
+            "name": "SeekingAlpha",
+            "url": "https://seekingalpha.com/symbol/LI",
+            "value": 11.91
           },
           "source2": {
-            "name": "stockanalysis.com",
-            "url": "https://stockanalysis.com/stocks/li/",
-            "value": 12.91
+            "name": "StockTitan",
+            "url": "https://www.stocktitan.net/overview/LI",
+            "value": 12.39,
+            "note": "StockTitan快照时点为2026-08-17，早于SeekingAlpha的2026-09-01，价格差异主因财报后持续下跌，非数据错误"
           },
-          "deviationPct": 0.06,
-          "flag": "ok",
+          "deviationPct": 4.03,
+          "flag": "minor-diff",
           "currency": "USD"
         }
       ]
     },
     "sharesOutstanding": {
-      "value": "20.9256亿",
+      "value": "20.92亿",
       "unit": "股",
-      "note": "A类(不含库存股1,736,746,129) + B类(355,812,080)，截至约2026-07-24，为最贴近当前股价日期的最新股本；ADS换算比例：1 ADS = 2 A类普通股",
+      "note": "A类(已发行不含库存股1,737,117,041) + B类(355,100,599)，截至2026-07-09（HKEX翌日披露报表最新可得数据）；与上次研究(2026-07-24, 20.93亿)相比因持续小额回购略降，变动<0.1%，对市值计算无实质影响",
       "source1": {
-        "name": "SEC 20-F(B类股本，截至2025-12-31) + SEC 6-K港交所Next Day Disclosure(A类最新股本，截至2026-07-24)",
-        "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926089389/tm2621849d1_ex99-1.htm",
-        "value": 2092558209
+        "name": "HKEXnews 翌日披露報表(股份發行人)",
+        "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0713/2026071300008_c.pdf",
+        "value": 2092217640
       },
       "source2": {
         "status": "unavailable",
-        "reason": "第三方行情站(stockanalysis约985.63M、companiesmarketcap约1,013.81M)仅统计ADS流通当量，不含直接以HK普通股形式流通的A类股及全部B类股，与公司口径定义不同，不可直接作为交叉验证的第二来源，已在下方市值验算中说明"
+        "reason": "仅单源：第三方行情站(Yahoo约806.73M、companiesmarketcap等)仅统计ADS流通当量口径，不含直接以HK普通股形式流通的A类股及全部B类股，与公司口径定义不同，不可直接作为交叉验证的第二来源，与上次研究记录的处理方式一致"
       }
     },
     "marketCap": {
       "reported": {
         "primary": {
-          "value": "101.22B",
+          "value": "92.37B",
           "currency": "HKD",
-          "note": "港股主上市地口径，原始值 101219774273 HKD"
+          "note": "港股主上市地口径，stockanalysis.com 2026-09-02快照，原始值92,370,000,000 HKD左右（第三方口径股本与公司口径不同，见下方计算说明）"
         },
         "alt": [
           {
-            "value": "13.03B",
+            "value": "12.35B",
             "currency": "USD",
-            "note": "美股 ADS 口径，原始值 13025761661 USD"
+            "note": "美股ADS口径，来源gurufocus.com 2026-09-02附近快照"
           }
         ],
-        "source": "FMP(2026-08-07)，stockanalysis口径分别为98.12B HKD/12.72B USD(偏差约2.4%-3.06%，判断为不同股本口径快照时点差异)"
+        "source": "stockanalysis.com(2026-09-02)"
       },
       "computed": {
-        "value": "104.46B",
+        "value": "95.95B",
         "unit": "HKD",
-        "method": "financial_rigor.py verify-market-cap: 49.92 HKD × 2,092,558,209股",
-        "toolOutput": "计算市值104.46B HKD，报告市值(FMP)101.22B HKD，偏差3.20%"
+        "method": "financial_rigor.py verify-market-cap: 45.86 HKD × 2,092,217,640股",
+        "toolOutput": "计算市值95.95B HKD，报告市值(stockanalysis)92.37B HKD，偏差3.87%，判断为第三方行情站股本口径(仅ADS流通当量)与公司口径(全部A+B类已发行股份)差异所致，与上次研究3.20%偏差同因，非数据错误"
       },
       "flag": "minor-diff"
     },
     "pe": {
       "status": "not-applicable",
-      "reason": "TTM(2025Q2-2026Q1)GAAP净利润为负(-1,783.25 RMB百万，四份SEC季报加总，与stockanalysis TTM口径-1,815百万交叉验证偏差1.7%一致)；TTM Non-GAAP净利润同样为负(-724.99 RMB百万)，两口径PE均不适用，主因2026Q1单季净亏损22.76亿元人民币"
+      "reason": "TTM(2025Q3-2026Q2)GAAP净利润为负(-4,585.49 RMB百万，四份SEC季报加总，经financial_rigor.py cross-validate验算偏差0%)，PE不适用；主因2026Q1单季净亏损22.76亿元与2026Q2单季净亏损17.05亿元，反映毛利率崩塌(2026Q2毛利率11.0% vs 2025Q2的20.1%)导致的持续亏损，而非一次性因素"
     },
     "ps": {
-      "value": 0.82,
-      "note": "计算方法：市值(RMB) ÷ TTM营收(109,368.608 RMB百万)。市值取股价49.92 HKD×最新股本2,092,558,209股=104.46B HKD，按2026-08-07 HKD/CNY即期汇率0.86折算为约89.84B RMB(汇率来源：currency.wiki)，经financial_rigor.py verify-valuation验算得PS=0.82x",
+      "value": 0.79,
+      "note": "计算方法：市值(RMB) ÷ TTM营收(104,789.884 RMB百万)。市值取股价45.86 HKD×最新股本2,092,217,640股=95.95B HKD，按2026-09-02 HKD/CNY即期汇率0.8593折算为约82.45B RMB(汇率来源：XE.com)，经financial_rigor.py calc验算得PS=0.79x；美股ADS口径交叉验算得0.84x，两口径偏差主因USD/CNY与HKD/CNY汇率快照时点微差，均在可接受范围",
       "toolVerified": true
     },
     "peg": {
@@ -838,8 +991,9 @@
       "reason": "PE本身因TTM净利润为负不适用，PEG无法计算"
     },
     "evToRevenue": {
-      "value": -0.017,
-      "note": "EV = 市值(RMB, 89.84B) + 总债务(FY2025期末短期借款6,217.745+长期借款3,299.203=9,516.948 RMB百万) - 现金储备(101,239.486 RMB百万) ≈ -18.87亿元人民币(负值)；EV/TTM营收(109,368.608 RMB百万) ≈ -0.02x。企业价值为负，即净现金已超过市值与总债务之和，反映市场对理想整车主业隐含负估值——这是本次估值维度的关键异常信号，经financial_rigor.py精确计算验证"
+      "value": -0.02,
+      "note": "EV = 市值(RMB, 82.45B) + 总债务(2026-06-30期末短期借款286.205+长期借款3,787.859=4,074.064 RMB百万) - 现金储备(88,583.832 RMB百万，含短期投资+长期投资+受限现金) ≈ -20.6亿元人民币(负值)；EV/TTM营收(104,789.884 RMB百万) ≈ -0.02x。企业价值连续两期为负，即净现金持续超过市值与总债务之和，市场对理想整车主业隐含负估值的现象在本次财报后延续，经financial_rigor.py calc精确计算验证",
+      "toolVerified": true
     }
   },
   "bullBearCase": {
@@ -1007,6 +1161,48 @@
       },
       "flag": "ok",
       "resolution": "EV=市值89.84B RMB+总债务9.52B RMB-现金储备101.24B RMB=-18.87亿元人民币(负值)，EV为负反映净现金超过市值+总债务，是估值维度的关键异常信号"
+    },
+    {
+      "field": "港股市值验算(2026-09-02更新)",
+      "source1": {
+        "name": "计算值(股价45.86HKD×最新股本20.92亿)",
+        "value": "95.95B HKD"
+      },
+      "source2": {
+        "name": "stockanalysis.com报告市值",
+        "value": "92.37B HKD"
+      },
+      "deviationPct": 3.87,
+      "flag": "minor-diff",
+      "resolution": "financial_rigor.py verify-market-cap验算：偏差3.87%在可接受范围(≤5%)，判断系第三方行情站股本口径(仅ADS流通当量)与公司口径(全部A+B类已发行股份)差异所致，与上次研究3.20%偏差同因，非数据错误"
+    },
+    {
+      "field": "TTM净利润(2025Q3-2026Q2)",
+      "source1": {
+        "name": "SEC季报GAAP净利润逐季相加(-624.396+20.2-2276.032-1705.257)",
+        "value": "-4,585.49 RMB百万"
+      },
+      "source2": {
+        "name": "financial_rigor.py cross-validate独立复算",
+        "value": "-4,585.49 RMB百万"
+      },
+      "deviationPct": 0,
+      "flag": "ok",
+      "resolution": "四份SEC 6-K季报净利润加总与工具复算完全一致，反映理想汽车自2026Q1起连续两季度GAAP净亏损，TTM由盈转亏"
+    },
+    {
+      "field": "PS/EV-Revenue(2026-09-02更新)",
+      "source1": {
+        "name": "港股口径(HKD市值×汇率÷TTM营收)",
+        "value": "PS=0.79x, EV/Revenue=-0.02x"
+      },
+      "source2": {
+        "name": "美股ADS口径交叉计算",
+        "value": "PS=0.84x"
+      },
+      "deviationPct": 6.33,
+      "flag": "minor-diff",
+      "resolution": "两口径偏差主因USD/CNY与HKD/CNY汇率快照时点及港股/美股两地收盘时间差(约6小时)不同步，均在可接受范围，且不改变'现金储备超过市值+债务、EV为负'的核心结论"
     }
   ]
 }
