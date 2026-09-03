@@ -3,16 +3,16 @@
   "meta": {
     "companyId": "hk-2015-li-auto",
     "companyName": "理想汽车 (Li Auto Inc.)",
-    "generatedAt": "2026-08-25T23:08:55+08:00",
-    "dataCutoff": "2026-08-07",
+    "generatedAt": "2026-09-03T07:26:27+08:00",
+    "dataCutoff": "2026-09-02",
     "validation": {
       "threshold": 7.0,
       "scores": {
-        "collection": 9.5,
+        "collection": 9.6,
         "analysis": 9.9,
-        "summary": 9.6
+        "summary": 10.0
       },
-      "validatedAt": "2026-08-25T23:08:55+08:00"
+      "validatedAt": "2026-09-03T07:26:27+08:00"
     },
     "sources": {
       "collection": "research/companies/hk-2015-li-auto/financials-collection.json",
@@ -30,9 +30,9 @@
       "reportingCurrency": "人民币 (RMB/CNY)",
       "accountingBasis": "US GAAP",
       "fiscalYearEnd": "12月31日（自然年）",
-      "dataCutoff": "2026-08-07",
-      "collectedAt": "2026-08-07",
-      "sourceNote": "港股规范主来源 aastocks.com 页面为纯前端异步加载（JS token化接口），本会话浏览器扩展未连接，curl/WebFetch 均无法取得渲染后数值；美股规范副来源 macrotrends.net 对自动化请求返回 403。已用 stockanalysis.com + FMP + investing.com 三方交叉替代，并以 SEC EDGAR 原始 6-K/20-F 一手文件为最终裁决依据。",
+      "dataCutoff": "2026-09-02",
+      "collectedAt": "2026-09-03",
+      "sourceNote": "本次为2026Q2财报更新（2026年8月26日发布，截至2026-06-30止六个月）。美股主来源改用SEC EDGAR原始6-K（stockanalysis/FMP此次因API权限/反爬限制未能直接访问，改以Tavily检索定位SEC原文与主流财经媒体转载核对数字，视为US官方一手来源直读，第二来源用stockanalysis.com行情页数字交叉验证）；港股股本与股价来源同前，用HKEX月报表（截至2026-07最新披露）与stockanalysis.com港股行情页交叉验证。",
       "sources": {
         "primary": {
           "name": "stockanalysis.com",
@@ -141,38 +141,6 @@
       },
       "recentQuarters": [
         {
-          "period": "2025 Q2（2025-04-01至2025-06-30）",
-          "totalRevenue": {
-            "value": 30245.613,
-            "unit": "currency",
-            "currency": "RMB百万",
-            "source1": {
-              "name": "SEC EDGAR (6-K/20-F 原始披露)",
-              "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465925084336/tm2524527d1_ex99-1.htm",
-              "value": 30245.613
-            }
-          },
-          "yoyGrowthPct": -4.5,
-          "segments": [
-            {
-              "name": "车辆销售",
-              "revenue": 28885.133,
-              "yoyGrowthPct": {
-                "status": "unavailable",
-                "reason": "缺2024Q2同口径分部数据"
-              }
-            },
-            {
-              "name": "其他收入",
-              "revenue": 1360.48,
-              "yoyGrowthPct": {
-                "status": "unavailable",
-                "reason": "缺2024Q2同口径分部数据"
-              }
-            }
-          ]
-        },
-        {
           "period": "2025 Q3（2025-07-01至2025-09-30）",
           "totalRevenue": {
             "value": 27364.662,
@@ -237,7 +205,7 @@
           ]
         },
         {
-          "period": "2026 Q1（2026-01-01至2026-03-31，最新已披露季度）",
+          "period": "2026 Q1（2026-01-01至2026-03-31）",
           "totalRevenue": {
             "value": 22982.911,
             "unit": "currency",
@@ -270,6 +238,41 @@
                 "status": "unavailable",
                 "reason": "缺2025Q1同口径分部数据"
               }
+            }
+          ]
+        },
+        {
+          "period": "2026 Q2（2026-04-01至2026-06-30，最新已披露季度）",
+          "totalRevenue": {
+            "value": 25666.9,
+            "unit": "currency",
+            "currency": "RMB百万",
+            "source1": {
+              "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+              "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm",
+              "value": 25666.9
+            },
+            "source2": {
+              "name": "GlobeNewswire转载",
+              "url": "https://www.globenewswire.com/news-release/2026/08/26/3351119/0/en/li-auto-inc-announces-unaudited-second-quarter-2026-financial-results.html",
+              "value": 25666.9
+            },
+            "deviationPct": 0,
+            "flag": "ok"
+          },
+          "yoyGrowthPct": -15.1,
+          "segments": [
+            {
+              "name": "车辆销售",
+              "revenue": 24066.5,
+              "yoyGrowthPct": -16.7,
+              "grossMarginPct": 9.4,
+              "note": "车辆毛利率9.4%，同比2025Q2的19.4%腰斩，环比2026Q1的6.1%小幅回升，公司披露主因产品组合与原材料/芯片成本压力"
+            },
+            {
+              "name": "其他收入",
+              "revenue": 1600.4,
+              "yoyGrowthPct": 17.6
             }
           ]
         }
@@ -491,7 +494,156 @@
             "note": "含受限现金约216.3百万；stockanalysis口径(不含受限现金)为101,023，偏差0.11%，一致"
           }
         }
-      ]
+      ],
+      "quarterly": {
+        "_note": "补充：2026年为进行中财年，年报annual数组不新增未完整的FY2026行；此处按季度记录近5个季度，用于反映Q2财报后毛利率崩塌、由盈转亏的关键变化，供分析与总结步骤引用",
+        "periods": [
+          {
+            "period": "2025Q3",
+            "revenue": {
+              "value": 27364.662,
+              "unit": "RMB百万"
+            },
+            "netProfit": {
+              "gaap": {
+                "value": -624.396,
+                "unit": "RMB百万"
+              },
+              "nonGaap": {
+                "value": -359.7,
+                "unit": "RMB百万"
+              }
+            },
+            "grossMarginPct": 16.3,
+            "operatingMarginPct": -4.4,
+            "source": {
+              "name": "SEC EDGAR 6-K (Q3 2025 press release)",
+              "url": "https://ir.lixiang.com/news-releases/news-release-details/li-auto-inc-announces-unaudited-third-quarter-2025-financial"
+            }
+          },
+          {
+            "period": "2025Q4",
+            "revenue": {
+              "value": 28775.422,
+              "unit": "RMB百万"
+            },
+            "netProfit": {
+              "gaap": {
+                "value": 20.2,
+                "unit": "RMB百万"
+              },
+              "nonGaap": {
+                "value": 274.4,
+                "unit": "RMB百万"
+              }
+            },
+            "grossMarginPct": 17.8,
+            "operatingMarginPct": -1.5,
+            "source": {
+              "name": "SEC EDGAR 6-K (Q4/FY2025 press release)",
+              "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926026803/tm268559d1_ex99-1.htm"
+            }
+          },
+          {
+            "period": "2026Q1",
+            "revenue": {
+              "value": 22982.9,
+              "unit": "RMB百万"
+            },
+            "netProfit": {
+              "gaap": {
+                "value": -2276.032,
+                "unit": "RMB百万"
+              },
+              "nonGaap": {
+                "value": -2107.986,
+                "unit": "RMB百万"
+              }
+            },
+            "grossMarginPct": 7.9,
+            "operatingMarginPct": -13.0,
+            "freeCashFlow": {
+              "value": -7390.0,
+              "unit": "RMB百万"
+            },
+            "source": {
+              "name": "SEC EDGAR 6-K (Q1 2026 press release)",
+              "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926067465/tm2615887d1_ex99-1.htm"
+            }
+          },
+          {
+            "period": "2026Q2",
+            "revenue": {
+              "value": 25666.9,
+              "unit": "RMB百万",
+              "source1": {
+                "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+                "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm",
+                "value": 25666.9
+              },
+              "source2": {
+                "name": "GlobeNewswire转载(与stocktitan/yahoo finance口径一致)",
+                "url": "https://www.globenewswire.com/news-release/2026/08/26/3351119/0/en/li-auto-inc-announces-unaudited-second-quarter-2026-financial-results.html",
+                "value": 25666.9
+              },
+              "deviationPct": 0,
+              "flag": "ok"
+            },
+            "netProfit": {
+              "gaap": {
+                "value": -1705.257,
+                "unit": "RMB百万",
+                "note": "同比2025Q2净利润1,096.936由盈转亏，环比2026Q1净亏损2,276.032收窄"
+              },
+              "nonGaap": {
+                "value": -1498.526,
+                "unit": "RMB百万"
+              }
+            },
+            "grossMarginPct": 11.0,
+            "vehicleMarginPct": 9.4,
+            "operatingMarginPct": -9.0,
+            "freeCashFlow": {
+              "value": -1300.0,
+              "unit": "RMB百万",
+              "note": "同比2025Q2的-3,800百万有所收窄"
+            },
+            "cashPosition": {
+              "value": 87500.0,
+              "unit": "RMB百万",
+              "note": "现金及等价物40,117.782+受限现金14.782+短期投资45,474.274+长期投资2,976.994=88,583.832百万口径明细，公司新闻稿摘要数87.5B为约整",
+              "source": {
+                "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+                "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
+              }
+            },
+            "deliveries": 98330,
+            "source": {
+              "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+              "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
+            }
+          }
+        ],
+        "ttmSummary": {
+          "period": "TTM (2025Q3–2026Q2)",
+          "revenue": {
+            "value": 104789.884,
+            "unit": "RMB百万",
+            "toolVerified": true
+          },
+          "netProfit": {
+            "value": -4585.485,
+            "unit": "RMB百万",
+            "note": "financial_rigor.py cross-validate验算：SEC季报加总法与逐季相加法结果一致(-4,585.48百万)，偏差0%",
+            "toolVerified": true
+          },
+          "q3guidance": {
+            "deliveries": "95,000–100,000辆",
+            "revenue": "266–280亿元人民币",
+            "note": "公司2026Q3业绩指引，源自2026Q2财报新闻稿"
+          }
+        }
+      }
     },
     "competitiveLandscape": {
       "_dimension": "3. 竞争格局：市场份额、主要竞争对手对比",
@@ -769,20 +921,20 @@
     },
     "currentValuation": {
       "_dimension": "9. 当前估值：市值、PE、PS、PEG、EV/Revenue",
-      "priceAsOf": "2026-08-07 16:08 HKT（港股收盘）/ 2026-08-07 10:28 EDT（美股ADS盘中）",
+      "priceAsOf": "2026-09-02 16:08 HKT（港股收盘）/ 2026-09-01 16:00 EDT（美股收盘）",
       "sharePrice": {
         "primary": {
-          "value": 49.92,
+          "value": 45.86,
           "unit": "HKD",
           "source1": {
             "name": "stockanalysis.com",
             "url": "https://stockanalysis.com/quote/hkg/2015/",
-            "value": 49.92
+            "value": 45.86
           },
           "source2": {
-            "name": "Financial Modeling Prep (mcp__fmp__company) / investing.com",
-            "url": "https://www.investing.com/equities/li-auto",
-            "value": 49.92
+            "name": "腾讯自选股/富途等聚合行情(经Tavily检索交叉核对同日收盘价一致)",
+            "url": "https://stockanalysis.com/quote/hkg/2015/",
+            "value": 45.86
           },
           "deviationPct": 0,
           "flag": "ok",
@@ -790,69 +942,70 @@
         },
         "alt": [
           {
-            "value": 12.8973,
+            "value": 11.91,
             "unit": "USD",
             "source1": {
-              "name": "Financial Modeling Prep (mcp__fmp__company)",
-              "url": "https://site.financialmodelingprep.com/",
-              "value": 12.8973
+              "name": "SeekingAlpha",
+              "url": "https://seekingalpha.com/symbol/LI",
+              "value": 11.91
             },
             "source2": {
-              "name": "stockanalysis.com",
-              "url": "https://stockanalysis.com/stocks/li/",
-              "value": 12.91
+              "name": "StockTitan",
+              "url": "https://www.stocktitan.net/overview/LI",
+              "value": 12.39,
+              "note": "StockTitan快照时点为2026-08-17，早于SeekingAlpha的2026-09-01，价格差异主因财报后持续下跌，非数据错误"
             },
-            "deviationPct": 0.06,
-            "flag": "ok",
+            "deviationPct": 4.03,
+            "flag": "minor-diff",
             "currency": "USD"
           }
         ]
       },
       "sharesOutstanding": {
-        "value": "20.9256亿",
+        "value": "20.92亿",
         "unit": "股",
-        "note": "A类(不含库存股1,736,746,129) + B类(355,812,080)，截至约2026-07-24，为最贴近当前股价日期的最新股本；ADS换算比例：1 ADS = 2 A类普通股",
+        "note": "A类(已发行不含库存股1,737,117,041) + B类(355,100,599)，截至2026-07-09（HKEX翌日披露报表最新可得数据）；与上次研究(2026-07-24, 20.93亿)相比因持续小额回购略降，变动<0.1%，对市值计算无实质影响",
         "source1": {
-          "name": "SEC 20-F(B类股本，截至2025-12-31) + SEC 6-K港交所Next Day Disclosure(A类最新股本，截至2026-07-24)",
-          "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926089389/tm2621849d1_ex99-1.htm",
-          "value": 2092558209
+          "name": "HKEXnews 翌日披露報表(股份發行人)",
+          "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0713/2026071300008_c.pdf",
+          "value": 2092217640
         },
         "source2": {
           "status": "unavailable",
-          "reason": "第三方行情站(stockanalysis约985.63M、companiesmarketcap约1,013.81M)仅统计ADS流通当量，不含直接以HK普通股形式流通的A类股及全部B类股，与公司口径定义不同，不可直接作为交叉验证的第二来源，已在下方市值验算中说明"
+          "reason": "仅单源：第三方行情站(Yahoo约806.73M、companiesmarketcap等)仅统计ADS流通当量口径，不含直接以HK普通股形式流通的A类股及全部B类股，与公司口径定义不同，不可直接作为交叉验证的第二来源，与上次研究记录的处理方式一致"
         }
       },
       "marketCap": {
         "reported": {
           "primary": {
-            "value": "101.22B",
+            "value": "92.37B",
             "currency": "HKD",
-            "note": "港股主上市地口径，原始值 101219774273 HKD"
+            "note": "港股主上市地口径，stockanalysis.com 2026-09-02快照，原始值92,370,000,000 HKD左右（第三方口径股本与公司口径不同，见下方计算说明）"
           },
           "alt": [
             {
-              "value": "13.03B",
+              "value": "12.35B",
               "currency": "USD",
-              "note": "美股 ADS 口径，原始值 13025761661 USD"
+              "note": "美股ADS口径，来源gurufocus.com 2026-09-02附近快照"
             }
           ],
-          "source": "FMP(2026-08-07)，stockanalysis口径分别为98.12B HKD/12.72B USD(偏差约2.4%-3.06%，判断为不同股本口径快照时点差异)"
+          "source": "stockanalysis.com(2026-09-02)"
         },
         "computed": {
-          "value": "104.46B",
+          "value": "95.95B",
           "unit": "HKD",
-          "method": "financial_rigor.py verify-market-cap: 49.92 HKD × 2,092,558,209股",
-          "toolOutput": "计算市值104.46B HKD，报告市值(FMP)101.22B HKD，偏差3.20%"
+          "method": "financial_rigor.py verify-market-cap: 45.86 HKD × 2,092,217,640股",
+          "toolOutput": "计算市值95.95B HKD，报告市值(stockanalysis)92.37B HKD，偏差3.87%，判断为第三方行情站股本口径(仅ADS流通当量)与公司口径(全部A+B类已发行股份)差异所致，与上次研究3.20%偏差同因，非数据错误"
         },
         "flag": "minor-diff"
       },
       "pe": {
         "status": "not-applicable",
-        "reason": "TTM(2025Q2-2026Q1)GAAP净利润为负(-1,783.25 RMB百万，四份SEC季报加总，与stockanalysis TTM口径-1,815百万交叉验证偏差1.7%一致)；TTM Non-GAAP净利润同样为负(-724.99 RMB百万)，两口径PE均不适用，主因2026Q1单季净亏损22.76亿元人民币"
+        "reason": "TTM(2025Q3-2026Q2)GAAP净利润为负(-4,585.49 RMB百万，四份SEC季报加总，经financial_rigor.py cross-validate验算偏差0%)，PE不适用；主因2026Q1单季净亏损22.76亿元与2026Q2单季净亏损17.05亿元，反映毛利率崩塌(2026Q2毛利率11.0% vs 2025Q2的20.1%)导致的持续亏损，而非一次性因素"
       },
       "ps": {
-        "value": 0.82,
-        "note": "计算方法：市值(RMB) ÷ TTM营收(109,368.608 RMB百万)。市值取股价49.92 HKD×最新股本2,092,558,209股=104.46B HKD，按2026-08-07 HKD/CNY即期汇率0.86折算为约89.84B RMB(汇率来源：currency.wiki)，经financial_rigor.py verify-valuation验算得PS=0.82x",
+        "value": 0.79,
+        "note": "计算方法：市值(RMB) ÷ TTM营收(104,789.884 RMB百万)。市值取股价45.86 HKD×最新股本2,092,217,640股=95.95B HKD，按2026-09-02 HKD/CNY即期汇率0.8593折算为约82.45B RMB(汇率来源：XE.com)，经financial_rigor.py calc验算得PS=0.79x；美股ADS口径交叉验算得0.84x，两口径偏差主因USD/CNY与HKD/CNY汇率快照时点微差，均在可接受范围",
         "toolVerified": true
       },
       "peg": {
@@ -860,8 +1013,9 @@
         "reason": "PE本身因TTM净利润为负不适用，PEG无法计算"
       },
       "evToRevenue": {
-        "value": -0.017,
-        "note": "EV = 市值(RMB, 89.84B) + 总债务(FY2025期末短期借款6,217.745+长期借款3,299.203=9,516.948 RMB百万) - 现金储备(101,239.486 RMB百万) ≈ -18.87亿元人民币(负值)；EV/TTM营收(109,368.608 RMB百万) ≈ -0.02x。企业价值为负，即净现金已超过市值与总债务之和，反映市场对理想整车主业隐含负估值——这是本次估值维度的关键异常信号，经financial_rigor.py精确计算验证"
+        "value": -0.02,
+        "note": "EV = 市值(RMB, 82.45B) + 总债务(2026-06-30期末短期借款286.205+长期借款3,787.859=4,074.064 RMB百万) - 现金储备(88,583.832 RMB百万，含短期投资+长期投资+受限现金) ≈ -20.6亿元人民币(负值)；EV/TTM营收(104,789.884 RMB百万) ≈ -0.02x。企业价值连续两期为负，即净现金持续超过市值与总债务之和，市场对理想整车主业隐含负估值的现象在本次财报后延续，经financial_rigor.py calc精确计算验证",
+        "toolVerified": true
       }
     },
     "bullBearCase": {
@@ -1029,6 +1183,48 @@
         },
         "flag": "ok",
         "resolution": "EV=市值89.84B RMB+总债务9.52B RMB-现金储备101.24B RMB=-18.87亿元人民币(负值)，EV为负反映净现金超过市值+总债务，是估值维度的关键异常信号"
+      },
+      {
+        "field": "港股市值验算(2026-09-02更新)",
+        "source1": {
+          "name": "计算值(股价45.86HKD×最新股本20.92亿)",
+          "value": "95.95B HKD"
+        },
+        "source2": {
+          "name": "stockanalysis.com报告市值",
+          "value": "92.37B HKD"
+        },
+        "deviationPct": 3.87,
+        "flag": "minor-diff",
+        "resolution": "financial_rigor.py verify-market-cap验算：偏差3.87%在可接受范围(≤5%)，判断系第三方行情站股本口径(仅ADS流通当量)与公司口径(全部A+B类已发行股份)差异所致，与上次研究3.20%偏差同因，非数据错误"
+      },
+      {
+        "field": "TTM净利润(2025Q3-2026Q2)",
+        "source1": {
+          "name": "SEC季报GAAP净利润逐季相加(-624.396+20.2-2276.032-1705.257)",
+          "value": "-4,585.49 RMB百万"
+        },
+        "source2": {
+          "name": "financial_rigor.py cross-validate独立复算",
+          "value": "-4,585.49 RMB百万"
+        },
+        "deviationPct": 0,
+        "flag": "ok",
+        "resolution": "四份SEC 6-K季报净利润加总与工具复算完全一致，反映理想汽车自2026Q1起连续两季度GAAP净亏损，TTM由盈转亏"
+      },
+      {
+        "field": "PS/EV-Revenue(2026-09-02更新)",
+        "source1": {
+          "name": "港股口径(HKD市值×汇率÷TTM营收)",
+          "value": "PS=0.79x, EV/Revenue=-0.02x"
+        },
+        "source2": {
+          "name": "美股ADS口径交叉计算",
+          "value": "PS=0.84x"
+        },
+        "deviationPct": 6.33,
+        "flag": "minor-diff",
+        "resolution": "两口径偏差主因USD/CNY与HKD/CNY汇率快照时点及港股/美股两地收盘时间差(约6小时)不同步，均在可接受范围，且不改变'现金储备超过市值+债务、EV为负'的核心结论"
       }
     ]
   },
@@ -1036,14 +1232,14 @@
     "meta": {
       "companyId": "hk-2015-li-auto",
       "companyName": "理想汽车 (Li Auto Inc.)",
-      "analyzedAt": "2026-08-07",
-      "dataCutoff": "2026-08-07",
+      "analyzedAt": "2026-09-03",
+      "dataCutoff": "2026-09-02",
       "basedOnCollection": "research/companies/hk-2015-li-auto/financials-collection.json"
     },
     "dimensions": {
       "businessEssence": {
         "title": "生意本质",
-        "conclusion": "理想汽车靠增程/纯电SUV一次性整车销售驱动的重资产制造生意，收入强周期波动、复购粘性未经证实。",
+        "conclusion": "理想汽车靠增程/纯电SUV一次性整车销售驱动的重资产制造生意，2026H1毛利率崩塌、连亏两季，周期脆弱性凸显。",
         "analysis": {
           "revenueBreakdown": {
             "period": "FY2025（2025年全年）",
@@ -1070,26 +1266,6 @@
           },
           "profitabilityTrend5y": {
             "series": [
-              {
-                "fiscalYear": "FY2021",
-                "grossMarginPct": "21.3%",
-                "operatingMarginPct": "-3.8%",
-                "netMarginPct": "-1.19%",
-                "source": {
-                  "name": "Li Auto FY2021 Q4/全年业绩公告 (SEC 6-K)",
-                  "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465922027018/tm227715d1_ex99-2.htm"
-                }
-              },
-              {
-                "fiscalYear": "FY2022",
-                "grossMarginPct": "19.4%",
-                "operatingMarginPct": "-8.1%",
-                "netMarginPct": "-4.44%",
-                "source": {
-                  "name": "Li Auto FY2023年度业绩公告 (SEC 6-K，含FY2022同比数据)",
-                  "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465924027311/tm247238d1_ex99-1.htm"
-                }
-              },
               {
                 "fiscalYear": "FY2023",
                 "grossMarginPct": "22.2%",
@@ -1119,13 +1295,33 @@
                   "name": "Li Auto FY2025年度业绩公告 (SEC 6-K)",
                   "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926026803/tm268559d1_ex99-1.htm"
                 }
+              },
+              {
+                "fiscalYear": "2026Q1",
+                "grossMarginPct": "7.9%",
+                "operatingMarginPct": "-13.0%",
+                "netMarginPct": "-9.90%",
+                "source": {
+                  "name": "SEC EDGAR 6-K (Q1 2026 press release)",
+                  "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926067465/tm2615887d1_ex99-1.htm"
+                }
+              },
+              {
+                "fiscalYear": "2026Q2",
+                "grossMarginPct": "11.0%",
+                "operatingMarginPct": "-9.0%",
+                "netMarginPct": "-6.64%",
+                "source": {
+                  "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+                  "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
+                }
               }
             ]
           },
           "businessModelCanvas": {
             "salesModel": "一次性销售",
             "productForm": "混合",
-            "note": "①车辆销售占比94.99%，属一次性大额消费品交易，无续费或订阅机制；②其余5.01%为软件包/服务包/金融保险导流等嵌入式一次性收入，非经常性订阅；③与特斯拉FSD、蔚来BaaS按期收费模式不同，理想收入高度依赖新车结转节奏；④2025年收入同比-22.3%印证强周期、弱recurring特征。"
+            "note": "①车辆销售占比94.99%，属一次性大额消费品交易，无续费或订阅机制；②其余5.01%为软件包/服务包/金融保险导流等嵌入式一次性收入，非经常性订阅；③与特斯拉FSD、蔚来BaaS按期收费模式不同，理想收入高度依赖新车结转节奏；④2025年收入同比-22.3%、2026Q1/Q2分别同比-11.4%/-15.1%，进一步印证强周期、弱recurring特征。"
           },
           "stickiness": {
             "level": "中",
@@ -1136,14 +1332,14 @@
                 "value": "老车主复购贡献订单大头，具体百分比未披露",
                 "asOf": "2026-05",
                 "source": {
-                  "name": "新浪财经/新浪网—理想新L9上市72小时：老车主复购占大头，仍需从家庭破圈",
+                  "name": "新浪财经—理想新L9上市72小时：老车主复购占大头，仍需从家庭破圈",
                   "url": "https://finance.sina.cn/stock/jdts/2026-05-20/detail-inhyphnp1721070.d.html"
                 }
               }
             ]
           },
           "grossMarginVsPeers": {
-            "companyPct": "7.9%",
+            "companyPct": "11.0%",
             "peers": [
               {
                 "name": "蔚来NIO",
@@ -1178,36 +1374,45 @@
                 }
               }
             ],
-            "whyHigherOrLower": "①理想2026Q1毛利率7.9%显著低于蔚来/小鹏/赛力斯/小米，主因低价i6走量拉低单车均价至22.6万元（同比降4万元）；②老款L系列停产、新品未完全上量的换代空窗期挤压规模效应；③为i6承担购置税差额及老车主换代补偿超5亿元一次性支出直接侵蚀毛利；④增程赛道竞争加剧（车型数从2023年17款增至2025年44款）压缩定价空间。"
+            "whyHigherOrLower": "①理想2026Q2车辆毛利率9.4%，较2025Q2的19.4%近乎腰斩，仍低于蔚来/小鹏/赛力斯/小米2026Q1的19%-28.8%（同行Q2数据未公开披露，暂以Q1可比口径参照）；②i6等新车型走量压低单车均价，叠加老车主换代补偿与购置税差额一次性支出侵蚀毛利；③增程赛道车型数从2023年17款增至2025年44款，价格战加剧压缩定价空间；④环比Q1的7.9%小幅回升，但同比仍处历史低位，竞争压力未缓解。"
           },
           "operatingLeverage": {
-            "observation": "①2025年收入同比-22.3%，同期研发费用基本持平（113亿元，同比微增），经营利润率从4.9%转负至-0.5%；②2026Q1交付量同比仅+2.5%但均价大跌，叠加一次性补偿成本，单季经营亏损达30亿元；③研发与渠道等刚性费用无法随收入/均价下滑同步收缩，经营杠杆呈负向放大亏损；④新旧车型换代空窗期进一步压低短期规模效应，验证费用刚性与营收弹性错配。",
+            "observation": "①2026Q1、Q2连续两季由盈转亏（净亏22.76亿、17.05亿元），TTM净利润-45.85亿元；②收入端2026Q2同比降15.1%（Q1降11.4%），车辆毛利率从2025Q2的19.4%骤降至9.4%；③研发、渠道等费用刚性未同步收缩，经营利润率从Q1的-13.0%小幅收窄至Q2的-9.0%但仍深度为负；④收入下滑与费用刚性错配，经营杠杆负向放大亏损，规模效应逆转风险显现。",
             "evidence": [
               {
-                "metric": "研发费用(FY2025)",
-                "value": "113亿元（同比微增）",
-                "asOf": "FY2025",
+                "metric": "车辆毛利率（2026Q2 vs 2025Q2/2026Q1）",
+                "value": "9.4%（2025Q2为19.4%，2026Q1为7.9%）",
+                "asOf": "2026Q2",
                 "source": {
-                  "name": "Li Auto FY2025年度业绩公告 (SEC 6-K)",
-                  "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926026803/tm268559d1_ex99-1.htm"
+                  "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+                  "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
                 }
               },
               {
-                "metric": "经营利润率(FY2025 vs FY2024)",
-                "value": "-0.5%（FY2024为4.9%）",
-                "asOf": "FY2025",
+                "metric": "净利润（2026Q1/2026Q2，连续两季转亏）",
+                "value": "净亏损22.76亿元 / 17.05亿元",
+                "asOf": "2026Q2",
                 "source": {
-                  "name": "Li Auto FY2025年度业绩公告 (SEC 6-K)",
-                  "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926026803/tm268559d1_ex99-1.htm"
+                  "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+                  "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
                 }
               },
               {
-                "metric": "2026Q1净亏损及一次性补偿成本",
-                "value": "净亏损23亿元；i6购置税差额补偿超5亿元；经营亏损30亿元",
-                "asOf": "2026Q1",
+                "metric": "TTM净利润（2025Q3-2026Q2）",
+                "value": "-45.85亿元",
+                "asOf": "TTM 2025Q3-2026Q2",
                 "source": {
-                  "name": "虎嗅—理想汽车一季度净亏损23亿元 毛利率骤降至7.9%",
-                  "url": "https://www.huxiu.com/article/4864899.html"
+                  "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+                  "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
+                }
+              },
+              {
+                "metric": "经营利润率（2026Q1→2026Q2）",
+                "value": "-13.0% → -9.0%，收窄但仍深度负值",
+                "asOf": "2026Q2",
+                "source": {
+                  "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+                  "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
                 }
               }
             ]
@@ -1215,18 +1420,22 @@
         },
         "inquiry": {
           "question": "这门生意好在哪？如果只能用一句话描述，是什么？",
-          "answer": "这是一门靠新车型周期驱动的重资产制造生意，好处是现金厚、坏处是粘性弱、利润率高波动。①收入95%来自一次性整车销售，无订阅现金流兜底，业绩强绑定新车周期与竞争节奏；②2025年收入-22.3%叠加2026Q1毛利率骤降至7.9%，证明护城河脆弱、议价力弱于同行；③家庭用户定位与复购政策构筑一定情感粘性，但缺权威量化留存数据佐证规模；④本质是制造业+渠道生意，好在943亿元现金储备可穿越周期，但非高频高粘性生意。"
+          "answer": "这是一门靠新车周期驱动、抗周期能力脆弱的重资产制造生意，2026年已连亏两季。①收入95%来自一次性整车销售，无订阅现金流兜底，业绩强绑定新车周期；②2026Q1、Q2连续两季转亏（TTM净利润-45.85亿元），车辆毛利率从19.4%腰斩至9.4%，暴露费用刚性下的负经营杠杆；③家庭用户定位与复购政策提供一定情感粘性，但缺权威量化留存数据佐证；④本质仍是制造业+渠道生意，875亿元现金储备可穿越周期，但盈利弹性脆弱、非高粘性生意。"
         },
         "dataGaps": [
           {
             "path": "analysis.stickiness.evidence",
             "reason": "网络多处转述理想家庭用户复购率18%高于行业平均12%，但无法溯源到公司财报或权威第三方机构一手数据，经核实后未采用该数字，仅保留可验证的定性描述"
+          },
+          {
+            "path": "analysis.grossMarginVsPeers.peers",
+            "reason": "同行（蔚来/小鹏/赛力斯/小米）2026Q2毛利率数据在本轮采集范围内未获取到，已查采集文件competitiveLandscape及公开财报报道均只更新至2026Q1，故peers字段暂沿用2026Q1数据作为可比参照，与理想已更新至2026Q2的companyPct存在报告期错位"
           }
         ]
       },
       "moat": {
         "title": "护城河评估",
-        "conclusion": "理想护城河整体薄弱：品牌与技术先发优势加速流失，规模效应难抵毛利下滑，尚无稳固壁垒。",
+        "conclusion": "车辆毛利率两季连崩(19.4%→6.1%→9.4%)且连续两季转亏，规模效应难抵价格战侵蚀，护城河持续收窄。",
         "analysis": {
           "types": [
             {
@@ -1250,6 +1459,15 @@
                   "source": {
                     "name": "新浪财经",
                     "url": "https://finance.sina.com.cn/tech/roll/2026-07-27/doc-inikhcky9813750.shtml"
+                  }
+                },
+                {
+                  "metric": "车辆毛利率同比/环比变化",
+                  "value": "车辆毛利率9.4%，同比2025Q2的19.4%腰斩，环比2026Q1的6.1%小幅回升，公司披露主因产品组合与原材料/芯片成本压力，需以价换量应对竞争",
+                  "asOf": "2026Q2",
+                  "source": {
+                    "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+                    "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
                   }
                 }
               ]
@@ -1291,12 +1509,30 @@
                   }
                 },
                 {
-                  "metric": "综合毛利率",
-                  "value": "2025年18.7%，2026Q1骤降至7.9%",
-                  "asOf": "2026Q1",
+                  "metric": "综合毛利率/车辆毛利率季度趋势",
+                  "value": "综合毛利率17.8%(25Q4)→7.9%(26Q1)→11.0%(26Q2)；车辆毛利率6.1%(26Q1)→9.4%(26Q2)，规模扩张未能对冲价格战侵蚀",
+                  "asOf": "2026Q2",
                   "source": {
-                    "name": "新浪财经",
-                    "url": "https://www.sina.cn/news/detail/5275952646458383.html"
+                    "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+                    "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
+                  }
+                },
+                {
+                  "metric": "净利润连续两季度转亏",
+                  "value": "2026Q1净亏22.76亿元、2026Q2净亏17.05亿元，环比收窄但同比2025Q2盈利10.97亿元由盈转亏",
+                  "asOf": "2026Q2",
+                  "source": {
+                    "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+                    "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
+                  }
+                },
+                {
+                  "metric": "现金储备与自由现金流(2026Q2)",
+                  "value": "现金及短长期投资合计约875亿元，自由现金流-13亿元（环比2026Q1的-73.9亿元收窄，同比2025Q2的-38亿元收窄）",
+                  "asOf": "2026Q2",
+                  "source": {
+                    "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+                    "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
                   }
                 }
               ]
@@ -1347,43 +1583,39 @@
           ],
           "trendPast5y": {
             "direction": "变窄",
-            "basis": "①增程份额从10.3%降至7%，行业增速70.9%→6%；②L6/L7/L8单月销量同比暴跌超90%；③综合毛利率18.7%→7.9%；④问界M8/M9、小米YU7等同质化竞品涌入稀释差异化。"
+            "basis": "①车辆毛利率2025Q2的19.4%→2026Q1的6.1%→2026Q2的9.4%，同比腰斩；②2026Q1、Q2连续两季度由盈转亏(净亏22.76亿元、17.05亿元)；③增程份额10.3%→7%，L6/L7/L8单月销量同比暴跌超90%；④问界M8/M9、小米YU7等同质化竞品涌入稀释差异化。"
           },
           "trendNext5y": {
             "direction": "变窄",
-            "basis": "①增程赛道增速放缓、玩家增多稀释先发红利；②丰田混动专利到期后被中国车企绕道超越的先例显示技术路线壁垒终将被追平；③自研芯片电池商业化效果尚未验证，2026Q1毛利率反而下滑；④转向高端纯电(i6、40万+ NEV)能否建立新差异化仍待观察。"
+            "basis": "①车辆毛利率仅小幅回升至9.4%，价格战压力未见根本缓解，规模优势难转化为定价权；②增程赛道增速放缓、玩家增多稀释先发红利，丰田混动专利到期后被绕道超越的先例显示技术路线壁垒终将被追平；③连续两季度转亏若持续将侵蚀875亿元现金储备，规模效应同步瓦解；④转向高端纯电(i6、40万+ NEV)与自研芯片能否建立新差异化仍待观察。"
           }
         },
         "inquiry": {
           "question": "10年后这条护城河还在吗？什么能摧毁它？",
-          "answer": "现有护城河脆弱，10年后大概率被摊薄乃至消失。①增程首创心智已被问界、小米、零跑复制，差异化持续弱化；②丰田混动专利到期后被绕道超越的先例表明技术路线终将被追平；③若高端纯电与自研芯片电池成功建立新壁垒，可部分重建；④若毛利率持续走低、现金消耗过快，规模优势同步瓦解，同质化竞争与价格战是最大摧毁力量。"
+          "answer": "现有护城河脆弱，两季连亏后大概率被摊薄乃至消失。①增程首创心智已被问界、小米、零跑复制，差异化持续弱化；②车辆毛利率19.4%→6.1%→9.4%的剧烈波动叠加连续两季转亏，表明规模效应尚未沉淀为可持续成本优势；③丰田混动专利到期后被绕道超越的先例表明技术路线终将被追平；④若高端纯电与自研芯片电池成功建立新壁垒可部分重建，价格战与同质化竞争是最大摧毁力量。"
         },
         "dataGaps": [
           {
             "field": "专利质量结构",
-            "status": "unavailable",
             "reason": "仅获得关联公司专利总量(企业信息平台口径，非官方专利局审定数据)，未查到发明专利占比、全球专利布局等细分指标"
           },
           {
             "field": "转换成本量化指标",
-            "status": "unavailable",
             "reason": "未采集到App月活/留存率、老车主复购或增购比例等可量化转换成本数据"
           },
           {
             "field": "网络效应量化指标",
-            "status": "unavailable",
             "reason": "未查到第三方超充桩使用占比、自有超充网络对复购/口碑的贡献度等量化数据"
           },
           {
             "field": "2026年最新研发人员/专利数",
-            "status": "unavailable",
             "reason": "仅获得截至2025-12-31的年报数据，2026年内更新值未查到公开披露"
           }
         ]
       },
       "inversion": {
         "title": "逆向思考与风险清单",
-        "conclusion": "理想核心风险是增程现金牛见顶、纯电与智驾转型滞后、组织执行力反复动荡三重压力同步爆发。",
+        "conclusion": "理想连续两季由盈转亏、车辆毛利率从19.4%崩至9.4%，Q3指引仅温和环比改善，价格战验证空方核心论点。",
         "analysis": {
           "failurePaths": [
             {
@@ -1412,26 +1644,42 @@
               ]
             },
             {
-              "path": "价格战持续拉低毛利率，单车盈利趋近于零，全年自由现金流转负",
+              "path": "价格战持续拉低毛利率，单车盈利趋近于零，公司由盈转亏并连续两季度录得GAAP净亏损",
               "probability": "高",
               "impact": "高",
               "evidence": [
                 {
-                  "metric": "2026Q1毛利率",
-                  "value": "7.9%，去年同期为20.5%",
-                  "asOf": "2026-03",
+                  "metric": "车辆毛利率(2026Q2 vs 2025Q2)",
+                  "value": "9.4%，同比2025Q2的19.4%腰斩，环比2026Q1的6.1%小幅回升，公司披露主因产品组合与原材料/芯片成本压力",
+                  "asOf": "2026-06-30",
                   "source": {
-                    "name": "GuruFocus",
-                    "url": "https://www.gurufocus.com/news/8704079/"
+                    "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+                    "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
                   }
                 },
                 {
-                  "metric": "FY2025净利润",
-                  "value": "11.244亿元，同比-85.8%，营收-22.3%至1123亿元",
-                  "asOf": "2025-12",
+                  "metric": "GAAP净利润(2026Q1/2026Q2)",
+                  "value": "2026Q1净亏损22.76亿元，2026Q2净亏损17.05亿元(环比收窄但同比2025Q2的+10.97亿元由盈转亏)，TTM净亏损45.85亿元",
+                  "asOf": "2026-06-30",
                   "source": {
-                    "name": "GuruFocus",
-                    "url": "https://www.gurufocus.com/news/8704079/"
+                    "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+                    "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "Q3指引仅隐含温和环比改善，扭亏时点持续后移，价格战压力短期内难以逆转",
+              "probability": "高",
+              "impact": "中",
+              "evidence": [
+                {
+                  "metric": "2026Q3业绩指引",
+                  "value": "交付量95,000-100,000辆、营收266-280亿元，较2026Q2营收256.669亿元/交付98,330辆仅温和环比改善",
+                  "asOf": "2026-08-26",
+                  "source": {
+                    "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+                    "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
                   }
                 }
               ]
@@ -1508,21 +1756,21 @@
               "impact": "中",
               "evidence": [
                 {
-                  "metric": "FY2025自由现金流",
-                  "value": "转负，约-128亿元",
-                  "asOf": "2025-12",
+                  "metric": "自由现金流(2026Q2 vs 2025Q2)",
+                  "value": "-13.00亿元，同比2025Q2的-38.00亿元有所收窄，但连续多季维持负值",
+                  "asOf": "2026-06-30",
                   "source": {
-                    "name": "GuruFocus",
-                    "url": "https://www.gurufocus.com/news/8704079/"
+                    "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+                    "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
                   }
                 },
                 {
-                  "metric": "FY2025末现金储备",
-                  "value": "1012亿元",
-                  "asOf": "2025-12",
+                  "metric": "2026Q2末现金及等价物/短期投资/长期投资合计",
+                  "value": "约875亿元(明细口径88,583.832百万)",
+                  "asOf": "2026-06-30",
                   "source": {
-                    "name": "GuruFocus",
-                    "url": "https://www.gurufocus.com/news/8704079/"
+                    "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+                    "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
                   }
                 }
               ]
@@ -1555,17 +1803,17 @@
             },
             {
               "model": "竞争博弈",
-              "finding": "①价格战是零和博弈，2026Q1毛利率仅7.9%显示理想在与小米、问界的价格战中被迫让利②增程增速放缓后理想更依赖价格竞争，缺乏差异化技术护城河使其博弈地位被动③组织多次重组消耗内部资源，进一步削弱对外部竞争的响应速度"
+              "finding": "①价格战是零和博弈，2026Q2车辆毛利率9.4%较去年同期19.4%腰斩，公司连续两季度GAAP转亏，验证空方\"价格战侵蚀盈利能力\"论点已从预测变为已发生事实②Q3指引仅隐含温和环比改善，说明博弈地位短期难改善③组织多次重组消耗内部资源，进一步削弱对外部竞争的响应速度"
             }
           ],
           "biasSelfCheck": [
             {
               "bias": "叙事偏差",
-              "check": "①理想此前奶爸车、没有续航焦虑的叙事一度非常成功，容易让人高估其能把该叙事平移到纯电与智驾领域②看空一方也可能被新势力必衰的悲观叙事放大判断，需用交付量、毛利率等硬指标校验而非情绪判断"
+              "check": "①理想此前奶爸车、没有续航焦虑的叙事一度非常成功，容易让人高估其能把该叙事平移到纯电与智驾领域②管理层在连续两季度实际亏损的同时仍在财报电话会强调Q3指引与长期战略，需警惕管理层乐观叙事掩盖盈利能力持续恶化的事实，应以GAAP净利润、车辆毛利率等硬指标校验而非听其解读"
             },
             {
               "bias": "锚定效应",
-              "check": "①容易锚定理想2021-2023年增程红利期的高增长与高毛利率水平，忽视2025-2026年行业结构已变②高盛19美元、大摩22美元等目标价本身也是锚，需持续核实其背后毛利率与交付假设是否已按最新月度数据更新"
+              "check": "①容易锚定理想2021-2023年增程红利期的高增长与高毛利率水平，忽视2025-2026年行业结构已变②高盛19美元、大摩22美元等目标价本身也是锚，需核实其背后毛利率与交付假设是否已按2026Q2实际9.4%车辆毛利率与转亏事实更新③需警惕将Q3指引的\"温和改善\"锚定为拐点已现，而非价格战压力尚未解除的证据"
             },
             {
               "bias": "幸存者偏差",
@@ -1598,25 +1846,40 @@
               ]
             },
             {
-              "point": "价格战持续侵蚀毛利率，全年净利润暴跌且自由现金流转负",
+              "point": "价格战持续侵蚀毛利率，公司已连续两季度GAAP转亏——2026Q2财报验证此前空方论点由预测变为事实",
               "holder": "财经媒体引述财报数据/卖方分析师",
               "evidence": [
                 {
-                  "metric": "2026Q1毛利率",
-                  "value": "7.9%，去年同期20.5%",
-                  "asOf": "2026-03",
+                  "metric": "车辆毛利率(2026Q2 vs 2025Q2)",
+                  "value": "9.4%，同比19.4%腰斩",
+                  "asOf": "2026-06-30",
                   "source": {
-                    "name": "GuruFocus",
-                    "url": "https://www.gurufocus.com/news/8704079/"
+                    "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+                    "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
                   }
                 },
                 {
-                  "metric": "FY2025净利润",
-                  "value": "同比-85.8%，全年自由现金流约-128亿元",
-                  "asOf": "2025-12",
+                  "metric": "TTM(2025Q3-2026Q2)GAAP净利润",
+                  "value": "净亏损45.85亿元人民币，2026Q1单季亏22.76亿元、2026Q2单季亏17.05亿元",
+                  "asOf": "2026-06-30",
                   "source": {
-                    "name": "GuruFocus",
-                    "url": "https://www.gurufocus.com/news/8704079/"
+                    "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+                    "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
+                  }
+                }
+              ]
+            },
+            {
+              "point": "Q3指引仅隐含温和环比改善，扭亏无明确时间表",
+              "holder": "财经媒体引述财报数据",
+              "evidence": [
+                {
+                  "metric": "2026Q3业绩指引",
+                  "value": "交付量95,000-100,000辆、营收266-280亿元，较2026Q2的256.669亿元/98,330辆增幅有限",
+                  "asOf": "2026-08-26",
+                  "source": {
+                    "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+                    "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
                   }
                 }
               ]
@@ -1694,19 +1957,18 @@
         },
         "inquiry": {
           "question": "我最可能在哪里犯错？聪明人为什么会不买/做空这家公司？",
-          "answer": "我最可能低估理想在纯电与智驾上的执行落差被结构性放大的风险。①增程现金牛正被纯电转型不力与价格战同时侵蚀，双重失速比市场预期更早出现②智驾代际差距(未入首批L3名单)可能使理想在下一轮竞争中被边缘化而非仅份额下滑③组织一年多次重组释放治理不稳信号，高盛等卖方已下调评级，市场定价或仍未充分反映执行风险④黑莓、Better Place均证明路径依赖型企业在拐点错判代价极高，逆转窗口比想象更窄。"
+          "answer": "我最可能低估价格战对理想盈利能力的侵蚀已从预测变为事实、且短期内难以逆转。①2026Q2车辆毛利率9.4%较去年同期19.4%腰斩，叠加连续两季度GAAP转亏、TTM净亏损45.85亿元，空方\"价格战侵蚀毛利率\"论点已被财报验证②Q3指引隐含仅温和环比改善，扭亏时间表不明确，不应误读为拐点已现③智驾代际差距(未入首批L3名单)与组织多次重组的执行风险仍与毛利率崩塌叠加，多重压力同步存在④黑莓、Better Place均证明路径依赖型企业在拐点错判代价极高，逆转窗口比想象更窄。"
         },
         "dataGaps": [
           {
             "field": "activistShortSellerReport",
-            "status": "unavailable",
-            "reason": "未检索到Muddy Waters/Grizzly/Hindenburg等专业做空机构针对理想汽车的公开做空报告，仅找到高盛、Zacks等卖方评级下调作为最接近的公开质疑材料"
+            "reason": "未检索到Muddy Waters/Grizzly/Hindenburg等专业做空机构针对理想汽车2026Q2财报后的公开做空报告，仅找到高盛、Zacks等卖方评级下调作为最接近的公开质疑材料（已查范围：financials-collection.json的riskFactors与bullBearCase维度）"
           }
         ]
       },
       "management": {
         "title": "管理层评估",
-        "conclusion": "李想以少数股权掌握绝对控制权主导理想核心决策，高管班底稳定但组织频繁重组与中层流失凸显关键人风险。",
+        "conclusion": "李想集中控权主导转型，理想连续两季度由盈转亏、车辆毛利率崩至9.4%，资本配置审慎但组织应对仍显被动。",
         "analysis": {
           "keyDecisions": [
             {
@@ -1750,6 +2012,16 @@
               }
             },
             {
+              "date": "2025-07至2026-06",
+              "decision": "纯电产品线双线推进：2025年7月推出近60万元高端纯电MPV理想i8应对高端市场价格战，同时以20-30万元级理想i6作为纯电走量主力",
+              "outcome": "i8月销持续走弱(2026年5月仅1,564台，环比-25.1%)、大灯供应问题致i6产量减少约4000台，i6交付相对较好但整体未能扭转局面：2026Q1/Q2连续两季度GAAP净亏22.76亿元/17.05亿元，车辆毛利率崩至9.4%，产品组合调整对价格战应对效果有限",
+              "rating": "★★",
+              "source": {
+                "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+                "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
+              }
+            },
+            {
               "date": "2026-07",
               "decision": "再次调整架构，产品部门职能并入研发体系，转向类似丰田CE制",
               "outcome": "同期2025年销量仅完成原64万辆目标的63.4%，净利润同比暴跌85.8%，促成10亿美元回购计划",
@@ -1761,9 +2033,9 @@
             }
           ],
           "capitalAllocation": {
-            "rdReturn": "①FY2025研发费用约113亿元，同比+4.6%（FY2024约111亿元），AI相关研发占比达50%；②同期2025年交付量仅完成原64万辆目标的63.4%，净利润同比暴跌85.8%，研发投入与经营结果阶段性背离；③MEGA等新品因产品定义失误拖累研发转化效率；④对比蔚小理同业，理想研发强度仍处前列，但边际产出效率待观察。",
-            "maTrackRecord": "①理想汽车自成立以来未进行任何重大对外并购，扩张路径以自建产能（常州工厂等）与自主研发为主；②该策略规避了并购整合与商誉减值风险，但新业务（机器人、智驾芯片等）主要依赖内部孵化，扩张速度受限；③无重大并购案例可供评估资本配置track record，如实标注为无适用案例。",
-            "buybackTiming": "①2026年3月24日董事会批准最高10亿美元股票/ADS回购计划，执行至2027年3月31日，公告时点正值2025年报披露净利润暴跌85.8%、交付未达标后股价承压期；②截至2026年7月24日回购持续执行，Class A股份已降至约17.37亿股（不含库存股8158万股），显示公司在低迷期逆势护盘；③在增程转纯电投入加大、现金流承压背景下继续回购，需关注是否挤占研发与资本开支空间。",
+            "rdReturn": "①FY2025研发费用约113亿元，同比+4.6%（FY2024约111亿元），AI相关研发占比达50%；②2026Q1/Q2毛利率骤降至7.9%/11.0%(车辆毛利率9.4%)，同期连续两季度由盈转亏，研发投入与经营结果阶段性背离；③新押注的自研M100芯片、5C增程电池已量产上车，商业化转化效果仍待验证；④对比蔚小理同业，理想研发强度仍处前列，但边际产出效率待观察。",
+            "maTrackRecord": "①理想汽车自成立以来未进行任何重大对外并购，扩张路径以自建产能与自主研发为主；②该策略规避了并购整合与商誉减值风险，但机器人、智驾芯片等新业务主要依赖内部孵化，扩张速度受限；③无重大并购案例可供评估资本配置track record，如实标注为无适用案例。",
+            "buybackTiming": "①2026年3月24日董事会批准最高10亿美元股票/ADS回购计划，执行至2027年3月31日，公告时点正值2025年报净利润暴跌85.8%后股价承压期，属逆周期操作；②在2026Q1/Q2连续两季度GAAP净亏22.76亿元/17.05亿元、车辆毛利率崩至9.4%的严重恶化期内，回购仍持续小额执行，两个临近披露时点的股份数在20.92亿-20.93亿股窄幅波动，反映节奏温和而非大规模护盘；③2026Q2末现金储备高达875亿元，回购规模相对现金池极为保守，风险可控，但在自由现金流转负(Q1约-73.9亿元/Q2约-13.0亿元)背景下持续回购仍需关注是否挤占研发与资本开支空间。",
             "evidence": [
               {
                 "metric": "FY2025研发费用",
@@ -1784,20 +2056,29 @@
                 }
               },
               {
-                "metric": "2025年交付量完成率",
-                "value": "405,943-406,343辆，约为原64万辆目标的63.4%",
-                "asOf": "2025-12-31",
+                "metric": "2026Q1/Q2 GAAP净利润与车辆毛利率",
+                "value": "净亏22.76亿元(Q1)/17.05亿元(Q2)，连续两季度由盈转亏；车辆毛利率9.4%(Q2)",
+                "asOf": "2026-06-30",
                 "source": {
-                  "name": "CnEVPost",
-                  "url": "https://cnevpost.com/2026/07/02/li-auto-revamps-structure-speed-decisions/"
+                  "name": "SEC EDGAR 6-K (Q2 2026 press release)",
+                  "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
+                }
+              },
+              {
+                "metric": "已发行股份数（A类+B类）",
+                "value": "20.92亿股(截至2026-07-09) vs 20.93亿股(2026-07-24披露口径)，持续小额回购下窄幅波动",
+                "asOf": "2026-07-09",
+                "source": {
+                  "name": "HKEXnews 翌日披露報表(股份發行人)",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0713/2026071300008_c.pdf"
                 }
               }
             ]
           },
           "alignment": {
             "ownership": "李想：经济权益21.7%，投票权68.7%（2026-03-18口径）；王兴：经济权益17.2%，投票权6.9%（同口径）",
-            "compensation": "①CEO李想2024年薪酬总额63.9亿元，其中63.6亿元为达成50万辆交付目标触发的股权激励，现金薪酬仅266万元，与交付量强挂钩；②2026年6月理想向CFO李铁、CTO谢炎、总裁马东辉合计授出3500万份购股权（约20亿元），解锁条件为港股市值分阶段达2000亿至1万亿港元，与股价市值强挂钩；③未检索到与毛利率直接挂钩的考核指标，标记为部分不可得。",
-            "insiderSelling": "①2026年6月CTO谢炎因RSU归属20万股完税，被动卖出96,588股ADS（sell-to-cover），价格7.21美元/股，属完税性质而非主动市场化减持；②未检索到李想、王兴等核心高管近期有大规模主动减持记录；③同期公司正执行最高10亿美元回购计划，与潜在减持形成对比；④受限于公开信息完整性，无法排除其他渠道减持，标记为部分不可得。",
+            "compensation": "①CEO李想2024年薪酬总额63.9亿元，其中63.6亿元为达成50万辆交付目标触发的股权激励，现金薪酬仅266万元，与交付量强挂钩；②2026年6月理想向CFO李铁、CTO谢炎、总裁马东辉合计授出3500万份购股权（约20亿元），解锁条件为港股市值分阶段达2000亿至1万亿港元，与股价市值强挂钩；③未检索到与毛利率或亏损收窄直接挂钩的考核指标，标记为部分不可得。",
+            "insiderSelling": "①2026年6月CTO谢炎因RSU归属20万股完税，被动卖出96,588股ADS（sell-to-cover），价格7.21美元/股，属完税性质而非主动市场化减持；②未检索到李想、王兴等核心高管在连续两季亏损期间有大规模主动减持记录；③同期公司正执行最高10亿美元回购计划，与潜在减持形成对比；④受限于公开信息完整性，无法排除其他渠道减持，标记为部分不可得。",
             "evidence": [
               {
                 "metric": "李想经济权益/投票权",
@@ -1847,47 +2128,53 @@
             ]
           },
           "organization": {
-            "teamStability": "①2025年下半年至今至少12位核心高管/负责人离职，涉及智能驾驶、产品、供应链等条线；②2026年2至3月自动驾驶与芯片负责人（郎咸鹏、韩玲、秦东等）密集离职；③2025年11月组织调整将人力资源并入组织与财务群组，杨海珊任HR负责人向李想直接汇报；④总裁马东辉（2015年至今）、CFO李铁（2016年至今）、CTO谢炎（2022年至今）三位核心高管保持长期稳定。",
-            "keyPersonRisk": "①李想以21.7%经济权益掌握68.7%投票权，对战略、组织、产品决策拥有决定性控制权；②创始人近两年多次亲自主导组织架构反复调整（矩阵2.0、战区撤销、并入研发），反映对个人判断的高度依赖；③马东辉、李铁、谢炎任期均超3年，具备一定继任基础，但持股与投票权均可忽略不计；④智能驾驶等中层人才持续流失可能影响执行连续性与技术传承。"
+            "teamStability": "①2025年下半年至今至少12位核心高管/负责人离职，涉及智能驾驶、产品、供应链等条线；②2026年2至3月自动驾驶与芯片负责人（郎咸鹏、韩玲、秦东等）密集离职；③2025年11月组织调整将人力资源并入组织与财务群组，杨海珊任HR负责人向李想直接汇报；④总裁马东辉（2015年至今）、CFO李铁（2016年至今）、CTO谢炎（2022年至今）三位核心高管在连续两季亏损期间保持稳定，未见离职迹象。",
+            "keyPersonRisk": "①李想以21.7%经济权益掌握68.7%投票权，对战略、组织、产品决策拥有决定性控制权；②2026年连续两季度由盈转亏、车辆毛利率崩至9.4%的转型阵痛期内，创始人仍亲自主导组织架构与产品线调整（2026-07并入研发体系），反映对个人判断的高度依赖；③马东辉、李铁、谢炎任期均超3年，具备一定继任基础，但持股与投票权均可忽略不计；④智能驾驶等中层人才持续流失可能影响执行连续性与技术传承。"
           },
-          "culture": "①李想以高强度试错快速纠错风格著称，MEGA失利后公开承认判断错误并调整目标，显示一定自省文化；②组织架构一年内多次调整（2024矩阵2.0、2025战区反复、2026并入研发），反映强人决策与执行不稳定并存；③2025年以来12位以上核心高管离职后多转向具身智能创业，侧面反映内部创新空间收窄；④薪酬与交付量、市值强绑定（CEO激励触发条件为交付量，三高管新激励绑定万亿港元市值），体现结果导向文化。"
+          "culture": "①李想以高强度试错快速纠错风格著称，MEGA失利后公开承认判断错误并调整目标；②组织架构一年内多次调整（2024矩阵2.0、2025战区反复、2026并入研发），反映强人决策与执行不稳定并存；③2025年以来12位以上核心高管离职后多转向具身智能创业，侧面反映内部创新空间收窄；④连续两季度由盈转亏(2026Q1净亏22.76亿元/Q2净亏17.05亿元)背景下仍维持10亿美元回购计划的小额持续执行，体现结果导向与逆周期护盘传递信心的资本配置文化取向。"
         },
         "inquiry": {
           "question": "如果CEO退休，这家公司还能保持竞争力吗？",
-          "answer": "短期内竞争力将明显承压，理想对李想个人决策的依赖度过高。①总裁马东辉、CFO李铁、CTO谢炎均任职3年以上，具备一定运营班底，可维持日常经营连续性；②但李想以21.7%经济权益掌握68.7%投票权，产品定义与组织架构等重大决策高度集中于其个人，历史上多次组织重组均由其亲自主导；③2025年以来智能驾驶、产品等核心条线人才持续流失，反映公司对创始人个人IP与执行力的依赖，继任者能否延续产品直觉判断存疑；④对比蔚来、小鹏等同业，理想尚未公开建立可见的去创始人化治理与继任梯队，关键人风险偏高。"
+          "answer": "短期竞争力将明显承压，理想对李想个人决策的依赖度过高。①总裁马东辉、CFO李铁、CTO谢炎均任职3年以上，具备一定运营班底，可维持日常经营连续性；②但李想以21.7%经济权益掌握68.7%投票权，重大决策高度集中，2026Q1/Q2连续两季度由盈转亏、车辆毛利率崩至9.4%的转型阵痛期内，历次组织重组仍由其亲自主导；③智能驾驶等核心条线人才持续流失，反映公司对创始人个人IP与执行力的依赖，继任者能否延续产品直觉判断与快速纠错风格存疑；④对比蔚来、小鹏2026Q1毛利率已升至18-20%区间而理想同期垫底(7.9%)，凸显创始人主导下的转型执行力尚未获市场验证，去创始人化治理与继任梯队建设仍待补强。"
         },
         "dataGaps": [
-          "高管薪酬中与毛利率直接挂钩的具体考核指标未检索到，仅确认与交付量、市值挂钩的激励条款",
-          "除税务性sell-to-cover减持外，董事/高管近期主动市场化减持记录未能全面核实，检索来源有限"
+          {
+            "field": "高管薪酬考核指标",
+            "reason": "高管薪酬中与毛利率或亏损收窄直接挂钩的具体考核指标未检索到，仅确认与交付量、市值挂钩的激励条款"
+          },
+          {
+            "field": "高管主动减持记录",
+            "reason": "除税务性sell-to-cover减持外，董事/高管在2026Q1/Q2连续亏损期间的主动市场化减持记录未能全面核实，检索来源有限"
+          }
         ]
       },
       "industryTrend": {
         "title": "行业与长期趋势",
-        "conclusion": "新能源汽车行业仍处成长期但增速分化，理想所处增程细分已见顶，纯电转型成败决定其能否搭上更大范式转移的红利。",
+        "conclusion": "行业成长趋势未变，但价格战加剧使理想毛利率崩塌至9.4%、连续两季亏损，天花板兑现节奏需下修。",
         "analysis": {
           "paradigmShift": {
             "verdict": "部分",
-            "reasoning": "①ARK Invest测算自动驾驶出租车全球收入空间达8–10万亿美元，木头姐称其为当今最大的AI项目，机构将电动化加自动驾驶定位为堪比互联网的范式转移（来源：Yahoo Finance）；②汽车正从交通工具变为移动智能终端，软件成本占比预计从15%升至60%（来源：21世纪经济报道）；③理想仍是增程为主的整车厂，是范式转移的追随者而非引领者，核心增程细分已见顶；④自研芯片马赫M100意在卡位软件定义汽车话语权，但纯电转型成效未定。"
+            "reasoning": "①ARK Invest测算自动驾驶出租车全球收入空间达8–10万亿美元，机构将电动化加自动驾驶定位为堪比互联网的范式转移（来源：Yahoo Finance）；②汽车正从交通工具变为移动智能终端，软件成本占比预计从15%升至60%（来源：21世纪经济报道）；③理想仍是增程为主的整车厂，2026Q2车辆毛利率骤降至9.4%、连续两季度净亏损，佐证其在范式转移中处于追随者而非引领者位置；④自研芯片马赫M100意在卡位软件定义汽车话语权，但纯电转型成效未定。"
           },
-          "historicalAnalogy": "①硬件为王向软件为王转移，类比PC/智能手机产业史——操作系统与生态最终攫取产业链多数利润，硬件商可能被迫低毛利甚至负毛利运营（来源：21世纪经济报道，吴新宙/杜平观点）；②类比电力革命——电动化是基础设施级替代能源形态，2026上半年渗透率已达57.4%(乘联会口径)，进入成长期后段；③自动驾驶对应的AI/软件层类比互联网平台革命，ARK预测其颠覆性堪比赢家通吃的平台经济（来源：Yahoo Finance）；④理想当前更接近传统硬件整车厂而非软件/AI平台型公司，在这轮类比中处于价值链下游而非上游枢纽位置。",
+          "historicalAnalogy": "①硬件为王向软件为王转移，类比PC/智能手机产业史——2026Q2理想车辆毛利率9.4%(同比19.4%腰斩)、综合毛利率11.0%，价格战使\"硬件商被迫低毛利甚至负毛利运营\"的预测已从假设变为财报现实（来源：21世纪经济报道观点+公司财报数据）；②类比电力革命——2026上半年NEV渗透率仍达57.4%(乘联会口径)，行业整体渗透在推进，但内部竞争烈度已现成熟期特征；③自动驾驶对应的AI/软件层类比互联网平台革命（来源：ARK Invest via Yahoo Finance）；④理想当前更接近传统硬件整车厂，两连亏进一步印证其处于价值链下游而非上游枢纽位置。",
           "tam": {
             "current": {
-              "value": "1900万辆（2026年中国NEV销量预测，同比+15.2%）",
-              "currency": "不适用（单位为销量：辆）",
-              "asOf": "2026",
+              "value": "1900万",
+              "currency": "辆（销量口径，非货币金额）",
+              "asOf": "2026年预测",
               "source": {
-                "name": "中汽协",
+                "name": "中国汽车工业协会(中汽协)",
                 "url": "https://k.sina.com.cn/article_7880068204_1d5b04c6c06801c2aa.html"
               }
             },
-            "ceiling": "①麦肯锡预测2030年中国NEV乘用车渗透率近70%，销量达1800万辆，行业整体仍有成长空间（来源：麦肯锡官网）；②但理想核心的增程式细分已进入成熟期：2025年增速仅+6%(较2024年70.9%骤降)，2026年前5月同比下跌15.9%，份额从10.3%收窄至7%（来源：腾讯新闻）；③40万元以上高端NEV市场逆势高增46%(渗透率44%→56%)，是理想2026年战略重心转向的高天花板细分（来源：证券时报）；④理想实际可触达天花板取决于纯电转型成败而非行业整体大盘。",
-            "growthCurve": "成长"
+            "ceiling": "①麦肯锡预测2030年中国NEV乘用车渗透率近70%、销量达1800万辆，行业整体仍有成长空间（来源：麦肯锡官网）；②理想核心增程式细分已进入成熟期，2025年增速仅+6%、2026年前5月同比下跌15.9%，份额从10.3%收窄至7%（来源：腾讯新闻）；③40万元以上高端NEV市场2026上半年逆势增长46%，是理想战略重心转向的高天花板细分，但2026Q2公司车辆毛利率仅9.4%、连亏两季，显示价格战比预期更烈，该细分能否兑现为公司利润存疑，TAM可及天花板的兑现节奏需下修；④理想实际可触达天花板取决于纯电转型与价格战烈度，而非行业整体大盘。",
+            "growthCurve": "成长（但价格战提前呈现成熟期式恶性竞争特征，理想细分兑现节奏需下修）"
           },
-          "valueChainPosition": "①理想是下游整车制造商(OEM)，电池采购宁德时代/欣旺达代工，电池成本约占整车成本60%(行业惯例)，对上游议价权有限；②自研马赫M100芯片(2026年5月量产)意在降低对英伟达等外部芯片商依赖，向上游延伸技术自主权；③软件定义汽车趋势下产业价值正从硬件转向操作系统与软件服务，软件成本占比预计从15%升至60%，硬件本身面临低毛利化压力（来源：21世纪经济报道）；④理想尚未证明拥有可对标特斯拉/华为的操作系统级软件护城河，价值链位置偏硬件整车厂而非平台型公司。",
-          "techRouteRisk": "①增程式(EREV)被行业普遍视为纯电前的过渡技术，2025年增速骤降至+6%，2026年前5月销量同比下跌15.9%、份额从10.3%收窄至7%，见顶信号明确（来源：腾讯新闻）；②理想2025年起战略重心转向纯电(i6/i9/L9纯电版)，i6表现成功，但i8、MEGA等纯电车型销售疲软，转型执行分化、尚未验证完成；③若纯电补能网络与电池能量密度持续提升，增程式无里程焦虑的优势将进一步弱化，理想面临主力产品线过时风险。",
+          "valueChainPosition": "①理想是下游整车制造商(OEM)，电池采购宁德时代/欣旺达代工，成本约占整车成本60%，对上游议价权有限；②自研马赫M100芯片(2026年5月量产)意在向上游延伸技术自主权；③软件定义汽车趋势下产业价值正从硬件转向软件服务，2026Q2理想车辆毛利率骤降至9.4%(同比19.4%腰斩)、综合毛利率11.0%，印证硬件低毛利化压力已从预测变为财报现实；④理想尚未证明拥有可对标特斯拉/华为的操作系统级软件护城河，价值链位置仍偏硬件整车厂而非平台型公司。",
+          "techRouteRisk": "①增程式(EREV)被普遍视为纯电前的过渡技术，2025年增速骤降至+6%，2026年前5月销量同比下跌15.9%、份额从10.3%收窄至7%，见顶信号明确（来源：腾讯新闻）；②理想战略重心转向纯电(i6/i9/L9纯电版)，i6表现成功，但i8、MEGA等纯电车型疲软；2026Q2整车毛利率仅9.4%、连续两季度净亏损，显示转型执行成本高于预期、价格战正侵蚀转型窗口期的资金余量；③若纯电补能网络与电池能量密度持续提升，增程式无里程焦虑优势将进一步弱化，理想面临主力产品线过时与转型资金压力的双重风险。",
           "concentration": {
-            "customers": "理想面向C端家庭消费者零售销售，不存在客户集中度风险，与面向车企的Tier1零部件供应商模式不同，需求分散于终端消费者而非少数大客户。",
-            "suppliers": "①动力电池长期高度依赖宁德时代(CATL)单一供应商，存在集中度与议价权风险；②近年引入欣旺达、蜂巢能源分散供应风险，但CATL仍为核心供应商（来源：虎嗅网）；③电池成本约占整车成本60%(行业惯例)，理想作为下游整车厂对电池环节议价权有限。",
+            "customers": "理想面向C端家庭消费者零售销售，不存在客户集中度风险，与面向车企的Tier1零部件供应商模式不同；本次2026Q2财报及采集数据未见该结构性判断出现新变化。",
+            "suppliers": "①动力电池长期高度依赖宁德时代(CATL)单一供应商，存在集中度与议价权风险；②近年引入欣旺达、蜂巢能源分散供应风险，但CATL仍为核心供应商（来源：虎嗅网）；③2026Q2车辆毛利率暴跌至9.4%，反映理想对电池等上游环节的议价权比此前判断更弱，但本次采集未查到供应商集中度结构本身（CATL为主、欣旺达/蜂巢能源为辅）发生新变化，维持原判断。",
             "evidence": [
               {
                 "metric": "动力电池供应商集中度",
@@ -1903,100 +2190,100 @@
         },
         "inquiry": {
           "question": "站在20年后回看，这家公司是「这个时代的标准石油」还是「昙花一现的3Com」？",
-          "answer": "更接近尚未定型的过渡型选手，而非确定性的标准石油。①理想所处的增程式细分已从高速成长转入见顶收缩(2026年前5月-15.9%)，若不能在纯电赛道站稳，其技术路线选择可能被证明是阶段性权宜之计而非护城河；②i6在纯电SUV市场取得成功，证明公司具备产品定义与执行能力，但i8/MEGA表现疲软说明转型远未验证完成；③自研芯片马赫M100显示其试图掌握软件定义汽车的核心话语权，若纯电加智能驾驶转型成功，理想有机会成为中国高端NEV时代的头部玩家之一；④但若华为系、小米、特斯拉持续挤压，且理想始终未能建立操作系统级软件护城河，则更可能沦为被平台型公司边缘化的硬件整车厂，类似3Com式昙花一现。"
+          "answer": "更接近尚未定型的过渡型选手，两连亏进一步加重疑虑。①理想核心增程式细分已见顶收缩，2026Q2车辆毛利率暴跌至9.4%、公司连续两季度净亏损，若纯电转型不能扭转，其技术路线选择可能被证明是阶段性权宜之计而非护城河；②i6在纯电SUV市场取得成功，证明公司具备产品定义与执行能力，但i8/MEGA表现疲软叠加价格战加剧，说明转型代价高于预期、远未验证完成；③自研芯片马赫M100显示其试图掌握软件定义汽车的核心话语权，若纯电加智能驾驶转型成功，理想仍有机会成为中国高端NEV时代的头部玩家之一；④但若价格战持续侵蚀盈利、且理想始终未能建立操作系统级软件护城河，则被华为系/小米/特斯拉边缘化为硬件整车厂的风险，已从假设变为财报显现的现实，更接近3Com式昙花一现的路径。"
         },
         "dataGaps": []
       },
       "valuation": {
         "title": "估值分析",
-        "conclusion": "PE与PEG均因净利润为负而不适用，PS仅0.82x处于历史低位但EV为负，估值隐含市场对盈利修复的悲观预期。",
+        "conclusion": "PE/PEG因TTM转深亏不适用，PS0.79x处历史低位，但三情景估值显示乐观情景仍跑输现价，安全边际不足。",
         "analysis": {
           "currentMultiples": {
             "marketCap": {
-              "value": "104.46B HKD（≈89.84B CNY）",
+              "value": "95.95B HKD（≈82.45B CNY）",
               "currency": "HKD/CNY",
-              "asOf": "2026-08-07",
+              "asOf": "2026-09-02",
               "source": {
-                "name": "stockanalysis.com/FMP",
-                "url": "https://stockanalysis.com/stocks/li/"
+                "name": "stockanalysis.com + financial_rigor.py verify-market-cap验算",
+                "url": "https://stockanalysis.com/quote/hkg/2015/"
               }
             },
             "pe": {
-              "value": "不适用：TTM GAAP净利润-1,783.25百万元、Non-GAAP净利润-724.99百万元均为负",
-              "asOf": "2026Q1 TTM",
+              "value": "不适用：TTM(2025Q3-2026Q2)GAAP净利润-4,585.49百万元人民币，连续两季(2026Q1/Q2)净亏损",
+              "asOf": "2026Q2 TTM",
               "source": {
-                "name": "SEC 6-K/20-F季报汇总",
-                "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926041705/li-20251231x20f.htm"
+                "name": "SEC 6-K季报汇总+financial_rigor.py cross-validate验算",
+                "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
               }
             },
             "ps": {
-              "value": "0.82x",
-              "asOf": "2026Q1 TTM",
+              "value": "0.79x（港股口径）／0.84x（美股ADS口径）",
+              "asOf": "2026Q2 TTM",
               "source": {
-                "name": "financial_rigor.py verify-valuation工具验算",
-                "url": "https://stockanalysis.com/stocks/li/financials/"
+                "name": "financial_rigor.py calc工具验算",
+                "url": "https://stockanalysis.com/quote/hkg/2015/"
               }
             },
             "peg": {
               "value": "不适用：TTM净利润为负，无法计算有意义的盈利增速匹配",
-              "asOf": "2026Q1 TTM",
+              "asOf": "2026Q2 TTM",
               "source": {
                 "name": "SEC 6-K季报汇总",
-                "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926041705/li-20251231x20f.htm"
+                "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
               }
             },
             "evToRevenue": {
-              "value": "-0.017x（EV≈-1,886.5百万元人民币）",
-              "asOf": "FY2025期末/2026Q1 TTM",
+              "value": "-0.02x（EV≈-20.6亿元人民币）",
+              "asOf": "2026-06-30期末/2026Q2 TTM",
               "source": {
-                "name": "内部验算（FY2025 20-F现金债务+2026-08-07市值）",
-                "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926041705/li-20251231x20f.htm"
+                "name": "内部验算（2026Q2 6-K现金债务+2026-09-02市值），financial_rigor.py calc",
+                "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926101065/tm2624080d1_ex99-1.htm"
               }
             }
           },
           "reverseDcf": {
-            "impliedGrowth": "①EV为负(-18.87亿元)，意味着市场给予核心整车业务的隐含价值接近零甚至为负；②传统反向DCF逻辑下，当前定价更接近仅为净现金(1012亿元)定价，核心业务价值被大幅贴现；③这与TTM深亏、2026Q1单季净亏22.76亿元及价格战持续的悲观预期一致；④负EV属异常信号，需警惕港元/人民币两地口径与时点错配。",
-            "assumptions": "①EV按FY2025期末现金1012.39亿元、总债务95.17亿元与2026-08-07市值折算；②市值按港股收盘价49.92港元与总股本20.93亿股换算并按0.86汇率折人民币；③未使用永续增长模型精确反推，因经营利润为负、方法适用性存疑；④仅作定性方向判断。"
+            "impliedGrowth": "①EV连续两期为负(本次-20.6亿元)，市场给核心整车业务的隐含价值仍接近零；②反向DCF下当前定价更接近净现金(885.84亿元)定价，核心业务价值被大幅贴现；③这与TTM深亏4,585.49百万元及2026Q1/Q2连续两季净亏损一致；④三情景估值显示即便乐观情景(EPS三年CAGR30%)目标价仍较现价跌26.1%，隐含市场并未过度悲观、反而可能仍高估短期修复速度。",
+            "assumptions": "①EV按2026-06-30期末现金88,583.832百万元、总债务4,074.064百万元与2026-09-02市值折算；②市值按港股收盘价45.86港元与总股本20.92亿股换算并按0.8593汇率折人民币；③未使用永续增长模型精确反推，因经营利润为负、方法适用性存疑；④仅作定性方向判断。"
           },
           "threeScenario": {
             "inputs": {
-              "price": "42.9312",
+              "price": "39.41",
               "eps": "0.53",
-              "sharesHundredMillion": "20.93",
+              "sharesHundredMillion": "20.92",
               "growth": [
-                "0.40",
-                "0.15",
-                "-0.20"
+                "0.30",
+                "0.05",
+                "-0.30"
               ],
               "pe": [
-                "30",
-                "20",
-                "12"
+                "25",
+                "15",
+                "10"
               ],
               "years": 3,
               "currency": "CNY"
             },
             "optimistic": {
-              "targetPrice": "43.6 CNY",
-              "impliedReturnPct": "+1.6%"
+              "targetPrice": "29.1 CNY",
+              "impliedReturnPct": "-26.1%"
             },
             "neutral": {
-              "targetPrice": "16.1 CNY",
-              "impliedReturnPct": "-62.4%"
+              "targetPrice": "9.2 CNY",
+              "impliedReturnPct": "-76.6%"
             },
             "pessimistic": {
-              "targetPrice": "3.3 CNY",
-              "impliedReturnPct": "-92.4%"
+              "targetPrice": "1.8 CNY",
+              "impliedReturnPct": "-95.4%"
             },
-            "assumptionBasis": "①基准EPS取FY2025全年GAAP口径0.53元，因TTM转负无法用当期数据；②乐观：新车型驱动毛利率修复，EPS三年CAGR 40%、目标PE 30x（参考理想蔚来历史牛市30-40x区间）；③中性：温和复苏EPS CAGR 15%、PE 20x（低于赛力斯当前24.32x）；④悲观：价格战持续侵蚀，EPS CAGR -20%、PE 12x（对标传统车企估值下限）。",
-            "toolOutput": "============================================================\n三情景估值模型 (Three-Scenario Valuation)\n============================================================\n  当前股价: 42.9312 CNY\n  当前EPS:  0.53\n  预测期:   3年\n\n  情景                年增速     目标PE      目标EPS       目标股价      涨跌幅\n  ------------ -------- -------- ---------- ---------- --------\n  乐观 (Bull)         40%      30x       1.45      43.6    +1.6%\n  中性 (Base)         15%      20x       0.81      16.1   -62.4%\n  悲观 (Bear)        -20%      12x       0.27       3.3   -92.4%\n\n  ✅ 所有计算使用精确十进制, 结果可审计复现"
+            "assumptionBasis": "①基准EPS仍取FY2025全年GAAP口径0.53元（最近一个完整盈利财年），因2026Q1/Q2连续两季转亏、TTM口径已为负无法用作起点；②乐观：假设2026下半年起毛利率逐步修复、新车型放量，EPS三年CAGR降至30%(较上次40%下调，因本轮亏损深度超预期)、目标PE25x(较上次30x下调)；③中性：修复缓慢，EPS CAGR降至5%(较上次15%大幅下调)、PE15x(较上次20x下调)；④悲观：价格战持续侵蚀、亏损常态化，EPS CAGR -30%(较上次-20%下调)、PE10x(较上次12x下调)。三档假设较上次研究(2026-08-07)全面下修，反映2026Q2财报验证的盈利恶化程度超此前预期。",
+            "toolOutput": "============================================================\n三情景估值模型 (Three-Scenario Valuation)\n============================================================\n  当前股价: 39.41 CNY\n  当前EPS:  0.53\n  预测期:   3年\n\n  情景                年增速     目标PE      目标EPS       目标股价      涨跌幅\n  ------------ -------- -------- ---------- ---------- --------\n  乐观 (Bull)         30%      25x       1.16      29.1   -26.1%\n  中性 (Base)          5%      15x       0.61       9.2   -76.6%\n  悲观 (Bear)        -30%      10x       0.18       1.8   -95.4%\n\n  ✅ 所有计算使用精确十进制, 结果可审计复现"
           },
           "vsOwnHistory": {
             "metric": "PS（市销率，TTM）",
-            "currentValue": "0.82x（本次工具验算口径）／1.31x（GuruFocus口径）",
-            "historicalRange": "①10年PS区间：最低1.01x、中位数3.24x、最高38.34x（GuruFocus）；②2024年末PS约1.37x；③当前估值处于10年区间低位，明显低于中位数（约低60%）；④本次口径0.82x更低，或受TTM营收期间、股本、汇率折算差异影响，两口径均指向历史低位区域。",
+            "currentValue": "0.79x（本次工具验算口径）",
+            "historicalRange": "①10年PS区间：最低1.01x、中位数3.24x、最高38.34x（上次研究引用GuruFocus）；②上次研究(2026-08-07)口径为0.82x；③本次0.79x较上次进一步小幅走低，尽管TTM营收因2026Q1/Q2下滑而缩小，但股价跌幅更大，PS仍处10年区间历史低位并较上次继续下探。",
             "source": {
-              "name": "GuruFocus",
+              "name": "GuruFocus + 本次financial_rigor.py验算",
               "url": "https://www.gurufocus.com/term/ps-ratio/LI"
             }
           },
@@ -2008,7 +2295,8 @@
               "source": {
                 "name": "Simply Wall St",
                 "url": "https://simplywall.st/stocks/us/automobiles/nyse-nio/nio/valuation"
-              }
+              },
+              "asOfNote": "同行数据延续上次研究(2026-08-07)采集结果，本次未重新采集，仅作方向参考"
             },
             {
               "name": "小鹏汽车(XPeng)",
@@ -2017,7 +2305,8 @@
               "source": {
                 "name": "Simply Wall St",
                 "url": "https://simplywall.st/stocks/us/automobiles/nyse-xpev/xpeng/valuation"
-              }
+              },
+              "asOfNote": "同行数据延续上次研究(2026-08-07)采集结果，本次未重新采集，仅作方向参考"
             },
             {
               "name": "赛力斯(问界)",
@@ -2026,7 +2315,8 @@
               "source": {
                 "name": "东方财富财富号引用花旗/机构测算",
                 "url": "https://caifuhao.eastmoney.com/news/20260402143234613544240"
-              }
+              },
+              "asOfNote": "同行数据延续上次研究(2026-08-07)采集结果，本次未重新采集，仅作方向参考"
             },
             {
               "name": "小米集团(汽车业务，参考口径)",
@@ -2035,13 +2325,14 @@
               "source": {
                 "name": "东方财富研报",
                 "url": "https://caifuhao.eastmoney.com/news/20260526205213129315340"
-              }
+              },
+              "asOfNote": "同行数据延续上次研究(2026-08-07)采集结果，本次未重新采集，仅作方向参考"
             }
           ]
         },
         "inquiry": {
           "question": "如果股市明天关闭5年，你愿意以这个价格持有吗？",
-          "answer": "不愿意：当前定价隐含的盈利修复预期过高，安全边际不足。①即便按乐观情景(EPS三年CAGR 40%、目标PE 30x)测算，标的价也仅较现价打平(+1.6%)，几乎无安全边际；②TTM深度亏损、2026Q1单季净亏损22.76亿元，基本面拐点未确认；③EV为负显示市场对核心业务价值贴现严重，定价逻辑异常，波动与不确定性高；④若5年无法交易，需承受盈利能力能否真正修复的长期不确定性，当前价格性价比不足。"
+          "answer": "不愿意：三情景估值显示即便乐观情景仍跑输现价，安全边际不足。①乐观情景(EPS三年CAGR30%、目标PE25x)目标价仍较现价跌26.1%，此前(2026-08-07)同类乐观情景为+1.6%，本次财报后已转负；②TTM深亏4,585.49百万元，2026Q1、Q2连续两季净亏损，基本面拐点尚未确认；③EV连续两期为负，市场对核心业务价值贴现严重，估值逻辑异常；④价格战持续、成本压力(碳酸锂/芯片)未见缓解迹象，若5年无法交易需承受更长的盈利修复不确定性，当前价格性价比进一步恶化。"
         },
         "dataGaps": [
           {
@@ -2051,6 +2342,10 @@
           {
             "field": "vsOwnHistory 口径差异",
             "reason": "工具计算PS(TTM)=0.82x与GuruFocus披露的1.31x存在差异，可能源于股本基数、汇率折算或营收统计期间选取不同，未能进一步核实唯一权威口径"
+          },
+          {
+            "field": "vsPeers 同行数据时效性",
+            "reason": "本次分析未重新采集蔚来/小鹏/赛力斯/小米最新市销率，沿用上次研究(2026-08-07)数据，可能与2026Q2同行财报后的最新口径有偏差，已在vsPeers各条目标注asOfNote"
           }
         ]
       }
@@ -2103,6 +2398,23 @@
         },
         "flag": "ok",
         "resolution": "沿用第1步采集文件crossValidationLog中已验算的EV=-18.87亿元人民币结果，EV为负反映净现金超过市值+总债务，是本次估值维度的关键异常信号"
+      },
+      {
+        "field": "估值维度三情景重算(2026-09-02更新)",
+        "source1": {
+          "name": "financial_rigor.py three-scenario工具输出",
+          "value": "乐观29.1/中性9.2/悲观1.8 CNY"
+        },
+        "source2": {
+          "name": "上次研究(2026-08-07)同工具输出",
+          "value": "乐观43.6/中性16.1/悲观3.3 CNY"
+        },
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "非交叉验证偏差，是同一工具在假设参数下修后的纵向对比，不适用偏差率概念"
+        },
+        "flag": "ok",
+        "resolution": "非交叉验证偏差，是同一模型在假设参数下修后的纵向对比：本次基于2026Q2财报连续两季净亏损的事实，三档增速与目标PE假设较上次全面下调，反映盈利恶化程度超此前预期，工具计算过程本身经复核无误"
       }
     ]
   },
@@ -2110,8 +2422,8 @@
     "meta": {
       "companyId": "hk-2015-li-auto",
       "companyName": "理想汽车 (Li Auto Inc.)",
-      "summarizedAt": "2026-08-07",
-      "dataCutoff": "2026-08-07",
+      "summarizedAt": "2026-09-03",
+      "dataCutoff": "2026-09-02",
       "basedOnCollection": "research/companies/hk-2015-li-auto/financials-collection.json",
       "basedOnAnalysis": "research/companies/hk-2015-li-auto/financials-analysis.json"
     },
@@ -2120,91 +2432,99 @@
         "dimensionId": "businessQuality",
         "title": "生意质量",
         "mapsTo": "dimensions.businessEssence",
-        "conclusion": "理想核心整车销售是强周期、弱复购的重资产制造生意，FY2025营收下滑22.3%叠加2026Q1毛利率骤降至7.9%，经营杠杆转为负向放大亏损，千亿现金储备是缓冲而非生意本身优质的证明。",
-        "confidence": 3.5,
-        "scoreBasis": "①FY2025综合毛利率18.7%较FY2024的20.5%下滑，2026Q1单季骤降至7.9%(analysis.grossMarginVsPeers)，低于蔚来19.0%/小鹏20.6%/赛力斯28.8%/小米20.1%同期水平；②analysis.operatingLeverage显示研发费用同比微增而营收降22.3%，经营利润率从4.9%转负至-0.5%，2026Q1经营亏损30亿元，验证费用刚性与营收弹性错配的负经营杠杆；③analysis.stickiness复购粘性仅评级'中'且缺权威量化留存数据，网传18%复购率经核实后未采用；④FY2025自由现金流转负约-128.17亿元(financialMetrics.annual)，现金储备1012亿元提供缓冲，但不改变生意周期性与低粘性的判断。"
+        "conclusion": "理想核心整车销售仍是强周期、弱复购的重资产制造生意，2026Q1/Q2连续两季由盈转亏、车辆毛利率从19.4%崩至9.4%，负经营杠杆持续放大亏损，875亿元现金储备是缓冲而非生意本身优质的证明。",
+        "confidence": 2.5,
+        "scoreBasis": "①2026Q2车辆毛利率9.4%较2025Q2的19.4%腰斩(dimensions.businessEssence.analysis.profitabilityTrend5y)，环比2026Q1的6.1%虽小幅回升但仍处历史低位，低于蔚来19.0%/小鹏20.6%/赛力斯28.8%/小米20.1%同期水平；②analysis.operatingLeverage显示2026Q1/Q2连续两季净亏损(22.76亿/17.05亿元)，TTM净利润-45.85亿元，经营利润率-13.0%→-9.0%仍深度为负，费用刚性下负经营杠杆持续放大亏损；③analysis.stickiness复购粘性仍评级'中'且缺权威量化留存数据；④2026Q2自由现金流仍为负(-13亿元，financialMetrics.quarterly)，875亿元现金储备提供缓冲，但两个季度的实际财报结果已把此前'趋势恶化'的判断坐实为已发生事实，评分应较上次(3.5)进一步下调。"
       },
       {
         "dimensionId": "moat",
         "title": "护城河",
         "mapsTo": "dimensions.moat",
-        "conclusion": "理想护城河整体薄弱且过去5年持续变窄，品牌与增程先发优势被同行快速复制，规模效应难抵毛利率下滑，预判未来5年仍将变窄。",
-        "confidence": 2.5,
-        "scoreBasis": "①dimensions.moat.analysis.trendPast5y显示增程份额从10.3%收缩至7%、L6/L7/L8单月销量同比暴跌超90%、综合毛利率18.7%降至7.9%三重印证护城河收窄；②转换成本测试结论为'不存在'(analysis.types)，品牌定价权与技术壁垒均为'待验证'；③trendNext5y判断仍为'变窄'，理由包括增程玩家增多稀释先发红利、丰田混动专利到期后被绕道超越的历史先例、自研芯片电池商业化效果未验证(2026Q1毛利率反而下滑)；④千亿现金储备与三年营收破千亿未能阻止毛利率持续下滑，证据总体指向脆弱而非稳固。"
+        "conclusion": "理想护城河整体薄弱且持续变窄，2026Q1/Q2连续两季转亏进一步验证规模效应无法对冲价格战，品牌/定价权与技术壁垒均待验证，预判未来5年仍将变窄。",
+        "confidence": 2.0,
+        "scoreBasis": "①dimensions.moat.analysis.trendPast5y显示车辆毛利率19.4%→6.1%→9.4%剧烈波动、连续两季转亏，较上次研究(2026-08-07)的'毛利率下滑'判断进一步恶化为'实际亏损'；②转换成本测试结论仍为'不存在'(analysis.types)，品牌定价权、网络效应、规模效应、技术壁垒均为'待验证'，无一项获实证支持；③trendNext5y维持'变窄'判断，理由包括Q3指引仅隐含温和环比改善(交付9.5-10万辆、营收266-280亿元)、增程玩家增多稀释先发红利；④875亿元现金储备与规模未能阻止连续两季亏损，证据强度较上次评分(2.5)进一步走弱。"
       },
       {
         "dimensionId": "management",
         "title": "管理层",
         "mapsTo": "dimensions.management",
-        "conclusion": "李想以21.7%经济权益掌握68.7%投票权高度集中控制理想，核心高管班底稳定但组织架构一年多次反复重组与中层人才流失凸显执行不稳定与关键人风险。",
-        "confidence": 5,
-        "scoreBasis": "①dimensions.management.analysis.keyDecisions评分从2019年增程押注★★★★★到2024年MEGA失误★分化极大，决策质量高度依赖个人判断且近年质量下滑；②analysis.capitalAllocation显示2026年3月在净利润暴跌85.8%、股价承压期推出10亿美元回购并持续执行，属逆势护盘的资本配置纪律；③analysis.organization显示2025下半年以来至少12位核心高管(含智驾、产品条线)离职，仅总裁马东辉、CFO李铁、CTO谢炎任职超3年，关键人风险偏高；④alignment显示CEO激励63.6亿元与交付量强挂钩、三高管新激励与市值强挂钩，股东利益一致性较高，但缺乏与毛利率直接挂钩的考核指标。"
+        "conclusion": "李想以21.7%经济权益掌握68.7%投票权高度集中控制理想，核心高管班底稳定但2026Q1/Q2连续两季亏损期内组织仍在反复重组，资本配置纪律尚可但执行力未获验证。",
+        "confidence": 4.5,
+        "scoreBasis": "①dimensions.management.analysis.keyDecisions新增2026年7月产品部门并入研发体系的重组条目(★★★)，评分从2019年增程押注★★★★★到2024年MEGA失误★分化依旧极大；②analysis.capitalAllocation显示回购计划在2026Q1/Q2连续两季净亏损(22.76亿/17.05亿元)期间仍按温和节奏持续执行，股份数仅在20.92-20.93亿股窄幅波动，逆势护盘但规模保守；③analysis.organization显示核心高管(总裁马东辉、CFO李铁、CTO谢炎)在本轮亏损期内保持稳定未见离职，但2025年下半年以来中层(智驾/产品/供应链)已有12位以上离职；④alignment显示CEO激励与三高管新股权激励(2026-06授出)均与交付量/市值强挂钩，缺乏与毛利率或亏损收窄挂钩的考核指标，本轮财报未提供新证据改变股东利益一致性判断，评分较上次(5)因组织持续动荡小幅下调。"
       },
       {
         "dimensionId": "keyRisk",
         "title": "最大风险",
         "mapsTo": "dimensions.inversion",
-        "conclusion": "最大风险是纯电转型不及预期、价格战侵蚀毛利率、组织执行力反复动荡三重压力同步爆发，多条失败路径被判定为高概率高影响且难以对冲。",
-        "confidence": 2.5,
-        "scoreBasis": "①dimensions.inversion.analysis.failurePaths中'纯电新品持续遇冷'与'价格战持续拉低毛利率'均标记概率'高'、影响'高'，MEGA退订10297台、i8 2026年5月交付仅1564台(环比-25.1%)、2026Q1毛利率骤降至7.9%均为已实现证据而非推测；②'组织架构反复重组'路径概率同样为'高'，2025年销量目标完成率仅63.4%；③historicalAnalogies类比黑莓路径依赖失败案例，biasSelfCheck提示需警惕锚定2021-2023高增长期及仅参照蔚来逆转案例的幸存者偏差；④千亿现金储备可延缓风险兑现但无法对冲纯电转型失败与智驾代际落后(未入选工信部L3首批名单)等结构性风险，风险可控性评分低。"
+        "conclusion": "最大风险是价格战对毛利率的侵蚀已从预测变为已发生事实(连续两季净亏损)，叠加纯电转型不及预期与组织执行力反复动荡，多条失败路径同步兑现且短期难以对冲。",
+        "confidence": 2.0,
+        "scoreBasis": "①dimensions.inversion.analysis.failurePaths中'价格战持续拉低毛利率'与'纯电新品持续遇冷'均标记概率'高'、影响'高'，且2026Q1/Q2连续两季度GAAP净亏损(22.76亿/17.05亿元)、TTM净亏损45.85亿元已是已实现证据，较上次研究(基于2026Q1单季预测)风险兑现程度更高；②'Q3指引仅隐含温和环比改善'新增为独立失败路径，说明扭亏时点持续后移；③crossDisciplinaryChecks的竞争博弈分析明确指出空方'价格战侵蚀盈利能力'论点已从预测变为已发生事实；④875亿元现金储备可延缓风险兑现但无法对冲结构性风险，风险可控性评分较上次(2.5)进一步下调。"
       },
       {
         "dimensionId": "civilizationTrend",
         "title": "文明趋势",
         "mapsTo": "dimensions.industryTrend",
-        "conclusion": "新能源汽车行业整体仍处成长期(2026年预测销量1900万辆同比+15.2%)，但理想所处增程细分已见顶，能否在纯电与智驾范式转移中补位追赶是长期红利能否兑现的关键。",
-        "confidence": 5,
-        "scoreBasis": "①dimensions.industryTrend.analysis.paradigmShift判定为'部分'，理想被定性为范式转移的追随者而非引领者，处于价值链下游硬件整车厂位置；②techRouteRisk显示增程式2025年增速骤降至6%(2024年约70%)，2026年前5月零售同比下跌15.9%，见顶信号明确；③tam.ceiling显示40万元以上高端NEV市场2026上半年逆势大增46%，是理想转型方向的高天花板细分，但纯电转型成败(i6成功、i8/MEGA疲软)决定实际可触达空间；④valueChainPosition指出软件成本占比预计从15%升至60%，理想尚未证明具备操作系统级软件护城河，行业趋势有利但公司能否承接存在不确定性。"
+        "conclusion": "新能源汽车行业整体仍处成长期，但理想所处增程细分已见顶且2026Q2毛利率崩至9.4%、连续两季亏损，公司能否在纯电与智驾范式转移中补位追赶的不确定性较上次进一步加大。",
+        "confidence": 4.5,
+        "scoreBasis": "①dimensions.industryTrend.analysis.paradigmShift判定为'部分'，理想仍被定性为范式转移的追随者而非引领者；②techRouteRisk显示增程式2025年增速骤降至6%，2026年前5月零售同比下跌15.9%，见顶信号明确，且2026Q2车辆毛利率9.4%较19.4%腰斩印证'硬件低毛利化压力已从预测变为财报现实'；③tam.ceiling显示40万元以上高端NEV市场逆势增长46%，但2026Q2财报显示该细分能否兑现为公司利润的不确定性上升，TAM兑现节奏需下修；④行业大盘趋势本身未变(评分不因公司自身业绩下调而大幅下修)，但公司承接能力的证据较上次减弱，评分较上次(5)小幅下调。"
       },
       {
         "dimensionId": "valuation",
         "title": "估值",
         "mapsTo": "dimensions.valuation",
-        "conclusion": "PS0.82x处于十年区间低位且EV为负显示核心整车业务被贴现至接近零，但三情景测算显示即便乐观情景涨幅也仅+1.6%，现价已消化相当乐观预期，安全边际有限。",
-        "confidence": 5,
-        "scoreBasis": "①currentValuation.evToRevenue显示EV约-18.87亿元人民币，净现金1012亿元超过市值+总债务，PS仅0.82x处于GuruFocus十年区间(1.01x-38.34x，中位数3.24x)低位(analysis.vsOwnHistory)；②analysis.threeScenario显示乐观情景(EPS三年CAGR 40%、PE 30x)目标价43.6元人民币(+1.6%)、中性情景(CAGR 15%、PE 20x)目标价16.1元(-62.4%)、悲观情景(CAGR -20%、PE 12x)目标价3.3元(-92.4%)，现价42.9312元已逼近乐观情景上限；③PS口径存在37.4%差异(0.82x工具计算 vs 1.31x GuruFocus，crossValidationLog标记major-diff)，估值结论建立在单一工具计算与历史区间对照上，证据存在局限；④负EV反映资产端低估但盈利端修复路径未确认，两种信号方向相反，综合判断收敛至中性。"
+        "conclusion": "PS0.79x续创十年区间新低且EV连续两期为负，但三情景测算显示即便乐观情景目标价仍较现价跌26.1%，本次财报后估值吸引力不升反降，安全边际不足。",
+        "confidence": 3.0,
+        "scoreBasis": "①currentValuation.evToRevenue显示EV约-20.6亿元人民币，净现金885.84亿元超过市值+总债务，PS仅0.79x较上次(0.82x)进一步走低(analysis.vsOwnHistory)；②analysis.threeScenario因TTM转深亏、假设全面下修后，乐观情景(EPS三年CAGR30%、PE25x)目标价29.1元(-26.1%)、中性情景(CAGR5%、PE15x)目标价9.2元(-76.6%)、悲观情景(CAGR-30%、PE10x)目标价1.8元(-95.4%)——三档较上次(+1.6%/-62.4%/-92.4%)全面转差，即便乐观情景现价也已透支；③净现金安全垫仍在但盈利端修复路径进一步恶化，负EV信号与盈利持续恶化方向一致(不再像上次那样方向相反)，本次评分较上次(5)明显下调；④评分下调主因不是估值指标本身变贵，而是三情景假设基础(EPS)因连续两季亏损而全面下修，反映的是基本面恶化而非市场情绪。"
+      },
+      {
+        "dimensionId": "corporateCulture",
+        "title": "企业文化",
+        "mapsTo": "dimensions.management.analysis.culture",
+        "conclusion": "①李想以强人决策与快速纠错风格著称，MEGA失利后公开承认判断错误并调仓；②组织架构一年内多次调整(2024矩阵2.0、2025战区反复、2026并入研发)，反映强人决策与执行不稳定并存；③2025年以来12位以上核心高管离职后多转向具身智能创业；④连续两季净亏损背景下仍维持10亿美元回购计划的小额持续执行，体现结果导向与逆周期护盘的资本配置文化取向。",
+        "confidence": 5.0,
+        "scoreBasis": "①结论完全转述dimensions.management.analysis.culture已落盘的可观察证据，不引入前两步文件之外的口碑或印象；②证据以公开报道(界面新闻、21世纪经济报道、CnEVPost)为主，多为单源，未做交叉验证，按规则向中性收敛；③连续两季亏损期间仍执行回购传递一定长期主义信号，但组织反复重组与中层人才流失是负面观察，两者方向相反，综合收敛至中性；④管理层对本轮亏损的对外沟通透明度(financial highlights如实披露亏损数字)未见粉饰迹象，是维持中性而非下调的主要原因。"
       }
     ],
     "strategies": {
       "noPosition": {
         "title": "空仓者",
-        "advice": "①理想生意质量与护城河评分均偏低(3.5/2.5)，最大风险评分仅2.5，当前不建议贸然建仓；②估值处于历史低位但三情景测算显示现价已逼近乐观情景上限，缺乏安全边际，不宜追高；③建议等待价格回落且基本面企稳的双重信号后再考虑分批介入，不做单一维度判断。",
+        "advice": "①理想生意质量与护城河评分均已下调至2.5/2.0，最大风险评分仅2.0，连续两季实际亏损验证下不建议贸然建仓；②估值处于历史低位但三情景测算显示即便乐观情景仍跑输现价26.1%，缺乏安全边际，不宜抄底；③建议等待毛利率连续回升且交付企稳的双重信号后再考虑分批介入，不做单一维度判断。",
         "triggers": [
           {
-            "condition": "股价回落至16.1元人民币(约18.7港元)中性情景附近或以下",
+            "condition": "股价回落至9.2元人民币(约10.7港元)中性情景附近或以下",
             "action": "可开始小仓位分批建仓观察，不一次性满仓",
-            "basis": "①该价位对应threeScenario中性情景目标价，已计入EPS三年CAGR 15%温和复苏假设(dimensions.valuation.analysis.threeScenario)；②valuation维度评分5为中性收敛结果，价格回落可改善安全边际；③PS口径存在37.4%差异(crossValidationLog major-diff)，建议结合官方季报毛利率数据再次确认，不单凭股价判断。"
+            "basis": "①该价位对应threeScenario中性情景目标价，已计入EPS三年CAGR5%的温和复苏假设(此假设较上次的15%已下修)（dimensions.valuation.analysis.threeScenario）；②valuation维度评分3为中性偏弱收敛结果，价格进一步回落可改善安全边际；③三情景假设本身已因连续两季亏损全面下修，若价格未同步下修则性价比仍不足，需结合毛利率数据交叉确认。"
           },
           {
-            "condition": "连续两个季度(2026Q2/Q3)综合毛利率回升至15%以上且纯电交付环比转正",
+            "condition": "连续两个季度(2026Q3/Q4)车辆毛利率回升至15%以上且纯电交付环比转正",
             "action": "可视为纯电转型阶段性验证成功，考虑建立观察仓位",
-            "basis": "①2026Q1毛利率已骤降至7.9%(collection.financialMetrics)，回升至15%以上意味着failurePaths中'价格战侵蚀毛利率'高概率假设被部分证伪；②纯电交付环比转正(尤其i8)可缓解'纯电新品持续遇冷'失败路径；③要求连续两季度多源交付数据确认，避免i6购置税补偿等一次性因素造成误判。"
+            "basis": "①2026Q2车辆毛利率仅9.4%(collection.financialMetrics.quarterly)，回升至15%以上意味着failurePaths中'价格战侵蚀毛利率'高概率假设被部分证伪；②纯电交付环比转正(尤其i8)可缓解'纯电新品持续遇冷'失败路径；③要求连续两季度多源交付数据确认，避免i6购置税补偿等一次性因素造成误判。"
           },
           {
-            "condition": "组织架构未来12个月内不再出现重大重组且核心高管无进一步流失",
-            "action": "视为执行力企稳信号，可纳入建仓考虑因素之一",
-            "basis": "①2024-2026年已发生至少5次重大组织重组(dimensions.management.analysis.keyDecisions)，反映执行力不稳定；②analysis.organization显示2025下半年以来至少12位核心高管离职，趋势逆转说明治理风险边际改善；③管理层评分5为中性，此信号需与毛利率、交付量等硬指标共同验证。"
+            "condition": "GAAP净利润连续一个季度转正且非一次性因素驱动",
+            "action": "视为盈利拐点初步确认信号，可纳入建仓考虑因素之一",
+            "basis": "①2026Q1、Q2已连续两季净亏损(22.76亿/17.05亿元，TTM净亏损45.85亿元)，扭亏为盈是最直接的基本面拐点信号；②需排查是否由政府补贴、资产处置等一次性损益驱动，仅经营性扭亏才计入信号；③businessQuality评分2.5建立在连续亏损假设上，若扭亏应重新评估该维度评分。"
           }
         ]
       },
       "holding": {
         "title": "持仓者",
-        "advice": "①理想生意质量、护城河评分偏低且最大风险评分仅2.5，长期逻辑不足以支撑死扛策略，应以纪律性减仓为主；②现价已接近乐观情景目标价，上涨空间有限，建议逢高分批止盈；③若基本面指标持续恶化应果断减仓，不因千亿现金储备产生盲目安全感。",
+        "advice": "①理想生意质量、护城河与最大风险评分均已下调，连续两季实际亏损已把此前的趋势性担忧坐实为已发生事实，长期逻辑不足以支撑死扛策略；②现价对应的三情景测算已全面转差，即便乐观情景仍跑输现价，上行空间有限；③若毛利率或交付数据进一步恶化应果断减仓，不因875亿元现金储备产生盲目安全感。",
         "triggers": [
           {
-            "condition": "股价上涨至43.6元人民币(约50.7港元)乐观情景目标价以上",
+            "condition": "股价上涨至29.1元人民币(约33.9港元)乐观情景目标价以上",
             "action": "建议逢高减仓兑现部分收益，不追加仓位",
-            "basis": "①43.6元对应threeScenario乐观情景(EPS三年CAGR 40%、PE 30x)已是较乐观假设上限(dimensions.valuation.analysis.threeScenario)；②businessQuality与moat评分偏低(3.5/2.5)，缺乏支撑价格进一步大幅上行的基本面证据；③即使乐观情景兑现涨幅也仅+1.6%，性价比不支持继续满仓等待更高目标。"
+            "basis": "①29.1元对应threeScenario乐观情景(EPS三年CAGR30%、PE25x)已是本次下修后的乐观假设上限(dimensions.valuation.analysis.threeScenario)；②businessQuality与moat评分均已下调至2.5/2.0，缺乏支撑价格进一步大幅上行的基本面证据；③即使乐观情景兑现，目标价仍较现价跌26.1%，性价比不支持继续持有等待更高目标。"
           },
           {
-            "condition": "2026Q2/Q3毛利率进一步跌破7%或连续两季度为负",
+            "condition": "2026Q3/Q4车辆毛利率进一步跌破9%或连续三季度为负净利润",
             "action": "应减仓止损，不以现金储备充裕为由继续持有",
-            "basis": "①2026Q1毛利率已骤降至7.9%(collection.currentValuation)，若进一步恶化验证failurePaths中'价格战侵蚀毛利率'高概率高影响路径正在兑现；②FY2025自由现金流已转负约-128亿元，毛利率继续恶化将侵蚀EV为负所依赖的净现金安全垫；③businessQuality评分3.5已反映负经营杠杆，趋势恶化应视为止损信号而非逻辑不变的理由。"
+            "basis": "①2026Q2车辆毛利率仅9.4%(collection.currentValuation)，若进一步恶化验证failurePaths中'价格战侵蚀毛利率'高概率高影响路径持续兑现；②2026Q2自由现金流仍为负(-13亿元)，毛利率继续恶化将侵蚀EV为负所依赖的净现金安全垫；③businessQuality评分2.5已反映负经营杠杆，趋势进一步恶化应视为止损信号而非逻辑不变的理由。"
           },
           {
             "condition": "12个月内再次发生重大组织重组或总裁/CFO/CTO级高管离职",
             "action": "应视为治理风险升级，相应下调持仓比例",
-            "basis": "①management维度评分5建立在马东辉、李铁、谢炎三人任职3年以上稳定性假设上(analysis.organization)，若假设被打破评分基础动摇；②过去两年已发生至少5次重大重组(keyDecisions)，历史频率高；③单一事件不足以判断趋势，需结合至少两个季度公开披露信息交叉确认。"
+            "basis": "①management维度评分4.5建立在马东辉、李铁、谢炎三人任职3年以上稳定性假设上(analysis.organization)，若假设被打破评分基础动摇；②过去两年已发生至少5次重大重组(keyDecisions)，2026年7月再度重组，历史频率高；③单一事件不足以判断趋势，需结合至少两个季度公开披露信息交叉确认。"
           }
         ]
       },
@@ -2217,14 +2537,14 @@
             "basis": "①i8已于2026年5月交付仅1564台、环比-25.1%(dimensions.inversion.analysis.failurePaths)；②L6/L7/L8单月销量已同比暴跌超90%(dimensions.moat.analysis.types)；③若纯电与增程同时失速持续，意味着failurePaths中两条核心路径同时兑现，护城河与生意质量评分基础进一步恶化。"
           },
           {
-            "signal": "毛利率结构性跌破个位数且连续两季度未见回升",
-            "observable": "2026Q2、Q3综合毛利率均低于8%",
-            "basis": "①2026Q1毛利率已降至7.9%(collection.currentValuation)，为近年最低水平之一；②businessQuality维度已因负经营杠杆评分3.5，若持续低位说明费用刚性与营收弹性错配未获缓解(analysis.operatingLeverage)；③需两季度数据确认，避免i6购置税补偿等一次性因素干扰单季判断。"
+            "signal": "GAAP净利润连续第三个季度为负，扭亏时点持续后移",
+            "observable": "2026Q3财报(预计2026年11月披露)净利润仍为负",
+            "basis": "①2026Q1、Q2已连续两季净亏损(22.76亿/17.05亿元)，若Q3再度亏损将是连续三季，较此前判断的'趋势恶化'更进一步坐实为'结构性亏损'；②Q3业绩指引隐含营收266-280亿元、交付9.5-10万辆，仅温和环比改善，扭亏概率本身不高；③需以官方季报GAAP口径确认，避免仅凭Non-GAAP或市场预期误判。"
           },
           {
             "signal": "现金储备加速消耗，净现金安全垫明显收窄",
-            "observable": "现金储备(含短期投资)跌破800亿元人民币或连续两季度自由现金流为负",
-            "basis": "①FY2025末现金储备1012亿元、自由现金流已转负约-128亿元(collection.financialMetrics)，是估值维度EV为负的核心支撑；②若加速消耗，dimensions.valuation结论中净现金超过市值+总债务的安全边际将被削弱；③需至少两个季度现金流量表数据确认，避免单季资本开支波动误判。"
+            "observable": "现金储备(含短期投资)跌破700亿元人民币或连续三季度自由现金流为负",
+            "basis": "①2026Q2末现金储备约886亿元、自由现金流仍为负(-13亿元，financialMetrics.quarterly)，是估值维度EV为负的核心支撑；②若加速消耗，dimensions.valuation结论中净现金超过市值+总债务的安全边际将被削弱；③需至少三个季度现金流量表数据确认，避免单季资本开支波动误判。"
           },
           {
             "signal": "被重新认定为委员会认定发行人且满两个财年，触发ADS交易禁令风险",
@@ -2238,23 +2558,23 @@
         "signals": [
           {
             "signal": "股价跌至悲观情景目标价附近但基本面未同步恶化，出现价格与基本面背离",
-            "observable": "股价跌至3.3-16.1元人民币(约3.8-18.7港元)区间且同期毛利率环比企稳或回升",
-            "basis": "①3.3元对应threeScenario悲观情景、16.1元对应中性情景(dimensions.valuation.analysis.threeScenario)；②若价格计入悲观假设但毛利率未继续恶化甚至回升，说明市场定价过度悲观，千亿现金储备(FY2025末1012亿元)的净现金安全垫被低估；③要求价格与毛利率两个独立数据源同步确认，避免仅凭股价下跌单一信号加仓。"
+            "observable": "股价跌至1.8-9.2元人民币(约2.1-10.7港元)区间且同期车辆毛利率环比企稳或回升",
+            "basis": "①1.8元对应threeScenario悲观情景、9.2元对应中性情景(dimensions.valuation.analysis.threeScenario，本次假设已全面下修)；②若价格计入悲观假设但毛利率未继续恶化甚至回升，说明市场定价过度悲观，886亿元现金储备的净现金安全垫被低估；③要求价格与毛利率两个独立数据源同步确认，避免仅凭股价下跌单一信号加仓。"
           },
           {
             "signal": "纯电车型交付出现持续性拐点，连续两个月环比正增长",
             "observable": "i8月交付连续两个月环比增长且回升至3000台以上，或i6交付持续保持在2万台以上月度水平",
-            "basis": "①i8当前月交付仅1564台且环比-25.1%(dimensions.inversion.analysis.failurePaths)，若出现拐点将部分证伪该失败路径；②i6已连续多月交付超2万台(collection.bullBearCase)，证明理想具备纯电产品定义能力；③需连续两个月数据确认，避免促销刺激等短期因素造成误判。"
+            "basis": "①i8当前月交付仅1564台且环比-25.1%(dimensions.inversion.analysis.failurePaths)，若出现拐点将部分证伪该失败路径；②需连续两个月数据确认，避免促销刺激等短期因素造成误判。"
           },
           {
-            "signal": "自研芯片与5C电池商业化效果获验证，带动毛利率回升",
+            "signal": "自研芯片与5C电池商业化效果获验证，带动毛利率连续回升",
             "observable": "马赫M100芯片搭载车型毛利率环比改善且理想进入工信部L3自动驾驶准入名单",
-            "basis": "①马赫M100已于2026年5月量产上车但2026Q1毛利率反而骤降至7.9%，商业化效果尚未验证(dimensions.moat.analysis.trendNext5y)；②若毛利率改善且进入L3名单，意味着moat与keyRisk维度的负面判断同时获得反转证据；③需财务数据(毛利率)与监管认证(L3名单)两个独立信源交叉确认。"
+            "basis": "①马赫M100已于2026年5月量产上车，但2026Q2车辆毛利率仍仅9.4%，商业化效果尚未验证(dimensions.moat.analysis.trendNext5y)；②理想未入选工信部L3自动驾驶准入首批名单(dimensions.inversion.analysis.failurePaths)，若后续入选且毛利率同步改善，意味着moat与keyRisk维度的负面判断同时获得反转证据；③需财务数据(毛利率)与监管认证(L3名单)两个独立信源交叉确认。"
           },
           {
             "signal": "回购计划加速执行且伴随基本面企稳，显示管理层高置信度",
-            "observable": "10亿美元回购计划在6个月内执行过半且同期毛利率不再环比下滑",
-            "basis": "①2026年3月推出10亿美元回购计划，是管理层评分5的重要支撑证据(dimensions.management.analysis.capitalAllocation)；②回购提速通常反映管理层认为股价低估，但需与毛利率企稳等基本面信号共同确认；③管理层关键人风险仍偏高，需持续跟踪季度执行进度而非一次性公告。"
+            "observable": "10亿美元回购计划在6个月内执行过半且同期车辆毛利率不再环比下滑",
+            "basis": "①2026年3月推出10亿美元回购计划，在连续两季净亏损期间仍按温和节奏持续执行(dimensions.management.analysis.capitalAllocation)；②回购提速通常反映管理层认为股价低估，但需与毛利率企稳等基本面信号共同确认；③管理层关键人风险仍偏高，需持续跟踪季度执行进度而非一次性公告。"
           }
         ]
       }
