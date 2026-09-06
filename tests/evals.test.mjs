@@ -133,8 +133,10 @@ test("recording feedback merges events and rating into one record", () => {
   writeFileSync(ratingPath, JSON.stringify({
     trust: 4, insight: 3, readability: 4, actionable: 2, density: 3,
     vsLast: "better", worstPart: "触发条件无法当天判定", defectStep: "summary",
-    changedMyPosition: false, familiarIndustry: true,
+    changedMyPosition: null, familiarIndustry: null,
+    ratedBy: "subagent",
     correctionMessages: 5, model: "test-model",
+    subagentNote: "阅读评分 Agent 完成",
   }));
 
   const ran = runPython("research_feedback.py", [
@@ -153,12 +155,19 @@ test("recording feedback merges events and rating into one record", () => {
   assert.equal(run.machine.validationRounds, 2);
   assert.equal(run.machine.firstPassValidation, true, "the first validation passed");
   assert.equal(run.companyName, "记账链路测试公司");
+  // 评分来源落到记录里：评估页靠它把人工与评分 Agent 分开读。
+  assert.equal(run.ratedBy, "subagent");
+  assert.equal(run.subagentNote, "阅读评分 Agent 完成");
+  // 行为两问是操作者两问，评分 Agent 返回 null；null 不是 false——未答不等于「没改变」。
+  assert.equal(run.rating.changedMyPosition, null);
+  assert.equal(run.rating.familiarIndustry, null);
 
   // 「最差的一处」落地即是一条缺陷记录。
   const defects = readJsonl("defects.jsonl");
   assert.equal(defects.length, 1);
   assert.equal(defects[0].symptom, "触发条件无法当天判定");
   assert.equal(defects[0].step, "summary");
+  assert.equal(defects[0].ratedBy, "subagent");
   assert.equal(defects[0].status, "open");
 });
 
@@ -186,6 +195,26 @@ test("cost metrics degrade to empty values when no transcript matches", () => {
   assert.equal(latest.machine.outputTokens, null, "an unknown cost is null, never 0");
   assert.equal(typeof latest.machine.costReason, "string");
   rmSync(emptyTranscripts, { recursive: true, force: true });
+});
+
+test("operator ratings keep behavior answers; unanswered behavior stays null", () => {
+  const ratingPath = path.join(workDir, "rating-operator.json");
+  writeFileSync(ratingPath, JSON.stringify({
+    trust: 3, insight: 3, readability: 3, actionable: 3, density: 3,
+    vsLast: "same", worstPart: "第三条夹具缺陷",
+    // 行为两问只有操作者本人能答：答了就记 true，不回就记 null（不是 false）。
+    changedMyPosition: true, familiarIndustry: null,
+    ratedBy: "operator",
+  }));
+  const ran = runPython("research_feedback.py", [
+    "--company", fixtureCompany, "--rating-json", ratingPath, "--no-publish",
+  ]);
+  assert.equal(ran.status, 0, ran.stderr);
+  const runs = readJsonl("runs.jsonl");
+  const latest = runs[runs.length - 1];
+  assert.equal(latest.ratedBy, "operator");
+  assert.equal(latest.rating.changedMyPosition, true);
+  assert.equal(latest.rating.familiarIndustry, null);
 });
 
 test("finding no defect is a valid answer that leaves no defect record", () => {

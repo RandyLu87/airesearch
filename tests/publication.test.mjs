@@ -35,6 +35,8 @@ const fixtureRuns = [
     dataCutoff: "2026-08-05",
     skillCommit: "abc1234",
     model: "test-model",
+    // 历史人工评分：评分人列显示「人工」。
+    ratedBy: "operator",
     machine: {
       validationRounds: 2, firstPassValidation: false, scores: { collection: 9.1 },
       outputTokens: 812345, activeMinutes: 96.4, userMessages: 31,
@@ -43,7 +45,7 @@ const fixtureRuns = [
     rating: {
       trust: 3, insight: 2, readability: 4, actionable: 2, density: 3,
       vsLast: "worse", worstPart: "夹具缺陷：触发条件无法当天判定",
-      changedMyPosition: false, familiarIndustry: true,
+      changedMyPosition: true, familiarIndustry: true,
     },
   },
   {
@@ -53,7 +55,8 @@ const fixtureRuns = [
     dataCutoff: "2026-08-06",
     skillCommit: "def5678",
     model: "test-model",
-    // 成本取不到时字段为空：页面必须显示 —— 而不是 0。
+    // 评分 Agent：评分人列显示「评分 Agent」；行为两问是操作者两问，Agent 不答（null）。
+    ratedBy: "subagent",
     machine: {
       validationRounds: 1, firstPassValidation: true, scores: { collection: 9.6 },
       outputTokens: null, activeMinutes: null, userMessages: null,
@@ -62,7 +65,7 @@ const fixtureRuns = [
     rating: {
       trust: 5, insight: 4, readability: 5, actionable: 4, density: 4,
       vsLast: "better", worstPart: "夹具缺陷：估值维度重复了采集里的原话",
-      changedMyPosition: true, familiarIndustry: false,
+      changedMyPosition: null, familiarIndustry: null,
     },
   },
 ];
@@ -72,6 +75,7 @@ const fixtureDefects = fixtureRuns.map((run) => ({
   step: "summary",
   symptom: run.rating.worstPart,
   skillCommit: run.skillCommit,
+  ratedBy: run.ratedBy,
   status: "open",
 }));
 
@@ -420,8 +424,11 @@ test("the evaluation page renders one ledger row per evaluation record", () => {
   assert.equal(text.includes("一次过"), true);
   assert.equal(text.includes("2 轮"), true, "a reworked validation must not read as first-pass");
   assert.equal(text.includes("812,345"), true, "output tokens missing");
-  // 行为指标：改变过仓位的次数比自评分诚实。
-  assert.equal(text.includes("1 / 2"), true, "changed-position count missing");
+  // 评分人列：人工与评分 Agent 分开读——绝对分不能跨源比，只能按同一源读趋势。
+  assert.equal(text.includes("人工"), true, "rater column must show 人工");
+  assert.equal(text.includes("评分 Agent"), true, "rater column must show 评分 Agent");
+  // 行为指标（改变仓位）只算人工已答的行：两条里一条人工已答且答了「改了」。
+  assert.equal(text.includes("1 / 1"), true, "changed-position must count answered operator rows only");
   // 缺陷原文不折叠——它是这一页最该被读到的东西。
   assert.equal(text.includes("夹具缺陷：触发条件无法当天判定"), true);
   assert.equal(text.includes("夹具缺陷：估值维度重复了采集里的原话"), true);

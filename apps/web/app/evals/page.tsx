@@ -1,13 +1,16 @@
 import {
+  RATED_BY_LABELS,
   RATING_FIELDS,
   RATING_LABELS,
   TREND_MIN_RECORDS,
   VS_LAST_LABELS,
   averageRating,
+  answeredPositionStats,
   firstPassRate,
   integerText,
   listDefects,
   listRuns,
+  ratedBy,
   type RunRecord,
 } from "../../lib/evals";
 
@@ -76,9 +79,8 @@ export default function EvalsPage() {
     ? rated.reduce((sum, value) => sum + value, 0) / rated.length
     : null;
   const passRate = firstPassRate(runs);
-  const changedPosition = runs.filter((run) => run.rating?.changedMyPosition === true).length;
-  // 「暂时没发现」是合法结果，但它的比例本身是个信号：长期偏高说明的多半不是
-  // 报告变好了，而是这一项在走过场。所以它必须可见，而不是被静静吞掉。
+  const operatorRuns = runs.filter((run) => ratedBy(run) === "operator");
+  const positionStats = answeredPositionStats(operatorRuns);
   const noneFound = runs.filter((run) => run.rating?.noneFound === true).length;
 
   return (
@@ -90,7 +92,8 @@ export default function EvalsPage() {
           <h1>研究评估</h1>
           <p className="company-current">
             这一页评估的是研究方法本身，不是任何一家公司的结论。每次研究做完时记录一条：
-            机器指标由工具运行时自己写，阅读评分由人读完报告当场打。
+            机器指标由工具运行时自己写，阅读评分由第 7 步的阅读评分 Agent 读完报告当场打，
+            操作者只补充自己才知道的行为两问。分数只按同一评分源的趋势读，不跨源横比。
           </p>
         </header>
 
@@ -121,8 +124,12 @@ export default function EvalsPage() {
               </div>
               <div>
                 <span>改变了仓位</span>
-                <strong>{changedPosition} / {runs.length}</strong>
-                <small>比自评分更诚实的行为指标</small>
+                <strong>
+                  {positionStats.answered === 0
+                    ? "—"
+                    : `${positionStats.changed} / ${positionStats.answered}`}
+                </strong>
+                <small>仅计人工已答；比自评分更诚实的行为指标</small>
               </div>
               <div>
                 <span>未发现缺陷</span>
@@ -151,6 +158,7 @@ export default function EvalsPage() {
                       {RATING_FIELDS.map((field) => <th key={field}>{RATING_LABELS[field]}</th>)}
                       <th>均分</th>
                       <th>比上次</th>
+                      <th>评分人</th>
                       <th>校验</th>
                       <th>干预 / 纠错</th>
                       <th>输出 token</th>
@@ -171,6 +179,7 @@ export default function EvalsPage() {
                           ))}
                           <td>{average === null ? "—" : average.toFixed(1)}</td>
                           <td>{VS_LAST_LABELS[run.rating?.vsLast] ?? "—"}</td>
+                          <td>{RATED_BY_LABELS[ratedBy(run)] ?? "—"}</td>
                           <td>
                             {machine.firstPassValidation === true
                               ? "一次过"
@@ -194,8 +203,10 @@ export default function EvalsPage() {
                 </table>
               </div>
               <p className="coverage-note">
-                成本指标取自会话日志，取不到时显示 —— 而不是 0；它依赖编辑器的内部日志格式，
-                因此被有意设计成可缺失。校验轮数与得分取自工具自己写的运行事件，是一等事实。
+                评分人列区分人工与评分 Agent：绝对分数不能跨源比较，按同一评分源的
+                时间序列看趋势才有意义。成本指标取自会话日志，取不到时显示 —— 而不是 0；
+                它依赖编辑器的内部日志格式，因此被有意设计成可缺失。校验轮数与得分取自
+                工具自己写的运行事件，是一等事实。
               </p>
             </section>
 
@@ -217,6 +228,7 @@ export default function EvalsPage() {
                       <div className="evals-defect-meta">
                         <span>{String(defect.at ?? "").slice(0, 10) || "—"}</span>
                         <span>{defect.company || "—"}</span>
+                        <span>{RATED_BY_LABELS[defect.ratedBy ?? ""] ?? "—"}</span>
                         <span>{defect.step || "unspecified"}</span>
                         <span>{defect.skillCommit || "—"}</span>
                       </div>
@@ -239,8 +251,9 @@ export default function EvalsPage() {
           </p>
           <p className="coverage-note">
             这套自我评价本身也可被怀疑：五项评分会漂移会饱和，真正承载信号的是「最差的一处」
-            与「是否改变仓位」这两个不易自欺的字段。若台账上的分数长期贴在高位而缺陷仍在稳定产出，
-            应当相信后者。原始记录在仓库的 research/evals/ 下，逐条可核对。
+            与「是否改变仓位」这两个不易自欺的字段——后者只由操作者本人回答，评分 Agent
+            无从代答。若台账上的分数长期贴在高位而缺陷仍在稳定产出，应当相信后者。
+            原始记录在仓库的 research/evals/ 下，逐条可核对。
           </p>
         </section>
 

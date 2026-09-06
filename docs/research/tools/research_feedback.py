@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
 """研究评估与反馈 — 研究流程第 7 步（docs/research/workflow/07-evaluation-and-feedback.md）。
 
-把一次研究的机器指标与人工阅读评分合并成一条研究评估记录，并把「最差的一处」
+把一次研究的机器指标与阅读评分合并成一条研究评估记录，并把「最差的一处」
 物化成一条缺陷记录，最后重跑一次站点发布，让研究评估页立刻是最新的。
+阅读评分默认由研究流程第 7 步启动的评分 Agent 产出，人工交互仅用于离线补录。
 
 用法：
-    # 交互式（正常反馈）
-    python3 docs/research/tools/research_feedback.py --company hk-2015-li-auto
-
-    # 非交互（测试与离线补录）
+    # 评分 JSON 由阅读评分 Agent 产出（研究流程第 7 步的默认路径，见
+    # docs/research/workflow/07-evaluation-and-feedback.md），主会话落账并重跑发布：
     python3 docs/research/tools/research_feedback.py --company hk-2015-li-auto \
-        --rating-json tmp/rating.json --no-publish
+        --rating-json tmp/hk-2015-li-auto-rating.json
+
+    # 交互式（离线人工补录与测试；正常流程不再逐题问人）
+    python3 docs/research/tools/research_feedback.py --company hk-2015-li-auto \
+        --no-publish
 
 退出码：0 = 已写入；1 = 记录已写入但发布失败；2 = 参数或评分输入不合法（未写入任何记录）。
 
@@ -319,12 +322,25 @@ def validate_rating(raw):
         rating["worstPart"] = worst.strip()
         rating["noneFound"] = False
 
+    # 行为两问（是否改变仓位 / 是否熟悉行业）只有操作者本人能如实回答，评分 Agent
+    # 无从代答。操作者不回时记为 null（未答），不允许用 false 冒充「没改变」——
+    # 评估页的分母只算已答的行。
     for field in ("changedMyPosition", "familiarIndustry"):
         value = raw.get(field)
-        if not isinstance(value, bool):
-            errors.append("%s 必须是 true / false（当前 %r）。" % (field, value))
+        if value is None:
+            rating[field] = None
+        elif not isinstance(value, bool):
+            errors.append("%s 必须是 true / false 或省略（当前 %r）。" % (field, value))
         else:
             rating[field] = value
+
+    # 谁打的这份分：subagent = 第 7 步阅读评分 Agent，operator = 人工（交互式补录）。
+    # 台账按它区分两种评分源——同源自评的分数按趋势读，独立人工补录才可横比。
+    rated_by = raw.get("ratedBy", "operator")
+    if rated_by not in ("operator", "subagent"):
+        errors.append("ratedBy 必须是 operator / subagent 之一（当前 %r）。" % (rated_by,))
+    else:
+        rating["ratedBy"] = rated_by
 
     corrections = raw.get("correctionMessages")
     if corrections is None:
@@ -344,17 +360,25 @@ def validate_rating(raw):
     if isinstance(raw.get("notes"), str) and raw["notes"].strip():
         rating["notes"] = raw["notes"].strip()
 
+    # 评分 Agent 给这次评分过程留的上下文（可选，字符串），落账在 run_record 顶层。
+    subagent_note = raw.get("subagentNote")
+    if subagent_note is not None:
+        if not isinstance(subagent_note, str) or not subagent_note.strip():
+            errors.append("subagentNote 必须是字符串或省略（当前 %r）。" % (subagent_note,))
+        else:
+            rating["subagentNote"] = subagent_note.strip()
+
     if errors:
         return None, errors
     return rating, []
 
 
 def ask_rating():
-    """交互式采集。趁热打分，攒到周末再补的分全是噪音。"""
+    """交互式采集（离线人工补录用）。正常流程由评分 Agent 产出评分 JSON，不逐题问人。"""
     print("=" * 60)
-    print("阅读评分（读完报告当场打，1–5 分）")
+    print("阅读评分 · 人工补录（正常流程由评分 Agent 完成，1–5 分）")
     print("=" * 60)
-    raw = {}
+    raw = {"ratedBy": "operator"}
     for field in RATING_FIELDS:
         while True:
             answer = input("%-12s %s：" % (field, RATING_LABELS[field])).strip()
@@ -380,8 +404,19 @@ def ask_rating():
                              if answer.isdigit() and 1 <= int(answer) <= len(DEFECT_STEPS)
                              else "unspecified")
 
-    raw["changedMyPosition"] = input("这次研究改变了你的仓位或关注列表吗（y/N）：").strip().lower() == "y"
-    raw["familiarIndustry"] = input("这家公司属于你熟悉的行业吗（y/N）：").strip().lower() == "y"
+    raw["changedMyPosition"] = None  # 可选：只有操作者本人能如实回答，回车 = 未答
+    answer = input("这次研究改变了你的仓位或关注列表吗（y/N，回车 = 未答）：").strip().lower()
+    if answer == "y":
+        raw["changedMyPosition"] = True
+    elif answer == "n":
+        raw["changedMyPosition"] = False
+
+    raw["familiarIndustry"] = None  # 可选，同上
+    answer = input("这家公司属于你熟悉的行业吗（y/N，回车 = 未答）：").strip().lower()
+    if answer == "y":
+        raw["familiarIndustry"] = True
+    elif answer == "n":
+        raw["familiarIndustry"] = False
 
     answer = input("干预里有几次是纠错（回车 = 不填）：").strip()
     raw["correctionMessages"] = int(answer) if answer.isdigit() else None
@@ -435,6 +470,12 @@ def main():
     machine.update(session_metrics(events, args.transcript_dir, args.transcript))
     machine["correctionMessages"] = rating.pop("correctionMessages", None)
 
+    # 评分 Agent 给这次评分过程留的上下文（读了什么、基线是否找到、为何降分）。
+    # 落账时作为 run_record.subagentNote 顶层字段（不在 rating 内），与操作者填的
+    # notes 分开——后者会出现在评分 JSON 的 rating.notes 里。
+    subagent_note = rating.pop("subagentNote", None)
+    rated_by = rating.pop("ratedBy")
+
     company_name, data_cutoff = company_facts_from_events(events)
     if not company_name or not data_cutoff:
         fallback_name, fallback_cutoff = fallback_company_facts(company)
@@ -453,9 +494,12 @@ def main():
         "dataCutoff": data_cutoff,
         "skillCommit": commit,
         "model": model,
+        "ratedBy": rated_by,
         "machine": machine,
         "rating": rating,
     }
+    if subagent_note:
+        run_record["subagentNote"] = subagent_note
     wrote_run = evals_log.append(evals_log.RUNS_FILE, run_record)
     # 「暂时没发现」不产生缺陷记录：日志是改研究方法时该改什么的清单，
     # 往里塞一条 status=open 的「无」，只会让这份清单失去清单的作用。
@@ -468,6 +512,7 @@ def main():
             "symptom": rating["worstPart"],
             "skillCommit": commit,
             "model": model,
+            "ratedBy": rated_by,
             "status": "open",
         })
     if not wrote_run or not wrote_defect:
@@ -475,8 +520,10 @@ def main():
         sys.exit(2)
 
     average = sum(rating[f] for f in RATING_FIELDS) / len(RATING_FIELDS)
-    print("✅ 已记录 %s：均分 %.1f（比上一份%s），%s" % (
-        company, average, VS_LAST_LABELS[rating["vsLast"]],
+    print("✅ 已记录 %s（%s）：均分 %.1f（比上一份%s），%s" % (
+        company,
+        "阅读评分 Agent" if rated_by == "subagent" else "人工补录",
+        average, VS_LAST_LABELS[rating["vsLast"]],
         "校验一次通过" if machine["firstPassValidation"] else
         "校验 %d 轮" % machine["validationRounds"]))
     if rating["noneFound"]:
@@ -496,10 +543,11 @@ def main():
         sys.exit(0)
 
     print("正在重跑发布，让研究评估页包含这次评分……")
-    result = subprocess.run(["npm", "run", "publish"], cwd=REPO_ROOT)
-    if result.returncode != 0:
-        sys.stderr.write("提示：记录已写入，但发布失败。修好后手动跑一次 npm run publish 即可。\n")
-        sys.exit(1)
+    if not args.no_publish:
+        result = subprocess.run(["npm", "run", "publish"], cwd=REPO_ROOT)
+        if result.returncode != 0:
+            sys.stderr.write("提示：记录已写入，但发布失败。修好后手动跑一次 npm run publish 即可。\n")
+            sys.exit(1)
     sys.exit(0)
 
 
