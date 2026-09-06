@@ -7,7 +7,7 @@ description: 上市公司长期价值调研，以商业模式、核心驱动和�
 
 研究流程、数据源规范、采集清单与产出模板全部保存在仓库内，两端共用一份：
 
-**执行 `docs/research/public-company-financial-research.md`，按 1–6 步完成：数据采集 → 多维度分析 → 分析总结 → 数据校验 → 渲染网站 → 更新首页。** 每一步的唯一正文在 `docs/research/workflow/<NN>-*.md`。
+**执行 `docs/research/public-company-financial-research.md`，按 1–7 步完成：数据采集 → 多维度分析 → 分析总结 → 数据校验 → 渲染网站 → 更新首页 → 评估与反馈。** 每一步的唯一正文在 `docs/research/workflow/<NN>-*.md`。第 7 步默认用 Task 工具启动一个**阅读评分 Agent**（只读第 5 步渲染的成品页与上一轮评估基线，按五维打分、返回 JSON），主会话补操作者两问后落账并发布；不要逐题问操作者打分。
 
 主链路命令：
 
@@ -28,6 +28,10 @@ python3 docs/research/tools/build_final.py \
 
 # 第 5/6 步：渲染公司分析页并更新首页卡片
 npm run publish
+
+# 第 7 步：落账评分 Agent 产出的评分 JSON（重跑发布让研究评估页包含这次评分）
+python3 docs/research/tools/research_feedback.py \
+  --company <id> --rating-json tmp/<id>-rating.json
 ```
 
 规范产出是 `research/companies/<company-id>/` 下四份固定文件名的 JSON（`financials-collection.json`、`financials-analysis.json`、`financials-summary.json`、`financials-final.json`），页面一律由 `npm run publish` 生成，不手写 HTML，不手改 `research/site/`。仓库的命名与目录规范见 `AGENTS.md`。

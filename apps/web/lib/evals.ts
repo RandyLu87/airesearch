@@ -35,6 +35,20 @@ export const VS_LAST_LABELS: Record<string, string> = {
   worse: "更差",
 };
 
+/** 评分来源：subagent = 第 7 步阅读评分 Agent，operator = 人工（交互式补录）。 */
+export const RATED_BY_LABELS: Record<string, string> = {
+  subagent: "评分 Agent",
+  operator: "人工",
+};
+
+export function ratedBy(run: RunRecord): "operator" | "subagent" {
+  const value = run.ratedBy ?? run.rating?.ratedBy;
+  if (value === "subagent") return "subagent";
+  // 缺省视为 operator：评分来源字段上线前的人工评分记录（历史缺陷同样）不带 ratedBy，
+  // 而评分 Agent 是之后才引入的，历史记录只能出自人工。
+  return "operator";
+}
+
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 export type Json = any;
 
@@ -45,6 +59,9 @@ export type RunRecord = {
   dataCutoff?: string;
   skillCommit?: string;
   model?: string;
+  /** 评分来源：operator = 人工（历史记录缺省），subagent = 第 7 步评分 Agent。 */
+  ratedBy?: "operator" | "subagent";
+  subagentNote?: string;
   machine?: Json;
   rating?: Json;
 };
@@ -55,6 +72,8 @@ export type DefectRecord = {
   step?: string;
   symptom?: string;
   skillCommit?: string;
+  model?: string;
+  ratedBy?: string;
   status?: string;
 };
 
@@ -114,6 +133,15 @@ export function firstPassRate(runs: RunRecord[]): number | null {
   const judged = runs.filter((run) => typeof run.machine?.firstPassValidation === "boolean");
   if (judged.length === 0) return null;
   return judged.filter((run) => run.machine.firstPassValidation).length / judged.length;
+}
+
+/** 行为两问之一（是否改变仓位）的统计：只算已答的行，未答（null）不进分母。 */
+export function answeredPositionStats(runs: RunRecord[]): { changed: number; answered: number } {
+  const answered = runs.filter((run) => typeof run.rating?.changedMyPosition === "boolean");
+  return {
+    changed: answered.filter((run) => run.rating.changedMyPosition).length,
+    answered: answered.length,
+  };
 }
 
 /** 千分位整数；空值给 —，不用 0 冒充「没花钱」。 */
