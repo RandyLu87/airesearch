@@ -1,0 +1,902 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>泡泡玛特国际集团有限公司 (Pop Mart International Group Limited)分析报告</title><meta name="description" content="以商业模式、核心驱动、最新变化和当前价格隐含的假设为主线的上市公司研究。"/><meta name="research-publication-version" content="0.1.0"/><meta name="research-final-version" content="1.0.0"/><style>/* Inter 只覆盖拉丁字形，中文一律走系统字体，所以字体文件按站点实际用到的字符
+   子集化过（48.3 KB → 25.8 KB），可变字重轴保留。重新生成见 fonts/README.md。
+   font-display: swap + 下面的系统字体兜底，保证字体在弱网下取不到时只是字形回退，
+   不影响可读性。 */
+@font-face {
+  font-family: "Inter Local";
+  src: url("../assets/fonts/InterVariable.woff2") format("woff2-variations");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  --paper: #f7f7f2;
+  --ink: #101010;
+  --muted: #686863;
+  --line: #c9c9c2;
+  --line-dark: #93938c;
+  --signal: #ff4d00;
+  --soft: #ecece6;
+  --max: 1440px;
+  color-scheme: light;
+  font-family: "Inter Local", system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--paper); }
+body { margin: 0; color: var(--ink); background: var(--paper); }
+a { color: inherit; text-underline-offset: .2em; }
+p, li { line-height: 1.62; }
+
+.research-report,
+.company-page {
+  width: min(100%, var(--max));
+  margin: 0 auto;
+  padding: 0 36px 80px;
+}
+
+.report-hero {
+  min-height: 78vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 26px 0 34px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.eyebrow-row,
+.metric-meta,
+.company-card-meta,
+.company-eyebrow {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 56px;
+  align-items: end;
+  margin: 10vh 0 8vh;
+}
+
+.kicker,
+.section-kicker {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+h1, h2, h3, p { margin-top: 0; }
+h1 {
+  max-width: 980px;
+  margin-bottom: 24px;
+  font-size: clamp(58px, 10vw, 150px);
+  font-weight: 500;
+  letter-spacing: -.075em;
+  line-height: .82;
+}
+
+.headline {
+  max-width: 840px;
+  margin: 0;
+  font-size: clamp(22px, 3vw, 42px);
+  font-weight: 450;
+  letter-spacing: -.035em;
+  line-height: 1.08;
+}
+
+.stance-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--ink);
+}
+.stance-block .label,
+.hero-facts span,
+.summary-grid span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.stance-block strong { font-size: 42px; font-weight: 520; letter-spacing: -.05em; }
+.stance-block > span:last-child { color: var(--muted); font-size: 13px; }
+
+/* Auto-fit for the same reason as `.company-summary`: the cell count follows the
+   contract, and 1.2.0 trades a fair value for a market capitalisation. */
+.hero-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  border-top: 1px solid var(--line-dark);
+}
+.hero-facts > div { padding: 18px 18px 0 0; }
+.hero-facts span, .hero-facts strong { display: block; }
+.hero-facts strong { margin-top: 8px; font-size: 18px; font-weight: 560; }
+.hero-facts small { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; }
+
+.section-nav {
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 12px 0;
+  background: color-mix(in srgb, var(--paper) 94%, transparent);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(12px);
+}
+.section-nav a,
+.pill-link {
+  flex: 0 0 auto;
+  padding: 8px 14px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 650;
+  text-decoration: none;
+}
+.section-nav a:hover, .pill-link:hover { color: var(--paper); background: var(--ink); }
+
+.report-section {
+  display: grid;
+  grid-template-columns: minmax(72px, 1fr) minmax(0, 10fr);
+  gap: 32px;
+  padding: 76px 0 86px;
+  border-bottom: 1px solid var(--ink);
+}
+.section-number { font-size: 12px; font-variant-numeric: tabular-nums; }
+.section-content { min-width: 0; }
+.section-content h2 {
+  max-width: 980px;
+  margin-bottom: 26px;
+  font-size: clamp(42px, 6vw, 92px);
+  font-weight: 490;
+  letter-spacing: -.065em;
+  line-height: .92;
+}
+.lead {
+  max-width: 960px;
+  margin-bottom: 38px;
+  font-size: clamp(20px, 2.3vw, 32px);
+  letter-spacing: -.025em;
+  line-height: 1.24;
+}
+
+.summary-grid,
+.metric-grid,
+.chart-grid,
+.scenario-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--ink);
+}
+.summary-grid article {
+  min-height: 180px;
+  padding: 20px 28px 26px 0;
+  border-bottom: 1px solid var(--line);
+}
+.summary-grid article:nth-child(odd) { border-right: 1px solid var(--line); }
+.summary-grid article:nth-child(even) { padding-left: 28px; }
+.summary-grid p { max-width: 540px; margin: 24px 0 0; font-size: 18px; }
+
+.change-ledger { margin-top: 54px; }
+.change-ledger h3 { font-size: 14px; letter-spacing: .08em; text-transform: uppercase; }
+.change-ledger dl { border-top: 1px solid var(--line-dark); }
+.change-ledger dl div { display: grid; grid-template-columns: 150px 1fr; gap: 24px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.change-ledger dt { font-weight: 650; }
+.change-ledger dd { margin: 0; color: var(--muted); }
+
+.editorial-list { max-width: 980px; margin: 0; padding: 0; list-style: none; counter-reset: editorial; }
+.editorial-list > li { position: relative; min-height: 72px; padding: 18px 0 18px 56px; border-top: 1px solid var(--line); font-size: 17px; counter-increment: editorial; }
+.editorial-list > li::before { position: absolute; left: 0; content: counter(editorial, decimal-leading-zero); color: var(--muted); font-size: 11px; letter-spacing: .1em; }
+.source-ids { display: inline-flex; gap: 6px; margin-top: 22px; color: var(--muted); font-size: 11px; }
+.source-ids a { color: var(--ink); font-weight: 700; text-decoration: none; }
+
+.metric-grid { margin-top: 36px; }
+.metric-card { min-height: 260px; padding: 20px 28px 28px 0; border-bottom: 1px solid var(--line); }
+.metric-card:nth-child(odd) { border-right: 1px solid var(--line); }
+.metric-card:nth-child(even) { padding-left: 28px; }
+.metric-meta { color: var(--muted); }
+.metric-card h3 { margin: 42px 0 10px; font-size: 17px; font-weight: 580; }
+.metric-card > strong { display: block; font-size: clamp(30px, 4vw, 58px); font-weight: 480; letter-spacing: -.055em; }
+.metric-card p { max-width: 440px; margin: 16px 0; color: var(--muted); }
+.metric-card small { display: block; padding-top: 12px; border-top: 1px solid var(--line); }
+
+.chart-grid { margin-top: 64px; gap: 28px; border-top: 0; }
+.decision-chart { margin: 0; padding: 18px 0 22px; border-top: 1px solid var(--line-dark); }
+.chart-title { margin-bottom: 8px; font-size: 13px; font-weight: 650; letter-spacing: .04em; }
+.decision-chart svg { display: block; width: 100%; height: 180px; }
+.decision-chart figcaption { max-width: 430px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+.chart-axis { stroke: var(--line-dark); stroke-width: 1; }
+.chart-track { fill: var(--soft); }
+.chart-value--ink { fill: var(--ink); }
+.chart-value--signal { fill: var(--signal); }
+.chart-marker { stroke: var(--ink); stroke-width: 1; }
+.chart-label { fill: var(--ink); font-family: "Inter Local", sans-serif; font-size: 11px; font-weight: 650; letter-spacing: .05em; }
+.chart-line { fill: none; stroke-width: 3; vector-effect: non-scaling-stroke; }
+.chart-line--ink { stroke: var(--ink); }
+.chart-line--signal { stroke: var(--signal); }
+.chart-line--muted { stroke: var(--line-dark); stroke-dasharray: 5 4; }
+.chart-legend, .chart-driver-label, .chart-trend { fill: var(--muted); font-family: "Inter Local", "PingFang SC", sans-serif; font-size: 10px; }
+.chart-trend { fill: var(--ink); font-size: 9px; }
+
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 16px 12px; text-align: right; border-bottom: 1px solid var(--line); }
+th:first-child, td:first-child { padding-left: 0; text-align: left; }
+thead th { color: var(--muted); font-size: 11px; font-weight: 650; letter-spacing: .04em; vertical-align: bottom; }
+tbody th { font-weight: 650; }
+
+.scenario-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.scenario-grid article { padding: 24px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.scenario-grid article:last-child { border-right: 0; }
+.scenario-grid article > span { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .12em; }
+.scenario-grid h3 { margin: 42px 0 24px; font-size: 36px; font-weight: 500; letter-spacing: -.04em; }
+.scenario-grid p { min-height: 96px; color: var(--muted); }
+.scenario-grid dl { display: grid; grid-template-columns: 52px 1fr; gap: 8px 16px; font-size: 12px; }
+.scenario-grid dl > div { display: contents; }
+.scenario-grid dt { color: var(--muted); }
+.scenario-grid dd { margin: 0; }
+
+.action-zones { margin-top: 46px; border-top: 1px solid var(--ink); }
+.action-zones > div { display: grid; grid-template-columns: 180px 160px 1fr; gap: 24px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.action-zones strong { font-size: 18px; }
+.action-zones span { font-weight: 650; }
+.action-zones p { margin: 0; color: var(--muted); }
+
+/* Where today's price ranks in its own multiple history. A fact about the
+   market, so it is typeset as one: no colour, no arrow, no verdict word. */
+.multiple-percentile { margin: 18px 0 0; color: var(--muted); font-size: 14px; }
+.multiple-percentile strong { color: var(--ink); font-weight: 650; }
+.multiple-percentile small { display: block; margin-top: 6px; font-size: 11px; }
+.multiple-percentile--unavailable { font-style: italic; }
+
+/* Attributed assumption sets. Every seat is styled identically — an emphasised
+   seat would be the "基准" this contract removed, reintroduced as CSS. */
+.assumption-sets { border-top: 1px solid var(--ink); }
+.assumption-sets-note { margin: 18px 0 28px; max-width: 74ch; color: var(--muted); font-size: 13px; }
+.assumption-set { padding: 26px 0; border-bottom: 1px solid var(--line); }
+.assumption-set-head { display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; }
+.assumption-set-kind { padding: 4px 9px; border: 1px solid var(--ink); border-radius: 999px; font-size: 10px; letter-spacing: .08em; }
+.assumption-set-head strong { font-size: 17px; font-weight: 600; }
+/* The bias sits above the numbers, never in a footnote: a short report and an
+   issuer's guidance render identically otherwise, and that similarity is the lie. */
+.assumption-set-bias { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 14px; margin: 14px 0 0; padding: 12px 14px; border-inline-start: 2px solid var(--signal); background: color-mix(in srgb, var(--signal) 5%, transparent); font-size: 13px; }
+.assumption-set-bias > span { color: var(--muted); font-size: 11px; letter-spacing: .06em; }
+.assumption-set-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin: 20px 0 0; }
+.assumption-set-facts dt { color: var(--muted); font-size: 11px; text-transform: uppercase; }
+.assumption-set-facts dd { margin: 8px 0 0; font-size: 22px; font-weight: 520; }
+.assumption-set-facts dd small { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; font-weight: 400; }
+.assumption-set-assumptions { margin: 18px 0 0; max-width: 78ch; color: var(--muted); }
+.assumption-set-components { margin: 14px 0 0; padding: 0; list-style: none; font-size: 12px; }
+.assumption-set-components li { display: grid; grid-template-columns: 68px minmax(0, 1fr); gap: 14px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.assumption-set-components li > span { color: var(--muted); }
+.assumption-set-missing { margin: 16px 0 0; color: var(--muted); font-style: italic; }
+
+.disagreement-anchor { display: flex; flex-wrap: wrap; gap: 16px; margin: 0 0 18px; color: var(--muted); font-size: 13px; }
+.disagreement-anchor strong { color: var(--ink); }
+.disagreement-converged { margin: 16px 0 0; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+
+.split-section { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px; }
+.split-section h2 { font-size: clamp(36px, 4vw, 62px); }
+.evidence-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--ink); }
+.evidence-list li { padding: 0; border-bottom: 1px solid var(--line); }
+.evidence-list details { padding: 20px 0; }
+.evidence-list summary { display: grid; grid-template-columns: 42px 90px minmax(0, 1fr); gap: 12px; align-items: center; cursor: pointer; font-size: 17px; font-weight: 600; list-style: none; }
+.evidence-list summary::-webkit-details-marker { display: none; }
+.evidence-number { color: var(--muted); font-size: 11px; }
+.evidence-detail { margin: 18px 0 0 144px; padding-top: 14px; border-top: 1px solid var(--line); }
+.evidence-list p, .evidence-list small { display: block; margin: 0 0 8px; color: var(--muted); }
+.external-link { display: inline-block; margin-top: 12px; font-size: 13px; font-weight: 650; overflow-wrap: anywhere; }
+.evidence-kind { align-self: start; width: max-content; padding: 5px 9px; border: 1px solid var(--ink); border-radius: 999px; font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
+.evidence-kind--calculation { border-color: var(--signal); color: var(--signal); }
+.evidence-kind--inference { border-style: dashed; }
+.disclaimer { margin: 48px 0 0; padding-top: 16px; border-top: 1px solid var(--ink); color: var(--muted); font-size: 12px; }
+.back-to-top { position: fixed; right: 24px; bottom: 24px; display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid var(--ink); border-radius: 50%; background: var(--paper); text-decoration: none; }
+
+/* The header is sized against the fold, not against the viewport: the first
+   card (269px) plus a peek of the next one has to fit under it at 375×667, so
+   the whole header block stays inside ~350px. A vh-based margin here spent
+   122px of a 763px-tall laptop viewport on empty space. */
+.company-header { padding: 24px 0 24px; border-bottom: 1px solid var(--ink); }
+/* The air above the title scales with the viewport, because the title itself
+   does: a flat 24px reads right under a 128px heading on a short laptop and
+   cramped under a 150px one on a 27" display. Bounded at 72px so it can never
+   repeat 16vh's 122px, and the tight bottom margin keeps the tagline bound to
+   the title rather than floating between the two. */
+.company-header h1 { margin: clamp(24px, 6vh, 72px) 0 20px; }
+
+/* 中文标题的行距与字距。全局 h1 的 `line-height: .82` / `letter-spacing: -.075em`
+   是给拉丁标题的——字母有升部降部，收紧后行框里仍留得出空隙。汉字字形填满整个
+   em 方框，同样的值一旦折行就是物理重叠、字距为负则直接粘连。
+   这条必须在基础层生效（移动端标题折行更早，同样会叠）。 */
+.company-header h1[data-cjk="true"] { line-height: 1.06; letter-spacing: -.04em; }
+
+/* 字号按标题视觉宽度分档，目标是任何公司名都落在两行以内，而不是让长中文名
+   吃掉整屏。分档由渲染层算好写进 data-title-scale（见 companies/[company]/page.tsx）。
+   只在宽屏生效：≤800px 有自己的一套尺寸，而属性选择器的特异性高于媒体查询里的
+   `.company-header h1`，放到基础层会把移动端一起打挂。 */
+@media (min-width: 801px) {
+  .company-header h1[data-title-scale="md"] { font-size: clamp(52px, 8.5vw, 118px); }
+  .company-header h1[data-title-scale="sm"] { font-size: clamp(44px, 7vw, 96px); }
+}
+/* Only the desktop ceiling comes down — 40px cost two lines and 137px of the
+   fold. The 22px floor stays: narrow screens have budget to spare, and this is
+   also the company page's lead thesis. */
+.company-current { max-width: 840px; font-size: clamp(22px, 1.8vw, 26px); line-height: 1.3; }
+/* Auto-fit rather than a fixed four: how many cells there are depends on which
+   contract the latest snapshot was written under (1.2.0 has no stance and no fair
+   value), and a fixed track would leave a hole where the verdict used to be. */
+.company-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); border-bottom: 1px solid var(--ink); }
+.company-summary > div { padding: 22px 18px 24px 0; }
+.company-summary span { display: block; color: var(--muted); font-size: 11px; text-transform: uppercase; }
+.company-summary strong { display: block; margin-top: 10px; font-size: 24px; font-weight: 520; }
+.company-summary small { display: block; margin-top: 8px; color: var(--muted); font-size: 11px; }
+.company-section { padding: 72px 0; border-bottom: 1px solid var(--ink); }
+/* The coverage list shares the fold with the header above it, so it hugs it.
+   Company pages keep the full 72px rhythm: their summary bar already clears the
+   fold, and tightening one of eight sections would only break the cadence. */
+.coverage-section { padding-top: 28px; }
+.company-section h2 { margin-bottom: 32px; font-size: clamp(36px, 5vw, 72px); font-weight: 490; letter-spacing: -.055em; }
+.snapshot-pair { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+.snapshot-card { padding: 22px 0; border-top: 1px solid var(--ink); }
+.snapshot-card time { color: var(--muted); font-size: 12px; }
+.snapshot-card h3 { margin: 28px 0 12px; font-size: 36px; font-weight: 500; }
+.snapshot-card strong { display: block; margin-bottom: 22px; font-size: 22px; }
+.snapshot-card p { color: var(--muted); }
+.snapshot-card dl { display: grid; grid-template-columns: 120px 1fr; gap: 8px 16px; margin: 24px 0 0; padding-top: 16px; border-top: 1px solid var(--line); font-size: 13px; }
+.snapshot-card dt { color: var(--muted); }
+.snapshot-card dd { margin: 0; }
+.comparison-heading { margin: 54px 0 14px; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; }
+.comparison-status { display: inline-block; padding: 4px 8px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; }
+.comparison-status--no { color: var(--muted); border-style: dashed; }
+.comparison-detail-grid { margin-top: 22px; }
+.comparison-detail { min-height: 240px; padding: 22px 24px 26px 0; border-top: 1px solid var(--ink); }
+.comparison-detail > span { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.comparison-detail > strong { display: block; margin: 36px 0 20px; font-size: clamp(24px, 3vw, 40px); font-weight: 500; letter-spacing: -.04em; }
+.comparison-detail ul, .comparison-detail ol { margin: 28px 0 0; padding-left: 20px; }
+.comparison-detail li { margin-bottom: 8px; color: var(--muted); }
+.report-index { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+.report-link { display: flex; min-height: 220px; flex-direction: column; justify-content: space-between; padding: 20px; border: 1px solid var(--ink); text-decoration: none; }
+.report-link:hover { color: var(--paper); background: var(--ink); }
+.report-link time { font-size: 12px; }
+.report-link strong { font-size: 28px; font-weight: 520; }
+/* Index card text sets no colour of its own so the card inverts cleanly on
+   hover; the hairline stays --line, which reads on both grounds. A stance can
+   run to a full sentence, so it wraps instead of being clipped. */
+.company-card-stance { margin: 14px 0 0; font-size: 15px; }
+.company-card-facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 18px 0 20px; padding-top: 14px; border-top: 1px solid var(--line); }
+.company-card-facts dt { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.company-card-facts dd { margin: 6px 0 0; font-size: 17px; }
+.company-card-facts small { display: block; font-size: 11px; }
+/* Sits under the cards, not above them: it is a caveat about how to read the
+   figures, and below the fold it doubles as the peek that invites scrolling. */
+.coverage-note { max-width: 640px; margin: 24px 0 0; color: var(--muted); font-size: 14px; }
+
+@media (max-width: 800px) {
+  .research-report, .company-page { padding: 0 18px 48px; }
+  .report-hero { min-height: 90svh; }
+  .hero-grid { grid-template-columns: 1fr; gap: 38px; margin: 12vh 0 7vh; }
+  h1 { font-size: clamp(56px, 20vw, 96px); }
+  /* One line for 上市公司研究 at 375px: a wrapped page title costs another 60px
+     of the fold. The report cover keeps the full size. A 46px title needs far
+     less air above it than a 150px one, and 375×667 has no budget to give. */
+  .company-header h1 { margin: 24px 0 16px; font-size: clamp(36px, 11vw, 46px); }
+  .stance-block { width: 65%; }
+  .hero-facts, .company-summary { grid-template-columns: repeat(2, 1fr); }
+  .report-section { grid-template-columns: 1fr; gap: 14px; padding: 52px 0 62px; }
+  .section-number { padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+  .section-content h2 { font-size: clamp(40px, 14vw, 68px); }
+  .summary-grid, .metric-grid, .chart-grid, .scenario-grid, .split-section, .snapshot-pair, .report-index { grid-template-columns: 1fr; }
+  .summary-grid article:nth-child(odd), .metric-card:nth-child(odd) { border-right: 0; }
+  .summary-grid article:nth-child(even), .metric-card:nth-child(even) { padding-left: 0; }
+  .scenario-grid article { padding-left: 0; border-right: 0; }
+  .action-zones > div { grid-template-columns: 1fr; gap: 6px; }
+  .change-ledger dl div { grid-template-columns: 1fr; gap: 8px; }
+  .evidence-list summary { grid-template-columns: 34px 82px minmax(0, 1fr); gap: 8px; font-size: 14px; }
+  .evidence-detail { margin-left: 0; }
+}
+
+@media print {
+  :root { --paper: #fff; }
+  @page { size: A4; margin: 16mm; }
+  .research-report { max-width: none; padding: 0; }
+  .report-hero { min-height: 250mm; break-after: page; }
+  .section-nav, .back-to-top, .company-page link, .company-page script { display: none; }
+  .report-section { display: block; padding: 12mm 0; break-before: page; }
+  .section-number { margin-bottom: 12mm; }
+  .metric-card, .decision-chart, .scenario-grid article, tr, .evidence-list li { break-inside: avoid; }
+  .evidence-list details { display: block; }
+  .evidence-list details > * { display: block; }
+  .section-content h2 { font-size: 48px; }
+  a { text-decoration: none; }
+}
+
+/* ── 通用小件 ─────────────────────────────────────────── */
+.block-heading { margin: 46px 0 16px; font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.company-note { max-width: 900px; margin: 0 0 28px; color: var(--muted); font-size: 16px; }
+.empty-note { margin: 0; padding: 18px 0; color: var(--muted); font-size: 14px; }
+.cell-prose { max-width: 420px; text-align: left; color: var(--muted); font-size: 13px; }
+.cell-change { font-weight: 650; }
+.trend { display: inline-block; padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; font-weight: 650; white-space: nowrap; }
+.trend--改善 { color: var(--signal); border-color: var(--signal); }
+.trend--恶化 { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.trend--待验证 { border-style: dashed; }
+
+/* 首列在横向滚动时钉住，否则宽表一滑就不知道在看哪一行 */
+.table-wrap table th:first-child { position: sticky; left: 0; z-index: 1; background: var(--paper); }
+
+/* ── 指标释义浮层（原生 popover，零 JS） ───────────────── */
+.metric-note-anchor { display: inline; white-space: nowrap; }
+.metric-note-toggle { margin-inline-start: 5px; padding: 0; border: 0; background: none; color: var(--muted); font: inherit; font-size: .8em; line-height: 1; cursor: pointer; }
+.metric-note-toggle:hover, .metric-note-toggle:focus-visible { color: var(--signal); }
+.metric-note-toggle { anchor-name: var(--note-anchor); }
+/* 贴着触发它的那个 ⓘ 弹出。不覆盖定位的话，浏览器默认是 inset:0 + margin:auto，
+   也就是视口正中——那是对话框的位置，不是名词解释该出现的位置。
+   仍然用 popover 而不是内联展开：它在 top layer，不会被财报表的横向滚动容器裁掉，
+   而且自带点击外部关闭与 Esc 关闭。 */
+/* 默认隐藏由这里显式声明，不依赖浏览器 UA 样式表的
+   `[popover]:not(:popover-open){display:none}`。上一版就是漏了这一条：
+   浏览器一旦没把该元素当 popover 处理，它就停在原地永久显示。
+   `:popover-open` 不被支持时整条规则会被丢弃，结果是保持隐藏——
+   失败方向朝「看不见」而不是「糊在页面上」。 */
+.metric-note { display: none; }
+.metric-note[popover] { position: fixed; width: min(380px, calc(100vw - 32px)); margin: 0; padding: 18px 20px; border: 1px solid var(--ink); background: var(--paper); color: var(--ink); font-size: 13px; font-weight: 400; font-style: normal; line-height: 1.58; text-align: left; white-space: normal; letter-spacing: 0; box-shadow: 0 10px 30px rgb(16 16 16 / .16); }
+.metric-note[popover]:popover-open { display: block; }
+/* 浮层内部的排版必须自己定死。它嵌在 <strong>、<h3> 这类容器里，
+   区块级的着色与字号规则会顺着继承进来——SOTP 那一版整段变橙就是这么来的。 */
+.metric-note, .metric-note > * { color: var(--ink); }
+/* 真的没有 popover 支持时，ⓘ 点了不会有反应，那就别给这个假承诺，
+   改为把页尾的指标释义表在屏幕上也显示出来。 */
+@supports not selector(:popover-open) {
+  .metric-note-toggle { display: none; }
+  .metric-glossary { display: block; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--ink); }
+}
+@supports (anchor-name: --a) {
+  .metric-note[popover] { position-anchor: var(--note-anchor); position-area: block-end span-inline-end; position-try-fallbacks: flip-block, flip-inline, block-start span-inline-start; margin-block-start: 8px; inset: auto; }
+}
+/* 不支持锚定定位的浏览器（目前主要是 Firefox）回落到视口居中；
+   不加变暗背景，避免它读起来像一个必须处理的模态。 */
+@supports not (anchor-name: --a) {
+  .metric-note[popover] { inset: 0; margin: auto; height: fit-content; }
+}
+.metric-note > * { display: block; }
+.metric-note-title { margin-bottom: 10px; font-size: 15px; font-weight: 650; }
+.metric-note-formula { margin-bottom: 10px; padding: 8px 10px; background: var(--soft); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+.metric-note-company { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); }
+.metric-note-pitfall { margin-top: 10px; color: var(--signal); }
+
+/* ── 商业模式 ─────────────────────────────────────────── */
+/* 长文本分段：按作者已写下的结构切开——句号分段，(1)(2)(3) 转有序列表。
+   段间距用 margin 而不是空行，且最后一段不带下边距，避免和外层容器的
+   padding 叠出双倍空隙。 */
+.prose-block > p { margin: 0 0 12px; }
+.prose-block > p:last-child { margin-bottom: 0; }
+.prose-enum { margin: 4px 0 12px; padding: 0; list-style: none; counter-reset: prose-enum; }
+.prose-enum:last-child { margin-bottom: 0; }
+.prose-enum li { position: relative; padding-left: 26px; counter-increment: prose-enum; }
+.prose-enum li + li { margin-top: 8px; }
+.prose-enum li::before {
+  content: "(" counter(prose-enum) ")";
+  position: absolute; left: 0; top: 0;
+  color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums;
+}
+/* 在 .editorial-list（章节要点与风险清单）里，分段块继承外层字号与行高 */
+.editorial-list > li .prose-block > p,
+.editorial-list > li .prose-enum li { font-size: inherit; line-height: inherit; }
+.constraint-list .prose-enum li { color: var(--muted); font-size: 14px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.model-prose { margin: 0 0 4px; max-width: 62ch; font-size: 15px; }
+
+/* 因果链：一条连续脊线穿过所有环节。节点标签在各公司间从 4 字到 54 字不等，
+   只有流式文本能自适应换行，因此刻意用 CSS 而非 ADR-0004 的内联 SVG。
+   不用通栏横线分隔——那会让递进关系读成表格行；序号也不用 --signal，
+   它在本设计里是语义色，而序号位置不携带语义。 */
+/* 因果链的飞轮环：卡片装全文，位置在构建期由环节数算出。
+   卡宽 210px、相邻卡中心间距 291px（8 环），几何上不可能碰撞，因此不需要
+   逐公司调参。只在 PC 上出现——打印内容宽仅 673px、手机更窄，两者回落到
+   下面的阶梯流，文字完全相同。 */
+/* 环与阶梯流互斥：宽屏显示环，窄屏与纸上显示阶梯流。另一份是
+   display:none，因此辅助技术与搜索引擎只会看到一份文本。 */
+@media (min-width: 1080px) {
+  .flywheel ~ .causal-flow { display: none; }
+}
+@media (max-width: 1079px) {
+  .flywheel { display: none; }
+}
+.flywheel { position: relative; width: 100%; max-width: 1000px; margin: 18px auto 6px; }
+.flywheel-track { position: absolute; inset: 0; width: 100%; height: 100%; }
+.flywheel-arc { fill: none; stroke: var(--line-dark); stroke-width: 2; vector-effect: non-scaling-stroke; }
+.flywheel-head { fill: var(--line-dark); }
+.flywheel-hub {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  display: flex; flex-direction: column; gap: 8px; align-items: center;
+  max-width: 260px; text-align: center;
+}
+.flywheel-hub { gap: 4px; max-width: 300px; }
+.flywheel-hub strong { font-size: 19px; font-weight: 560; letter-spacing: -.02em; text-wrap: balance; }
+.flywheel-hub em { font-size: 15px; font-style: normal; letter-spacing: .04em; }
+.flywheel-hub span { margin-top: 6px; color: var(--muted); font-size: 12px; }
+.flywheel-cards { margin: 0; padding: 0; list-style: none; }
+.flywheel-cards li {
+  position: absolute; transform: translate(-50%, -50%);
+  /* 宽度用百分比而不是 px：这样卡宽与环半径同比例缩放，间距/卡宽之比恒为
+     0.76，容器变窄也不会碰撞。写死 210px 时容器缩到 900px 以下就会重叠。 */
+  width: 23%; padding: 15px 15px 14px; text-align: center;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 10px;
+}
+.nowrap { white-space: nowrap; }
+.flywheel-cards p { margin: 0; font-size: 13px; line-height: 1.5; text-wrap: pretty; }
+.flywheel-badge {
+  position: absolute; left: 50%; top: 0; transform: translate(-50%, -50%);
+  display: grid; place-items: center; width: 24px; height: 24px;
+  border-radius: 50%; background: var(--ink); color: var(--paper);
+  font-size: 12px; font-weight: 650; font-variant-numeric: tabular-nums;
+}
+
+/* 脊线是正文列的 border-left：相邻环节的边框首尾相接，天然连续，不需要用
+   背景色去打断再拼回来——上一版正是这么做的，结果线看着像虚线。 */
+.causal-flow { --gut: 30px; --lane: 20px; margin: 6px 0 0; }
+.causal-flow ol { margin: 0; padding: 0; list-style: none; }
+.causal-flow li { display: grid; grid-template-columns: var(--gut) minmax(0, 1fr); break-inside: avoid; }
+.causal-step { grid-column: 1; padding: 1px 13px 0 0; text-align: right; color: var(--muted); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.causal-flow li p { grid-column: 2; position: relative; margin: 0; max-width: 58ch; padding: 0 0 21px var(--lane); border-left: 1px solid var(--line); font-size: 15px; line-height: 1.62; }
+/* 节点是脊线上的小空心圆，比在文字里塞符号安静得多 */
+.causal-flow li p::before {
+  content: ""; position: absolute; left: -3.5px; top: .6em;
+  box-sizing: border-box; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--paper); border: 1px solid var(--line-dark);
+}
+/* 回指：同一条脊线转成虚线继续往下，读作「线绕回去了」 */
+.causal-loop { display: grid; grid-template-columns: var(--gut) minmax(0, 1fr); margin: 0; }
+.causal-loop-mark { grid-column: 1; padding: 15px 13px 0 0; text-align: right; color: var(--line-dark); font-size: 12.5px; }
+.causal-loop-note { grid-column: 2; padding: 15px 0 0 var(--lane); border-left: 1px dashed var(--line-dark); color: var(--muted); font-size: 12.5px; line-height: 1.6; }
+
+/* 现金引擎瀑布：走 SVG 与其余决策图表同族——它需要零基线、正负方向与
+   跨条基准线，这三样用 CSS 横条做会很别扭。高度由行数在组件里算出。 */
+.cash-waterfall { padding-top: 14px; }
+.cash-waterfall svg { height: auto; }
+.waterfall-label { fill: var(--ink); font-size: 11px; }
+.waterfall-value { fill: var(--ink); font-size: 11px; font-variant-numeric: tabular-nums; }
+.waterfall-value--total { font-weight: 650; }
+.waterfall-value--cost { fill: var(--signal); }
+.waterfall-bar--segment { fill: var(--ink); }
+.waterfall-bar--total { fill: var(--line-dark); }
+.waterfall-bar--cost { fill: var(--signal); }
+.waterfall-axis { stroke: var(--line-dark); stroke-width: 1; }
+.segment-list { display: grid; gap: 22px; }
+.segment-row { padding: 20px 0; border-top: 1px solid var(--line-dark); }
+.segment-head { display: flex; align-items: baseline; gap: 14px; }
+.segment-head strong { font-size: 20px; font-weight: 560; }
+.segment-head em { margin-left: auto; font-size: 28px; font-style: normal; font-weight: 480; letter-spacing: -.04em; }
+.segment-role { padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; }
+.segment-role--经济核心 { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.segment-role--收缩中 { border-style: dashed; color: var(--muted); }
+.segment-bar { display: block; height: 6px; margin: 12px 0 16px; background: var(--soft); }
+.segment-bar span { display: block; height: 100%; background: var(--ink); }
+.segment-row dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0; font-size: 13px; }
+.segment-row dt { margin-bottom: 4px; color: var(--muted); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+.segment-row dd { margin: 0; }
+
+/* ── 行业地位 ─────────────────────────────────────────── */
+.share-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px; }
+.share-card { padding: 22px 0; border-top: 1px solid var(--ink); }
+.share-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--muted); font-size: 11px; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; }
+.share-card h3 { margin: 24px 0 12px; font-size: 16px; font-weight: 580; }
+.share-card > strong { display: block; font-size: clamp(30px, 4vw, 52px); font-weight: 480; letter-spacing: -.05em; }
+.share-rank { margin: 12px 0 0; color: var(--muted); font-size: 13px; }
+.share-reason { margin: 8px 0 0; color: var(--signal); font-size: 13px; }
+.share-denominator { margin: 18px 0 0; padding: 14px 0 0; border-top: 1px solid var(--line); list-style: none; font-size: 12px; color: var(--muted); }
+.share-denominator li { margin-bottom: 6px; line-height: 1.5; }
+.share-excluded { color: var(--signal); }
+.divergence-callout { max-width: 900px; margin: 34px 0 0; padding: 20px 24px; border-left: 3px solid var(--signal); background: var(--soft); font-size: 15px; }
+.divergence-callout strong { display: block; margin-bottom: 8px; letter-spacing: .04em; }
+.concentration { max-width: 900px; margin: 24px 0 0; color: var(--muted); font-size: 14px; }
+
+/* ── 报告期筛选（纯 CSS） ─────────────────────────────── */
+.cadence-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.cadence-nav { display: flex; gap: 8px; margin-bottom: 20px; }
+.cadence-label { padding: 7px 16px; border: 1px solid var(--ink); border-radius: 999px; font-size: 12px; font-weight: 650; cursor: pointer; }
+.cadence-label:hover { background: var(--soft); }
+.cadence-panel, .cadence-panel-heading { display: none; }
+.cadence-input--1:checked ~ .cadence-panel--1,
+.cadence-input--2:checked ~ .cadence-panel--2,
+.cadence-input--3:checked ~ .cadence-panel--3 { display: block; }
+.cadence-input--1:checked ~ .cadence-nav .cadence-label--1,
+.cadence-input--2:checked ~ .cadence-nav .cadence-label--2,
+.cadence-input--3:checked ~ .cadence-nav .cadence-label--3 { color: var(--paper); background: var(--ink); }
+.cadence-input--1:focus-visible ~ .cadence-nav .cadence-label--1,
+.cadence-input--2:focus-visible ~ .cadence-nav .cadence-label--2,
+.cadence-input--3:focus-visible ~ .cadence-nav .cadence-label--3 { outline: 2px solid var(--signal); outline-offset: 2px; }
+.row-segment th { font-weight: 400; }
+.segment-indent { padding-left: 14px; color: var(--muted); }
+.period-derived { margin-left: 6px; padding: 2px 6px; border: 1px dashed var(--line-dark); border-radius: 999px; font-size: 9px; font-weight: 400; }
+
+/* ── 价值桥 ───────────────────────────────────────────── */
+.value-bridge { margin: 0 0 44px; padding: 20px 0 24px; border-top: 1px solid var(--ink); }
+.value-bridge .chart-title { margin-bottom: 20px; }
+.bridge-rows { margin: 0; padding: 0; list-style: none; }
+.bridge-rows li { display: grid; grid-template-columns: minmax(120px, 200px) minmax(0, 1fr) 78px; gap: 16px; align-items: center; padding: 9px 0; }
+.bridge-label { font-size: 14px; }
+.bridge-track { position: relative; height: 22px; background: var(--soft); }
+.bridge-bar { position: absolute; top: 0; height: 100%; background: var(--ink); }
+.bridge-bar--face-value { background: var(--line-dark); }
+.bridge-bar--cut { background: repeating-linear-gradient(45deg, var(--signal) 0 4px, transparent 4px 8px); }
+.bridge-bar--total { background: var(--signal); }
+.bridge-marker { position: absolute; top: -5px; width: 2px; height: 32px; background: var(--ink); }
+.bridge-value { font-size: 15px; font-variant-numeric: tabular-nums; text-align: right; }
+.bridge-total { border-top: 1px solid var(--ink); font-weight: 650; }
+.bridge-total .bridge-value, .bridge-price .bridge-value { font-size: 18px; font-weight: 650; }
+.bridge-price .bridge-label, .bridge-price .bridge-value { color: var(--muted); }
+.bridge-range { margin: 18px 0 0; color: var(--muted); font-size: 13px; }
+
+/* ── 估值方法与升级提示 ───────────────────────────────── */
+.method-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px; margin-bottom: 30px; }
+.method-pair article { padding: 20px 0; border-top: 1px solid var(--line-dark); }
+.method-pair article > span { display: block; margin-bottom: 12px; color: var(--muted); font-size: 11px; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; }
+.method-pair strong { display: block; margin-bottom: 12px; font-size: 22px; font-weight: 540; }
+.method-pair p { margin: 0; color: var(--muted); font-size: 14px; }
+.method-ideal { border-top-color: var(--signal); }
+.method-ideal > span { color: var(--signal); }
+.implied-line { max-width: 940px; margin: 0 0 30px; padding: 18px 22px; background: var(--soft); font-size: 15px; }
+.implied-line strong { margin-right: 12px; letter-spacing: .04em; }
+.upgrade-hint { margin-bottom: 30px; padding: 22px 24px; border: 1px solid var(--signal); }
+.upgrade-hint h4 { margin: 0 0 16px; font-size: 15px; font-weight: 650; color: var(--signal); }
+.upgrade-hint ol { margin: 0; padding-left: 20px; }
+.upgrade-hint li { margin-bottom: 14px; font-size: 14px; }
+.upgrade-hint li > * { display: block; }
+.upgrade-hint li strong { margin-bottom: 4px; }
+.upgrade-hint li span { color: var(--muted); }
+.upgrade-hint li em { margin-top: 4px; color: var(--muted); font-size: 12px; font-style: normal; }
+.health-check { margin-bottom: 30px; padding: 16px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.health-check summary { font-size: 13px; font-weight: 650; cursor: pointer; }
+.health-check ul { margin: 18px 0 0; padding: 0; list-style: none; }
+.health-check li { margin-bottom: 16px; font-size: 13px; }
+.health-check li > * { display: block; }
+.health-response { width: max-content; margin-bottom: 6px; padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; }
+.health-response--blocked { color: var(--signal); border-color: var(--signal); }
+.health-check li strong { margin-bottom: 4px; }
+.health-check li span:last-child { color: var(--muted); }
+
+/* ── 驱动、约束与「相对上次」 ─────────────────────────── */
+.driver-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--ink); }
+.driver-card { min-height: 230px; padding: 20px 24px 26px 0; border-bottom: 1px solid var(--line); }
+.driver-card:not(:nth-child(3n)) { border-right: 1px solid var(--line); }
+.driver-card:not(:nth-child(3n+1)) { padding-left: 24px; }
+.driver-card h3 { margin: 30px 0 10px; font-size: 15px; font-weight: 580; }
+.driver-card > strong { display: block; font-size: clamp(22px, 2.6vw, 34px); font-weight: 480; letter-spacing: -.04em; }
+.driver-delta { margin: 14px 0; color: var(--muted); font-size: 13px; }
+.driver-card small { display: block; padding-top: 12px; border-top: 1px solid var(--line); font-size: 12px; }
+.constraint-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line-dark); }
+.constraint-list > li { display: grid; grid-template-columns: 90px 260px 1fr; gap: 20px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.constraint-list > li > .prose-block > p, .constraint-list > li > p { margin: 0; color: var(--muted); font-size: 14px; }
+.delta-line { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0 0 26px; border-top: 1px solid var(--ink); }
+.delta-line > div { padding: 18px 18px 20px 0; }
+.delta-line dt { color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.delta-line dd { margin: 10px 0 0; font-size: 17px; font-weight: 520; }
+.driver-change-list { margin: 26px 0 0; padding: 0; list-style: none; }
+.driver-change-list li { padding: 16px 0; border-top: 1px solid var(--line); }
+.driver-change-list p { margin: 8px 0 0; color: var(--muted); font-size: 14px; }
+.driver-change { display: inline-block; margin-right: 12px; padding: 3px 9px; border: 1px solid var(--signal); border-radius: 999px; color: var(--signal); font-size: 10px; text-transform: uppercase; }
+
+/* ── 护城河与转折点 ───────────────────────────────────── */
+.moat-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0 30px; border-top: 1px solid var(--ink); }
+.moat-card { padding: 20px 0 24px; border-bottom: 1px solid var(--line); }
+.moat-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px; }
+.moat-type { font-size: 15px; font-weight: 650; }
+.moat-trend { display: inline-block; margin-left: auto; padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; font-weight: 650; white-space: nowrap; }
+.moat-trend--变宽 { color: var(--signal); border-color: var(--signal); }
+.moat-trend--变窄 { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.moat-trend--待验证 { border-style: dashed; }
+.moat-trend--已撤销 { color: var(--muted); border-style: dotted; }
+.moat-mechanism { margin: 0 0 16px; font-size: 14px; }
+.moat-card dl { display: grid; gap: 12px; margin: 0; }
+.moat-card dt { margin-bottom: 4px; color: var(--muted); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+.moat-card dd { margin: 0; font-size: 13px; }
+.moat-absent { margin: 0; color: var(--muted); font-size: 14px; }
+.moat-trend-list { margin: 26px 0 0; padding: 0; list-style: none; }
+.moat-trend-list li { display: grid; grid-template-columns: 90px 200px 1fr; gap: 20px; align-items: baseline; padding: 14px 0; border-top: 1px solid var(--line); }
+.moat-trend-list p { margin: 0; color: var(--muted); font-size: 14px; }
+.moat-trend-list .moat-trend { margin-left: 0; }
+
+/* ── 分歧点 ───────────────────────────────────────────── */
+.disagreement { margin-bottom: 30px; padding: 22px 24px; border: 1px solid var(--line-dark); }
+.disagreement h4 { display: flex; align-items: baseline; gap: 12px; margin: 0 0 18px; font-size: 15px; font-weight: 650; }
+.disagreement-driver { margin-left: auto; color: var(--muted); font-size: 12px; font-weight: 480; }
+.disagreement dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin: 0; }
+.disagreement dt { margin-bottom: 6px; color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.disagreement dd { margin: 0; }
+/* 重合不是错误，但也不是好消息：虚线边框把它和一条真实分歧区分开。 */
+.disagreement--converged { border-style: dashed; }
+
+/* ── 管理层承诺与资本配置 ─────────────────────────────── */
+.commitment-counts { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0 20px; margin: 0 0 26px; border-top: 1px solid var(--ink); }
+.commitment-counts article { padding: 16px 0 18px; }
+.commitment-counts span { display: block; color: var(--muted); font-size: 11px; letter-spacing: .06em; }
+.commitment-counts strong { display: block; margin-top: 8px; font-size: clamp(24px, 2.6vw, 34px); font-weight: 480; letter-spacing: -.04em; }
+.commitment-outstanding { margin: 0 0 24px; padding: 0; list-style: none; border-top: 1px solid var(--line-dark); }
+.commitment-outstanding li { display: grid; grid-template-columns: 90px 1fr 200px; gap: 16px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.commitment-outstanding em { color: var(--muted); font-size: 12px; font-style: normal; text-align: right; }
+.commitment-status { display: inline-block; padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; font-weight: 650; white-space: nowrap; }
+.commitment-status--未兑现 { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.commitment-status--部分兑现 { border-style: dashed; }
+.commitment-latest { margin: 0 0 24px; color: var(--muted); font-size: 14px; }
+
+/* ── 证据密度 ─────────────────────────────────────────── */
+.density-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 24px; margin: 0 0 24px; border-top: 1px solid var(--ink); }
+.density-grid article { padding: 18px 0 20px; }
+.density-grid span { display: block; color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.density-grid strong { display: block; margin: 10px 0 8px; font-size: clamp(22px, 2.4vw, 30px); font-weight: 480; letter-spacing: -.04em; }
+.density-grid small { display: block; color: var(--muted); font-size: 12px; }
+.density-method { margin: 0 0 20px; color: var(--muted); font-size: 14px; }
+.density-clear { margin: 0; padding: 14px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+.density-responses { margin: 0; padding: 0; list-style: none; }
+.density-responses > li { padding: 16px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.density-responses > li > strong { display: block; margin: 8px 0 4px; }
+.density-responses > li > span:not([class]) { color: var(--muted); }
+.density-blocked { margin: 12px 0 0; padding-left: 20px; }
+.density-blocked li { margin-bottom: 10px; }
+.density-blocked li > * { display: block; }
+.density-blocked li span { color: var(--muted); }
+.density-blocked li em { margin-top: 2px; color: var(--muted); font-size: 12px; font-style: normal; }
+
+/* ── 打印用指标释义表（屏幕隐藏） ─────────────────────── */
+.metric-glossary { display: none; }
+
+@media (max-width: 800px) {
+  .share-grid, .method-pair, .driver-grid, .delta-line, .segment-row dl { grid-template-columns: 1fr; }
+  .causal-flow { --gut: 24px; --lane: 14px; }
+  .causal-step { padding-right: 9px; }
+  .causal-loop-mark { padding-right: 9px; }
+  .driver-card:not(:nth-child(3n)) { border-right: 0; }
+  .driver-card:not(:nth-child(3n+1)) { padding-left: 0; }
+  .constraint-list > li { grid-template-columns: 1fr; gap: 8px; }
+  .moat-trend-list li { grid-template-columns: 1fr; gap: 8px; }
+  .disagreement dl { grid-template-columns: 1fr; }
+  .density-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .commitment-counts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .commitment-outstanding li { grid-template-columns: 1fr; gap: 8px; }
+  .commitment-outstanding em { text-align: left; }
+  .bridge-rows li { grid-template-columns: minmax(96px, 1fr) 64px; }
+  .bridge-track { display: none; }
+  .segment-head { flex-wrap: wrap; }
+  .segment-head em { margin-left: 0; }
+}
+
+@media print {
+  /* 浮层在纸上没有意义：关掉触发器，改用页尾的释义表。 */
+  .metric-note-toggle, .metric-note[popover] { display: none !important; }
+  .metric-glossary { display: block; break-before: page; }
+  .metric-glossary dl { border-top: 1px solid var(--ink); }
+  .metric-glossary div { padding: 10px 0; border-bottom: 1px solid var(--line); break-inside: avoid; }
+  .metric-glossary dt { font-weight: 650; }
+  .metric-glossary dd { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+  /* 筛选页签在纸上同样无效：三档全部展开，各自带标题。 */
+  .cadence-nav { display: none; }
+  .cadence-panel { display: block !important; break-inside: avoid; }
+  .cadence-panel-heading { display: block; margin: 16px 0 8px; font-size: 13px; font-weight: 650; }
+  .table-wrap table th:first-child { position: static; }
+  .segment-row, .share-card, .driver-card, .value-bridge, .upgrade-hint { break-inside: avoid; }
+  /* 节点圆心用纸色填充，打印时纸色是纯白 */
+  .flywheel { display: none !important; }
+  .flywheel ~ .causal-flow { display: block !important; }
+  .causal-flow li p::before { background: #fff; }
+  .causal-flow ol, .cash-waterfall { break-inside: avoid; }
+  .health-check[open] summary ~ * { display: block; }
+}
+.cadence-missing { margin: 0 0 14px; color: var(--muted); font-size: 12px; }
+
+/* ———— 分析页（financials-final 渲染）————
+   原则：结论一眼可读，溯源（打分依据 / 依据字段路径 / 证据 / 缺口）默认折叠。 */
+
+/* 折叠溯源块：摘要行小号大写，与 block-heading 同族 */
+.fold { margin-top: 16px; border-top: 1px solid var(--line); }
+.fold summary { padding: 10px 0 4px; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; list-style: none; user-select: none; }
+.fold summary::-webkit-details-marker { display: none; }
+.fold summary::after { content: "＋"; margin-left: 8px; }
+.fold[open] summary::after { content: "－"; }
+.fold summary:hover { color: var(--ink); }
+.fold p { max-width: 900px; margin: 8px 0 12px; color: var(--muted); font-size: 13px; line-height: 1.65; }
+.fold ul { max-width: 900px; margin: 8px 0 12px; padding-left: 18px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+.fold li { margin-bottom: 8px; }
+td .fold { margin-top: 4px; border-top: 0; }
+td .fold summary { padding: 0; }
+td .fold p, td .fold ul { font-size: 12px; }
+
+/*
+ * 分点叙述：分析文件里长字段按「① ② ③」分点书写（见
+ * docs/research/workflow/02-multi-dimension-analysis.md），渲染层切成 .prose-point，
+ * 每点独占一行；序号悬挂在文字左侧，折行后与首字对齐，长段落才真正可扫读。
+ */
+.prose-point { display: block; padding-left: 1.35em; text-indent: -1.35em; }
+.prose-point + .prose-point { margin-top: 6px; }
+.fold .prose-point + .prose-point, td .prose-point + .prose-point { margin-top: 4px; }
+
+/* 每节开头的一句话结论：正文级可读，不再用 muted 小字 */
+.section-lead { max-width: 900px; margin: 0 0 34px; font-size: clamp(17px, 1.4vw, 20px); line-height: 1.6; }
+
+/* 维度总结卡里的结论段 */
+.driver-card .dim-conclusion { margin: 14px 0 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+/* 策略建议：两列卡片（空仓者/持仓者） */
+.strategy-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 56px; border-top: 1px solid var(--ink); }
+.strategy-grid > article { padding: 26px 0 30px; border-bottom: 1px solid var(--line); }
+.strategy-grid h3 { margin: 0 0 14px; font-size: 22px; font-weight: 560; letter-spacing: -.02em; }
+.strategy-grid .advice { margin: 0 0 18px; font-size: 15px; line-height: 1.65; }
+.trigger-lines { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line-dark); }
+.trigger-lines > li { padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14px; line-height: 1.55; }
+.trigger-lines strong { font-weight: 650; }
+.trigger-lines .then { color: var(--muted); }
+
+/* 卖出/加仓信号：全宽行，信号名一行、观察方式一段 */
+.signal-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line-dark); }
+.signal-list > li { padding: 20px 0 16px; border-bottom: 1px solid var(--line); }
+.signal-list .signal-name { display: block; margin: 0 0 6px; font-size: 17px; font-weight: 620; letter-spacing: -.01em; }
+.signal-list .signal-desc { max-width: 900px; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.6; }
+
+/* 追问：左边框引用卡，问题加粗、回答正文 */
+.inquiry-block { max-width: 940px; margin: 44px 0 6px; padding: 20px 26px 22px; border-left: 3px solid var(--ink); background: color-mix(in srgb, var(--ink) 4%, var(--paper)); }
+.inquiry-block .q { margin: 0 0 10px; font-size: 16px; font-weight: 700; }
+.inquiry-block .a { margin: 0; font-size: 15px; line-height: 1.7; }
+
+/* 键值行：代替 delta-line 承载长文本（四列窄栏放长段会变成高塔） */
+.kv-list { margin: 0 0 8px; border-top: 1px solid var(--line-dark); }
+.kv-list > div { display: grid; grid-template-columns: 170px 1fr; gap: 24px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.kv-list dt { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding-top: 3px; }
+.kv-list dd { max-width: 900px; margin: 0; font-size: 15px; line-height: 1.6; }
+
+/* 含长文本的表格：左对齐、顶对齐 */
+.analysis-table th, .analysis-table td { text-align: left; vertical-align: top; }
+.analysis-table td { font-size: 13px; line-height: 1.55; color: var(--muted); }
+.analysis-table td:first-child { color: var(--ink); font-weight: 600; font-size: 14px; }
+table td { vertical-align: top; }
+
+@media (max-width: 900px) {
+  .strategy-grid { grid-template-columns: 1fr; gap: 0; }
+  .kv-list > div { grid-template-columns: 1fr; gap: 6px; }
+}
+/* 表格与折叠块内的来源标注不需要 22px 顶距（那是给正文段落用的） */
+td .source-ids, .fold .source-ids { margin-top: 0; }
+/* 首页卡片文案兜底：最多三行截断，防止长结论把卡片撑成一屏 */
+.company-card-stance { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+/* 来源胶囊：不显示名称，只留一枚可点击的高亮标记；名称与时点在 title 提示里 */
+.source-pill { display: inline-block; margin-left: 6px; padding: 1px 8px 2px; border: 1px solid var(--line-dark); border-radius: 999px; color: var(--ink); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-decoration: none; vertical-align: middle; white-space: nowrap; }
+.source-pill:hover { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+
+/* 研究评估页（研究流程第 7 步）：复用既有的区块、表格与统计条，只补三处 */
+/* 首页 eyebrow 里的评估页入口：不占额外高度，第一张公司卡片仍不用滚动 */
+.company-eyebrow a { text-decoration: underline; text-underline-offset: .3em; }
+/* 均分走势：纵轴固定 1–5 分，样本量不足时页面根本不渲染它 */
+.evals-trend { margin: 0 0 32px; }
+.evals-trend svg { display: block; width: 100%; height: auto; border: 1px solid var(--line); }
+.evals-trend figcaption { margin-top: 10px; color: var(--muted); font-size: 12px; }
+/* 缺陷清单：元数据一行、症状原文一行，不折叠——它是这一页最该被读到的东西 */
+.evals-defects { margin: 0; padding: 0; list-style: none; }
+.evals-defects li { padding: 18px 0; border-bottom: 1px solid var(--line); }
+.evals-defects li p { max-width: 900px; margin: 10px 0 0; font-size: 16px; }
+.evals-defect-meta { display: flex; flex-wrap: wrap; gap: 16px; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+</style></head><body class="research-shell"><script defer="" src="../assets/research.js"></script><main class="company-page"><header class="company-header"><div class="company-eyebrow"><span>COMPANY ANALYSIS</span><span>9992.HK</span></div><h1 data-cjk="true" data-title-scale="sm">泡泡玛特国际集团有限公司 (Pop Mart International Group Limited)</h1><p class="company-current">以自有/签约艺术家 IP 为核心、用盲盒与毛绒等形态做「可收藏的情感消费品」，靠艺术家发掘—设计—代工—直营渠道全链条把 IP 转成复购，向消费者直接收钱（DTC），IP 生命周期决定收入上限。</p></header><div class="company-summary"><div><span>市值</span><strong>2036.20亿 HKD</strong><small>2026-09-14 前双源验证</small></div><div><span>股价</span><strong>152.9 HKD</strong><small>截至 <time>2026-09-14 港股收盘</time></small></div><div><span>PE</span><strong title="13.16（TTM，IFRS 归母口径）">13.16</strong><small title="13.16（TTM，IFRS 归母口径）">TTM 口径</small></div><div><span>数据完整性</span><strong>9.6 / 10 / 10</strong><small>采集 / 分析 / 总结，满分 10</small></div><div><span>数据截止</span><strong>2026-09-14</strong></div></div><section class="company-section" aria-labelledby="dimension-summary"><p class="section-kicker">CONCLUSIONS AND CONFIDENCE</p><h2 id="dimension-summary">维度总结与信心度</h2><div class="driver-grid"><article class="driver-card"><h3>生意质量</h3><strong>8 / 10</strong><p class="dim-conclusion">极高毛利的 IP 快消生意，现金转换干净，但收入上限由 IP 热度而非产能决定；2026H1 首次出现经营杠杆反向。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">① 加分项全部来自经工具验算的硬数据：毛利率 72.1%、经营利润率 45.5%、ROE 77.52%（dimensions.businessEssence.analysis.profitabilityTrend5y 与 valuation.analysis.currentMultiples），FY2025 自由现金流 96.93 亿元、无银行借款、净现金 104.36 亿元（collection.financialMetrics.annual[4] 与 latestBalanceSheet）。</span><span class="prose-point">② 减分项来自 stickiness：会员复购率 51.6%、无付费锁定，存货周转天数由 123 天升至 201 天（dimensions.businessEssence.analysis.stickiness.evidence）。</span><span class="prose-point">③ 需求侧不可控：2026H1 收入 +23.8% 而经营利润 +11.3%（dimensions.businessEssence.analysis.operatingLeverage），显示经营杠杆在减速年份立即反向。</span><span class="prose-point">④ dataGaps 中分 IP 复购率与同业毛利率缺失，按规范向中性收敛 0.5 分，最终 8.0。</span></p></details></article><article class="driver-card"><h3>护城河</h3><strong>6.5 / 10</strong><p class="dim-conclusion">只有「艺术家 IP 平台」与「直营渠道」两条真护城河；过去 5 年显著变宽，未来 5 年判为稳定，关键未验证项是平台能否重复孵化。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">① 变宽的证据来自 dimensions.moat.analysis.trendPast5y：毛利率 57.5%→72.1%、经营利润率 12.6%→45.5%、十亿级 IP 由 0 个增至 8 个、海外收入占比升至 43.8%。</span><span class="prose-point">② 五类护城河的验证结果为「品牌/定价权 待验证、转换成本 不存在、网络效应 待验证、规模效应 存在、技术专利 不存在」（dimensions.moat.analysis.types），其中转换成本被判「不存在」是本维度最大的扣分项——消费者可在 39 元与 99–199 元价格带之间自由切换。</span><span class="prose-point">③ 未验证项无数据支持：公司未披露新 IP 成功率（dimensions.moat.dataGaps），三丽鸥的 65 年复盘显示 IP 公司会出现长达 7 个财年的低谷（dimensions.inversion.analysis.historicalAnalogies），因此不给出高于 7 分的看多。</span><span class="prose-point">④ 最终 6.5。</span></p></details></article><article class="driver-card"><h3>管理层</h3><strong>7.5 / 10</strong><p class="dim-conclusion">创始人能力经一次完整周期验证、披露诚实，资本配置以自建与回购为主无并购风险；扣分项是治理制衡缺失。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">① 加分项：2016 年转型与 2022–2023 年逆势重投海外被评为 ★★★★★（dimensions.management.analysis.keyDecisions[0][1]），2026-08-20 主动承认完不成 20% 收入目标（keyDecisions[4]），FY2022 起连续回购、FY2025 派息率 24.8%（dimensions.management.analysis.alignment 与 capitalAllocation.buybackTiming）。</span><span class="prose-point">② 减分项：王宁持股 48.73% 且董事长与 CEO 由同一人担任、偏离企业管治守则 C.2.1、配偶杨涛任副总裁、董事司德减持 60.99 万股、未披露接班计划（dimensions.management.analysis.alignment 与 organization.keyPersonRisk）。</span><span class="prose-point">③ 回购时点未显现抄底效果（均价区间 140.9–194.9 港元，其后股价仍下行），故资本配置能力不给满分。</span><span class="prose-point">④ 最终 7.5。</span></p></details></article><article class="driver-card"><h3>最大风险</h3><strong>5 / 10</strong><p class="dim-conclusion">最大风险是「LABUBU 之后没有下一个」且备货已先行——这是需求侧风险，公司无法用经营手段控制，且已部分兑现。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">① 按「风险越致命分数越低」打分。首要风险 probability 高、impact 高：THE MONSTERS 2026H1 收入 −7.5%、占比 38.1%→26.0%，接棒 IP 星星人 26.50 亿元仅为同期 THE MONSTERS 的 59%（dimensions.inversion.analysis.failurePaths[0]）。</span><span class="prose-point">② 风险已从预期变为事实：管理层承认完不成 20% 增长目标，卖方集体下修（汇丰 2026 年收入由 +6% 改为 −7%、目标价 136.5 港元；花旗 −8%、目标价 198 港元）（failurePaths 与 bearCase[0]）。</span><span class="prose-point">③ 缓冲项：无银行借款、净现金 104.36 亿元、FY2025 自由现金流 96.93 亿元，使风险更可能是「长期低增长」而非「生存危机」（collection.financialMetrics.latestBalanceSheet）。</span><span class="prose-point">④ 风险可控性低（消费者偏好不可经营），因此不给 6 分以上，最终 5.0。</span></p></details></article><article class="driver-card"><h3>文明趋势</h3><strong>6 / 10</strong><p class="dim-conclusion">不是文明级范式转移，而是社交媒体放大了 IP 的传播速度与衰减速度；行业总量增速仅个位数，公司份额已近全球授权玩具市场的一成。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">① paradigmShift 判定为「部分」：产品形态是既有玩具，被重构的是 IP 传播效率（dimensions.industryTrend.analysis.paradigmShift）。</span><span class="prose-point">② 天花板偏紧：全球玩具市场年增速 2.4%–5.9%、授权玩具 485 亿美元（2025）预计 2035 年 828 亿美元（CAGR 5.5%），而公司 FY2025 收入 371.20 亿元已约占全球授权玩具市场的 11%（dimensions.industryTrend.analysis.tam 与 ceiling）。</span><span class="prose-point">③ 长处在于价值链条位置：直营 96%、客户无单一占比 ≥10%、应收周转 8 天，上游对艺术家有平台吸引力（analysis.valueChainPosition 与 concentration）。</span><span class="prose-point">④ 历史类比不给出超额分：三丽鸥经历过长达 7 个财年的利润下滑，公司当前更接近其三丽鸥 2000 年前后的处境（historicalAnalogies）。</span><span class="prose-point">⑤ 最终 6.0。</span></p></details></article><article class="driver-card"><h3>估值</h3><strong>6.5 / 10</strong><p class="dim-conclusion">按 TTM 口径处于上市以来最低估值区，按 2026 年一致预期只是合理；三情景中位数回报仅 +12.9%，缺乏安全边际。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">① 估值吸引力来自 history 与 multiples：TTM PE 13.16x（历史区间 17.54–59.76x）、PB 7.55x、PS 4.31x、EV/Sales 4.05x、股息率 1.82% 且派息率 24.8%，另加 20–50 亿元回购（dimensions.valuation.analysis.currentMultiples 与 vsOwnHistory）。</span><span class="prose-point">② 但分母不稳：2026 年一致预期净利已下调至约 104.5 亿元（汇丰），对应 PE 约 16x（dimensions.inversion.analysis.bearCase[0]）。</span><span class="prose-point">③ 三情景工具验算结果：乐观 309.3 HKD（+102.3%）／中性 172.6 HKD（+12.9%）／悲观 71.3 HKD（−53.4%），中性情景低于本报告预期回报门槛（dimensions.valuation.analysis.threeScenario）。</span><span class="prose-point">④ 与同业比较无优势：名创优品集团 PE 14.87x、PS 0.79x（analysis.vsPeers[0]）。</span><span class="prose-point">⑤ 最终 6.5——不便宜到可以忽略增长风险。</span></p></details></article><article class="driver-card"><h3>企业文化</h3><strong>6.5 / 10</strong><p class="dim-conclusion">文化证据指向长期主义、克制扩张、披露诚实与制度化回购分红，同时指向创始人绝对控制下的治理集中；证据以单源可观察事实为主。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">① 只转述第 2 步已落盘的证据（dimensions.management.analysis.culture）：长期主义（2016 年转型后 15 年只做一条主线）、克制扩张（2022/2023 年业绩会明确不以开店换增长、2026H1 中国内地门店半年仅净增 10 家）、披露诚信（2026-08-20 主动承认完不成 20% 收入目标，汇兑损失 7.20 亿元单独列示）、股东回报制度化（FY2022 起连续回购、FY2025 派息率 24.8%）。</span><span class="prose-point">② 同一字段亦记录反向事实：创始人持股 48.73%、董事长与 CEO 同一人（偏离企业管治守则 C.2.1）、配偶杨涛任副总裁，属治理层面的可观察事实。</span><span class="prose-point">③ 文化证据多为 Level 3 单源（业绩会转述、公司公告表述），按 _spec.corporateCulture 要求向中性收敛，不给 7 分以上。</span><span class="prose-point">④ 最终 6.5。</span></p></details></article></div><p class="company-note">信心度为价值投资视角下对该维度的看多程度（0–10，越高越看多）；最大风险按可控程度、估值按价格吸引力打分；企业文化按文化对长期股东的有利程度打分，结论为基于已落盘证据的客观陈述。</p></section><section class="company-section" aria-labelledby="strategies"><p class="section-kicker">WHAT TO DO ABOUT IT</p><h2 id="strategies">策略建议</h2><div class="strategy-grid"><article><h3>空仓者</h3><p class="advice">不追反弹、不预测底部：当前 13.16x TTM PE 隐含的是「零增长但不再恶化」，而 2026 年一致预期利润已在下调，价格尚未提供安全边际。建议以「第二个百亿元级 IP 被证实」为进场前提，在此之前仅用小仓位（不超过计划仓位 1/3）试探，且必须在股价跌破 120 港元、TTM PE ≤ 10.3x 时才动用。</p><ul class="trigger-lines"><li><strong>股价 ≤ 120 港元（对应市值约 1,598 亿港元、TTM PE ≤ 10.3x）</strong><span class="then"> —— 建立不超过计划仓位 1/3 的底仓，并同步设定 71–80 港元（悲观情景目标价区间）为观察下限</span></li><li><strong>公司披露任一非 THE MONSTERS 的 IP 年度收入 ≥ 80 亿元（即接棒 IP 达到第一大 IP 的六成量级）</strong><span class="then"> —— 把仓位提升至标准配置——这是「IP 平台可重复」的第一个硬证据</span></li><li><strong>连续两个报告期海外收入同比转正且毛利率 ≥ 70%</strong><span class="then"> —— 在标准配置基础上加至超配，并按现金回报（回购 + 股息率 ≥ 3%）核对股东回报执行情况</span></li></ul><details class="fold"><summary>各触发条件的依据</summary><ul><li>dimensions.valuation.analysis.threeScenario（悲观 71.3 HKD / 中性 172.6 HKD）与 currentMultiples（TTM 归母 132.40 亿元、股本 13.317 亿股）</li><li>dimensions.moat.analysis.trendNext5y 的关键判据（三年内是否出现第二个百亿元级 IP）与 inversion.analysis.failurePaths[0] 的接棒规模缺口（星星人 26.50 亿元 = THE MONSTERS 的 59%）</li><li>dimensions.businessEssence.analysis.operatingLeverage（减速年份经营杠杆反向）与 collection.currentValuation.dividendYieldPct</li></ul></details></article><article><h3>持仓者</h3><p class="advice">保留核心仓位但下调预期：把持有逻辑从「IP 平台高速成长」改为「高毛利消费股 + 现金回报」，用 24.8% 的派息率与 20–50 亿元回购作为下行保护，不再为季度增速支付溢价。不要因为回撤 55% 就补仓——补齐仓位的前提是基本面（而非价格）出现新证据。</p><ul class="trigger-lines"><li><strong>股价 ≥ 230 港元（中性情景 172.6 HKD 之上约 33%，隐含市场重回成长股定价）且当期收入同比仍为负</strong><span class="then"> —— 减仓 1/3 兑现估值修复，保留 2/3 等待 IP 矩阵验证</span></li><li><strong>2026 全年收入同比 ≤ −5% 且经营利润率 &lt; 35%（公司口径）</strong><span class="then"> —— 减至半仓，并把持仓逻辑降级为「现金回报型」，按股息率而非 PE 定价</span></li><li><strong>回购计划（2026-08-20 起 6 个月、20–50 亿元）执行完毕且实际回购金额 ≥ 20 亿元</strong><span class="then"> —— 维持仓位不动——管理层在低估值区用真金白银兑现承诺，是文化证据的正向验证</span></li></ul><details class="fold"><summary>各触发条件的依据</summary><ul><li>dimensions.valuation.analysis.threeScenario（中性 172.6 HKD）与 dimensions.inversion.analysis.bearCase[0]（2026 年收入一致预期为负增长）</li><li>dimensions.businessEssence.analysis.operatingLeverage（FY2025 经营利润率 45.5% 与 2026H1 回落至 39.2%）与汇丰对 2026 年净利率降至 30% 的预测</li><li>dimensions.management.analysis.capitalAllocation.buybackTiming 与 alignment.evidence（累计回购约 17.44 亿港元、均价区间 140.9–194.9 港元）</li></ul></details></article></div><div><h3 class="block-heading">卖出信号</h3><ul class="signal-list"><li><strong class="signal-name">第一大 IP 连续第二年负增长，且没有第二个 IP 年收入达到 80 亿元</strong><p class="signal-desc">FY2026 年报披露 THE MONSTERS 收入同比再次为负，且非 THE MONSTERS 的最高 IP 年收入 &lt; 80 亿元</p><details class="fold"><summary>依据</summary><p>dimensions.inversion.analysis.failurePaths[0]（2026H1 THE MONSTERS −7.5%、星星人仅为同期 59%）与 dimensions.moat.analysis.trendNext5y</p></details></li><li><strong class="signal-name">海外收入连续两个报告期负增长，同时海外门店仍在净增（用开店掩盖需求下滑）</strong><p class="signal-desc">2027H1 海外合计收入同比 &lt; 0 且期末海外门店数较 2026-06-30 的 221 家净增 &gt; 10 家</p><details class="fold"><summary>依据</summary><p>dimensions.inversion.analysis.failurePaths[1]（2026H1 亚太 −9.7%、美洲 −16.5%，同期美洲门店 64→86 家、租赁费用 +43.3%）</p></details></li><li><strong class="signal-name">存货周转天数持续高于 200 天或出现大额存货减值（Funko 路径）</strong><p class="signal-desc">半年报存货周转天数 &gt; 200 天，或存货减值准备单期 &gt; 5 亿元（2026H1 为 0.23 亿元）</p><details class="fold"><summary>依据</summary><p>dimensions.inversion.analysis.failurePaths[2]（存货 61.02 亿元、周转天数 123→201 天；Funko FY2023 收入 −17%、净亏 1.541 亿美元并销毁 3,000 万美元库存）</p></details></li><li><strong class="signal-name">承诺的回购未兑现，或分红政策转向收缩</strong><p class="signal-desc">2026-08-20 起 6 个月的 20–50 亿元回购窗口内实际回购金额 &lt; 20 亿元，或 FY2026 派息率低于 FY2025 的 24.8%</p><details class="fold"><summary>依据</summary><p>dimensions.management.analysis.capitalAllocation.buybackTiming 与 collection.meta（公司 2026-08-20 业绩会公告的回购区间）</p></details></li><li><strong class="signal-name">毛利率结构性跌破 65% 且非汇率或一次性因素</strong><p class="signal-desc">连续两个报告期毛利率 &lt; 65%，且公司归因中包含「终端降价」或「折扣促销」</p><details class="fold"><summary>依据</summary><p>dimensions.businessEssence.analysis.grossMarginVsPeers（72.1% 来自自有 IP 占比与直营渠道，一旦降价换量则护城河与利润结构同时受损）</p></details></li></ul></div><div><h3 class="block-heading">加仓信号</h3><ul class="signal-list"><li><strong class="signal-name">第二增长曲线被证实（新 IP 达到第一大 IP 的六成量级）</strong><p class="signal-desc">年报或中报披露任一非 THE MONSTERS 的 IP 收入 ≥ 80 亿元，或其占比 ≥ 20%</p><details class="fold"><summary>依据</summary><p>dimensions.moat.analysis.trendNext5y（关键判据：三年内是否出现第二个百亿元级 IP）</p></details></li><li><strong class="signal-name">海外业务止跌回稳，经营杠杆重新正向</strong><p class="signal-desc">连续两个报告期海外收入同比转正，且收入增速高于销售费用增速（经营利润率环比提升）</p><details class="fold"><summary>依据</summary><p>dimensions.businessEssence.analysis.operatingLeverage 与 dimensions.valuation.analysis.threeScenario.optimistic（年增 10%、PE 20x 假设的前提）</p></details></li><li><strong class="signal-name">价格落到悲观情景区而基本面未继续恶化</strong><p class="signal-desc">股价 ≤ 110 港元（TTM PE ≤ 9.4x、EV/Sales ≤ 2.9x），且年报自由现金流仍 &gt; 80 亿元/年</p><details class="fold"><summary>依据</summary><p>dimensions.valuation.analysis.threeScenario.pessimistic（71.3 HKD）与 collection.financialMetrics.annual[4].freeCashFlow（FY2025 96.93 亿元）</p></details></li><li><strong class="signal-name">中国内地业务连续两个报告期保持 30% 以上增长且毛利率 ≥ 70%</strong><p class="signal-desc">半年报中国内地收入同比 ≥ 30%、集团毛利率 ≥ 70%，同时会员复购率不低于 50%</p><details class="fold"><summary>依据</summary><p>collection.revenueStructure.recentQuarters[3]（2026H1 中国 +47.3%、会员复购率 51.6%）——这是海外失速时唯一已获验证的基本盘</p></details></li></ul></div></section><section class="company-section" aria-labelledby="business-essence"><p class="section-kicker">WHAT THE BUSINESS IS</p><h2 id="business-essence">生意本质</h2><p class="section-lead">把艺术家 IP 做成可收藏的情感消费品、靠直营渠道反复收钱的 IP 运营商。</p><h3 class="block-heading">收入结构（FY2025）</h3><div class="table-wrap"><table><thead><tr><th>分部</th><th>收入（亿元）</th><th>占比（%）</th><th>来源</th></tr></thead><tbody><tr><td>中国（地区）</td><td>208.52亿元</td><td>56.2%</td><td><a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf" rel="noreferrer" title="公司 FY2025 年度业绩公告 Revenue by regions">来源</a></td></tr><tr><td>亚太（地区，中国以外亚洲及大洋洲）</td><td>80.11亿元</td><td>21.6%</td><td><a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf" rel="noreferrer" title="公司 FY2025 年度业绩公告 Revenue by regions">来源</a></td></tr><tr><td>美洲（地区）</td><td>68.06亿元</td><td>18.3%</td><td><a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf" rel="noreferrer" title="公司 FY2025 年度业绩公告 Revenue by regions">来源</a></td></tr><tr><td>欧洲及其他地区（地区）</td><td>14.51亿元</td><td>3.9%</td><td><a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf" rel="noreferrer" title="公司 FY2025 年度业绩公告 Revenue by regions">来源</a></td></tr><tr><td>毛绒玩具（产品品类）</td><td>187.08亿元</td><td>50.4%</td><td><a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf" rel="noreferrer" title="公司 FY2025 年度业绩公告 Revenue by Product Category">来源</a></td></tr><tr><td>手办（产品品类）</td><td>120.23亿元</td><td>32.4%</td><td><a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf" rel="noreferrer" title="公司 FY2025 年度业绩公告 Revenue by Product Category">来源</a></td></tr><tr><td>THE MONSTERS（含 LABUBU，第一大 IP）</td><td>141.61亿元</td><td>38.1%</td><td><a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf" rel="noreferrer" title="公司 FY2025 年度业绩公告 Revenue by IPs">来源</a></td></tr><tr><td>Twinkle Twinkle 星星人（增速最快 IP）</td><td>20.56亿元</td><td>5.5%</td><td><a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf" rel="noreferrer" title="公司 FY2025 年度业绩公告 Revenue by IPs">来源</a></td></tr></tbody></table></div><h3 class="block-heading">5 年盈利能力趋势</h3><div class="table-wrap"><table><thead><tr><th>财年</th><th>毛利率</th><th>经营利润率</th><th>净利率</th><th>来源</th></tr></thead><tbody><tr><td>FY2021</td><td>61.4%</td><td>25.6%</td><td>19.0%</td><td><a class="source-pill" href="https://stockanalysis.com/quote/hkg/9992/financials/" rel="noreferrer" title="公司 FY2025 年报五年财务摘要 + stockanalysis 财务比率">来源</a></td></tr><tr><td>FY2022</td><td>57.5%</td><td>12.6%</td><td>10.3%</td><td><a class="source-pill" href="https://stockanalysis.com/quote/hkg/9992/financials/" rel="noreferrer" title="公司 FY2025 年报五年财务摘要 + stockanalysis 财务比率">来源</a></td></tr><tr><td>FY2023</td><td>61.3%</td><td>19.5%</td><td>17.2%</td><td><a class="source-pill" href="https://stockanalysis.com/quote/hkg/9992/financials/" rel="noreferrer" title="公司 FY2025 年报五年财务摘要 + stockanalysis 财务比率">来源</a></td></tr><tr><td>FY2024</td><td>66.8%</td><td>31.9%</td><td>24.0%</td><td><a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf" rel="noreferrer" title="公司 FY2025 年度业绩公告比较列 + stockanalysis 财务比率">来源</a></td></tr><tr><td>FY2025</td><td>72.1%</td><td>45.5%</td><td>34.4%</td><td><a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf" rel="noreferrer" title="公司 FY2025 年度业绩公告（毛利率 72.1%、经营利润 168.90 亿元、归母 127.76 亿元）">来源</a></td></tr></tbody></table></div><h3 class="block-heading">商业模式与粘性</h3><dl class="kv-list"><div><dt>商业模式</dt><dd>销售模式 混合 · 产品形态 混合</dd></div><div><dt>粘性 / 锁定 · 中</dt><dd><span class="prose-point">① 靠 IP 收藏的系列完整性驱动复购，不是合约锁定。</span><span class="prose-point">② 会员积分与 Pop Draw 抽盒玩法提高单渠道迁移成本。</span><span class="prose-point">③ 二手市场可流通降低了买错的沉没成本，反向削弱锁定。</span></dd></div><div><dt>毛利率 vs 同行 · 72.1%（FY2025）</dt><dd><span class="prose-point">① 品类结构：自有艺术家 IP 占收入 90%，授权费成本仅占收入 3.8%，同业授权 IP 占比更高、授权成本更重。</span><span class="prose-point">② 渠道结构：直营 DTC（零售店/线上/机器人商店）占收入 96%，无加盟分成与经销商折价。</span><span class="prose-point">③ 区域结构：海外毛利率高于国内，FY2025 海外占收入 43.8% 拉高综合毛利。</span><span class="prose-point">④ 2026H1 毛利率回落至 69.7% 正是这三条同时反向（海外占比降至 29%、原材料涨价）。</span></dd></div><div><dt>经营杠杆</dt><dd>经营杠杆在放量年份极强、在减速年份立即反向。FY2025 收入 +184.7% 而销售费用 +121.4%、管理费用 +86.9%，费用率大幅下降带来经营利润率由 31.9% 升至 45.5%。2026H1 收入 +23.8% 但销售人员成本 +45.7%、租赁相关费用 +43.3%，经营利润仅 +11.3%，经营利润率回落至 39.2%。</dd></div></dl><details class="fold"><summary>本节证据 7 条</summary><ul><li>中国内地会员复购率（半年内购买 2 次及以上占购买会员比例）：51.6%（2026H1） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 2026H1 中期业绩公告 Member operation 段">来源</a></li><li>中国内地会员贡献销售占比：92.9%（2026H1） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 2026H1 中期业绩公告 Member operation 段">来源</a></li><li>全球累计注册会员数：超 1 亿（中国内地 8,244 万）（2026-06-30） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 2026H1 中期业绩公告 Member operation 段">来源</a></li><li>存货周转天数（粘性最直接的反向指标）：201 天（FY2025 为 123 天）（2026H1） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 2026H1 中期业绩公告 Inventories 段">来源</a></li><li>FY2025 销售费用率 / 管理费用率：约 21.8% / 约 4.8%（同比 −6.2pct / −2.5pct）（FY2025） <a class="source-pill" href="http://webview.hibor.org/data/e24818160f1bbc0c07ced996436adaa7.html" rel="noreferrer" title="华西证券研报引公司 FY2025 公告数据">来源</a></li><li>2026H1 收入增速与经营利润增速之差：收入 +23.8% vs 经营利润 +11.3%（2026H1） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 2026H1 中期业绩公告 INTERIM RESULTS HIGHLIGHTS">来源</a></li><li>2026H1 销售费用增长构成：租赁相关 +43.3%、员工成本 +45.7%（销售人员 6,219→9,734 人）（2026H1） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 2026H1 中期业绩公告 Distribution and Selling Expenses 段">来源</a></li></ul></details><aside class="inquiry-block"><p class="q">追问 · 这门生意好在哪？如果只能用一句话描述，是什么？</p><p class="a"><span class="prose-point">好在这是一门「用低成本版权换高毛利情感溢价、用直营渠道全额收钱」的生意——但它的收入上限由 IP 热度决定，不由产能或渠道决定。</span><span class="prose-point">① 毛利率 72.1%、无银行借款、净现金 104.36 亿元，说明商业模式本身极轻、现金转换几乎无摩擦。</span><span class="prose-point">② 利润弹性来自经营杠杆：FY2025 收入增长 1.85 倍时经营利润率提升 13.6pct；但 2026H1 减速时费用刚性立刻反噬。</span><span class="prose-point">③ 真正的成本项是艺术家版权与设计（FY2025 设计及授权费 9.51 亿元，占收入 2.6%），一旦 IP 失效，这条护城河不会因规模而自动修复。</span></p></aside><details class="fold"><summary>数据缺口 3 项</summary><ul><li>businessEssence.analysis.stickiness.evidence——缺分 IP 的复购率/留存数据：公司只披露中国内地整体会员复购率 51.6%，不披露单个 IP 的重复购买或流失率</li><li>businessEssence.analysis.grossMarginVsPeers.peers——缺可比同业的毛利率原值：52TOYS 与卡游均未上市、招股书未按披露口径给出毛利率，无法做毛利率横向对比</li><li>businessEssence.analysis.profitabilityTrend5y.series——FY2021–FY2023 的经营利润率与净利率全部依赖 stockanalysis 单源（公司 FY2025 年报五年摘要只给收入/毛利/经营溢利/除税前溢利，未给净利率与费用率）</li></ul></details></section><section class="company-section" aria-labelledby="moat"><p class="section-kicker">WHAT PROTECTS IT</p><h2 id="moat">护城河评估</h2><p class="section-lead">真护城河只有「艺术家 IP 平台 + 直营渠道」两条，2026H1 首次被压力测试。</p><div class="table-wrap"><table class="analysis-table"><thead><tr><th>类型</th><th>验证方法</th><th>判定</th><th>证据</th></tr></thead><tbody><tr><td>品牌/定价权</td><td>是否能在不损失销量的情况下提价？</td><td>待验证</td><td><details class="fold"><summary>证据 3 条</summary><ul><li>毛利率变动（FY2022→FY2025）：57.5% → 72.1%（+14.6pct）（FY2025） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf" rel="noreferrer" title="公司 FY2025 年度业绩公告">来源</a></li><li>2026H1 毛利率回落原因（宁可降毛利也不降价）：69.7%（−0.6pct），公司归因海外占比下降与原材料涨价（2026H1） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 2026H1 中期业绩公告 Gross Profit 段">来源</a></li><li>二手溢价崩塌（定价权的市场化检验）：新品上市数小时内出现折价挂单，部分系列二手价跌去一半以上（2026-06） <a class="source-pill" href="https://en.sedaily.com/international/2026/06/26/labubu-resale-market-cools-as-discounted-dolls-flood" rel="noreferrer" title="Seoul Economic Daily / CNBC 关于 LABUBU 二手溢价回落的报道">来源</a></li></ul></details></td></tr><tr><td>转换成本</td><td>客户迁移到竞品的成本有多高？</td><td>不存在</td><td><details class="fold"><summary>证据 2 条</summary><ul><li>会员性质（积分制而非付费订阅）：会员贡献收入 92.9% 但复购率 51.6%，无付费门槛（2026H1） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 2026H1 中期业绩公告 Member operation 段">来源</a></li><li>竞品价格带分布（用户可低成本试新）：52TOYS 盲盒均价 39 元、覆盖 10–35 元价格带 vs 泡泡玛特主力 99–199 元（2024） <a class="source-pill" href="https://m.winshang.com/news734324.html" rel="noreferrer" title="行业对比报道（52TOYS 招股书数据引述）">来源</a></li></ul></details></td></tr><tr><td>网络效应</td><td>用户越多产品越好吗？</td><td>待验证</td><td><details class="fold"><summary>证据 2 条</summary><ul><li>二级市场与内容生态规模：全球注册会员超 1 亿；二手转售与开箱内容构成 IP 声量放大器（2026-06-30） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 2026H1 中期业绩公告">来源</a></li><li>网络效应的反向证据：二手溢价崩塌后线上流量同步下滑：美洲线上 −45.6%、亚太线上 −39.8%（2026H1） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 2026H1 中期业绩公告各区域渠道表">来源</a></li></ul></details></td></tr><tr><td>规模效应</td><td>规模带来的成本优势有多大？</td><td>存在</td><td><details class="fold"><summary>证据 3 条</summary><ul><li>集中采购与柔性供应链：FY2025 毛利率 +5.3pct，公司归因海外占比提升与核心供应商集中采购议价（FY2025） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf" rel="noreferrer" title="公司 FY2025 年度业绩公告 Gross Profit 段">来源</a></li><li>生产基地与仓配网络：六个全球生产基地 + 区域仓储（FY2025 年报 OUTLOOK）（FY2025） <a class="source-pill" href="https://prod-out-res.popmart.com/cms/ANNUAL_REPORT_2025_bd4e173872.pdf" rel="noreferrer" title="公司 FY2025 年报 OUTLOOK 段">来源</a></li><li>规模效应的反面证据：2026H1 存货周转天数 201 天（FY2025 123 天），备货规模放大需求误判的代价（2026H1） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 2026H1 中期业绩公告 Inventories 段">来源</a></li></ul></details></td></tr><tr><td>技术/专利壁垒</td><td>技术领先几年？能否被复制？</td><td>不存在</td><td><details class="fold"><summary>证据 2 条</summary><ul><li>技术护城河的替代形态：公司主导发起潮玩行业首个国家标准（标准话语权，非专利）（FY2025） <a class="source-pill" href="https://prod-out-res.popmart.com/cms/ANNUAL_REPORT_2025_bd4e173872.pdf" rel="noreferrer" title="公司 FY2025 年报 OUTLOOK 段">来源</a></li><li>研发投入无法单独计量：损益表无研发费用行项目；且公司无阻挡性专利组合披露（FY2025） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf" rel="noreferrer" title="公司 FY2025 年度业绩公告损益表">来源</a></li></ul></details></td></tr></tbody></table></div><dl class="kv-list"><div><dt>过去 5 年 · 变宽</dt><dd><span class="prose-point">① 毛利率 57.5%→72.1%、经营利润率 12.6%→45.5%。</span><span class="prose-point">② 十亿级 IP 从 0 个增至 8 个，单一 IP 依赖度在 FY2025 达到峰值 38.1%。</span><span class="prose-point">③ 海外收入从 2022 年的个位数占比升至 FY2025 的 43.8%，渠道从代销转为直营。</span></dd></div><div><dt>未来 5 年 · 稳定</dt><dd><span class="prose-point">① 变宽的依据：中国内地 2026H1 +47.3%、成立 15 年已孵出 8 个十亿级 IP、六大生产基地与全球会员体系仍在扩建。</span><span class="prose-point">② 变窄的依据：第一大 IP 已负增长（THE MONSTERS −7.5%）、二手溢价崩塌、新品销售率降至上年 30%–50%、竞品同时拿到融资（卡游 2024 年经调整净利 44.66 亿元、名创拿 100 亿储备金背书 TOP TOY）。</span><span class="prose-point">③ 关键判据：三年内是否出现第二个年收入 100 亿元级 IP；出现则变宽，只靠 LABUBU 则变窄。</span></dd></div></dl><aside class="inquiry-block"><p class="q">追问 · 10年后这条护城河还在吗？什么能摧毁它？</p><p class="a"><span class="prose-point">还在，但形态会变——十年后仍然存在的是「艺术家发掘与全链条运营能力」，最可能被摧毁的是「单个 IP 的定价权」。</span><span class="prose-point">① 三丽鸥提供了长寿样本：Hello Kitty 经营 50 年，但期间经历 2015–2021 连续七个财年利润下滑、单一 IP 占比过高与过度授权反噬，靠换帅与多 IP 战略才在 2024 财年创新高（营业利润 518 亿日元，同比 +92%）。</span><span class="prose-point">② 摧毁护城河的第一路径是「下一个 LABUBU 出不来」：公司未披露新 IP 成功率，无法用数据证明平台可重复。</span><span class="prose-point">③ 第二路径是品牌被稀释：盲盒与毛绒的仿冒品、二级市场炒作退潮（新系列上市即折价）会同时损伤溢价与稀缺感。</span></p></aside><details class="fold"><summary>数据缺口 2 项</summary><ul><li>moat.analysis.types[0].evidence——缺可直接量化的提价证据（分 IP/分产品的价格与销量序列）：公司不披露单品价格与销量，只能用毛利率与二手溢价间接推断</li><li>moat.analysis.trendNext5y——缺新 IP 成功率的历史统计（多少个新 IP 能跑出 1 亿元以上收入）：公司只披露当期过亿 IP 个数，不披露新 IP 的数量基数与淘汰率</li></ul></details></section><section class="company-section" aria-labelledby="inversion"><p class="section-kicker">HOW IT COULD FAIL</p><h2 id="inversion">逆向思考与风险清单</h2><p class="section-lead">最致命的风险不是竞争，而是「LABUBU 之后没有下一个」且备货已先行。</p><div class="table-wrap"><table class="analysis-table"><thead><tr><th>失败路径</th><th>概率</th><th>影响</th><th>证据</th></tr></thead><tbody><tr><td>第一大 IP 持续负增长，接棒 IP 规模不足</td><td>高</td><td>高</td><td><details class="fold"><summary>证据 2 条</summary><ul><li>THE MONSTERS 2026H1 收入同比：−7.5%（44.54 亿元），占比 38.1%→26.0%（2026H1） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 2026H1 中期业绩公告 Revenue by IPs">来源</a></li><li>接棒 IP 的规模缺口：星星人 2026H1 26.50 亿元，仅为 THE MONSTERS 同期的 59%（2026H1） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 2026H1 中期业绩公告 Revenue by IPs">来源</a></li></ul></details></td></tr><tr><td>海外扩张从高增长变成负增长，海外固定成本去杠杆</td><td>高</td><td>高</td><td><details class="fold"><summary>证据 2 条</summary><ul><li>2026H1 海外区域收入：亚太 −9.7%、美洲 −16.5%、欧洲及其他 +5.9%（2026H1） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 2026H1 中期业绩公告 Revenue by regions">来源</a></li><li>海外门店净增加与费用：美洲门店 64→86 家，租赁相关费用 +43.3%（2026H1） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 2026H1 中期业绩公告 Distribution and Selling Expenses 段">来源</a></li></ul></details></td></tr><tr><td>库存与需求误判形成减值周期（Funko 路径）</td><td>中</td><td>中</td><td><details class="fold"><summary>证据 2 条</summary><ul><li>存货与周转天数：存货 61.02 亿元、周转天数 201 天（FY2025 123 天）（2026H1） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 2026H1 中期业绩公告 Inventories 段">来源</a></li><li>同业历史教训（Funko）：收入由 2022 年 13 亿美元降至 2023 年 11 亿美元（−17%），2023 年净亏损 1.541 亿美元，并销毁 3,000 万美元以上库存（FY2023） <a class="source-pill" href="https://investor.funko.com/news-and-events/press-releases/Press-Releases/2024/Funko-Reports-2023-Fourth-Quarter-Full-Year-Financial-Results-Provides-Full-Year-Outlook-for-2024/default.aspx" rel="noreferrer" title="Funko FY2023 业绩公告与 ICv2 报道">来源</a></li></ul></details></td></tr><tr><td>IP 被过度商业化与授权稀释，品牌调性下滑</td><td>中</td><td>中</td><td><details class="fold"><summary>证据 2 条</summary><ul><li>三丽鸥的同类教训：2008 年后广开授权透支 IP，2014–2020 年业绩长期低迷；Hello Kitty 占公司销售比重从 75% 降至 50% 后才恢复增长（2014–2020） <a class="source-pill" href="https://www.nippon.com/cn/in-depth/d01053/" rel="noreferrer" title="华泰证券《六十五载萌力深耕，三丽鸥 IP 沉浮启示录》与 Nippon.com 复盘">来源</a></li><li>本公司的授权扩张动作：FY2025 授权 IP 收入 33.82 亿元（+111.3%），并称「已取得大部分授权 IP 的全球授权」（FY2025） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 FY2025 年度业绩公告与 2026H1 中期业绩公告">来源</a></li></ul></details></td></tr><tr><td>监管收紧随机抽取品类与未成年人销售</td><td>低</td><td>中</td><td><details class="fold"><summary>证据 2 条</summary><ul><li>现行规则约束：《盲盒经营行为规范指引（试行）》：不得向未满 8 周岁未成年人销售、8 岁以上须监护人同意、鼓励保底机制与承诺不炒作不进场二级市场（2023-06） <a class="source-pill" href="http://www.xinhuanet.com/tech/20230615/a28e02c43f3e4fb7ad15c2c35a10108c/c.html" rel="noreferrer" title="市场监管总局《盲盒经营行为规范指引（试行）》（新华网转载）">来源</a></li><li>监管的当前实际影响：指引落地后公司收入与毛利率持续上升，未见经营层面的量化冲击（2023–2025） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf" rel="noreferrer" title="公司 FY2025 年度业绩公告（收入与毛利率序列）">来源</a></li></ul></details></td></tr><tr><td>创始人控制权集中带来的决策风险</td><td>低</td><td>中</td><td><details class="fold"><summary>证据 2 条</summary><ul><li>股权与治理结构：王宁持股 48.73%，董事长与 CEO 由同一人担任（偏离企业管治守则 C.2.1）（2025-12-31） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 FY2025 年报与 2026H1 中期业绩公告 Corporate Governance 段">来源</a></li><li>海外扩张节奏的决策依据：2026H1 美洲门店由 64 家增至 86 家（半年净增 22 家），同期美洲收入 −16.5%（2026H1） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 2026H1 中期业绩公告 Consumer Access 段">来源</a></li></ul></details></td></tr></tbody></table></div><h3 class="block-heading">历史类比</h3><ul class="signal-list"><li><strong class="signal-name">Funko（FNKO）</strong><p class="signal-desc">同为「设计师收藏玩具 + 授权 IP + 大众流行」的爆红标的，需求由潮流驱动、库存周转快、二级市场溢价是需求信号；结局：2021 年收入 13 亿美元为峰值，2023 年降至 11 亿美元（−17%）并净亏 1.541 亿美元，销毁 3,000 万美元以上库存，股价较峰值缩水逾九成 <a class="source-pill" href="https://icv2.com/articles/news/view/56464/funko-lost-154-1-million-2023" rel="noreferrer" title="Funko FY2023 业绩公告、ICv2、CBS News">来源</a></p></li><li><strong class="signal-name">三丽鸥（8136.T）</strong><p class="signal-desc">同为单一卡通 IP 支撑的授权/周边公司，经历过 IP 全球化破圈、随后长期低迷、再由多 IP 战略复兴；结局：1999 财年销售额峰值 1,502 亿日元；2015–2021 连续七个财年利润下滑；2021 年换帅后精简授权、多角色并行，FY3/2025 营收 1,449 亿日元（+45%）、营业利润 518 亿日元（+92%）创历史新高 <a class="source-pill" href="https://www.nippon.com/cn/in-depth/d01053/" rel="noreferrer" title="Nippon.com Hello Kitty 50 周年复盘、华泰证券三丽鸥专题、智研咨询 IP 衍生品研究">来源</a></p></li><li><strong class="signal-name">52TOYS（乐自天成，未上市，2025 年递表港交所）</strong><p class="signal-desc">同为中国多品类 IP 玩具公司、同样采用「盲盒 + 授权 IP」模式，且都被资本市场当作「下一个泡泡玛特」定价；结局：规模停留在泡泡玛特单个 IP 的量级（2024 年收入 6.30 亿元，约等于泡泡玛特当年收入第 6 的 IP HIRONO 的 7.3 亿元），2022–2024 年连续净亏损，经调整净利率仅约 5%、授权成本占收入 7.1%（泡泡玛特同期 3.8%） <a class="source-pill" href="https://www.36kr.com/p/3305136499431940" rel="noreferrer" title="52TOYS 招股书媒体引述（收入、净亏损、授权成本占比与 GMV 排名）">来源</a></p></li></ul><h3 class="block-heading">空方论点</h3><ul class="signal-list"><li><strong class="signal-name">单 IP 风险已经兑现，不是预期风险：LABUBU 首次负增长，且新品销售率降至上年同期 30%–50%，管理层自己承认完不成 20% 增长目标</strong><p class="signal-desc">持有者：卖方（汇丰、花旗）、虎嗅与华尔街见闻、WSJ</p><details class="fold"><summary>证据 2 条</summary><ul><li>汇丰研究下修：2026 年收入由 +6% 改为 −7%，目标价 136.5 港元；花旗预测 2026 年收入 −8%、目标价 198 港元：汇丰 2026 年净利预测降至 104.52 亿元（2026-08） <a class="source-pill" href="https://gmg.9fzt.com/dynamic/HKSE/09992/e80935b0e5faaf900c788c5e9772f2ef.html" rel="noreferrer" title="汇丰研究与花旗研究（媒体转述）">来源</a></li><li>新品销售率：仅为去年同期的 30%–50%（2026H1） <a class="source-pill" href="https://www.huxiu.com/article/4885078.html" rel="noreferrer" title="虎嗅《当 LABUBU 不再稀缺》">来源</a></li></ul></details></li><li><strong class="signal-name">盈利质量恶化快于收入：毛利率 −0.6pct、调整后净利率由 33.9% 降至 30.0%、存货周转天数 123→201 天、汇兑损失 7.20 亿元</strong><p class="signal-desc">持有者：机构投资者与媒体分析（CNBC、KR Asia、虎嗅）</p><details class="fold"><summary>证据 2 条</summary><ul><li>调整后净利率与存货周转天数：30.0%（去年 33.9%）与 201 天（去年末 123 天）（2026H1） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 2026H1 中期业绩公告与 KR Asia 报道">来源</a></li><li>库存与供应链错配导致的减值风险：存货 61.02 亿元，公司称系海外扩张提前备货（2026H1） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 2026H1 中期业绩公告 Inventories 段">来源</a></li></ul></details></li></ul><details class="fold"><summary>跨学科检验 4 项 · 偏误自查 3 项</summary><ul><li><strong>技术采纳曲线</strong>：LABUBU 已完成从创新者到早期大众的扩散（明星带货、FIFA 世界杯联名），2026H1 的海外线上收缩符合「早期大众之后进入长尾」的典型形态；曲线判断指向需求不会消失，但增速回归常态。</li><li><strong>网络效应理论</strong>：泡泡玛特的网络效应是「单向间接型」：二手转售与社交内容放大声量，但公司不对网络直接收费，且网络活跃度下降会先冲击需求（线上渠道跌幅大于线下），因此不能按平台型网络效应给予估值溢价。</li><li><strong>竞争博弈</strong>：潮玩是高毛利、低门槛进入的行业（FY2025 行业 CR5 不足 25%），竞争者同时获得资本（卡游 2024 年经调整净利 44.66 亿元、名创 100 亿元储备金背书 TOP TOY、布鲁可港股上市、52TOYS 递表）。当行业从增量转向存量时，艺术家与 IP 的签约价格会被推高，挤压公司 72% 的毛利率。</li><li><strong>时尚周期与羊群效应</strong>：把收藏品当投资品的资金撤离时，二级市场会从溢价转为折价，并反向抑制一手需求。2026 年新品上线数小时内即出现折价挂单，说明投机资金已退出，需求回归真实消费者。</li><li><strong>叙事偏差</strong>：原始叙事是「中国 IP 出海第一股」，容易被 LABUBU 的世界杯与明星联名故事牵引；本次特意核对财务总量：2026H1 收入 171.73 亿元里，中国占 71.0%、海外仅 29.0%，且海外同比为负，故事与财务已出现背离。</li><li><strong>锚定效应</strong>：两个锚都会误导：一是股价从 337.08 港元高点回落 55%，容易得出「跌够了」；二是 PE 13.16x 处于历史低位，容易得出「便宜」。真实锚应是「如果 2026 年利润按卖方预期下降 18%，PE 会立刻回到 16x 以上」。</li><li><strong>幸存者偏差</strong>：看到的是 LABUBU 成功，看不到同期被淘汰的新 IP（公司披露累计推出过大量 IP，但只披露收入过亿者）。行业口径 IP 生命周期 2–5 年，样本偏差会把「偶然命中」读成「平台能力」。</li></ul></details><aside class="inquiry-block"><p class="q">追问 · 我最可能在哪里犯错？聪明人为什么会不买/做空这家公司？</p><p class="a"><span class="prose-point">我最可能犯的错是把「平台化的可能性」当成「平台化的既成事实」。</span><span class="prose-point">① 公司确实孵出过 8 个十亿级 IP，但只有一个做到了全球破圈（LABUBU），而支撑高毛利的正是海外 43.8% 的高价销售；海外一旦转负，毛利率与经营杠杆会同时反向（2026H1 已验证）。</span><span class="prose-point">② 聪明人不买的理由是估值锚不稳定：2026 年一致预期收入 351 亿元、净利预测已下调至约 104.5 亿元（汇丰），若按此计算当前 PE 已约 16.6x，不再「便宜」；而如果 2027 年 LABUBU 不回稳，分母还会再降。</span><span class="prose-point">③ 做空者更看空的是「收藏品金融化退潮」这个二阶效应：二手溢价消失会让一部分以保值为目的的购买彻底退出，一手销量的下滑会大于热度下滑本身。</span></p></aside><details class="fold"><summary>数据缺口 2 项</summary><ul><li>inversion.analysis.historicalAnalogies[2]——Beanie Babies 泡沫缺少可溯源的量化数据（未上市公司，无财报），仅作为机制参照，不作为证据使用</li><li>inversion.analysis.failurePaths——缺概率的量化基础：各失败路径的概率是定性与比较判断（高/中/低），没有可计算的历史基准率（公司未披露新 IP 成功率或历史 IP 衰减曲线）</li></ul></details></section><section class="company-section" aria-labelledby="management"><p class="section-kicker">WHO RUNS IT</p><h2 id="management">管理层评估</h2><p class="section-lead">创始人能力已证明，资本配置尚可，但治理制衡与减持纪律偏弱。</p><h3 class="block-heading">关键决策复盘</h3><div class="table-wrap"><table class="analysis-table"><thead><tr><th>时间</th><th>决策</th><th>结果</th><th>评分</th></tr></thead><tbody><tr><td>2016</td><td>签约 MOLLY 艺术家 IP，从杂货代理转型为 IP + 盲盒运营商</td><td>奠定商业模式；MOLLY 至今仍贡献 28.97 亿元（FY2025） <a class="source-pill" href="https://baike.baidu.com/item/%E7%8E%8B%E5%AE%81/50355896" rel="noreferrer" title="百度百科王宁履历与企业沿革（单源，Level 3）">来源</a></td><td>★★★★★</td></tr><tr><td>2022–2023</td><td>行业低谷期克制国内开店、重投海外渠道与 POP LAND 乐园</td><td>FY2025 美洲收入同比 +748.4%，海外占收入 43.8%，形成第二曲线 <a class="source-pill" href="https://www.yicai.com/news/102036534.html" rel="noreferrer" title="第一财经 FY2023 业绩会报道与 FY2025 年度业绩公告 Revenue by regions">来源</a></td><td>★★★★★</td></tr><tr><td>2025-08</td><td>将全年收入指引由 200 亿元上调至「不低于 300 亿元」</td><td>FY2025 实际 371.20 亿元，超额完成 <a class="source-pill" href="https://hk.usmartglobal.com/en/news-detail/7363879246546240320" rel="noreferrer" title="uSMART 对 2025H1 业绩会的转述与 FY2025 年度业绩公告">来源</a></td><td>★★★★</td></tr><tr><td>2026-03</td><td>FY2025 末期股息每股 2.3817 元（合计 31.94 亿元）+ 连续 6 个交易日回购 13.97 亿港元</td><td>派息率 24.8%；回购注销 1,122 万股，均价区间 140.9–194.9 港元 <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 FY2025 年度业绩公告 Dividends 段与 2026H1 中期业绩公告 Share Capital 段">来源</a></td><td>★★★</td></tr><tr><td>2026-08-20</td><td>公开承认完不成 20% 收入增长目标，转向「重心不在销售高速增长」，同时宣布 20–50 亿元回购</td><td>披露诚信加分；但市场以股价下跌回应，回购尚未执行完毕，效果待验证 <a class="source-pill" href="https://www.stcn.com/article/detail/4092654.html" rel="noreferrer" title="证券时报、新浪财经对 2026H1 业绩会的转述">来源</a></td><td>★★★</td></tr></tbody></table></div><dl class="kv-list"><div><dt>研发回报</dt><dd>无法用研发回报率衡量：损益表无研发费用行项目。可观察的替代指标是设计及授权费（FY2024 5.07 亿元 → FY2025 9.51 亿元）与行政/设计研发人员（1,435 → 2,194 → 2,322 人），对应 IP 收入从 112.08 亿元增至 334.06 亿元（艺术家 IP，FY2024→FY2025），投入产出方向正向</dd></div><div><dt>并购记录</dt><dd>基本无并购记录：FY2025 与 2026H1 公告均称「未进行重大收购或处置」；唯一相关动作是 2025 年对原 50% 合营企业实现业务合并（2025H1 确认重估收益 0.42 亿元）。扩张以自建为主，未出现商誉减值风险</dd></div><div><dt>回购时机</dt><dd>★★☆：2026 年 1 月回购约 3.48 亿港元、3 月 26 日至 4 月 2 日回购 13.97 亿港元（均价区间 140.9–194.9 港元），此后股价继续下行至 152.90 港元；回购金额占 2026H1 末现金资源 141.64 亿元的约 12%，财务上安全，但时点未显现抄底效果。对比 FY2023 回购 3.34 亿元、FY2022 回购 6.34 亿元，属连续行为而非临时救市</dd></div><div><dt>管理层持股</dt><dd>王宁（创始人、董事长兼 CEO）持股 654,381,407 股、占已发行股本 48.73%（2025-12-31）；公司无 AB 股结构，经济权益 = 投票权。其他执行董事：司德（COO）0.77%、文德一（CGO）0.1%</dd></div><div><dt>薪酬结构</dt><dd>公司损益表披露股份支付费用（FY2025 为 0.72 亿元，FY2025 年度业绩公告），并设 Post-IPO 股份奖励计划（2026-07-08 授予奖励，含向供应商 IP 设计服务方授予的 Service Provider Grantee）；薪酬与考核挂钩的具体指标未在业绩公告中量化披露</dd></div><div><dt>减持记录</dt><dd>董事层面存在减持：同花顺 F10 股东持股显示司德个人持股变动 −60.99 万股；王宁持股在 2025 年内「不变」。管理层未出现大规模集中减持的公开记录</dd></div><div><dt>团队稳定性</dt><dd>创始团队稳定：王宁任 CEO 逾 15 年，刘冉、司德、文德一均为执行董事并分管运营/增长；COO 司德在 2025 年度业绩会与 2026H1 业绩会上均为主要对外发言人。员工总数由 2024 年末 6,702 人（销售 5,267 + 行政研发 1,435）增至 2026H1 的 12,056 人，扩张期但未见核心高管流失披露</dd></div><div><dt>关键人风险</dt><dd>高：王宁同时担任董事长与 CEO（偏离企业管治守则 C.2.1），持股 48.73%，公司战略（克制开店、重投海外、乐园与内容投入）明显带有创始人个人判断色彩；公司未披露接班计划</dd></div><div><dt>企业文化</dt><dd><span class="prose-point">① 长期主义有可观察痕迹：2016 年拿下 IP 授权后坚持自建艺术家矩阵，2020 年上市至今 15 年只做一条主线。</span><span class="prose-point">② 克制扩张：2022、2023 年业绩会明确不以开店换增长，2026H1 中国内地门店半年仅净增 10 家。</span><span class="prose-point">③ 披露诚信：2026-08-20 主动承认完不成 20% 增长目标，未用口径调整粉饰；FY2026H1 汇兑损失 7.20 亿元亦单独列示。</span><span class="prose-point">④ 股东回报为制度化行为：FY2022 起连续回购，FY2025 起派发大额末期股息（派息率 24.8%）。</span><span class="prose-point">⑤ 风险信号：创始人绝对控制 + 配偶杨涛任副总裁 + 董事长兼 CEO，缺少外部制衡。</span></dd></div></dl><details class="fold"><summary>本节证据 5 条</summary><ul><li>累计回购金额与价格区间：截至 2026-04 累计约 17.44 亿港元；2026H1 回购 1,122 万股，均价区间 140.9–194.9 港元（2026-06-30） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 2026H1 中期业绩公告 Share Capital 段；证券时报对回购历史的汇总">来源</a></li><li>现金资源与派息：2026H1 末现金资源 141.64 亿元；FY2025 派息 31.94 亿元（派息率 24.8%）（2026-06-30） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 2026H1 中期业绩公告 Current Assets 段">来源</a></li><li>创始人持股比例：48.73%（654,381,407 股）（2025-12-31） <a class="source-pill" href="https://basic.10jqka.com.cn/176/HK9992/holder.html" rel="noreferrer" title="公司 FY2025 年报；同花顺 F10 主要股东（GWF Holding 41.78% + Pop Mart Hehuo 4.62% + Tianjin Paqu 2.32%）">来源</a></li><li>董事持股变动：司德 −60.99 万股；王宁 不变（2025-12-31） <a class="source-pill" href="https://basic.10jqka.com.cn/176/HK9992/holder.html" rel="noreferrer" title="同花顺 F10 泡泡玛特股东持股">来源</a></li><li>股份奖励计划：2026-07-08 授出奖励，含 IP 设计服务供应商（2026-07-08） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 2026H1 中期业绩公告 Supplemental Announcement on Grant of Awards">来源</a></li></ul></details><aside class="inquiry-block"><p class="q">追问 · 如果CEO退休，这家公司还能保持竞争力吗？</p><p class="a"><span class="prose-point">短期能，长期存疑——三丽鸥的答案是「换帅后靠多 IP 战略反而复兴」，泡泡玛特尚未证明这一点。</span><span class="prose-point">① 组织能力已有沉淀：COO 司德分管运营与增长、CGO 文德一负责全球增长，2025 年完成全球组织架构调整（首次按四大区域披露），日常经营不完全依赖创始人。</span><span class="prose-point">② 但战略判断高度个人化：克制国内开店、逆势重投海外与乐园、宣布回购区间，都是创始人在业绩会现场给出的口径，公司未披露接班计划与授权边界。</span><span class="prose-point">③ 参照三丽鸥：其 2021 年的复兴恰好发生在创始人之孙接任总经理、并由新管理层精简授权伙伴之后——说明 IP 公司换帅可以是转机也可以是断层，取决于治理结构是否允许专业管理者改写策略；泡泡玛特目前 48.73% 的持股结构使这种改写只能由王宁本人发起。</span></p></aside><details class="fold"><summary>数据缺口 3 项</summary><ul><li>management.analysis.alignment.compensation——缺高管薪酬结构与考核指标：公告披露股份支付总额与股份奖励计划，但未量化高管薪酬与业绩指标的挂钩方式</li><li>management.analysis.capitalAllocation.rdReturn——缺研发费用行项目，无法计算研发回报率；只能用设计及授权费与设计师人数做替代观察</li><li>management.analysis.keyDecisions——2016 年转型与早期决策仅有第三方百科与媒体单源（Level 3，允许单源），无一手披露可核</li></ul></details></section><section class="company-section" aria-labelledby="industry-trend"><p class="section-kicker">WHERE THE WORLD IS GOING</p><h2 id="industry-trend">行业与长期趋势</h2><p class="section-lead">不是文明级范式转移，而是「社交媒体时代的 IP 快消」——传播更快、衰减也更快。</p><dl class="kv-list"><div><dt>范式转移</dt><dd>部分</dd></div><div><dt>历史类比</dt><dd>参照三丽鸥的供给侧路径：1974 年诞生 Hello Kitty，靠 1990 年代亚洲消费崛起与欧美明星带货完成全球化，1999 财年销售额达峰值 1,502 亿日元；此后因过度授权与单一 IP 依赖，2015–2021 连续七个财年利润下滑；2021 年后精简授权、多 IP 并行才创新高。泡泡玛特当前处于「刚经历一次全球化破圈、开始面对 IP 单一依赖」的位置，与三丽鸥 2000 年前后的处境更接近，而非与迪士尼的多 IP 内容生态可比</dd></div><div><dt>TAM</dt><dd>1,101亿元 CNY；阶段：成长期中后段：公司自身规模仍在扩张（FY2025 +184.7%），但核心 IP 与其主要区域已进入成熟/衰退切换期（2026H1 海外三大区域转负），行业整体从「情感叙事驱动」转向「符号消费主导」（第三方行业分析）</dd></div><div><dt>价值链位置</dt><dd>位于价值链的设计与品牌端（IP 运营 + 零售终端），不自建工厂（六个全球生产基地均为合作产能），上游是艺术家与授权方（FY2025 设计及授权费 9.51 亿元、授权费应付款 5.19 亿元），下游直接面对消费者（直营 96%）。议价权在两端都对泡泡玛特有利：对上游以「IP 孵化平台」身份获得艺术家依赖，对下游以稀缺性维持终端定价；但这种议价权在 IP 热度下降时会同时衰减</dd></div><div><dt>技术路线风险</dt><dd>技术路线风险低、需求路线风险高：产品工艺（毛绒、手办、可动结构）可被同业复制，不存在被新技术替代的问题；真正风险是「消费者情感投射对象」从实体潮玩转向其他形态（虚拟形象、游戏皮肤、宠物、AI 陪伴硬件）——2026H1 公司自己把增长归因于「情感陪伴」，也说明品类边界是需求而非技术</dd></div><div><dt>客户集中度</dt><dd>客户极度分散：公告明确「2026H1 与 2025H1 均无单一客户收入占比达 10% 或以上」，应收周转天数仅 8 天</dd></div><div><dt>供应商集中度</dt><dd>供应商为代工厂与原材料商，集中度不高但存在区域集中：公司未披露前五大供应商占比；成本端敏感项是原材料涨价（2026H1 毛利率下降原因之一）与代工产能的区域布局（中国 + 东南亚 + 墨西哥的多元制造格局）</dd></div></dl><details class="fold"><summary>范式转移正反方证据与 TAM 天花板检验</summary><p><span class="prose-point">① 产品本身不是新范式：盲盒与毛绒是既有玩具形态，1970 年代的 Beanie Babies、2000 年代的 Hello Kitty 周边已出现过同构需求。</span><span class="prose-point">② 真正被重构的是 IP 传播成本：短视频与明星带货让一个中国 IP 在 18 个月内完成全球破圈（LABUBU 登上 FIFA 世界杯开闭幕式），这是分发效率的范式变化。</span><span class="prose-point">③ 传播越快，衰减也越快：2026H1 海外线上渠道跌幅 40%–59%，正是流量型扩散的反面。</span></p><p>天花板不在玩具总量，而在「IP 情感消费」的份额：全球玩具市场约 1,114–1,243 亿美元、年增速仅 2.4%–5.9%，其中授权玩具 485 亿美元（2025）、预计 2035 年 828 亿美元（CAGR 5.5%）。泡泡玛特 FY2025 收入 371.20 亿元（约 52 亿美元）已相当于全球授权玩具市场的约 11%，继续靠品类扩张提升份额的空间有限，真正的天花板是「一个 IP 能承载多少品类与地理范围」</p></details><details class="fold"><summary>本节证据 2 条</summary><ul><li>客户集中度与应收周转：无单一客户占比 ≥10%；贸易应收 6.27 亿元，周转天数 8 天（2026H1） <a class="source-pill" href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf" rel="noreferrer" title="公司 2026H1 中期业绩公告 Segment and Revenue Information 与 Trade Receivables 段">来源</a></li><li>供应商集中度：未披露前五大供应商占比；仅披露六个全球生产基地与集中采购策略（FY2025） <a class="source-pill" href="https://prod-out-res.popmart.com/cms/ANNUAL_REPORT_2025_bd4e173872.pdf" rel="noreferrer" title="公司 FY2025 年报 OUTLOOK 段">来源</a></li></ul></details><aside class="inquiry-block"><p class="q">追问 · 站在20年后回看，这家公司是「这个时代的标准石油」还是「昙花一现的3Com」？</p><p class="a"><span class="prose-point">更接近「IP 快消时代的宝洁」，既不是标准石油，也不是 3Com——它不太可能消亡，但也不太可能长期维持 45% 的经营利润率。</span><span class="prose-point">① 「不是标准石油」：公司没有不可复制的资源或网络垄断，其核心资产（艺术家合约与 IP）会到期、会老化，行业 CR5 不足 25% 意味着替代品永远存在。</span><span class="prose-point">② 「不是 3Com」：它的现金流与资产负债表是真实的（FY2025 自由现金流 96.93 亿元、无银行借款、净现金 104.36 亿元），且已具备多 IP 与全球渠道，不会因一次技术路线错误而消失。</span><span class="prose-point">③ 三丽鸥的 65 年给出了可能的终局图景：IP 会经历 1–2 次长期低谷（其低谷长达 7 个财年），但只要能维持多 IP 与国际授权网络，就能在低谷后创新高（FY3/2025 营业利润 518 亿日元）。</span><span class="prose-point">④ 结论：20 年维度的关键不是「会不会死」，而是「低谷有多长」——这是决定 3 年还是 10 年回本的核心变量，而公司目前没有任何公开数据能回答新 IP 孵化周期有多长。</span></p></aside><details class="fold"><summary>数据缺口 2 项</summary><ul><li>industryTrend.analysis.tam.ceiling——缺权威的全球潮玩/收藏玩具统一口径市场规模：现有来源口径差异大（全球玩具 1,114 亿 vs 1,243 亿美元；授权玩具 485 亿美元），无法精确计算公司份额</li><li>industryTrend.analysis.concentration.suppliers——缺前五大供应商集中度：公司未按上市规则强制披露且年报未列示</li></ul></details></section><section class="company-section" aria-labelledby="valuation"><p class="section-kicker">WHAT THE PRICE IMPLIES</p><h2 id="valuation">估值分析</h2><p class="section-lead">按 TTM 是低估，按 2026 年一致预期只是合理——分歧全在分母取哪一年。</p><h3 class="block-heading">三情景（3 年，工具精确计算）</h3><div class="action-zones"><div><strong>309.3 HKD</strong><span>乐观</span><p>隐含回报 +102.3%</p></div><div><strong>172.6 HKD</strong><span>中性</span><p>隐含回报 +12.9%</p></div><div><strong>71.3 HKD</strong><span>悲观</span><p>隐含回报 −53.4%</p></div></div><details class="fold"><summary>三情景假设依据与工具输出</summary><p><span class="prose-point">① 基数：TTM 每股收益 11.62 港元（TTM 归母 132.40 亿元 ÷ 13.317 亿股 ÷ 0.8554）。</span><span class="prose-point">② 三个增速口径不互换：第三方 3 年复合 3.82%、卖方 2026 单年降幅约 18%（净利预期 104.5 亿元）、本模型三组增速是「 2026 下滑 + 2027–2028 恢复」的三年净复合。</span><span class="prose-point">③ 中性 +2% 的桥接：2026 年 EPS 按一致预期降约 18%，2027 年起在中国内地双位数增长与海外止跌的共同作用下年均恢复约 14%，三年净复合回到 +2%。</span><span class="prose-point">④ 乐观 +10% 假设三年内出现百亿元级新 IP 且海外转正；悲观 −12% 假设 LABUBU 年化两位数衰减且无接棒 IP，估值向传统玩具制造商靠拢。</span></p><p class="tool-output">三情景估值模型 (Three-Scenario Valuation)
+  当前股价: 152.9 HKD
+  当前EPS:  11.62
+  预测期:   3年
+
+  情景                年增速     目标PE      目标EPS       目标股价      涨跌幅
+  乐观 (Bull)         10%      20x      15.47     309.3  +102.3%
+  中性 (Base)          2%      14x      12.33     172.6   +12.9%
+  悲观 (Bear)        -12%       9x       7.92      71.3   -53.4%
+
+  ✅ 所有计算使用精确十进制, 结果可审计复现</p></details><h3 class="block-heading">当前倍数</h3><div class="table-wrap"><table class="analysis-table"><thead><tr><th>指标</th><th>数值</th><th>来源</th></tr></thead><tbody><tr><td>marketCap</td><td>2036.20亿港元（约 1741.8 亿元人民币） HKD</td><td><a class="source-pill" href="https://stockanalysis.com/quote/hkg/9992/" rel="noreferrer" title="financial_rigor.py verify-market-cap（152.90 HKD × 13.317 亿股）">来源</a></td></tr><tr><td>pe</td><td>13.16x（TTM IFRS 归母）；静态 13.61x（FY2025）</td><td><a class="source-pill" href="https://stockanalysis.com/quote/hkg/9992/statistics/" rel="noreferrer" title="financial_rigor.py calc（TTM 归母 132.40 亿元 → 每股 9.94 元人民币 = 11.62 港元）">来源</a></td></tr><tr><td>ps</td><td>4.31x（TTM 收入 404.17 亿元）</td><td><a class="source-pill" href="https://stockanalysis.com/quote/hkg/9992/statistics/" rel="noreferrer" title="financial_rigor.py calc">来源</a></td></tr><tr><td>peg</td><td>3.45（PE 13.16 ÷ 3 年 EPS 一致预期增速 3.82%）</td><td><a class="source-pill" href="https://stockanalysis.com/quote/hkg/9992/statistics/" rel="noreferrer" title="financial_rigor.py calc；增速取自 stockanalysis 一致预期">来源</a></td></tr><tr><td>evToRevenue</td><td>4.05x（EV = 市值 1,741.8 亿元 − 净现金 104.36 亿元）</td><td><a class="source-pill" href="https://stockanalysis.com/quote/hkg/9992/statistics/" rel="noreferrer" title="financial_rigor.py calc">来源</a></td></tr></tbody></table></div><dl class="kv-list"><div><dt>反向 DCF</dt><dd>当前 13.16x TTM PE 隐含的预期接近「零增长略负」：若贴现率 10%、永续增长 2.5%，13.16x 大致对应未来 5 年自由现金流年均增速约 0%–3%。反过来说，市场当前定价已经反映了「2026 年利润下滑但不再持续恶化」这一情形，并未定价二次衰退</dd></div><div><dt>vs 自身历史 · PE（各财年年末静态 PE 序列） 当前 13.16x（TTM，2026-09-14）</dt><dd>FY2021 59.76x、FY2022 50.41x、FY2023 22.57x、FY2024 35.75x、FY2025 17.54x，当前 TTM 13.16x 为上市以来最低区；PB 7.55x（FY2025 年末为 9.0x 以上），PS 4.31x（FY2024 年末 8.57x）</dd></div><div><dt>或有稀释</dt><dd>—</dd></div></dl><h3 class="block-heading">同行对比</h3><div class="table-wrap"><table><thead><tr><th>公司</th><th>PE（TTM / Fwd）</th><th>PS</th><th>来源</th></tr></thead><tbody><tr><td>名创优品集团（9896.HK，TOP TOY 母公司）</td><td>— / —</td><td>0.79x</td><td><a class="source-pill" href="https://stockanalysis.com/quote/hkg/9896/statistics/" rel="noreferrer" title="本仓库已落盘研究 research/companies/us-mnso-miniso/financials-collection.json（2026-09-11/14 数据）">来源</a></td></tr><tr><td>三丽鸥（8136.T，IP 授权对照）</td><td>— / —</td><td>未取得：同上：未取到市值，无法计算 PS</td><td><a class="source-pill" href="https://m.chyxx.com/news/1229714.html" rel="noreferrer" title="智研咨询 IP 衍生品研究（三丽鸥 FY3/2025 数据）">来源</a></td></tr></tbody></table></div><aside class="inquiry-block"><p class="q">追问 · 如果股市明天关闭5年，你愿意以这个价格持有吗？</p><p class="a"><span class="prose-point">愿意，但只能以「高质量消费股」的预期持有，不能以「IP 平台成长股」的预期持有——因为两者的回报差了三倍以上。</span><span class="prose-point">① 支撑持有的硬要素：净现金 104.36 亿元（占市值约 6%）、无银行借款、FY2025 自由现金流 96.93 亿元、派息率 24.8% 且已宣布 20–50 亿元回购，即使利润腰斩，公司也不会陷入财务困境。</span><span class="prose-point">② 五年维度的真正风险是「分母不增长」：如果 LABUBU 继续衰减且无接棒 IP，5 年后 EPS 可能低于今天，此时 13x PE 会在利润下滑中变成 18–20x，价格并不便宜。</span><span class="prose-point">③ 关键监控点是「第二个百亿元级 IP 是否出现」，而不是季度收入增速——前者决定五年后的 EPS 量级，后者只决定短期股价波动。</span></p></aside><details class="fold"><summary>数据缺口 3 项</summary><ul><li>valuation.analysis.vsPeers[1]——缺三丽鸥当期 PE/PS/市值：未回日本 IR 一手披露，无法完成跨市场估值对比</li><li>valuation.analysis.reverseDcf——缺逐期 DCF 建模所需的资本开支与折旧预测序列（公司不披露未来资本开支指引），反推为量级判断而非模型输出</li><li>valuation.analysis.vsOwnHistory——历史 PE band 未能按前复权口径重算：第三方给出的分财年 PE 为年末静态口径，公司历史价格序列未取到（Tushare hk_daily 本轮撞 1 次/小时限频）</li></ul></details></section><section class="company-section" aria-labelledby="provenance"><p class="section-kicker">PROVENANCE</p><h2 id="provenance">数据与免责声明</h2><p class="company-note">本页由三份经完整性校验（阈值 7 分）的结构化文件合并渲染： 采集 research/companies/hk-9992-pop-mart/financials-collection.json、分析 research/companies/hk-9992-pop-mart/financials-analysis.json、总结 research/companies/hk-9992-pop-mart/financials-summary.json。 生成于 <time>2026-09-14T17:17:09+08:00</time>，数据截止 2026-09-14（Asia/Shanghai）。最新已披露财报为 2026 年中期业绩（截至 2026-06-30，2026-08-20 港股收盘后发布）；行情为 2026-09-14 港股收盘价 152.90 HKD。。</p><p class="company-note">本总结基于公开信息与数据截止时点（2026-09-14，Asia/Shanghai）的分析生成，仅供研究参考，不构成个性化投资建议。</p></section></main></body></html>

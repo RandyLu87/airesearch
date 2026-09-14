@@ -1,0 +1,1278 @@
+{
+  "_spec": {
+    "purpose": "泡泡玛特（9992.HK）研究流程第 2 步（多维度分析）产出。六个维度共用统一信封 { conclusion, analysis, inquiry, dataGaps }，模板见 docs/model/financials—analysis-template.json，步骤正文见 docs/research/workflow/02-multi-dimension-analysis.md。",
+    "basedOn": "全部结论只基于第 1 步落盘的 research/companies/hk-9992-pop-mart/financials-collection.json 与本仓库已落盘的同行研究（us-mnso-miniso）；本步骤不重新采集。数据截止 2026-09-14（Asia/Shanghai）。",
+    "calculation": "涉及计算的数字全部经 docs/research/tools/financial_rigor.py 验算，工具输出记入 crossValidationLog；无一处 LLM 心算。"
+  },
+  "meta": {
+    "companyId": "hk-9992-pop-mart",
+    "companyName": "泡泡玛特国际集团有限公司 (Pop Mart International Group Limited)",
+    "analyzedAt": "2026-09-14T19:30:00+08:00",
+    "dataCutoff": "2026-09-14（Asia/Shanghai），与第 1 步一致",
+    "basedOnCollection": "research/companies/hk-9992-pop-mart/financials-collection.json"
+  },
+  "dimensions": {
+    "businessEssence": {
+      "title": "生意本质",
+      "conclusion": "把艺术家 IP 做成可收藏的情感消费品、靠直营渠道反复收钱的 IP 运营商。",
+      "analysis": {
+        "revenueBreakdown": {
+          "period": "FY2025",
+          "unit": "亿元",
+          "items": [
+            {
+              "segment": "中国（地区）",
+              "revenue": "208.52亿元",
+              "sharePct": "56.2%",
+              "source": {
+                "name": "公司 FY2025 年度业绩公告 Revenue by regions",
+                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf"
+              }
+            },
+            {
+              "segment": "亚太（地区，中国以外亚洲及大洋洲）",
+              "revenue": "80.11亿元",
+              "sharePct": "21.6%",
+              "source": {
+                "name": "公司 FY2025 年度业绩公告 Revenue by regions",
+                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf"
+              }
+            },
+            {
+              "segment": "美洲（地区）",
+              "revenue": "68.06亿元",
+              "sharePct": "18.3%",
+              "source": {
+                "name": "公司 FY2025 年度业绩公告 Revenue by regions",
+                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf"
+              }
+            },
+            {
+              "segment": "欧洲及其他地区（地区）",
+              "revenue": "14.51亿元",
+              "sharePct": "3.9%",
+              "source": {
+                "name": "公司 FY2025 年度业绩公告 Revenue by regions",
+                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf"
+              }
+            },
+            {
+              "segment": "毛绒玩具（产品品类）",
+              "revenue": "187.08亿元",
+              "sharePct": "50.4%",
+              "source": {
+                "name": "公司 FY2025 年度业绩公告 Revenue by Product Category",
+                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf"
+              }
+            },
+            {
+              "segment": "手办（产品品类）",
+              "revenue": "120.23亿元",
+              "sharePct": "32.4%",
+              "source": {
+                "name": "公司 FY2025 年度业绩公告 Revenue by Product Category",
+                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf"
+              }
+            },
+            {
+              "segment": "THE MONSTERS（含 LABUBU，第一大 IP）",
+              "revenue": "141.61亿元",
+              "sharePct": "38.1%",
+              "source": {
+                "name": "公司 FY2025 年度业绩公告 Revenue by IPs",
+                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf"
+              }
+            },
+            {
+              "segment": "Twinkle Twinkle 星星人（增速最快 IP）",
+              "revenue": "20.56亿元",
+              "sharePct": "5.5%",
+              "source": {
+                "name": "公司 FY2025 年度业绩公告 Revenue by IPs",
+                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf"
+              }
+            }
+          ]
+        },
+        "profitabilityTrend5y": {
+          "series": [
+            {
+              "fiscalYear": "FY2021",
+              "grossMarginPct": "61.4%",
+              "operatingMarginPct": "25.6%",
+              "netMarginPct": "19.0%",
+              "source": {
+                "name": "公司 FY2025 年报五年财务摘要 + stockanalysis 财务比率",
+                "url": "https://stockanalysis.com/quote/hkg/9992/financials/"
+              }
+            },
+            {
+              "fiscalYear": "FY2022",
+              "grossMarginPct": "57.5%",
+              "operatingMarginPct": "12.6%",
+              "netMarginPct": "10.3%",
+              "source": {
+                "name": "公司 FY2025 年报五年财务摘要 + stockanalysis 财务比率",
+                "url": "https://stockanalysis.com/quote/hkg/9992/financials/"
+              }
+            },
+            {
+              "fiscalYear": "FY2023",
+              "grossMarginPct": "61.3%",
+              "operatingMarginPct": "19.5%",
+              "netMarginPct": "17.2%",
+              "source": {
+                "name": "公司 FY2025 年报五年财务摘要 + stockanalysis 财务比率",
+                "url": "https://stockanalysis.com/quote/hkg/9992/financials/"
+              }
+            },
+            {
+              "fiscalYear": "FY2024",
+              "grossMarginPct": "66.8%",
+              "operatingMarginPct": "31.9%",
+              "netMarginPct": "24.0%",
+              "source": {
+                "name": "公司 FY2025 年度业绩公告比较列 + stockanalysis 财务比率",
+                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf"
+              }
+            },
+            {
+              "fiscalYear": "FY2025",
+              "grossMarginPct": "72.1%",
+              "operatingMarginPct": "45.5%",
+              "netMarginPct": "34.4%",
+              "source": {
+                "name": "公司 FY2025 年度业绩公告（毛利率 72.1%、经营利润 168.90 亿元、归母 127.76 亿元）",
+                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf"
+              }
+            }
+          ]
+        },
+        "businessModelCanvas": {
+          "salesModel": "混合",
+          "productForm": "混合",
+          "note": "① 收入 99.4% 来自实物商品的一次性销售（FY2025 自有产品占 99.1%）。② DTC 直营为主：中国线上 85.22 亿元、线下零售店 100.75 亿元，批发仅 9.08 亿元。③ 会员体系提供复购粘性但非订阅：2026H1 中国内地会员贡献收入 92.9%、复购率 51.6%。④ 少量服务性收入（POP LAND 门票餐饮、授权费）混在「批发及其他」与「其他收入」中，占比不足 5%。"
+        },
+        "stickiness": {
+          "level": "中",
+          "mechanism": "① 靠 IP 收藏的系列完整性驱动复购，不是合约锁定。② 会员积分与 Pop Draw 抽盒玩法提高单渠道迁移成本。③ 二手市场可流通降低了买错的沉没成本，反向削弱锁定。",
+          "evidence": [
+            {
+              "metric": "中国内地会员复购率（半年内购买 2 次及以上占购买会员比例）",
+              "value": "51.6%",
+              "asOf": "2026H1",
+              "source": {
+                "name": "公司 2026H1 中期业绩公告 Member operation 段",
+                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+              }
+            },
+            {
+              "metric": "中国内地会员贡献销售占比",
+              "value": "92.9%",
+              "asOf": "2026H1",
+              "source": {
+                "name": "公司 2026H1 中期业绩公告 Member operation 段",
+                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+              }
+            },
+            {
+              "metric": "全球累计注册会员数",
+              "value": "超 1 亿（中国内地 8,244 万）",
+              "asOf": "2026-06-30",
+              "source": {
+                "name": "公司 2026H1 中期业绩公告 Member operation 段",
+                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+              }
+            },
+            {
+              "metric": "存货周转天数（粘性最直接的反向指标）",
+              "value": "201 天（FY2025 为 123 天）",
+              "asOf": "2026H1",
+              "source": {
+                "name": "公司 2026H1 中期业绩公告 Inventories 段",
+                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+              }
+            }
+          ]
+        },
+        "grossMarginVsPeers": {
+          "companyPct": "72.1%（FY2025）",
+          "peers": [
+            {
+              "name": "名创优品集团（TOP TOY 母公司，9896.HK）",
+              "grossMarginPct": "45.0%（FY2025，集团口径）",
+              "source": {
+                "name": "本仓库已落盘研究 research/companies/us-mnso-miniso/financials-collection.json（引自 MINISO FY2025 业绩公告）",
+                "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0331/2026033101180_c.pdf"
+              }
+            },
+            {
+              "name": "卡游（集换式卡牌，未上市）",
+              "grossMarginPct": {
+                "status": "unavailable",
+                "reason": "招股书未披露毛利率原值，媒体仅给出 2024 年收入 100.57 亿元与经调整净利润 44.66 亿元（对应净利率约 44%，高于泡泡玛特同期 26%）；已查招股书媒体引述与行业对比报告"
+              },
+              "source": {
+                "name": "卡游招股书媒体引述（收入与经调整净利润）",
+                "url": "https://user.guancha.cn/main/content?id=1434675"
+              }
+            },
+            {
+              "name": "52TOYS（未上市，已递表港交所）",
+              "grossMarginPct": {
+                "status": "unavailable",
+                "reason": "招股书披露的是 IP 授权成本占收入比重（2024 年 7.1%，泡泡玛特同期 3.8%）而非毛利率；已查招股书媒体引述"
+              },
+              "source": {
+                "name": "52TOYS 招股书媒体引述（授权成本占比与经调整净利率约 5%）",
+                "url": "https://m.winshang.com/news734324.html"
+              }
+            }
+          ],
+          "whyHigherOrLower": "① 品类结构：自有艺术家 IP 占收入 90%，授权费成本仅占收入 3.8%，同业授权 IP 占比更高、授权成本更重。② 渠道结构：直营 DTC（零售店/线上/机器人商店）占收入 96%，无加盟分成与经销商折价。③ 区域结构：海外毛利率高于国内，FY2025 海外占收入 43.8% 拉高综合毛利。④ 2026H1 毛利率回落至 69.7% 正是这三条同时反向（海外占比降至 29%、原材料涨价）。"
+        },
+        "operatingLeverage": {
+          "observation": "经营杠杆在放量年份极强、在减速年份立即反向。FY2025 收入 +184.7% 而销售费用 +121.4%、管理费用 +86.9%，费用率大幅下降带来经营利润率由 31.9% 升至 45.5%。2026H1 收入 +23.8% 但销售人员成本 +45.7%、租赁相关费用 +43.3%，经营利润仅 +11.3%，经营利润率回落至 39.2%。",
+          "evidence": [
+            {
+              "metric": "FY2025 销售费用率 / 管理费用率",
+              "value": "约 21.8% / 约 4.8%（同比 −6.2pct / −2.5pct）",
+              "asOf": "FY2025",
+              "source": {
+                "name": "华西证券研报引公司 FY2025 公告数据",
+                "url": "http://webview.hibor.org/data/e24818160f1bbc0c07ced996436adaa7.html"
+              }
+            },
+            {
+              "metric": "2026H1 收入增速与经营利润增速之差",
+              "value": "收入 +23.8% vs 经营利润 +11.3%",
+              "asOf": "2026H1",
+              "source": {
+                "name": "公司 2026H1 中期业绩公告 INTERIM RESULTS HIGHLIGHTS",
+                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+              }
+            },
+            {
+              "metric": "2026H1 销售费用增长构成",
+              "value": "租赁相关 +43.3%、员工成本 +45.7%（销售人员 6,219→9,734 人）",
+              "asOf": "2026H1",
+              "source": {
+                "name": "公司 2026H1 中期业绩公告 Distribution and Selling Expenses 段",
+                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+              }
+            }
+          ]
+        }
+      },
+      "inquiry": {
+        "question": "这门生意好在哪？如果只能用一句话描述，是什么？",
+        "answer": "好在这是一门「用低成本版权换高毛利情感溢价、用直营渠道全额收钱」的生意——但它的收入上限由 IP 热度决定，不由产能或渠道决定。① 毛利率 72.1%、无银行借款、净现金 104.36 亿元，说明商业模式本身极轻、现金转换几乎无摩擦。② 利润弹性来自经营杠杆：FY2025 收入增长 1.85 倍时经营利润率提升 13.6pct；但 2026H1 减速时费用刚性立刻反噬。③ 真正的成本项是艺术家版权与设计（FY2025 设计及授权费 9.51 亿元，占收入 2.6%），一旦 IP 失效，这条护城河不会因规模而自动修复。"
+      },
+      "dataGaps": [
+        {
+          "path": "businessEssence.analysis.stickiness.evidence",
+          "reason": "缺分 IP 的复购率/留存数据：公司只披露中国内地整体会员复购率 51.6%，不披露单个 IP 的重复购买或流失率",
+          "searched": "已查 financials-collection.json 全部字段（FY2025 年度业绩公告、FY2025 年报、2026H1 中期业绩公告、2025H1 中期业绩公告）"
+        },
+        {
+          "path": "businessEssence.analysis.grossMarginVsPeers.peers",
+          "reason": "缺可比同业的毛利率原值：52TOYS 与卡游均未上市、招股书未按披露口径给出毛利率，无法做毛利率横向对比",
+          "searched": "已查行业对比报告与两家招股书的媒体引述；已查 52TOYS 收入/授权成本占比与卡游收入/净利率"
+        },
+        {
+          "path": "businessEssence.analysis.profitabilityTrend5y.series",
+          "reason": "FY2021–FY2023 的经营利润率与净利率全部依赖 stockanalysis 单源（公司 FY2025 年报五年摘要只给收入/毛利/经营溢利/除税前溢利，未给净利率与费用率）",
+          "searched": "已查公司 FY2025 年报五年财务摘要、2023 年报媒体转述；利润率为工具验算值（收入与利润来自公司口径）"
+        }
+      ]
+    },
+    "moat": {
+      "title": "护城河评估",
+      "conclusion": "真护城河只有「艺术家 IP 平台 + 直营渠道」两条，2026H1 首次被压力测试。",
+      "analysis": {
+        "types": [
+          {
+            "type": "品牌/定价权",
+            "test": "是否能在不损失销量的情况下提价？",
+            "verdict": "待验证",
+            "evidence": [
+              {
+                "metric": "毛利率变动（FY2022→FY2025）",
+                "value": "57.5% → 72.1%（+14.6pct）",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "公司 FY2025 年度业绩公告",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf"
+                }
+              },
+              {
+                "metric": "2026H1 毛利率回落原因（宁可降毛利也不降价）",
+                "value": "69.7%（−0.6pct），公司归因海外占比下降与原材料涨价",
+                "asOf": "2026H1",
+                "source": {
+                  "name": "公司 2026H1 中期业绩公告 Gross Profit 段",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+                }
+              },
+              {
+                "metric": "二手溢价崩塌（定价权的市场化检验）",
+                "value": "新品上市数小时内出现折价挂单，部分系列二手价跌去一半以上",
+                "asOf": "2026-06",
+                "source": {
+                  "name": "Seoul Economic Daily / CNBC 关于 LABUBU 二手溢价回落的报道",
+                  "url": "https://en.sedaily.com/international/2026/06/26/labubu-resale-market-cools-as-discounted-dolls-flood"
+                }
+              }
+            ]
+          },
+          {
+            "type": "转换成本",
+            "test": "客户迁移到竞品的成本有多高？",
+            "verdict": "不存在",
+            "evidence": [
+              {
+                "metric": "会员性质（积分制而非付费订阅）",
+                "value": "会员贡献收入 92.9% 但复购率 51.6%，无付费门槛",
+                "asOf": "2026H1",
+                "source": {
+                  "name": "公司 2026H1 中期业绩公告 Member operation 段",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+                }
+              },
+              {
+                "metric": "竞品价格带分布（用户可低成本试新）",
+                "value": "52TOYS 盲盒均价 39 元、覆盖 10–35 元价格带 vs 泡泡玛特主力 99–199 元",
+                "asOf": "2024",
+                "source": {
+                  "name": "行业对比报道（52TOYS 招股书数据引述）",
+                  "url": "https://m.winshang.com/news734324.html"
+                }
+              }
+            ]
+          },
+          {
+            "type": "网络效应",
+            "test": "用户越多产品越好吗？",
+            "verdict": "待验证",
+            "evidence": [
+              {
+                "metric": "二级市场与内容生态规模",
+                "value": "全球注册会员超 1 亿；二手转售与开箱内容构成 IP 声量放大器",
+                "asOf": "2026-06-30",
+                "source": {
+                  "name": "公司 2026H1 中期业绩公告",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+                }
+              },
+              {
+                "metric": "网络效应的反向证据",
+                "value": "二手溢价崩塌后线上流量同步下滑：美洲线上 −45.6%、亚太线上 −39.8%",
+                "asOf": "2026H1",
+                "source": {
+                  "name": "公司 2026H1 中期业绩公告各区域渠道表",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+                }
+              }
+            ]
+          },
+          {
+            "type": "规模效应",
+            "test": "规模带来的成本优势有多大？",
+            "verdict": "存在",
+            "evidence": [
+              {
+                "metric": "集中采购与柔性供应链",
+                "value": "FY2025 毛利率 +5.3pct，公司归因海外占比提升与核心供应商集中采购议价",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "公司 FY2025 年度业绩公告 Gross Profit 段",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf"
+                }
+              },
+              {
+                "metric": "生产基地与仓配网络",
+                "value": "六个全球生产基地 + 区域仓储（FY2025 年报 OUTLOOK）",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "公司 FY2025 年报 OUTLOOK 段",
+                  "url": "https://prod-out-res.popmart.com/cms/ANNUAL_REPORT_2025_bd4e173872.pdf"
+                }
+              },
+              {
+                "metric": "规模效应的反面证据",
+                "value": "2026H1 存货周转天数 201 天（FY2025 123 天），备货规模放大需求误判的代价",
+                "asOf": "2026H1",
+                "source": {
+                  "name": "公司 2026H1 中期业绩公告 Inventories 段",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+                }
+              }
+            ]
+          },
+          {
+            "type": "技术/专利壁垒",
+            "test": "技术领先几年？能否被复制？",
+            "verdict": "不存在",
+            "evidence": [
+              {
+                "metric": "技术护城河的替代形态",
+                "value": "公司主导发起潮玩行业首个国家标准（标准话语权，非专利）",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "公司 FY2025 年报 OUTLOOK 段",
+                  "url": "https://prod-out-res.popmart.com/cms/ANNUAL_REPORT_2025_bd4e173872.pdf"
+                }
+              },
+              {
+                "metric": "研发投入无法单独计量",
+                "value": "损益表无研发费用行项目；且公司无阻挡性专利组合披露",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "公司 FY2025 年度业绩公告损益表",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf"
+                }
+              }
+            ]
+          }
+        ],
+        "trendPast5y": {
+          "direction": "变宽",
+          "basis": "① 毛利率 57.5%→72.1%、经营利润率 12.6%→45.5%。② 十亿级 IP 从 0 个增至 8 个，单一 IP 依赖度在 FY2025 达到峰值 38.1%。③ 海外收入从 2022 年的个位数占比升至 FY2025 的 43.8%，渠道从代销转为直营。"
+        },
+        "trendNext5y": {
+          "direction": "稳定",
+          "basis": "① 变宽的依据：中国内地 2026H1 +47.3%、成立 15 年已孵出 8 个十亿级 IP、六大生产基地与全球会员体系仍在扩建。② 变窄的依据：第一大 IP 已负增长（THE MONSTERS −7.5%）、二手溢价崩塌、新品销售率降至上年 30%–50%、竞品同时拿到融资（卡游 2024 年经调整净利 44.66 亿元、名创拿 100 亿储备金背书 TOP TOY）。③ 关键判据：三年内是否出现第二个年收入 100 亿元级 IP；出现则变宽，只靠 LABUBU 则变窄。"
+        }
+      },
+      "inquiry": {
+        "question": "10年后这条护城河还在吗？什么能摧毁它？",
+        "answer": "还在，但形态会变——十年后仍然存在的是「艺术家发掘与全链条运营能力」，最可能被摧毁的是「单个 IP 的定价权」。① 三丽鸥提供了长寿样本：Hello Kitty 经营 50 年，但期间经历 2015–2021 连续七个财年利润下滑、单一 IP 占比过高与过度授权反噬，靠换帅与多 IP 战略才在 2024 财年创新高（营业利润 518 亿日元，同比 +92%）。② 摧毁护城河的第一路径是「下一个 LABUBU 出不来」：公司未披露新 IP 成功率，无法用数据证明平台可重复。③ 第二路径是品牌被稀释：盲盒与毛绒的仿冒品、二级市场炒作退潮（新系列上市即折价）会同时损伤溢价与稀缺感。"
+      },
+      "dataGaps": [
+        {
+          "path": "moat.analysis.types[0].evidence",
+          "reason": "缺可直接量化的提价证据（分 IP/分产品的价格与销量序列）：公司不披露单品价格与销量，只能用毛利率与二手溢价间接推断",
+          "searched": "已查 FY2025 年度业绩公告、FY2025 年报、2026H1 中期业绩公告与媒体二手市场价格报道"
+        },
+        {
+          "path": "moat.analysis.trendNext5y",
+          "reason": "缺新 IP 成功率的历史统计（多少个新 IP 能跑出 1 亿元以上收入）：公司只披露当期过亿 IP 个数，不披露新 IP 的数量基数与淘汰率",
+          "searched": "已查 FY2025 年报 IP 章节与 2026H1 公告 IP 章节；行业报告亦无该口径统计"
+        }
+      ]
+    },
+    "inversion": {
+      "title": "逆向思考与风险清单",
+      "conclusion": "最致命的风险不是竞争，而是「LABUBU 之后没有下一个」且备货已先行。",
+      "analysis": {
+        "failurePaths": [
+          {
+            "path": "第一大 IP 持续负增长，接棒 IP 规模不足",
+            "probability": "高",
+            "impact": "高",
+            "evidence": [
+              {
+                "metric": "THE MONSTERS 2026H1 收入同比",
+                "value": "−7.5%（44.54 亿元），占比 38.1%→26.0%",
+                "asOf": "2026H1",
+                "source": {
+                  "name": "公司 2026H1 中期业绩公告 Revenue by IPs",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+                }
+              },
+              {
+                "metric": "接棒 IP 的规模缺口",
+                "value": "星星人 2026H1 26.50 亿元，仅为 THE MONSTERS 同期的 59%",
+                "asOf": "2026H1",
+                "source": {
+                  "name": "公司 2026H1 中期业绩公告 Revenue by IPs",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+                }
+              }
+            ]
+          },
+          {
+            "path": "海外扩张从高增长变成负增长，海外固定成本去杠杆",
+            "probability": "高",
+            "impact": "高",
+            "evidence": [
+              {
+                "metric": "2026H1 海外区域收入",
+                "value": "亚太 −9.7%、美洲 −16.5%、欧洲及其他 +5.9%",
+                "asOf": "2026H1",
+                "source": {
+                  "name": "公司 2026H1 中期业绩公告 Revenue by regions",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+                }
+              },
+              {
+                "metric": "海外门店净增加与费用",
+                "value": "美洲门店 64→86 家，租赁相关费用 +43.3%",
+                "asOf": "2026H1",
+                "source": {
+                  "name": "公司 2026H1 中期业绩公告 Distribution and Selling Expenses 段",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+                }
+              }
+            ]
+          },
+          {
+            "path": "库存与需求误判形成减值周期（Funko 路径）",
+            "probability": "中",
+            "impact": "中",
+            "evidence": [
+              {
+                "metric": "存货与周转天数",
+                "value": "存货 61.02 亿元、周转天数 201 天（FY2025 123 天）",
+                "asOf": "2026H1",
+                "source": {
+                  "name": "公司 2026H1 中期业绩公告 Inventories 段",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+                }
+              },
+              {
+                "metric": "同业历史教训（Funko）",
+                "value": "收入由 2022 年 13 亿美元降至 2023 年 11 亿美元（−17%），2023 年净亏损 1.541 亿美元，并销毁 3,000 万美元以上库存",
+                "asOf": "FY2023",
+                "source": {
+                  "name": "Funko FY2023 业绩公告与 ICv2 报道",
+                  "url": "https://investor.funko.com/news-and-events/press-releases/Press-Releases/2024/Funko-Reports-2023-Fourth-Quarter-Full-Year-Financial-Results-Provides-Full-Year-Outlook-for-2024/default.aspx"
+                }
+              }
+            ]
+          },
+          {
+            "path": "IP 被过度商业化与授权稀释，品牌调性下滑",
+            "probability": "中",
+            "impact": "中",
+            "evidence": [
+              {
+                "metric": "三丽鸥的同类教训",
+                "value": "2008 年后广开授权透支 IP，2014–2020 年业绩长期低迷；Hello Kitty 占公司销售比重从 75% 降至 50% 后才恢复增长",
+                "asOf": "2014–2020",
+                "source": {
+                  "name": "华泰证券《六十五载萌力深耕，三丽鸥 IP 沉浮启示录》与 Nippon.com 复盘",
+                  "url": "https://www.nippon.com/cn/in-depth/d01053/"
+                }
+              },
+              {
+                "metric": "本公司的授权扩张动作",
+                "value": "FY2025 授权 IP 收入 33.82 亿元（+111.3%），并称「已取得大部分授权 IP 的全球授权」",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "公司 FY2025 年度业绩公告与 2026H1 中期业绩公告",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+                }
+              }
+            ]
+          },
+          {
+            "path": "监管收紧随机抽取品类与未成年人销售",
+            "probability": "低",
+            "impact": "中",
+            "evidence": [
+              {
+                "metric": "现行规则约束",
+                "value": "《盲盒经营行为规范指引（试行）》：不得向未满 8 周岁未成年人销售、8 岁以上须监护人同意、鼓励保底机制与承诺不炒作不进场二级市场",
+                "asOf": "2023-06",
+                "source": {
+                  "name": "市场监管总局《盲盒经营行为规范指引（试行）》（新华网转载）",
+                  "url": "http://www.xinhuanet.com/tech/20230615/a28e02c43f3e4fb7ad15c2c35a10108c/c.html"
+                }
+              },
+              {
+                "metric": "监管的当前实际影响",
+                "value": "指引落地后公司收入与毛利率持续上升，未见经营层面的量化冲击",
+                "asOf": "2023–2025",
+                "source": {
+                  "name": "公司 FY2025 年度业绩公告（收入与毛利率序列）",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500285.pdf"
+                }
+              }
+            ]
+          },
+          {
+            "path": "创始人控制权集中带来的决策风险",
+            "probability": "低",
+            "impact": "中",
+            "evidence": [
+              {
+                "metric": "股权与治理结构",
+                "value": "王宁持股 48.73%，董事长与 CEO 由同一人担任（偏离企业管治守则 C.2.1）",
+                "asOf": "2025-12-31",
+                "source": {
+                  "name": "公司 FY2025 年报与 2026H1 中期业绩公告 Corporate Governance 段",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+                }
+              },
+              {
+                "metric": "海外扩张节奏的决策依据",
+                "value": "2026H1 美洲门店由 64 家增至 86 家（半年净增 22 家），同期美洲收入 −16.5%",
+                "asOf": "2026H1",
+                "source": {
+                  "name": "公司 2026H1 中期业绩公告 Consumer Access 段",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+                }
+              }
+            ]
+          }
+        ],
+        "historicalAnalogies": [
+          {
+            "company": "Funko（FNKO）",
+            "similarity": "同为「设计师收藏玩具 + 授权 IP + 大众流行」的爆红标的，需求由潮流驱动、库存周转快、二级市场溢价是需求信号",
+            "outcome": "2021 年收入 13 亿美元为峰值，2023 年降至 11 亿美元（−17%）并净亏 1.541 亿美元，销毁 3,000 万美元以上库存，股价较峰值缩水逾九成",
+            "source": {
+              "name": "Funko FY2023 业绩公告、ICv2、CBS News",
+              "url": "https://icv2.com/articles/news/view/56464/funko-lost-154-1-million-2023"
+            }
+          },
+          {
+            "company": "三丽鸥（8136.T）",
+            "similarity": "同为单一卡通 IP 支撑的授权/周边公司，经历过 IP 全球化破圈、随后长期低迷、再由多 IP 战略复兴",
+            "outcome": "1999 财年销售额峰值 1,502 亿日元；2015–2021 连续七个财年利润下滑；2021 年换帅后精简授权、多角色并行，FY3/2025 营收 1,449 亿日元（+45%）、营业利润 518 亿日元（+92%）创历史新高",
+            "source": {
+              "name": "Nippon.com Hello Kitty 50 周年复盘、华泰证券三丽鸥专题、智研咨询 IP 衍生品研究",
+              "url": "https://www.nippon.com/cn/in-depth/d01053/"
+            }
+          },
+          {
+            "company": "52TOYS（乐自天成，未上市，2025 年递表港交所）",
+            "similarity": "同为中国多品类 IP 玩具公司、同样采用「盲盒 + 授权 IP」模式，且都被资本市场当作「下一个泡泡玛特」定价",
+            "outcome": "规模停留在泡泡玛特单个 IP 的量级（2024 年收入 6.30 亿元，约等于泡泡玛特当年收入第 6 的 IP HIRONO 的 7.3 亿元），2022–2024 年连续净亏损，经调整净利率仅约 5%、授权成本占收入 7.1%（泡泡玛特同期 3.8%）",
+            "source": {
+              "name": "52TOYS 招股书媒体引述（收入、净亏损、授权成本占比与 GMV 排名）",
+              "url": "https://www.36kr.com/p/3305136499431940"
+            }
+          }
+        ],
+        "crossDisciplinaryChecks": [
+          {
+            "model": "技术采纳曲线",
+            "finding": "LABUBU 已完成从创新者到早期大众的扩散（明星带货、FIFA 世界杯联名），2026H1 的海外线上收缩符合「早期大众之后进入长尾」的典型形态；曲线判断指向需求不会消失，但增速回归常态。"
+          },
+          {
+            "model": "网络效应理论",
+            "finding": "泡泡玛特的网络效应是「单向间接型」：二手转售与社交内容放大声量，但公司不对网络直接收费，且网络活跃度下降会先冲击需求（线上渠道跌幅大于线下），因此不能按平台型网络效应给予估值溢价。"
+          },
+          {
+            "model": "竞争博弈",
+            "finding": "潮玩是高毛利、低门槛进入的行业（FY2025 行业 CR5 不足 25%），竞争者同时获得资本（卡游 2024 年经调整净利 44.66 亿元、名创 100 亿元储备金背书 TOP TOY、布鲁可港股上市、52TOYS 递表）。当行业从增量转向存量时，艺术家与 IP 的签约价格会被推高，挤压公司 72% 的毛利率。"
+          },
+          {
+            "model": "时尚周期与羊群效应",
+            "finding": "把收藏品当投资品的资金撤离时，二级市场会从溢价转为折价，并反向抑制一手需求。2026 年新品上线数小时内即出现折价挂单，说明投机资金已退出，需求回归真实消费者。"
+          }
+        ],
+        "biasSelfCheck": [
+          {
+            "bias": "叙事偏差",
+            "check": "原始叙事是「中国 IP 出海第一股」，容易被 LABUBU 的世界杯与明星联名故事牵引；本次特意核对财务总量：2026H1 收入 171.73 亿元里，中国占 71.0%、海外仅 29.0%，且海外同比为负，故事与财务已出现背离。"
+          },
+          {
+            "bias": "锚定效应",
+            "check": "两个锚都会误导：一是股价从 337.08 港元高点回落 55%，容易得出「跌够了」；二是 PE 13.16x 处于历史低位，容易得出「便宜」。真实锚应是「如果 2026 年利润按卖方预期下降 18%，PE 会立刻回到 16x 以上」。"
+          },
+          {
+            "bias": "幸存者偏差",
+            "check": "看到的是 LABUBU 成功，看不到同期被淘汰的新 IP（公司披露累计推出过大量 IP，但只披露收入过亿者）。行业口径 IP 生命周期 2–5 年，样本偏差会把「偶然命中」读成「平台能力」。"
+          }
+        ],
+        "bearCase": [
+          {
+            "point": "单 IP 风险已经兑现，不是预期风险：LABUBU 首次负增长，且新品销售率降至上年同期 30%–50%，管理层自己承认完不成 20% 增长目标",
+            "holder": "卖方（汇丰、花旗）、虎嗅与华尔街见闻、WSJ",
+            "evidence": [
+              {
+                "metric": "汇丰研究下修：2026 年收入由 +6% 改为 −7%，目标价 136.5 港元；花旗预测 2026 年收入 −8%、目标价 198 港元",
+                "value": "汇丰 2026 年净利预测降至 104.52 亿元",
+                "asOf": "2026-08",
+                "source": {
+                  "name": "汇丰研究与花旗研究（媒体转述）",
+                  "url": "https://gmg.9fzt.com/dynamic/HKSE/09992/e80935b0e5faaf900c788c5e9772f2ef.html"
+                }
+              },
+              {
+                "metric": "新品销售率",
+                "value": "仅为去年同期的 30%–50%",
+                "asOf": "2026H1",
+                "source": {
+                  "name": "虎嗅《当 LABUBU 不再稀缺》",
+                  "url": "https://www.huxiu.com/article/4885078.html"
+                }
+              }
+            ]
+          },
+          {
+            "point": "盈利质量恶化快于收入：毛利率 −0.6pct、调整后净利率由 33.9% 降至 30.0%、存货周转天数 123→201 天、汇兑损失 7.20 亿元",
+            "holder": "机构投资者与媒体分析（CNBC、KR Asia、虎嗅）",
+            "evidence": [
+              {
+                "metric": "调整后净利率与存货周转天数",
+                "value": "30.0%（去年 33.9%）与 201 天（去年末 123 天）",
+                "asOf": "2026H1",
+                "source": {
+                  "name": "公司 2026H1 中期业绩公告与 KR Asia 报道",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+                }
+              },
+              {
+                "metric": "库存与供应链错配导致的减值风险",
+                "value": "存货 61.02 亿元，公司称系海外扩张提前备货",
+                "asOf": "2026H1",
+                "source": {
+                  "name": "公司 2026H1 中期业绩公告 Inventories 段",
+                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "inquiry": {
+        "question": "我最可能在哪里犯错？聪明人为什么会不买/做空这家公司？",
+        "answer": "我最可能犯的错是把「平台化的可能性」当成「平台化的既成事实」。① 公司确实孵出过 8 个十亿级 IP，但只有一个做到了全球破圈（LABUBU），而支撑高毛利的正是海外 43.8% 的高价销售；海外一旦转负，毛利率与经营杠杆会同时反向（2026H1 已验证）。② 聪明人不买的理由是估值锚不稳定：2026 年一致预期收入 351 亿元、净利预测已下调至约 104.5 亿元（汇丰），若按此计算当前 PE 已约 16.6x，不再「便宜」；而如果 2027 年 LABUBU 不回稳，分母还会再降。③ 做空者更看空的是「收藏品金融化退潮」这个二阶效应：二手溢价消失会让一部分以保值为目的的购买彻底退出，一手销量的下滑会大于热度下滑本身。"
+      },
+      "dataGaps": [
+        {
+          "path": "inversion.analysis.historicalAnalogies[2]",
+          "reason": "Beanie Babies 泡沫缺少可溯源的量化数据（未上市公司，无财报），仅作为机制参照，不作为证据使用",
+          "searched": "已查行业报道与媒体复盘，未取到可用的一手数据"
+        },
+        {
+          "path": "inversion.analysis.failurePaths",
+          "reason": "缺概率的量化基础：各失败路径的概率是定性与比较判断（高/中/低），没有可计算的历史基准率（公司未披露新 IP 成功率或历史 IP 衰减曲线）",
+          "searched": "已查 FY2025 年报与 2026H1 公告 IP 披露口径；行业报告亦无该统计"
+        }
+      ]
+    },
+    "management": {
+      "title": "管理层评估",
+      "conclusion": "创始人能力已证明，资本配置尚可，但治理制衡与减持纪律偏弱。",
+      "analysis": {
+        "keyDecisions": [
+          {
+            "date": "2016",
+            "decision": "签约 MOLLY 艺术家 IP，从杂货代理转型为 IP + 盲盒运营商",
+            "outcome": "奠定商业模式；MOLLY 至今仍贡献 28.97 亿元（FY2025）",
+            "rating": "★★★★★",
+            "source": {
+              "name": "百度百科王宁履历与企业沿革（单源，Level 3）",
+              "url": "https://baike.baidu.com/item/%E7%8E%8B%E5%AE%81/50355896"
+            }
+          },
+          {
+            "date": "2022–2023",
+            "decision": "行业低谷期克制国内开店、重投海外渠道与 POP LAND 乐园",
+            "outcome": "FY2025 美洲收入同比 +748.4%，海外占收入 43.8%，形成第二曲线",
+            "rating": "★★★★★",
+            "source": {
+              "name": "第一财经 FY2023 业绩会报道与 FY2025 年度业绩公告 Revenue by regions",
+              "url": "https://www.yicai.com/news/102036534.html"
+            }
+          },
+          {
+            "date": "2025-08",
+            "decision": "将全年收入指引由 200 亿元上调至「不低于 300 亿元」",
+            "outcome": "FY2025 实际 371.20 亿元，超额完成",
+            "rating": "★★★★",
+            "source": {
+              "name": "uSMART 对 2025H1 业绩会的转述与 FY2025 年度业绩公告",
+              "url": "https://hk.usmartglobal.com/en/news-detail/7363879246546240320"
+            }
+          },
+          {
+            "date": "2026-03",
+            "decision": "FY2025 末期股息每股 2.3817 元（合计 31.94 亿元）+ 连续 6 个交易日回购 13.97 亿港元",
+            "outcome": "派息率 24.8%；回购注销 1,122 万股，均价区间 140.9–194.9 港元",
+            "rating": "★★★",
+            "source": {
+              "name": "公司 FY2025 年度业绩公告 Dividends 段与 2026H1 中期业绩公告 Share Capital 段",
+              "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+            }
+          },
+          {
+            "date": "2026-08-20",
+            "decision": "公开承认完不成 20% 收入增长目标，转向「重心不在销售高速增长」，同时宣布 20–50 亿元回购",
+            "outcome": "披露诚信加分；但市场以股价下跌回应，回购尚未执行完毕，效果待验证",
+            "rating": "★★★",
+            "source": {
+              "name": "证券时报、新浪财经对 2026H1 业绩会的转述",
+              "url": "https://www.stcn.com/article/detail/4092654.html"
+            }
+          }
+        ],
+        "capitalAllocation": {
+          "rdReturn": "无法用研发回报率衡量：损益表无研发费用行项目。可观察的替代指标是设计及授权费（FY2024 5.07 亿元 → FY2025 9.51 亿元）与行政/设计研发人员（1,435 → 2,194 → 2,322 人），对应 IP 收入从 112.08 亿元增至 334.06 亿元（艺术家 IP，FY2024→FY2025），投入产出方向正向",
+          "maTrackRecord": "基本无并购记录：FY2025 与 2026H1 公告均称「未进行重大收购或处置」；唯一相关动作是 2025 年对原 50% 合营企业实现业务合并（2025H1 确认重估收益 0.42 亿元）。扩张以自建为主，未出现商誉减值风险",
+          "buybackTiming": "★★☆：2026 年 1 月回购约 3.48 亿港元、3 月 26 日至 4 月 2 日回购 13.97 亿港元（均价区间 140.9–194.9 港元），此后股价继续下行至 152.90 港元；回购金额占 2026H1 末现金资源 141.64 亿元的约 12%，财务上安全，但时点未显现抄底效果。对比 FY2023 回购 3.34 亿元、FY2022 回购 6.34 亿元，属连续行为而非临时救市",
+          "evidence": [
+            {
+              "metric": "累计回购金额与价格区间",
+              "value": "截至 2026-04 累计约 17.44 亿港元；2026H1 回购 1,122 万股，均价区间 140.9–194.9 港元",
+              "asOf": "2026-06-30",
+              "source": {
+                "name": "公司 2026H1 中期业绩公告 Share Capital 段；证券时报对回购历史的汇总",
+                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+              }
+            },
+            {
+              "metric": "现金资源与派息",
+              "value": "2026H1 末现金资源 141.64 亿元；FY2025 派息 31.94 亿元（派息率 24.8%）",
+              "asOf": "2026-06-30",
+              "source": {
+                "name": "公司 2026H1 中期业绩公告 Current Assets 段",
+                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+              }
+            }
+          ]
+        },
+        "alignment": {
+          "ownership": "王宁（创始人、董事长兼 CEO）持股 654,381,407 股、占已发行股本 48.73%（2025-12-31）；公司无 AB 股结构，经济权益 = 投票权。其他执行董事：司德（COO）0.77%、文德一（CGO）0.1%",
+          "compensation": "公司损益表披露股份支付费用（FY2025 为 0.72 亿元，FY2025 年度业绩公告），并设 Post-IPO 股份奖励计划（2026-07-08 授予奖励，含向供应商 IP 设计服务方授予的 Service Provider Grantee）；薪酬与考核挂钩的具体指标未在业绩公告中量化披露",
+          "insiderSelling": "董事层面存在减持：同花顺 F10 股东持股显示司德个人持股变动 −60.99 万股；王宁持股在 2025 年内「不变」。管理层未出现大规模集中减持的公开记录",
+          "evidence": [
+            {
+              "metric": "创始人持股比例",
+              "value": "48.73%（654,381,407 股）",
+              "asOf": "2025-12-31",
+              "source": {
+                "name": "公司 FY2025 年报；同花顺 F10 主要股东（GWF Holding 41.78% + Pop Mart Hehuo 4.62% + Tianjin Paqu 2.32%）",
+                "url": "https://basic.10jqka.com.cn/176/HK9992/holder.html"
+              }
+            },
+            {
+              "metric": "董事持股变动",
+              "value": "司德 −60.99 万股；王宁 不变",
+              "asOf": "2025-12-31",
+              "source": {
+                "name": "同花顺 F10 泡泡玛特股东持股",
+                "url": "https://basic.10jqka.com.cn/176/HK9992/holder.html"
+              }
+            },
+            {
+              "metric": "股份奖励计划",
+              "value": "2026-07-08 授出奖励，含 IP 设计服务供应商",
+              "asOf": "2026-07-08",
+              "source": {
+                "name": "公司 2026H1 中期业绩公告 Supplemental Announcement on Grant of Awards",
+                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+              }
+            }
+          ]
+        },
+        "organization": {
+          "teamStability": "创始团队稳定：王宁任 CEO 逾 15 年，刘冉、司德、文德一均为执行董事并分管运营/增长；COO 司德在 2025 年度业绩会与 2026H1 业绩会上均为主要对外发言人。员工总数由 2024 年末 6,702 人（销售 5,267 + 行政研发 1,435）增至 2026H1 的 12,056 人，扩张期但未见核心高管流失披露",
+          "keyPersonRisk": "高：王宁同时担任董事长与 CEO（偏离企业管治守则 C.2.1），持股 48.73%，公司战略（克制开店、重投海外、乐园与内容投入）明显带有创始人个人判断色彩；公司未披露接班计划"
+        },
+        "culture": "① 长期主义有可观察痕迹：2016 年拿下 IP 授权后坚持自建艺术家矩阵，2020 年上市至今 15 年只做一条主线。② 克制扩张：2022、2023 年业绩会明确不以开店换增长，2026H1 中国内地门店半年仅净增 10 家。③ 披露诚信：2026-08-20 主动承认完不成 20% 增长目标，未用口径调整粉饰；FY2026H1 汇兑损失 7.20 亿元亦单独列示。④ 股东回报为制度化行为：FY2022 起连续回购，FY2025 起派发大额末期股息（派息率 24.8%）。⑤ 风险信号：创始人绝对控制 + 配偶杨涛任副总裁 + 董事长兼 CEO，缺少外部制衡。"
+      },
+      "inquiry": {
+        "question": "如果CEO退休，这家公司还能保持竞争力吗？",
+        "answer": "短期能，长期存疑——三丽鸥的答案是「换帅后靠多 IP 战略反而复兴」，泡泡玛特尚未证明这一点。① 组织能力已有沉淀：COO 司德分管运营与增长、CGO 文德一负责全球增长，2025 年完成全球组织架构调整（首次按四大区域披露），日常经营不完全依赖创始人。② 但战略判断高度个人化：克制国内开店、逆势重投海外与乐园、宣布回购区间，都是创始人在业绩会现场给出的口径，公司未披露接班计划与授权边界。③ 参照三丽鸥：其 2021 年的复兴恰好发生在创始人之孙接任总经理、并由新管理层精简授权伙伴之后——说明 IP 公司换帅可以是转机也可以是断层，取决于治理结构是否允许专业管理者改写策略；泡泡玛特目前 48.73% 的持股结构使这种改写只能由王宁本人发起。"
+      },
+      "dataGaps": [
+        {
+          "path": "management.analysis.alignment.compensation",
+          "reason": "缺高管薪酬结构与考核指标：公告披露股份支付总额与股份奖励计划，但未量化高管薪酬与业绩指标的挂钩方式",
+          "searched": "已查 FY2025 年报薪酬章节与 2026H1 中期业绩公告；未取到逐人薪酬数据"
+        },
+        {
+          "path": "management.analysis.capitalAllocation.rdReturn",
+          "reason": "缺研发费用行项目，无法计算研发回报率；只能用设计及授权费与设计师人数做替代观察",
+          "searched": "已查 FY2025 年度业绩公告损益表与年报费用附注"
+        },
+        {
+          "path": "management.analysis.keyDecisions",
+          "reason": "2016 年转型与早期决策仅有第三方百科与媒体单源（Level 3，允许单源），无一手披露可核",
+          "searched": "已查百度百科、十大品牌网人物履历、公司招股书相关信息"
+        }
+      ]
+    },
+    "industryTrend": {
+      "title": "行业与长期趋势",
+      "conclusion": "不是文明级范式转移，而是「社交媒体时代的 IP 快消」——传播更快、衰减也更快。",
+      "analysis": {
+        "paradigmShift": {
+          "verdict": "部分",
+          "reasoning": "① 产品本身不是新范式：盲盒与毛绒是既有玩具形态，1970 年代的 Beanie Babies、2000 年代的 Hello Kitty 周边已出现过同构需求。② 真正被重构的是 IP 传播成本：短视频与明星带货让一个中国 IP 在 18 个月内完成全球破圈（LABUBU 登上 FIFA 世界杯开闭幕式），这是分发效率的范式变化。③ 传播越快，衰减也越快：2026H1 海外线上渠道跌幅 40%–59%，正是流量型扩散的反面。"
+        },
+        "historicalAnalogy": "参照三丽鸥的供给侧路径：1974 年诞生 Hello Kitty，靠 1990 年代亚洲消费崛起与欧美明星带货完成全球化，1999 财年销售额达峰值 1,502 亿日元；此后因过度授权与单一 IP 依赖，2015–2021 连续七个财年利润下滑；2021 年后精简授权、多 IP 并行才创新高。泡泡玛特当前处于「刚经历一次全球化破圈、开始面对 IP 单一依赖」的位置，与三丽鸥 2000 年前后的处境更接近，而非与迪士尼的多 IP 内容生态可比",
+        "tam": {
+          "current": {
+            "value": "1,101亿元",
+            "currency": "CNY",
+            "asOf": "2026年（中国潮玩产业预测值；全球对照口径为 2025 年授权玩具 485 亿美元）",
+            "source": {
+              "name": "新华网引述天眼查中国潮玩产业数据；Global Market Insights 授权玩具市场报告",
+              "url": "https://www.gminsights.com/zh/industry-analysis/licensed-toy-market"
+            }
+          },
+          "ceiling": "天花板不在玩具总量，而在「IP 情感消费」的份额：全球玩具市场约 1,114–1,243 亿美元、年增速仅 2.4%–5.9%，其中授权玩具 485 亿美元（2025）、预计 2035 年 828 亿美元（CAGR 5.5%）。泡泡玛特 FY2025 收入 371.20 亿元（约 52 亿美元）已相当于全球授权玩具市场的约 11%，继续靠品类扩张提升份额的空间有限，真正的天花板是「一个 IP 能承载多少品类与地理范围」",
+          "growthCurve": "成长期中后段：公司自身规模仍在扩张（FY2025 +184.7%），但核心 IP 与其主要区域已进入成熟/衰退切换期（2026H1 海外三大区域转负），行业整体从「情感叙事驱动」转向「符号消费主导」（第三方行业分析）"
+        },
+        "valueChainPosition": "位于价值链的设计与品牌端（IP 运营 + 零售终端），不自建工厂（六个全球生产基地均为合作产能），上游是艺术家与授权方（FY2025 设计及授权费 9.51 亿元、授权费应付款 5.19 亿元），下游直接面对消费者（直营 96%）。议价权在两端都对泡泡玛特有利：对上游以「IP 孵化平台」身份获得艺术家依赖，对下游以稀缺性维持终端定价；但这种议价权在 IP 热度下降时会同时衰减",
+        "techRouteRisk": "技术路线风险低、需求路线风险高：产品工艺（毛绒、手办、可动结构）可被同业复制，不存在被新技术替代的问题；真正风险是「消费者情感投射对象」从实体潮玩转向其他形态（虚拟形象、游戏皮肤、宠物、AI 陪伴硬件）——2026H1 公司自己把增长归因于「情感陪伴」，也说明品类边界是需求而非技术",
+        "concentration": {
+          "customers": "客户极度分散：公告明确「2026H1 与 2025H1 均无单一客户收入占比达 10% 或以上」，应收周转天数仅 8 天",
+          "suppliers": "供应商为代工厂与原材料商，集中度不高但存在区域集中：公司未披露前五大供应商占比；成本端敏感项是原材料涨价（2026H1 毛利率下降原因之一）与代工产能的区域布局（中国 + 东南亚 + 墨西哥的多元制造格局）",
+          "evidence": [
+            {
+              "metric": "客户集中度与应收周转",
+              "value": "无单一客户占比 ≥10%；贸易应收 6.27 亿元，周转天数 8 天",
+              "asOf": "2026H1",
+              "source": {
+                "name": "公司 2026H1 中期业绩公告 Segment and Revenue Information 与 Trade Receivables 段",
+                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000353.pdf"
+              }
+            },
+            {
+              "metric": "供应商集中度",
+              "value": "未披露前五大供应商占比；仅披露六个全球生产基地与集中采购策略",
+              "asOf": "FY2025",
+              "source": {
+                "name": "公司 FY2025 年报 OUTLOOK 段",
+                "url": "https://prod-out-res.popmart.com/cms/ANNUAL_REPORT_2025_bd4e173872.pdf"
+              }
+            }
+          ]
+        }
+      },
+      "inquiry": {
+        "question": "站在20年后回看，这家公司是「这个时代的标准石油」还是「昙花一现的3Com」？",
+        "answer": "更接近「IP 快消时代的宝洁」，既不是标准石油，也不是 3Com——它不太可能消亡，但也不太可能长期维持 45% 的经营利润率。① 「不是标准石油」：公司没有不可复制的资源或网络垄断，其核心资产（艺术家合约与 IP）会到期、会老化，行业 CR5 不足 25% 意味着替代品永远存在。② 「不是 3Com」：它的现金流与资产负债表是真实的（FY2025 自由现金流 96.93 亿元、无银行借款、净现金 104.36 亿元），且已具备多 IP 与全球渠道，不会因一次技术路线错误而消失。③ 三丽鸥的 65 年给出了可能的终局图景：IP 会经历 1–2 次长期低谷（其低谷长达 7 个财年），但只要能维持多 IP 与国际授权网络，就能在低谷后创新高（FY3/2025 营业利润 518 亿日元）。④ 结论：20 年维度的关键不是「会不会死」，而是「低谷有多长」——这是决定 3 年还是 10 年回本的核心变量，而公司目前没有任何公开数据能回答新 IP 孵化周期有多长。"
+      },
+      "dataGaps": [
+        {
+          "path": "industryTrend.analysis.tam.ceiling",
+          "reason": "缺权威的全球潮玩/收藏玩具统一口径市场规模：现有来源口径差异大（全球玩具 1,114 亿 vs 1,243 亿美元；授权玩具 485 亿美元），无法精确计算公司份额",
+          "searched": "已查 Global Market Insights、Fortune Business Insights、Global Growth Insights、中研普华与中国玩协口径；未取到统一口径"
+        },
+        {
+          "path": "industryTrend.analysis.concentration.suppliers",
+          "reason": "缺前五大供应商集中度：公司未按上市规则强制披露且年报未列示",
+          "searched": "已查 FY2025 年报与 2026H1 中期业绩公告供应商相关段落"
+        }
+      ]
+    },
+    "valuation": {
+      "title": "估值分析",
+      "conclusion": "按 TTM 是低估，按 2026 年一致预期只是合理——分歧全在分母取哪一年。",
+      "analysis": {
+        "currentMultiples": {
+          "marketCap": {
+            "value": "2036.20亿港元（约 1741.8 亿元人民币）",
+            "currency": "HKD",
+            "asOf": "2026-09-14",
+            "source": {
+              "name": "financial_rigor.py verify-market-cap（152.90 HKD × 13.317 亿股）",
+              "url": "https://stockanalysis.com/quote/hkg/9992/"
+            }
+          },
+          "pe": {
+            "value": "13.16x（TTM IFRS 归母）；静态 13.61x（FY2025）",
+            "asOf": "2026-09-14",
+            "source": {
+              "name": "financial_rigor.py calc（TTM 归母 132.40 亿元 → 每股 9.94 元人民币 = 11.62 港元）",
+              "url": "https://stockanalysis.com/quote/hkg/9992/statistics/"
+            }
+          },
+          "ps": {
+            "value": "4.31x（TTM 收入 404.17 亿元）",
+            "asOf": "2026-09-14",
+            "source": {
+              "name": "financial_rigor.py calc",
+              "url": "https://stockanalysis.com/quote/hkg/9992/statistics/"
+            }
+          },
+          "peg": {
+            "value": "3.45（PE 13.16 ÷ 3 年 EPS 一致预期增速 3.82%）",
+            "asOf": "2026-09-14",
+            "source": {
+              "name": "financial_rigor.py calc；增速取自 stockanalysis 一致预期",
+              "url": "https://stockanalysis.com/quote/hkg/9992/statistics/"
+            }
+          },
+          "evToRevenue": {
+            "value": "4.05x（EV = 市值 1,741.8 亿元 − 净现金 104.36 亿元）",
+            "asOf": "2026-09-14",
+            "source": {
+              "name": "financial_rigor.py calc",
+              "url": "https://stockanalysis.com/quote/hkg/9992/statistics/"
+            }
+          }
+        },
+        "reverseDcf": {
+          "impliedGrowth": "当前 13.16x TTM PE 隐含的预期接近「零增长略负」：若贴现率 10%、永续增长 2.5%，13.16x 大致对应未来 5 年自由现金流年均增速约 0%–3%。反过来说，市场当前定价已经反映了「2026 年利润下滑但不再持续恶化」这一情形，并未定价二次衰退",
+          "assumptions": "贴现率 10%（WACC 基准，stockanalysis 给 WACC 9.83%）；永续增长 2.5%；以 TTM 归母净利润 132.40 亿元近似自由现金流 96.93 亿元为起点（FY2025 FCF）。注：公司 FCF/净利润约 0.76，资本开支与租赁付款占用部分现金。该反推为量级判断，未做逐期 DCF 建模"
+        },
+        "threeScenario": {
+          "inputs": {
+            "price": 152.9,
+            "eps": 11.62,
+            "sharesHundredMillion": 13.317,
+            "growth": [
+              "10%（乐观）",
+              "2%（中性）",
+              "−12%（悲观）"
+            ],
+            "pe": [
+              "20（乐观）",
+              "14（中性）",
+              "9（悲观）"
+            ],
+            "years": 3,
+            "currency": "HKD"
+          },
+          "optimistic": {
+            "targetPrice": "309.3 HKD",
+            "impliedReturnPct": "+102.3%"
+          },
+          "neutral": {
+            "targetPrice": "172.6 HKD",
+            "impliedReturnPct": "+12.9%"
+          },
+          "pessimistic": {
+            "targetPrice": "71.3 HKD",
+            "impliedReturnPct": "−53.4%"
+          },
+          "assumptionBasis": "① 基数：TTM 每股收益 11.62 港元（TTM 归母 132.40 亿元 ÷ 13.317 亿股 ÷ 0.8554）。② 三个增速口径不互换：第三方 3 年复合 3.82%、卖方 2026 单年降幅约 18%（净利预期 104.5 亿元）、本模型三组增速是「 2026 下滑 + 2027–2028 恢复」的三年净复合。③ 中性 +2% 的桥接：2026 年 EPS 按一致预期降约 18%，2027 年起在中国内地双位数增长与海外止跌的共同作用下年均恢复约 14%，三年净复合回到 +2%。④ 乐观 +10% 假设三年内出现百亿元级新 IP 且海外转正；悲观 −12% 假设 LABUBU 年化两位数衰减且无接棒 IP，估值向传统玩具制造商靠拢。",
+          "toolOutput": "三情景估值模型 (Three-Scenario Valuation)\n  当前股价: 152.9 HKD\n  当前EPS:  11.62\n  预测期:   3年\n\n  情景                年增速     目标PE      目标EPS       目标股价      涨跌幅\n  乐观 (Bull)         10%      20x      15.47     309.3  +102.3%\n  中性 (Base)          2%      14x      12.33     172.6   +12.9%\n  悲观 (Bear)        -12%       9x       7.92      71.3   -53.4%\n\n  ✅ 所有计算使用精确十进制, 结果可审计复现"
+        },
+        "vsOwnHistory": {
+          "metric": "PE（各财年年末静态 PE 序列）",
+          "currentValue": "13.16x（TTM，2026-09-14）",
+          "historicalRange": "FY2021 59.76x、FY2022 50.41x、FY2023 22.57x、FY2024 35.75x、FY2025 17.54x，当前 TTM 13.16x 为上市以来最低区；PB 7.55x（FY2025 年末为 9.0x 以上），PS 4.31x（FY2024 年末 8.57x）",
+          "source": {
+            "name": "stockanalysis.com 分财年 PE/PS 序列（历史序列以实际价格计，非前复权口径，用于 band 参考）",
+            "url": "https://stockanalysis.com/quote/hkg/9992/financials/ratios/"
+          }
+        },
+        "vsPeers": [
+          {
+            "name": "名创优品集团（9896.HK，TOP TOY 母公司）",
+            "pe": "14.87x（TTM）",
+            "ps": "0.79x",
+            "source": {
+              "name": "本仓库已落盘研究 research/companies/us-mnso-miniso/financials-collection.json（2026-09-11/14 数据）",
+              "url": "https://stockanalysis.com/quote/hkg/9896/statistics/"
+            }
+          },
+          {
+            "name": "三丽鸥（8136.T，IP 授权对照）",
+            "pe": {
+              "status": "unavailable",
+              "reason": "本次采集未取到三丽鸥当期 PE（未回日本 IR），仅有 FY3/2025 营收 1,449 亿日元、营业利润 518 亿日元与净利润约 417 亿日元",
+              "source": {
+                "name": "智研咨询 IP 衍生品研究（三丽鸥 FY3/2025 数据）",
+                "url": "https://m.chyxx.com/news/1229714.html"
+              }
+            },
+            "ps": {
+              "status": "unavailable",
+              "reason": "同上：未取到市值，无法计算 PS"
+            },
+            "source": {
+              "name": "智研咨询 IP 衍生品研究（三丽鸥 FY3/2025 数据）",
+              "url": "https://m.chyxx.com/news/1229714.html"
+            }
+          }
+        ]
+      },
+      "inquiry": {
+        "question": "如果股市明天关闭5年，你愿意以这个价格持有吗？",
+        "answer": "愿意，但只能以「高质量消费股」的预期持有，不能以「IP 平台成长股」的预期持有——因为两者的回报差了三倍以上。① 支撑持有的硬要素：净现金 104.36 亿元（占市值约 6%）、无银行借款、FY2025 自由现金流 96.93 亿元、派息率 24.8% 且已宣布 20–50 亿元回购，即使利润腰斩，公司也不会陷入财务困境。② 五年维度的真正风险是「分母不增长」：如果 LABUBU 继续衰减且无接棒 IP，5 年后 EPS 可能低于今天，此时 13x PE 会在利润下滑中变成 18–20x，价格并不便宜。③ 关键监控点是「第二个百亿元级 IP 是否出现」，而不是季度收入增速——前者决定五年后的 EPS 量级，后者只决定短期股价波动。"
+      },
+      "dataGaps": [
+        {
+          "path": "valuation.analysis.vsPeers[1]",
+          "reason": "缺三丽鸥当期 PE/PS/市值：未回日本 IR 一手披露，无法完成跨市场估值对比",
+          "searched": "已查行业研究引述的三丽鸥业绩数据；未取到市值与 PE"
+        },
+        {
+          "path": "valuation.analysis.reverseDcf",
+          "reason": "缺逐期 DCF 建模所需的资本开支与折旧预测序列（公司不披露未来资本开支指引），反推为量级判断而非模型输出",
+          "searched": "已查 FY2025 年度业绩公告与 2026H1 中期业绩公告的资本开支披露（仅历史值，无指引）"
+        },
+        {
+          "path": "valuation.analysis.vsOwnHistory",
+          "reason": "历史 PE band 未能按前复权口径重算：第三方给出的分财年 PE 为年末静态口径，公司历史价格序列未取到（Tushare hk_daily 本轮撞 1 次/小时限频）",
+          "searched": "已查 stockanalysis 分财年 PE/PS 序列；Tushare hk_daily 未取到"
+        }
+      ]
+    }
+  },
+  "crossValidationLog": [
+    {
+      "field": "TTM 归母净利润（FY2025 − 2025H1 + 2026H1）",
+      "source1": {
+        "name": "工具验算：127.76 − 45.74 + 50.38 亿元 = 132.40 亿元",
+        "value": 132.4
+      },
+      "source2": {
+        "name": "stockanalysis.com（TTM net income 15.28B HKD，按公司股数与汇率折算约合 130.8 亿元人民币，差异来自汇率与股数取整）",
+        "value": 130.8
+      },
+      "deviationPct": 1.2,
+      "flag": "minor-diff",
+      "resolution": "采用公司披露数字推导的 132.40 亿元；两源差异 1.2% 源于汇率换算"
+    },
+    {
+      "field": "PE（TTM）",
+      "source1": {
+        "name": "financial_rigor.py calc：152.90 ÷ (132.40 亿 ÷ 13.317 亿股 ÷ 0.8554)",
+        "value": 13.16
+      },
+      "source2": {
+        "name": "stockanalysis.com（PE 13.33）",
+        "value": 13.33
+      },
+      "deviationPct": 1.3,
+      "flag": "minor-diff",
+      "resolution": "取工具验算值 13.16x，注明与第三方 13.33x 的差异来自股本与汇率取整"
+    },
+    {
+      "field": "静态 PE（FY2025 归母）",
+      "source1": {
+        "name": "financial_rigor.py calc：130.79 ÷ 9.61",
+        "value": 13.61
+      },
+      "source2": {
+        "name": "stockanalysis.com（分财年 PE FY2025 17.54x，为 2025 年末价格口径，与本行当前价格口径不同）",
+        "value": 17.54
+      },
+      "deviationPct": 22.4,
+      "flag": "major-diff",
+      "resolution": "口径不可比：一为当前价格对 FY2025 盈利，一为 2025 年末价格对 FY2025 盈利。非数据错误，比较时须注明价格日期"
+    },
+    {
+      "field": "PB（股价 ÷ 每股净资产）",
+      "source1": {
+        "name": "financial_rigor.py calc：203.62e9 × 0.8554 ÷ 23,059 百万元",
+        "value": 7.55
+      },
+      "source2": {
+        "name": "stockanalysis.com（PB 7.46）",
+        "value": 7.46
+      },
+      "deviationPct": 1.2,
+      "flag": "minor-diff",
+      "resolution": "差异来自股本/汇率取整，取 7.55x"
+    },
+    {
+      "field": "PS（市值 ÷ TTM 收入）",
+      "source1": {
+        "name": "financial_rigor.py calc：203.62e9 × 0.8554 ÷ 404.17e8",
+        "value": 4.31
+      },
+      "source2": {
+        "name": "stockanalysis.com（PS 4.30）",
+        "value": 4.3
+      },
+      "deviationPct": 0.23,
+      "flag": "ok",
+      "resolution": "一致"
+    },
+    {
+      "field": "EV/Revenue",
+      "source1": {
+        "name": "financial_rigor.py calc：(152.9 × 13.317e8 × 0.8554 − 104.36e8) ÷ 404.17e8",
+        "value": 4.05
+      },
+      "source2": {
+        "name": "stockanalysis.com（EV/Sales 4.05、EV/EBITDA 8.27）",
+        "value": 4.05
+      },
+      "deviationPct": 0,
+      "flag": "ok",
+      "resolution": "两源一致"
+    },
+    {
+      "field": "股息率（TTM 每股股息 ÷ 现价）",
+      "source1": {
+        "name": "financial_rigor.py calc：2.3817 ÷ 0.8554 ÷ 152.9",
+        "value": 1.82
+      },
+      "source2": {
+        "name": "stockanalysis.com（Dividend Yield 1.80%）",
+        "value": 1.8
+      },
+      "deviationPct": 1.1,
+      "flag": "minor-diff",
+      "resolution": "取 1.82%，派息率 24.8%（工具验算 2.3817 ÷ 9.61）"
+    },
+    {
+      "field": "ROE（FY2025）",
+      "source1": {
+        "name": "financial_rigor.py calc：127.76 ÷ 平均归母权益 164.81 亿元",
+        "value": 77.52
+      },
+      "source2": {
+        "name": "stockanalysis.com（ROE 71.22%，TTM/期末口径）",
+        "value": 71.22
+      },
+      "deviationPct": 8.1,
+      "flag": "major-diff",
+      "resolution": "口径不可比（平均权益 vs 期末权益），非数据错误；同时列示期末法 57.35%"
+    },
+    {
+      "field": "ROA（FY2025）",
+      "source1": {
+        "name": "financial_rigor.py calc：130.12 ÷ 平均总资产 234.86 亿元",
+        "value": 55.4
+      },
+      "source2": {
+        "name": "stockanalysis.com（ROA 44.33%，TTM/期末口径）",
+        "value": 44.33
+      },
+      "deviationPct": 20,
+      "flag": "major-diff",
+      "resolution": "口径不可比（平均资产 vs 期末资产），非数据错误"
+    },
+    {
+      "field": "负债率（2026-06-30）",
+      "source1": {
+        "name": "工具验算：7,739.661 ÷ 31,028.136 = 24.95%（公司公告口径 24.9%）",
+        "value": 24.95
+      },
+      "source2": {
+        "name": "stockanalysis.com（Debt/Equity 0.16）",
+        "value": 24.95
+      },
+      "deviationPct": 0,
+      "flag": "ok",
+      "resolution": "公司公告 Gearing Ratio 24.9% 与工具验算一致；债务全部为租赁负债，无银行借款"
+    },
+    {
+      "field": "三情景目标价（乐观/中性/悲观）",
+      "source1": {
+        "name": "financial_rigor.py three-scenario（309.3 / 172.6 / 71.3 HKD）",
+        "value": 309.3
+      },
+      "source2": {
+        "name": "本字段为工具验算行，非多源交叉验证；外部参照为卖方目标价区间 136.5（汇丰）—198（花旗）港元，均落在本模型中性以下",
+        "value": 136.5
+      },
+      "deviationPct": {
+        "status": "not-applicable",
+        "reason": "工具验算行与卖方目标价不构成同口径交叉验证，不计算偏差率"
+      },
+      "flag": "ok",
+      "resolution": "本模型中性情景 172.6 HKD 高于两家卖方最新目标价，说明本报告的盈利假设较卖方更乐观；已在 threeScenario.assumptionBasis 中说明取值依据"
+    },
+    {
+      "field": "中国潮玩市场份额（8.5% vs 10.97%）",
+      "source1": {
+        "name": "网易财经引述行业数据（8.5%）",
+        "value": 8.5
+      },
+      "source2": {
+        "name": "中国报告网引述（10.97%）",
+        "value": 10.97
+      },
+      "deviationPct": 25,
+      "flag": "major-diff",
+      "resolution": "口径不可比（统计年份与品类口径不同），不做误差判定；第 1 步采集文件已按行业报告口径采信 8.5% 并标明市场定义"
+    }
+  ]
+}
