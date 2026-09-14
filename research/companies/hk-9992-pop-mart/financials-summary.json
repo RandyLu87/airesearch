@@ -1,0 +1,174 @@
+{
+  "_spec": {
+    "purpose": "泡泡玛特（9992.HK）研究流程第 3 步（分析总结）产出，按 docs/model/financials—summary-template.json 结构生成。只基于第 1 步采集与第 2 步分析的落盘文件，不重新采集。",
+    "confidence": "信心度 0–10：价值投资视角下对该维度的看多程度，越高越看多。最大风险维度按风险可控程度打分（越致命越低），估值维度按价格吸引力打分（越透支越低），企业文化维度按文化对长期股东的有利程度打分。",
+    "traceability": "每条 conclusion、confidence、triggers 的 basis 均写明所引用的前两步文件字段路径与关键数据。",
+    "dataCutoffNote": "数据截止 2026-09-14（Asia/Shanghai）；估值为 2026-09-14 港股收盘 152.90 HKD 口径。"
+  },
+  "meta": {
+    "companyId": "hk-9992-pop-mart",
+    "companyName": "泡泡玛特国际集团有限公司 (Pop Mart International Group Limited)",
+    "summarizedAt": "2026-09-14T20:10:00+08:00",
+    "dataCutoff": "2026-09-14（Asia/Shanghai），与第 1、2 步一致",
+    "basedOnCollection": "research/companies/hk-9992-pop-mart/financials-collection.json",
+    "basedOnAnalysis": "research/companies/hk-9992-pop-mart/financials-analysis.json"
+  },
+  "dimensionSummary": [
+    {
+      "dimensionId": "businessQuality",
+      "title": "生意质量",
+      "mapsTo": "dimensions.businessEssence",
+      "conclusion": "极高毛利的 IP 快消生意，现金转换干净，但收入上限由 IP 热度而非产能决定；2026H1 首次出现经营杠杆反向。",
+      "confidence": 8,
+      "scoreBasis": "① 加分项全部来自经工具验算的硬数据：毛利率 72.1%、经营利润率 45.5%、ROE 77.52%（dimensions.businessEssence.analysis.profitabilityTrend5y 与 valuation.analysis.currentMultiples），FY2025 自由现金流 96.93 亿元、无银行借款、净现金 104.36 亿元（collection.financialMetrics.annual[4] 与 latestBalanceSheet）。② 减分项来自 stickiness：会员复购率 51.6%、无付费锁定，存货周转天数由 123 天升至 201 天（dimensions.businessEssence.analysis.stickiness.evidence）。③ 需求侧不可控：2026H1 收入 +23.8% 而经营利润 +11.3%（dimensions.businessEssence.analysis.operatingLeverage），显示经营杠杆在减速年份立即反向。④ dataGaps 中分 IP 复购率与同业毛利率缺失，按规范向中性收敛 0.5 分，最终 8.0。"
+    },
+    {
+      "dimensionId": "moat",
+      "title": "护城河",
+      "mapsTo": "dimensions.moat",
+      "conclusion": "只有「艺术家 IP 平台」与「直营渠道」两条真护城河；过去 5 年显著变宽，未来 5 年判为稳定，关键未验证项是平台能否重复孵化。",
+      "confidence": 6.5,
+      "scoreBasis": "① 变宽的证据来自 dimensions.moat.analysis.trendPast5y：毛利率 57.5%→72.1%、经营利润率 12.6%→45.5%、十亿级 IP 由 0 个增至 8 个、海外收入占比升至 43.8%。② 五类护城河的验证结果为「品牌/定价权 待验证、转换成本 不存在、网络效应 待验证、规模效应 存在、技术专利 不存在」（dimensions.moat.analysis.types），其中转换成本被判「不存在」是本维度最大的扣分项——消费者可在 39 元与 99–199 元价格带之间自由切换。③ 未验证项无数据支持：公司未披露新 IP 成功率（dimensions.moat.dataGaps），三丽鸥的 65 年复盘显示 IP 公司会出现长达 7 个财年的低谷（dimensions.inversion.analysis.historicalAnalogies），因此不给出高于 7 分的看多。④ 最终 6.5。"
+    },
+    {
+      "dimensionId": "management",
+      "title": "管理层",
+      "mapsTo": "dimensions.management",
+      "conclusion": "创始人能力经一次完整周期验证、披露诚实，资本配置以自建与回购为主无并购风险；扣分项是治理制衡缺失。",
+      "confidence": 7.5,
+      "scoreBasis": "① 加分项：2016 年转型与 2022–2023 年逆势重投海外被评为 ★★★★★（dimensions.management.analysis.keyDecisions[0][1]），2026-08-20 主动承认完不成 20% 收入目标（keyDecisions[4]），FY2022 起连续回购、FY2025 派息率 24.8%（dimensions.management.analysis.alignment 与 capitalAllocation.buybackTiming）。② 减分项：王宁持股 48.73% 且董事长与 CEO 由同一人担任、偏离企业管治守则 C.2.1、配偶杨涛任副总裁、董事司德减持 60.99 万股、未披露接班计划（dimensions.management.analysis.alignment 与 organization.keyPersonRisk）。③ 回购时点未显现抄底效果（均价区间 140.9–194.9 港元，其后股价仍下行），故资本配置能力不给满分。④ 最终 7.5。"
+    },
+    {
+      "dimensionId": "keyRisk",
+      "title": "最大风险",
+      "mapsTo": "dimensions.inversion",
+      "conclusion": "最大风险是「LABUBU 之后没有下一个」且备货已先行——这是需求侧风险，公司无法用经营手段控制，且已部分兑现。",
+      "confidence": 5,
+      "scoreBasis": "① 按「风险越致命分数越低」打分。首要风险 probability 高、impact 高：THE MONSTERS 2026H1 收入 −7.5%、占比 38.1%→26.0%，接棒 IP 星星人 26.50 亿元仅为同期 THE MONSTERS 的 59%（dimensions.inversion.analysis.failurePaths[0]）。② 风险已从预期变为事实：管理层承认完不成 20% 增长目标，卖方集体下修（汇丰 2026 年收入由 +6% 改为 −7%、目标价 136.5 港元；花旗 −8%、目标价 198 港元）（failurePaths 与 bearCase[0]）。③ 缓冲项：无银行借款、净现金 104.36 亿元、FY2025 自由现金流 96.93 亿元，使风险更可能是「长期低增长」而非「生存危机」（collection.financialMetrics.latestBalanceSheet）。④ 风险可控性低（消费者偏好不可经营），因此不给 6 分以上，最终 5.0。"
+    },
+    {
+      "dimensionId": "civilizationTrend",
+      "title": "文明趋势",
+      "mapsTo": "dimensions.industryTrend",
+      "conclusion": "不是文明级范式转移，而是社交媒体放大了 IP 的传播速度与衰减速度；行业总量增速仅个位数，公司份额已近全球授权玩具市场的一成。",
+      "confidence": 6,
+      "scoreBasis": "① paradigmShift 判定为「部分」：产品形态是既有玩具，被重构的是 IP 传播效率（dimensions.industryTrend.analysis.paradigmShift）。② 天花板偏紧：全球玩具市场年增速 2.4%–5.9%、授权玩具 485 亿美元（2025）预计 2035 年 828 亿美元（CAGR 5.5%），而公司 FY2025 收入 371.20 亿元已约占全球授权玩具市场的 11%（dimensions.industryTrend.analysis.tam 与 ceiling）。③ 长处在于价值链条位置：直营 96%、客户无单一占比 ≥10%、应收周转 8 天，上游对艺术家有平台吸引力（analysis.valueChainPosition 与 concentration）。④ 历史类比不给出超额分：三丽鸥经历过长达 7 个财年的利润下滑，公司当前更接近其三丽鸥 2000 年前后的处境（historicalAnalogies）。⑤ 最终 6.0。"
+    },
+    {
+      "dimensionId": "valuation",
+      "title": "估值",
+      "mapsTo": "dimensions.valuation",
+      "conclusion": "按 TTM 口径处于上市以来最低估值区，按 2026 年一致预期只是合理；三情景中位数回报仅 +12.9%，缺乏安全边际。",
+      "confidence": 6.5,
+      "scoreBasis": "① 估值吸引力来自 history 与 multiples：TTM PE 13.16x（历史区间 17.54–59.76x）、PB 7.55x、PS 4.31x、EV/Sales 4.05x、股息率 1.82% 且派息率 24.8%，另加 20–50 亿元回购（dimensions.valuation.analysis.currentMultiples 与 vsOwnHistory）。② 但分母不稳：2026 年一致预期净利已下调至约 104.5 亿元（汇丰），对应 PE 约 16x（dimensions.inversion.analysis.bearCase[0]）。③ 三情景工具验算结果：乐观 309.3 HKD（+102.3%）／中性 172.6 HKD（+12.9%）／悲观 71.3 HKD（−53.4%），中性情景低于本报告预期回报门槛（dimensions.valuation.analysis.threeScenario）。④ 与同业比较无优势：名创优品集团 PE 14.87x、PS 0.79x（analysis.vsPeers[0]）。⑤ 最终 6.5——不便宜到可以忽略增长风险。"
+    },
+    {
+      "dimensionId": "corporateCulture",
+      "title": "企业文化",
+      "mapsTo": "dimensions.management.analysis.culture",
+      "conclusion": "文化证据指向长期主义、克制扩张、披露诚实与制度化回购分红，同时指向创始人绝对控制下的治理集中；证据以单源可观察事实为主。",
+      "confidence": 6.5,
+      "scoreBasis": "① 只转述第 2 步已落盘的证据（dimensions.management.analysis.culture）：长期主义（2016 年转型后 15 年只做一条主线）、克制扩张（2022/2023 年业绩会明确不以开店换增长、2026H1 中国内地门店半年仅净增 10 家）、披露诚信（2026-08-20 主动承认完不成 20% 收入目标，汇兑损失 7.20 亿元单独列示）、股东回报制度化（FY2022 起连续回购、FY2025 派息率 24.8%）。② 同一字段亦记录反向事实：创始人持股 48.73%、董事长与 CEO 同一人（偏离企业管治守则 C.2.1）、配偶杨涛任副总裁，属治理层面的可观察事实。③ 文化证据多为 Level 3 单源（业绩会转述、公司公告表述），按 _spec.corporateCulture 要求向中性收敛，不给 7 分以上。④ 最终 6.5。"
+    }
+  ],
+  "strategies": {
+    "noPosition": {
+      "title": "空仓者",
+      "advice": "不追反弹、不预测底部：当前 13.16x TTM PE 隐含的是「零增长但不再恶化」，而 2026 年一致预期利润已在下调，价格尚未提供安全边际。建议以「第二个百亿元级 IP 被证实」为进场前提，在此之前仅用小仓位（不超过计划仓位 1/3）试探，且必须在股价跌破 120 港元、TTM PE ≤ 10.3x 时才动用。",
+      "triggers": [
+        {
+          "condition": "股价 ≤ 120 港元（对应市值约 1,598 亿港元、TTM PE ≤ 10.3x）",
+          "action": "建立不超过计划仓位 1/3 的底仓，并同步设定 71–80 港元（悲观情景目标价区间）为观察下限",
+          "basis": "dimensions.valuation.analysis.threeScenario（悲观 71.3 HKD / 中性 172.6 HKD）与 currentMultiples（TTM 归母 132.40 亿元、股本 13.317 亿股）"
+        },
+        {
+          "condition": "公司披露任一非 THE MONSTERS 的 IP 年度收入 ≥ 80 亿元（即接棒 IP 达到第一大 IP 的六成量级）",
+          "action": "把仓位提升至标准配置——这是「IP 平台可重复」的第一个硬证据",
+          "basis": "dimensions.moat.analysis.trendNext5y 的关键判据（三年内是否出现第二个百亿元级 IP）与 inversion.analysis.failurePaths[0] 的接棒规模缺口（星星人 26.50 亿元 = THE MONSTERS 的 59%）"
+        },
+        {
+          "condition": "连续两个报告期海外收入同比转正且毛利率 ≥ 70%",
+          "action": "在标准配置基础上加至超配，并按现金回报（回购 + 股息率 ≥ 3%）核对股东回报执行情况",
+          "basis": "dimensions.businessEssence.analysis.operatingLeverage（减速年份经营杠杆反向）与 collection.currentValuation.dividendYieldPct"
+        }
+      ]
+    },
+    "holding": {
+      "title": "持仓者",
+      "advice": "保留核心仓位但下调预期：把持有逻辑从「IP 平台高速成长」改为「高毛利消费股 + 现金回报」，用 24.8% 的派息率与 20–50 亿元回购作为下行保护，不再为季度增速支付溢价。不要因为回撤 55% 就补仓——补齐仓位的前提是基本面（而非价格）出现新证据。",
+      "triggers": [
+        {
+          "condition": "股价 ≥ 230 港元（中性情景 172.6 HKD 之上约 33%，隐含市场重回成长股定价）且当期收入同比仍为负",
+          "action": "减仓 1/3 兑现估值修复，保留 2/3 等待 IP 矩阵验证",
+          "basis": "dimensions.valuation.analysis.threeScenario（中性 172.6 HKD）与 dimensions.inversion.analysis.bearCase[0]（2026 年收入一致预期为负增长）"
+        },
+        {
+          "condition": "2026 全年收入同比 ≤ −5% 且经营利润率 < 35%（公司口径）",
+          "action": "减至半仓，并把持仓逻辑降级为「现金回报型」，按股息率而非 PE 定价",
+          "basis": "dimensions.businessEssence.analysis.operatingLeverage（FY2025 经营利润率 45.5% 与 2026H1 回落至 39.2%）与汇丰对 2026 年净利率降至 30% 的预测"
+        },
+        {
+          "condition": "回购计划（2026-08-20 起 6 个月、20–50 亿元）执行完毕且实际回购金额 ≥ 20 亿元",
+          "action": "维持仓位不动——管理层在低估值区用真金白银兑现承诺，是文化证据的正向验证",
+          "basis": "dimensions.management.analysis.capitalAllocation.buybackTiming 与 alignment.evidence（累计回购约 17.44 亿港元、均价区间 140.9–194.9 港元）"
+        }
+      ]
+    },
+    "sellSignals": {
+      "title": "卖出信号",
+      "signals": [
+        {
+          "signal": "第一大 IP 连续第二年负增长，且没有第二个 IP 年收入达到 80 亿元",
+          "observable": "FY2026 年报披露 THE MONSTERS 收入同比再次为负，且非 THE MONSTERS 的最高 IP 年收入 < 80 亿元",
+          "basis": "dimensions.inversion.analysis.failurePaths[0]（2026H1 THE MONSTERS −7.5%、星星人仅为同期 59%）与 dimensions.moat.analysis.trendNext5y"
+        },
+        {
+          "signal": "海外收入连续两个报告期负增长，同时海外门店仍在净增（用开店掩盖需求下滑）",
+          "observable": "2027H1 海外合计收入同比 < 0 且期末海外门店数较 2026-06-30 的 221 家净增 > 10 家",
+          "basis": "dimensions.inversion.analysis.failurePaths[1]（2026H1 亚太 −9.7%、美洲 −16.5%，同期美洲门店 64→86 家、租赁费用 +43.3%）"
+        },
+        {
+          "signal": "存货周转天数持续高于 200 天或出现大额存货减值（Funko 路径）",
+          "observable": "半年报存货周转天数 > 200 天，或存货减值准备单期 > 5 亿元（2026H1 为 0.23 亿元）",
+          "basis": "dimensions.inversion.analysis.failurePaths[2]（存货 61.02 亿元、周转天数 123→201 天；Funko FY2023 收入 −17%、净亏 1.541 亿美元并销毁 3,000 万美元库存）"
+        },
+        {
+          "signal": "承诺的回购未兑现，或分红政策转向收缩",
+          "observable": "2026-08-20 起 6 个月的 20–50 亿元回购窗口内实际回购金额 < 20 亿元，或 FY2026 派息率低于 FY2025 的 24.8%",
+          "basis": "dimensions.management.analysis.capitalAllocation.buybackTiming 与 collection.meta（公司 2026-08-20 业绩会公告的回购区间）"
+        },
+        {
+          "signal": "毛利率结构性跌破 65% 且非汇率或一次性因素",
+          "observable": "连续两个报告期毛利率 < 65%，且公司归因中包含「终端降价」或「折扣促销」",
+          "basis": "dimensions.businessEssence.analysis.grossMarginVsPeers（72.1% 来自自有 IP 占比与直营渠道，一旦降价换量则护城河与利润结构同时受损）"
+        }
+      ]
+    },
+    "addSignals": {
+      "title": "加仓信号",
+      "signals": [
+        {
+          "signal": "第二增长曲线被证实（新 IP 达到第一大 IP 的六成量级）",
+          "observable": "年报或中报披露任一非 THE MONSTERS 的 IP 收入 ≥ 80 亿元，或其占比 ≥ 20%",
+          "basis": "dimensions.moat.analysis.trendNext5y（关键判据：三年内是否出现第二个百亿元级 IP）"
+        },
+        {
+          "signal": "海外业务止跌回稳，经营杠杆重新正向",
+          "observable": "连续两个报告期海外收入同比转正，且收入增速高于销售费用增速（经营利润率环比提升）",
+          "basis": "dimensions.businessEssence.analysis.operatingLeverage 与 dimensions.valuation.analysis.threeScenario.optimistic（年增 10%、PE 20x 假设的前提）"
+        },
+        {
+          "signal": "价格落到悲观情景区而基本面未继续恶化",
+          "observable": "股价 ≤ 110 港元（TTM PE ≤ 9.4x、EV/Sales ≤ 2.9x），且年报自由现金流仍 > 80 亿元/年",
+          "basis": "dimensions.valuation.analysis.threeScenario.pessimistic（71.3 HKD）与 collection.financialMetrics.annual[4].freeCashFlow（FY2025 96.93 亿元）"
+        },
+        {
+          "signal": "中国内地业务连续两个报告期保持 30% 以上增长且毛利率 ≥ 70%",
+          "observable": "半年报中国内地收入同比 ≥ 30%、集团毛利率 ≥ 70%，同时会员复购率不低于 50%",
+          "basis": "collection.revenueStructure.recentQuarters[3]（2026H1 中国 +47.3%、会员复购率 51.6%）——这是海外失速时唯一已获验证的基本盘"
+        }
+      ]
+    }
+  },
+  "disclaimer": "本总结基于公开信息与数据截止时点（2026-09-14，Asia/Shanghai）的分析生成，仅供研究参考，不构成个性化投资建议。"
+}
