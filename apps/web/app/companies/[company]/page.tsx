@@ -402,7 +402,7 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
           ) : null}
           <h3 className="block-heading">商业模式与粘性</h3>
           <KvList rows={[
-            ["商业模式", `${text(essence.analysis?.businessModelCanvas?.salesModel)} · ${text(essence.analysis?.businessModelCanvas?.productForm)}`],
+            ["商业模式", `销售模式 ${text(essence.analysis?.businessModelCanvas?.salesModel)} · 产品形态 ${text(essence.analysis?.businessModelCanvas?.productForm)}`],
             [`粘性 / 锁定 · ${text(essence.analysis?.stickiness?.level)}`, essence.analysis?.stickiness?.mechanism],
             [`毛利率 vs 同行 · ${pctText(essence.analysis?.grossMarginVsPeers?.companyPct)}`, essence.analysis?.grossMarginVsPeers?.whyHigherOrLower],
             ["经营杠杆", essence.analysis?.operatingLeverage?.observation],
