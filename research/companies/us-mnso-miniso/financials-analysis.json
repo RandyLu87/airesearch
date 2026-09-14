@@ -1,0 +1,1135 @@
+{
+  "meta": {
+    "companyId": "us-mnso-miniso",
+    "companyName": "名创优品集团控股有限公司 (MINISO Group Holding Limited)",
+    "analyzedAt": "2026-09-14",
+    "dataCutoff": "2026-09-14（Asia/Shanghai）；最新财报为 26H1（截至 2026-06-30），行情为 2026-09-11 美股收盘 US$9.07/ADS、2026-09-14 港股 HK$17.79/股",
+    "basedOnCollection": "research/companies/us-mnso-miniso/financials-collection.json"
+  },
+  "dimensions": {
+    "businessEssence": {
+      "title": "生意本质",
+      "conclusion": "用 8,674 家门店把 5–25 美元的 IP 设计商品卖给全球消费者，收入靠门店与 IP 热度扩张，利润被直营扩张与授权成本压着。",
+      "analysis": {
+        "revenueBreakdown": {
+          "period": "FY2025（2025 自然年）",
+          "unit": "亿元",
+          "items": [
+            {
+              "segment": "名创优品品牌－中国内地",
+              "revenue": "108.96 亿元",
+              "sharePct": "50.8%",
+              "source": {
+                "name": "公司 FY2025 业绩新闻稿（中国内地收入同比 +16.8%，全年首破 100 亿元）",
+                "url": "https://www.sec.gov/Archives/edgar/data/1815846/000110465926038269/tm2610734d1_ex99-6.htm"
+              }
+            },
+            {
+              "segment": "名创优品品牌－海外",
+              "revenue": "86.29 亿元",
+              "sharePct": "40.2%",
+              "source": {
+                "name": "公司 FY2025 业绩新闻稿（海外 +29.3%，占名创优品品牌收入 44.2%）",
+                "url": "https://www.sec.gov/Archives/edgar/data/1815846/000110465926038269/tm2610734d1_ex99-6.htm"
+              }
+            },
+            {
+              "segment": "TOP TOY 品牌",
+              "revenue": "19.16 亿元",
+              "sharePct": "8.9%",
+              "source": {
+                "name": "公司 FY2025 业绩新闻稿（TOP TOY 收入 +94.8%）",
+                "url": "https://www.sec.gov/Archives/edgar/data/1815846/000110465926038269/tm2610734d1_ex99-6.htm"
+              }
+            },
+            {
+              "segment": "其他（其他品牌与零星收入）",
+              "revenue": "0.03 亿元",
+              "sharePct": "0.0%",
+              "source": {
+                "name": "公司 FY2025 年度业绩公告分部表（3,308 千元）",
+                "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0331/2026033101180_c.pdf"
+              }
+            }
+          ]
+        },
+        "profitabilityTrend5y": {
+          "series": [
+            {
+              "fiscalYear": "FY2021（6 月止旧财年）",
+              "grossMarginPct": "26.8%",
+              "operatingMarginPct": "4.4%",
+              "netMarginPct": "-15.6%",
+              "source": {
+                "name": "公司 FY2022 年度业绩公告对照数与 FY2022 业绩新闻稿（毛利率 26.8%）",
+                "url": "https://www.sec.gov/Archives/edgar/data/1815846/000110465922094242/tm2224543d1_ex99-2.htm"
+              }
+            },
+            {
+              "fiscalYear": "FY2022（6 月止旧财年）",
+              "grossMarginPct": "30.4%",
+              "operatingMarginPct": "8.7%",
+              "netMarginPct": "6.3%",
+              "source": {
+                "name": "公司 FY2022 业绩新闻稿（毛利率 30.4%、经营利润 882.0 百万元、归母净利 638.2 百万元）",
+                "url": "https://www.sec.gov/Archives/edgar/data/1815846/000110465922094242/tm2224543d1_ex99-1.htm"
+              }
+            },
+            {
+              "fiscalYear": "FY2023（12 月止，含 2022H2 过渡期）",
+              "grossMarginPct": "41.2%",
+              "operatingMarginPct": "20.1%",
+              "netMarginPct": "16.3%",
+              "source": {
+                "name": "stockanalysis.com 年度比率序列（FY2023 毛利率 41.18%、经营利润率 20.05%、净利率 16.28%）",
+                "url": "https://stockanalysis.com/stocks/mnso/financials/"
+              }
+            },
+            {
+              "fiscalYear": "FY2024",
+              "grossMarginPct": "44.9%",
+              "operatingMarginPct": "19.5%",
+              "netMarginPct": "15.4%",
+              "source": {
+                "name": "公司 FY2024 业绩公告与 stockanalysis 比率序列",
+                "url": "https://stockanalysis.com/stocks/mnso/financials/ratios/"
+              }
+            },
+            {
+              "fiscalYear": "FY2025",
+              "grossMarginPct": "45.0%",
+              "operatingMarginPct": "15.4%",
+              "netMarginPct": "5.6%",
+              "source": {
+                "name": "公司 FY2025 年度业绩公告（毛利率 45.0%、经营利润 33.03 亿元、归母净利 12.05 亿元）",
+                "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0331/2026033101180_c.pdf"
+              }
+            }
+          ]
+        },
+        "businessModelCanvas": {
+          "salesModel": "一次性销售",
+          "productForm": "混合",
+          "note": "收入 99% 以上为商品零售与批发（自营门店零售 + 零售合作伙伴/经销商的商品批发 + 线上），无订阅；服务类收入（加盟分成、IP 授权）金额不单独披露且规模很小。加盟商的商业模式是：公司按门店日营业额分成（合伙人拿约 38%、食品类约 33%），租金人工由合作伙伴承担，故公司收入是批发价而非终端零售额——集团 FY2025 零售额（GMV）371 亿元，而报表收入 214.44 亿元。"
+        },
+        "stickiness": {
+          "level": "中",
+          "mechanism": "① C 端几乎零迁移成本：商品是 5–25 美元的可替代日用品/潮玩，买哪家取决于 IP 与选址。② 粘性来自会员体系与上新节奏：中国内地累计会员约 1.3 亿（26H1 +31.0%，贡献当地销售 77.4%），美国会员约 580 万（+107.1%，贡献 60.1%）。③ 对零售合作伙伴有一定锁定：供应链系统自动订货补货、门店 SOP 与 IP 商品配给，但 FY2024→FY2025 海外零售合作伙伴由 114 家降至 109 家，显示绑定并不牢固。",
+          "evidence": [
+            {
+              "metric": "中国内地累计会员数 / 会员销售占比",
+              "value": "约 1.3 亿人 / 77.4%",
+              "asOf": "2026-06-30",
+              "source": {
+                "name": "公司 26H1 业绩新闻稿（CEO 评论）",
+                "url": "https://www.prnewswire.com/news-releases/miniso-group-announces-2026-june-quarter-and-interim-unaudited-financial-results-302862628.html"
+              }
+            },
+            {
+              "metric": "近 12 个月有购买行为的活跃会员 / 累计会员",
+              "value": "FY2025 约 6,400 万人（累计中国内地 1.121 亿人、活跃占比 48.4%）",
+              "asOf": "2025-12-31",
+              "source": {
+                "name": "公司 FY2025 年度业绩公告（营销与消费者互动章节）",
+                "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0331/2026033101180_c.pdf"
+              }
+            },
+            {
+              "metric": "海外零售合作伙伴数量变化",
+              "value": "114 家（2024）→ 109 家（2025），越南减少",
+              "asOf": "2025-12-31",
+              "source": {
+                "name": "公司 FY2025 年度业绩公告（门店网络章节）",
+                "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0331/2026033101180_c.pdf"
+              }
+            }
+          ]
+        },
+        "grossMarginVsPeers": {
+          "companyPct": "45.0%（FY2025，26H1 为 44.3%）",
+          "peers": [
+            {
+              "name": "泡泡玛特（9992.HK，IP 玩具直接对标）",
+              "grossMarginPct": "69.7%（26H1，上年同期 70.3%）",
+              "source": {
+                "name": "泡泡玛特 26H1 财报（证券时报/观察者/华尔街见闻转述财报原文口径）",
+                "url": "https://www.stcn.com/article/detail/4092620.html"
+              }
+            },
+            {
+              "name": "名创优品（自身，含 TOP TOY，作为对照）",
+              "grossMarginPct": "45.0%",
+              "source": {
+                "name": "公司 FY2025 年度业绩公告",
+                "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0331/2026033101180_c.pdf"
+              }
+            }
+          ],
+          "whyHigherOrLower": "① 环节不同：名创优品在价值链上是渠道商/批发商，收入按批发价确认（终端零售额 371 亿元 vs 报表收入 214.44 亿元），天然低于直接卖 IP 商品的品牌商。② 商品结构不同：主业是无 IP 溢价的生活日用品（三类支柱：生活百货、美妆、玩具），授权 IP 商品只是引流与提价的部分品类。③ TOP TOY 与自有 IP 占比在提升（26H1 自有 IP YOYO 相关收入约 5 亿元），但基数太小，尚不足以把毛利率结构性推高——26H1 毛利率 44.3% 与上年持平。"
+        },
+        "operatingLeverage": {
+          "observation": "过去两年是负经营杠杆：FY2023→FY2025 收入从 138.39 亿元增至 214.44 亿元（+55%），经营利润仅从 27.75 亿元增至 33.03 亿元（+19%），经营利润率由 20.1% 降至 15.4%；26H1 收入 +22.4% 而经营利润 +6.1%，利润率进一步降至 14.3%（26Q2 单季经营利润率仅 2.0%）。费用端：26H1 销售及分销费用 30.45 亿元（+39.6%，占收入 26.5%），其中直营店折旧摊销与租金合计 10.23 亿元（+38.3%），许可费用占收入比重同比 +0.5 个百分点。结论：当前的扩张形态（海外直营大店 + 授权 IP 采购）是「先花钱再收钱」，投入期利润被前置摊薄，只有在单店模型成熟后才可能转为正杠杆。",
+          "evidence": [
+            {
+              "metric": "收入增速 vs 经营利润增速（FY2023→FY2025）",
+              "value": "+55% vs +19%",
+              "asOf": "2025-12-31",
+              "source": {
+                "name": "公司 FY2025 年度业绩公告与 stockanalysis 序列",
+                "url": "https://stockanalysis.com/stocks/mnso/financials/"
+              }
+            },
+            {
+              "metric": "26H1 销售及分销费用（剔除股权激励）/ 收入",
+              "value": "25.8%，同比 +2.7 个百分点",
+              "asOf": "2026-06-30",
+              "source": {
+                "name": "公司 26H1 业绩新闻稿",
+                "url": "https://www.prnewswire.com/news-releases/miniso-group-announces-2026-june-quarter-and-interim-unaudited-financial-results-302862628.html"
+              }
+            }
+          ]
+        }
+      },
+      "inquiry": {
+        "question": "这门生意好在哪？如果只能用一句话描述，是什么？",
+        "answer": "好在「高频复购的低单价商品 + 全球加盟网络」带来的周转与现金流，而不是定价权。① 商品单价多在 5–25 美元、上新极快，消费者为 IP 与款式重复购买，FY2025 集团零售额 371 亿元、26H1 经营现金流 14.75 亿元（同比 +45.5%）。② 门店由零售合作伙伴出资本与租金，公司以批发与分成回收现金，扩张的资本开支相对轻（26H1 资本开支 7.25 亿元）。③ 短板在于利润不由自己掌握：45% 的毛利率中很大一块要付给 IP 授权方，海外直营又是重资产，26H1 剔除汇兑的调整后净利润同比 −1.7%。④ 一句话：这是一门赚「周转与网络租金」的生意，不是赚「IP 定价权」的生意。"
+      },
+      "dataGaps": [
+        {
+          "item": "分品牌/分地区毛利率",
+          "reason": "公司仅披露集团合并毛利率，未按名创优品品牌/TOP TOY、中国内地/海外拆分",
+          "searched": "FY2025 年度业绩公告、FY2025 业绩新闻稿、26H1 中报与业绩新闻稿"
+        },
+        {
+          "item": "国内与海外的单店模型量化数据（单店收入、单店利润、回收期）",
+          "reason": "公司未披露；现有信息为业绩会口径的回本周期区间（乐园店约 1 年内、常规店 16–18 个月），无门店级损益表",
+          "searched": "公司业绩会转述（澎湃）、投资者演示，未获公司层面披露文件；此项不影响结论方向，但限制了单店模型的精确校验"
+        }
+      ]
+    },
+    "moat": {
+      "title": "护城河评估",
+      "conclusion": "护城河主要是「规模+网络的执行效率」而非定价权：渠道与供应链是真的，IP 与品牌溢价还在建设中。",
+      "analysis": {
+        "types": [
+          {
+            "type": "品牌/定价权",
+            "test": "是否能在不损失销量的情况下提价？",
+            "verdict": "待验证",
+            "evidence": [
+              {
+                "metric": "海外同店 GMV 增速",
+                "value": "26H1 低个位数下滑（26Q1 为低个位数增长）",
+                "asOf": "2026-06-30",
+                "source": {
+                  "name": "公司 26H1 业绩新闻稿",
+                  "url": "https://www.prnewswire.com/news-releases/miniso-group-announces-2026-june-quarter-and-interim-unaudited-financial-results-302862628.html"
+                }
+              },
+              {
+                "metric": "中国内地同店 GMV 增速",
+                "value": "26H1 中个位数正增长（26Q1 高个位数）",
+                "asOf": "2026-06-30",
+                "source": {
+                  "name": "公司 26H1 业绩新闻稿（管理层评论）",
+                  "url": "https://www.prnewswire.com/news-releases/miniso-group-announces-2026-june-quarter-and-interim-unaudited-financial-results-302862628.html"
+                }
+              }
+            ]
+          },
+          {
+            "type": "转换成本",
+            "test": "客户迁移到竞品的成本有多高？",
+            "verdict": "不存在",
+            "evidence": [
+              {
+                "metric": "海外零售合作伙伴数量变化",
+                "value": "FY2025 由 114 家降至 109 家（越南减少），国内零售伙伴 4,624 家（26H1 净增 102 家）",
+                "asOf": "2026-06-30",
+                "source": {
+                  "name": "公司 FY2025 年度业绩公告与 26H1 业绩新闻稿",
+                  "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0828/2026082800578_c.pdf"
+                }
+              }
+            ]
+          },
+          {
+            "type": "网络效应",
+            "test": "用户越多产品越好吗？",
+            "verdict": "待验证",
+            "evidence": [
+              {
+                "metric": "会员规模与活跃率",
+                "value": "中国内地累计会员 1.3 亿人、贡献当地销售 77.4%；FY2025 活跃会员（12 个月内有购买）约 6,400 万人，占中国内地累计会员 48.4%",
+                "asOf": "2026-06-30",
+                "source": {
+                  "name": "公司 26H1 业绩新闻稿与 FY2025 年度业绩公告",
+                  "url": "https://www.prnewswire.com/news-releases/miniso-group-announces-2026-june-quarter-and-interim-unaudited-financial-results-302862628.html"
+                }
+              }
+            ]
+          },
+          {
+            "type": "规模效应",
+            "test": "规模带来的成本优势有多大？",
+            "verdict": "存在",
+            "evidence": [
+              {
+                "metric": "门店数与全球覆盖",
+                "value": "集团 8,674 家门店、覆盖 113 个国家与地区；其中海外名创优品门店 3,644 家",
+                "asOf": "2026-06-30",
+                "source": {
+                  "name": "公司 26H1 业绩新闻稿",
+                  "url": "https://www.prnewswire.com/news-releases/miniso-group-announces-2026-june-quarter-and-interim-unaudited-financial-results-302862628.html"
+                }
+              },
+              {
+                "metric": "规模对单店模型的作用（乐园系 vs 常规店）",
+                "value": "乐园系大店回本周期约 1 年内 vs 常规店 16–18 个月，早期门店最快约 6 个月",
+                "asOf": "2026-08-28",
+                "source": {
+                  "name": "公司 26H1 业绩会（澎湃新闻转述）",
+                  "url": "https://www.thepaper.cn/newsDetail_forward_33968188"
+                }
+              }
+            ]
+          },
+          {
+            "type": "技术/专利壁垒",
+            "test": "技术领先几年？能否被复制？",
+            "verdict": "不存在",
+            "evidence": [
+              {
+                "metric": "技术资产形式",
+                "value": "供应链管理系统（自动订货/补货、销售预测）与门店 SOP 属可复制的管理能力；公司不披露研发费用，无专利型壁垒证据",
+                "asOf": "2025-12-31",
+                "source": {
+                  "name": "公司 FY2025 年度业绩公告（供应链与系统描述）与本次采集 technology 维度结论",
+                  "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0331/2026033101180_c.pdf"
+                }
+              }
+            ]
+          }
+        ],
+        "trendPast5y": {
+          "direction": "变宽",
+          "basis": "① 门店从 FY2021 末约 5,000 家级扩张到 8,674 家（26H1），海外占比从边缘变成 3,644 家。② 毛利率从 26.8%（FY2021）升到 45.0%（FY2025），主要来自海外高毛利占比与品牌升级。③ 会员资产从 0 级量级到中国内地 1.3 亿人。反向证据：经营利润率从 FY2023 的 20.1% 降到 FY2025 的 15.4%，说明「规模」扩张的边际盈利质量在下降。"
+        },
+        "trendNext5y": {
+          "direction": "稳定",
+          "basis": "① 变宽的潜在来源：乐园系大店（国内已 100 家、目标 1,200 家）单店经济性优于旧模型；自有 IP 从 0 到半年 5 亿元；会员与海外网络仍在扩张。② 变窄的现实压力：近 200 个 IP 中约 180 个为授权 IP，授权费与 IP 生命周期不由公司掌握；泡泡玛特以自有 IP 对比，体量与净利率高出数倍；海外同店已转负、非北美直营尚未盈利。③ 结论：现有渠道与供应链优势可维持，但增量护城河（IP）尚未验证，取「稳定」；若自有 IP 收入占比在 2028 年前未达到两位数占比，应下修至「变窄」。"
+        }
+      },
+      "inquiry": {
+        "question": "10年后这条护城河还在吗？什么能摧毁它？",
+        "answer": "渠道型护城河大概率还在，IP 型护城河不确定。① 可延续的部分：8,674 家门店、113 个国家与地区的分销网络、供应链上新速度与加盟商体系，属于十年期难以被单点摧毁的重资产网络。② 脆弱的部分：公司当前 45% 毛利率里，IP 授权商品贡献可观，而近 200 个 IP 中约 180 个是授权来的；一旦迪士尼等 IP 方提价、转为直营竞品或转向其他零售商，公司立刻失去差异化。③ 最可能的摧毁路径：消费者偏好从「IP 设计日用品」转向其他形态（如线上内容/IP 直连消费者），叠加海外直营重资产化，使门店网络从资产变成包袱。④ 观察指标：自有 IP 收入占比、会员复购率、授权费用占收入比重的变化。"
+      },
+      "dataGaps": [
+        {
+          "item": "授权 IP 合约的关键条款（保底金、分成率、期限、地域独家性）",
+          "reason": "公司不披露单个授权合约条款，仅在年报中作风险提示",
+          "searched": "FY2025 年度业绩公告与 20-F 风险因素章节；本项为护城河判断的最大证据缺口",
+          "evidenceRequest": {
+            "metric": "IP 授权费占收入比重与主要授权方合约到期年份",
+            "question": "迪士尼、三丽鸥等主要授权 IP 的费用率与合约期限结构如何？",
+            "whyNeeded": "判断毛利率对授权成本的敏感度与护城河耐久性",
+            "priority": "high"
+          }
+        }
+      ]
+    },
+    "inversion": {
+      "title": "逆向思考与风险清单",
+      "conclusion": "最可能失败于「海外重资产扩张 + IP 依赖」这两件事同时收紧，而不是门店数量或产品力问题。",
+      "analysis": {
+        "failurePaths": [
+          {
+            "path": "海外直营持续失血，投入无法回收（非北美直营仍未盈利，下半年被迫净减少 50–70 家门店）",
+            "probability": "中",
+            "impact": "高",
+            "evidence": [
+              {
+                "metric": "海外利润贡献占集团比重",
+                "value": "从 2023 年 35%–40% 降至 26H1 的 10%–15%",
+                "asOf": "2026-08-28",
+                "source": {
+                  "name": "公司 26H1 业绩会（21 世纪经济报道转述）",
+                  "url": "https://m.21jingji.com/article/20260903/herald/9acabe4e088dadba2978afbe30707db2.html"
+                }
+              },
+              {
+                "metric": "海外直营门店数与折旧租金",
+                "value": "直营店 795 家（同比 +216 家）；26H1 直营店折旧摊销与租金合计 10.23 亿元（+38.3%）",
+                "asOf": "2026-06-30",
+                "source": {
+                  "name": "公司 26H1 业绩新闻稿与业绩会转述",
+                  "url": "https://www.prnewswire.com/news-releases/miniso-group-announces-2026-june-quarter-and-interim-unaudited-financial-results-302862628.html"
+                }
+              }
+            ]
+          },
+          {
+            "path": "自有 IP 只是阶段性爆款，授权 IP 成本上升挤压毛利（近 200 个 IP 中约 180 个为授权 IP）",
+            "probability": "中",
+            "impact": "高",
+            "evidence": [
+              {
+                "metric": "自有 IP 与对标 IP 的量级差",
+                "value": "YOYO 26H1 相关收入约 5 亿元；泡泡玛特 THE MONSTERS 单 IP 26H1 收入 44.54 亿元（同比 −7.5%）、星星人 26.5 亿元",
+                "asOf": "2026-06-30",
+                "source": {
+                  "name": "公司业绩会与泡泡玛特 26H1 财报（媒体转述）",
+                  "url": "https://m.21jingji.com/article/20260903/herald/9acabe4e088dadba2978afbe30707db2.html"
+                }
+              },
+              {
+                "metric": "许可费用占收入比重",
+                "value": "26H1 同比 +0.5 个百分点（管理层称系战略性加大 IP 投入）",
+                "asOf": "2026-06-30",
+                "source": {
+                  "name": "公司 26H1 业绩新闻稿",
+                  "url": "https://www.prnewswire.com/news-releases/miniso-group-announces-2026-june-quarter-and-interim-unaudited-financial-results-302862628.html"
+                }
+              }
+            ]
+          },
+          {
+            "path": "国内大店计划资本开支超支、低线城市单店模型不成立（5 年关 80% 门店、开 1,200 家乐园店）",
+            "probability": "中",
+            "impact": "中",
+            "evidence": [
+              {
+                "metric": "大店计划规模与现状",
+                "value": "国内已开 100 家乐园系门店，目标 1,200 家；单店面积数倍于常规店，80–90% SKU 为 IP 商品",
+                "asOf": "2026-06-30",
+                "source": {
+                  "name": "公司 26H1 业绩会（澎湃与每经转述）",
+                  "url": "https://www.thepaper.cn/newsDetail_forward_33968188"
+                }
+              },
+              {
+                "metric": "国内门店天花板（管理层自估）",
+                "value": "7,000–8,000 家（现有 4,665 家），增量主要来自大店而非门店数",
+                "asOf": "2026-08-28",
+                "source": {
+                  "name": "公司 26H1 业绩会（澎湃新闻转述）",
+                  "url": "https://www.thepaper.cn/newsDetail_forward_33968188"
+                }
+              }
+            ]
+          },
+          {
+            "path": "非主业投资二次减值与资金占用（永辉 29.4% 股权、AI 基金、TOP TOY 优先股）",
+            "probability": "中",
+            "impact": "中",
+            "evidence": [
+              {
+                "metric": "永辉投资账面与质押情况",
+                "value": "成本 62.70 亿元；2026-06-30 账面权益 55.56 亿元（低于成本）；被质押联营权益约 38.22 亿元（2025-12-31）",
+                "asOf": "2026-06-30",
+                "source": {
+                  "name": "公司 FY2025 年度业绩公告与 26H1 业绩新闻稿资产负债表",
+                  "url": "https://www.sec.gov/Archives/edgar/data/1815846/000110465926038269/tm2610734d1_ex99-6.htm"
+                }
+              },
+              {
+                "metric": "投资公允价值对利润的扰动",
+                "value": "26Q1 浮盈 8.75 亿元、26Q2 浮亏 5.97 亿元（AI 基金，对应 MiniMax 上市后股价波动）",
+                "asOf": "2026-06-30",
+                "source": {
+                  "name": "公司 26H1 业绩新闻稿与 26Q1 业绩新闻稿",
+                  "url": "https://www.prnewswire.com/news-releases/miniso-group-announces-2026-june-quarter-and-interim-unaudited-financial-results-302862628.html"
+                }
+              }
+            ]
+          },
+          {
+            "path": "关税与汇率冲击北美业务（北美是增长最快市场，商品主要自中国供应链出口）",
+            "probability": "中",
+            "impact": "中",
+            "evidence": [
+              {
+                "metric": "关税退款对毛利率的贡献",
+                "value": "26H1 约 0.6 个百分点、26Q2 约 1.2 个百分点（管理层预计后续还有约 4.1 百万美元）",
+                "asOf": "2026-06-30",
+                "source": {
+                  "name": "公司 26H1 业绩新闻稿",
+                  "url": "https://www.prnewswire.com/news-releases/miniso-group-announces-2026-june-quarter-and-interim-unaudited-financial-results-302862628.html"
+                }
+              },
+              {
+                "metric": "汇兑损益",
+                "value": "26H1 汇兑净损失 1.42 亿元（上年同期为净收益 0.37 亿元）",
+                "asOf": "2026-06-30",
+                "source": {
+                  "name": "公司 26H1 业绩新闻稿",
+                  "url": "https://www.prnewswire.com/news-releases/miniso-group-announces-2026-june-quarter-and-interim-unaudited-financial-results-302862628.html"
+                }
+              }
+            ]
+          },
+          {
+            "path": "治理折价长期化：创始人持股 63.7% 兼主席与 CEO，历史上有做空机构质疑加盟商关联方",
+            "probability": "低",
+            "impact": "中",
+            "evidence": [
+              {
+                "metric": "创始人持股与职务",
+                "value": "叶国富持股 63.70%、投票权 63.73%，兼执行董事、董事会主席与 CEO",
+                "asOf": "2026",
+                "source": {
+                  "name": "同花顺 F10 股东数据",
+                  "url": "https://basic.10jqka.com.cn/184/MNSO/holder.html"
+                }
+              },
+              {
+                "metric": "历史做空事件",
+                "value": "2022-07-26 Blue Orca Capital 指控至少 620 家门店由与高管/董事长关系密切的个人注册；公司否认",
+                "asOf": "2022-07-27",
+                "source": {
+                  "name": "新浪财经/界面报道与公司澄清公告（单源）",
+                  "url": "https://finance.sina.com.cn/stock/s/2022-07-27/doc-imizmscv3762257.shtml"
+                }
+              }
+            ]
+          }
+        ],
+        "historicalAnalogies": [
+          {
+            "company": "无印良品（良品计划）海外扩张阶段（1991 年起）",
+            "similarity": "同为「平价设计生活杂货 + 海外门店扩张」模式，同样把海外增长当作第二曲线",
+            "outcome": "海外前 11 年连续亏损，2002 年后才盈利；美国子公司在 2020 年因负债 67 亿日元申请破产保护；中国内地可比销售自 2016–2017 年起放缓并在 2018 年转负",
+            "source": {
+              "name": "21 财经《无印良品到底输在了哪里》与《关店数创新高 无印良品在中国市场不灵了？》",
+              "url": "http://www.21jingji.com/article/20230109/herald/c3d12b3f1c4b0a9bf4923b5fd46d8569.html"
+            }
+          },
+          {
+            "company": "达芙妮国际（2012 峰值 6,881 家门店 → 2020 年 242 家）",
+            "similarity": "依赖加盟/联营快速铺店、品牌溢价弱、品类随消费偏好转移而失速",
+            "outcome": "2015–2020 累计亏损约 42 亿港元，门店萎缩 96%，市值从 170 多亿港元降至约 3.5 亿港元；2020 年宣布退出中高档实体零售",
+            "source": {
+              "name": "界面新闻《日均关店 6 家，退出实体零售，一代鞋王达芙妮陨落》与 21 财经报道",
+              "url": "https://www.jiemian.com/article/4895304.html"
+            }
+          },
+          {
+            "company": "泡泡玛特（2010 年成立，2024–2025 年靠自有 IP 跃升）",
+            "similarity": "同为 IP 商品零售，且名创优品以 TOP TOY 与自有 IP 直接对标",
+            "outcome": "FY2025 收入 371.2 亿元（+184.7%）、经调整净利润 130.8 亿元（+284.5%），26H1 毛利率 69.7%；证明「自持 IP + 直营渠道」路线的盈利能力远超渠道型零售商，但同期其主力 IP THE MONSTERS 收入已同比 −7.5%",
+            "source": {
+              "name": "泡泡玛特 FY2025 财报与 26H1 财报（媒体转述）",
+              "url": "https://www.stcn.com/article/detail/4092620.html"
+            }
+          }
+        ],
+        "crossDisciplinaryChecks": [
+          {
+            "model": "网络效应理论",
+            "finding": "会员规模（中国内地 1.3 亿）已具备规模但缺乏双向网络效应：活跃率仅 48.4%，会员规模未转化为「用户越多产品越好」的机制，只降低获客成本，不构成赢家通吃。"
+          },
+          {
+            "model": "技术采纳曲线",
+            "finding": "公司当前增长高度依赖 IP 单品生命周期：YOYO 处于导入到成长阶段（单月破 1 亿元），而行业对标 IP（THE MONSTERS）已出现 −7.5% 的同比下滑，说明品类存在快速轮换，单一爆款不能外推为长期增速。"
+          },
+          {
+            "model": "竞争博弈",
+            "finding": "与泡泡玛特同场竞争是「渠道方 vs IP 方」的博弈：名创优品以 8,674 家门店换 IP 势能（YOYO 借渠道快速铺开），泡泡玛特以自有 IP 换渠道（门店数少但毛利率 69.7%）。IP 稀缺时渠道方议价权最低，这解释了为什么名创优品毛利率 45% 与泡泡玛特 70% 之间存在结构性差距。"
+          }
+        ],
+        "biasSelfCheck": [
+          {
+            "bias": "叙事偏差",
+            "check": "「中国迪士尼」「对标泡泡玛特」是管理层叙事，但公司近 200 个 IP 中约 180 个为授权 IP，26H1 自有 IP 相关收入约 5 亿元（占总收入约 4.3%，工具验算 5 ÷ 115）——叙事与收入结构不匹配，不能按 IP 公司估值。"
+          },
+          {
+            "bias": "锚定效应",
+            "check": "股价从 52 周高点 HK$50.90 跌至 HK$17.79（−65%），容易被「便宜」锚定；实际 PE(TTM) 14.9x 与泡泡玛特 15.2x 几乎相同，而后者盈利能力、IP 资产与利润率更高——低价不等于低估。"
+          },
+          {
+            "bias": "幸存者偏差",
+            "check": "用泡泡玛特的成功反推「名创优品也能做成 IP 公司」，忽略了泡泡玛特用了十年构建角色与收藏体系、且其主力 IP 已在下滑；同时忽略了达芙妮、无印良品这类「加盟扩张→海外/大店改造」失败样本。"
+          }
+        ],
+        "bearCase": [
+          {
+            "point": "公司自己下调全年指引，核心盈利在收缩",
+            "holder": "公司管理层（业绩会口头指引，非做空方观点）",
+            "evidence": [
+              {
+                "metric": "FY2026 指引",
+                "value": "调整后净利润同比高个位数下滑；调整后经营利润率同比下降 3–4 个百分点（年初指引为下降 1–2 个百分点）",
+                "asOf": "2026-08-28",
+                "source": {
+                  "name": "公司 26H1 业绩会（华尔街见闻转述）",
+                  "url": "https://wallstreetcn.com/articles/3780596"
+                }
+              }
+            ]
+          },
+          {
+            "point": "海外引擎失速，量增价不增",
+            "holder": "卖方与媒体（21 世纪经济报道、京报网等）",
+            "evidence": [
+              {
+                "metric": "26H1 海外收入与同店",
+                "value": "海外收入 40.6 亿元（+14.9%，低于高双位数指引）；海外同店 GMV 低个位数下滑；下半年海外门店计划净减 50–70 家",
+                "asOf": "2026-08-28",
+                "source": {
+                  "name": "公司 26H1 业绩新闻稿与业绩会转述",
+                  "url": "https://m.21jingji.com/article/20260903/herald/9acabe4e088dadba2978afbe30707db2.html"
+                }
+              }
+            ]
+          },
+          {
+            "point": "利润表被非经营项污染，调整后口径也被质疑",
+            "holder": "媒体与部分投资者（华尔街见闻、21 财经）",
+            "evidence": [
+              {
+                "metric": "利润构成",
+                "value": "26Q2 净亏损 2.92 亿元，其中 AI 基金浮亏 5.97 亿元；剔除后调整后净利润同比仍 −10.5%；26H1 投资相关收益贡献超过净利的 30%",
+                "asOf": "2026-06-30",
+                "source": {
+                  "name": "公司 26H1 业绩新闻稿与媒体测算",
+                  "url": "https://m.21jingji.com/article/20260903/herald/9acabe4e088dadba2978afbe30707db2.html"
+                }
+              }
+            ]
+          },
+          {
+            "point": "对标泡泡玛特没有估值优势，IP 资产质量差距大",
+            "holder": "市场（两者 PE 相近、市值差 9 倍，媒体归纳）",
+            "evidence": [
+              {
+                "metric": "市值与利润率对比",
+                "value": "泡泡玛特 26H1 经调整净利润率 30%、毛利率 69.7%，市值约 2,157 亿港元；名创优品剔除汇兑调整后净利率 10.6%、毛利率 44.3%，市值约 213.6 亿港元",
+                "asOf": "2026-09-02",
+                "source": {
+                  "name": "泡泡玛特 26H1 财报（证券时报/观察者转述）与 21 财经对比报道",
+                  "url": "https://www.guancha.cn/economy/2026_08_20_828012.shtml"
+                }
+              }
+            ]
+          },
+          {
+            "point": "海外重资产化侵蚀资本回报：净负债 58.24 亿元、有息负债 132.19 亿元",
+            "holder": "关注资产负债表的投资者（本文件依据公司报表计算）",
+            "evidence": [
+              {
+                "metric": "有息负债与净负债",
+                "value": "2026-06-30 有息负债 132.19 亿元（借款 86.41 亿元 + 租赁负债 45.78 亿元），净负债 58.24 亿元；FY2024 末有息负债仅 31.10 亿元",
+                "asOf": "2026-06-30",
+                "source": {
+                  "name": "公司 26H1 业绩新闻稿资产负债表（本文件用 financial_rigor.py 计算）",
+                  "url": "https://www.prnewswire.com/news-releases/miniso-group-announces-2026-june-quarter-and-interim-unaudited-financial-results-302862628.html"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "inquiry": {
+        "question": "我最可能在哪里犯错？聪明人为什么会不买/做空这家公司？",
+        "answer": "最可能犯错在「把渠道效率当成 IP 能力」以及「把会计调整后的利润当成真实盈利能力」。① 聪明人不买的核心理由：这门生意的增量增长（海外、大店、自有 IP）全部处于投入期，而利润已连续两年被侵蚀，公司自己下调指引，说明旧模型的天花板已到、新模型尚未验证。② 第二类理由是资本配置：62.70 亿元买永辉 29.4%、US$5.5 亿 ELS、TOP TOY 优先股，让利润表充满与主业无关的波动，投资者无法用一条清晰逻辑给公司定价。③ 第三类理由是估值比较：如果同样 15 倍 PE 可以买毛利率 70%、净利率 30% 的泡泡玛特，为什么要买毛利率 45%、净利率 10% 的名创优品。④ 我自己可能犯错的地方：低估 26Q2 的亏损里有多少是一次性因素（AI 基金、汇兑、TOP TOY 优先股），也可能低估国内大店模型的真实回报（回本周期 1 年内若可复制，是真实的价值创造）。"
+      },
+      "dataGaps": [
+        {
+          "item": "海外直营门店的分市场损益（北美盈利、其他国家亏损的金额）",
+          "reason": "公司只给方向性表述（北美盈利、非北美未盈利），不披露分市场利润表",
+          "searched": "26H1 业绩新闻稿、中报与业绩会转述"
+        },
+        {
+          "item": "永辉股权的可回收价值与进一步减值风险",
+          "reason": "永辉市值在 2026 年波动大（3 月约 361 亿元 → 9 月约 274–289 亿元），公司未披露减值测试的核心假设",
+          "searched": "公司 FY2025 年度业绩公告、26H1 中报，未取到减值测试细节",
+          "evidenceRequest": {
+            "metric": "永辉股权的减值测试假设与市场价值区间",
+            "question": "公司对 29.4% 永辉股权的最新减值测试结论与关键假设是什么？永辉当前市值对应公司持股市值多少？",
+            "whyNeeded": "判断 55.56 亿元账面权益是否有进一步减值风险（影响净资产与利润）",
+            "priority": "medium"
+          }
+        }
+      ]
+    },
+    "management": {
+      "title": "管理层评估",
+      "conclusion": "创始人对生意方向判断敏锐、执行快、股东回报承诺兑现度高，但资本配置纪律是最大扣分项。",
+      "analysis": {
+        "keyDecisions": [
+          {
+            "date": "2013-11",
+            "decision": "在广州开出首家 MINISO 门店，用「高颜值+低价+IP 设计」切入生活杂货并用零售合作伙伴模式快速铺店",
+            "outcome": "26H1 全球 8,674 家门店、覆盖 113 个国家与地区，FY2025 集团零售额 371 亿元",
+            "rating": "★★★★★",
+            "source": {
+              "name": "公司 FY2025 年度业绩公告（业务回顾）",
+              "url": "https://www.sec.gov/Archives/edgar/data/1815846/000110465926038269/tm2610734d1_ex99-6.htm"
+            }
+          },
+          {
+            "date": "2020-10-15",
+            "decision": "在纽交所 IPO，ADS 定价 US$20",
+            "outcome": "取得全球融资平台；2026-09-11 收于 US$9.07/ADS，较高点回落逾 60%",
+            "rating": "★★★",
+            "source": {
+              "name": "stockanalysis.com MNSO 价格历史与公司 IR",
+              "url": "https://stockanalysis.com/stocks/mnso/"
+            }
+          },
+          {
+            "date": "2022-07-13",
+            "decision": "以双重主要上市方式在香港挂牌（9896.HK）",
+            "outcome": "形成美股+港股双重上市，降低单一市场依赖；港股 20 日均量约 586 万股",
+            "rating": "★★★★",
+            "source": {
+              "name": "公司 IR 与 stockanalysis HKG:9896",
+              "url": "https://stockanalysis.com/quote/hkg/9896/statistics/"
+            }
+          },
+          {
+            "date": "2022-07-27",
+            "decision": "回应 Blue Orca Capital 做空报告（指控门店由与高管/董事长关系密切的个人注册），公告称毫无依据",
+            "outcome": "未见监管处罚或财务重述；关联方与加盟结构透明度成为长期治理折价因素",
+            "rating": "★★",
+            "source": {
+              "name": "公司澄清公告与界面/新浪财经报道（单源）",
+              "url": "https://www.jiemian.com/article/7818185.html"
+            }
+          },
+          {
+            "date": "2024-09-23",
+            "decision": "以 62.70 亿元收购永辉超市 29.4% 股权（2025Q1 完成），并以 2025-01 发行的 US$5.5 亿 ELS 与银行贷款融资",
+            "outcome": "FY2025 应占永辉亏损 8.13 亿元（税后），是归母净利润 −54% 的主因；26H1 永辉转盈贡献 0.60 亿元；账面权益 55.56 亿元低于成本、其中 38.22 亿元被质押",
+            "rating": "★★",
+            "source": {
+              "name": "公司 FY2025 年度业绩公告（重大投资章节）",
+              "url": "https://www.sec.gov/Archives/edgar/data/1815846/000110465926038269/tm2610734d1_ex99-6.htm"
+            }
+          },
+          {
+            "date": "2025-01",
+            "decision": "发行 US$5.5 亿现金结算可转债（ELS，2032 到期，行使价 US$8.2822/股）+ Call Spread，净募资 US$457.1 百万",
+            "outcome": "为海外扩张与回购提供资金；股价远低于行使价（US$9.07/ADS ≈ US$2.27/股）使转股稀释风险低，但每年产生非现金利息与衍生工具公允价值波动",
+            "rating": "★★★",
+            "source": {
+              "name": "公司 FY2025 年度业绩公告（ELS 与 Call Spread 章节）",
+              "url": "https://www.sec.gov/Archives/edgar/data/1815846/000110465926038269/tm2610734d1_ex99-6.htm"
+            }
+          },
+          {
+            "date": "2025-07",
+            "decision": "TOP TOY 引入淡马锡等 A 轮融资约 US$59.4 百万，投后估值约 US$13 亿；公司持股降至 86.9%",
+            "outcome": "为 TOP TOY 取得独立估值与资金；代价是优先股公允价值变动计入损益（FY2025 −1.58 亿元、26H1 −0.47 亿元），且 TOP TOY 26H1 首次经营亏损 0.72 亿元",
+            "rating": "★★★",
+            "source": {
+              "name": "公司 26H1 业绩新闻稿与 36 氪/投资界对融资的报道",
+              "url": "https://www.prnewswire.com/news-releases/miniso-group-announces-2026-june-quarter-and-interim-unaudited-financial-results-302862628.html"
+            }
+          },
+          {
+            "date": "2026-01-30",
+            "decision": "发布「大店计划」：未来 5 年关闭约 80% 门店、开 400 平方米以上乐园店（国内目标 1,200 家）、每年投入约 1 亿元培育原创 IP",
+            "outcome": "26H1 国内乐园系门店破 100 家；管理层称乐园店回本周期约 1 年内，快于常规店 16–18 个月；计划本身尚未经历完整周期验证",
+            "rating": "★★★",
+            "source": {
+              "name": "每经对全球合作伙伴大会的报道与公司 26H1 业绩会（澎湃转述）",
+              "url": "https://www.thepaper.cn/newsDetail_forward_33968188"
+            }
+          },
+          {
+            "date": "2024-03 起（2026-03-31 修订）",
+            "decision": "确立并修订按调整后净利润约 50% 分红的政策；2026-06 批准上限 20 亿港元回购计划并设自动回购安排",
+            "outcome": "26H1 分红+回购返还 13.10 亿元，相当于剔除汇兑后调整后净利润的 121%；自 2020 年美股 IPO 累计返还 62 亿元",
+            "rating": "★★★★",
+            "source": {
+              "name": "公司 26H1 业绩新闻稿（CFO 评论）",
+              "url": "https://www.prnewswire.com/news-releases/miniso-group-announces-2026-june-quarter-and-interim-unaudited-financial-results-302862628.html"
+            }
+          }
+        ],
+        "capitalAllocation": {
+          "rdReturn": {
+            "status": "unavailable",
+            "reason": "公司不披露研发费用科目，无法计算研发回报率；已查 FY2025 年度业绩公告三张表与 26H1 中报（均无研发费用行项目）"
+          },
+          "maTrackRecord": "重大交易两笔：① 永辉超市 29.4% 股权，成本 62.70 亿元，截至 2026-06-30 账面权益 55.56 亿元（含 26H1 应占利润 0.60 亿元），FY2025 单年应占亏损 8.13 亿元；按永辉 2026-09 约 274–289 亿元市值对应持股市值约 82 亿元，高于成本但公司未披露减值测试细节。② TOP TOY A 轮融资（US$59.4 百万、投后估值约 US$13 亿）稀释后仍持 86.9%。结论：跨界并购在选择上偏离主业（超市与 IP 零售），执行层面第一年即拖累归母净利润腰斩",
+          "buybackTiming": "FY2025 全年回购仅约 US$22.0 百万（约 1.6 亿元人民币）；26H1 回购 5.176 亿元（超过 2025 全年 90%），2026-06 新增 HK$20 亿计划并设自动回购。回购加码发生在股价从 HK$50.9 跌至 HK$18 的过程中，属逆势；但在 2023–2025 年高估值期回购力度轻微，尚未证明择时能力",
+          "evidence": [
+            {
+              "metric": "26H1 股东返还 / 剔除汇兑后调整后净利润",
+              "value": "13.10 亿元 / 12.22 亿元 = 107%（公告口径 121% 为按未剔除前调整后净利计算）",
+              "asOf": "2026-06-30",
+              "source": {
+                "name": "公司 26H1 业绩新闻稿（CFO 评论）与本次工具复算",
+                "url": "https://www.prnewswire.com/news-releases/miniso-group-announces-2026-june-quarter-and-interim-unaudited-financial-results-302862628.html"
+              }
+            },
+            {
+              "metric": "永辉投资账面价值 vs 成本",
+              "value": "55.56 亿元 vs 62.70 亿元",
+              "asOf": "2026-06-30",
+              "source": {
+                "name": "公司 26H1 业绩新闻稿资产负债表（联营投资科目）",
+                "url": "https://www.prnewswire.com/news-releases/miniso-group-announces-2026-june-quarter-and-interim-unaudited-financial-results-302862628.html"
+              }
+            }
+          ]
+        },
+        "alignment": {
+          "ownership": "叶国富持股 78,954.11 万股（63.70%），投票权 63.73%；股份为单一类别，未见 AB 股加权投票安排，经济权益与投票权基本一致",
+          "compensation": {
+            "status": "unavailable",
+            "reason": "本次未取到高管薪酬明细与考核指标原文；已查公司 IR 管理层页面、同花顺 F10 管理层页与 stockanalysis 高管页，均无薪酬结构表"
+          },
+          "insiderSelling": {
+            "status": "unavailable",
+            "reason": "未取到近 12 个月内部人增减持流水；已查同花顺 F10 股东页（仅显示期末持股不变）与公司公告索引"
+          },
+          "evidence": [
+            {
+              "metric": "创始人持股比例与投票权",
+              "value": "63.70% / 63.73%",
+              "asOf": "2026",
+              "source": {
+                "name": "同花顺 F10 MNSO 股东数据",
+                "url": "https://basic.10jqka.com.cn/184/MNSO/holder.html"
+              }
+            },
+            {
+              "metric": "内部人持股比例（第三方口径）",
+              "value": "内部人合计 65.97%、机构 15.44%",
+              "asOf": "2026-09",
+              "source": {
+                "name": "stockanalysis.com MNSO 股东统计",
+                "url": "https://stockanalysis.com/stocks/mnso/statistics/"
+              }
+            }
+          ]
+        },
+        "organization": {
+          "teamStability": "创始人叶国富自 2020 年起任主席兼 CEO、长期主导战略；CFO 张靖京 2023-01 上任（此前 2022-09 起任资本市场副总裁）；TOP TOY 由孙元文任 CEO 且持股 3.9%，有独立管理层。员工从 FY2024 的 7,003 人增至 FY2025 的 8,329 人，海外员工 5,125 人（61.5%）",
+          "keyPersonRisk": "偏高。创始人持股 63.7% 并兼主席与 CEO，「大店计划」「对标迪士尼」「自有 IP 人形机器人」等方向均由其个人定调；报告期内未见明确的接班人安排披露"
+        },
+        "culture": "① 资本配置偏进攻：2024–2025 用银行贷款与 US$5.5 亿 ELS 融资 62.70 亿元跨界收购永辉 29.4%，有息负债由 31.10 亿元升至 132.19 亿元，FY2025 因应占亏损 8.13 亿元导致归母净利润腰斩。② 股东回报承诺兑现度高：分红政策为调整后净利润约 50%，26H1 实际返还 13.10 亿元（超过同期剔除汇兑的调整后净利润），并设自动回购安排在静默期继续执行，自 2020 年 IPO 累计返还 62 亿元。③ 纠错速度可观察：26H1 业绩会公开承认海外收入低于指引、非北美直营未盈利，下调全年指引并计划下半年海外门店净减 50–70 家，管理层自述「正在纠正过去重规模和门店数量增长模式」。④ 披露质量：按季披露品牌与地区收入、SSSG、门店数、Non-IFRS 调节表，对永辉、ELS、TOP TOY 优先股、AI 基金逐项拆解，可核查性较高。⑤ 存在历史治理争议：2022-07 遭 Blue Orca Capital 做空，指控至少 620 家门店由与高管/董事长关系密切的个人注册，公司否认且未见监管处罚，但加盟结构透明度仍是长期折价因素（单源证据）。"
+      },
+      "inquiry": {
+        "question": "如果CEO退休，这家公司还能保持竞争力吗？",
+        "answer": "渠道与供应链业务可以延续，但「向 IP 公司转型」的路径大概率失速。① 可延续部分：8,674 家门店网络、零售合作伙伴体系、供应链系统与上新能力是组织资产，不依赖个人。② 依赖个人的部分：大店计划、对标迪士尼、自有 IP 投入强度与 YOYO/CHOUCHOU 等 IP 选择均由创始人定调，未见制度化的 IP 委员会或接班人安排；TOP TOY 有独立 CEO（孙元文持股 3.9%），是唯一被验证有独立管理层的板块（但其 26H1 已转为经营亏损）。③ 关键人风险已经体现在资本配置上：62.70 亿元跨界投资永辉这类决定由创始人主导，事后看回报不佳。④ 结论：现有生意可守，增量逻辑需要创始人。"
+      },
+      "dataGaps": [
+        {
+          "item": "高管薪酬结构与考核挂钩指标",
+          "reason": "未取到年报薪酬明细原文",
+          "searched": "公司 IR 管理层页、同花顺 F10、stockanalysis 高管页",
+          "evidenceRequest": {
+            "metric": "高管薪酬总额与考核指标",
+            "question": "叶国富与 CFO 的最新年度薪酬构成，是否与 ROIC/利润率/股价挂钩？",
+            "whyNeeded": "评估管理层激励与股东利益一致性",
+            "priority": "medium"
+          }
+        },
+        {
+          "item": "创始人及高管的股权质押与减持记录",
+          "reason": "仅取到期末持股，无质押/减持明细",
+          "searched": "同花顺 F10 股东与质押页、HKEX 权益披露索引",
+          "evidenceRequest": {
+            "metric": "内部人质押与减持",
+            "question": "叶国富是否存在股份质押？2025-09 至 2026-09 有无内部人减持？",
+            "whyNeeded": "判断控制权稳定性与内部人信号",
+            "priority": "medium"
+          }
+        }
+      ]
+    },
+    "industryTrend": {
+      "title": "行业与长期趋势",
+      "conclusion": "IP 消费是长期真实趋势，但公司在价值链上处于「渠道+授权」环节，趋势红利大部分归 IP 方。",
+      "analysis": {
+        "paradigmShift": {
+          "verdict": "部分",
+          "reasoning": "① 是趋势的部分：IP 与情绪消费是结构性需求，中国潮玩零售额从 2019 年 207 亿元增至 2024 年 587 亿元（CAGR 23.2%），2025 年约 879.7 亿元（+21%），首次超过传统玩具市场；名创优品自身以 YOYO 验证了「渠道+爆款 IP」可以在一年内做出单月破亿元的销售。② 不是范式转移的部分：名创优品不是这个趋势的发起者，其近 200 个 IP 中约 180 个为授权 IP，本质是把别处的 IP 需求变现为零售流量，属「渠道受益者」而非「IP 创造者」；真正的范式转移受益方（泡泡玛特）毛利率 69.7%、净利率 30%，与名创优品 45%/10.6% 形成结构性差距。"
+        },
+        "historicalAnalogy": "[估计] 与 1990 年代美国零售商的「自有品牌化（private label）」浪潮同构：渠道方以规模与周转效率从品牌方手中争取利润份额，胜负取决于能否把渠道规模转化为自有产品能力。全行业层面的直接类比是日本生活杂货连锁的出海史（无印良品海外前 11 年亏损、美国子公司 2020 年破产保护）——渠道与商品力可以复制到新市场，但本地化与租金模型往往要十年才跑通。",
+        "tam": {
+          "current": {
+            "value": "879.7 亿元",
+            "currency": "CNY",
+            "asOf": "2025",
+            "source": {
+              "name": "广东省玩具协会/华源证券（中国潮玩市场 2025 年 879.7 亿元，+21%；对照口径毕马威 825 亿元）",
+              "url": "https://m.caizhongshe.cn/news-7475445465208255585.html"
+            }
+          },
+          "ceiling": "① 中国潮玩：弗若斯特沙利文预测 2030 年 3,310 亿元（自 2026 年 1,264 亿元，CAGR 27.2%），保守对照为毕马威 2030 年 2,133 亿元（CAGR 18.7%）。② 公司实际可寻址的部分更小：管理层自估国内名创优品门店天花板 7,000–8,000 家（现有 4,665 家），增量主要来自大店改造；全球自有品牌综合零售 2019 年 GMV 约 520 亿美元，公司当时份额 5.2%。③ 已实现的验证：TOP TOY 与自有 IP 合计收入在 26H1 约 15 亿元（TOP TOY 9.85 亿元 + 自有 IP 约 5 亿元），占总收入 13%——即当前 TAM 变现率仍低。",
+          "growthCurve": "海外 IP 零售处于导入到成长阶段（113 个国家、3,644 家门店，但同店已转负）；国内潮玩/大店处于成长阶段（乐园店 100 家、目标 1,200 家）；传统生活杂货主业处于成熟阶段（国内同店中个位数）。三条曲线的加权结果：整体增速从 2025 年的 +26% 降至 2026 年的高个位数到低双位数（公司指引 H2 收入高个位数增长）"
+        },
+        "valueChainPosition": "公司位于价值链的零售分销环节：上游是 IP 授权方（迪士尼等，约 180 个授权 IP）与代工产能，下游是零售合作伙伴、经销商与消费者。议价权弱于 IP 拥有方——证据是毛利率 45% vs 泡泡玛特 69.7%；同时比纯代工强，因为掌握 8,674 家门店与 113 国渠道。真正的杠杆点在「把渠道规模换成自有 IP」（YOYO 单月破 1 亿元）或「把大店换成更高的单店产出」（乐园店回本 1 年内）。",
+        "techRouteRisk": "① 需求形态风险：潮玩品类轮换快（搪胶毛绒、手办、盲盒、拼装模型），对标 IP THE MONSTERS 已同比 −7.5%，公司在 2025 年前几乎不参与品类定义，跟随者角色使其难以提前布局下一个形态。② 渠道形态风险：若 IP 方转向自营或直连消费者（泡泡玛特模式），渠道方价值被压缩。③ 公司应对：YOYO 人形机器人等 AI+IP 尝试（管理层 2026-01 表述）、供应链系统自动化、乐园店 IP 化陈列，但这些尚无可验证的财务成果。",
+        "concentration": {
+          "customers": "高度分散：8,674 家门店、113 个国家与地区；国内零售合作伙伴 4,624 家、海外零售合作伙伴 439 家与经销商 2,410 家（26H1）。单一客户无重大依赖",
+          "suppliers": {
+            "status": "unavailable",
+            "reason": "公司未披露供应商集中度（前五大供应商占比）；已查 FY2025 年度业绩公告与 20-F，仅有供应链系统与工厂管理描述，无集中度数据"
+          },
+          "evidence": [
+            {
+              "metric": "门店与合作伙伴数量",
+              "value": "集团 8,674 家门店；名创优品品牌 8,309 家（中国内地 4,665 家、海外 3,644 家）；TOP TOY 365 家",
+              "asOf": "2026-06-30",
+              "source": {
+                "name": "公司 26H1 业绩新闻稿",
+                "url": "https://www.prnewswire.com/news-releases/miniso-group-announces-2026-june-quarter-and-interim-unaudited-financial-results-302862628.html"
+              }
+            },
+            {
+              "metric": "IP 结构（授权 vs 自有）",
+              "value": "约 200 个 IP 中约 180 个为授权 IP；签约潮玩艺术家 IP 超 30 位",
+              "asOf": "2026-01-30",
+              "source": {
+                "name": "公司全球合作伙伴大会（每日经济新闻报道）",
+                "url": "https://www.vzkoo.com/read/20250126c9728d1a95959622b9f722b8.html"
+              }
+            }
+          ]
+        }
+      },
+      "inquiry": {
+        "question": "站在20年后回看，这家公司是「这个时代的标准石油」还是「昙花一现的3Com」？",
+        "answer": "更像「渠道型零售的长期存在者」，介于两者之间，天花板取决于能否拥有自己的 IP。① 不是 3Com 的理由：5–25 美元价格带的日用品/潮玩需求长期存在，8,674 家门店与供应链是十年以上可延续的实体网络，公司也在 2026 年仍有 14.75 亿元的半年经营现金流。② 不是标准石油的理由：公司不掌握最稀缺的生产要素（IP 内容与角色），近 200 个 IP 中约 180 个为授权；渠道网络可被电商、IP 方直营或其他连锁替代，达芙妮的 6,881 家门店在 8 年内萎缩 96% 说明「渠道网络」本身不是护城河。③ 决定命运的观察点：自有 IP 收入占比能否在 3–5 年内从当前约 4%（26H1 约 5 亿元 ÷ 115 亿元，工具验算 4.3%）提升到两位数，以及乐园系大店的单店回报能否在扩张到 1,200 家时保持不变。"
+      },
+      "dataGaps": [
+        {
+          "item": "供应商集中度与前五大供应商占比",
+          "reason": "公司未披露；已查 FY2025 年度业绩公告与 20-F 相关章节",
+          "searched": "FY2025 年度业绩公告、20-F 风险因素与供应链章节"
+        },
+        {
+          "item": "全球生活家居零售市场的整体规模与公司份额（最新年度口径）",
+          "reason": "现有份额数据为 2019–2021 年弗若斯特沙利文口径（基于招股书），近年未见更新；已查券商研报转述与新报告",
+          "searched": "弗若斯特沙利文相关报道、券商行业报告摘要、公司 IR",
+          "evidenceRequest": {
+            "metric": "全球自有品牌综合零售/生活家居零售市场规模与公司份额（2024–2025）",
+            "question": "最新的全球生活家居零售市场规模与名创优品的市场份额是多少？",
+            "whyNeeded": "量化 TAM 与份额趋势，替代 2019 年旧口径",
+            "priority": "medium"
+          }
+        }
+      ]
+    },
+    "valuation": {
+      "title": "估值分析",
+      "conclusion": "按 IFRS 口径 PE 14.9x 不便宜、按剔除投资噪音的口径约 6.9x 便宜，分歧在于利润率下滑是一次性还是趋势性。",
+      "analysis": {
+        "currentMultiples": {
+          "marketCap": {
+            "value": "184.3 亿元（27.22 亿美元 / 213.56 亿港元）",
+            "currency": "CNY",
+            "asOf": "2026-09-11（美股）/2026-09-14（港股）",
+            "source": {
+              "name": "stockanalysis.com MNSO / HKG:9896（市值 2.72B USD / 21.35B HKD，本文件用 financial_rigor.py 验算并统一折为人民币）",
+              "url": "https://stockanalysis.com/stocks/mnso/statistics/"
+            }
+          },
+          "pe": {
+            "value": "14.9x（TTM，IFRS 归母）；15.7x（FY2025 静态）；约 6.9x（TTM Non-IFRS 调整后）",
+            "asOf": "2026-09-11",
+            "source": {
+              "name": "financial_rigor.py verify-valuation 工具验算（US$9.07 ÷ US$0.61 TTM EPS/ADS）与 stockanalysis（14.89x）",
+              "url": "https://stockanalysis.com/stocks/mnso/statistics/"
+            }
+          },
+          "ps": {
+            "value": "0.79x（市值 184.3 亿元 ÷ TTM 收入 235.50 亿元）",
+            "asOf": "2026-09-11",
+            "source": {
+              "name": "stockanalysis.com（PS 0.79x）",
+              "url": "https://stockanalysis.com/stocks/mnso/statistics/"
+            }
+          },
+          "peg": {
+            "value": "不适用",
+            "asOf": "2026-09-14",
+            "source": {
+              "name": "公司指引 FY2026 调整后净利润同比高个位数下滑（分母为负增长），PEG 失去意义；stockanalysis 给出的 10.42 与盈利下滑事实矛盾，本文件不采用",
+              "url": "https://wallstreetcn.com/articles/3780596"
+            }
+          },
+          "evToRevenue": {
+            "value": "1.03x（(市值 184.32 亿元 + 净负债 58.24 亿元) ÷ TTM 收入 235.50 亿元）；EV/EBITDA 6.4x、EV/FCF 13.7x",
+            "asOf": "2026-09-11",
+            "source": {
+              "name": "financial_rigor.py calc 工具验算与 stockanalysis（EV/Sales 1.03、EV/EBITDA 6.41）",
+              "url": "https://stockanalysis.com/stocks/mnso/statistics/"
+            }
+          }
+        },
+        "reverseDcf": {
+          "impliedGrowth": "约 0.4%（贴现率 10%）或 2.4%（贴现率 12%）",
+          "assumptions": "用戈登永续模型反推：TTM 每股 ADS 自由现金流 US$0.87，现价 US$9.07 → FCF 收益率 9.59%。若要求 10% 年化回报，隐含永续增长率 = 10% − 9.59% = 0.4%；若要求 12%，则为 2.4%。即当前价格隐含「自由现金流基本零增长」的假设，未包含海外扩张带来任何增长。反向解读：市场并不是在给增长付费，而是在给「利润会不会继续下滑」定价（公司指引 FY2026 调整后净利润同比高个位数下滑）。此模型对贴现率高度敏感，且 TTM FCF 受海外直营资本开支（26H1 资本开支 7.25 亿元）压低，故仅作方向参考。"
+        },
+        "threeScenario": {
+          "inputs": {
+            "price": "US$9.07/ADS",
+            "eps": "US$1.278/ADS（2026E，基数：FY2025 调整后净利润 28.98 亿元 × (1 − 9%) = 26.37 亿元 ÷ 3.05 亿 ADS = 8.65 元/ADS ÷ 6.7698）",
+            "sharesHundredMillion": "3.0011（亿份 ADS）",
+            "growth": [
+              "15%（乐观）",
+              "5%（中性）",
+              "-5%（悲观）"
+            ],
+            "pe": [
+              "12x（乐观）",
+              "9x（中性）",
+              "6.5x（悲观）"
+            ],
+            "years": 3,
+            "currency": "USD"
+          },
+          "optimistic": {
+            "targetPrice": "US$23.30",
+            "impliedReturnPct": "+157.2%"
+          },
+          "neutral": {
+            "targetPrice": "US$13.32",
+            "impliedReturnPct": "+46.8%"
+          },
+          "pessimistic": {
+            "targetPrice": "US$7.12",
+            "impliedReturnPct": "-21.5%"
+          },
+          "assumptionBasis": "① 基数取公司自己的 FY2026 指引中值（调整后净利润同比 −9%），避免把 26Q2 亏损当作常态、也不假设盈利立即修复。② 乐观 15%：海外直营转正、乐园店扩至 300 家以上、自有 IP 收入翻数倍，给 12x（接近当前 PE 与泡泡玛特 15x 之间的折扣位）。③ 中性 5%：指引达成后收入回到低双位数增长、利润率止跌，给 9x（对应 Non-IFRS 口径约 8–9x，与全球连锁零售估值带一致）。④ 悲观 −5%：利润率继续被直营与授权成本侵蚀、IP 生命周期结束，给 6.5x（接近上市以来最低估值区间的 PS/PE 下沿）。⑤ EPS 以调整后（剔除永辉、ELS 利息、衍生工具、投资公允价值变动）为基数，因为 IFRS 口径的年度利润已被非经营项主导（FY2025 12.05 亿元 vs 调整后 28.98 亿元）。",
+          "toolOutput": "three-scenario 输出：当前股价 9.07 USD，当前 EPS 1.278，预测期 3 年；乐观 15%/12x → 目标 EPS 1.94、目标股价 23.3、+157.2%；中性 5%/9x → 1.48、13.3、+46.8%；悲观 -5%/6.5x → 1.10、7.1、-21.5%。所有计算使用精确十进制，结果可审计复现。"
+        },
+        "vsOwnHistory": {
+          "metric": "PE（TTM）与 PS（TTM）",
+          "currentValue": "PE 14.9x、PS 0.79x",
+          "historicalRange": "2022Q1 至 2026Q2 各季末 PE 区间 13.8x–56.7x（最低 2023Q1 13.81x、最高 2022Q1 56.70x），当前 14.9x 处于区间下沿附近；PS 区间 1.04x–3.65x（2023Q4 3.25x、2025Q4 1.86x、2026Q1 1.50x、2026Q2 1.04x），当前 0.79x 为上市以来最低。注意：PE 下沿与「利润被非经营项压低」相伴，历史 PE 低点（2023Q1 13.8x）出现在利润高增期，含义不同，不能简单读作「回到历史低位就是便宜」",
+          "source": {
+            "name": "stockanalysis.com MNSO 季度比率序列表（各季末 PE 与 PS）",
+            "url": "https://stockanalysis.com/stocks/mnso/financials/?p=quarterly"
+          }
+        },
+        "vsPeers": [
+          {
+            "name": "泡泡玛特 (9992.HK)",
+            "pe": "15.2x（理杏仁，2026）",
+            "ps": {
+              "status": "unavailable",
+              "reason": "本次未取到泡泡玛特 PS 的原文口径（市值 2,157.48 亿港元 ÷ 需与收入口径/汇率对齐）；已查理杏仁估值页与公司披露，仅取得 PE 15.18x、PB 8.70x、股息率 1.68%"
+            },
+            "source": {
+              "name": "理杏仁 09992 估值页（股价 162.00 港元、市值 2,157.48 亿港元、PE 15.18x、PB 8.70x）",
+              "url": "https://www.lixinger.com/equity/company/detail/hk/09992/9992"
+            }
+          },
+          {
+            "name": "名创优品（自身，作为对照）",
+            "pe": "14.9x（TTM IFRS）／约 6.9x（TTM Non-IFRS 调整后）",
+            "ps": "0.79x",
+            "source": {
+              "name": "本文件工具验算与 stockanalysis",
+              "url": "https://stockanalysis.com/stocks/mnso/statistics/"
+            }
+          }
+        ]
+      },
+      "inquiry": {
+        "question": "如果股市明天关闭5年，你愿意以这个价格持有吗？",
+        "answer": "取决于把哪一个利润当作真实盈利，我更倾向于认为当前价格只提供有限的安全边际。① 如果相信调整后口径（TTM 约 6.9x PE、7.3% 股息率、P/FCF 10.4x），这是明显低估，五年维度上全球化网络仍在扩张。② 如果相信 IFRS 口径（14.9x PE），价格与利润率高出一倍的泡泡玛特几乎同估值，五年持有的吸引力不足——因为利润表里永辉、ELS、AI 基金与优先股的公允价值波动未来五年仍会继续出现，不是一次性噪音。③ 五年关市的真实检验是「公司能否把自有 IP 做成第二增长曲线」：26H1 自有 IP 相关收入约 5 亿元、占收入约 4.3%，这件事尚未开始验证。④ 结论：在 6.9x 的调整后口径下愿意持有，在 14.9x 的 IFRS 口径下只能算合理，无法支撑「关闭五年也无所谓」的确定性。"
+      },
+      "dataGaps": [
+        {
+          "item": "分析师一致预期的未来 3 年 EPS 明细",
+          "reason": "本机无 FMP estimates 端点权限；stockanalysis forecast 仅给出 Revenue Growth Forecast 3Y 13.47%、EPS Growth Forecast 3Y 8.34%，与公司指引（FY2026 调整后净利润下滑高个位数）方向冲突",
+          "searched": "stockanalysis forecast 页面、公司 26H1 业绩会指引；未获取卖方逐家预测",
+          "evidenceRequest": {
+            "metric": "卖方一致预期 EPS（2026–2028）与目标价分布",
+            "question": "17 家覆盖机构对 FY2026–FY2028 的调整后 EPS 预期区间是多少？",
+            "whyNeeded": "校准三情景的基数与增速假设，并解释分析师目标价 US$14.87（+63%）与公司利润下滑指引之间的差距",
+            "priority": "medium"
+          }
+        }
+      ]
+    }
+  },
+  "crossValidationLog": [
+    {
+      "field": "收入增速（26Q2 与 26H1）",
+      "source1": {
+        "name": "公司 26H1 业绩新闻稿（26Q2 RMB 5,810.5 百万元、26H1 RMB 11,498.9 百万元）",
+        "value": 17.0
+      },
+      "source2": {
+        "name": "financial_rigor.py calc 工具验算（5,810.513 ÷ 4,966.068 − 1 = 17.00%；11,498.901 ÷ 9,393.112 − 1 = 22.42%）",
+        "value": 17.0
+      },
+      "deviationPct": 0,
+      "flag": "ok",
+      "resolution": "工具复算与公司披露一致（17.0% / 22.4%）；本文件所有增速、利润率、负债率、倍数均经 financial_rigor.py 计算"
+    },
+    {
+      "field": "FY2025 经营利润率与净利率",
+      "source1": {
+        "name": "financial_rigor.py / 手算复核（经营利润 3,303.123 ÷ 收入 21,443.827 = 15.40%；归母净利 1,205.045 ÷ 收入 = 5.62%）",
+        "value": 15.4
+      },
+      "source2": {
+        "name": "stockanalysis.com（FY2025 operating margin 15.57%、profit margin 5.62%；差异因 stockanalysis 经营利润取 3,339 而非公司口径 3,303）",
+        "value": 15.57
+      },
+      "deviationPct": 1.1,
+      "flag": "minor-diff",
+      "resolution": "差异 1.1% 来自经营利润口径（stockanalysis 对部分非经营项的处理不同），本文件统一采用公司公告的 3,303.123 百万元（15.40%）"
+    },
+    {
+      "field": "三情景估值（2026E 调整后 EPS 基数）",
+      "source1": {
+        "name": "公司 FY2026 指引（调整后净利润同比高个位数下滑）＋ FY2025 调整后净利润 28.98 亿元，本文件取 −9% 得 26.37 亿元",
+        "value": 26.37
+      },
+      "source2": {
+        "status": "not-applicable",
+        "reason": "工具验算行（financial_rigor.py three-scenario 输入口径的推算），非多源交叉验证；EPS 换算 26.37 亿元 ÷ 3.05 亿 ADS = 8.65 元/ADS ÷ 6.7698 = US$1.278/ADS"
+      },
+      "deviationPct": {
+        "status": "not-applicable",
+        "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+      },
+      "flag": "ok",
+      "resolution": "指引为区间（高个位数下滑），本文件取中值 −9%；悲观情景即为该指引下沿的延续，敏感性已写入 threeScenario.assumptionBasis"
+    },
+    {
+      "field": "反向 DCF 隐含增长率",
+      "source1": {
+        "name": "financial_rigor.py calc（10% − 0.87/9.07 = 0.41%；12% − 0.87/9.07 = 2.41%）",
+        "value": 0.41
+      },
+      "source2": {
+        "status": "not-applicable",
+        "reason": "工具验算（戈登永续模型反推），非多源交叉验证；FCF/ADS 采用 TTM 1,752 百万元 ÷ 1,200.44 百万股 = 1.46 元/股（= US$0.87/ADS）"
+      },
+      "deviationPct": {
+        "status": "not-applicable",
+        "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+      },
+      "flag": "ok",
+      "resolution": "隐含增长率对贴现率极敏感（0.4% vs 2.4%），已在 reverseDcf.assumptions 中标注为方向性参考"
+    },
+    {
+      "field": "2026Q2 核心盈利（剔除汇兑）",
+      "source1": {
+        "name": "公司 26H1 业绩新闻稿（26Q2 剔除 FX 后调整后净利润 5.884 亿元，上年同期 6.573 亿元）",
+        "value": -10.5
+      },
+      "source2": {
+        "name": "媒体测算（21 财经：剔除 AI 基金等非经营项后 26Q2 调整后净利润同比约 −10.5%）",
+        "value": -10.5
+      },
+      "deviationPct": 0,
+      "flag": "ok",
+      "resolution": "公司披露的剔除汇兑口径与媒体剔除非经营项后的测算口径得出同一幅度，互为印证"
+    }
+  ]
+}
