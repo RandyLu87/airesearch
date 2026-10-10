@@ -1,0 +1,180 @@
+{
+  "_spec": {
+    "purpose": "研究流程第 3 步（分析总结）的产出。由评估环节基于第 1 步采集与第 2 步分析落盘文件生成，不重新采集。",
+    "confidence": "信心度总分 10 分，价值投资视角下对该维度的看多程度。",
+    "corporateCulture": "企业文化维度的结论为客观陈述，只转述第 2 步已落盘的可观察证据；缺失或证据以单源为主时写明证据限制、信心度向中性收敛。",
+    "traceability": "每个结论、评分、建议的 basis 字段写明引用的前两步文件字段路径与关键数据。",
+    "executorNote": "本次会话未挂载 Task/子代理工具，第 3 步评估由主会话按同一输出格式与评分规则完成，未做独立 Agent 隔离；这会在第 7 步评估中作为一次流程偏离记录。"
+  },
+  "meta": {
+    "companyId": "us-mcd-mcdonalds",
+    "companyName": "McDonald's Corporation",
+    "summarizedAt": "2026-10-09",
+    "dataCutoff": "2026-10-09（Asia/Shanghai）",
+    "basedOnCollection": "research/companies/us-mcd-mcdonalds/financials-collection.json",
+    "basedOnAnalysis": "research/companies/us-mcd-mcdonalds/financials-analysis.json"
+  },
+  "dimensionSummary": [
+    {
+      "dimensionId": "businessQuality",
+      "title": "生意质量",
+      "mapsTo": "dimensions.businessEssence",
+      "conclusion": "把 4.5 万家餐厅的流水转成加盟商地租与抽成的收费权生意，毛利率与现金创造能力在整个餐饮业无出其右；代价是过去五年再投资回报未放大，利润增长基本被资本开支吃掉。",
+      "confidence": 8,
+      "scoreBasis": "① 单位经济极优：特许经营分部毛利率 84.18%、自营 14.67%（businessEssence.analysis.revenueBreakdown 与 marginByType），FY2025 营业利润率 46.10%、FCF 转化率 83.9%。② 现金创造真实：FY2025 经营现金流 10.551B、FCF 7.186B，分红+回购占 FCF 99%（financialMetrics.capitalReturn）。③ 扣分项：收入 CAGR 3.73% 而资本开支 CAGR 13.33%、FCF CAGR 仅 0.29%，税后 ROIC 从 25.2% 降到 20.3%（businessEssence.analysis.operatingLeverage），经营杠杆未放大。④ 数据缺口仅限非量化项（会员留存率、第三方验证），不影响该维度判断。"
+    },
+    {
+      "dimensionId": "moat",
+      "title": "护城河",
+      "mapsTo": "dimensions.moat",
+      "conclusion": "最硬的护城河是地产产权加 20 年加盟合约，这一段不会随消费趋势变化；但「能提价」这一段正在变窄，2026 年美国客流为负是直接证据。",
+      "confidence": 8,
+      "scoreBasis": "① 结构层最宽：自持约 56% 土地与 80% 建筑、95% 门店加盟化、45,356 家门店规模效应（moat.analysis.types 规模效应条）。② 数字印证：营业利润率 45.72% vs QSR 26.97%、YUM 32.47%、CMG 15.27%、SBUX 10.37%。③ 扣分项：品牌/定价权判定为「待验证」——美国可比销售从 2025Q4 +6.8% 降到 2026Q2 +0.8% 且客流为负，提价空间在低端客群见顶。④ 未来五年趋势判为「稳定」，前提是约 250bps 餐厅效率能落地。"
+    },
+    {
+      "dimensionId": "management",
+      "title": "管理层",
+      "mapsTo": "dimensions.management",
+      "conclusion": "资本配置纪律清晰、股东回报慷慨、战略语言连续，但连续三年计提「非经常性」重组费用，且回购发生在偏高估值区间，管理层持股比例极低。",
+      "confidence": 7,
+      "scoreBasis": "① 正面证据：FY2025 分红+回购约 71 亿美元占 FCF 99%，51 年连续增息；PRSU 考核绑三年 EPS 增速与 ROIC≥16%，CEO「实际支付」薪酬随股价从 36.85M 降到 17.92M，激励与股东同向（management.analysis.alignment）。② 负面证据：Accelerating the Organization 三年累计计提 697M、2026 年预计再计提约 250M，管理层评价为 ★★★（management.analysis.keyDecisions）。③ 对齐度扣分：CEO 仅持股 0.123%、全体董事高管 0.26%，经济绑定偏弱。④ 未解决缺口：未逐笔核验 Form 4 减持，无法确认内部人交易方向。"
+    },
+    {
+      "dimensionId": "keyRisk",
+      "title": "最大风险",
+      "mapsTo": "dimensions.inversion",
+      "conclusion": "最大风险是提价空间见顶而加盟商不再投钱——它不会让公司归零，但会让自由现金流长期停滞、估值中枢继续下移；风险可观察、可分散，但难以由投资者对冲。",
+      "confidence": 6,
+      "scoreBasis": "① 风险清单中「加盟商现金回报不足」与「客流持续流失」均为高影响、中概率，且指向同一个变量：4.5 万家门店的再投资意愿（inversion.analysis.failurePaths）。② 相对可控的部分：业务横跨 100+ 国家、17 个十亿美元单品、无客户集中度，不存在单点致命的结构；对比「食品安全的系统性事件（低概率高影响）」也说明风险不是单点。③ 不可控的部分：股东权益 −1.023B、现金仅 822M，若经营现金流两位数下滑，分红与回购必须二选一。④ 已有三年期量化证据（ROIC 25.2%→20.3%、FCF 五年 CAGR 0.29%），不是推测。"
+    },
+    {
+      "dimensionId": "civilizationTrend",
+      "title": "文明趋势",
+      "mapsTo": "dimensions.industryTrend",
+      "conclusion": "连锁快餐不是文明级技术革命的受益者或受害者，它是被数字渠道重塑的成熟现金牛；行业分散到 4.5 万家门店只占全球餐饮支出个位数量级，天花板不是约束。",
+      "confidence": 6,
+      "scoreBasis": "① 范式判断为「部分」：产品技术半个世纪无本质变化，变的是分发（数字点单、外送约 41,000 家门店、70 个市场会员），industryTrend.analysis.paradigmShift。② 趋势支持项：会员 2.2 亿活跃、2027 年目标 2.5 亿，数字渠道渗透仍在推进。③ 扣分项：行业成熟、公司收入 CAGR 3.73% 低于行业中位增速约 5.6%，公司自身把「技术投资回报不达标」列为风险因子。④ 数据缺口明确：TAM 各来源分歧极大（3.02%~11.89% CAGR），该维度不宜给高分。"
+    },
+    {
+      "dimensionId": "valuation",
+      "title": "估值",
+      "mapsTo": "dimensions.valuation",
+      "conclusion": "PE 19.07x 低于五年区间下沿约 24%，按唯一不受加盟会计扭曲的 EV/EBITDA 口径是同业五家中最低；反向 DCF 只隐含 2%~3% 的永续增长，价格已从「贵」回到「合理偏便宜」。",
+      "confidence": 8,
+      "scoreBasis": "① 自身历史：PE 从 FY2021–FY2025 的 25.26–31.25x 降至 19.07x，处五年最低（valuation.analysis.vsOwnHistory）。② 同业可比口径：EV/EBITDA 14.83x 为五家最低（QSR 16.00x、YUM 17.03x、CMG 19.65x、SBUX 21.87x），且营业利润率最高；PS 6.00x 偏高是加盟会计产物，不可用于比较（valuation.analysis.peerComparisonNote）。③ 反向 DCF 隐含增速 2.22%~3.18%，低于公司自身五年收入 CAGR 3.73%（valuation.analysis.reverseDcf）。④ 三情景：乐观 382.6（+63.0%）、中性 293.2（+24.9%）、悲观 193.1（−17.7%），下行幅度小于上行幅度。⑤ 扣分项：分红+回购已占 FCF 99%，股本无缓冲垫，估值修复依赖基本面不再恶化。"
+    },
+    {
+      "dimensionId": "corporateCulture",
+      "title": "企业文化",
+      "mapsTo": "dimensions.management.analysis.culture",
+      "conclusion": "已落盘证据显示三项文化特征：以加盟商关系为系统核心、以长期股东回报为资本配置目标（51 年增息）、以成本纪律推动组织精简；但全部证据来自公司自身披露，无外部独立验证，结论应限于此。",
+      "confidence": 6,
+      "scoreBasis": "① 加盟商中心：10-K 原文表述加盟关系对整体业绩与品牌保护「of fundamental importance」（management.analysis.culture 第①点）。② 股东导向：51 年连续增息，资本配置优先级明示为「先投资增长、再保分红、余下回购」，FY2025 分红+回购占 FCF 99%（management.analysis.culture 第②点、alignment.compensation）。③ 成本纪律：连续三年推进 Accelerating the Organization 与 GBS，累计重组费用 697M（management.analysis.organization.teamStability）。④ 证据限制（这是分数向中性收敛的直接原因）：三条均引自 10-K/委托书等公司自述材料，属 Level 3 单源；第 2 步 management.dataGaps 明确登记「无外部独立证据（员工满意度、离职率、加盟商满意度）可交叉验证」，且 2026 年 8 月刚更换美国总裁，组织稳定性证据偏弱。"
+    }
+  ],
+  "strategies": {
+    "noPosition": {
+      "title": "空仓者",
+      "advice": "① 价格已进入可分批建仓区间，但不要一次买满——增长减速尚未见底，2026Q3 财报前的基本面方向未定。② 把入场锚定在三情景的悲观与中性目标之间，用分批而非择时降低「买在减速中段」的风险。③ 不该因为 3.29% 股息率就把它当债券买：分红+回购已占 FCF 99%，缓冲区为零。",
+      "triggers": [
+        {
+          "condition": "股价回落至 215 美元以下（约当 17.5x TTM EPS）",
+          "action": "建立目标仓位 1/3 的初始头寸",
+          "basis": "① 215 美元约为五年 PE 区间下沿 25.26x 的 70%，位于三情景悲观目标 193.1 与中性目标 293.2 之间（dimensions.valuation.analysis.threeScenario）。② 该价位对应股息率约 3.6%、FCF 收益率约 5.1%，接近同行 QSR 的股息率 3.67%。"
+        },
+        {
+          "condition": "2026Q3 财报（2026-11-04）美国可比销售转正且客流不再为负",
+          "action": "补足至目标仓位的一半",
+          "basis": "① 客流是区分「提价驱动」与「真需求恢复」的唯一观察点（dimensions.inversion.analysis.failurePaths[0]）。② 美国分部 2026Q2 可比销售 +0.8%、客流为负，是当前最大的基本面未知数。"
+        },
+        {
+          "condition": "股价升破 293 美元（中性情景目标价）而基本面未改善",
+          "action": "停止加仓，等待下一次财报确认",
+          "basis": "① 293.2 美元为三情景中性目标（dimensions.valuation.analysis.threeScenario）。② 在中性假设下该价位已完全兑现三年增长，继续买入等于押注乐观情景。"
+        }
+      ]
+    },
+    "holding": {
+      "title": "持仓者",
+      "advice": "① 继续持有，回报的主要来源是现金而不是估值：股东收益率合计 3.99%（股息 3.29% + 回购 0.73%），分红已连续增长 51 年。② 不要在投资者日后的利空情绪里恐慌卖出——下杀的是估值而不是现金流，FY2025 经营现金流仍增长 11.7%。③ 但要把仓位上限设在「能承受悲观情景」的水平，因为资产负债表没有缓冲垫。",
+      "triggers": [
+        {
+          "condition": "股价跌至 193 美元附近（悲观情景目标价）",
+          "action": "若基本面未触发卖出信号，可动用剩余现金加仓至目标仓位",
+          "basis": "① 193.1 美元为三情景悲观目标（dimensions.valuation.analysis.threeScenario），对应约 15.7x TTM EPS。② 该价位意味着市场按「低速税收型资产」定价，而公司 FY2025 FCF 仍覆盖分红与回购。"
+        },
+        {
+          "condition": "股价升破 293 美元而美国客流与可比销售未同步改善",
+          "action": "减至半仓，锁定估值修复收益",
+          "basis": "① 293.2 美元为中性情景目标（dimensions.valuation.analysis.threeScenario）。② 估值维度信心度 8 分建立在 19.07x 的低起点上，回到 25x 以上后安全边际消失（dimensions.valuation.analysis.vsOwnHistory）。"
+        },
+        {
+          "condition": "公司宣布削减或暂停回购（当前回购约占 FCF 28.6%）",
+          "action": "重新评估仓位，并把股东收益率假设下调至仅股息口径",
+          "basis": "① FY2025 回购 2.056B 占 FCF 28.61%（dimensions.management.analysis.capitalAllocation.buybackTiming）。② 削减回购通常意味着现金流或资本开支预期发生变化，是比股价更早的信号。"
+        }
+      ]
+    },
+    "sellSignals": {
+      "title": "卖出信号",
+      "signals": [
+        {
+          "signal": "全球可比销售连续两个季度为负（不只是美国）",
+          "observable": "季度 8-K 新闻稿的 COMPARABLE SALES 表，Total Company 一行为负且连续两期",
+          "basis": "① 当前仅美国在 2026Q2 降到 +0.8% 且客流为负，全球仍 +1.3%（dimensions.inversion.analysis.failurePaths[0]）。② 全球转负意味着提价策略在多个市场同时失效，生意质量维度的 8 分基础被打破。"
+        },
+        {
+          "signal": "税后 ROIC 跌破 16%（公司 PRSU 考核阈值）",
+          "observable": "10-K MD&A 的 after-tax ROIC from continuing operations，2025 年为 20.3%",
+          "basis": "① 该指标已从 2023 年 25.2% 连续降至 2025 年 20.3%（dimensions.businessEssence.analysis.operatingLeverage）。② 16% 是公司自己给管理层设定的下限，跌破说明再投资已不创造价值。"
+        },
+        {
+          "signal": "公司再度扩大加盟商支持规模（现有的 2036 年前约 85 亿美元之外再加码）",
+          "observable": "8-K 或投资者材料中新增的加盟商资本支持/租金减免承诺金额",
+          "basis": "① 现有承诺 2036 年前约 85 亿美元、2030 年前约 50 亿（dimensions.management.analysis.keyDecisions 2026-09-23 条）。② 加码等于承认 NEXT 的餐厅效率提升未按计划落地，是加盟商经济性恶化的直接证据。"
+        },
+        {
+          "signal": "AI 定价集体诉讼出现实体不利裁决（如禁令限制算法定价或加盟店数据共享）",
+          "observable": "法院裁定文书或被公司计入 10-Q 重大或有负债",
+          "basis": "① 该案指控 AI 定价系统在自营与加盟店间共享非公开数据协调价格（dimensions.inversion.analysis.failurePaths[3]）。② 定价算法与数据打通是 NEXT 的核心工具，被限制将直接削弱提价与效率路径。"
+        },
+        {
+          "signal": "分红被削减或不再增长（中断 51 年连续增息纪录）",
+          "observable": "季度股息宣告低于上季度，或公司声明暂停年度上调",
+          "basis": "① 分红占 FCF 71.18%，这是股东回报的最大一块（dimensions.management.analysis.capitalAllocation）。② 在股东权益 −1.023B、现金仅 822M 的结构下，削减股息是现金流恶化的最直接确认。"
+        }
+      ]
+    },
+    "addSignals": {
+      "title": "加仓信号",
+      "signals": [
+        {
+          "signal": "股价跌至 193 美元以下（悲观情景目标价）",
+          "observable": "收盘价连续 5 个交易日低于 193.1 美元，且公司未出现上述卖出信号",
+          "basis": "① 193.1 美元为三情景悲观目标，对应约 15.7x TTM EPS（dimensions.valuation.analysis.threeScenario）。② 在这个价位上即便按悲观情景也已反映，下行空间被价格而非预测吸收。"
+        },
+        {
+          "signal": "美国可比销售连续两个季度回升至 2% 以上且客流转正",
+          "observable": "季度 8-K 的 COMPARABLE SALES 表美国一行，公司对客流的定性表述转为正面",
+          "basis": "① 客流是区分提价与真需求的核心观察点（dimensions.inversion.analysis.failurePaths[0]）。② 恢复到 2% 以上接近 FY2025 美国全年 +2.1% 的水平，说明减速是阶段性的。"
+        },
+        {
+          "signal": "NEXT 的约 250bps 餐厅效率出现可验证的分期落地数据",
+          "observable": "公司披露美国加盟商单店现金流改善幅度，或 ArchIQ 部署门店数达到覆盖过半",
+          "basis": "① 该目标约合美国单店年均 10 万美元现金流收益、约四年回本（dimensions.management.analysis.keyDecisions 2026-09-23 条）。② 这是三情景乐观假设（EPS 年化 9%）的唯一验证点，落地即允许上修估值中枢。"
+        },
+        {
+          "signal": "税后 ROIC 止跌回升至 22% 以上",
+          "observable": "10-K MD&A 的 after-tax ROIC，回到 2024 年 21.8% 以上",
+          "basis": "① ROIC 从 2023 年 25.2% 降至 2025 年 20.3%，是生意质量维度扣分的核心依据（dimensions.businessEssence.analysis.operatingLeverage）。② 回到 22% 意味着资本开支的边际回报重新上升，三情景中的中性假设被验证。"
+        },
+        {
+          "signal": "股息连续两个年度上调幅度回升至 5% 以上",
+          "observable": "每年 9 月/10 月的季度股息宣告同比增幅（2026 年为 +4.74%）",
+          "basis": "① 2026 年上调幅度 4.74%，派息率 62.71%（dimensions.valuation.analysis.currentMultiples.dividendYieldPct）。② 派息率与增幅同时回升，说明管理层对自由现金流的能见度改善。"
+        }
+      ]
+    }
+  },
+  "disclaimer": "本总结基于公开信息与数据截止时点的分析生成，仅供研究参考，不构成个性化投资建议。"
+}

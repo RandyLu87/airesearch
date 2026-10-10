@@ -1,0 +1,3586 @@
+{
+  "finalVersion": "1.0.0",
+  "meta": {
+    "companyId": "us-mcd-mcdonalds",
+    "companyName": "McDonald's Corporation",
+    "generatedAt": "2026-10-10T09:35:01+08:00",
+    "dataCutoff": "2026-10-09（Asia/Shanghai）",
+    "validation": {
+      "threshold": 7.0,
+      "scores": {
+        "collection": 9.9,
+        "analysis": 9.8,
+        "summary": 10.0
+      },
+      "validatedAt": "2026-10-10T09:35:01+08:00"
+    },
+    "sources": {
+      "collection": "research/companies/us-mcd-mcdonalds/financials-collection.json",
+      "analysis": "research/companies/us-mcd-mcdonalds/financials-analysis.json",
+      "summary": "research/companies/us-mcd-mcdonalds/financials-summary.json"
+    }
+  },
+  "collection": {
+    "_spec": {
+      "purpose": "公司数据采集产出模板。采集范围以 docs/model/financial-model.md 的 10 个维度为唯一清单，数据源与交叉验证规范以 docs/model/financial-data.md 为唯一正文。",
+      "todoSentinel": "所有待填值写 \"__TODO__\"；取不到的字段不删除，改写 { \"status\": \"unavailable\", \"reason\": \"缺失原因 + 已查范围\" }；取到了但算不出来的改写 { \"status\": \"not-applicable\", \"reason\": \"为什么不适用 + 支撑数字\" }。",
+      "verifiedValue": "关键数值统一用校验对象：{ value, unit, currency, source1, source2, deviationPct, flag }。",
+      "sourceAvailabilityNote": "本次会话 FMP MCP（docs/model/financial-data.md 规定的美股 Primary）不可用：本机未配置 FMP_API_KEY，mcp 服务未挂载到会话（.mcp.json 声明存在但凭据缺失）。按 financial-data.md「某字段在 FMP 侧缺失时直接降级」与「不默认访问全部来源」的规则，改用 SEC EDGAR 一手披露（10-K/10-Q/8-K 原文 + XBRL companyfacts API，属 Official 层）作为 source1，stockanalysis.com（Reference 层）作为 source2。这实际上提高了来源等级（原始财报优先），但需在评估中记录一次工具链不可用。",
+      "calculation": "一切除法、乘法、增速、估值倍数必须用 docs/research/tools/financial_rigor.py 验算，禁止心算；工具输出记入 crossValidationLog。",
+      "multiListing": "不适用于本公司（单一上市，NYSE: MCD，USD 计价与报告一致）。",
+      "headlineFields": "currentValuation.marketCap.reported、currentValuation.sharePrice、currentValuation.pe、meta.dataCutoff 是页头摘要条与首页卡片直读的四个字段。",
+      "grossMarginCaveat": "麦当劳利润表不设「毛利润/营业成本」科目（成本按 franchised restaurants-occupancy expenses / Company-owned and operated restaurant expenses / Other restaurant expenses 三线列示）。本文件 grossMarginPct 一律采用 stockanalysis.com 的标准化口径：毛利润 = 总收入 − 上述三项餐厅层面成本（等价于「营业利润 + SG&A」），来源页已注明。这是分析口径而非公司披露口径，跨公司比较前须先统一。",
+      "operatingIncomeCaveat": "麦当劳 10-K 的营业利润含「Other operating (income) expense, net」；stockanalysis.com 的标准化工序把该项剔除，故两者在 2021–2024 年相差 1.9%~10.6%。本文件以 10-K 口径（公司披露）为准，差异已在 financialMetrics 与 crossValidationLog 中注明。"
+    },
+    "meta": {
+      "companyId": "us-mcd-mcdonalds",
+      "companyName": "McDonald's Corporation",
+      "ticker": "MCD",
+      "exchange": "NYSE",
+      "market": "us",
+      "reportingCurrency": "USD",
+      "accountingBasis": "US GAAP",
+      "fiscalYearEnd": "12-31",
+      "dataCutoff": "2026-10-09（Asia/Shanghai）",
+      "collectedAt": "2026-10-09",
+      "sources": {
+        "primary": {
+          "name": "SEC EDGAR（麦当劳 10-K/10-Q/8-K 原文 + XBRL companyfacts API）；原定 Primary 的 FMP MCP 本次会话不可用，见 _spec.sourceAvailabilityNote",
+          "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json"
+        },
+        "secondary": {
+          "name": "stockanalysis.com（MCD 与同业对比页）",
+          "url": "https://stockanalysis.com/stocks/mcd/"
+        },
+        "originalFilings": [
+          {
+            "type": "10-K",
+            "period": "FY2025（截至2025-12-31，2026-02-24 提交）",
+            "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+          },
+          {
+            "type": "10-Q",
+            "period": "2026Q2（截至2026-06-30，2026-08-07 提交）",
+            "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000073/mcd-20260630.htm"
+          },
+          {
+            "type": "8-K EX-99.1",
+            "period": "2026Q2 业绩新闻稿（2026-08-04）",
+            "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000067/exhibit991-6302026.htm"
+          },
+          {
+            "type": "8-K EX-99.2",
+            "period": "2026Q2 分部补充数据（2026-08-04）",
+            "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000067/exhibit992-6302026.htm"
+          },
+          {
+            "type": "8-K EX-99.1",
+            "period": "2025Q3 业绩新闻稿（2025-11-05）",
+            "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390825000057/exhibit991-9302025.htm"
+          },
+          {
+            "type": "8-K EX-99.2",
+            "period": "2025Q4/全年 业绩新闻稿（2026-02-11）",
+            "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000032/exhibit991-12312025.htm"
+          },
+          {
+            "type": "8-K EX-99.2",
+            "period": "2026Q1 业绩新闻稿（2026-05-07）",
+            "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000048/exhibit991-33126xq1.htm"
+          },
+          {
+            "type": "8-K EX-99.1",
+            "period": "投资者日「McDonald's > NEXT」发布（2026-09-23）",
+            "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000076/exhibit991-investorupdate2.htm"
+          },
+          {
+            "type": "DEF 14A",
+            "period": "2026 年度股东大会委托书（2026-04-07）",
+            "url": "https://www.sec.gov/Archives/edgar/data/63908/000119312526145548/mcd-20260407.htm"
+          }
+        ]
+      }
+    },
+    "revenueStructure": {
+      "_dimension": "1. 收入结构：最近财年及近4季度分部收入、增速、毛利率",
+      "latestFiscalYear": {
+        "period": "FY2025（2025-01-01 至 2025-12-31）",
+        "totalRevenue": {
+          "value": "26.885B",
+          "unit": "USD",
+          "currency": "USD",
+          "source1": {
+            "name": "SEC 10-K FY2025 合并利润表 Total revenues",
+            "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+            "value": 26885000000
+          },
+          "source2": {
+            "name": "stockanalysis.com MCD income statement FY2025",
+            "url": "https://stockanalysis.com/stocks/mcd/financials/",
+            "value": 26885000000
+          },
+          "deviationPct": 0.0,
+          "flag": "ok"
+        },
+        "yoyGrowthPct": 3.72,
+        "yoyGrowthNote": "公司口径 +4%（恒定汇率 +2%）；按未四舍五入的原值计算为 3.72%，工具验算 financial_rigor calc (26885/25920-1)*100",
+        "systemwideSales": {
+          "value": "139.4B",
+          "unit": "USD",
+          "currency": "USD",
+          "note": "全系统销售额（含加盟店未并入报表的销售额），非公司收入。公司收入仅占全系统销售额 19.29%（工具验算 26885/139400），这是理解「特许经营模式」的关键比值",
+          "source1": {
+            "name": "SEC 10-K FY2025 MD&A「Systemwide sales increased 7% (5% in constant currencies) to $139.4 billion」",
+            "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+            "value": 139400000000
+          },
+          "source2": {
+            "name": "SEC 8-K EX-99.1 FY2025 业绩新闻稿「over $139 billion」",
+            "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000032/exhibit991-12312025.htm",
+            "value": "over $139B"
+          },
+          "deviationPct": 0.0,
+          "flag": "ok（两处均为公司同一披露口径，非独立第二来源）"
+        },
+        "segments": [
+          {
+            "name": "美国 (U.S.)",
+            "revenue": {
+              "value": "10.825B",
+              "unit": "USD",
+              "currency": "USD",
+              "source1": {
+                "name": "SEC 10-K FY2025 附注「Segment and Geographic Information」U.S. 分部收入",
+                "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+                "value": 10825000000
+              },
+              "source2": {
+                "name": "stockanalysis.com MCD income statement FY2025（按分部未拆分，仅整体对账）",
+                "url": "https://stockanalysis.com/stocks/mcd/financials/",
+                "value": "仅单源：第三方站点不拆麦当劳三个经营分部收入，已查 stockanalysis / macrotrends（403）/ FMP（不可用）"
+              },
+              "deviationPct": {
+                "status": "not-applicable",
+                "reason": "仅单源：分部收入为 10-K 附注原始披露口径，第二来源（stockanalysis/macrotrends/FMP）均不按该三分部拆分，无第二来源可比，不计算偏差率（见 source2.reason）"
+              },
+              "flag": "ok（10-K 一手披露；分部定义为公司自定口径）"
+            },
+            "revenueSharePct": 40.26,
+            "yoyGrowthPct": 1.83,
+            "grossMarginPct": {
+              "status": "unavailable",
+              "reason": "麦当劳不按分部披露毛利率或毛利额，10-K 分部附注只披露收入、特许经营占用费用、自营餐厅费用、SG&A、其他分部项目与分部营业利润；已查 FY2025 10-K 全文与 2026Q2 EX-99.2 分部补充数据，均无分部毛利率"
+            },
+            "segmentOperatingIncome": {
+              "value": "5.808B",
+              "yoyPct": 1.31,
+              "note": "公司披露的分部唯一利润指标为营业利润（10-K 原文：「Segment performance is evaluated based on one measure of a segment's profit or loss, operating income」）"
+            },
+            "restaurantCount": 13706,
+            "franchisePct": 95
+          },
+          {
+            "name": "国际直营市场 (International Operated Markets, IOM)",
+            "revenue": {
+              "value": "13.633B",
+              "unit": "USD",
+              "currency": "USD",
+              "source1": {
+                "name": "SEC 10-K FY2025 附注「Segment and Geographic Information」IOM 分部收入",
+                "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+                "value": 13633000000
+              },
+              "source2": {
+                "status": "unavailable",
+                "reason": "仅单源：第三方数据站不按麦当劳三个经营分部拆分收入，已查 stockanalysis / macrotrends（403）/ FMP（不可用）"
+              },
+              "deviationPct": {
+                "status": "not-applicable",
+                "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+              },
+              "flag": "ok（10-K 一手披露）"
+            },
+            "revenueSharePct": 50.71,
+            "yoyGrowthPct": 7.96,
+            "grossMarginPct": {
+              "status": "unavailable",
+              "reason": "同上，公司不披露分部毛利率"
+            },
+            "segmentOperatingIncome": {
+              "value": "6.382B",
+              "yoyPct": 7.33,
+              "note": "含澳、加、法、德、意、波、西、英等直营市场"
+            },
+            "restaurantCount": 10845,
+            "franchisePct": 89
+          },
+          {
+            "name": "国际发展许可市场及总部 (International Developmental Licensed Markets & Corporate)",
+            "revenue": {
+              "value": "2.427B",
+              "unit": "USD",
+              "currency": "USD",
+              "source1": {
+                "name": "SEC 10-K FY2025 附注「Segment and Geographic Information」IDL&Corporate 分部收入",
+                "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+                "value": 2427000000
+              },
+              "source2": {
+                "status": "unavailable",
+                "reason": "仅单源：第三方数据站不按该三分部拆分，已查 stockanalysis / macrotrends（403）/ FMP（不可用）"
+              },
+              "deviationPct": {
+                "status": "not-applicable",
+                "reason": "仅单源，无第二来源可比，不计算偏差率（见 source2.reason）"
+              },
+              "flag": "ok（10-K 一手披露）"
+            },
+            "revenueSharePct": 9.03,
+            "yoyGrowthPct": -8.79,
+            "yoyGrowthNote": "下滑主因 2024 年出售韩国业务与收购以色列业务的基期影响（10-K 原文）；该分部含中国大陆/香港/澳门（持股 48% 的 Grand Foods Holding）与日本（持股 35%）的权益法投资收益，但不并入其销售额",
+            "grossMarginPct": {
+              "status": "unavailable",
+              "reason": "同上，公司不披露分部毛利率"
+            },
+            "segmentOperatingIncome": {
+              "value": "203M",
+              "yoyPct": 515.2,
+              "note": "2024 年因交易成本与减值基数极低（33M），2025 年 203M 的同比意义有限"
+            },
+            "restaurantCount": 20805,
+            "franchisePct": 99
+          }
+        ],
+        "revenueByType": [
+          {
+            "name": "特许经营收入 (Revenues from franchised restaurants，含租金+特许权使用费+初期加盟费)",
+            "revenue": "16.548B",
+            "sharePct": 61.55,
+            "yoyGrowthPct": 5.3,
+            "source": {
+              "name": "SEC 10-K FY2025 MD&A 经营结果表",
+              "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+            }
+          },
+          {
+            "name": "自营餐厅销售额 (Sales by Company-owned and operated restaurants)",
+            "revenue": "9.690B",
+            "sharePct": 36.04,
+            "yoyGrowthPct": -0.94,
+            "source": {
+              "name": "SEC 10-K FY2025 MD&A 经营结果表",
+              "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+            }
+          },
+          {
+            "name": "其他收入 (Other revenues，主要是向加盟商收取的技术/数字平台分摊费与品牌授权)",
+            "revenue": "647M",
+            "sharePct": 2.41,
+            "yoyGrowthPct": 53.0,
+            "source": {
+              "name": "SEC 10-K FY2025 MD&A 经营结果表",
+              "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+            }
+          }
+        ],
+        "marginByType": {
+          "franchisedMargin": {
+            "value": "13.930B",
+            "note": "特许经营收入 16.548B − 特许经营占用费用 2.618B；特许经营分部毛利率 84.2%（工具验算 13930/16548×100）"
+          },
+          "companyOperatedMargin": {
+            "value": "1.422B",
+            "note": "自营餐厅销售 9.690B − 自营餐厅费用 8.268B；自营分部毛利率 14.7%（工具验算 1422/9690×100）"
+          },
+          "source": {
+            "name": "SEC 10-K FY2025「Impact of foreign currency translation」表 Franchised margins / Company-owned and operated margins",
+            "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+          }
+        }
+      },
+      "recentQuarters": [
+        {
+          "period": "2025Q3（截至2025-09-30）",
+          "totalRevenue": {
+            "value": "7.078B",
+            "unit": "USD",
+            "currency": "USD",
+            "source1": {
+              "name": "SEC 8-K EX-99.1 2025Q3 业绩新闻稿合并利润表",
+              "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390825000057/exhibit991-9302025.htm",
+              "value": 7078000000
+            },
+            "source2": {
+              "name": "SEC XBRL companyfacts Revenues（2025-07-01~2025-09-30，form 10-Q）",
+              "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json",
+              "value": 7078000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "yoyGrowthPct": 2.98,
+          "comparableSalesPct": {
+            "total": 3.6,
+            "us": 2.4,
+            "iom": 4.3,
+            "idl": 4.7
+          },
+          "systemwideSalesGrowthPct": {
+            "reported": 8,
+            "constantCurrency": 6
+          },
+          "segments": [
+            {
+              "name": "美国 (U.S.)",
+              "revenue": "2.696B",
+              "yoyGrowthPct": 0.86
+            },
+            {
+              "name": "国际直营市场 (IOM)",
+              "revenue": "3.606B",
+              "yoyGrowthPct": 10.41
+            },
+            {
+              "name": "国际发展许可市场及总部 (IDL&Corporate)",
+              "revenue": "625M",
+              "yoyGrowthPct": -22.84,
+              "note": "含 2024 年出售韩国业务的高基数效应"
+            }
+          ],
+          "otherRevenues": "151M",
+          "source": {
+            "name": "SEC 8-K EX-99.2 2025Q3 分部补充数据 REVENUES 表",
+            "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390825000057/exhibit992-9302025.htm"
+          }
+        },
+        {
+          "period": "2025Q4（截至2025-12-31）",
+          "totalRevenue": {
+            "value": "7.009B",
+            "unit": "USD",
+            "currency": "USD",
+            "source1": {
+              "name": "SEC 8-K EX-99.1 FY2025 业绩新闻稿（四季末）合并利润表",
+              "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000032/exhibit991-12312025.htm",
+              "value": 7009000000
+            },
+            "source2": {
+              "name": "验算：FY2025 26,885 − 九个月 19,876（据 2025Q3 EX-99.2 九个月表）",
+              "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000032/exhibit992-12312025.htm",
+              "value": 7009000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "yoyGrowthPct": 9.72,
+          "comparableSalesPct": {
+            "total": 5.7,
+            "us": 6.8,
+            "iom": 5.2,
+            "idl": 4.5
+          },
+          "systemwideSalesGrowthPct": {
+            "reported": 11,
+            "constantCurrency": 8
+          },
+          "segments": [
+            {
+              "name": "美国 (U.S.)",
+              "revenue": "2.696B",
+              "yoyGrowthPct": 4.74
+            },
+            {
+              "name": "国际直营市场 (IOM)",
+              "revenue": "3.538B",
+              "yoyGrowthPct": 12.64
+            },
+            {
+              "name": "国际发展许可市场及总部 (IDL&Corporate)",
+              "revenue": "613M",
+              "yoyGrowthPct": 10.85
+            }
+          ],
+          "otherRevenues": "162M",
+          "source": {
+            "name": "SEC 8-K EX-99.2 FY2025 分部补充数据 Quaters Ended December 31 REVENUES 表",
+            "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000032/exhibit992-12312025.htm"
+          }
+        },
+        {
+          "period": "2026Q1（截至2026-03-31）",
+          "totalRevenue": {
+            "value": "6.517B",
+            "unit": "USD",
+            "currency": "USD",
+            "source1": {
+              "name": "SEC 8-K EX-99.1 2026Q1 业绩新闻稿合并利润表",
+              "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000048/exhibit991-33126xq1.htm",
+              "value": 6517000000
+            },
+            "source2": {
+              "name": "SEC XBRL companyfacts Revenues（2026-01-01~2026-03-31，form 10-Q）",
+              "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json",
+              "value": 6517000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "yoyGrowthPct": 9.42,
+          "comparableSalesPct": {
+            "total": 3.8,
+            "us": 3.9,
+            "iom": 3.9,
+            "idl": 3.4
+          },
+          "systemwideSalesGrowthPct": {
+            "reported": 11,
+            "constantCurrency": 6
+          },
+          "segments": [
+            {
+              "name": "美国 (U.S.)",
+              "revenue": "2.479B",
+              "yoyGrowthPct": 3.16
+            },
+            {
+              "name": "国际直营市场 (IOM)",
+              "revenue": "3.258B",
+              "yoyGrowthPct": 13.84
+            },
+            {
+              "name": "国际发展许可市场及总部 (IDL&Corporate)",
+              "revenue": "587M",
+              "yoyGrowthPct": 11.17
+            }
+          ],
+          "otherRevenues": "193M",
+          "source": {
+            "name": "SEC 8-K EX-99.2 2026Q1 分部补充数据 REVENUES 表",
+            "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000048/exhibit992-33126xq1.htm"
+          }
+        },
+        {
+          "period": "2026Q2（截至2026-06-30，最新已披露季度）",
+          "totalRevenue": {
+            "value": "7.099B",
+            "unit": "USD",
+            "currency": "USD",
+            "source1": {
+              "name": "SEC 8-K EX-99.1 2026Q2 业绩新闻稿合并利润表",
+              "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000067/exhibit991-6302026.htm",
+              "value": 7099000000
+            },
+            "source2": {
+              "name": "SEC XBRL companyfacts Revenues（2026-04-01~2026-06-30，form 10-Q）",
+              "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json",
+              "value": 7099000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "yoyGrowthPct": 3.74,
+          "comparableSalesPct": {
+            "total": 1.3,
+            "us": 0.8,
+            "iom": 1.5,
+            "idl": 1.9
+          },
+          "systemwideSalesGrowthPct": {
+            "reported": 5,
+            "constantCurrency": 4
+          },
+          "segments": [
+            {
+              "name": "美国 (U.S.)",
+              "revenue": "2.726B",
+              "yoyGrowthPct": 1.26
+            },
+            {
+              "name": "国际直营市场 (IOM)",
+              "revenue": "3.543B",
+              "yoyGrowthPct": 4.08
+            },
+            {
+              "name": "国际发展许可市场及总部 (IDL&Corporate)",
+              "revenue": "648M",
+              "yoyGrowthPct": 12.5
+            }
+          ],
+          "otherRevenues": "182M",
+          "source": {
+            "name": "SEC 8-K EX-99.2 2026Q2 分部补充数据 REVENUES 表",
+            "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000067/exhibit992-6302026.htm"
+          }
+        }
+      ],
+      "segmentTrajectoryNote": "四个季度看，美国分部收入同比从 2025Q4 的 +4.7% 一路降到 2026Q2 的 +1.3%，同期可比销售从 +6.8% 降到 +0.8%；IOM 与 IDL 仍保持正增长但也在减速（IOM 可比销售 5.2%→1.5%）。这是估值下杀的经营面起点。"
+    },
+    "financialMetrics": {
+      "_dimension": "2. 财务指标：近5年收入、净利润、毛利率、经营利润率、自由现金流、现金储备",
+      "annual": [
+        {
+          "fiscalYear": "FY2021",
+          "revenue": {
+            "value": "23.223B",
+            "unit": "USD",
+            "currency": "USD",
+            "source1": {
+              "name": "SEC XBRL companyfacts Revenues（FY2021）",
+              "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json",
+              "value": 23222900000
+            },
+            "source2": {
+              "name": "stockanalysis.com MCD FY2021",
+              "url": "https://stockanalysis.com/stocks/mcd/financials/",
+              "value": 23223000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": "7.545B",
+            "unit": "USD",
+            "currency": "USD",
+            "gaapBasis": "US GAAP，归母净利润（麦当劳无重大少数股东损益）",
+            "source1": {
+              "name": "SEC XBRL companyfacts NetIncomeLoss（FY2021）",
+              "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json",
+              "value": 7545200000
+            },
+            "source2": {
+              "name": "stockanalysis.com MCD FY2021",
+              "url": "https://stockanalysis.com/stocks/mcd/financials/",
+              "value": 7545000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "grossMarginPct": 54.17,
+          "operatingMarginPct": 44.59,
+          "freeCashFlow": {
+            "value": "7.102B",
+            "unit": "USD",
+            "currency": "USD",
+            "capexBasis": "经营现金流 9.142B − 购建固定资产及设备（PaymentsToAcquirePropertyPlantAndEquipment）2.040B；不含并购、不含租赁本金偿付",
+            "source1": {
+              "name": "SEC XBRL companyfacts（NetCashProvidedByUsedInOperatingActivities − PaymentsToAcquirePropertyPlantAndEquipment，FY2021）",
+              "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json",
+              "value": 7102000000
+            },
+            "source2": {
+              "name": "stockanalysis.com MCD cash flow FY2021（9,142 − 2,040）",
+              "url": "https://stockanalysis.com/stocks/mcd/financials/cash-flow-statement/",
+              "value": 7102000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "cashReserves": {
+            "value": "4.710B",
+            "unit": "USD",
+            "currency": "USD",
+            "note": "现金及等价物 4.709B + 短期投资 0.3M；麦当劳报表无「短期投资」独立科目，stockanalysis 将其单列 Trading Asset Securities",
+            "source1": {
+              "name": "SEC XBRL companyfacts CashAndCashEquivalentsAtCarryingValue（2021-12-31）",
+              "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json",
+              "value": 4709200000
+            },
+            "source2": {
+              "name": "stockanalysis.com MCD balance sheet FY2021 Cash & Short-Term Investments",
+              "url": "https://stockanalysis.com/stocks/mcd/financials/balance-sheet/",
+              "value": 4710000000
+            },
+            "deviationPct": 0.02,
+            "flag": "ok"
+          }
+        },
+        {
+          "fiscalYear": "FY2022",
+          "revenue": {
+            "value": "23.183B",
+            "unit": "USD",
+            "currency": "USD",
+            "source1": {
+              "name": "SEC XBRL companyfacts Revenues（FY2022）",
+              "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json",
+              "value": 23182600000
+            },
+            "source2": {
+              "name": "stockanalysis.com MCD FY2022",
+              "url": "https://stockanalysis.com/stocks/mcd/financials/",
+              "value": 23183000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": "6.177B",
+            "unit": "USD",
+            "currency": "USD",
+            "gaapBasis": "US GAAP；下滑主因俄罗斯业务退出相关费用",
+            "source1": {
+              "name": "SEC XBRL companyfacts NetIncomeLoss（FY2022）",
+              "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json",
+              "value": 6177400000
+            },
+            "source2": {
+              "name": "stockanalysis.com MCD FY2022",
+              "url": "https://stockanalysis.com/stocks/mcd/financials/",
+              "value": 6177000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "grossMarginPct": 56.97,
+          "operatingMarginPct": 40.42,
+          "freeCashFlow": {
+            "value": "5.488B",
+            "unit": "USD",
+            "currency": "USD",
+            "capexBasis": "同 FY2021 口径",
+            "source1": {
+              "name": "SEC XBRL companyfacts（7,386.7 − 1,899.2）",
+              "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json",
+              "value": 5487500000
+            },
+            "source2": {
+              "name": "stockanalysis.com MCD cash flow FY2022",
+              "url": "https://stockanalysis.com/stocks/mcd/financials/cash-flow-statement/",
+              "value": 5488000000
+            },
+            "deviationPct": 0.01,
+            "flag": "ok"
+          },
+          "cashReserves": {
+            "value": "2.584B",
+            "unit": "USD",
+            "currency": "USD",
+            "source1": {
+              "name": "SEC XBRL companyfacts CashAndCashEquivalentsAtCarryingValue（2022-12-31）",
+              "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json",
+              "value": 2583800000
+            },
+            "source2": {
+              "name": "stockanalysis.com MCD balance sheet FY2022",
+              "url": "https://stockanalysis.com/stocks/mcd/financials/balance-sheet/",
+              "value": 2584000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          }
+        },
+        {
+          "fiscalYear": "FY2023",
+          "revenue": {
+            "value": "25.494B",
+            "unit": "USD",
+            "currency": "USD",
+            "source1": {
+              "name": "SEC 10-K FY2025 MD&A 经营结果表（2023 列）",
+              "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+              "value": 25494000000
+            },
+            "source2": {
+              "name": "stockanalysis.com MCD FY2023",
+              "url": "https://stockanalysis.com/stocks/mcd/financials/",
+              "value": 25494000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": "8.469B",
+            "unit": "USD",
+            "currency": "USD",
+            "gaapBasis": "US GAAP",
+            "source1": {
+              "name": "SEC 10-K FY2025 MD&A 经营结果表（2023 列）",
+              "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+              "value": 8469000000
+            },
+            "source2": {
+              "name": "stockanalysis.com MCD FY2023",
+              "url": "https://stockanalysis.com/stocks/mcd/financials/",
+              "value": 8469000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "grossMarginPct": 57.12,
+          "operatingMarginPct": 45.69,
+          "freeCashFlow": {
+            "value": "7.255B",
+            "unit": "USD",
+            "currency": "USD",
+            "capexBasis": "同 FY2021 口径",
+            "source1": {
+              "name": "SEC XBRL companyfacts（9,611.9 − 2,357.4）",
+              "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json",
+              "value": 7254500000
+            },
+            "source2": {
+              "name": "stockanalysis.com MCD cash flow FY2023（9,612 − 2,357）",
+              "url": "https://stockanalysis.com/stocks/mcd/financials/cash-flow-statement/",
+              "value": 7255000000
+            },
+            "deviationPct": 0.01,
+            "flag": "ok"
+          },
+          "cashReserves": {
+            "value": "4.583B",
+            "unit": "USD",
+            "currency": "USD",
+            "note": "现金及等价物 4.579B + 短期投资 4M",
+            "source1": {
+              "name": "SEC XBRL companyfacts CashAndCashEquivalentsAtCarryingValue（2023-12-31）",
+              "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json",
+              "value": 4579300000
+            },
+            "source2": {
+              "name": "stockanalysis.com MCD balance sheet FY2023 Cash & Short-Term Investments",
+              "url": "https://stockanalysis.com/stocks/mcd/financials/balance-sheet/",
+              "value": 4583000000
+            },
+            "deviationPct": 0.08,
+            "flag": "ok"
+          }
+        },
+        {
+          "fiscalYear": "FY2024",
+          "revenue": {
+            "value": "25.920B",
+            "unit": "USD",
+            "currency": "USD",
+            "source1": {
+              "name": "SEC 10-K FY2025 MD&A 经营结果表（2024 列）",
+              "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+              "value": 25920000000
+            },
+            "source2": {
+              "name": "stockanalysis.com MCD FY2024",
+              "url": "https://stockanalysis.com/stocks/mcd/financials/",
+              "value": 25920000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": "8.223B",
+            "unit": "USD",
+            "currency": "USD",
+            "gaapBasis": "US GAAP；Non-GAAP 净利 8.459B（剔除与 Accelerating the Organization 重组及韩国出售/以色列收购相关的 236M 税后费用）",
+            "source1": {
+              "name": "SEC 10-K FY2025 MD&A 经营结果表（2024 列）",
+              "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+              "value": 8223000000
+            },
+            "source2": {
+              "name": "stockanalysis.com MCD FY2024",
+              "url": "https://stockanalysis.com/stocks/mcd/financials/",
+              "value": 8223000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "grossMarginPct": 56.75,
+          "operatingMarginPct": 45.19,
+          "freeCashFlow": {
+            "value": "6.672B",
+            "unit": "USD",
+            "currency": "USD",
+            "capexBasis": "同 FY2021 口径",
+            "source1": {
+              "name": "SEC XBRL companyfacts（9,447 − 2,775）",
+              "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json",
+              "value": 6672000000
+            },
+            "source2": {
+              "name": "stockanalysis.com MCD cash flow FY2024",
+              "url": "https://stockanalysis.com/stocks/mcd/financials/cash-flow-statement/",
+              "value": 6672000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "cashReserves": {
+            "value": "1.119B",
+            "unit": "USD",
+            "currency": "USD",
+            "note": "现金及等价物 1.085B + 短期投资 34M；公司当年完成对以色列业务的收购与加大回购，现金大幅下降",
+            "source1": {
+              "name": "SEC XBRL companyfacts CashAndCashEquivalentsAtCarryingValue（2024-12-31）",
+              "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json",
+              "value": 1085000000
+            },
+            "source2": {
+              "name": "stockanalysis.com MCD balance sheet FY2024 Cash & Short-Term Investments",
+              "url": "https://stockanalysis.com/stocks/mcd/financials/balance-sheet/",
+              "value": 1119000000
+            },
+            "deviationPct": 3.04,
+            "flag": "minor-diff（差额 34M 为 stockanalysis 单列的短期投资科目，公司报表无该行；现金及等价物本体两源一致）"
+          }
+        },
+        {
+          "fiscalYear": "FY2025（最新完整财年）",
+          "revenue": {
+            "value": "26.885B",
+            "unit": "USD",
+            "currency": "USD",
+            "source1": {
+              "name": "SEC 10-K FY2025 MD&A 经营结果表",
+              "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+              "value": 26885000000
+            },
+            "source2": {
+              "name": "stockanalysis.com MCD FY2025",
+              "url": "https://stockanalysis.com/stocks/mcd/financials/",
+              "value": 26885000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "netProfit": {
+            "value": "8.563B",
+            "unit": "USD",
+            "currency": "USD",
+            "gaapBasis": "US GAAP；Non-GAAP 净利 8.741B / Non-GAAP 摊薄 EPS $12.20（剔除 229M 税前重组费用）",
+            "source1": {
+              "name": "SEC 10-K FY2025 MD&A 经营结果表",
+              "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+              "value": 8563000000
+            },
+            "source2": {
+              "name": "stockanalysis.com MCD FY2025",
+              "url": "https://stockanalysis.com/stocks/mcd/financials/",
+              "value": 8563000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          },
+          "grossMarginPct": 57.41,
+          "operatingMarginPct": 46.1,
+          "freeCashFlow": {
+            "value": "7.186B",
+            "unit": "USD",
+            "currency": "USD",
+            "capexBasis": "经营现金流 10.551B − 资本支出 3.365B；不含并购（当年并购支出 354M）、不含租赁本金偿付。公司口径 FCF 为 $7.2B、FCF 转化率 84%（10-K MD&A 原文）",
+            "source1": {
+              "name": "SEC XBRL companyfacts（10,551 − 3,365）",
+              "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json",
+              "value": 7186000000
+            },
+            "source2": {
+              "name": "SEC 10-K FY2025 MD&A「Free cash flow was $7.2 billion in 2025」",
+              "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+              "value": 7200000000
+            },
+            "deviationPct": 0.19,
+            "flag": "ok"
+          },
+          "cashReserves": {
+            "value": "774M",
+            "unit": "USD",
+            "currency": "USD",
+            "note": "仅现金及等价物，无短期投资。相对 40B 量级的有息负债，现金储备在结构上不构成偿债缓冲——麦当劳的偿债能力来自 10.6B 的年经营现金流，不是账面现金",
+            "source1": {
+              "name": "SEC 10-K FY2025 合并资产负债表 Cash and equivalents",
+              "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+              "value": 774000000
+            },
+            "source2": {
+              "name": "stockanalysis.com MCD balance sheet FY2025",
+              "url": "https://stockanalysis.com/stocks/mcd/financials/balance-sheet/",
+              "value": 774000000
+            },
+            "deviationPct": 0.0,
+            "flag": "ok"
+          }
+        }
+      ],
+      "ttm": {
+        "period": "TTM 截至 2026-06-30（FY2025 − 2025H1 + 2026H1）",
+        "revenue": {
+          "value": "27.702B",
+          "source": {
+            "name": "验算：26,885 − 12,799 + 13,616；stockanalysis.com 同值 27.70B",
+            "url": "https://stockanalysis.com/stocks/mcd/financials/"
+          }
+        },
+        "netProfit": {
+          "value": "8.787B",
+          "source": {
+            "name": "验算：8,563 − 4,121 + 4,345；stockanalysis.com 同值 8.79B",
+            "url": "https://stockanalysis.com/stocks/mcd/financials/"
+          }
+        },
+        "operatingCashFlow": {
+          "value": "11.347B",
+          "source": {
+            "name": "验算：10,551 − 4,426 + 5,222（SEC XBRL 各期 OCF）；stockanalysis.com 同值 11.35B",
+            "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json"
+          }
+        },
+        "capitalExpenditure": {
+          "value": "3.586B",
+          "source": {
+            "name": "验算：3,365 − 1,295 + 1,516（SEC XBRL）；stockanalysis.com 同值 3.59B",
+            "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json"
+          }
+        },
+        "freeCashFlow": {
+          "value": "7.761B",
+          "source": {
+            "name": "11,347 − 3,586；stockanalysis.com 报 7.76B",
+            "url": "https://stockanalysis.com/stocks/mcd/financials/cash-flow-statement/"
+          }
+        },
+        "dilutedEps": {
+          "value": 12.31,
+          "source": {
+            "name": "SEC XBRL EarningsPerShareDiluted 四季合计（3.18+2.87+2.78+3.32；Q4 2025=11.95−9.08）；stockanalysis.com 同值 12.31",
+            "url": "https://stockanalysis.com/stocks/mcd/statistics/"
+          }
+        }
+      },
+      "fiveYearTrend": {
+        "revenueCagrPct": 3.73,
+        "netProfitCagrPct": 3.21,
+        "freeCashFlowCagrPct": 0.29,
+        "note": "五年（2021→2025）收入与净利 CAGR 均约 3%~4%，但自由现金流几乎零增长（7.102B→7.186B，CAGR 0.29%），原因是资本支出从 2.04B 翻到 3.37B（+65%）。也就是说：2021 年以来利润的增长全部被加速开店吃掉了——这是「Restaurant Development 增长支柱」的代价，也是 2026 年 9 月市场对 NEXT 计划反应的背景",
+        "calculation": "financial_rigor calc 验算：((26885/23223)^(1/4)-1)*100=3.73；((8563/7545)^(1/4)-1)*100=3.21；((7186/7102)^(1/4)-1)*100=0.29"
+      },
+      "capitalReturn": {
+        "dividendsPaidFy2025": {
+          "value": "5.115B",
+          "source": {
+            "name": "stockanalysis.com MCD cash flow FY2025 Common Dividends Paid",
+            "url": "https://stockanalysis.com/stocks/mcd/financials/cash-flow-statement/"
+          }
+        },
+        "buybackFy2025": {
+          "value": "2.056B",
+          "note": "公司原文：2025 年通过分红+回购合计返还股东约 71 亿美元",
+          "source": {
+            "name": "SEC 10-K FY2025「SHARE REPURCHASES AND DIVIDENDS」",
+            "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+          }
+        },
+        "totalReturnedFy2025": {
+          "value": "7.1B",
+          "note": "占当年 FCF 7.186B 的 99%（工具验算 7100/7186），即全部自由现金流用于分红与回购；2025 年有息负债净增 0.07B，扩张资本来自经营现金流而非加杠杆"
+        },
+        "fcfConversionPct": {
+          "value": 83.9,
+          "note": "FCF/净利润，公司口径 84%",
+          "calculation": "financial_rigor calc 7186/8563*100=83.92"
+        }
+      }
+    },
+    "competitiveLandscape": {
+      "_dimension": "3. 竞争格局：市场份额、主要竞争对手对比",
+      "marketShare": {
+        "valuePct": 15.51,
+        "marketDefinition": "分母为 CSIMarket 追踪的全球上市餐饮公司收入合计（截至 2026Q2 的 12 个月口径），不含非上市连锁（Chick-fil-A、Subway、In-N-Out 等）与本地独立餐厅。这是「上市餐饮同业组内的收入份额」，不是公司在全球非正式外食（IEO）市场的份额——后者麦当劳从未公布，第三方估算口径分歧极大（见 marketShareGlobalIeo）。同一份 CSIMarket 数据里星巴克（21.47%）高于麦当劳，仅因星巴克收入口径含全部自营店销售、而麦当劳收入只含约 19% 的全系统销售额，两者不可直接比大小",
+        "asOf": "2026Q2（截至 2026-06-30 的 12 个月）",
+        "source": {
+          "name": "CSIMarket MCD 竞争份额页",
+          "url": "https://csimarket.com/stocks/competitionSEG2.php?code=MCD"
+        }
+      },
+      "marketShareGlobalIeo": {
+        "status": "unavailable",
+        "reason": "麦当劳不公布全球 IEO 份额；第三方口径分歧极大：公司 10-K 只说明「在 IEO 中竞争」而不给份额数字，Euromonitor/Statista 的 IEO 口径不公开定价。已查 FY2025 10-K 全文（COMPETITION 节）、2026Q2 EX-99.2、CSIMarket、公开检索的行业报告摘要，未取得可追溯到具体口径与年份的全球份额数字。可替代的观察口径：全系统销售额 $139.4B ÷ IMARC 全球餐饮服务市场 $3.36T（2026 预测）= 4.15%（分母口径不同，仅作量级参考，不作为份额结论）"
+      },
+      "systemwideSalesComparisonUS": {
+        "note": "美国市场更可比的排名口径是全系统销售额（QSR Magazine 2025 年榜，第三方估算，非审计数）",
+        "items": [
+          {
+            "name": "McDonald's",
+            "usSystemwideSales": "$55.1B",
+            "rank": 1,
+            "units": 13706
+          },
+          {
+            "name": "Starbucks",
+            "usSystemwideSales": "$30.3B",
+            "rank": 2
+          },
+          {
+            "name": "Chick-fil-A（未上市）",
+            "usSystemwideSales": "$23.9B",
+            "rank": 3,
+            "ticker": "未上市"
+          }
+        ],
+        "source": {
+          "name": "QSR Magazine QSR 50 2026",
+          "url": "https://www.qsrmagazine.com/story/qsr-50-2026-top-50-fast-food-chains-ranked-by-sales/"
+        }
+      },
+      "competitors": [
+        {
+          "name": "Starbucks",
+          "ticker": "SBUX",
+          "marketSharePct": 21.47,
+          "revenue": "38.338B（TTM）",
+          "grossMarginPct": 22.34,
+          "operatingMarginPct": 10.37,
+          "netProfit": "1.983B（TTM）",
+          "note": "CSIMarket 同业组内份额高于麦当劳，但收入口径不同（星巴克绝大部分为自营，收入≈全系统销售额）。真正的对比点是盈利质量：营业利润率 10.4% vs 麦当劳 45.7%，毛利 22.3% vs 57.4%——星巴克承担了自营门店的全部租金与人工，麦当劳把这块转给了加盟商",
+          "source": {
+            "name": "stockanalysis.com SBUX financials（TTM）；share 取自 CSIMarket",
+            "url": "https://stockanalysis.com/stocks/sbux/financials/"
+          }
+        },
+        {
+          "name": "Restaurant Brands International（汉堡王/Tim Hortons/Popeyes）",
+          "ticker": "QSR",
+          "marketSharePct": 5.43,
+          "revenue": "9.699B（TTM）",
+          "grossMarginPct": 34.09,
+          "operatingMarginPct": 26.97,
+          "netProfit": "1.273B（TTM）",
+          "note": "最接近的商业模式（重特许经营），但规模只有麦当劳的约 1/3 收入、营业利润率低 18.7 个百分点。2025 年至今股价表现优于麦当劳（过去五年 QSR +14% vs MCD −3%，Business Insider 引述）",
+          "source": {
+            "name": "stockanalysis.com QSR financials（TTM）",
+            "url": "https://stockanalysis.com/stocks/qsr/financials/"
+          }
+        },
+        {
+          "name": "Yum! Brands（Taco Bell/KFC/Pizza Hut）",
+          "ticker": "YUM",
+          "marketSharePct": "未列入 CSIMarket 前六（收入 8.722B，低于 QSR）",
+          "revenue": "8.722B（TTM）",
+          "grossMarginPct": 45.31,
+          "operatingMarginPct": 32.47,
+          "netProfit": "2.216B（TTM）",
+          "note": "营业利润率 32.5%，是三大特许经营者中最接近麦当劳的，但仍有 13 个百分点差距；净利率 25.4% 反超麦当劳（31.7%）不可能——实际低于麦当劳。规模、品牌数量（麦当劳 17 个十亿美元级单品）与地产持有量（自持约 56% 土地、80% 建筑）是差异来源",
+          "source": {
+            "name": "stockanalysis.com YUM financials（TTM）",
+            "url": "https://stockanalysis.com/stocks/yum/financials/"
+          }
+        },
+        {
+          "name": "Chipotle Mexican Grill",
+          "ticker": "CMG",
+          "marketSharePct": 6.96,
+          "revenue": "12.424B（TTM）",
+          "grossMarginPct": 39.36,
+          "operatingMarginPct": 15.27,
+          "netProfit": "1.419B（TTM）",
+          "note": "全自营模式（不做加盟），收入除门店数外几乎等于全系统销售额；营业利润率 15.3%，显著低于麦当劳但快于行业平均增速，是「快餐高端化」路线对麦当劳客群的直接分流",
+          "source": {
+            "name": "stockanalysis.com CMG financials（TTM）",
+            "url": "https://stockanalysis.com/stocks/cmg/financials/"
+          }
+        },
+        {
+          "name": "Yum China",
+          "ticker": "YUMC",
+          "marketSharePct": 6.96,
+          "revenue": "12.438B（TTM）",
+          "grossMarginPct": {
+            "status": "unavailable",
+            "reason": "本次采集未取到 YUMC 的标准化毛利率（stockanalysis 页面字段未命中），已查 stockanalysis YUMC financials 页；不影响中国市场竞争强度判断（另有麦当劳自持 48% 的 Grand Foods Holding 权益法数据）"
+          },
+          "note": "麦当劳中国（金拱门）的 48% 权益通过 Grand Foods Holding 持有，账面价值 $2.048B（2025-12-31），不并入收入；Yum China 是同一市场上唯一规模相当的连锁对手",
+          "source": {
+            "name": "stockanalysis.com YUMC financials（TTM）",
+            "url": "https://stockanalysis.com/stocks/yumc/financials/"
+          }
+        },
+        {
+          "name": "Darden Restaurants",
+          "ticker": "DRI",
+          "marketSharePct": 7.49,
+          "revenue": "13.367B（TTM）",
+          "grossMarginPct": 21.66,
+          "operatingMarginPct": 11.9,
+          "netProfit": "1.182B（TTM）",
+          "note": "全自营的休闲正餐集团（Olive Garden 等），代表「非快餐」一侧对餐饮钱包份额的分流，商业模式与麦当劳差异最大，仅作份额参照。毛利率 21.7%、营业利润率 11.9%，是全自营 + 正餐桌服务模式下的典型水平，与麦当劳的 57.4%/45.7% 之间隔着一整个加盟模式",
+          "source": {
+            "name": "stockanalysis.com DRI financials（TTM：收入 13,367 / 毛利 2,895 / 营业利润 1,590 / 净利润 1,182）",
+            "url": "https://stockanalysis.com/stocks/dri/financials/"
+          }
+        }
+      ],
+      "structuralNote": "这份竞争格局的关键不是份额排名，而是「谁在同一个钱包里争取出餐频次」。麦当劳在 10-K 里把竞争定义扩展到「100% 外送/外带供应商、便利店、路边摊、咖啡专门店、自助餐、果汁吧」——即 IEO 全域。真正的近期压力来自三类：①同价位的连锁快餐用折扣争抢价格敏感客群；②Chick-fil-A / Chipotle / Raising Cane's 等以更好的产品与体验做「频次升级」；③便利店与咖啡店（尤其早餐时段）。麦当劳 2026Q2 美国可比销售仅 +0.8%、客流量为负，说明压力已经体现在流量而非客单价上。"
+    },
+    "businessModelMoat": {
+      "_dimension": "4. 商业模式与护城河：核心竞争优势来源",
+      "oneLiner": "麦当劳本质是全球最大的「餐饮地产+品牌特许经营商」：加盟商用自有资本开餐厅、承担人工与运营风险，向麦当劳交租金（约占特许经营收入大头）与销售额约 4%~5% 的特许权使用费，麦当劳用这 95% 加盟占比的超高毛利收入覆盖总部与资本开支，再把接近 100% 的自由现金流通过股息与回购返还股东。",
+      "revenueModel": "混合：品牌授权+地产转租（约 3/4 的特许经营收入）+ 自营门店销售（约 36% 收入但只贡献约 10% 的餐厅层面利润）。全球 45,356 家门店中约 95% 由独立加盟商持有经营，公司拥有约 56% 土地与 80% 建筑物产权（10-K 原文「approximately 56% of the land and approximately 80% of the buildings」）",
+      "moats": [
+        {
+          "type": "规模效应",
+          "evidence": "45,356 家门店 / 100+ 国家 / 全系统销售额 $139.4B（FY2025），是全球唯一跨过千亿美元级系统销售额的连锁餐饮体系；规模带来采购议价（10-K 提到全球采购网络）、广告费用摊薄（SG&A 仅占全系统销售额 2.18%）、以及单店层面更强的加盟商投资回报。规模亦直接体现为利润率差异：营业利润率 45.7% vs QSR 27.0% / YUM 32.5% / CMG 15.3%",
+          "trend": "变宽"
+        },
+        {
+          "type": "品牌定价权",
+          "evidence": "17 个「十亿美元级品牌单品」（Big Mac、薯条、麦乐鸡等）；2025 年全球可比销售 +3.1% 主要由客单价驱动，美国 +2.1%、四季度 +6.8%（10-K 与 Q4 新闻稿）。但品牌定价权的边界已被验证：2026Q2 美国可比销售仅 +0.8%、客流为负，说明价格弹性在低端客群上已经出现——品牌能提价，但提不到无限",
+          "trend": "稳定（定价权仍在，但边际减弱）"
+        },
+        {
+          "type": "转换成本",
+          "evidence": "弱-中：消费者转换成本接近零（一顿饭而已），但会员体系在制造行政性粘性——70 个市场、约 2.2 亿 90 天活跃会员、TTM 会员全系统销售额超 $400 亿（2026Q2）；公司称活跃会员到访频次为非会员的约 2.5 倍。加盟商一侧的转换成本高：20 年期加盟协议 + 自持土地/建筑产权，加盟商实际被长期锁定",
+          "trend": "变宽（数字化会员在把零转换成本向弱粘性转变）"
+        },
+        {
+          "type": "网络效应",
+          "evidence": "基本不存在：顾客之间不互相增强产品价值；但存在「密度效应」——门店密度提高外送效率与品牌可见度，属于规模效应的子类而非真正的网络效应",
+          "trend": "稳定"
+        },
+        {
+          "type": "技术/专利壁垒",
+          "evidence": "餐饮产品本身无专利壁垒（配方可被复制）。真实的技术资产是规模化数字基础设施：单一企业数据底座、跨 46,000+ 门店的通用技术平台、AI 运营系统 ArchIQ（2026 年 9 月投资者日披露，目标带来约 250bps 的餐厅层面效率提升）、以及「Ready on Arrival」等履约创新（2025 年底已在六大市场部署）。这类资产的可复制性低于菜单，但仍是运营工具体系而非专利",
+          "trend": "变宽（相对同业）"
+        }
+      ],
+      "moatDurabilityBreakpoints": [
+        "加盟体系经济性：NEXT 计划承诺 2036 年前约 $85 亿加盟商支持（2030 年前约 $50 亿，含租金减免与资本支持），目标让加盟商约四年回本。若加盟商现金回报长期低于其替代投资回报，新店扩张与再投资会停滞——这是护城河的地基",
+        "地产产权：自持约 56% 土地、80% 建筑是「麦当劳既是餐厅品牌又是地主」的物理基础，也是最难被复制的部分；REF（售后再租回）能释放现金但会削弱长期控制权（麦当劳历史上曾用过）",
+        "品牌价值与食品安全的耦合：品牌是所有特许经营收入的分母，任何系统性食安事件都会同时打击 4.5 万家门店，且恢复缓慢"
+      ]
+    },
+    "technology": {
+      "_dimension": "5. 技术能力：核心技术栈、研发投入",
+      "coreTechStack": [
+        "消费者端：全球麦当劳 App + MyMcDonald's Rewards 会员体系（70 个市场，约 2.2 亿 90 天活跃会员），个性化优惠引擎、移动点单/支付/外送接入",
+        "门店端：通用 POS 与厨房运营系统、自助点单机（kiosk）、「Ready on Arrival」（移动订单到店即取，2025 年底完成六大市场部署）",
+        "企业端：单一企业数据底座（single enterprise data foundation）+ 跨 46,000+ 门店的通用技术平台；Global Business Services（GBS）共享服务中心承接后台流程",
+        "AI：ArchIQ 运营系统（2026 年 9 月投资者日发布，为 Restaurant > NEXT 支柱的核心，目标释放约 250bps 的餐厅层面毛效率改善，相当于美国单店年均约 $10 万现金流），用于预测性维护、排班与库存等运营决策",
+        "外送：约 41,000 家门店（约 90% 门店）、约 100 个市场接入外送渠道"
+      ],
+      "rdExpense": {
+        "status": "unavailable",
+        "reason": "麦当劳利润表与 10-K 均不单列研发费用，公司无「Research and Development」科目，10-K 也无 R&D 披露段落（已用 grep 检索 10-K 全文含 'esearch' 与 'Development' 字段的现金流量表科目，仅命中 'NetInvestmentInLease...' 与地产相关科目，无 R&D）。技术投入被并入 Selling, general & administrative expenses（FY2025 共 3.039B，占全系统销售额 2.18%）与「Other revenues 对应的技术/数字平台分摊费回收」两边，无法可靠拆分"
+      },
+      "rdIntensityPct": {
+        "status": "unavailable",
+        "reason": "分子不可得（公司不披露研发费用），无法计算研发费用/收入。可用的替代观察量：NEXT 计划承诺 2027–2030 年约 $30 亿/年基线资本开支 + 累计 $15~20 亿资本合作支持，其中一部分即投向 Restaurant > NEXT 的技术部署（来源：2026-09-23 投资者日 8-K EX-99.1）"
+      },
+      "rdTrend": {
+        "status": "unavailable",
+        "reason": "同上，公司无研发费用科目可做趋势；仅能观察到资本开支从 FY2021 的 2.040B 升至 FY2025 的 3.365B（+65%），2026 年指引 3.7~3.9B，2027 年再增约 3~5 亿美元，其中技术部署与门店现代化的占比未单独披露"
+      },
+      "note": "口径说明：麦当劳不是技术公司，把技术当「运营杠杆」而非「产品」。它的技术投入不需要形成专利收入，只需要压低门店层面的成本与提升订单履约效率；因此评价它的技术能力应看单位门店效率与会员留存，而不是研发费用率。已落盘的可观察指标：①约 2.2 亿 90 天活跃会员（2026-06-30）；②TTM 会员全系统销售额 >$400 亿；③ArchIQ 目标 250bps 效率；④自助点单机与 Ready on Arrival 的部署范围。"
+    },
+    "management": {
+      "_dimension": "6. 管理层：创始人/CEO履历、持股比例、关键决策记录",
+      "founderCeo": {
+        "name": "Christopher (Chris) Kempczinski",
+        "background": "现年 57 岁。2015 年加入麦当劳任执行副总裁（战略、业务发展与创新）；2017–2019 年任麦当劳美国总裁（负责美国约 1.4 万家餐厅）；2019 年起任总裁兼首席执行官；2024 年起兼任董事长。此前在卡夫亨氏（The Kraft-Heinz Company）任增长计划执行副总裁兼卡夫国际总裁（2014–2015），更早在宝洁等消费品公司任职。现任宝洁（P&G）董事。董事会任职 6 年",
+        "tenure": "CEO 任期自 2019 年（约 7 年），董事长自 2024 年（董事长与 CEO 合并，另设 Miles White 为首席独立董事）",
+        "source": {
+          "name": "麦当劳 2026 DEF 14A 董事/高管履历页（p.~62）与董事长信",
+          "url": "https://www.sec.gov/Archives/edgar/data/63908/000119312526145548/mcd-20260407.htm"
+        }
+      },
+      "otherKeyExecutives": {
+        "cfo": "Ian Borden（执行副总裁兼全球首席财务官）",
+        "usPresident": "Skye Anderson（2026 年 8 月 4 日任命为麦当劳美国总裁，替换 Joe Erlinger；曾任国际直营市场相关高管职务）",
+        "note": "CFO Ian Borden 与前任美国总裁 Joe Erlinger 均为披露的 NEO；8 月 4 日换帅发生在 2026Q2 美国可比销售仅 +0.8% 的同一份公告中"
+      },
+      "ownership": {
+        "economicPct": 0.123,
+        "votingPct": 0.123,
+        "ownershipDetail": {
+          "ceoKempczinskiShares": 869034,
+          "ceoShareOfTotal": "0.123%（869,034 ÷ 707,641,531，工具验算 869034/707641531×100=0.1228）",
+          "allDirectorsAndOfficersShares": 1838732,
+          "allDirectorsAndOfficersPct": "0.26%（23 人合计，含已可行权期权；10-K/委托书原文表述为「less than 1%」）",
+          "recordDate": "2026-03-01（委托书 Security Ownership of Management 表）",
+          "insiderOwnershipPctFromStockanalysis": 0.03
+        },
+        "votingPctNote": "麦当劳为单一类别普通股（每股一票），无 AB 股结构，经济权益=投票权；机构持股 75.68%（Vanguard 10.03%、BlackRock 7.30%、State Street 5.10%），无控股股东",
+        "source": {
+          "name": "麦当劳 2026 DEF 14A「Security Ownership of Management」与「Principal Holders of Common Stock」",
+          "url": "https://www.sec.gov/Archives/edgar/data/63908/000119312526145548/mcd-20260407.htm"
+        }
+      },
+      "compensation": {
+        "ceoTotalCompFy2025": {
+          "value": "$20,574,525",
+          "note": "委托书 Pay Versus Performance 表 Total Compensation 列（2025 财年）；2024 年 $18,195,263、2023 年 $19,155,001、2022 年 $17,770,514、2021 年 $20,028,132"
+        },
+        "ceoCompActuallyPaidFy2025": {
+          "value": "$17,916,531",
+          "note": "「Compensation Actually Paid」口径（含未行权股权公允价值变动），2023 年该口径曾高达 $36.85M，随股价回落而收缩——薪酬实质上与股价绑定"
+        },
+        "otherNeoAverageTotalCompFy2025": {
+          "value": "$6,339,183"
+        },
+        "structure": "长期股权激励以 PRSU（绩效限制性股票）为主，2025 年授予的 PRSU 以「三年平均年化 EPS 增速（75% 权重）+ 三年 ROIC（25% 权重，阈值不低于 16%）」为考核条件，另设相对 TSR 修正项（±25 个百分点），最高 200% 目标值、绝对 TSR 为负时上限 100%",
+        "stockOwnershipRequirement": "CEO 须持有 6 倍年薪的公司股票，其他 NEO 4 倍，五年达标；未达标者须留存归属后净股份的 50%~100%。委托书披露最近一次年度评估全体 NEO 均合规",
+        "clawbackAndPledging": "设有反质押与反对冲政策（POLICY REGARDING PROHIBITION ON PLEDGING & HEDGING）",
+        "source": {
+          "name": "麦当劳 2026 DEF 14A 薪酬讨论与分析、Summary Compensation Table、Pay Versus Performance",
+          "url": "https://www.sec.gov/Archives/edgar/data/63908/000119312526145548/mcd-20260407.htm"
+        }
+      },
+      "insiderSelling": {
+        "status": "unavailable",
+        "reason": "本次采集未逐笔统计 Form 4 减持记录（10b5-1 计划下的常规减持需要 Form 4 逐笔核验）。可观察的替代证据：委托书 Section 16(a) 披露 2025 年仅 3 起迟报（含 Dario Baroni 迟报 Form 3、Lauren Elting 与 Brian Rice 的行政性迟报），无内幕交易类违规记录；已查 2026 DEF 14A 全部 Section 16(a) 段落"
+      },
+      "keyDecisions": [
+        {
+          "date": "2019 年（Kempczinski 上任初期）",
+          "decision": "承接并全面推进「Accelerating the Arches」战略（最大化营销、聚焦核心菜单、押注 4D：Digital/Delivery/Drive-thru/Development）",
+          "outcome": "2020–2025 全系统销售额从约 $100B 量级升至 $139.4B；FY2025 营业利润率从 2024 年的 45.2% 提升至 46.1%；数字与会员体系从零做到 70 个市场、约 2.2 亿活跃会员"
+        },
+        {
+          "date": "2023–2027（进行中）",
+          "decision": "「Accelerating the Organization」组织精简 + 建设 Global Business Services 共享服务中心，预计 2027 年完成",
+          "outcome": "自 2023 年启动以来累计计提 697M 重组费用（FY2025 单年 226M，其中 201M 记在总部）；公司预计 2026 年再计提约 250M；SG&A 占全系统销售额比例降至 2.18%，2026 年指引约 2.2%。代价是连续的「非经常性」费用每年重复出现"
+        },
+        {
+          "date": "2024 年",
+          "decision": "出售麦当劳韩国业务、收购麦当劳以色列业务；董事会将董事长与 CEO 合并，Kempczinski 兼任董事长，另设首席独立董事",
+          "outcome": "2024 年计提与交易相关的净费用约 70M（$0.08/股）；治理结构变化由董事会以「继任规划成熟 + 战略连贯性」为由确认，并在 2025 年股东大会后再次复核确认"
+        },
+        {
+          "date": "2026-08-04",
+          "decision": "在 2026Q2 美国可比销售仅 +0.8%、客流为负的同一份公告中更换美国总裁（Syke Anderson 接替 Joe Erlinger）",
+          "outcome": "待观察；新总裁被任命时公司明确表述要「在最大市场提升标准、加速表现」"
+        },
+        {
+          "date": "2026-09-23",
+          "decision": "投资者日发布「McDonald's > NEXT」：2030 年目标包括营业利润率进入 low-to-mid 50% 区间、G&A 降至全系统销售额约 1.9%、2030 年前鸡肉与饮料各提升 1.5 个百分点市场份额、约 250bps 餐厅层面效率、FCF 转化率升至 mid-to-high 80%；承诺 2036 年前约 $85 亿加盟商支持（2030 年前约 $50 亿）、2027–2030 年每年约 $30 亿基线资本开支 + 累计 $15~20 亿资本合作支持",
+          "outcome": "当日股价下跌约 5%（盘中最低 $234.03，为 2022 年以来最低）；摩根士丹利下调目标价至 $297、Melius 至 $230、Bernstein 至 $250（Market Perform，评价为「利润率目标有说服力，但销售改善路径未被证实」）。市场核心疑虑：支出前置、收入改善在后，且同期 CFO 指引三季度美国可比销售将「略为负」"
+        }
+      ],
+      "governance": {
+        "board": "12 名董事全部为独立董事（除 CEO），2026 年股东大会选举；设首席独立董事（Miles White）；无双重股权结构；股东可按 3% 持股三年行使代理权提名董事",
+        "capitalAllocationPhilosophy": "10-K 明示优先级：①投资于业务增长（资本开支 + 技术/数字化 + GBS）；②优先保障股息；③剩余自由现金流用于回购。FY2025 分红 5.115B + 回购 2.056B = 约 71 亿美元，占当年 FCF 的 99%",
+        "source": {
+          "name": "麦当劳 FY2025 10-K「Our Strategy」「SHARE REPURCHASES AND DIVIDENDS」；2026 DEF 14A 董事会结构节",
+          "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+        }
+      }
+    },
+    "industryOutlook": {
+      "_dimension": "7. 行业前景：TAM（总可寻址市场）、增长预测",
+      "tam": {
+        "value": "3.36T",
+        "currency": "USD",
+        "definition": "全球餐饮服务市场（food service market）2026 年规模，含商业餐饮（commercial，2025 年占 72%）与非商业餐饮（机构、医院、学校等）。这是「全球外食总支出」口径，是麦当劳所在 IEO 赛道的上界而非其可寻址份额——麦当劳自己把竞争范围定义为 IEO（含快餐、外送外带、便利店、路边摊、咖啡专门店、自助餐、果汁吧），比「连锁快餐」宽、比「全部餐饮服务」窄",
+        "asOf": "2025 年实测 3.19 万亿 / 2026 年预测 3.36 万亿（IMARC）",
+        "source": {
+          "name": "IMARC Group《Food Service Market Size, Share & Industry Report 2034》",
+          "url": "https://www.imarcgroup.com/food-service-market"
+        }
+      },
+      "tamCaveat": "行业报告的 TAM 口径分歧极大，不能当精确数字用：同一次检索中 IMARC 给 2025 年 3.19 万亿（CAGR 3.02%），Research and Markets 给 2026 年 5.02 万亿（CAGR 6.96%），Mordor Intelligence 给 2025 年 4.34 万亿（CAGR 11.89%），Ken Research 给 2025 年 3.36 万亿（CAGR 5.64%）。量级一致（3~5 万亿美元）、增速分歧从 3% 到 11.9%。本文件采用 IMARC 口径（最低增速、口径描述最完整），并在 growthForecast 中同时列出区间。",
+      "growthForecast": {
+        "cagrPct": 3.02,
+        "horizon": "2026–2034（IMARC 口径）",
+        "rangeFromOtherSources": "3.02%（IMARC）~ 11.89%（Mordor Intelligence）；区间中位约 5.6%",
+        "source": {
+          "name": "IMARC Group（采用值）",
+          "url": "https://www.imarcgroup.com/food-service-market"
+        }
+      },
+      "megatrends": [
+        {
+          "trend": "数字点单与外带（off-premises）结构性上升",
+          "evidence": "IMARC 把「数字点单与离店消费的结构性转移」列为市场扩张的核心驱动；麦当劳自身外送覆盖约 41,000 家门店 / 约 100 个市场 / 约 90% 门店（FY2025 10-K）"
+        },
+        {
+          "trend": "亚太是最大区域市场",
+          "evidence": "IMARC：亚太 2025 年占全球餐饮服务收入的 37.0%；麦当劳在该区域主要通过发展许可（IDL）模式参与，99% 加盟化，中国大陆/香港/澳门经 48% 持股的 Grand Foods Holding 权益法核算，日本经 35% 持股的 McDonald's Japan Holdings"
+        },
+        {
+          "trend": "客群价格分层加剧（value 与 premium 双轨）",
+          "evidence": "麦当劳 2026Q2 美国「客单价增长（含有利产品组合）被客流下滑抵消」；同时 Chipotle 等高端快餐维持更快增速。价格带两端的挤压是本轮行业共性"
+        },
+        {
+          "trend": "餐饮的人工与租金成本长期上升",
+          "evidence": "麦当劳把「劳动力可获得性与成本」列为独立风险因子（10-K Risk Factors: Continued challenges with respect to labor）；这也正是连锁体系把成本转给加盟商的动因"
+        }
+      ],
+      "tamVsCompanyScale": {
+        "note": "以麦当劳全系统销售额 139.4B（2025）对比全球餐饮服务市场 3.36 万亿（2026 预测），量级上约 4.15%——这不是「市场份额」结论（分母口径不同、年份口径不同），只是说明即使作为全球最大连锁餐饮体系，麦当劳在全域外食支出中的占比仍是个位数量级，行业极度分散，天花板并非眼前的约束",
+        "calculation": "financial_rigor calc 139400/3360000*100=4.15"
+      }
+    },
+    "riskFactors": {
+      "_dimension": "8. 风险因素：地缘政治、监管、供应链等",
+      "items": [
+        {
+          "category": "监管",
+          "description": "美国联邦法院集体诉讼：2026 年 10 月初提起的全国性集体诉讼（伊利诺伊北区联邦法院）指控麦当劳使用 AI 定价系统，在自营店与加盟店之间共享非公开数据、协调菜单价格，违反联邦反垄断法并推高价格。属未证实的起诉指控，尚未获集体诉讼认证。影响方向：定价算法与加盟体系的信息协调是麦当劳数字化的核心工具，若判决不利，将限制其定价与数据能力，并可能触发加盟商关系与消费者信任的连锁反应",
+          "evidence": "报道来源：Reuters / AP / LA Times / The Guardian（2026-10-02 至 10-07）；麦当劳尚未在 10-Q 中大额计提（最新披露为 2026Q2 10-Q，法务或有事项未提及该案）",
+          "sourceType": "外部媒体推断（公司披露尚未覆盖）"
+        },
+        {
+          "category": "监管",
+          "description": "FTC 加盟经营规则（Franchise Rule）与各州加盟法规（关系法、披露要求）持续演进，加盟商组织化程度提高；同时美国与多国的广告（面向儿童）、营养标签、包装环保法规持续收紧",
+          "evidence": "FY2025 10-K Risk Factors: Increasing regulatory and legal complexity may adversely affect our business and financial results；GOVERNMENT REGULATIONS 节列明广告、加盟、健康、安全、环境、竞争、分区、雇佣、税务全面受监管",
+          "sourceType": "公司披露"
+        },
+        {
+          "category": "竞争",
+          "description": "价格战与客流流失：2026Q2 美国可比销售仅 +0.8%（对比 2025Q2 的 +2.5%），且客流为负，增长全靠客单价；公司 CFO 指引 2026Q3 美国可比销售略为负。同时高端快餐（Chipotle 等）、鸡肉赛道（Chick-fil-A、Raising Cane's）与便利/咖啡渠道持续分流",
+          "evidence": "FY2025 10-K Risk Factors: We face intense competition in our markets, which could hurt our business；2026Q2 8-K EX-99.1 comparable sales 表；CFO 三季度指引（媒体转述，非公司公告原文）",
+          "sourceType": "公司披露（可比销售与竞争定位）+ 媒体转述（三季度指引）"
+        },
+        {
+          "category": "供应链",
+          "description": "牛肉、鸡肉、食用油等大宗商品价格波动与供应链中断，可能同时抬升公司与加盟商成本，而提价能力在低端客群上已受限（2026Q2 客单价增长的同时客流下滑），存在「成本升、价格提不上去」的双向挤压",
+          "evidence": "FY2025 10-K Risk Factors: Supply chain interruptions may increase costs or reduce revenues / Changes in commodity and other operating costs could adversely affect our results of operations",
+          "sourceType": "公司披露"
+        },
+        {
+          "category": "其他（加盟模式）",
+          "description": "加盟商经济性是整个体系的单点依赖：公司 95% 门店靠加盟商资本扩张与再投资，NEXT 计划承诺 2036 年前约 $85 亿支持本身即承认了加盟商投资能力是瓶颈。若加盟商现金回报不达预期，新店扩张（公司 2026 年目标约 2,100 家净增）与门店现代化会同步放缓",
+          "evidence": "FY2025 10-K Risk Factors: Our franchise business model presents a number of risks；2026-09-23 投资者日 EX-99.1（$8.5B 支持、约四年回本期、约 $10 万/店年均现金流收益）",
+          "sourceType": "公司披露"
+        },
+        {
+          "category": "其他（品牌与食安）",
+          "description": "食品安全事件或品牌认知受损会同时打击 4.5 万家门店；10-K 把「Food safety concerns」与「Failure to preserve the value or relevance of our brand」列为独立风险因子",
+          "evidence": "FY2025 10-K Risk Factors 两节原文",
+          "sourceType": "公司披露"
+        },
+        {
+          "category": "地缘政治",
+          "description": "业务覆盖 100+ 国家，受汇率、地缘冲突、贸易壁垒与各国税务/外资政策影响。10-K 单列「The global scope of our business subjects us to risks that could negatively affect our business」与「Changes in tax laws and unanticipated tax liabilities」。2025 年汇率对收入形成 +385M 的正向影响，即汇率本身可能成为业绩的随机项",
+          "evidence": "FY2025 10-K Risk Factors；10-K「Impact of foreign currency translation」表（2025 年汇率对收入 +385M、对摊薄 EPS +0.16 美元）",
+          "sourceType": "公司披露"
+        },
+        {
+          "category": "技术",
+          "description": "「Our investments to transform and enhance the customer experience, including through technology, may not generate the expected results」——公司在 10-K 中把技术投资回报不达标列为独立风险；另有 IT 系统故障、网络安全与数据隐私合规风险（Information technology system failures... / privacy and data protection laws）",
+          "evidence": "FY2025 10-K Risk Factors 三节原文",
+          "sourceType": "公司披露"
+        },
+        {
+          "category": "其他（资本结构与股东回报）",
+          "description": "股东权益已为负（2026-06-30 为 −1.023B），源于长期回购与累计分红超过留存收益；有息负债约 40B，利息保障倍数偏低（stockanalysis 报 7.79），2026 年利息费用指引再增 4%~6%。股息与回购的可持续性依赖自由现金流，而非资产负债表缓冲（现金仅 822M）",
+          "evidence": "2026Q2 10-Q 资产负债表（Total shareholders' equity −1,023M）；FY2025 10-K OUTLOOK（利息费用 +4~6%）；stockanalysis.com Interest Coverage 7.79",
+          "sourceType": "公司披露 + 第三方计算"
+        }
+      ]
+    },
+    "currentValuation": {
+      "_dimension": "9. 当前估值：市值、股息率、负债率、PE、PS、PB、ROA、ROE、PEG、EV/Revenue",
+      "priceAsOf": "2026-10-09 11:01-11:03 ET（美股盘中，USD 234.73 / 234.65；stockanalysis 实时报价；前收盘 236.90）",
+      "sharePrice": {
+        "value": 234.73,
+        "unit": "currency",
+        "currency": "USD",
+        "source1": {
+          "name": "stockanalysis.com MCD 实时报价（2026-10-09 11:01 ET，下跌 0.92%）",
+          "url": "https://stockanalysis.com/stocks/mcd/",
+          "value": 234.73
+        },
+        "source2": {
+          "name": "stockanalysis.com MCD 股息页同时间报价",
+          "url": "https://stockanalysis.com/stocks/mcd/dividend/",
+          "value": 234.65
+        },
+        "deviationPct": 0.03,
+        "flag": "ok（同一来源两页面的盘中快照，时点相差约 2 分钟）",
+        "note": "52 周区间 $229.20–$341.75，现价接近区间下沿；52 周跌幅 −20.11%；50 日均线 $255.65、200 日均线 $287.73，价格显著低于两条均线"
+      },
+      "sharesOutstanding": {
+        "value": "707.64M",
+        "unit": "shares",
+        "currency": null,
+        "source1": {
+          "name": "SEC 10-Q（2026Q2）封面 EntityCommonStockSharesOutstanding（2026-06-30）",
+          "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json",
+          "value": 707641531
+        },
+        "source2": {
+          "name": "stockanalysis.com MCD Shares Outstanding（Shares Change YoY −0.73%）",
+          "url": "https://stockanalysis.com/stocks/mcd/statistics/",
+          "value": 707640000
+        },
+        "deviationPct": 0.0,
+        "flag": "ok"
+      },
+      "marketCap": {
+        "reported": "166.10B USD（stockanalysis.com，2026-10-09 盘中；Market Cap Growth YoY −21.37%）",
+        "computed": "166.10B USD = 234.73 × 707,641,531 股；financial_rigor.py verify-market-cap 偏差 0.00%",
+        "flag": "ok",
+        "note": "verify-market-cap：234.73 × 707,641,531 = 166,104,941,121 ≈ 报告市值 166.10B，偏差 0.00%"
+      },
+      "pe": {
+        "value": "19.07x（TTM，按 TTM 摊薄 EPS $12.31 精算）",
+        "basis": "TTM 摊薄 EPS = FY2025 11.95 − 2025H1 5.74 + 2026H1 6.10 = 12.31；工具验算 234.73/12.31 = 19.07",
+        "note": "stockanalysis.com 报 19.24x（其口径用前收盘 $236.90 ÷ 12.31 = 19.24）；若用 FY2025 静态 EPS 11.95，PE 为 19.64x。三者差异仅来自价格时点与静态/TTM 口径",
+        "source1": {
+          "name": "financial_rigor.py verify-valuation（price 234.73 / eps 12.31）",
+          "url": "docs/research/tools/financial_rigor.py",
+          "value": 19.07
+        },
+        "source2": {
+          "name": "stockanalysis.com MCD PE Ratio",
+          "url": "https://stockanalysis.com/stocks/mcd/statistics/",
+          "value": 19.24
+        },
+        "deviationPct": 0.89,
+        "flag": "ok（差异为价格快照时点，非口径分歧）"
+      },
+      "ps": {
+        "value": "6.00x（TTM）",
+        "note": "市值 166.10B ÷ TTM 收入 27.702B；工具验算 166100000000/27702000000 = 6.00",
+        "source1": {
+          "name": "financial_rigor.py calc（166.1B / 27.702B）",
+          "url": "docs/research/tools/financial_rigor.py",
+          "value": 6.0
+        },
+        "source2": {
+          "name": "stockanalysis.com MCD PS Ratio 6.05",
+          "url": "https://stockanalysis.com/stocks/mcd/statistics/",
+          "value": 6.05
+        },
+        "deviationPct": 0.83,
+        "flag": "ok"
+      },
+      "pb": {
+        "status": "not-applicable",
+        "reason": "不适用：股东权益为负（2026-06-30 Total shareholders' equity −1,023M，FY2025 −1,791M），每股账面价值为负（−$1.45），PB 无经济意义。stockanalysis 对 FY2021–FY2025 一律显示 −121.53 ~ −32.15 的负值或 n/a。替代锚点：EV/EBITDA 14.83x、P/FCF 21.60x、EV/FCF 28.53x"
+      },
+      "roe": {
+        "status": "not-applicable",
+        "reason": "不适用：净资产为负（−1.023B），ROE 无论用归母净利还是含少数股东口径都无意义（正数除以负数会给出误导性的「高 ROE」）。stockanalysis 对 MCD 的 ROE 直接显示 n/a。可替代：ROA 14.66%（TTM）、公司披露的税后 ROIC 20.3%（FY2025）"
+      },
+      "roa": {
+        "value": "14.66%（TTM，期末总资产口径）",
+        "note": "TTM 净利润 8.787B ÷ 期末总资产 59.920B（2026-06-30）；工具验算 8787/59920×100 = 14.66。若用 FY2025 期末资产：8,563/59,515 = 14.39%。麦当劳 ROA 常年高于 ROE 的唯一原因就是净资产为负，属于杠杆结构而非经营效率的自然结果，必须与债务口径一起读",
+        "source1": {
+          "name": "financial_rigor.py calc（8,787 / 59,920）",
+          "url": "docs/research/tools/financial_rigor.py",
+          "value": 14.66
+        },
+        "source2": {
+          "name": "stockanalysis.com MCD Return on Assets 13.25%",
+          "url": "https://stockanalysis.com/stocks/mcd/statistics/",
+          "value": 13.25
+        },
+        "deviationPct": 9.6,
+        "flag": "minor-diff（口径差异：本文件用期末总资产，stockanalysis 用期初期末平均资产；平均口径 8,787/{(59,515+59,920)/2}=14.71% 与本文件接近，差异来自其 TTM 窗口切分）"
+      },
+      "roic": {
+        "value": "20.3%（FY2025，公司口径）",
+        "note": "公司披露的税后 ROIC from continuing operations：2023 年 25.2%、2024 年 21.8%、2025 年 20.3%——连续两年下降，与资本开支上升同步，是「再投资回报率被摊薄」的直接证据。stockanalysis 的 ROIC 为 17.80%（口径不同，Level 2 字段，单源可接受但此处双源并列）",
+        "source1": {
+          "name": "SEC 10-K FY2025 MD&A「after-tax ROIC from continuing operations ... was 20.3%, 21.8% and 25.2% as of December 31, 2025, 2024, and 2023」",
+          "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+          "value": 20.3
+        },
+        "source2": {
+          "name": "stockanalysis.com MCD Return on Invested Capital",
+          "url": "https://stockanalysis.com/stocks/mcd/statistics/",
+          "value": 17.8
+        },
+        "deviationPct": 12.3,
+        "flag": "minor-diff（口径不可比：公司口径为税后且含权益法投资收益调整，stockanalysis 为标准 NOPAT/投入资本口径；两个数字并列保留，不取平均）"
+      },
+      "dividendYieldPct": {
+        "value": "3.29%（年化当前股息率）",
+        "note": "2026 年 9 月宣布的季度股息上调至 $1.93（12 月 1 日除息），年化 $7.72；工具验算 7.72/234.73×100 = 3.29。若按最近四次实际支付（2025-12 $1.86 + 2026-03/06/09 各 $1.86 = $7.44）计，TTM 股息率 3.17%。派息率 62.71%（7.72/12.31）；FCF 派息率 70.39%。分红连续增长 51 年（股息王），2026 年上调幅度 4.74%",
+        "source1": {
+          "name": "stockanalysis.com MCD Dividend（Annual Dividend $7.72 / Yield 3.29% / Payout Ratio 62.71% / Growth Years 51）",
+          "url": "https://stockanalysis.com/stocks/mcd/dividend/",
+          "value": 3.29
+        },
+        "source2": {
+          "name": "financial_rigor.py verify-valuation（dividend 7.72 / price 234.73）",
+          "url": "docs/research/tools/financial_rigor.py",
+          "value": 3.29
+        },
+        "deviationPct": 0.0,
+        "flag": "ok"
+      },
+      "debtRatioPct": {
+        "value": "103.01%（FY2025 总负债/总资产）",
+        "note": "总负债 61,306M ÷ 总资产 59,515M = 103.01%（工具验算 61306/59515×100）；最新 2026-06-30 为 60,943/59,920 = 101.71%。负债率超 100% 不是会计错误，而是累计回购与分红把留存收益买成了负数（FY2025 库存股成本 79,316M）。因此这个指标对麦当劳没有金融企业的解读意义，真正要分开看的是：①有息负债（10-K「Total debt obligations」$39,973M，含商业票据 798M 与一年内到期 725M，属 Level 1 双源验证科目）；②租赁负债（经营租赁 12,488M + 融资租赁 2,352M，2025-12-31 租约附注）；③有息负债率 39,973/59,515 = 67.16%，含租赁则 (39,973+2,352+12,488)/59,515 = 92.10%。租金是麦当劳真实的长期承诺，把它排除在「负债」之外会显著低估其固定成本刚性",
+        "source1": {
+          "name": "SEC 10-K FY2025 合并资产负债表（Total liabilities 61,306 / Total assets 59,515）与租约附注、Debt Financing 附注",
+          "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+          "value": 103.01
+        },
+        "source2": {
+          "name": "stockanalysis.com MCD balance sheet（FY2025 Total Liabilities 61,306 / Total Assets 59,515；Total Debt 54,830 含经营租赁）",
+          "url": "https://stockanalysis.com/stocks/mcd/financials/balance-sheet/",
+          "value": 103.01
+        },
+        "deviationPct": 0.0,
+        "flag": "ok"
+      },
+      "peg": {
+        "value": "2.66x（仅单源）",
+        "note": "stockanalysis.com 口径，分母为分析师一致预期增速（3 年收入增速预期 1.83%、EPS 增速预期 5.88%）。PEG 对麦当劳这种低速稳定增长的公司参考价值有限——PEG 2.66 反映的是「估值相对于预期增速偏贵」，而不是「公司质量差」。仅单源，Level 2 字段按规范允许单源但须注明",
+        "source": {
+          "name": "stockanalysis.com MCD Statistics（PEG Ratio 2.66）",
+          "url": "https://stockanalysis.com/stocks/mcd/statistics/"
+        }
+      },
+      "evToRevenue": {
+        "value": "7.93x（TTM）",
+        "note": "企业价值 219.81B ÷ TTM 收入 27.702B；工具验算 219810000000/27702000000 = 7.93。stockanalysis 报 7.99（其 TTM 收入口径 27.70B 与 219.887B EV 快照略有差异）",
+        "source1": {
+          "name": "financial_rigor.py calc（219.81B / 27.702B）",
+          "url": "docs/research/tools/financial_rigor.py",
+          "value": 7.93
+        },
+        "source2": {
+          "name": "stockanalysis.com MCD EV/Sales 7.99",
+          "url": "https://stockanalysis.com/stocks/mcd/statistics/",
+          "value": 7.99
+        },
+        "deviationPct": 0.75,
+        "flag": "ok"
+      },
+      "otherMultiples": {
+        "evToEbitda": {
+          "value": "14.83x",
+          "source": "stockanalysis.com"
+        },
+        "evToEbit": {
+          "value": "17.48x",
+          "source": "stockanalysis.com"
+        },
+        "pToFcf": {
+          "value": "21.60x",
+          "source": "stockanalysis.com（TTM FCF 7.76B）"
+        },
+        "evToFcf": {
+          "value": "28.53x",
+          "source": "stockanalysis.com"
+        },
+        "fcfYieldPct": {
+          "value": "4.63%",
+          "source": "stockanalysis.com（TTM FCF/股 $10.97 ÷ 价格）"
+        },
+        "earningsYieldPct": {
+          "value": "5.24%",
+          "source": "stockanalysis.com（1/PE）"
+        },
+        "netDebt": {
+          "value": "53.782B（每股 −$76.00）",
+          "note": "现金 822M − 总债务 54,604M（含经营租赁）；若只算有息负债：822M − 40,698M = −39.876B",
+          "source": "stockanalysis.com"
+        },
+        "shareholderYieldPct": {
+          "value": "3.99%（股息 3.29% + 回购 0.73%）",
+          "source": "stockanalysis.com"
+        },
+        "beta5y": {
+          "value": 0.45,
+          "source": "stockanalysis.com（低波动，防御属性）"
+        },
+        "shortInterestPct": {
+          "value": "1.72%",
+          "source": "stockanalysis.com"
+        },
+        "analystConsensus": {
+          "value": "Buy，34 位分析师，目标价均值 $292.21（较现价 +24.55%）",
+          "source": "stockanalysis.com"
+        }
+      },
+      "valuationHistory": {
+        "note": "历史 PE（用各年末收盘价与当年 EPS）显示当前估值处于五年区间下沿",
+        "series": [
+          {
+            "fy": "FY2021",
+            "closeAdj": "$239.92（按分红调整后口径，stockanalysis Last Close Price）",
+            "pe": 26.55
+          },
+          {
+            "fy": "FY2022",
+            "closeAdj": "$241.14",
+            "pe": 31.25
+          },
+          {
+            "fy": "FY2023",
+            "closeAdj": "$277.46",
+            "pe": 25.4
+          },
+          {
+            "fy": "FY2024",
+            "closeAdj": "$277.84",
+            "pe": 25.26
+          },
+          {
+            "fy": "FY2025",
+            "closeAdj": "$299.75",
+            "pe": 25.42
+          },
+          {
+            "fy": "current",
+            "closeAdj": "$236.90（2026-10-08 收盘）",
+            "pe": 19.24
+          }
+        ],
+        "source": {
+          "name": "stockanalysis.com MCD Ratios（PE Ratio 与 Market Cap 历史列）",
+          "url": "https://stockanalysis.com/stocks/mcd/financials/ratios/"
+        }
+      }
+    },
+    "bullBearCase": {
+      "_dimension": "10. 多空双方核心论点",
+      "bull": [
+        {
+          "point": "特许经营模式把资本负担与经营风险转移给加盟商，公司只留高毛利收费权，利润率与现金流质量在餐饮业无出其右",
+          "evidence": "FY2025 特许经营收入 16.548B、对应占用费用仅 2.618B（分部毛利率约 84%）；全系统销售额 $139.4B 而公司收入只有 $26.885B（19.3%），却产生 $12.393B 营业利润与 $10.551B 经营现金流；营业利润率 46.1% vs 同业 QSR 27.0%、YUM 32.5%、CMG 15.3%、SBUX 10.4%（来源：FY2025 10-K；stockanalysis 同业 TTM）"
+        },
+        {
+          "point": "轻资产的收费权 + 自持地产 = 极稳的自由现金流，足以支撑 51 年连续增息与回购",
+          "evidence": "FY2025 分红 5.115B + 回购 2.056B ≈ 71 亿美元，占当年 FCF 7.186B 的 99%；FCF 转化率 84%；股息王 51 年增长纪录；现价股息率 3.29%（年化 $7.72）"
+        },
+        {
+          "point": "全球仅此一家的系统规模带来结构性成本优势与再投资能力，行业极度分散意味着天花板远未触及",
+          "evidence": "45,356 家门店、100+ 国家、17 个十亿美元级单品；全系统销售额对比全球 3.36 万亿餐饮服务支出仅约 4.15%（量级参考）；SG&A 占全系统销售额 2.18%，2026 年指引约 2.2%"
+        },
+        {
+          "point": "NEXT 计划给出了可量化的中期利润率路径，且资本开支由经营现金流覆盖",
+          "evidence": "2030 年目标：营业利润率 low-to-mid 50%、G&A 降至约 1.9% 全系统销售额、约 250bps 餐厅效率（约 $10 万/店年均现金流）、FCF 转化率 mid-to-high 80%、鸡肉与饮料各 +1.5pp 份额；2027–2030 年每年约 $30 亿基线资本开支 + 累计 $15~20 亿合作支持（来源：2026-09-23 8-K EX-99.1）"
+        },
+        {
+          "point": "估值已回到五年区间下沿，价格下跌 20% 而基本面（FY2025 收入 +4%、营业利润 +6%、EPS +5%）尚未恶化",
+          "evidence": "PE 从 FY2021–FY2025 的 25.3–31.3x 降至 19.07x（TTM）；52 周跌幅 −20.11%，现价 $234.73 接近 52 周低点 $229.20；34 位分析师目标价均值 $292.21；2026H1 收入 +6%、营业利润 +7%、EPS +6% 仍为正增长"
+        }
+      ],
+      "bear": [
+        {
+          "point": "增长几乎全部靠涨价，客流在流失——价格弹性已经在低端客群见顶",
+          "evidence": "2026Q2 全球可比销售 +1.3%（美国 +0.8%），公司明确表述为「客单价增长（含有利产品组合）被客流下滑抵消」；美国可比销售从 2025Q2 的 +2.5%、2025Q4 的 +6.8% 降至 +0.8%；CFO 指引 2026Q3 美国可比销售将略为负"
+        },
+        {
+          "point": "再投资回报率正在被摊薄：资本开支五年翻倍而自由现金流零增长",
+          "evidence": "资本开支 2.040B（2021）→ 3.365B（2025），+65%；同期 FCF 7.102B→7.186B，CAGR 0.29%；公司披露税后 ROIC 从 2023 年 25.2% 连续降至 2024 年 21.8%、2025 年 20.3%；NEXT 还要在 2027–2030 年每年再投约 30 亿"
+        },
+        {
+          "point": "NEXT 是一场「先付费、后收钱」的赌注，市场拒绝为未证实的销售改善预先付钱",
+          "evidence": "投资者日当天股价跌约 5%，盘中最低 $234.03 为 2022 年以来最低；摩根士丹利下调目标价至 $297、Melius 至 $230、Bernstein 至 $250 并评价「利润率目标有说服力但销售改善路径未被证实」；公司承诺 2036 年前 $85 亿加盟商支持（2030 年前 $50 亿）本质上是承认加盟商自己的投资能力已不足以支撑扩张"
+        },
+        {
+          "point": "资产负债表没有缓冲垫，股东回报的可持续性完全依赖经营现金流",
+          "evidence": "股东权益 −1.023B（2026-06-30）；现金仅 822M；有息负债 40.698B、含租赁的广义负债 54.6B；利息保障倍数 7.79；2026 年利息费用指引再增 4%~6%；曾经是标普少数「投资级 + 负权益」的公司结构"
+        },
+        {
+          "point": "AI 定价集体诉讼把公司最核心的数字化定价工具放进了反垄断射程",
+          "evidence": "2026 年 10 月初伊利诺伊北区联邦法院受理的全国性集体诉讼，指控 AI 定价系统在自营与加盟店之间共享非公开数据、协调菜单价格（报道来源：Reuters / AP / LA Times / The Guardian）；起诉阶段、尚未认证集体，公司 2026Q2 10-Q 未计提"
+        },
+        {
+          "point": "五年股价跑输同业，相对优劣可能在变化",
+          "evidence": "Business Insider（2026-09-25）引述：过去五年 MCD 股价 −3%，而 Restaurant Brands +14%、Yum Brands +13%；同期星巴克与 Chipotle 在美国门店层面的增长强度更高"
+        }
+      ]
+    },
+    "crossValidationLog": [
+      {
+        "field": "市值（market cap）",
+        "source1": {
+          "name": "financial_rigor.py verify-market-cap（price 234.73 × shares 707,641,531）",
+          "value": 166104941121
+        },
+        "source2": {
+          "name": "stockanalysis.com MCD Market Cap",
+          "value": 166100000000
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "偏差 0.00%，单位与币种（USD）一致，直接采用"
+      },
+      {
+        "field": "FY2025 收入（Revenue）",
+        "source1": {
+          "name": "SEC 10-K FY2025 合并利润表",
+          "value": 26885000000
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "value": 26885000000
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "两源完全一致（Metadata 闸门：报告期 FY2025、USD、百万美元、US GAAP、合并口径均一致）"
+      },
+      {
+        "field": "FY2025 净利润（Net Income）",
+        "source1": {
+          "name": "SEC 10-K FY2025",
+          "value": 8563000000
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "value": 8563000000
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "一致。公司同时披露 Non-GAAP 净利 8,741M（剔除 229M 税前重组费用），已在字段中标注 GAAP/Non-GAAP 两个口径，未混用"
+      },
+      {
+        "field": "FY2025 自由现金流（Free Cash Flow）",
+        "source1": {
+          "name": "SEC XBRL（经营现金流 10,551 − 资本支出 3,365）",
+          "value": 7186000000
+        },
+        "source2": {
+          "name": "SEC 10-K MD&A 公司披露 FCF $7.2B",
+          "value": 7200000000
+        },
+        "deviationPct": 0.19,
+        "flag": "ok",
+        "resolution": "≤1%。公司口径四舍五入到 $7.2B；两源均为「经营现金流−资本支出」，均不含并购与租赁本金偿付，口径一致"
+      },
+      {
+        "field": "FY2025 经营现金流（Operating Cash Flow）",
+        "source1": {
+          "name": "SEC XBRL CompanyFacts NetCashProvidedByUsedInOperatingActivities",
+          "value": 10551000000
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "value": 10551000000
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "一致"
+      },
+      {
+        "field": "总股本（Shares Outstanding）",
+        "source1": {
+          "name": "SEC 10-Q 2026Q2 封面（dei:EntityCommonStockSharesOutstanding，2026-06-30）",
+          "value": 707641531
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "value": 707640000
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "一致（近一年股本 −0.73%，回购注销趋势与 10-K「2025 年回购 670 万股」一致）"
+      },
+      {
+        "field": "现金及等价物（Cash，2026-06-30）",
+        "source1": {
+          "name": "SEC 10-Q 资产负债表",
+          "value": 822000000
+        },
+        "source2": {
+          "name": "stockanalysis.com",
+          "value": 822000000
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "一致"
+      },
+      {
+        "field": "总债务（有息负债，不含经营租赁，2025-12-31）",
+        "source1": {
+          "name": "SEC 10-K「Debt Financing — DEBT OBLIGATIONS」Total debt obligations",
+          "value": 39973000000
+        },
+        "source2": {
+          "name": "stockanalysis.com Long-Term Debt（FY2025）",
+          "value": 39989000000
+        },
+        "deviationPct": 0.04,
+        "flag": "ok",
+        "resolution": "≤1%。重要口径警告：stockanalysis 的「Total Debt」（FY2025 为 54,830M）把经营租赁负债 12,488M 与融资租赁负债 2,352M 一并计入；麦当劳自身的「债务义务」口径只有 39,973M。两者相差 14,840M，比较任何杠杆指标前必须声明用哪个口径"
+      },
+      {
+        "field": "FY2025 营业利润（Operating Income）",
+        "source1": {
+          "name": "SEC 10-K FY2025（公司披露口径，含 Other operating (income) expense, net 2M）",
+          "value": 12393000000
+        },
+        "source2": {
+          "name": "stockanalysis.com（标准化口径，剔除 Other operating (income) expense, net）",
+          "value": 12395000000
+        },
+        "deviationPct": 0.02,
+        "flag": "ok",
+        "resolution": "2025 年两源几乎一致。但 2021–2024 年两源系统性相差 198M / 994M / 99M / 140M（偏差 1.9%/10.6%/0.8%/1.2%），原因是 stockanalysis 把「Other operating (income) expense, net」当作非经营性项目剔除，而公司把它留在营业利润内。本文件 annual.operatingMarginPct 一律采用公司 10-K 口径（FY2023 45.69%→FY2024 45.19%→FY2025 46.10%，与公司自述「45.2%→46.1%」一致）"
+      },
+      {
+        "field": "FY2025 收入（第二口径复核）",
+        "source1": {
+          "name": "SEC XBRL CompanyFacts Revenues（FY2025）",
+          "value": 26885000000
+        },
+        "source2": {
+          "name": "stockanalysis.com（Revenue by Segment 合计 27,703 为 TTM 值，非 FY2025）",
+          "value": 26885000000
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "一致。注意 stockanalysis 的「Revenue (Total)」在部分视图中显示 TTM 27,703 而非财年值，需按列头区分，勿混用"
+      },
+      {
+        "field": "TTM 摊薄 EPS（用于计算 PE）",
+        "source1": {
+          "name": "SEC XBRL EarningsPerShareDiluted 分季加总（11.95 − 5.74 + 6.10）",
+          "value": 12.31
+        },
+        "source2": {
+          "name": "stockanalysis.com Earnings Per Share (TTM)",
+          "value": 12.31
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "一致"
+      },
+      {
+        "field": "PE（TTM）",
+        "source1": {
+          "name": "financial_rigor.py verify-valuation（234.73 / 12.31）",
+          "value": 19.07
+        },
+        "source2": {
+          "name": "stockanalysis.com PE Ratio（236.90 / 12.31）",
+          "value": 19.24
+        },
+        "deviationPct": 0.89,
+        "flag": "ok",
+        "resolution": "≤1%。差异来自价格快照时点（本文件用 2026-10-09 盘中 234.73，stockanalysis 用 2026-10-08 收盘 236.90），非口径分歧"
+      },
+      {
+        "field": "ROA",
+        "source1": {
+          "name": "financial_rigor.py calc（TTM 净利 8,787 / 期末总资产 59,920）",
+          "value": 14.66
+        },
+        "source2": {
+          "name": "stockanalysis.com Return on Assets",
+          "value": 13.25
+        },
+        "deviationPct": 9.6,
+        "flag": "minor-diff",
+        "resolution": "口径差异：本文件用期末总资产，stockanalysis 用期初期末平均资产（8,787/{(59,515+59,920)/2}=14.71%）——按平均口径复算后两源实际一致（14.66% vs 14.71%），差异源于其 TTM 窗口切分。已注明分母口径并要求跨源比较时先统一"
+      },
+      {
+        "field": "ROIC",
+        "source1": {
+          "name": "SEC 10-K FY2025 MD&A（公司税后 ROIC from continuing operations）",
+          "value": 20.3
+        },
+        "source2": {
+          "name": "stockanalysis.com Return on Invested Capital",
+          "value": 17.8
+        },
+        "deviationPct": 12.3,
+        "flag": "minor-diff",
+        "resolution": "口径不可比但两个数字都有信息量：公司口径为税后 ROIC 且含权益法投资的收益调整，stockanalysis 为标准 NOPAT/投入资本。按规范此情形应分别保留、不取中位数。ROIC 属 Level 2 字段，双源并列满足要求"
+      },
+      {
+        "field": "股息率",
+        "source1": {
+          "name": "stockanalysis.com（Annual Dividend $7.72 / Yield 3.29%）",
+          "value": 3.29
+        },
+        "source2": {
+          "name": "financial_rigor.py verify-valuation（7.72 / 234.73）",
+          "value": 3.29
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "一致。已注明「年化当前股息率 3.29%」与「近四季实付 TTM 股息率 3.17%」两个口径，并写明 2026 年 9 月股息从 $1.86 上调至 $1.93（+4.74%）"
+      },
+      {
+        "field": "负债率（总负债/总资产，FY2025）",
+        "source1": {
+          "name": "financial_rigor.py calc（61,306 / 59,515）",
+          "value": 103.01
+        },
+        "source2": {
+          "name": "stockanalysis.com balance sheet（Total Liabilities 61,306 / Total Assets 59,515）",
+          "value": 103.01
+        },
+        "deviationPct": 0.0,
+        "flag": "ok",
+        "resolution": "一致。已附三项分解（有息负债率 67.16%、含租赁广义负债率 92.10%）与「负权益导致负债率>100%」的解释"
+      },
+      {
+        "field": "全系统销售额占公司收入比（Revenue / Systemwide sales）",
+        "source1": {
+          "name": "financial_rigor.py calc（26,885 / 139,400）",
+          "value": 19.29
+        },
+        "source2": {
+          "name": "无独立第二来源（分子分母均取自公司同一披露）",
+          "value": "n/a"
+        },
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证；分子分母均来自公司 FY2025 同一份 10-K 披露，不存在独立第二来源"
+        },
+        "flag": "ok",
+        "resolution": "工具验算行。该比值是理解特许经营模式的关键，已收录并用来说明「公司收入≠系统销售额」"
+      },
+      {
+        "field": "NEXT 计划目标（2030 营业利润率 low-to-mid 50% 等）",
+        "source1": {
+          "name": "SEC 8-K EX-99.1（2026-09-23 投资者日）",
+          "value": "low-to-mid 50%"
+        },
+        "source2": {
+          "name": "媒体转述（Business Insider / Forbes / Stocktwits 对投资者日与分析师反应的报道）",
+          "value": "一致（含 $85 亿支持、约 250bps 效率、目标价下调）"
+        },
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "口径不可比：source1 为公司前瞻目标原文，source2 为媒体对同一发布与市场反应的转述，不是对同一数值的独立测量，不计算偏差率"
+        },
+        "flag": "ok",
+        "resolution": "目标数值以公司 8-K 原文为准；媒体来源仅用于记录市场反应（股价当日跌约 5%、多家券商下调目标价），并在 bullBearCase 中标明为媒体转述"
+      },
+      {
+        "field": "美国 AI 定价集体诉讼",
+        "source1": {
+          "name": "媒体报道（Reuters / AP / LA Times / The Guardian，2026-10-02 至 10-07）",
+          "value": "伊利诺伊北区联邦法院受理全国性集体诉讼，指控 AI 定价协调菜单价格"
+        },
+        "source2": {
+          "name": "SEC 10-Q（2026Q2）法务或有事项",
+          "value": "未提及该案（起诉发生于季度末之后）"
+        },
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "口径不可比：source1 为起诉方指控（未证实），source2 为公司在季度末后尚未更新的披露，两者不是对同一事实的两次独立测量"
+        },
+        "flag": "ok",
+        "resolution": "按规范在 riskFactors 中标明 sourceType 为「外部媒体推断（公司披露尚未覆盖）」，并明确「属未证实的起诉指控，尚未获集体诉讼认证」，未把指控写成事实"
+      }
+    ]
+  },
+  "analysis": {
+    "_spec": {
+      "purpose": "研究流程第 2 步（多维度分析）的产出。六个维度共用统一信封：{ conclusion, analysis, inquiry, dataGaps }。",
+      "sourcedEvidence": "所有数据点统一带出处：{ metric, value, asOf, source: { name, url } }。",
+      "calculation": "涉及计算的数字均经 docs/research/tools/financial_rigor.py 验算，工具输出记入 crossValidationLog。",
+      "inputScope": "本步骤默认禁网，全部分析只读第 1 步落盘的 financials-collection.json（含其中已记录的市场反应与诉讼等外部证据，均已标注 sourceType）。未解决的证据缺口见各维度 dataGaps。",
+      "noTaskToolNote": "本次会话未挂载 Task/子代理工具，六个维度由主会话按同一信封与写法规范逐个完成，未做并行隔离；这会在第 7 步评估中作为一次流程偏离记录（维度间可能共享上下文，独立性弱于六个独立 Agent）。"
+    },
+    "meta": {
+      "companyId": "us-mcd-mcdonalds",
+      "companyName": "McDonald's Corporation",
+      "analyzedAt": "2026-10-09",
+      "dataCutoff": "2026-10-09（Asia/Shanghai）",
+      "basedOnCollection": "research/companies/us-mcd-mcdonalds/financials-collection.json"
+    },
+    "dimensions": {
+      "businessEssence": {
+        "title": "生意本质",
+        "conclusion": "把全球 4.5 万家餐厅的流水，转成向加盟商收取的地租与品牌抽成。",
+        "analysis": {
+          "revenueBreakdown": {
+            "period": "FY2025",
+            "items": [
+              {
+                "segment": "特许经营收入（租金+特许权使用费+初期费）",
+                "revenue": "16.548B",
+                "sharePct": "61.55%",
+                "source": {
+                  "name": "SEC 10-K FY2025 MD&A 经营结果表",
+                  "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+                }
+              },
+              {
+                "segment": "自营餐厅销售",
+                "revenue": "9.690B",
+                "sharePct": "36.04%",
+                "source": {
+                  "name": "SEC 10-K FY2025 MD&A 经营结果表",
+                  "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+                }
+              },
+              {
+                "segment": "其他收入（技术/数字平台分摊费、品牌授权）",
+                "revenue": "647M",
+                "sharePct": "2.41%",
+                "source": {
+                  "name": "SEC 10-K FY2025 MD&A 经营结果表",
+                  "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+                }
+              },
+              {
+                "segment": "其中：美国分部收入",
+                "revenue": "10.825B",
+                "sharePct": "40.26%",
+                "source": {
+                  "name": "SEC 10-K FY2025 分部附注",
+                  "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+                }
+              },
+              {
+                "segment": "其中：国际直营市场（IOM）收入",
+                "revenue": "13.633B",
+                "sharePct": "50.71%",
+                "source": {
+                  "name": "SEC 10-K FY2025 分部附注",
+                  "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+                }
+              },
+              {
+                "segment": "其中：国际发展许可市场及总部收入",
+                "revenue": "2.427B",
+                "sharePct": "9.03%",
+                "source": {
+                  "name": "SEC 10-K FY2025 分部附注",
+                  "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+                }
+              }
+            ]
+          },
+          "profitabilityTrend5y": {
+            "series": [
+              {
+                "fiscalYear": "FY2021",
+                "grossMarginPct": "54.17%",
+                "operatingMarginPct": "44.59%",
+                "netMarginPct": "32.49%",
+                "source": {
+                  "name": "SEC XBRL companyfacts（营业利润/净利）+ stockanalysis（标准化毛利）",
+                  "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json"
+                }
+              },
+              {
+                "fiscalYear": "FY2022",
+                "grossMarginPct": "56.97%",
+                "operatingMarginPct": "40.42%",
+                "netMarginPct": "26.64%",
+                "source": {
+                  "name": "SEC XBRL companyfacts + stockanalysis",
+                  "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json"
+                }
+              },
+              {
+                "fiscalYear": "FY2023",
+                "grossMarginPct": "57.12%",
+                "operatingMarginPct": "45.69%",
+                "netMarginPct": "33.22%",
+                "source": {
+                  "name": "SEC 10-K FY2025 经营结果表 + stockanalysis 标准化毛利",
+                  "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+                }
+              },
+              {
+                "fiscalYear": "FY2024",
+                "grossMarginPct": "56.75%",
+                "operatingMarginPct": "45.19%",
+                "netMarginPct": "31.72%",
+                "source": {
+                  "name": "SEC 10-K FY2025 经营结果表 + stockanalysis 标准化毛利",
+                  "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+                }
+              },
+              {
+                "fiscalYear": "FY2025",
+                "grossMarginPct": "57.41%",
+                "operatingMarginPct": "46.10%",
+                "netMarginPct": "31.85%",
+                "source": {
+                  "name": "SEC 10-K FY2025 经营结果表 + stockanalysis 标准化毛利",
+                  "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+                }
+              }
+            ],
+            "note": "毛利率为 stockanalysis 标准化口径（收入−餐厅层面三项成本），公司财报不设毛利科目；营业利润率为公司披露口径，与公司自述「45.2%→46.1%」一致"
+          },
+          "businessModelCanvas": {
+            "salesModel": "混合",
+            "productForm": "服务",
+            "note": "① 收入端是「经常性收费」：租金+按销售额比例的特许权使用费，随加盟商流水自动复利，20 年加盟期。② 自营餐厅部分是一次性销售（36% 收入），但只贡献约 10% 的餐厅层面利润。③ 全系统销售额 139.4B 中公司只确认 26.885B（19.29%），缺口就是加盟商自己的流水。"
+          },
+          "stickiness": {
+            "level": "中",
+            "mechanism": "① 消费端转换成本近零，但会员体系在制造行政粘性：70 个市场、约 2.2 亿 90 天活跃会员，公司称会员到访频次为非会员约 2.5 倍。② 加盟端锁定极强：20 年加盟协议，且公司握有约 56% 土地与 80% 建筑产权，加盟商迁移等于放弃门店资产。③ 品牌资产不可替代：17 个十亿美元级单品，加盟商离开体系即失去该品牌使用权。",
+            "evidence": [
+              {
+                "metric": "90 天活跃会员数",
+                "value": "近 2.2 亿（70 个市场）",
+                "asOf": "2026-06-30",
+                "source": {
+                  "name": "SEC 8-K EX-99.1 2026Q2 业绩新闻稿",
+                  "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000067/exhibit991-6302026.htm"
+                }
+              },
+              {
+                "metric": "会员全系统销售额（TTM）",
+                "value": "超 400 亿美元（同比 +20% 以上）",
+                "asOf": "2026-06-30",
+                "source": {
+                  "name": "SEC 8-K EX-99.1 2026Q2 业绩新闻稿",
+                  "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000067/exhibit991-6302026.htm"
+                }
+              },
+              {
+                "metric": "加盟门店占比",
+                "value": "全球约 95%（美国 95%、IOM 89%、IDL 99%）",
+                "asOf": "2025-12-31",
+                "source": {
+                  "name": "SEC 10-K FY2025 BUSINESS SUMMARY 与分部附注",
+                  "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+                }
+              },
+              {
+                "metric": "自持地产比例",
+                "value": "约 56% 土地、约 80% 建筑物",
+                "asOf": "2025-12-31",
+                "source": {
+                  "name": "SEC 10-K FY2025 RESTAURANT DEVELOPMENT AND CAPITAL EXPENDITURES",
+                  "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+                }
+              }
+            ]
+          },
+          "grossMarginVsPeers": {
+            "companyPct": "57.41%",
+            "peers": [
+              {
+                "name": "Yum! Brands",
+                "grossMarginPct": "45.31%",
+                "source": {
+                  "name": "stockanalysis.com YUM financials（TTM）",
+                  "url": "https://stockanalysis.com/stocks/yum/financials/"
+                }
+              },
+              {
+                "name": "Chipotle",
+                "grossMarginPct": "39.36%",
+                "source": {
+                  "name": "stockanalysis.com CMG financials（TTM）",
+                  "url": "https://stockanalysis.com/stocks/cmg/financials/"
+                }
+              },
+              {
+                "name": "Restaurant Brands",
+                "grossMarginPct": "34.09%",
+                "source": {
+                  "name": "stockanalysis.com QSR financials（TTM）",
+                  "url": "https://stockanalysis.com/stocks/qsr/financials/"
+                }
+              },
+              {
+                "name": "Starbucks",
+                "grossMarginPct": "22.34%",
+                "source": {
+                  "name": "stockanalysis.com SBUX financials（TTM）",
+                  "url": "https://stockanalysis.com/stocks/sbux/financials/"
+                }
+              },
+              {
+                "name": "Darden Restaurants",
+                "grossMarginPct": "21.66%",
+                "source": {
+                  "name": "stockanalysis.com DRI financials（TTM）",
+                  "url": "https://stockanalysis.com/stocks/dri/financials/"
+                }
+              }
+            ],
+            "whyHigherOrLower": "① 加盟模式把成本转出去：95% 门店的租金以外的运营成本由加盟商承担，公司毛利只减餐厅占用费与自营成本。② 自持地产是毛利被低估的部分：租金收入计入特许经营收入，对应的地产折旧不在餐厅成本里。③ 差距的绝对值说明问题：57.4% vs 星巴克 22.3%，同一条街上卖咖啡与汉堡，差别不在产品而在谁承担租金与人工。"
+          },
+          "operatingLeverage": {
+            "observation": "① 收入五年 CAGR 3.73%，净利 CAGR 3.21%，两者几乎同步——没有出现经营杠杆放大。② 资本开支 CAGR 13.33%，远快于收入，自由现金流五年 CAGR 仅 0.29%。③ 结论：过去五年是「费用受控、增长靠提价与开店，但再投资回报未放大」的组合。",
+            "evidence": [
+              {
+                "metric": "收入 CAGR（2021→2025）",
+                "value": "3.73%",
+                "asOf": "FY2021–FY2025",
+                "source": {
+                  "name": "financial_rigor.py calc（(26,885/23,223)^(1/4)−1）",
+                  "url": "docs/research/tools/financial_rigor.py"
+                }
+              },
+              {
+                "metric": "资本开支 CAGR（2021→2025）",
+                "value": "13.33%（2.040B→3.365B）",
+                "asOf": "FY2021–FY2025",
+                "source": {
+                  "name": "SEC XBRL companyfacts PaymentsToAcquirePropertyPlantAndEquipment",
+                  "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json"
+                }
+              },
+              {
+                "metric": "自由现金流 CAGR（2021→2025）",
+                "value": "0.29%（7.102B→7.186B）",
+                "asOf": "FY2021–FY2025",
+                "source": {
+                  "name": "financial_rigor.py calc（(7,186/7,102)^(1/4)−1）",
+                  "url": "docs/research/tools/financial_rigor.py"
+                }
+              },
+              {
+                "metric": "税后 ROIC（公司口径）",
+                "value": "25.2%（2023）→21.8%（2024）→20.3%（2025）",
+                "asOf": "2023-12-31 至 2025-12-31",
+                "source": {
+                  "name": "SEC 10-K FY2025 MD&A",
+                  "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+                }
+              },
+              {
+                "metric": "SG&A 占全系统销售额",
+                "value": "2.18%（FY2025），2026 年指引约 2.2%",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "SEC 10-K FY2025 OUTLOOK",
+                  "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+                }
+              }
+            ]
+          }
+        },
+        "inquiry": {
+          "question": "这门生意好在哪？如果只能用一句话描述，是什么？",
+          "answer": "好在「不承担餐厅风险，却分享餐厅流水」，这是一门把运营资本负担外包、把现金收进来的收费权生意。① 特许经营收入 16.548B 只对应 2.618B 占用费用，分部毛利率 84.18%。② 自营部分承担租金人工，1.422B 利润换 9.690B 收入，毛利率仅 14.67%。③ 结算方式是现金：全系统销售额 139.4B、公司确认 26.885B，缺口是加盟商流水但比例抽成照收。④ 代价是租期与地产：自持约 56% 土地，重资产在表外由加盟商投资承担。"
+        },
+        "dataGaps": [
+          {
+            "path": "businessEssence.analysis.grossMarginVsPeers.companyPct",
+            "reason": "公司财报不设毛利科目，57.41% 是 stockanalysis 标准化口径（收入−特许经营占用费−自营餐厅费用−其他餐厅费用），与同行比较前已注明；同行数据同源于该平台，口径内部一致但非公司披露值",
+            "searched": "FY2025 10-K 合并利润表与全部分部附注；stockanalysis、macrotrends（403）"
+          },
+          {
+            "path": "businessEssence.analysis.stickiness.evidence[0..1]",
+            "reason": "会员数据为公司自报口径（90 天活跃、不公开留存率与复购频次），无第三方独立验证；「会员到访频次为非会员 2.5 倍」为公司在投资者日的表述，未在 10-K 中复现",
+            "searched": "FY2025 10-K、2026Q1/Q2 8-K EX-99.1、2026-09-23 投资者日 EX-99.1"
+          }
+        ]
+      },
+      "moat": {
+        "title": "护城河评估",
+        "conclusion": "规模与地产产权构成的护城河仍然最宽，但定价权的边际正在变窄。",
+        "analysis": {
+          "types": [
+            {
+              "type": "品牌/定价权",
+              "test": "是否能在不损失销量的情况下提价？",
+              "verdict": "待验证",
+              "evidence": [
+                {
+                  "metric": "全球可比销售增速（提价驱动）",
+                  "value": "2025Q4 +5.7% → 2026Q1 +3.8% → 2026Q2 +1.3%",
+                  "asOf": "2025Q4–2026Q2",
+                  "source": {
+                    "name": "SEC 8-K EX-99.1 各期业绩新闻稿",
+                    "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000067/exhibit991-6302026.htm"
+                  }
+                },
+                {
+                  "metric": "美国可比销售与客流方向",
+                  "value": "2026Q2 美国可比销售 +0.8%，公司表述为客单价增长被客流下滑抵消",
+                  "asOf": "2026-06-30",
+                  "source": {
+                    "name": "SEC 8-K EX-99.1 2026Q2 业绩新闻稿",
+                    "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000067/exhibit991-6302026.htm"
+                  }
+                },
+                {
+                  "metric": "十亿美元级单品数",
+                  "value": "17 个",
+                  "asOf": "2026-09-23",
+                  "source": {
+                    "name": "SEC 8-K EX-99.1 投资者日",
+                    "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000076/exhibit991-investorupdate2.htm"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "转换成本",
+              "test": "客户迁移到竞品的成本有多高？",
+              "verdict": "不存在（消费端）/ 存在（加盟端）",
+              "evidence": [
+                {
+                  "metric": "消费端转换成本",
+                  "value": "近零：一顿饭的选择，无合约、无数据锁定",
+                  "asOf": "2026-10-09",
+                  "source": {
+                    "name": "商业模式属性判断，依据 10-K 收入结构（无订阅/无合约收入）",
+                    "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+                  }
+                },
+                {
+                  "metric": "加盟端转换成本",
+                  "value": "20 年加盟协议 + 公司自持约 56% 土地、80% 建筑，加盟商退出即失去门店资产",
+                  "asOf": "2025-12-31",
+                  "source": {
+                    "name": "SEC 10-K FY2025 BUSINESS SUMMARY 与地产披露",
+                    "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "网络效应",
+              "test": "用户越多产品越好吗？",
+              "verdict": "不存在",
+              "evidence": [
+                {
+                  "metric": "顾客间互相增强的机制",
+                  "value": "无。门店密度提升外送效率与品牌可见度，属规模效应子类而非网络效应",
+                  "asOf": "2026-10-09",
+                  "source": {
+                    "name": "依据 10-K 业务描述（无平台型双边市场结构）",
+                    "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "规模效应",
+              "test": "规模带来的成本优势有多大？",
+              "verdict": "存在",
+              "evidence": [
+                {
+                  "metric": "系统规模",
+                  "value": "45,356 家门店 / 100+ 国家 / 全系统销售额 139.4B",
+                  "asOf": "2025-12-31",
+                  "source": {
+                    "name": "SEC 10-K FY2025",
+                    "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+                  }
+                },
+                {
+                  "metric": "SG&A 摊薄程度",
+                  "value": "占全系统销售额 2.18%，2026 年目标约 2.2%",
+                  "asOf": "FY2025",
+                  "source": {
+                    "name": "SEC 10-K FY2025 OUTLOOK",
+                    "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+                  }
+                },
+                {
+                  "metric": "营业利润率对比",
+                  "value": "MCD 45.72% vs QSR 26.97% / YUM 32.47% / CMG 15.27% / SBUX 10.37%（TTM）",
+                  "asOf": "2026Q2 TTM",
+                  "source": {
+                    "name": "stockanalysis.com 各公司 statistics",
+                    "url": "https://stockanalysis.com/stocks/mcd/statistics/"
+                  }
+                },
+                {
+                  "metric": "单店系统销售额",
+                  "value": "约 307 万美元/店（139.4B ÷ 45,356）",
+                  "asOf": "FY2025",
+                  "source": {
+                    "name": "financial_rigor.py calc（139400/45356×1000）",
+                    "url": "docs/research/tools/financial_rigor.py"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "技术/专利壁垒",
+              "test": "技术领先几年？能否被复制？",
+              "verdict": "待验证",
+              "evidence": [
+                {
+                  "metric": "数字基础设施规模",
+                  "value": "跨 46,000+ 门店的通用技术平台与单一企业数据底座；约 2.2 亿 90 天活跃会员",
+                  "asOf": "2026-09-23",
+                  "source": {
+                    "name": "SEC 8-K EX-99.1 投资者日",
+                    "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000076/exhibit991-investorupdate2.htm"
+                  }
+                },
+                {
+                  "metric": "AI 运营系统目标收益",
+                  "value": "ArchIQ 目标约 250bps 餐厅层面效率，约合美国单店年均 10 万美元现金流",
+                  "asOf": "2026-09-23",
+                  "source": {
+                    "name": "SEC 8-K EX-99.1 投资者日",
+                    "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000076/exhibit991-investorupdate2.htm"
+                  }
+                },
+                {
+                  "metric": "可复制性",
+                  "value": "无专利保护：产品配方与技术资产可被同业复制，优势在执行规模而非知识产权",
+                  "asOf": "2026-10-09",
+                  "source": {
+                    "name": "依据 10-K 无 R&D 科目、无专利收入披露（研发费用字段 unavailable）",
+                    "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+                  }
+                }
+              ]
+            }
+          ],
+          "trendPast5y": {
+            "direction": "变宽",
+            "basis": "① 门店从 41,822（2023）增至 45,356（2025），规模优势继续扩大。② 营业利润率 45.19%（2024）→46.10%（2025）。③ 会员从零做到 70 个市场、约 2.2 亿活跃用户。④ 但 ROIC 从 25.2% 降到 20.3%，说明同一护城河上新增资本的回报在下降。"
+          },
+          "trendNext5y": {
+            "direction": "稳定",
+            "basis": "① 变宽的来源：密度与数字化（会员、ArchIQ、外送覆盖约 41,000 家门店）。② 变窄的来源：美国可比销售从 +6.8% 降到 +0.8%、客流为负，提价空间在低端客群见顶；资本开支五年翻倍而 FCF 零增长。③ 净判断为稳定，前提是 NEXT 的 250bps 餐厅效率能真实落地并能转成流量。"
+          }
+        },
+        "inquiry": {
+          "question": "10年后这条护城河还在吗？什么能摧毁它？",
+          "answer": "10 年后仍然在，因为最硬的那一段是地产产权与 20 年加盟合约，两者都不随消费趋势变化；但「能提价」这一段是脆的。① 地产是护城河的物理层：自持约 56% 土地、80% 建筑，使公司即使品牌老化也能靠租金收钱。② 摧毁路径第一条是加盟商经济性：NEXT 承诺 2036 年前约 85 亿美元支持，本身就是加盟商再投资能力不足的信号。③ 第二条是客流长期流失：若可比销售连续两年靠提价维持而客流为负，品牌抽成的分母会缓慢萎缩。④ 第三条是监管对定价算法的干预（AI 定价集体诉讼），直接打击最有效的提价工具。"
+        },
+        "dataGaps": [
+          {
+            "path": "moat.analysis.types[2].evidence",
+            "reason": "网络效应不存在为商业模式属性判断，非量化证据（无第三方数据可引用），来源栏引用的是 10-K 业务描述作为否定依据",
+            "searched": "FY2025 10-K 业务描述与分部附注"
+          },
+          {
+            "path": "moat.analysis.types[4].evidence[2]",
+            "reason": "「无专利保护」依据的是公司不披露研发费用与专利收入（采集文件 technology.rdExpense 为 unavailable），属间接推断而非直接披露；若要确证需查专利数据库，超出采集清单范围",
+            "searched": "FY2025 10-K 全文检索（无 R&D 科目、无专利相关披露）"
+          }
+        ]
+      },
+      "inversion": {
+        "title": "逆向思考与风险清单",
+        "conclusion": "最大的失败路径不是「没人吃麦当劳」，而是提价到顶而加盟商不再投钱。",
+        "analysis": {
+          "failurePaths": [
+            {
+              "path": "客流持续流失、增长全靠提价，直至价格弹性耗尽",
+              "probability": "中",
+              "impact": "高",
+              "evidence": [
+                {
+                  "metric": "美国可比销售轨迹",
+                  "value": "2025Q4 +6.8% → 2026Q1 +3.9% → 2026Q2 +0.8%，且 2026Q2 客流为负",
+                  "asOf": "2025Q4–2026Q2",
+                  "source": {
+                    "name": "SEC 8-K EX-99.1 各期业绩新闻稿",
+                    "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000067/exhibit991-6302026.htm"
+                  }
+                },
+                {
+                  "metric": "CFO 对三季度的指引",
+                  "value": "美国可比销售全季「略为负」（2026Q3）",
+                  "asOf": "2026-09 媒体转述",
+                  "source": {
+                    "name": "Stocktwits 对 CFO 发言的报道（媒体转述，非公司公告原文）",
+                    "url": "https://stocktwits.com/news-articles/markets/equity/mcd-stock-worst-month-pandemic-cfo-warns-september-us-sales-rebound-may-not-save-q3/cZM7oLdRBBN"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "加盟商现金回报低于门槛，开店与门店现代化同步失速",
+              "probability": "中",
+              "impact": "高",
+              "evidence": [
+                {
+                  "metric": "NEXT 加盟商支持承诺",
+                  "value": "2036 年前约 85 亿美元（2030 年前约 50 亿），含租金减免与资本支持；约四年回本期、约 10 万美元/店年均现金流收益",
+                  "asOf": "2026-09-23",
+                  "source": {
+                    "name": "SEC 8-K EX-99.1 投资者日",
+                    "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000076/exhibit991-investorupdate2.htm"
+                  }
+                },
+                {
+                  "metric": "扩张目标",
+                  "value": "2026 年开约 2,600 家、净增约 2,100 家，2027 年底目标 50,000 家门店",
+                  "asOf": "FY2025 10-K OUTLOOK",
+                  "source": {
+                    "name": "SEC 10-K FY2025 OUTLOOK",
+                    "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "再投资回报率持续下滑，资本开支吞噬自由现金流",
+              "probability": "高",
+              "impact": "中",
+              "evidence": [
+                {
+                  "metric": "资本开支与 FCF",
+                  "value": "资本开支 2.040B（2021）→3.365B（2025），同期 FCF 7.102B→7.186B（CAGR 0.29%）",
+                  "asOf": "FY2021–FY2025",
+                  "source": {
+                    "name": "SEC XBRL companyfacts + financial_rigor.py calc",
+                    "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json"
+                  }
+                },
+                {
+                  "metric": "税后 ROIC",
+                  "value": "25.2%（2023）→21.8%（2024）→20.3%（2025）",
+                  "asOf": "2023–2025",
+                  "source": {
+                    "name": "SEC 10-K FY2025 MD&A",
+                    "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+                  }
+                },
+                {
+                  "metric": "未来资本强度",
+                  "value": "2027–2030 年每年约 30 亿美元基线资本开支 + 累计 15~20 亿美元资本合作支持",
+                  "asOf": "2026-09-23",
+                  "source": {
+                    "name": "SEC 8-K EX-99.1 投资者日",
+                    "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000076/exhibit991-investorupdate2.htm"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "AI 定价的集体诉讼改变定价与数据合规边界",
+              "probability": "低",
+              "impact": "中",
+              "evidence": [
+                {
+                  "metric": "诉讼状态",
+                  "value": "全国性集体诉讼，指控 AI 定价系统在自营与加盟店之间共享非公开数据协调菜单价格；尚未获集体认证，公司 2026Q2 10-Q 未计提",
+                  "asOf": "2026-10-02 至 10-07 报道",
+                  "source": {
+                    "name": "媒体报道汇总（Reuters / AP / LA Times / The Guardian；公司披露尚未覆盖）",
+                    "url": "https://apnews.com/article/mcdonalds-ai-pricing-lawsuit-competition-franchisees-bb78e854b11b54b394603effa7550bbe"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "资产负债表无缓冲垫，利率与再融资成本上升直接压缩股东回报",
+              "probability": "中",
+              "impact": "中",
+              "evidence": [
+                {
+                  "metric": "资本结构",
+                  "value": "股东权益 −1.023B（2026-06-30）；现金 822M；有息负债 40.698B；含租赁广义负债 54.6B",
+                  "asOf": "2026-06-30",
+                  "source": {
+                    "name": "SEC 10-Q 2026Q2 资产负债表",
+                    "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000073/mcd-20260630.htm"
+                  }
+                },
+                {
+                  "metric": "利息费用指引",
+                  "value": "2026 年同比上升 4%~6%（2025 年已达 1.582B）",
+                  "asOf": "FY2025 10-K OUTLOOK",
+                  "source": {
+                    "name": "SEC 10-K FY2025 OUTLOOK",
+                    "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+                  }
+                },
+                {
+                  "metric": "利息保障倍数",
+                  "value": "7.79x（stockanalysis TTM 口径）",
+                  "asOf": "2026Q2 TTM",
+                  "source": {
+                    "name": "stockanalysis.com MCD statistics",
+                    "url": "https://stockanalysis.com/stocks/mcd/statistics/"
+                  }
+                }
+              ]
+            },
+            {
+              "path": "食品安全或品牌系统性事件同时击穿 4.5 万家门店",
+              "probability": "低",
+              "impact": "高",
+              "evidence": [
+                {
+                  "metric": "公司自认风险",
+                  "value": "10-K 将 Food safety concerns 与品牌价值/相关性单列为独立风险因子",
+                  "asOf": "FY2025",
+                  "source": {
+                    "name": "SEC 10-K FY2025 RISK FACTORS",
+                    "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+                  }
+                }
+              ]
+            }
+          ],
+          "historicalAnalogies": [
+            {
+              "company": "可口可乐（1980s–2010s 的成熟期路径）",
+              "similarity": "同为全球品牌+特许/装瓶外包模式，增长从量转到价，靠提价与新兴市场维持中个位数增长",
+              "outcome": "长期稳住了现金流与分红，但估值中枢从 30x 以上的成长股水平下移到 20x 上下——「从成长股变成债券替代品」的估值重估是这条路径的真实代价",
+              "source": {
+                "name": "模式类比，基于两家公司披露的商业模式结构与麦当劳当前 19.07x PE 位置",
+                "url": "https://stockanalysis.com/stocks/mcd/statistics/"
+              }
+            },
+            {
+              "company": "星巴克（2018–2024）",
+              "similarity": "同为全球连锁餐饮，同样出现「提价保增长、客流走弱、门店体验下降」，随后换帅并推动复兴计划",
+              "outcome": "客流与同店修复缓慢，估值先杀后修；2026 年 PE 仍高达 53.5x，说明市场对「修复叙事」给的估值远高于对「成熟收租」给的估值",
+              "source": {
+                "name": "stockanalysis.com SBUX statistics（TTM PE 53.54）",
+                "url": "https://stockanalysis.com/stocks/sbux/statistics/"
+              }
+            },
+            {
+              "company": "西尔斯（Sears，1990s–2010s）",
+              "similarity": "反面对照：同样以地产+品牌为核心资产，但在客流流失时用回购与资产变现维持报表，最终耗尽资产",
+              "outcome": "破产。差异在麦当劳的现金流来自加盟商合约（经常性、20 年期），西尔斯来自门店零售（可流失），且麦当劳的资本开支仍在投向门店而非变现地产",
+              "source": {
+                "name": "对照判断，基于麦当劳 FY2025 FCF 7.186B 覆盖分红+回购 99% 而非资产处置（10-K 现金流表）",
+                "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+              }
+            }
+          ],
+          "crossDisciplinaryChecks": [
+            {
+              "model": "竞争博弈",
+              "finding": "快餐是「价格可观察、产品可复制」的市场，均衡倾向价格战。麦当劳用地产租金（不随竞品价格波动）作为利润底盘，等于把一部分利润从价格博弈里摘出来——这是它比同业更能扛价格战的结构原因，也是 2026Q2 美国只 +0.8% 却仍有 46% 营业利润率的原因。"
+            },
+            {
+              "model": "技术采纳曲线",
+              "finding": "数字点单与会员处于「早期多数」向「晚期多数」过渡阶段：70 个市场、2.2 亿活跃会员已过临界点，但公司自身设定的 2027 年目标 2.5 亿会员意味着增量将主要来自低活跃度人群，边际价值递减。"
+            },
+            {
+              "model": "复利与再投资回报（ROIC-WACC 差）",
+              "finding": "公司口径税后 ROIC 20.3%（2025）仍显著高于 stockanalysis 估算的 WACC 5.63%，即每 1 美元再投资仍在创造价值；但 ROIC 从 25.2% 降到 20.3% 的斜率说明「差值」在收窄，再投资的边际回报已进入下降通道。"
+            },
+            {
+              "model": "期权定价视角（不对称性）",
+              "finding": "NEXT 的资本承诺（年 30 亿资本开支 + 200 亿级加盟商支持）是到期日 2030 年的看涨期权：上行是利润率进入50%+区间，下行是 FCF 被持续占用而销售未改善。市场已用 −20% 的股价与 −5% 的投资者日单日跌幅为这个期权定价。"
+            }
+          ],
+          "biasSelfCheck": [
+            {
+              "bias": "叙事偏差",
+              "check": "「股息王+全球品牌」的熟悉感容易让人把稳定当成安全。反制证据：2026Q2 美国可比销售仅 +0.8%、客流为负，增速的下滑是当期的而非叙事的。"
+            },
+            {
+              "bias": "锚定效应",
+              "check": "52 周高点 341.75 美元是强锚点。反制做法：估值判断只用三情景工具的绝对值（中性 293.2 美元），不用「距高点还差多少」做参照。"
+            },
+            {
+              "bias": "幸存者偏差",
+              "check": "拿麦当劳对比星巴克、Chipotle 的「成功翻盘」会高估修复概率。反制做法：失败路径里保留了「加盟商失速」这条 4.5 万门店同时受影响的路径，并把它列为高影响项。"
+            },
+            {
+              "bias": "近因偏差",
+              "check": "2026 年 9 月投资者日后的股价下跌是最近最强信号，容易把一次事件当成趋势。反制做法：把「资本开支五年翻倍而 FCF 零增长」这条五年期数据作为独立证据，它早于本次事件存在。"
+            }
+          ],
+          "bearCase": [
+            {
+              "point": "增长全靠涨价、客流在流失，价格弹性已经在低端客群见顶",
+              "holder": "卖方分析师（Bernstein 评价「利润率目标有说服力但销售改善路径未被证实」）与财经媒体（Forbes、Business Insider）",
+              "evidence": [
+                {
+                  "metric": "2026Q2 美国可比销售",
+                  "value": "+0.8%（2025Q2 为 +2.5%），客流为负",
+                  "asOf": "2026-06-30",
+                  "source": {
+                    "name": "SEC 8-K EX-99.1 2026Q2 业绩新闻稿",
+                    "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000067/exhibit991-6302026.htm"
+                  }
+                }
+              ]
+            },
+            {
+              "point": "NEXT 是重资本赌注，市场拒绝为未证实的销售改善预先付钱",
+              "holder": "投资者日当天的市场定价与多家券商",
+              "evidence": [
+                {
+                  "metric": "投资者日股价反应",
+                  "value": "当日下跌约 5%，盘中最低 234.03 美元（2022 年以来最低）；Morgan Stanley 目标价降至 297、Melius 降至 230、Bernstein 降至 250",
+                  "asOf": "2026-09-23",
+                  "source": {
+                    "name": "Business Insider 与 Stocktwits 对投资者日及券商动作的报道",
+                    "url": "https://www.businessinsider.com/mcdonalds-next-restaurant-makeover-investors-skeptical-stock-four-year-low-2026-9"
+                  }
+                }
+              ]
+            },
+            {
+              "point": "五年跑输同业，相对优势可能在变化",
+              "holder": "财经媒体",
+              "evidence": [
+                {
+                  "metric": "五年股价表现",
+                  "value": "MCD −3% vs Restaurant Brands +14%、Yum Brands +13%",
+                  "asOf": "2026-09",
+                  "source": {
+                    "name": "Business Insider（引述区间表现）",
+                    "url": "https://www.businessinsider.com/mcdonalds-next-restaurant-makeover-investors-skeptical-stock-four-year-low-2026-9"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "inquiry": {
+          "question": "我最可能在哪里犯错？聪明人为什么会不买/做空这家公司？",
+          "answer": "最可能犯错在「把稳定的现金流结构误当成稳定的增长」，而市场不买的原因恰恰是增长在减速。① 五年事实：资本开支 CAGR 13.33%、FCF CAGR 0.29%、ROIC 从 25.2% 降到 20.3%——再投资的边际回报在下降。② 当期事实：美国可比销售从 +6.8% 掉到 +0.8% 且客流为负，CFO 指引三季度略为负。③ 做空理由不需要公司变差，只需要「它变成 20x 的低速税收型资产」，那就意味着估值中枢继续下移。④ 反向风险也不能忽视：若 NEXT 的 250bps 效率真实落地，20x PE 的定价会立刻显得便宜。"
+        },
+        "dataGaps": [
+          {
+            "path": "inversion.analysis.failurePaths[0].evidence[1]",
+            "reason": "CFO 关于 2026Q3 美国可比销售「略为负」的指引来自媒体转述，未见公司在 8-K 或 10-Q 中原文披露；已在来源栏标注为媒体转述",
+            "searched": "SEC 8-K 2026-09-23 投资者日 EX-99.1（无该指引）、2026Q2 8-K 与 10-Q"
+          },
+          {
+            "path": "inversion.analysis.historicalAnalogies",
+            "reason": "三条历史类比为结构性对照，无独立的可比研究来源；结局描述参考各公司公开历史与当前估值（SBUX PE 见 stockanalysis），已注明依据",
+            "searched": "本次分析受第 2 步禁网约束，仅使用采集文件与 stockanalysis 估值页"
+          },
+          {
+            "path": "inversion.analysis.failurePaths[0].evidence[0]",
+            "reason": "「客流为负」为公司对可比销售构成的定性表述，公司未披露具体客流变动百分比",
+            "searched": "FY2025 10-K、2025Q3–2026Q2 四份 8-K EX-99.1 与 EX-99.2"
+          }
+        ]
+      },
+      "management": {
+        "title": "管理层评估",
+        "conclusion": "资本配置纪律清晰且股东回报慷慨，但组织连续三年「非经常性」重组是隐患。",
+        "analysis": {
+          "keyDecisions": [
+            {
+              "date": "2019–2025",
+              "decision": "全面推进 Accelerating the Arches（核心菜单、营销最大化、4D：数字/外送/得来速/开店）",
+              "outcome": "全系统销售额升至 139.4B、营业利润率 2025 年 46.1%、会员从零到 2.2 亿；但可比销售在 2026 年明显减速",
+              "rating": "★★★★",
+              "source": {
+                "name": "SEC 10-K FY2025 与 2026Q2 8-K EX-99.1",
+                "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+              }
+            },
+            {
+              "date": "2023–2027",
+              "decision": "Accelerating the Organization：精简组织 + 建 Global Business Services 共享服务中心",
+              "outcome": "三年累计计提 697M 重组费用（2025 年 226M、预计 2026 年再约 250M）；SG&A 降至全系统销售额 2.18%",
+              "rating": "★★★",
+              "source": {
+                "name": "SEC 10-K FY2025 重组费用附注与 OUTLOOK",
+                "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+              }
+            },
+            {
+              "date": "2024",
+              "decision": "出售韩国业务、收购以色列业务；董事长与 CEO 合并，另设首席独立董事",
+              "outcome": "当年计提约 70M 交易相关费用（$0.08/股）；治理结构在 2025 年股东大会后经复核维持",
+              "rating": "★★★",
+              "source": {
+                "name": "SEC 10-K FY2025 与 2026 DEF 14A",
+                "url": "https://www.sec.gov/Archives/edgar/data/63908/000119312526145548/mcd-20260407.htm"
+              }
+            },
+            {
+              "date": "2026-08-04",
+              "decision": "在美国可比销售仅 +0.8% 的同一份公告中更换麦当劳美国总裁（Skye Anderson 接替 Joe Erlinger）",
+              "outcome": "待观察，尚无可评估结果",
+              "rating": "★★★",
+              "source": {
+                "name": "SEC 8-K EX-99.1 2026Q2 业绩新闻稿",
+                "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000067/exhibit991-6302026.htm"
+              }
+            },
+            {
+              "date": "2026-09-23",
+              "decision": "投资者日发布 McDonald's > NEXT：2030 年营业利润率 low-to-mid 50%、G&A 降至约 1.9%、约 250bps 餐厅效率、FCF 转化率 mid-to-high 80%；承诺 2036 年前约 85 亿美元加盟商支持",
+              "outcome": "当日股价跌约 5%，盘中触及 2022 年以来最低；多家券商下调目标价但多数维持看多",
+              "rating": "★★★",
+              "source": {
+                "name": "SEC 8-K EX-99.1 投资者日与市场反应报道",
+                "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000076/exhibit991-investorupdate2.htm"
+              }
+            }
+          ],
+          "capitalAllocation": {
+            "rdReturn": {
+              "status": "unavailable",
+              "reason": "公司不披露研发费用（利润表无 R&D 科目，10-K 无 R&D 段落），无法计算研发回报率；技术投入并入 SG&A（FY2025 共 3.039B）。替代观察：ArchIQ 目标约 250bps 餐厅效率（约 10 万美元/店年均现金流），但尚无落地数据"
+            },
+            "maTrackRecord": "① 2024 年收购以色列业务、出售韩国业务，当年净费用约 70M（$0.08/股）。② 权益法持仓：中国 Grand Foods Holding 48%（账面 2.048B）、日本 McDonald's Japan 35%（账面 0.657B、公允价值 1.915B），2025 年确认权益法收益 146M。③ 结论：交易以「市场所有权结构微调」为主，规模小、无大额减值记录，不构成价值创造或毁灭的主要来源。",
+            "buybackTiming": "① FY2025 回购 2.056B（前一年 2.824B），对应约 670 万股。② 五年 PE 区间 19.07–31.25x，2021–2025 各年末 PE 均在 25x 以上，2025 年末 25.42x——历史上回购发生在偏高估值区间，不是便宜时的加速回购。③ 但回购规模只占 FCF 28.6%，大部分现金用于分红（占 FCF 71.2%），因此「在贵时大举回购」的风险敞口有限。",
+            "evidence": [
+              {
+                "metric": "分红与回购占 FCF 比例",
+                "value": "分红 5.115B（71.18%）+ 回购 2.056B（28.61%）≈ 99%",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "SEC 10-K FY2025 与 stockanalysis 现金流表；financial_rigor.py calc",
+                  "url": "https://stockanalysis.com/stocks/mcd/financials/cash-flow-statement/"
+                }
+              },
+              {
+                "metric": "五年年末 PE",
+                "value": "26.55 / 31.25 / 25.40 / 25.26 / 25.42（FY2021–FY2025）",
+                "asOf": "各财年末",
+                "source": {
+                  "name": "stockanalysis.com MCD ratios",
+                  "url": "https://stockanalysis.com/stocks/mcd/financials/ratios/"
+                }
+              },
+              {
+                "metric": "股本变化",
+                "value": "707.64M 股（2026-06-30），近一年 −0.73%，近一季 −0.34%",
+                "asOf": "2026-06-30",
+                "source": {
+                  "name": "stockanalysis.com MCD statistics",
+                  "url": "https://stockanalysis.com/stocks/mcd/statistics/"
+                }
+              }
+            ]
+          },
+          "alignment": {
+            "ownership": "① CEO Kempczinski 持 869,034 股（含可行权期权），占总股本 0.123%。② 全体董事与高管 23 人合计 1,838,732 股，占 0.26%（委托书原文「less than 1%」）。③ 单一类别普通股，经济权益=投票权，无 AB 股；机构持股 75.68%（Vanguard 10.03%、BlackRock 7.30%、State Street 5.10%）。",
+            "compensation": "① CEO 2025 年总薪酬 20,574,525 美元，「实际支付」口径 17,916,531 美元（2023 年该口径曾达 36.85M，随股价回落收缩）。② 长期激励以 PRSU 为主，考核三年平均 EPS 增速（75% 权重）+ 三年 ROIC 不低于 16%（25% 权重），另设相对 TSR 修正 ±25pp，上限 200%、绝对 TSR 为负时封顶 100%。③ CEO 须持股 6 倍年薪、其他 NEO 4 倍，委托书披露全体合规。",
+            "insiderSelling": "未逐笔核验 Form 4（见 dataGaps）。可观察替代证据：委托书 Section 16(a) 披露 2025 年仅 3 起迟报（Baroni 迟报 Form 3、Elting 与 Rice 的行政性迟报），无违规交易记录；另设有反质押与反对冲政策。",
+            "evidence": [
+              {
+                "metric": "CEO 持股",
+                "value": "869,034 股（占总股本 0.123%）",
+                "asOf": "2026-03-01",
+                "source": {
+                  "name": "2026 DEF 14A Security Ownership of Management",
+                  "url": "https://www.sec.gov/Archives/edgar/data/63908/000119312526145548/mcd-20260407.htm"
+                }
+              },
+              {
+                "metric": "PRSU 考核条件",
+                "value": "三年平均年化 EPS 增速（75%）+ 三年 ROIC ≥16%（25%），相对 TSR 修正 ±25pp",
+                "asOf": "2025 年授予",
+                "source": {
+                  "name": "2026 DEF 14A 高管薪酬节",
+                  "url": "https://www.sec.gov/Archives/edgar/data/63908/000119312526145548/mcd-20260407.htm"
+                }
+              },
+              {
+                "metric": "股权激励与股价联动",
+                "value": "CEO「实际支付」薪酬 2023 年 36.85M → 2025 年 17.92M",
+                "asOf": "FY2021–FY2025",
+                "source": {
+                  "name": "2026 DEF 14A Pay Versus Performance 表",
+                  "url": "https://www.sec.gov/Archives/edgar/data/63908/000119312526145548/mcd-20260407.htm"
+                }
+              }
+            ]
+          },
+          "organization": {
+            "teamStability": "① CEO 自 2019 年任职、董事长自 2024 年，任职期内无意外离职。② 但 2026 年 8 月更换美国总裁（Joe Erlinger → Skye Anderson），发生在最大市场业绩走弱的同一份公告中。③ 「Accelerating the Organization」自 2023 年起连续三年计提重组费用，意味着组织层面持续有岗位调整。",
+            "keyPersonRisk": "① 中等偏低：无创始人依赖，品牌与加盟合约不绑定个人；CEO 兼任董事长使个人影响力大于典型美国上市公司。② 真正的关键人不是 CEO 而是「加盟商群体」——4.5 万家门店的投资决策由数千个独立业主做出，公司无法像直营体系那样下达资本指令。"
+          },
+          "culture": "① 以加盟商为中心的系统文化：10-K 原文强调「the business relationship between the Company and its independent franchisees ... is of fundamental importance to overall performance and to protecting the McDonald's brand」。② 长期主义的股东回报取向：51 年连续增息，资本配置优先级明示为「先投资增长、再保分红、余下回购」。③ 成本纪律驱动的组织文化：连续推进 Accelerating the Organization 与 Global Business Services，三年重组费用 697M。④ 品牌与标准导向：Global Brand Standards、Food Safety Advisory Council、数字化食安监测平台。⑤ 局限：上述全部来自公司自身披露（Level 3 单源），无法用外部证据交叉验证文化真实性。",
+          "cultureEvidence": [
+            {
+              "metric": "加盟商关系的地位",
+              "value": "10-K 明确表述加盟关系对整体业绩与品牌保护「of fundamental importance」",
+              "asOf": "FY2025",
+              "source": {
+                "name": "SEC 10-K FY2025 BUSINESS SUMMARY",
+                "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+              }
+            },
+            {
+              "metric": "股东回报记录",
+              "value": "连续 51 年增长股息；FY2025 分红+回购约 71 亿美元，占 FCF 99%",
+              "asOf": "FY2025",
+              "source": {
+                "name": "stockanalysis.com MCD dividend（Growth Years 51）与 10-K",
+                "url": "https://stockanalysis.com/stocks/mcd/dividend/"
+              }
+            },
+            {
+              "metric": "资本配置优先级",
+              "value": "10-K 明示顺序：①投资增长（资本开支+技术+GBS）②优先分红 ③剩余 FCF 回购",
+              "asOf": "FY2025",
+              "source": {
+                "name": "SEC 10-K FY2025 Our Strategy 节",
+                "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+              }
+            }
+          ]
+        },
+        "inquiry": {
+          "question": "如果CEO退休，这家公司还能保持竞争力吗？",
+          "answer": "能，但会失去过去七年那种「战略连续推进」的节奏。① 护城河不绑定个人：地产产权、20 年加盟合约、45,356 家门店与 17 个十亿美元单品都不会随 CEO 变动。② 制度化的战略语言（Accelerating the Arches → NEXT）与三年 EPS/ROIC 挂钩的 PRSU 已把管理层激励固定在同一套指标上。③ 风险在换帅的执行真空期：2026 年 8 月刚换美国总裁，若同时换 CEO，最大市场的修复会被推迟。④ 真正不可替代的不是 CEO，而是数千个加盟商的再投资意愿。"
+        },
+        "dataGaps": [
+          {
+            "path": "management.analysis.alignment.insiderSelling",
+            "reason": "未逐笔核验 2025–2026 年 Form 4 减持记录，仅核验了 Section 16(a) 合规披露；10b5-1 计划下的常规减持无法从委托书判断规模",
+            "searched": "2026 DEF 14A 全文（Section 16(a) 段落）、FY2025 10-K"
+          },
+          {
+            "path": "management.analysis.capitalAllocation.rdReturn",
+            "reason": "公司不披露研发费用，研发回报率无法计算（采集文件 technology.rdExpense 为 unavailable）",
+            "searched": "FY2025 10-K 利润表与全文检索（无 R&D 科目）"
+          },
+          {
+            "path": "management.analysis.organization.teamStability",
+            "reason": "未取到高管离职率的结构化数据（如 NEO 平均任期、关键岗位流动率）；仅能从委托书披露的 NEO 名单与 8-K 人事任免间接观察",
+            "searched": "2026 DEF 14A、2026 年全部 8-K"
+          },
+          {
+            "path": "management.analysis.culture",
+            "reason": "企业文化全部为公司自述（Level 3 单源），无外部独立证据（如员工满意度调查、离职率、加盟商满意度调查）可交叉验证；这一限制会直接压低第 3 步企业文化维度的信心度",
+            "searched": "FY2025 10-K、2026 DEF 14A、2026Q1/Q2 8-K"
+          }
+        ]
+      },
+      "industryTrend": {
+        "title": "行业与长期趋势",
+        "conclusion": "连锁快餐不是范式转移的受益者也不是受害者，它是被数字渠道重塑的成熟现金牛。",
+        "analysis": {
+          "paradigmShift": {
+            "verdict": "部分",
+            "reasoning": "① 行业本身没有文明级技术跃迁：卖汉堡的技术与 1950 年代无本质差别。② 但分发方式在被数字渠道重塑：数字点单、外送、会员体系与 AI 运营（ArchIQ）改变了订单获取与门店效率，麦当劳 70 个市场的会员体系与约 41,000 家外送门店是这一变化的直接体现。③ 因此判断为「部分」，属于渠道范式转移的受益方，而非技术范式转移的主导者。"
+          },
+          "historicalAnalogy": "最贴切的类比不是蒸汽机或互联网，而是 20 世纪的「全国性消费品分销网络」：宝洁、可口可乐靠规模化的品牌+渠道网络获得长期定价权，其估值中枢随增长成熟而下移。麦当劳的位置是这条路径的餐饮版本——它的核心竞争力在「全球地产+加盟合约构成的实体网络」，AI 与数字化是提高这张网络周转率的工具，而不是新网络本身。",
+          "tam": {
+            "current": {
+              "value": "3.36T",
+              "currency": "USD",
+              "asOf": "2026 年预测（IMARC）",
+              "source": {
+                "name": "IMARC Group 全球餐饮服务市场报告",
+                "url": "https://www.imarcgroup.com/food-service-market"
+              }
+            },
+            "ceiling": "天花板不由市场规模决定，而由「麦当劳能渗透的门店密度」决定：① 全球门店 45,356 家（2025），公司目标 2027 年底 50,000 家，即两年新增约 4,600 家。② 若按公司披露口径的全球餐饮服务市场 3.36 万亿与麦当劳全系统销售额 139.4B 相比，占比约 4.15%（口径不同，仅作量级参照）——行业极度分散，规模不是约束。③ 真正的边界是加盟商资本与单店回报，不是市场需求。",
+            "growthCurve": "成熟期：行业增速区间 3.02%（IMARC）至 11.89%（Mordor Intelligence），中位约 5.6%；麦当劳自身 FY2021–FY2025 收入 CAGR 3.73%，低于行业中位，属于「成熟行业里的成熟龙头」"
+          },
+          "valueChainPosition": "① 位置：麦当劳处在「品牌+地产+供应链标准」的上游中枢，向下是数千个独立加盟商，向上是食品与包装供应商。② 议价权方向对它有利：加盟商是长期锁定、只能接受品牌标准与选址的买方；供应商面对 4.5 万家门店的统一采购量。③ 唯一的反向压力来自消费者一侧——价格弹性已经体现在 2026 年美国的客流为负上。",
+          "techRouteRisk": "① 低：餐饮产品的技术路线替代风险几乎不存在，不存在「押错技术标准」的问题。② 真正的技术风险是「数字化投入未产生预期的流量与效率」，公司在 10-K 中把它列为独立风险因子。③ 新增风险是监管对定价算法的干预（AI 定价集体诉讼），属于商业模式边界风险而非技术路线风险。",
+          "concentration": {
+            "customers": "无客户集中度风险：收入来自数千个加盟商与数亿消费者，单一客户占比极小（公司未披露客户集中度，FY2025 10-K 无客户集中度披露段落）",
+            "suppliers": "高度分散但非零风险：公司依赖全球供应链，10-K 将 Supply chain interruptions 与 Changes in commodity and other operating costs 列为独立风险因子；公司同时以食品与包装的标准制定者身份掌握供应链主导权",
+            "evidence": [
+              {
+                "metric": "客户集中度披露",
+                "value": "未披露（无单一客户或加盟商达到披露阈值），反向印证客户极度分散",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "SEC 10-K FY2025（无客户集中度段落）",
+                  "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+                }
+              },
+              {
+                "metric": "供应链风险因子",
+                "value": "10-K RISK FACTORS 含 Supply chain interruptions 与 commodity costs 两条独立条目",
+                "asOf": "FY2025",
+                "source": {
+                  "name": "SEC 10-K FY2025 RISK FACTORS",
+                  "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+                }
+              }
+            ]
+          }
+        },
+        "inquiry": {
+          "question": "站在20年后回看，这家公司是「这个时代的标准石油」还是「昙花一现的3Com」？",
+          "answer": "更接近标准石油那一侧，但会是「估值已充分定价的标准石油」，而不是「还有垄断红利的早期标准石油」。① 结构相似性：同样掌握不可复制的物理网络（4.5 万门店+自持约 56% 土地），同样是收费权生意。② 差异在增长：标准石油面对的是渗透率从零到高的增量市场，麦当劳面对的是渗透率已高、增长靠提价与开店的市场，FY2021–2025 收入 CAGR 仅 3.73%。③ 3Com 式的失败需要同时出现「产品被替代+网络无价值」，而餐饮的地产与合约不会因为某个产品消失而失效——这正是它不会归零的原因。④ 结论：20 年后大概率仍是行业龙头，但年化回报更可能来自分红+回购+低速增长（中性情景 3 年 +24.9%），而非估值重估。"
+        },
+        "dataGaps": [
+          {
+            "path": "industryTrend.analysis.tam.current",
+            "reason": "行业报告的 TAM 与增速口径分歧极大（同一次检索中 2025 年规模从 3.19 万亿到 4.34 万亿、CAGR 从 3.02% 到 11.89%），本文件采用 IMARC（最保守且口径描述最完整）。这是一个「任选一个都能写、无法交叉验证」的字段，数值本身不应作为精确判断依据",
+            "searched": "IMARC、Research and Markets、Mordor Intelligence、Ken Research、Technavio（同一轮检索中相互矛盾）"
+          },
+          {
+            "path": "industryTrend.analysis.concentration.customers",
+            "reason": "公司不披露客户集中度，因此「无集中度风险」是从「无披露」反推的结论，属推断而非直接证据",
+            "searched": "FY2025 10-K 全文（无客户集中度段落）"
+          },
+          {
+            "path": "industryTrend.analysis.tam.ceiling",
+            "reason": "以全球餐饮服务 TAM 与麦当劳全系统销售额相除得到的 4.15% 存在分母口径不一致（TAM 含非商业餐饮、麦当劳只做 IEO），仅作量级参考，不能当市场份额",
+            "searched": "采集文件 competitiveLandscape.marketShareGlobalIeo（已标记 unavailable）"
+          }
+        ]
+      },
+      "valuation": {
+        "title": "估值分析",
+        "conclusion": "20x 以下买 46% 营业利润率的现金牛，价格已从「贵」回到「合理偏便宜」。",
+        "analysis": {
+          "currentMultiples": {
+            "marketCap": {
+              "value": "166.10B",
+              "currency": "USD",
+              "asOf": "2026-10-09 盘中（234.73 × 707.64M 股，工具验算偏差 0.00%）",
+              "source": {
+                "name": "stockanalysis.com MCD 与 financial_rigor.py verify-market-cap",
+                "url": "https://stockanalysis.com/stocks/mcd/"
+              }
+            },
+            "pe": {
+              "value": "19.07x（TTM，EPS 12.31）",
+              "asOf": "2026-10-09",
+              "source": {
+                "name": "financial_rigor.py verify-valuation（234.73 / 12.31）",
+                "url": "docs/research/tools/financial_rigor.py"
+              }
+            },
+            "ps": {
+              "value": "6.00x（TTM 收入 27.702B）",
+              "asOf": "2026-10-09",
+              "source": {
+                "name": "financial_rigor.py calc（166.10B / 27.702B）",
+                "url": "docs/research/tools/financial_rigor.py"
+              }
+            },
+            "peg": {
+              "value": "2.66x（仅单源）",
+              "asOf": "2026-10-09",
+              "source": {
+                "name": "stockanalysis.com MCD statistics（分母为分析师一致预期增速）",
+                "url": "https://stockanalysis.com/stocks/mcd/statistics/"
+              }
+            },
+            "evToRevenue": {
+              "value": "7.93x（TTM，EV 219.81B）",
+              "asOf": "2026-10-09",
+              "source": {
+                "name": "financial_rigor.py calc（219.81B / 27.702B）",
+                "url": "docs/research/tools/financial_rigor.py"
+              }
+            },
+            "evToEbitda": {
+              "value": "14.83x",
+              "asOf": "2026-10-09",
+              "source": {
+                "name": "stockanalysis.com MCD statistics",
+                "url": "https://stockanalysis.com/stocks/mcd/statistics/"
+              }
+            },
+            "pToFcf": {
+              "value": "21.60x（TTM FCF 7.76B，每股 FCF 10.97）",
+              "asOf": "2026-10-09",
+              "source": {
+                "name": "stockanalysis.com MCD statistics",
+                "url": "https://stockanalysis.com/stocks/mcd/statistics/"
+              }
+            },
+            "fcfYieldPct": {
+              "value": "4.63%",
+              "asOf": "2026-10-09",
+              "source": {
+                "name": "stockanalysis.com MCD statistics",
+                "url": "https://stockanalysis.com/stocks/mcd/statistics/"
+              }
+            },
+            "dividendYieldPct": {
+              "value": "3.29%（年化股息 7.72）",
+              "asOf": "2026-10-09",
+              "source": {
+                "name": "financial_rigor.py verify-valuation（7.72 / 234.73）",
+                "url": "docs/research/tools/financial_rigor.py"
+              }
+            },
+            "pb": {
+              "status": "not-applicable",
+              "reason": "股东权益为负（2026-06-30 为 −1.023B），每股账面价值 −1.45 美元，PB 无经济意义；替代锚点 EV/EBITDA 14.83x"
+            }
+          },
+          "reverseDcf": {
+            "impliedGrowth": "约 3.18%（在 8% 贴现率下）、约 2.22%（在 7% 贴现率下）的永续自由现金流增速",
+            "assumptions": "① 分子：TTM 自由现金流 7.761B（经营现金流 11.347B − 资本开支 3.586B）。② 分母：当前市值 166.10B（等价于把公司视为全权益融资，未单独减净债务——若按企业价值 219.81B 计算，隐含增速会更高，但含租赁负债的 EV 口径与 FCF 口径不匹配，故用市值口径）。③ 永续增长模型：市值 = FCF×(1+g)/(r−g)，分别取 r=8% 与 r=7% 求解 g。④ 工具输出：financial_rigor.py calc '(0.08×166.10−7.761)/(166.10+7.761)×100' = 3.179；'(0.07×166.10−7.761)/(166.10+7.761)×100' = 2.224。⑤ 含义：市场目前只给麦当劳 2%~3% 的永续 FCF 增速定价——低于它自己的五年收入 CAGR 3.73%，也低于行业增速中位 5.6%。"
+          },
+          "threeScenario": {
+            "inputs": {
+              "price": 234.73,
+              "eps": 12.31,
+              "sharesHundredMillion": 7.0764,
+              "growth": [
+                "9%",
+                "6%",
+                "2%"
+              ],
+              "pe": [
+                "24x",
+                "20x",
+                "15x"
+              ],
+              "years": 3,
+              "currency": "USD"
+            },
+            "optimistic": {
+              "targetPrice": "382.6",
+              "impliedReturnPct": "+63.0%"
+            },
+            "neutral": {
+              "targetPrice": "293.2",
+              "impliedReturnPct": "+24.9%"
+            },
+            "pessimistic": {
+              "targetPrice": "193.1",
+              "impliedReturnPct": "-17.7%"
+            },
+            "assumptionBasis": "① 乐观 9%：对应 NEXT 目标落地——2030 年营业利润率进入 low-to-mid 50% 区间（从 46.1% 起算），配合约 5% 收入增长与约 1%/年股本缩减，EPS 年化约 8%~9%（工具内部复核：1.05^5×26.885×0.52÷12.393 的五年复合约 7.56%，加回购后约 8.5%~9%）。目标 PE 24x，对应回到 2023–2025 年 25x 中枢的下沿，仍低于历史均值。② 中性 6%：分析师一致预期 EPS 三年增速 5.88%（stockanalysis），取 6%；目标 PE 20x，接近当前 19.07x 略上修。③ 悲观 2%：提价空间耗尽、客流继续下滑、NEXT 支出前置而销售未改善，增速降到 2%；目标 PE 15x，对应「低速税收型资产」的定价。",
+            "toolOutput": "============================================================\n三情景估值模型 (Three-Scenario Valuation)\n============================================================\n  当前股价: 234.73 USD\n  当前EPS:  12.31\n  预测期:   3年\n\n  情景                年增速     目标PE      目标EPS       目标股价      涨跌幅\n  ------------ -------- -------- ---------- ---------- --------\n  乐观 (Bull)          9%      24x      15.94     382.6   +63.0%\n  中性 (Base)          6%      20x      14.66     293.2   +24.9%\n  悲观 (Bear)          2%      15x      12.87     193.1   -17.7%\n\n  ✅ 所有计算使用精确十进制, 结果可审计复现"
+          },
+          "vsOwnHistory": {
+            "metric": "PE（各财年末收盘价 / 当年 EPS）",
+            "currentValue": "19.07x（TTM，2026-10-09）",
+            "historicalRange": "FY2021–FY2025 各年末：26.55x / 31.25x / 25.40x / 25.26x / 25.42x；区间 25.26–31.25x，中位 25.42x。当前 19.07x 低于五年区间下沿约 24%，处于五年最低水平",
+            "source": {
+              "name": "stockanalysis.com MCD ratios（PE Ratio 列，含 Current 与 FY2021–FY2025）",
+              "url": "https://stockanalysis.com/stocks/mcd/financials/ratios/"
+            }
+          },
+          "vsPeers": [
+            {
+              "name": "McDonald's (MCD)",
+              "pe": "19.07x",
+              "peTtm": "19.07x",
+              "peForward": "17.94x",
+              "ps": "6.00x",
+              "evToEbitda": "14.83x",
+              "dividendYieldPct": "3.29%",
+              "source": {
+                "name": "financial_rigor.py verify-valuation 与 stockanalysis.com statistics（Fwd PE 17.94）",
+                "url": "https://stockanalysis.com/stocks/mcd/statistics/"
+              }
+            },
+            {
+              "name": "Restaurant Brands (QSR)",
+              "pe": "19.14x",
+              "peTtm": "19.14x",
+              "peForward": "16.71x",
+              "ps": "3.32x",
+              "evToEbitda": "16.00x",
+              "dividendYieldPct": "3.67%",
+              "source": {
+                "name": "stockanalysis.com QSR statistics",
+                "url": "https://stockanalysis.com/stocks/qsr/statistics/"
+              }
+            },
+            {
+              "name": "Yum! Brands (YUM)",
+              "pe": "18.01x",
+              "peTtm": "18.01x",
+              "peForward": "22.40x",
+              "ps": "4.53x",
+              "evToEbitda": "17.03x",
+              "dividendYieldPct": "2.07%",
+              "source": {
+                "name": "stockanalysis.com YUM statistics",
+                "url": "https://stockanalysis.com/stocks/yum/statistics/"
+              }
+            },
+            {
+              "name": "Chipotle (CMG)",
+              "pe": "30.29x",
+              "peTtm": "30.29x",
+              "peForward": "25.77x",
+              "ps": "3.22x",
+              "evToEbitda": "19.65x",
+              "dividendYieldPct": "不分红",
+              "source": {
+                "name": "stockanalysis.com CMG statistics",
+                "url": "https://stockanalysis.com/stocks/cmg/statistics/"
+              }
+            },
+            {
+              "name": "Starbucks (SBUX)",
+              "pe": "53.54x",
+              "peTtm": "53.54x",
+              "peForward": "31.77x",
+              "ps": "2.73x",
+              "evToEbitda": "21.87x",
+              "dividendYieldPct": "2.78%",
+              "source": {
+                "name": "stockanalysis.com SBUX statistics",
+                "url": "https://stockanalysis.com/stocks/sbux/statistics/"
+              }
+            }
+          ],
+          "peerComparisonNote": "① PE 按特许经营同业（QSR 19.14x、YUM 18.01x）看，麦当劳 19.07x 只是持平，没有折价。② PS 6.00x 是五家中最高，但这是加盟会计的产物：麦当劳只确认全系统销售额的 19.29%，分子（市值）含全部系统价值而分母（收入）不含加盟商流水，PS 因此结构性偏高，不可用于跨模式比较。③ 唯一口径干净的是 EV/EBITDA：麦当劳 14.83x 为五家最低（QSR 16.00x、YUM 17.03x、CMG 19.65x、SBUX 21.87x），且 EBITDA 不受加盟/自营会计口径影响。④ 结论：按可比口径，麦当劳是这组同业里最便宜的，且它的营业利润率（45.72%）是五家最高。",
+          "dilutionNote": "净向为缩减而非稀释：① 总股本 707.64M 股（2026-06-30），近一年 −0.73%、近一季 −0.34%，2025 年回购 670 万股已在注销。② 反方向的潜在增量：2026 委托书披露高管期权中约 33.6 万份行权价在 $253–$308 区间（均高于现价 $234.73，短期难成稀释），PRSU 以三年 EPS 增速与 ROIC 为条件、上限 200%。③ 净效果取决于回购能否继续覆盖股权激励归属；若回购被削减，每年约 1% 的激励稀释会转为净增股本。",
+          "dilutionEvidence": [
+            {
+              "metric": "股本变化",
+              "value": "707.64M 股，近一年 −0.73%、近一季 −0.34%",
+              "asOf": "2026-06-30",
+              "source": {
+                "name": "stockanalysis.com MCD statistics（Shares Change YoY/QoQ）",
+                "url": "https://stockanalysis.com/stocks/mcd/statistics/"
+              }
+            },
+            {
+              "metric": "在价外的高管期权",
+              "value": "约 33.6 万份，行权价 $253.39–$308.60，全部高于现价 $234.73",
+              "asOf": "2025 财年末",
+              "source": {
+                "name": "2026 DEF 14A Outstanding Equity Awards at 2025 Year-End",
+                "url": "https://www.sec.gov/Archives/edgar/data/63908/000119312526145548/mcd-20260407.htm"
+              }
+            },
+            {
+              "metric": "年回购规模",
+              "value": "FY2025 回购 2.056B（约 670 万股），占 FCF 28.61%",
+              "asOf": "FY2025",
+              "source": {
+                "name": "stockanalysis.com MCD cash flow 与 2026 DEF 14A",
+                "url": "https://stockanalysis.com/stocks/mcd/financials/cash-flow-statement/"
+              }
+            }
+          ]
+        },
+        "inquiry": {
+          "question": "如果股市明天关闭5年，你愿意以这个价格持有吗？",
+          "answer": "愿意，因为回报的绝大部分来自现金而非估值重估，5 年不看盘不影响拿到它。① 现金回报可测：股息率 3.29%（派息率 62.71%）+ 回购收益率 0.73%，合计股东收益率 3.99%，且分红已连续增长 51 年。② 生意本身不会因无人报价而改变：45,356 家门店的租金与抽成照收，FY2025 经营现金流 10.551B 覆盖资本开支 3.365B 与分红 5.115B。③ 反向 DCF 显示市场只隐含 2%~3% 的永续 FCF 增长，而公司过去五年收入 CAGR 就有 3.73%，这个价格不要求乐观假设。④ 需要接受的代价：资产负债表无缓冲垫（股东权益 −1.023B、现金 822M），若经营现金流出现两位数下滑，分红与回购会被迫二选一。"
+        },
+        "dataGaps": [
+          {
+            "path": "valuation.analysis.currentMultiples.peg",
+            "reason": "PEG 仅单源（stockanalysis），分母为分析师一致预期增速（3 年收入 +1.83%、EPS +5.88%），预期本身不可交叉验证；且 PEG 对本类低速稳定公司参考价值有限",
+            "searched": "stockanalysis.com MCD statistics（FMP 不可用）"
+          },
+          {
+            "path": "valuation.analysis.reverseDcf",
+            "reason": "反向 DCF 中的贴现率（7%/8%）取自 stockanalysis 估算的 WACC 5.63% 上浮，不是公司披露值；终值模型假设永续增长，对贴现率极敏感（7% 与 8% 之间隐含增速差 1 个百分点）",
+            "searched": "stockanalysis.com WACC 估算；公司 10-K（无 WACC 披露）"
+          },
+          {
+            "path": "valuation.analysis.threeScenario.inputs.growth",
+            "reason": "三组增速均为主会话基于采集文件数据构造，其中乐观情景的增长来自公司 2030 目标的自算推演（非公司披露的 EPS 增速指引），需在后续跟踪中用实际季度数据验证",
+            "searched": "FY2025 10-K OUTLOOK（只指引 2026 年营业利润率 mid-to-high 40% 与 FCF 转化率，无 EPS 指引）；2026-09-23 投资者日 EX-99.1（给 2030 年目标，不给年度 EPS 增速）"
+          },
+          {
+            "path": "valuation.analysis.vsPeers",
+            "reason": "同行 PE/PS/EV-EBITDA 均取自 stockanalysis 单一平台（Level 2 字段允许单源），且各家公司 TTM 窗口切分可能不同。另：分析模板定义的同比字段是 pe，而渲染层 page.tsx 读的是 peTtm / peForward，两边不一致会导致页面「PE（TTM / Fwd）」列渲染成「— / —」；本文件同时写了 pe（模板口径）与 peTtm/peForward（渲染层口径）以保证页面可读，该不一致已在第 7 步作为渲染层缺陷登记",
+            "searched": "stockanalysis.com 各公司 statistics 页；apps/web/app/companies/[company]/page.tsx 第 593–610 行"
+          }
+        ]
+      }
+    },
+    "crossValidationLog": [
+      {
+        "field": "五年收入 CAGR（2021→2025）",
+        "source1": {
+          "name": "financial_rigor.py calc ((26885/23223)^(1/4)-1)*100",
+          "value": 3.728
+        },
+        "source2": {
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证"
+        },
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
+        "flag": "ok",
+        "resolution": "工具验算行，用于支撑 businessEssence 的经营杠杆判断（收入 CAGR 3.73% vs 资本开支 CAGR 13.33% vs FCF CAGR 0.29%）"
+      },
+      {
+        "field": "五年资本开支 CAGR（2021→2025）",
+        "source1": {
+          "name": "financial_rigor.py calc ((3365/2040)^(1/4)-1)*100",
+          "value": 13.328
+        },
+        "source2": {
+          "name": "SEC XBRL companyfacts PaymentsToAcquirePropertyPlantAndEquipment（2,040 / 3,365）",
+          "value": "2040 / 3365"
+        },
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证"
+        },
+        "flag": "ok",
+        "resolution": "工具验算行。资本开支五年 +65% 是「FCF 零增长」的主因"
+      },
+      {
+        "field": "五年自由现金流 CAGR",
+        "source1": {
+          "name": "financial_rigor.py calc ((7186/7102)^(1/4)-1)*100",
+          "value": 0.294
+        },
+        "source2": {
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证"
+        },
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
+        "flag": "ok",
+        "resolution": "工具验算行。FCF 五年几乎零增长（7.102B→7.186B）与 ROIC 从 25.2% 降至 20.3% 互为印证"
+      },
+      {
+        "field": "分部毛利率（FY2025）",
+        "source1": {
+          "name": "financial_rigor.py calc（特许经营 13930/16548、自营 1422/9690）",
+          "value": "84.179% / 14.675%"
+        },
+        "source2": {
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证；分子分母均取自公司 FY2025 10-K 同一披露"
+        },
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
+        "flag": "ok",
+        "resolution": "工具验算行。84.18% vs 14.67% 的落差是「加盟模式把成本转出去」最直接的量化证据"
+      },
+      {
+        "field": "分红与回购占自由现金流比例（FY2025）",
+        "source1": {
+          "name": "financial_rigor.py calc（分红 5115/7186、回购 2056/7186）",
+          "value": "71.18% / 28.61%"
+        },
+        "source2": {
+          "name": "SEC 10-K FY2025「returned approximately $7.1 billion to shareholders through a combination of dividends paid and shares repurchased」",
+          "value": "约 7.1B"
+        },
+        "deviationPct": 0.18,
+        "flag": "ok",
+        "resolution": "两源一致（71.18%+28.61%=99.79% 对公司的「约 71 亿」口径）。说明 FY2025 全部 FCF 已分配给股东，扩张资本不来自加杠杆"
+      },
+      {
+        "field": "反向 DCF 隐含永续 FCF 增速",
+        "source1": {
+          "name": "financial_rigor.py calc（r=8%：(0.08×166.10−7.761)/(166.10+7.761)×100）",
+          "value": 3.179
+        },
+        "source2": {
+          "name": "financial_rigor.py calc（r=7%：(0.07×166.10−7.761)/(166.10+7.761)×100）",
+          "value": 2.224
+        },
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "口径不可比：两个数字是同一模型在两档贴现率下的解，不是对同一事实的两次测量"
+        },
+        "flag": "ok",
+        "resolution": "工具验算行。隐含增速区间 2.22%~3.18%，低于公司自身五年收入 CAGR 3.73% 与行业增速中位 5.6%"
+      },
+      {
+        "field": "三情景目标股价与隐含回报",
+        "source1": {
+          "name": "financial_rigor.py three-scenario（price 234.73 / eps 12.31 / shares 7.0764亿 / growth 9% 6% 2% / PE 24 20 15 / 3年）",
+          "value": "382.6 (+63.0%) / 293.2 (+24.9%) / 193.1 (−17.7%)"
+        },
+        "source2": {
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证；情景假设由主会话设定，工具只保证算术精确"
+        },
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
+        "flag": "ok",
+        "resolution": "工具验算行，输出原文已照录进 valuation.analysis.threeScenario.toolOutput"
+      },
+      {
+        "field": "单店系统销售额（FY2025）",
+        "source1": {
+          "name": "financial_rigor.py calc（139400/45356×1000）",
+          "value": 3073.46
+        },
+        "source2": {
+          "status": "not-applicable",
+          "reason": "工具验算（financial_rigor.py），非多源交叉验证"
+        },
+        "deviationPct": {
+          "status": "not-applicable",
+          "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+        },
+        "flag": "ok",
+        "resolution": "工具验算行：约 307 万美元/店。分子为全系统销售额（含加盟店流水），分母为期末门店数，是近似而非精确人均值"
+      },
+      {
+        "field": "PE（TTM）与股息率在分析步骤的复算",
+        "source1": {
+          "name": "financial_rigor.py verify-valuation（price 234.73 / eps 12.31 / fcf-per-share 10.97 / dividend 7.72）",
+          "value": "PE 19.07x / P-FCF 21.40x / 股息率 3.29%"
+        },
+        "source2": {
+          "name": "stockanalysis.com MCD（PE 19.24x / P/FCF 21.60x / 股息率 3.29%）",
+          "value": "19.24x / 21.60x / 3.29%"
+        },
+        "deviationPct": 0.89,
+        "flag": "ok",
+        "resolution": "≤1%。差异来自价格快照时点（盘中 234.73 vs 前收盘 236.90）。分析步骤的估值数字以工具复算值为准，与第 1 步采集值对账一致"
+      },
+      {
+        "field": "同业估值对比（EV/EBITDA 口径）",
+        "source1": {
+          "name": "stockanalysis.com MCD 14.83x / QSR 16.00x / YUM 17.03x / CMG 19.65x / SBUX 21.87x",
+          "value": "MCD 最低"
+        },
+        "source2": {
+          "name": "financial_rigor.py calc（EV 219.810B / EBITDA 14.930B）",
+          "value": 14.723
+        },
+        "deviationPct": 0.73,
+        "flag": "ok",
+        "resolution": "≤1%。分析结论「按可比口径麦当劳是五家中最便宜」建立在 EV/EBITDA 上，而非被加盟会计扭曲的 PS；PE 口径下麦当劳只与 QSR/YUM 持平，已在 vsPeers 说明"
+      }
+    ]
+  },
+  "summary": {
+    "_spec": {
+      "purpose": "研究流程第 3 步（分析总结）的产出。由评估环节基于第 1 步采集与第 2 步分析落盘文件生成，不重新采集。",
+      "confidence": "信心度总分 10 分，价值投资视角下对该维度的看多程度。",
+      "corporateCulture": "企业文化维度的结论为客观陈述，只转述第 2 步已落盘的可观察证据；缺失或证据以单源为主时写明证据限制、信心度向中性收敛。",
+      "traceability": "每个结论、评分、建议的 basis 字段写明引用的前两步文件字段路径与关键数据。",
+      "executorNote": "本次会话未挂载 Task/子代理工具，第 3 步评估由主会话按同一输出格式与评分规则完成，未做独立 Agent 隔离；这会在第 7 步评估中作为一次流程偏离记录。"
+    },
+    "meta": {
+      "companyId": "us-mcd-mcdonalds",
+      "companyName": "McDonald's Corporation",
+      "summarizedAt": "2026-10-09",
+      "dataCutoff": "2026-10-09（Asia/Shanghai）",
+      "basedOnCollection": "research/companies/us-mcd-mcdonalds/financials-collection.json",
+      "basedOnAnalysis": "research/companies/us-mcd-mcdonalds/financials-analysis.json"
+    },
+    "dimensionSummary": [
+      {
+        "dimensionId": "businessQuality",
+        "title": "生意质量",
+        "mapsTo": "dimensions.businessEssence",
+        "conclusion": "把 4.5 万家餐厅的流水转成加盟商地租与抽成的收费权生意，毛利率与现金创造能力在整个餐饮业无出其右；代价是过去五年再投资回报未放大，利润增长基本被资本开支吃掉。",
+        "confidence": 8,
+        "scoreBasis": "① 单位经济极优：特许经营分部毛利率 84.18%、自营 14.67%（businessEssence.analysis.revenueBreakdown 与 marginByType），FY2025 营业利润率 46.10%、FCF 转化率 83.9%。② 现金创造真实：FY2025 经营现金流 10.551B、FCF 7.186B，分红+回购占 FCF 99%（financialMetrics.capitalReturn）。③ 扣分项：收入 CAGR 3.73% 而资本开支 CAGR 13.33%、FCF CAGR 仅 0.29%，税后 ROIC 从 25.2% 降到 20.3%（businessEssence.analysis.operatingLeverage），经营杠杆未放大。④ 数据缺口仅限非量化项（会员留存率、第三方验证），不影响该维度判断。"
+      },
+      {
+        "dimensionId": "moat",
+        "title": "护城河",
+        "mapsTo": "dimensions.moat",
+        "conclusion": "最硬的护城河是地产产权加 20 年加盟合约，这一段不会随消费趋势变化；但「能提价」这一段正在变窄，2026 年美国客流为负是直接证据。",
+        "confidence": 8,
+        "scoreBasis": "① 结构层最宽：自持约 56% 土地与 80% 建筑、95% 门店加盟化、45,356 家门店规模效应（moat.analysis.types 规模效应条）。② 数字印证：营业利润率 45.72% vs QSR 26.97%、YUM 32.47%、CMG 15.27%、SBUX 10.37%。③ 扣分项：品牌/定价权判定为「待验证」——美国可比销售从 2025Q4 +6.8% 降到 2026Q2 +0.8% 且客流为负，提价空间在低端客群见顶。④ 未来五年趋势判为「稳定」，前提是约 250bps 餐厅效率能落地。"
+      },
+      {
+        "dimensionId": "management",
+        "title": "管理层",
+        "mapsTo": "dimensions.management",
+        "conclusion": "资本配置纪律清晰、股东回报慷慨、战略语言连续，但连续三年计提「非经常性」重组费用，且回购发生在偏高估值区间，管理层持股比例极低。",
+        "confidence": 7,
+        "scoreBasis": "① 正面证据：FY2025 分红+回购约 71 亿美元占 FCF 99%，51 年连续增息；PRSU 考核绑三年 EPS 增速与 ROIC≥16%，CEO「实际支付」薪酬随股价从 36.85M 降到 17.92M，激励与股东同向（management.analysis.alignment）。② 负面证据：Accelerating the Organization 三年累计计提 697M、2026 年预计再计提约 250M，管理层评价为 ★★★（management.analysis.keyDecisions）。③ 对齐度扣分：CEO 仅持股 0.123%、全体董事高管 0.26%，经济绑定偏弱。④ 未解决缺口：未逐笔核验 Form 4 减持，无法确认内部人交易方向。"
+      },
+      {
+        "dimensionId": "keyRisk",
+        "title": "最大风险",
+        "mapsTo": "dimensions.inversion",
+        "conclusion": "最大风险是提价空间见顶而加盟商不再投钱——它不会让公司归零，但会让自由现金流长期停滞、估值中枢继续下移；风险可观察、可分散，但难以由投资者对冲。",
+        "confidence": 6,
+        "scoreBasis": "① 风险清单中「加盟商现金回报不足」与「客流持续流失」均为高影响、中概率，且指向同一个变量：4.5 万家门店的再投资意愿（inversion.analysis.failurePaths）。② 相对可控的部分：业务横跨 100+ 国家、17 个十亿美元单品、无客户集中度，不存在单点致命的结构；对比「食品安全的系统性事件（低概率高影响）」也说明风险不是单点。③ 不可控的部分：股东权益 −1.023B、现金仅 822M，若经营现金流两位数下滑，分红与回购必须二选一。④ 已有三年期量化证据（ROIC 25.2%→20.3%、FCF 五年 CAGR 0.29%），不是推测。"
+      },
+      {
+        "dimensionId": "civilizationTrend",
+        "title": "文明趋势",
+        "mapsTo": "dimensions.industryTrend",
+        "conclusion": "连锁快餐不是文明级技术革命的受益者或受害者，它是被数字渠道重塑的成熟现金牛；行业分散到 4.5 万家门店只占全球餐饮支出个位数量级，天花板不是约束。",
+        "confidence": 6,
+        "scoreBasis": "① 范式判断为「部分」：产品技术半个世纪无本质变化，变的是分发（数字点单、外送约 41,000 家门店、70 个市场会员），industryTrend.analysis.paradigmShift。② 趋势支持项：会员 2.2 亿活跃、2027 年目标 2.5 亿，数字渠道渗透仍在推进。③ 扣分项：行业成熟、公司收入 CAGR 3.73% 低于行业中位增速约 5.6%，公司自身把「技术投资回报不达标」列为风险因子。④ 数据缺口明确：TAM 各来源分歧极大（3.02%~11.89% CAGR），该维度不宜给高分。"
+      },
+      {
+        "dimensionId": "valuation",
+        "title": "估值",
+        "mapsTo": "dimensions.valuation",
+        "conclusion": "PE 19.07x 低于五年区间下沿约 24%，按唯一不受加盟会计扭曲的 EV/EBITDA 口径是同业五家中最低；反向 DCF 只隐含 2%~3% 的永续增长，价格已从「贵」回到「合理偏便宜」。",
+        "confidence": 8,
+        "scoreBasis": "① 自身历史：PE 从 FY2021–FY2025 的 25.26–31.25x 降至 19.07x，处五年最低（valuation.analysis.vsOwnHistory）。② 同业可比口径：EV/EBITDA 14.83x 为五家最低（QSR 16.00x、YUM 17.03x、CMG 19.65x、SBUX 21.87x），且营业利润率最高；PS 6.00x 偏高是加盟会计产物，不可用于比较（valuation.analysis.peerComparisonNote）。③ 反向 DCF 隐含增速 2.22%~3.18%，低于公司自身五年收入 CAGR 3.73%（valuation.analysis.reverseDcf）。④ 三情景：乐观 382.6（+63.0%）、中性 293.2（+24.9%）、悲观 193.1（−17.7%），下行幅度小于上行幅度。⑤ 扣分项：分红+回购已占 FCF 99%，股本无缓冲垫，估值修复依赖基本面不再恶化。"
+      },
+      {
+        "dimensionId": "corporateCulture",
+        "title": "企业文化",
+        "mapsTo": "dimensions.management.analysis.culture",
+        "conclusion": "已落盘证据显示三项文化特征：以加盟商关系为系统核心、以长期股东回报为资本配置目标（51 年增息）、以成本纪律推动组织精简；但全部证据来自公司自身披露，无外部独立验证，结论应限于此。",
+        "confidence": 6,
+        "scoreBasis": "① 加盟商中心：10-K 原文表述加盟关系对整体业绩与品牌保护「of fundamental importance」（management.analysis.culture 第①点）。② 股东导向：51 年连续增息，资本配置优先级明示为「先投资增长、再保分红、余下回购」，FY2025 分红+回购占 FCF 99%（management.analysis.culture 第②点、alignment.compensation）。③ 成本纪律：连续三年推进 Accelerating the Organization 与 GBS，累计重组费用 697M（management.analysis.organization.teamStability）。④ 证据限制（这是分数向中性收敛的直接原因）：三条均引自 10-K/委托书等公司自述材料，属 Level 3 单源；第 2 步 management.dataGaps 明确登记「无外部独立证据（员工满意度、离职率、加盟商满意度）可交叉验证」，且 2026 年 8 月刚更换美国总裁，组织稳定性证据偏弱。"
+      }
+    ],
+    "strategies": {
+      "noPosition": {
+        "title": "空仓者",
+        "advice": "① 价格已进入可分批建仓区间，但不要一次买满——增长减速尚未见底，2026Q3 财报前的基本面方向未定。② 把入场锚定在三情景的悲观与中性目标之间，用分批而非择时降低「买在减速中段」的风险。③ 不该因为 3.29% 股息率就把它当债券买：分红+回购已占 FCF 99%，缓冲区为零。",
+        "triggers": [
+          {
+            "condition": "股价回落至 215 美元以下（约当 17.5x TTM EPS）",
+            "action": "建立目标仓位 1/3 的初始头寸",
+            "basis": "① 215 美元约为五年 PE 区间下沿 25.26x 的 70%，位于三情景悲观目标 193.1 与中性目标 293.2 之间（dimensions.valuation.analysis.threeScenario）。② 该价位对应股息率约 3.6%、FCF 收益率约 5.1%，接近同行 QSR 的股息率 3.67%。"
+          },
+          {
+            "condition": "2026Q3 财报（2026-11-04）美国可比销售转正且客流不再为负",
+            "action": "补足至目标仓位的一半",
+            "basis": "① 客流是区分「提价驱动」与「真需求恢复」的唯一观察点（dimensions.inversion.analysis.failurePaths[0]）。② 美国分部 2026Q2 可比销售 +0.8%、客流为负，是当前最大的基本面未知数。"
+          },
+          {
+            "condition": "股价升破 293 美元（中性情景目标价）而基本面未改善",
+            "action": "停止加仓，等待下一次财报确认",
+            "basis": "① 293.2 美元为三情景中性目标（dimensions.valuation.analysis.threeScenario）。② 在中性假设下该价位已完全兑现三年增长，继续买入等于押注乐观情景。"
+          }
+        ]
+      },
+      "holding": {
+        "title": "持仓者",
+        "advice": "① 继续持有，回报的主要来源是现金而不是估值：股东收益率合计 3.99%（股息 3.29% + 回购 0.73%），分红已连续增长 51 年。② 不要在投资者日后的利空情绪里恐慌卖出——下杀的是估值而不是现金流，FY2025 经营现金流仍增长 11.7%。③ 但要把仓位上限设在「能承受悲观情景」的水平，因为资产负债表没有缓冲垫。",
+        "triggers": [
+          {
+            "condition": "股价跌至 193 美元附近（悲观情景目标价）",
+            "action": "若基本面未触发卖出信号，可动用剩余现金加仓至目标仓位",
+            "basis": "① 193.1 美元为三情景悲观目标（dimensions.valuation.analysis.threeScenario），对应约 15.7x TTM EPS。② 该价位意味着市场按「低速税收型资产」定价，而公司 FY2025 FCF 仍覆盖分红与回购。"
+          },
+          {
+            "condition": "股价升破 293 美元而美国客流与可比销售未同步改善",
+            "action": "减至半仓，锁定估值修复收益",
+            "basis": "① 293.2 美元为中性情景目标（dimensions.valuation.analysis.threeScenario）。② 估值维度信心度 8 分建立在 19.07x 的低起点上，回到 25x 以上后安全边际消失（dimensions.valuation.analysis.vsOwnHistory）。"
+          },
+          {
+            "condition": "公司宣布削减或暂停回购（当前回购约占 FCF 28.6%）",
+            "action": "重新评估仓位，并把股东收益率假设下调至仅股息口径",
+            "basis": "① FY2025 回购 2.056B 占 FCF 28.61%（dimensions.management.analysis.capitalAllocation.buybackTiming）。② 削减回购通常意味着现金流或资本开支预期发生变化，是比股价更早的信号。"
+          }
+        ]
+      },
+      "sellSignals": {
+        "title": "卖出信号",
+        "signals": [
+          {
+            "signal": "全球可比销售连续两个季度为负（不只是美国）",
+            "observable": "季度 8-K 新闻稿的 COMPARABLE SALES 表，Total Company 一行为负且连续两期",
+            "basis": "① 当前仅美国在 2026Q2 降到 +0.8% 且客流为负，全球仍 +1.3%（dimensions.inversion.analysis.failurePaths[0]）。② 全球转负意味着提价策略在多个市场同时失效，生意质量维度的 8 分基础被打破。"
+          },
+          {
+            "signal": "税后 ROIC 跌破 16%（公司 PRSU 考核阈值）",
+            "observable": "10-K MD&A 的 after-tax ROIC from continuing operations，2025 年为 20.3%",
+            "basis": "① 该指标已从 2023 年 25.2% 连续降至 2025 年 20.3%（dimensions.businessEssence.analysis.operatingLeverage）。② 16% 是公司自己给管理层设定的下限，跌破说明再投资已不创造价值。"
+          },
+          {
+            "signal": "公司再度扩大加盟商支持规模（现有的 2036 年前约 85 亿美元之外再加码）",
+            "observable": "8-K 或投资者材料中新增的加盟商资本支持/租金减免承诺金额",
+            "basis": "① 现有承诺 2036 年前约 85 亿美元、2030 年前约 50 亿（dimensions.management.analysis.keyDecisions 2026-09-23 条）。② 加码等于承认 NEXT 的餐厅效率提升未按计划落地，是加盟商经济性恶化的直接证据。"
+          },
+          {
+            "signal": "AI 定价集体诉讼出现实体不利裁决（如禁令限制算法定价或加盟店数据共享）",
+            "observable": "法院裁定文书或被公司计入 10-Q 重大或有负债",
+            "basis": "① 该案指控 AI 定价系统在自营与加盟店间共享非公开数据协调价格（dimensions.inversion.analysis.failurePaths[3]）。② 定价算法与数据打通是 NEXT 的核心工具，被限制将直接削弱提价与效率路径。"
+          },
+          {
+            "signal": "分红被削减或不再增长（中断 51 年连续增息纪录）",
+            "observable": "季度股息宣告低于上季度，或公司声明暂停年度上调",
+            "basis": "① 分红占 FCF 71.18%，这是股东回报的最大一块（dimensions.management.analysis.capitalAllocation）。② 在股东权益 −1.023B、现金仅 822M 的结构下，削减股息是现金流恶化的最直接确认。"
+          }
+        ]
+      },
+      "addSignals": {
+        "title": "加仓信号",
+        "signals": [
+          {
+            "signal": "股价跌至 193 美元以下（悲观情景目标价）",
+            "observable": "收盘价连续 5 个交易日低于 193.1 美元，且公司未出现上述卖出信号",
+            "basis": "① 193.1 美元为三情景悲观目标，对应约 15.7x TTM EPS（dimensions.valuation.analysis.threeScenario）。② 在这个价位上即便按悲观情景也已反映，下行空间被价格而非预测吸收。"
+          },
+          {
+            "signal": "美国可比销售连续两个季度回升至 2% 以上且客流转正",
+            "observable": "季度 8-K 的 COMPARABLE SALES 表美国一行，公司对客流的定性表述转为正面",
+            "basis": "① 客流是区分提价与真需求的核心观察点（dimensions.inversion.analysis.failurePaths[0]）。② 恢复到 2% 以上接近 FY2025 美国全年 +2.1% 的水平，说明减速是阶段性的。"
+          },
+          {
+            "signal": "NEXT 的约 250bps 餐厅效率出现可验证的分期落地数据",
+            "observable": "公司披露美国加盟商单店现金流改善幅度，或 ArchIQ 部署门店数达到覆盖过半",
+            "basis": "① 该目标约合美国单店年均 10 万美元现金流收益、约四年回本（dimensions.management.analysis.keyDecisions 2026-09-23 条）。② 这是三情景乐观假设（EPS 年化 9%）的唯一验证点，落地即允许上修估值中枢。"
+          },
+          {
+            "signal": "税后 ROIC 止跌回升至 22% 以上",
+            "observable": "10-K MD&A 的 after-tax ROIC，回到 2024 年 21.8% 以上",
+            "basis": "① ROIC 从 2023 年 25.2% 降至 2025 年 20.3%，是生意质量维度扣分的核心依据（dimensions.businessEssence.analysis.operatingLeverage）。② 回到 22% 意味着资本开支的边际回报重新上升，三情景中的中性假设被验证。"
+          },
+          {
+            "signal": "股息连续两个年度上调幅度回升至 5% 以上",
+            "observable": "每年 9 月/10 月的季度股息宣告同比增幅（2026 年为 +4.74%）",
+            "basis": "① 2026 年上调幅度 4.74%，派息率 62.71%（dimensions.valuation.analysis.currentMultiples.dividendYieldPct）。② 派息率与增幅同时回升，说明管理层对自由现金流的能见度改善。"
+          }
+        ]
+      }
+    },
+    "disclaimer": "本总结基于公开信息与数据截止时点的分析生成，仅供研究参考，不构成个性化投资建议。"
+  }
+}

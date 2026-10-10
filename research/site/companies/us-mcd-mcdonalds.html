@@ -1,0 +1,905 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>McDonald&#x27;s Corporation分析报告</title><meta name="description" content="以商业模式、核心驱动、最新变化和当前价格隐含的假设为主线的上市公司研究。"/><meta name="research-publication-version" content="0.1.0"/><meta name="research-final-version" content="1.0.0"/><style>/* Inter 只覆盖拉丁字形，中文一律走系统字体，所以字体文件按站点实际用到的字符
+   子集化过（48.3 KB → 25.8 KB），可变字重轴保留。重新生成见 fonts/README.md。
+   font-display: swap + 下面的系统字体兜底，保证字体在弱网下取不到时只是字形回退，
+   不影响可读性。 */
+@font-face {
+  font-family: "Inter Local";
+  src: url("../assets/fonts/InterVariable.woff2") format("woff2-variations");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  --paper: #f7f7f2;
+  --ink: #101010;
+  --muted: #686863;
+  --line: #c9c9c2;
+  --line-dark: #93938c;
+  --signal: #ff4d00;
+  --soft: #ecece6;
+  --max: 1440px;
+  color-scheme: light;
+  font-family: "Inter Local", system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--paper); }
+body { margin: 0; color: var(--ink); background: var(--paper); }
+a { color: inherit; text-underline-offset: .2em; }
+p, li { line-height: 1.62; }
+
+.research-report,
+.company-page {
+  width: min(100%, var(--max));
+  margin: 0 auto;
+  padding: 0 36px 80px;
+}
+
+.report-hero {
+  min-height: 78vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 26px 0 34px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.eyebrow-row,
+.metric-meta,
+.company-card-meta,
+.company-eyebrow {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 56px;
+  align-items: end;
+  margin: 10vh 0 8vh;
+}
+
+.kicker,
+.section-kicker {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+h1, h2, h3, p { margin-top: 0; }
+h1 {
+  max-width: 980px;
+  margin-bottom: 24px;
+  font-size: clamp(58px, 10vw, 150px);
+  font-weight: 500;
+  letter-spacing: -.075em;
+  line-height: .82;
+}
+
+.headline {
+  max-width: 840px;
+  margin: 0;
+  font-size: clamp(22px, 3vw, 42px);
+  font-weight: 450;
+  letter-spacing: -.035em;
+  line-height: 1.08;
+}
+
+.stance-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--ink);
+}
+.stance-block .label,
+.hero-facts span,
+.summary-grid span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.stance-block strong { font-size: 42px; font-weight: 520; letter-spacing: -.05em; }
+.stance-block > span:last-child { color: var(--muted); font-size: 13px; }
+
+/* Auto-fit for the same reason as `.company-summary`: the cell count follows the
+   contract, and 1.2.0 trades a fair value for a market capitalisation. */
+.hero-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  border-top: 1px solid var(--line-dark);
+}
+.hero-facts > div { padding: 18px 18px 0 0; }
+.hero-facts span, .hero-facts strong { display: block; }
+.hero-facts strong { margin-top: 8px; font-size: 18px; font-weight: 560; }
+.hero-facts small { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; }
+
+.section-nav {
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 12px 0;
+  background: color-mix(in srgb, var(--paper) 94%, transparent);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(12px);
+}
+.section-nav a,
+.pill-link {
+  flex: 0 0 auto;
+  padding: 8px 14px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 650;
+  text-decoration: none;
+}
+.section-nav a:hover, .pill-link:hover { color: var(--paper); background: var(--ink); }
+
+.report-section {
+  display: grid;
+  grid-template-columns: minmax(72px, 1fr) minmax(0, 10fr);
+  gap: 32px;
+  padding: 76px 0 86px;
+  border-bottom: 1px solid var(--ink);
+}
+.section-number { font-size: 12px; font-variant-numeric: tabular-nums; }
+.section-content { min-width: 0; }
+.section-content h2 {
+  max-width: 980px;
+  margin-bottom: 26px;
+  font-size: clamp(42px, 6vw, 92px);
+  font-weight: 490;
+  letter-spacing: -.065em;
+  line-height: .92;
+}
+.lead {
+  max-width: 960px;
+  margin-bottom: 38px;
+  font-size: clamp(20px, 2.3vw, 32px);
+  letter-spacing: -.025em;
+  line-height: 1.24;
+}
+
+.summary-grid,
+.metric-grid,
+.chart-grid,
+.scenario-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--ink);
+}
+.summary-grid article {
+  min-height: 180px;
+  padding: 20px 28px 26px 0;
+  border-bottom: 1px solid var(--line);
+}
+.summary-grid article:nth-child(odd) { border-right: 1px solid var(--line); }
+.summary-grid article:nth-child(even) { padding-left: 28px; }
+.summary-grid p { max-width: 540px; margin: 24px 0 0; font-size: 18px; }
+
+.change-ledger { margin-top: 54px; }
+.change-ledger h3 { font-size: 14px; letter-spacing: .08em; text-transform: uppercase; }
+.change-ledger dl { border-top: 1px solid var(--line-dark); }
+.change-ledger dl div { display: grid; grid-template-columns: 150px 1fr; gap: 24px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.change-ledger dt { font-weight: 650; }
+.change-ledger dd { margin: 0; color: var(--muted); }
+
+.editorial-list { max-width: 980px; margin: 0; padding: 0; list-style: none; counter-reset: editorial; }
+.editorial-list > li { position: relative; min-height: 72px; padding: 18px 0 18px 56px; border-top: 1px solid var(--line); font-size: 17px; counter-increment: editorial; }
+.editorial-list > li::before { position: absolute; left: 0; content: counter(editorial, decimal-leading-zero); color: var(--muted); font-size: 11px; letter-spacing: .1em; }
+.source-ids { display: inline-flex; gap: 6px; margin-top: 22px; color: var(--muted); font-size: 11px; }
+.source-ids a { color: var(--ink); font-weight: 700; text-decoration: none; }
+
+.metric-grid { margin-top: 36px; }
+.metric-card { min-height: 260px; padding: 20px 28px 28px 0; border-bottom: 1px solid var(--line); }
+.metric-card:nth-child(odd) { border-right: 1px solid var(--line); }
+.metric-card:nth-child(even) { padding-left: 28px; }
+.metric-meta { color: var(--muted); }
+.metric-card h3 { margin: 42px 0 10px; font-size: 17px; font-weight: 580; }
+.metric-card > strong { display: block; font-size: clamp(30px, 4vw, 58px); font-weight: 480; letter-spacing: -.055em; }
+.metric-card p { max-width: 440px; margin: 16px 0; color: var(--muted); }
+.metric-card small { display: block; padding-top: 12px; border-top: 1px solid var(--line); }
+
+.chart-grid { margin-top: 64px; gap: 28px; border-top: 0; }
+.decision-chart { margin: 0; padding: 18px 0 22px; border-top: 1px solid var(--line-dark); }
+.chart-title { margin-bottom: 8px; font-size: 13px; font-weight: 650; letter-spacing: .04em; }
+.decision-chart svg { display: block; width: 100%; height: 180px; }
+.decision-chart figcaption { max-width: 430px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+.chart-axis { stroke: var(--line-dark); stroke-width: 1; }
+.chart-track { fill: var(--soft); }
+.chart-value--ink { fill: var(--ink); }
+.chart-value--signal { fill: var(--signal); }
+.chart-marker { stroke: var(--ink); stroke-width: 1; }
+.chart-label { fill: var(--ink); font-family: "Inter Local", sans-serif; font-size: 11px; font-weight: 650; letter-spacing: .05em; }
+.chart-line { fill: none; stroke-width: 3; vector-effect: non-scaling-stroke; }
+.chart-line--ink { stroke: var(--ink); }
+.chart-line--signal { stroke: var(--signal); }
+.chart-line--muted { stroke: var(--line-dark); stroke-dasharray: 5 4; }
+.chart-legend, .chart-driver-label, .chart-trend { fill: var(--muted); font-family: "Inter Local", "PingFang SC", sans-serif; font-size: 10px; }
+.chart-trend { fill: var(--ink); font-size: 9px; }
+
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 16px 12px; text-align: right; border-bottom: 1px solid var(--line); }
+th:first-child, td:first-child { padding-left: 0; text-align: left; }
+thead th { color: var(--muted); font-size: 11px; font-weight: 650; letter-spacing: .04em; vertical-align: bottom; }
+tbody th { font-weight: 650; }
+
+.scenario-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.scenario-grid article { padding: 24px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.scenario-grid article:last-child { border-right: 0; }
+.scenario-grid article > span { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .12em; }
+.scenario-grid h3 { margin: 42px 0 24px; font-size: 36px; font-weight: 500; letter-spacing: -.04em; }
+.scenario-grid p { min-height: 96px; color: var(--muted); }
+.scenario-grid dl { display: grid; grid-template-columns: 52px 1fr; gap: 8px 16px; font-size: 12px; }
+.scenario-grid dl > div { display: contents; }
+.scenario-grid dt { color: var(--muted); }
+.scenario-grid dd { margin: 0; }
+
+.action-zones { margin-top: 46px; border-top: 1px solid var(--ink); }
+.action-zones > div { display: grid; grid-template-columns: 180px 160px 1fr; gap: 24px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.action-zones strong { font-size: 18px; }
+.action-zones span { font-weight: 650; }
+.action-zones p { margin: 0; color: var(--muted); }
+
+/* Where today's price ranks in its own multiple history. A fact about the
+   market, so it is typeset as one: no colour, no arrow, no verdict word. */
+.multiple-percentile { margin: 18px 0 0; color: var(--muted); font-size: 14px; }
+.multiple-percentile strong { color: var(--ink); font-weight: 650; }
+.multiple-percentile small { display: block; margin-top: 6px; font-size: 11px; }
+.multiple-percentile--unavailable { font-style: italic; }
+
+/* Attributed assumption sets. Every seat is styled identically — an emphasised
+   seat would be the "基准" this contract removed, reintroduced as CSS. */
+.assumption-sets { border-top: 1px solid var(--ink); }
+.assumption-sets-note { margin: 18px 0 28px; max-width: 74ch; color: var(--muted); font-size: 13px; }
+.assumption-set { padding: 26px 0; border-bottom: 1px solid var(--line); }
+.assumption-set-head { display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; }
+.assumption-set-kind { padding: 4px 9px; border: 1px solid var(--ink); border-radius: 999px; font-size: 10px; letter-spacing: .08em; }
+.assumption-set-head strong { font-size: 17px; font-weight: 600; }
+/* The bias sits above the numbers, never in a footnote: a short report and an
+   issuer's guidance render identically otherwise, and that similarity is the lie. */
+.assumption-set-bias { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 14px; margin: 14px 0 0; padding: 12px 14px; border-inline-start: 2px solid var(--signal); background: color-mix(in srgb, var(--signal) 5%, transparent); font-size: 13px; }
+.assumption-set-bias > span { color: var(--muted); font-size: 11px; letter-spacing: .06em; }
+.assumption-set-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin: 20px 0 0; }
+.assumption-set-facts dt { color: var(--muted); font-size: 11px; text-transform: uppercase; }
+.assumption-set-facts dd { margin: 8px 0 0; font-size: 22px; font-weight: 520; }
+.assumption-set-facts dd small { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; font-weight: 400; }
+.assumption-set-assumptions { margin: 18px 0 0; max-width: 78ch; color: var(--muted); }
+.assumption-set-components { margin: 14px 0 0; padding: 0; list-style: none; font-size: 12px; }
+.assumption-set-components li { display: grid; grid-template-columns: 68px minmax(0, 1fr); gap: 14px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.assumption-set-components li > span { color: var(--muted); }
+.assumption-set-missing { margin: 16px 0 0; color: var(--muted); font-style: italic; }
+
+.disagreement-anchor { display: flex; flex-wrap: wrap; gap: 16px; margin: 0 0 18px; color: var(--muted); font-size: 13px; }
+.disagreement-anchor strong { color: var(--ink); }
+.disagreement-converged { margin: 16px 0 0; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+
+.split-section { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px; }
+.split-section h2 { font-size: clamp(36px, 4vw, 62px); }
+.evidence-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--ink); }
+.evidence-list li { padding: 0; border-bottom: 1px solid var(--line); }
+.evidence-list details { padding: 20px 0; }
+.evidence-list summary { display: grid; grid-template-columns: 42px 90px minmax(0, 1fr); gap: 12px; align-items: center; cursor: pointer; font-size: 17px; font-weight: 600; list-style: none; }
+.evidence-list summary::-webkit-details-marker { display: none; }
+.evidence-number { color: var(--muted); font-size: 11px; }
+.evidence-detail { margin: 18px 0 0 144px; padding-top: 14px; border-top: 1px solid var(--line); }
+.evidence-list p, .evidence-list small { display: block; margin: 0 0 8px; color: var(--muted); }
+.external-link { display: inline-block; margin-top: 12px; font-size: 13px; font-weight: 650; overflow-wrap: anywhere; }
+.evidence-kind { align-self: start; width: max-content; padding: 5px 9px; border: 1px solid var(--ink); border-radius: 999px; font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
+.evidence-kind--calculation { border-color: var(--signal); color: var(--signal); }
+.evidence-kind--inference { border-style: dashed; }
+.disclaimer { margin: 48px 0 0; padding-top: 16px; border-top: 1px solid var(--ink); color: var(--muted); font-size: 12px; }
+.back-to-top { position: fixed; right: 24px; bottom: 24px; display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid var(--ink); border-radius: 50%; background: var(--paper); text-decoration: none; }
+
+/* The header is sized against the fold, not against the viewport: the first
+   card (269px) plus a peek of the next one has to fit under it at 375×667, so
+   the whole header block stays inside ~350px. A vh-based margin here spent
+   122px of a 763px-tall laptop viewport on empty space. */
+.company-header { padding: 24px 0 24px; border-bottom: 1px solid var(--ink); }
+/* The air above the title scales with the viewport, because the title itself
+   does: a flat 24px reads right under a 128px heading on a short laptop and
+   cramped under a 150px one on a 27" display. Bounded at 72px so it can never
+   repeat 16vh's 122px, and the tight bottom margin keeps the tagline bound to
+   the title rather than floating between the two. */
+.company-header h1 { margin: clamp(24px, 6vh, 72px) 0 20px; }
+
+/* 中文标题的行距与字距。全局 h1 的 `line-height: .82` / `letter-spacing: -.075em`
+   是给拉丁标题的——字母有升部降部，收紧后行框里仍留得出空隙。汉字字形填满整个
+   em 方框，同样的值一旦折行就是物理重叠、字距为负则直接粘连。
+   这条必须在基础层生效（移动端标题折行更早，同样会叠）。 */
+.company-header h1[data-cjk="true"] { line-height: 1.06; letter-spacing: -.04em; }
+
+/* 字号按标题视觉宽度分档，目标是任何公司名都落在两行以内，而不是让长中文名
+   吃掉整屏。分档由渲染层算好写进 data-title-scale（见 companies/[company]/page.tsx）。
+   只在宽屏生效：≤800px 有自己的一套尺寸，而属性选择器的特异性高于媒体查询里的
+   `.company-header h1`，放到基础层会把移动端一起打挂。 */
+@media (min-width: 801px) {
+  .company-header h1[data-title-scale="md"] { font-size: clamp(52px, 8.5vw, 118px); }
+  .company-header h1[data-title-scale="sm"] { font-size: clamp(44px, 7vw, 96px); }
+}
+/* Only the desktop ceiling comes down — 40px cost two lines and 137px of the
+   fold. The 22px floor stays: narrow screens have budget to spare, and this is
+   also the company page's lead thesis. */
+.company-current { max-width: 840px; font-size: clamp(22px, 1.8vw, 26px); line-height: 1.3; }
+/* Auto-fit rather than a fixed four: how many cells there are depends on which
+   contract the latest snapshot was written under (1.2.0 has no stance and no fair
+   value), and a fixed track would leave a hole where the verdict used to be. */
+.company-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); border-bottom: 1px solid var(--ink); }
+.company-summary > div { padding: 22px 18px 24px 0; }
+.company-summary span { display: block; color: var(--muted); font-size: 11px; text-transform: uppercase; }
+.company-summary strong { display: block; margin-top: 10px; font-size: 24px; font-weight: 520; }
+.company-summary small { display: block; margin-top: 8px; color: var(--muted); font-size: 11px; }
+.company-section { padding: 72px 0; border-bottom: 1px solid var(--ink); }
+/* The coverage list shares the fold with the header above it, so it hugs it.
+   Company pages keep the full 72px rhythm: their summary bar already clears the
+   fold, and tightening one of eight sections would only break the cadence. */
+.coverage-section { padding-top: 28px; }
+.company-section h2 { margin-bottom: 32px; font-size: clamp(36px, 5vw, 72px); font-weight: 490; letter-spacing: -.055em; }
+.snapshot-pair { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+.snapshot-card { padding: 22px 0; border-top: 1px solid var(--ink); }
+.snapshot-card time { color: var(--muted); font-size: 12px; }
+.snapshot-card h3 { margin: 28px 0 12px; font-size: 36px; font-weight: 500; }
+.snapshot-card strong { display: block; margin-bottom: 22px; font-size: 22px; }
+.snapshot-card p { color: var(--muted); }
+.snapshot-card dl { display: grid; grid-template-columns: 120px 1fr; gap: 8px 16px; margin: 24px 0 0; padding-top: 16px; border-top: 1px solid var(--line); font-size: 13px; }
+.snapshot-card dt { color: var(--muted); }
+.snapshot-card dd { margin: 0; }
+.comparison-heading { margin: 54px 0 14px; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; }
+.comparison-status { display: inline-block; padding: 4px 8px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; }
+.comparison-status--no { color: var(--muted); border-style: dashed; }
+.comparison-detail-grid { margin-top: 22px; }
+.comparison-detail { min-height: 240px; padding: 22px 24px 26px 0; border-top: 1px solid var(--ink); }
+.comparison-detail > span { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.comparison-detail > strong { display: block; margin: 36px 0 20px; font-size: clamp(24px, 3vw, 40px); font-weight: 500; letter-spacing: -.04em; }
+.comparison-detail ul, .comparison-detail ol { margin: 28px 0 0; padding-left: 20px; }
+.comparison-detail li { margin-bottom: 8px; color: var(--muted); }
+.report-index { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+.report-link { display: flex; min-height: 220px; flex-direction: column; justify-content: space-between; padding: 20px; border: 1px solid var(--ink); text-decoration: none; }
+.report-link:hover { color: var(--paper); background: var(--ink); }
+.report-link time { font-size: 12px; }
+.report-link strong { font-size: 28px; font-weight: 520; }
+/* Index card text sets no colour of its own so the card inverts cleanly on
+   hover; the hairline stays --line, which reads on both grounds. A stance can
+   run to a full sentence, so it wraps instead of being clipped. */
+.company-card-stance { margin: 14px 0 0; font-size: 15px; }
+.company-card-facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 18px 0 20px; padding-top: 14px; border-top: 1px solid var(--line); }
+.company-card-facts dt { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.company-card-facts dd { margin: 6px 0 0; font-size: 17px; }
+.company-card-facts small { display: block; font-size: 11px; }
+/* Sits under the cards, not above them: it is a caveat about how to read the
+   figures, and below the fold it doubles as the peek that invites scrolling. */
+.coverage-note { max-width: 640px; margin: 24px 0 0; color: var(--muted); font-size: 14px; }
+
+@media (max-width: 800px) {
+  .research-report, .company-page { padding: 0 18px 48px; }
+  .report-hero { min-height: 90svh; }
+  .hero-grid { grid-template-columns: 1fr; gap: 38px; margin: 12vh 0 7vh; }
+  h1 { font-size: clamp(56px, 20vw, 96px); }
+  /* One line for 上市公司研究 at 375px: a wrapped page title costs another 60px
+     of the fold. The report cover keeps the full size. A 46px title needs far
+     less air above it than a 150px one, and 375×667 has no budget to give. */
+  .company-header h1 { margin: 24px 0 16px; font-size: clamp(36px, 11vw, 46px); }
+  .stance-block { width: 65%; }
+  .hero-facts, .company-summary { grid-template-columns: repeat(2, 1fr); }
+  .report-section { grid-template-columns: 1fr; gap: 14px; padding: 52px 0 62px; }
+  .section-number { padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+  .section-content h2 { font-size: clamp(40px, 14vw, 68px); }
+  .summary-grid, .metric-grid, .chart-grid, .scenario-grid, .split-section, .snapshot-pair, .report-index { grid-template-columns: 1fr; }
+  .summary-grid article:nth-child(odd), .metric-card:nth-child(odd) { border-right: 0; }
+  .summary-grid article:nth-child(even), .metric-card:nth-child(even) { padding-left: 0; }
+  .scenario-grid article { padding-left: 0; border-right: 0; }
+  .action-zones > div { grid-template-columns: 1fr; gap: 6px; }
+  .change-ledger dl div { grid-template-columns: 1fr; gap: 8px; }
+  .evidence-list summary { grid-template-columns: 34px 82px minmax(0, 1fr); gap: 8px; font-size: 14px; }
+  .evidence-detail { margin-left: 0; }
+}
+
+@media print {
+  :root { --paper: #fff; }
+  @page { size: A4; margin: 16mm; }
+  .research-report { max-width: none; padding: 0; }
+  .report-hero { min-height: 250mm; break-after: page; }
+  .section-nav, .back-to-top, .company-page link, .company-page script { display: none; }
+  .report-section { display: block; padding: 12mm 0; break-before: page; }
+  .section-number { margin-bottom: 12mm; }
+  .metric-card, .decision-chart, .scenario-grid article, tr, .evidence-list li { break-inside: avoid; }
+  .evidence-list details { display: block; }
+  .evidence-list details > * { display: block; }
+  .section-content h2 { font-size: 48px; }
+  a { text-decoration: none; }
+}
+
+/* ── 通用小件 ─────────────────────────────────────────── */
+.block-heading { margin: 46px 0 16px; font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.company-note { max-width: 900px; margin: 0 0 28px; color: var(--muted); font-size: 16px; }
+.empty-note { margin: 0; padding: 18px 0; color: var(--muted); font-size: 14px; }
+.cell-prose { max-width: 420px; text-align: left; color: var(--muted); font-size: 13px; }
+.cell-change { font-weight: 650; }
+.trend { display: inline-block; padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; font-weight: 650; white-space: nowrap; }
+.trend--改善 { color: var(--signal); border-color: var(--signal); }
+.trend--恶化 { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.trend--待验证 { border-style: dashed; }
+
+/* 首列在横向滚动时钉住，否则宽表一滑就不知道在看哪一行 */
+.table-wrap table th:first-child { position: sticky; left: 0; z-index: 1; background: var(--paper); }
+
+/* ── 指标释义浮层（原生 popover，零 JS） ───────────────── */
+.metric-note-anchor { display: inline; white-space: nowrap; }
+.metric-note-toggle { margin-inline-start: 5px; padding: 0; border: 0; background: none; color: var(--muted); font: inherit; font-size: .8em; line-height: 1; cursor: pointer; }
+.metric-note-toggle:hover, .metric-note-toggle:focus-visible { color: var(--signal); }
+.metric-note-toggle { anchor-name: var(--note-anchor); }
+/* 贴着触发它的那个 ⓘ 弹出。不覆盖定位的话，浏览器默认是 inset:0 + margin:auto，
+   也就是视口正中——那是对话框的位置，不是名词解释该出现的位置。
+   仍然用 popover 而不是内联展开：它在 top layer，不会被财报表的横向滚动容器裁掉，
+   而且自带点击外部关闭与 Esc 关闭。 */
+/* 默认隐藏由这里显式声明，不依赖浏览器 UA 样式表的
+   `[popover]:not(:popover-open){display:none}`。上一版就是漏了这一条：
+   浏览器一旦没把该元素当 popover 处理，它就停在原地永久显示。
+   `:popover-open` 不被支持时整条规则会被丢弃，结果是保持隐藏——
+   失败方向朝「看不见」而不是「糊在页面上」。 */
+.metric-note { display: none; }
+.metric-note[popover] { position: fixed; width: min(380px, calc(100vw - 32px)); margin: 0; padding: 18px 20px; border: 1px solid var(--ink); background: var(--paper); color: var(--ink); font-size: 13px; font-weight: 400; font-style: normal; line-height: 1.58; text-align: left; white-space: normal; letter-spacing: 0; box-shadow: 0 10px 30px rgb(16 16 16 / .16); }
+.metric-note[popover]:popover-open { display: block; }
+/* 浮层内部的排版必须自己定死。它嵌在 <strong>、<h3> 这类容器里，
+   区块级的着色与字号规则会顺着继承进来——SOTP 那一版整段变橙就是这么来的。 */
+.metric-note, .metric-note > * { color: var(--ink); }
+/* 真的没有 popover 支持时，ⓘ 点了不会有反应，那就别给这个假承诺，
+   改为把页尾的指标释义表在屏幕上也显示出来。 */
+@supports not selector(:popover-open) {
+  .metric-note-toggle { display: none; }
+  .metric-glossary { display: block; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--ink); }
+}
+@supports (anchor-name: --a) {
+  .metric-note[popover] { position-anchor: var(--note-anchor); position-area: block-end span-inline-end; position-try-fallbacks: flip-block, flip-inline, block-start span-inline-start; margin-block-start: 8px; inset: auto; }
+}
+/* 不支持锚定定位的浏览器（目前主要是 Firefox）回落到视口居中；
+   不加变暗背景，避免它读起来像一个必须处理的模态。 */
+@supports not (anchor-name: --a) {
+  .metric-note[popover] { inset: 0; margin: auto; height: fit-content; }
+}
+.metric-note > * { display: block; }
+.metric-note-title { margin-bottom: 10px; font-size: 15px; font-weight: 650; }
+.metric-note-formula { margin-bottom: 10px; padding: 8px 10px; background: var(--soft); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+.metric-note-company { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); }
+.metric-note-pitfall { margin-top: 10px; color: var(--signal); }
+
+/* ── 商业模式 ─────────────────────────────────────────── */
+/* 长文本分段：按作者已写下的结构切开——句号分段，(1)(2)(3) 转有序列表。
+   段间距用 margin 而不是空行，且最后一段不带下边距，避免和外层容器的
+   padding 叠出双倍空隙。 */
+.prose-block > p { margin: 0 0 12px; }
+.prose-block > p:last-child { margin-bottom: 0; }
+.prose-enum { margin: 4px 0 12px; padding: 0; list-style: none; counter-reset: prose-enum; }
+.prose-enum:last-child { margin-bottom: 0; }
+.prose-enum li { position: relative; padding-left: 26px; counter-increment: prose-enum; }
+.prose-enum li + li { margin-top: 8px; }
+.prose-enum li::before {
+  content: "(" counter(prose-enum) ")";
+  position: absolute; left: 0; top: 0;
+  color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums;
+}
+/* 在 .editorial-list（章节要点与风险清单）里，分段块继承外层字号与行高 */
+.editorial-list > li .prose-block > p,
+.editorial-list > li .prose-enum li { font-size: inherit; line-height: inherit; }
+.constraint-list .prose-enum li { color: var(--muted); font-size: 14px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.model-prose { margin: 0 0 4px; max-width: 62ch; font-size: 15px; }
+
+/* 因果链：一条连续脊线穿过所有环节。节点标签在各公司间从 4 字到 54 字不等，
+   只有流式文本能自适应换行，因此刻意用 CSS 而非 ADR-0004 的内联 SVG。
+   不用通栏横线分隔——那会让递进关系读成表格行；序号也不用 --signal，
+   它在本设计里是语义色，而序号位置不携带语义。 */
+/* 因果链的飞轮环：卡片装全文，位置在构建期由环节数算出。
+   卡宽 210px、相邻卡中心间距 291px（8 环），几何上不可能碰撞，因此不需要
+   逐公司调参。只在 PC 上出现——打印内容宽仅 673px、手机更窄，两者回落到
+   下面的阶梯流，文字完全相同。 */
+/* 环与阶梯流互斥：宽屏显示环，窄屏与纸上显示阶梯流。另一份是
+   display:none，因此辅助技术与搜索引擎只会看到一份文本。 */
+@media (min-width: 1080px) {
+  .flywheel ~ .causal-flow { display: none; }
+}
+@media (max-width: 1079px) {
+  .flywheel { display: none; }
+}
+.flywheel { position: relative; width: 100%; max-width: 1000px; margin: 18px auto 6px; }
+.flywheel-track { position: absolute; inset: 0; width: 100%; height: 100%; }
+.flywheel-arc { fill: none; stroke: var(--line-dark); stroke-width: 2; vector-effect: non-scaling-stroke; }
+.flywheel-head { fill: var(--line-dark); }
+.flywheel-hub {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  display: flex; flex-direction: column; gap: 8px; align-items: center;
+  max-width: 260px; text-align: center;
+}
+.flywheel-hub { gap: 4px; max-width: 300px; }
+.flywheel-hub strong { font-size: 19px; font-weight: 560; letter-spacing: -.02em; text-wrap: balance; }
+.flywheel-hub em { font-size: 15px; font-style: normal; letter-spacing: .04em; }
+.flywheel-hub span { margin-top: 6px; color: var(--muted); font-size: 12px; }
+.flywheel-cards { margin: 0; padding: 0; list-style: none; }
+.flywheel-cards li {
+  position: absolute; transform: translate(-50%, -50%);
+  /* 宽度用百分比而不是 px：这样卡宽与环半径同比例缩放，间距/卡宽之比恒为
+     0.76，容器变窄也不会碰撞。写死 210px 时容器缩到 900px 以下就会重叠。 */
+  width: 23%; padding: 15px 15px 14px; text-align: center;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 10px;
+}
+.nowrap { white-space: nowrap; }
+.flywheel-cards p { margin: 0; font-size: 13px; line-height: 1.5; text-wrap: pretty; }
+.flywheel-badge {
+  position: absolute; left: 50%; top: 0; transform: translate(-50%, -50%);
+  display: grid; place-items: center; width: 24px; height: 24px;
+  border-radius: 50%; background: var(--ink); color: var(--paper);
+  font-size: 12px; font-weight: 650; font-variant-numeric: tabular-nums;
+}
+
+/* 脊线是正文列的 border-left：相邻环节的边框首尾相接，天然连续，不需要用
+   背景色去打断再拼回来——上一版正是这么做的，结果线看着像虚线。 */
+.causal-flow { --gut: 30px; --lane: 20px; margin: 6px 0 0; }
+.causal-flow ol { margin: 0; padding: 0; list-style: none; }
+.causal-flow li { display: grid; grid-template-columns: var(--gut) minmax(0, 1fr); break-inside: avoid; }
+.causal-step { grid-column: 1; padding: 1px 13px 0 0; text-align: right; color: var(--muted); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.causal-flow li p { grid-column: 2; position: relative; margin: 0; max-width: 58ch; padding: 0 0 21px var(--lane); border-left: 1px solid var(--line); font-size: 15px; line-height: 1.62; }
+/* 节点是脊线上的小空心圆，比在文字里塞符号安静得多 */
+.causal-flow li p::before {
+  content: ""; position: absolute; left: -3.5px; top: .6em;
+  box-sizing: border-box; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--paper); border: 1px solid var(--line-dark);
+}
+/* 回指：同一条脊线转成虚线继续往下，读作「线绕回去了」 */
+.causal-loop { display: grid; grid-template-columns: var(--gut) minmax(0, 1fr); margin: 0; }
+.causal-loop-mark { grid-column: 1; padding: 15px 13px 0 0; text-align: right; color: var(--line-dark); font-size: 12.5px; }
+.causal-loop-note { grid-column: 2; padding: 15px 0 0 var(--lane); border-left: 1px dashed var(--line-dark); color: var(--muted); font-size: 12.5px; line-height: 1.6; }
+
+/* 现金引擎瀑布：走 SVG 与其余决策图表同族——它需要零基线、正负方向与
+   跨条基准线，这三样用 CSS 横条做会很别扭。高度由行数在组件里算出。 */
+.cash-waterfall { padding-top: 14px; }
+.cash-waterfall svg { height: auto; }
+.waterfall-label { fill: var(--ink); font-size: 11px; }
+.waterfall-value { fill: var(--ink); font-size: 11px; font-variant-numeric: tabular-nums; }
+.waterfall-value--total { font-weight: 650; }
+.waterfall-value--cost { fill: var(--signal); }
+.waterfall-bar--segment { fill: var(--ink); }
+.waterfall-bar--total { fill: var(--line-dark); }
+.waterfall-bar--cost { fill: var(--signal); }
+.waterfall-axis { stroke: var(--line-dark); stroke-width: 1; }
+.segment-list { display: grid; gap: 22px; }
+.segment-row { padding: 20px 0; border-top: 1px solid var(--line-dark); }
+.segment-head { display: flex; align-items: baseline; gap: 14px; }
+.segment-head strong { font-size: 20px; font-weight: 560; }
+.segment-head em { margin-left: auto; font-size: 28px; font-style: normal; font-weight: 480; letter-spacing: -.04em; }
+.segment-role { padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; }
+.segment-role--经济核心 { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.segment-role--收缩中 { border-style: dashed; color: var(--muted); }
+.segment-bar { display: block; height: 6px; margin: 12px 0 16px; background: var(--soft); }
+.segment-bar span { display: block; height: 100%; background: var(--ink); }
+.segment-row dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0; font-size: 13px; }
+.segment-row dt { margin-bottom: 4px; color: var(--muted); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+.segment-row dd { margin: 0; }
+
+/* ── 行业地位 ─────────────────────────────────────────── */
+.share-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px; }
+.share-card { padding: 22px 0; border-top: 1px solid var(--ink); }
+.share-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--muted); font-size: 11px; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; }
+.share-card h3 { margin: 24px 0 12px; font-size: 16px; font-weight: 580; }
+.share-card > strong { display: block; font-size: clamp(30px, 4vw, 52px); font-weight: 480; letter-spacing: -.05em; }
+.share-rank { margin: 12px 0 0; color: var(--muted); font-size: 13px; }
+.share-reason { margin: 8px 0 0; color: var(--signal); font-size: 13px; }
+.share-denominator { margin: 18px 0 0; padding: 14px 0 0; border-top: 1px solid var(--line); list-style: none; font-size: 12px; color: var(--muted); }
+.share-denominator li { margin-bottom: 6px; line-height: 1.5; }
+.share-excluded { color: var(--signal); }
+.divergence-callout { max-width: 900px; margin: 34px 0 0; padding: 20px 24px; border-left: 3px solid var(--signal); background: var(--soft); font-size: 15px; }
+.divergence-callout strong { display: block; margin-bottom: 8px; letter-spacing: .04em; }
+.concentration { max-width: 900px; margin: 24px 0 0; color: var(--muted); font-size: 14px; }
+
+/* ── 报告期筛选（纯 CSS） ─────────────────────────────── */
+.cadence-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.cadence-nav { display: flex; gap: 8px; margin-bottom: 20px; }
+.cadence-label { padding: 7px 16px; border: 1px solid var(--ink); border-radius: 999px; font-size: 12px; font-weight: 650; cursor: pointer; }
+.cadence-label:hover { background: var(--soft); }
+.cadence-panel, .cadence-panel-heading { display: none; }
+.cadence-input--1:checked ~ .cadence-panel--1,
+.cadence-input--2:checked ~ .cadence-panel--2,
+.cadence-input--3:checked ~ .cadence-panel--3 { display: block; }
+.cadence-input--1:checked ~ .cadence-nav .cadence-label--1,
+.cadence-input--2:checked ~ .cadence-nav .cadence-label--2,
+.cadence-input--3:checked ~ .cadence-nav .cadence-label--3 { color: var(--paper); background: var(--ink); }
+.cadence-input--1:focus-visible ~ .cadence-nav .cadence-label--1,
+.cadence-input--2:focus-visible ~ .cadence-nav .cadence-label--2,
+.cadence-input--3:focus-visible ~ .cadence-nav .cadence-label--3 { outline: 2px solid var(--signal); outline-offset: 2px; }
+.row-segment th { font-weight: 400; }
+.segment-indent { padding-left: 14px; color: var(--muted); }
+.period-derived { margin-left: 6px; padding: 2px 6px; border: 1px dashed var(--line-dark); border-radius: 999px; font-size: 9px; font-weight: 400; }
+
+/* ── 价值桥 ───────────────────────────────────────────── */
+.value-bridge { margin: 0 0 44px; padding: 20px 0 24px; border-top: 1px solid var(--ink); }
+.value-bridge .chart-title { margin-bottom: 20px; }
+.bridge-rows { margin: 0; padding: 0; list-style: none; }
+.bridge-rows li { display: grid; grid-template-columns: minmax(120px, 200px) minmax(0, 1fr) 78px; gap: 16px; align-items: center; padding: 9px 0; }
+.bridge-label { font-size: 14px; }
+.bridge-track { position: relative; height: 22px; background: var(--soft); }
+.bridge-bar { position: absolute; top: 0; height: 100%; background: var(--ink); }
+.bridge-bar--face-value { background: var(--line-dark); }
+.bridge-bar--cut { background: repeating-linear-gradient(45deg, var(--signal) 0 4px, transparent 4px 8px); }
+.bridge-bar--total { background: var(--signal); }
+.bridge-marker { position: absolute; top: -5px; width: 2px; height: 32px; background: var(--ink); }
+.bridge-value { font-size: 15px; font-variant-numeric: tabular-nums; text-align: right; }
+.bridge-total { border-top: 1px solid var(--ink); font-weight: 650; }
+.bridge-total .bridge-value, .bridge-price .bridge-value { font-size: 18px; font-weight: 650; }
+.bridge-price .bridge-label, .bridge-price .bridge-value { color: var(--muted); }
+.bridge-range { margin: 18px 0 0; color: var(--muted); font-size: 13px; }
+
+/* ── 估值方法与升级提示 ───────────────────────────────── */
+.method-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px; margin-bottom: 30px; }
+.method-pair article { padding: 20px 0; border-top: 1px solid var(--line-dark); }
+.method-pair article > span { display: block; margin-bottom: 12px; color: var(--muted); font-size: 11px; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; }
+.method-pair strong { display: block; margin-bottom: 12px; font-size: 22px; font-weight: 540; }
+.method-pair p { margin: 0; color: var(--muted); font-size: 14px; }
+.method-ideal { border-top-color: var(--signal); }
+.method-ideal > span { color: var(--signal); }
+.implied-line { max-width: 940px; margin: 0 0 30px; padding: 18px 22px; background: var(--soft); font-size: 15px; }
+.implied-line strong { margin-right: 12px; letter-spacing: .04em; }
+.upgrade-hint { margin-bottom: 30px; padding: 22px 24px; border: 1px solid var(--signal); }
+.upgrade-hint h4 { margin: 0 0 16px; font-size: 15px; font-weight: 650; color: var(--signal); }
+.upgrade-hint ol { margin: 0; padding-left: 20px; }
+.upgrade-hint li { margin-bottom: 14px; font-size: 14px; }
+.upgrade-hint li > * { display: block; }
+.upgrade-hint li strong { margin-bottom: 4px; }
+.upgrade-hint li span { color: var(--muted); }
+.upgrade-hint li em { margin-top: 4px; color: var(--muted); font-size: 12px; font-style: normal; }
+.health-check { margin-bottom: 30px; padding: 16px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.health-check summary { font-size: 13px; font-weight: 650; cursor: pointer; }
+.health-check ul { margin: 18px 0 0; padding: 0; list-style: none; }
+.health-check li { margin-bottom: 16px; font-size: 13px; }
+.health-check li > * { display: block; }
+.health-response { width: max-content; margin-bottom: 6px; padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; }
+.health-response--blocked { color: var(--signal); border-color: var(--signal); }
+.health-check li strong { margin-bottom: 4px; }
+.health-check li span:last-child { color: var(--muted); }
+
+/* ── 驱动、约束与「相对上次」 ─────────────────────────── */
+.driver-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--ink); }
+.driver-card { min-height: 230px; padding: 20px 24px 26px 0; border-bottom: 1px solid var(--line); }
+.driver-card:not(:nth-child(3n)) { border-right: 1px solid var(--line); }
+.driver-card:not(:nth-child(3n+1)) { padding-left: 24px; }
+.driver-card h3 { margin: 30px 0 10px; font-size: 15px; font-weight: 580; }
+.driver-card > strong { display: block; font-size: clamp(22px, 2.6vw, 34px); font-weight: 480; letter-spacing: -.04em; }
+.driver-delta { margin: 14px 0; color: var(--muted); font-size: 13px; }
+.driver-card small { display: block; padding-top: 12px; border-top: 1px solid var(--line); font-size: 12px; }
+.constraint-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line-dark); }
+.constraint-list > li { display: grid; grid-template-columns: 90px 260px 1fr; gap: 20px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.constraint-list > li > .prose-block > p, .constraint-list > li > p { margin: 0; color: var(--muted); font-size: 14px; }
+.delta-line { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0 0 26px; border-top: 1px solid var(--ink); }
+.delta-line > div { padding: 18px 18px 20px 0; }
+.delta-line dt { color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.delta-line dd { margin: 10px 0 0; font-size: 17px; font-weight: 520; }
+.driver-change-list { margin: 26px 0 0; padding: 0; list-style: none; }
+.driver-change-list li { padding: 16px 0; border-top: 1px solid var(--line); }
+.driver-change-list p { margin: 8px 0 0; color: var(--muted); font-size: 14px; }
+.driver-change { display: inline-block; margin-right: 12px; padding: 3px 9px; border: 1px solid var(--signal); border-radius: 999px; color: var(--signal); font-size: 10px; text-transform: uppercase; }
+
+/* ── 护城河与转折点 ───────────────────────────────────── */
+.moat-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0 30px; border-top: 1px solid var(--ink); }
+.moat-card { padding: 20px 0 24px; border-bottom: 1px solid var(--line); }
+.moat-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px; }
+.moat-type { font-size: 15px; font-weight: 650; }
+.moat-trend { display: inline-block; margin-left: auto; padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; font-weight: 650; white-space: nowrap; }
+.moat-trend--变宽 { color: var(--signal); border-color: var(--signal); }
+.moat-trend--变窄 { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.moat-trend--待验证 { border-style: dashed; }
+.moat-trend--已撤销 { color: var(--muted); border-style: dotted; }
+.moat-mechanism { margin: 0 0 16px; font-size: 14px; }
+.moat-card dl { display: grid; gap: 12px; margin: 0; }
+.moat-card dt { margin-bottom: 4px; color: var(--muted); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+.moat-card dd { margin: 0; font-size: 13px; }
+.moat-absent { margin: 0; color: var(--muted); font-size: 14px; }
+.moat-trend-list { margin: 26px 0 0; padding: 0; list-style: none; }
+.moat-trend-list li { display: grid; grid-template-columns: 90px 200px 1fr; gap: 20px; align-items: baseline; padding: 14px 0; border-top: 1px solid var(--line); }
+.moat-trend-list p { margin: 0; color: var(--muted); font-size: 14px; }
+.moat-trend-list .moat-trend { margin-left: 0; }
+
+/* ── 分歧点 ───────────────────────────────────────────── */
+.disagreement { margin-bottom: 30px; padding: 22px 24px; border: 1px solid var(--line-dark); }
+.disagreement h4 { display: flex; align-items: baseline; gap: 12px; margin: 0 0 18px; font-size: 15px; font-weight: 650; }
+.disagreement-driver { margin-left: auto; color: var(--muted); font-size: 12px; font-weight: 480; }
+.disagreement dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin: 0; }
+.disagreement dt { margin-bottom: 6px; color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.disagreement dd { margin: 0; }
+/* 重合不是错误，但也不是好消息：虚线边框把它和一条真实分歧区分开。 */
+.disagreement--converged { border-style: dashed; }
+
+/* ── 管理层承诺与资本配置 ─────────────────────────────── */
+.commitment-counts { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0 20px; margin: 0 0 26px; border-top: 1px solid var(--ink); }
+.commitment-counts article { padding: 16px 0 18px; }
+.commitment-counts span { display: block; color: var(--muted); font-size: 11px; letter-spacing: .06em; }
+.commitment-counts strong { display: block; margin-top: 8px; font-size: clamp(24px, 2.6vw, 34px); font-weight: 480; letter-spacing: -.04em; }
+.commitment-outstanding { margin: 0 0 24px; padding: 0; list-style: none; border-top: 1px solid var(--line-dark); }
+.commitment-outstanding li { display: grid; grid-template-columns: 90px 1fr 200px; gap: 16px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.commitment-outstanding em { color: var(--muted); font-size: 12px; font-style: normal; text-align: right; }
+.commitment-status { display: inline-block; padding: 3px 9px; border: 1px solid var(--line-dark); border-radius: 999px; font-size: 10px; font-weight: 650; white-space: nowrap; }
+.commitment-status--未兑现 { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.commitment-status--部分兑现 { border-style: dashed; }
+.commitment-latest { margin: 0 0 24px; color: var(--muted); font-size: 14px; }
+
+/* ── 证据密度 ─────────────────────────────────────────── */
+.density-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 24px; margin: 0 0 24px; border-top: 1px solid var(--ink); }
+.density-grid article { padding: 18px 0 20px; }
+.density-grid span { display: block; color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.density-grid strong { display: block; margin: 10px 0 8px; font-size: clamp(22px, 2.4vw, 30px); font-weight: 480; letter-spacing: -.04em; }
+.density-grid small { display: block; color: var(--muted); font-size: 12px; }
+.density-method { margin: 0 0 20px; color: var(--muted); font-size: 14px; }
+.density-clear { margin: 0; padding: 14px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+.density-responses { margin: 0; padding: 0; list-style: none; }
+.density-responses > li { padding: 16px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.density-responses > li > strong { display: block; margin: 8px 0 4px; }
+.density-responses > li > span:not([class]) { color: var(--muted); }
+.density-blocked { margin: 12px 0 0; padding-left: 20px; }
+.density-blocked li { margin-bottom: 10px; }
+.density-blocked li > * { display: block; }
+.density-blocked li span { color: var(--muted); }
+.density-blocked li em { margin-top: 2px; color: var(--muted); font-size: 12px; font-style: normal; }
+
+/* ── 打印用指标释义表（屏幕隐藏） ─────────────────────── */
+.metric-glossary { display: none; }
+
+@media (max-width: 800px) {
+  .share-grid, .method-pair, .driver-grid, .delta-line, .segment-row dl { grid-template-columns: 1fr; }
+  .causal-flow { --gut: 24px; --lane: 14px; }
+  .causal-step { padding-right: 9px; }
+  .causal-loop-mark { padding-right: 9px; }
+  .driver-card:not(:nth-child(3n)) { border-right: 0; }
+  .driver-card:not(:nth-child(3n+1)) { padding-left: 0; }
+  .constraint-list > li { grid-template-columns: 1fr; gap: 8px; }
+  .moat-trend-list li { grid-template-columns: 1fr; gap: 8px; }
+  .disagreement dl { grid-template-columns: 1fr; }
+  .density-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .commitment-counts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .commitment-outstanding li { grid-template-columns: 1fr; gap: 8px; }
+  .commitment-outstanding em { text-align: left; }
+  .bridge-rows li { grid-template-columns: minmax(96px, 1fr) 64px; }
+  .bridge-track { display: none; }
+  .segment-head { flex-wrap: wrap; }
+  .segment-head em { margin-left: 0; }
+}
+
+@media print {
+  /* 浮层在纸上没有意义：关掉触发器，改用页尾的释义表。 */
+  .metric-note-toggle, .metric-note[popover] { display: none !important; }
+  .metric-glossary { display: block; break-before: page; }
+  .metric-glossary dl { border-top: 1px solid var(--ink); }
+  .metric-glossary div { padding: 10px 0; border-bottom: 1px solid var(--line); break-inside: avoid; }
+  .metric-glossary dt { font-weight: 650; }
+  .metric-glossary dd { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+  /* 筛选页签在纸上同样无效：三档全部展开，各自带标题。 */
+  .cadence-nav { display: none; }
+  .cadence-panel { display: block !important; break-inside: avoid; }
+  .cadence-panel-heading { display: block; margin: 16px 0 8px; font-size: 13px; font-weight: 650; }
+  .table-wrap table th:first-child { position: static; }
+  .segment-row, .share-card, .driver-card, .value-bridge, .upgrade-hint { break-inside: avoid; }
+  /* 节点圆心用纸色填充，打印时纸色是纯白 */
+  .flywheel { display: none !important; }
+  .flywheel ~ .causal-flow { display: block !important; }
+  .causal-flow li p::before { background: #fff; }
+  .causal-flow ol, .cash-waterfall { break-inside: avoid; }
+  .health-check[open] summary ~ * { display: block; }
+}
+.cadence-missing { margin: 0 0 14px; color: var(--muted); font-size: 12px; }
+
+/* ———— 分析页（financials-final 渲染）————
+   原则：结论一眼可读，溯源（打分依据 / 依据字段路径 / 证据 / 缺口）默认折叠。 */
+
+/* 折叠溯源块：摘要行小号大写，与 block-heading 同族 */
+.fold { margin-top: 16px; border-top: 1px solid var(--line); }
+.fold summary { padding: 10px 0 4px; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; list-style: none; user-select: none; }
+.fold summary::-webkit-details-marker { display: none; }
+.fold summary::after { content: "＋"; margin-left: 8px; }
+.fold[open] summary::after { content: "－"; }
+.fold summary:hover { color: var(--ink); }
+.fold p { max-width: 900px; margin: 8px 0 12px; color: var(--muted); font-size: 13px; line-height: 1.65; }
+.fold ul { max-width: 900px; margin: 8px 0 12px; padding-left: 18px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+.fold li { margin-bottom: 8px; }
+td .fold { margin-top: 4px; border-top: 0; }
+td .fold summary { padding: 0; }
+td .fold p, td .fold ul { font-size: 12px; }
+
+/*
+ * 分点叙述：分析文件里长字段按「① ② ③」分点书写（见
+ * docs/research/workflow/02-multi-dimension-analysis.md），渲染层切成 .prose-point，
+ * 每点独占一行；序号悬挂在文字左侧，折行后与首字对齐，长段落才真正可扫读。
+ */
+.prose-point { display: block; padding-left: 1.35em; text-indent: -1.35em; }
+.prose-point + .prose-point { margin-top: 6px; }
+.fold .prose-point + .prose-point, td .prose-point + .prose-point { margin-top: 4px; }
+
+/* 每节开头的一句话结论：正文级可读，不再用 muted 小字 */
+.section-lead { max-width: 900px; margin: 0 0 34px; font-size: clamp(17px, 1.4vw, 20px); line-height: 1.6; }
+
+/* 维度总结卡里的结论段 */
+.driver-card .dim-conclusion { margin: 14px 0 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+/* 策略建议：两列卡片（空仓者/持仓者） */
+.strategy-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 56px; border-top: 1px solid var(--ink); }
+.strategy-grid > article { padding: 26px 0 30px; border-bottom: 1px solid var(--line); }
+.strategy-grid h3 { margin: 0 0 14px; font-size: 22px; font-weight: 560; letter-spacing: -.02em; }
+.strategy-grid .advice { margin: 0 0 18px; font-size: 15px; line-height: 1.65; }
+.trigger-lines { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line-dark); }
+.trigger-lines > li { padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14px; line-height: 1.55; }
+.trigger-lines strong { font-weight: 650; }
+.trigger-lines .then { color: var(--muted); }
+
+/* 卖出/加仓信号：全宽行，信号名一行、观察方式一段 */
+.signal-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line-dark); }
+.signal-list > li { padding: 20px 0 16px; border-bottom: 1px solid var(--line); }
+.signal-list .signal-name { display: block; margin: 0 0 6px; font-size: 17px; font-weight: 620; letter-spacing: -.01em; }
+.signal-list .signal-desc { max-width: 900px; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.6; }
+
+/* 追问：左边框引用卡，问题加粗、回答正文 */
+.inquiry-block { max-width: 940px; margin: 44px 0 6px; padding: 20px 26px 22px; border-left: 3px solid var(--ink); background: color-mix(in srgb, var(--ink) 4%, var(--paper)); }
+.inquiry-block .q { margin: 0 0 10px; font-size: 16px; font-weight: 700; }
+.inquiry-block .a { margin: 0; font-size: 15px; line-height: 1.7; }
+
+/* 键值行：代替 delta-line 承载长文本（四列窄栏放长段会变成高塔） */
+.kv-list { margin: 0 0 8px; border-top: 1px solid var(--line-dark); }
+.kv-list > div { display: grid; grid-template-columns: 170px 1fr; gap: 24px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.kv-list dt { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding-top: 3px; }
+.kv-list dd { max-width: 900px; margin: 0; font-size: 15px; line-height: 1.6; }
+
+/* 含长文本的表格：左对齐、顶对齐 */
+.analysis-table th, .analysis-table td { text-align: left; vertical-align: top; }
+.analysis-table td { font-size: 13px; line-height: 1.55; color: var(--muted); }
+.analysis-table td:first-child { color: var(--ink); font-weight: 600; font-size: 14px; }
+table td { vertical-align: top; }
+
+@media (max-width: 900px) {
+  .strategy-grid { grid-template-columns: 1fr; gap: 0; }
+  .kv-list > div { grid-template-columns: 1fr; gap: 6px; }
+}
+/* 表格与折叠块内的来源标注不需要 22px 顶距（那是给正文段落用的） */
+td .source-ids, .fold .source-ids { margin-top: 0; }
+/* 首页卡片文案兜底：最多三行截断，防止长结论把卡片撑成一屏 */
+.company-card-stance { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+/* 来源胶囊：不显示名称，只留一枚可点击的高亮标记；名称与时点在 title 提示里 */
+.source-pill { display: inline-block; margin-left: 6px; padding: 1px 8px 2px; border: 1px solid var(--line-dark); border-radius: 999px; color: var(--ink); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-decoration: none; vertical-align: middle; white-space: nowrap; }
+.source-pill:hover { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+
+/* 研究评估页（研究流程第 7 步）：复用既有的区块、表格与统计条，只补三处 */
+/* 首页 eyebrow 里的评估页入口：不占额外高度，第一张公司卡片仍不用滚动 */
+.company-eyebrow a { text-decoration: underline; text-underline-offset: .3em; }
+/* 均分走势：纵轴固定 1–5 分，样本量不足时页面根本不渲染它 */
+.evals-trend { margin: 0 0 32px; }
+.evals-trend svg { display: block; width: 100%; height: auto; border: 1px solid var(--line); }
+.evals-trend figcaption { margin-top: 10px; color: var(--muted); font-size: 12px; }
+/* 缺陷清单：元数据一行、症状原文一行，不折叠——它是这一页最该被读到的东西 */
+.evals-defects { margin: 0; padding: 0; list-style: none; }
+.evals-defects li { padding: 18px 0; border-bottom: 1px solid var(--line); }
+.evals-defects li p { max-width: 900px; margin: 10px 0 0; font-size: 16px; }
+.evals-defect-meta { display: flex; flex-wrap: wrap; gap: 16px; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+</style></head><body class="research-shell"><script defer="" src="../assets/research.js"></script><main class="company-page"><header class="company-header"><div class="company-eyebrow"><span>COMPANY ANALYSIS</span><span>MCD</span></div><h1 data-cjk="false" data-title-scale="md">McDonald&#x27;s Corporation</h1><p class="company-current">麦当劳本质是全球最大的「餐饮地产+品牌特许经营商」：加盟商用自有资本开餐厅、承担人工与运营风险，向麦当劳交租金（约占特许经营收入大头）与销售额约 4%~5% 的特许权使用费，麦当劳用这 95% 加盟占比的超高毛利收入覆盖总部与资本开支，再把接近 100% 的自由现金流通过股息与回购返还股东。</p></header><div class="company-summary"><div><span>市值</span><strong title="166.10B USD（stockanalysis.com，2026-10-09 盘中；Market Cap Growth YoY −21.37%）">166.10B USD</strong><small title="166.10B USD（stockanalysis.com，2026-10-09 盘中；Market Cap Growth YoY −21.37%）">2026-10-09 前双源验证</small></div><div><span>股价</span><strong>234.73 USD</strong><small>截至 <time>2026-10-09 11:01-11:03 ET</time></small></div><div><span>PE</span><strong title="19.07x（TTM，按 TTM 摊薄 EPS $12.31 精算）">19.07x</strong><small title="19.07x（TTM，按 TTM 摊薄 EPS $12.31 精算）">TTM 口径</small></div><div><span>数据完整性</span><strong>9.9 / 9.8 / 10</strong><small>采集 / 分析 / 总结，满分 10</small></div><div><span>数据截止</span><strong>2026-10-09</strong></div></div><section class="company-section" aria-labelledby="dimension-summary"><p class="section-kicker">CONCLUSIONS AND CONFIDENCE</p><h2 id="dimension-summary">维度总结与信心度</h2><div class="driver-grid"><article class="driver-card"><h3>生意质量</h3><strong>8 / 10</strong><p class="dim-conclusion">把 4.5 万家餐厅的流水转成加盟商地租与抽成的收费权生意，毛利率与现金创造能力在整个餐饮业无出其右；代价是过去五年再投资回报未放大，利润增长基本被资本开支吃掉。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">① 单位经济极优：特许经营分部毛利率 84.18%、自营 14.67%（businessEssence.analysis.revenueBreakdown 与 marginByType），FY2025 营业利润率 46.10%、FCF 转化率 83.9%。</span><span class="prose-point">② 现金创造真实：FY2025 经营现金流 10.551B、FCF 7.186B，分红+回购占 FCF 99%（financialMetrics.capitalReturn）。</span><span class="prose-point">③ 扣分项：收入 CAGR 3.73% 而资本开支 CAGR 13.33%、FCF CAGR 仅 0.29%，税后 ROIC 从 25.2% 降到 20.3%（businessEssence.analysis.operatingLeverage），经营杠杆未放大。</span><span class="prose-point">④ 数据缺口仅限非量化项（会员留存率、第三方验证），不影响该维度判断。</span></p></details></article><article class="driver-card"><h3>护城河</h3><strong>8 / 10</strong><p class="dim-conclusion">最硬的护城河是地产产权加 20 年加盟合约，这一段不会随消费趋势变化；但「能提价」这一段正在变窄，2026 年美国客流为负是直接证据。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">① 结构层最宽：自持约 56% 土地与 80% 建筑、95% 门店加盟化、45,356 家门店规模效应（moat.analysis.types 规模效应条）。</span><span class="prose-point">② 数字印证：营业利润率 45.72% vs QSR 26.97%、YUM 32.47%、CMG 15.27%、SBUX 10.37%。</span><span class="prose-point">③ 扣分项：品牌/定价权判定为「待验证」——美国可比销售从 2025Q4 +6.8% 降到 2026Q2 +0.8% 且客流为负，提价空间在低端客群见顶。</span><span class="prose-point">④ 未来五年趋势判为「稳定」，前提是约 250bps 餐厅效率能落地。</span></p></details></article><article class="driver-card"><h3>管理层</h3><strong>7 / 10</strong><p class="dim-conclusion">资本配置纪律清晰、股东回报慷慨、战略语言连续，但连续三年计提「非经常性」重组费用，且回购发生在偏高估值区间，管理层持股比例极低。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">① 正面证据：FY2025 分红+回购约 71 亿美元占 FCF 99%，51 年连续增息；PRSU 考核绑三年 EPS 增速与 ROIC≥16%，CEO「实际支付」薪酬随股价从 36.85M 降到 17.92M，激励与股东同向（management.analysis.alignment）。</span><span class="prose-point">② 负面证据：Accelerating the Organization 三年累计计提 697M、2026 年预计再计提约 250M，管理层评价为 ★★★（management.analysis.keyDecisions）。</span><span class="prose-point">③ 对齐度扣分：CEO 仅持股 0.123%、全体董事高管 0.26%，经济绑定偏弱。</span><span class="prose-point">④ 未解决缺口：未逐笔核验 Form 4 减持，无法确认内部人交易方向。</span></p></details></article><article class="driver-card"><h3>最大风险</h3><strong>6 / 10</strong><p class="dim-conclusion">最大风险是提价空间见顶而加盟商不再投钱——它不会让公司归零，但会让自由现金流长期停滞、估值中枢继续下移；风险可观察、可分散，但难以由投资者对冲。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">① 风险清单中「加盟商现金回报不足」与「客流持续流失」均为高影响、中概率，且指向同一个变量：4.5 万家门店的再投资意愿（inversion.analysis.failurePaths）。</span><span class="prose-point">② 相对可控的部分：业务横跨 100+ 国家、17 个十亿美元单品、无客户集中度，不存在单点致命的结构；对比「食品安全的系统性事件（低概率高影响）」也说明风险不是单点。</span><span class="prose-point">③ 不可控的部分：股东权益 −1.023B、现金仅 822M，若经营现金流两位数下滑，分红与回购必须二选一。</span><span class="prose-point">④ 已有三年期量化证据（ROIC 25.2%→20.3%、FCF 五年 CAGR 0.29%），不是推测。</span></p></details></article><article class="driver-card"><h3>文明趋势</h3><strong>6 / 10</strong><p class="dim-conclusion">连锁快餐不是文明级技术革命的受益者或受害者，它是被数字渠道重塑的成熟现金牛；行业分散到 4.5 万家门店只占全球餐饮支出个位数量级，天花板不是约束。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">① 范式判断为「部分」：产品技术半个世纪无本质变化，变的是分发（数字点单、外送约 41,000 家门店、70 个市场会员），industryTrend.analysis.paradigmShift。</span><span class="prose-point">② 趋势支持项：会员 2.2 亿活跃、2027 年目标 2.5 亿，数字渠道渗透仍在推进。</span><span class="prose-point">③ 扣分项：行业成熟、公司收入 CAGR 3.73% 低于行业中位增速约 5.6%，公司自身把「技术投资回报不达标」列为风险因子。</span><span class="prose-point">④ 数据缺口明确：TAM 各来源分歧极大（3.02%~11.89% CAGR），该维度不宜给高分。</span></p></details></article><article class="driver-card"><h3>估值</h3><strong>8 / 10</strong><p class="dim-conclusion">PE 19.07x 低于五年区间下沿约 24%，按唯一不受加盟会计扭曲的 EV/EBITDA 口径是同业五家中最低；反向 DCF 只隐含 2%~3% 的永续增长，价格已从「贵」回到「合理偏便宜」。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">① 自身历史：PE 从 FY2021–FY2025 的 25.26–31.25x 降至 19.07x，处五年最低（valuation.analysis.vsOwnHistory）。</span><span class="prose-point">② 同业可比口径：EV/EBITDA 14.83x 为五家最低（QSR 16.00x、YUM 17.03x、CMG 19.65x、SBUX 21.87x），且营业利润率最高；PS 6.00x 偏高是加盟会计产物，不可用于比较（valuation.analysis.peerComparisonNote）。</span><span class="prose-point">③ 反向 DCF 隐含增速 2.22%~3.18%，低于公司自身五年收入 CAGR 3.73%（valuation.analysis.reverseDcf）。</span><span class="prose-point">④ 三情景：乐观 382.6（+63.0%）、中性 293.2（+24.9%）、悲观 193.1（−17.7%），下行幅度小于上行幅度。</span><span class="prose-point">⑤ 扣分项：分红+回购已占 FCF 99%，股本无缓冲垫，估值修复依赖基本面不再恶化。</span></p></details></article><article class="driver-card"><h3>企业文化</h3><strong>6 / 10</strong><p class="dim-conclusion">已落盘证据显示三项文化特征：以加盟商关系为系统核心、以长期股东回报为资本配置目标（51 年增息）、以成本纪律推动组织精简；但全部证据来自公司自身披露，无外部独立验证，结论应限于此。</p><details class="fold"><summary>打分依据</summary><p><span class="prose-point">① 加盟商中心：10-K 原文表述加盟关系对整体业绩与品牌保护「of fundamental importance」（management.analysis.culture 第</span><span class="prose-point">①点）。</span><span class="prose-point">② 股东导向：51 年连续增息，资本配置优先级明示为「先投资增长、再保分红、余下回购」，FY2025 分红+回购占 FCF 99%（management.analysis.culture 第</span><span class="prose-point">②点、alignment.compensation）。</span><span class="prose-point">③ 成本纪律：连续三年推进 Accelerating the Organization 与 GBS，累计重组费用 697M（management.analysis.organization.teamStability）。</span><span class="prose-point">④ 证据限制（这是分数向中性收敛的直接原因）：三条均引自 10-K/委托书等公司自述材料，属 Level 3 单源；第 2 步 management.dataGaps 明确登记「无外部独立证据（员工满意度、离职率、加盟商满意度）可交叉验证」，且 2026 年 8 月刚更换美国总裁，组织稳定性证据偏弱。</span></p></details></article></div><p class="company-note">信心度为价值投资视角下对该维度的看多程度（0–10，越高越看多）；最大风险按可控程度、估值按价格吸引力打分；企业文化按文化对长期股东的有利程度打分，结论为基于已落盘证据的客观陈述。</p></section><section class="company-section" aria-labelledby="strategies"><p class="section-kicker">WHAT TO DO ABOUT IT</p><h2 id="strategies">策略建议</h2><div class="strategy-grid"><article><h3>空仓者</h3><p class="advice"><span class="prose-point">① 价格已进入可分批建仓区间，但不要一次买满——增长减速尚未见底，2026Q3 财报前的基本面方向未定。</span><span class="prose-point">② 把入场锚定在三情景的悲观与中性目标之间，用分批而非择时降低「买在减速中段」的风险。</span><span class="prose-point">③ 不该因为 3.29% 股息率就把它当债券买：分红+回购已占 FCF 99%，缓冲区为零。</span></p><ul class="trigger-lines"><li><strong>股价回落至 215 美元以下（约当 17.5x TTM EPS）</strong><span class="then"> —— 建立目标仓位 1/3 的初始头寸</span></li><li><strong>2026Q3 财报（2026-11-04）美国可比销售转正且客流不再为负</strong><span class="then"> —— 补足至目标仓位的一半</span></li><li><strong>股价升破 293 美元（中性情景目标价）而基本面未改善</strong><span class="then"> —— 停止加仓，等待下一次财报确认</span></li></ul><details class="fold"><summary>各触发条件的依据</summary><ul><li><span class="prose-point">① 215 美元约为五年 PE 区间下沿 25.26x 的 70%，位于三情景悲观目标 193.1 与中性目标 293.2 之间（dimensions.valuation.analysis.threeScenario）。</span><span class="prose-point">② 该价位对应股息率约 3.6%、FCF 收益率约 5.1%，接近同行 QSR 的股息率 3.67%。</span></li><li><span class="prose-point">① 客流是区分「提价驱动」与「真需求恢复」的唯一观察点（dimensions.inversion.analysis.failurePaths[0]）。</span><span class="prose-point">② 美国分部 2026Q2 可比销售 +0.8%、客流为负，是当前最大的基本面未知数。</span></li><li><span class="prose-point">① 293.2 美元为三情景中性目标（dimensions.valuation.analysis.threeScenario）。</span><span class="prose-point">② 在中性假设下该价位已完全兑现三年增长，继续买入等于押注乐观情景。</span></li></ul></details></article><article><h3>持仓者</h3><p class="advice"><span class="prose-point">① 继续持有，回报的主要来源是现金而不是估值：股东收益率合计 3.99%（股息 3.29% + 回购 0.73%），分红已连续增长 51 年。</span><span class="prose-point">② 不要在投资者日后的利空情绪里恐慌卖出——下杀的是估值而不是现金流，FY2025 经营现金流仍增长 11.7%。</span><span class="prose-point">③ 但要把仓位上限设在「能承受悲观情景」的水平，因为资产负债表没有缓冲垫。</span></p><ul class="trigger-lines"><li><strong>股价跌至 193 美元附近（悲观情景目标价）</strong><span class="then"> —— 若基本面未触发卖出信号，可动用剩余现金加仓至目标仓位</span></li><li><strong>股价升破 293 美元而美国客流与可比销售未同步改善</strong><span class="then"> —— 减至半仓，锁定估值修复收益</span></li><li><strong>公司宣布削减或暂停回购（当前回购约占 FCF 28.6%）</strong><span class="then"> —— 重新评估仓位，并把股东收益率假设下调至仅股息口径</span></li></ul><details class="fold"><summary>各触发条件的依据</summary><ul><li><span class="prose-point">① 193.1 美元为三情景悲观目标（dimensions.valuation.analysis.threeScenario），对应约 15.7x TTM EPS。</span><span class="prose-point">② 该价位意味着市场按「低速税收型资产」定价，而公司 FY2025 FCF 仍覆盖分红与回购。</span></li><li><span class="prose-point">① 293.2 美元为中性情景目标（dimensions.valuation.analysis.threeScenario）。</span><span class="prose-point">② 估值维度信心度 8 分建立在 19.07x 的低起点上，回到 25x 以上后安全边际消失（dimensions.valuation.analysis.vsOwnHistory）。</span></li><li><span class="prose-point">① FY2025 回购 2.056B 占 FCF 28.61%（dimensions.management.analysis.capitalAllocation.buybackTiming）。</span><span class="prose-point">② 削减回购通常意味着现金流或资本开支预期发生变化，是比股价更早的信号。</span></li></ul></details></article></div><div><h3 class="block-heading">卖出信号</h3><ul class="signal-list"><li><strong class="signal-name">全球可比销售连续两个季度为负（不只是美国）</strong><p class="signal-desc">季度 8-K 新闻稿的 COMPARABLE SALES 表，Total Company 一行为负且连续两期</p><details class="fold"><summary>依据</summary><p><span class="prose-point">① 当前仅美国在 2026Q2 降到 +0.8% 且客流为负，全球仍 +1.3%（dimensions.inversion.analysis.failurePaths[0]）。</span><span class="prose-point">② 全球转负意味着提价策略在多个市场同时失效，生意质量维度的 8 分基础被打破。</span></p></details></li><li><strong class="signal-name">税后 ROIC 跌破 16%（公司 PRSU 考核阈值）</strong><p class="signal-desc">10-K MD&amp;A 的 after-tax ROIC from continuing operations，2025 年为 20.3%</p><details class="fold"><summary>依据</summary><p><span class="prose-point">① 该指标已从 2023 年 25.2% 连续降至 2025 年 20.3%（dimensions.businessEssence.analysis.operatingLeverage）。</span><span class="prose-point">② 16% 是公司自己给管理层设定的下限，跌破说明再投资已不创造价值。</span></p></details></li><li><strong class="signal-name">公司再度扩大加盟商支持规模（现有的 2036 年前约 85 亿美元之外再加码）</strong><p class="signal-desc">8-K 或投资者材料中新增的加盟商资本支持/租金减免承诺金额</p><details class="fold"><summary>依据</summary><p><span class="prose-point">① 现有承诺 2036 年前约 85 亿美元、2030 年前约 50 亿（dimensions.management.analysis.keyDecisions 2026-09-23 条）。</span><span class="prose-point">② 加码等于承认 NEXT 的餐厅效率提升未按计划落地，是加盟商经济性恶化的直接证据。</span></p></details></li><li><strong class="signal-name">AI 定价集体诉讼出现实体不利裁决（如禁令限制算法定价或加盟店数据共享）</strong><p class="signal-desc">法院裁定文书或被公司计入 10-Q 重大或有负债</p><details class="fold"><summary>依据</summary><p><span class="prose-point">① 该案指控 AI 定价系统在自营与加盟店间共享非公开数据协调价格（dimensions.inversion.analysis.failurePaths[3]）。</span><span class="prose-point">② 定价算法与数据打通是 NEXT 的核心工具，被限制将直接削弱提价与效率路径。</span></p></details></li><li><strong class="signal-name">分红被削减或不再增长（中断 51 年连续增息纪录）</strong><p class="signal-desc">季度股息宣告低于上季度，或公司声明暂停年度上调</p><details class="fold"><summary>依据</summary><p><span class="prose-point">① 分红占 FCF 71.18%，这是股东回报的最大一块（dimensions.management.analysis.capitalAllocation）。</span><span class="prose-point">② 在股东权益 −1.023B、现金仅 822M 的结构下，削减股息是现金流恶化的最直接确认。</span></p></details></li></ul></div><div><h3 class="block-heading">加仓信号</h3><ul class="signal-list"><li><strong class="signal-name">股价跌至 193 美元以下（悲观情景目标价）</strong><p class="signal-desc">收盘价连续 5 个交易日低于 193.1 美元，且公司未出现上述卖出信号</p><details class="fold"><summary>依据</summary><p><span class="prose-point">① 193.1 美元为三情景悲观目标，对应约 15.7x TTM EPS（dimensions.valuation.analysis.threeScenario）。</span><span class="prose-point">② 在这个价位上即便按悲观情景也已反映，下行空间被价格而非预测吸收。</span></p></details></li><li><strong class="signal-name">美国可比销售连续两个季度回升至 2% 以上且客流转正</strong><p class="signal-desc">季度 8-K 的 COMPARABLE SALES 表美国一行，公司对客流的定性表述转为正面</p><details class="fold"><summary>依据</summary><p><span class="prose-point">① 客流是区分提价与真需求的核心观察点（dimensions.inversion.analysis.failurePaths[0]）。</span><span class="prose-point">② 恢复到 2% 以上接近 FY2025 美国全年 +2.1% 的水平，说明减速是阶段性的。</span></p></details></li><li><strong class="signal-name">NEXT 的约 250bps 餐厅效率出现可验证的分期落地数据</strong><p class="signal-desc">公司披露美国加盟商单店现金流改善幅度，或 ArchIQ 部署门店数达到覆盖过半</p><details class="fold"><summary>依据</summary><p><span class="prose-point">① 该目标约合美国单店年均 10 万美元现金流收益、约四年回本（dimensions.management.analysis.keyDecisions 2026-09-23 条）。</span><span class="prose-point">② 这是三情景乐观假设（EPS 年化 9%）的唯一验证点，落地即允许上修估值中枢。</span></p></details></li><li><strong class="signal-name">税后 ROIC 止跌回升至 22% 以上</strong><p class="signal-desc">10-K MD&amp;A 的 after-tax ROIC，回到 2024 年 21.8% 以上</p><details class="fold"><summary>依据</summary><p><span class="prose-point">① ROIC 从 2023 年 25.2% 降至 2025 年 20.3%，是生意质量维度扣分的核心依据（dimensions.businessEssence.analysis.operatingLeverage）。</span><span class="prose-point">② 回到 22% 意味着资本开支的边际回报重新上升，三情景中的中性假设被验证。</span></p></details></li><li><strong class="signal-name">股息连续两个年度上调幅度回升至 5% 以上</strong><p class="signal-desc">每年 9 月/10 月的季度股息宣告同比增幅（2026 年为 +4.74%）</p><details class="fold"><summary>依据</summary><p><span class="prose-point">① 2026 年上调幅度 4.74%，派息率 62.71%（dimensions.valuation.analysis.currentMultiples.dividendYieldPct）。</span><span class="prose-point">② 派息率与增幅同时回升，说明管理层对自由现金流的能见度改善。</span></p></details></li></ul></div></section><section class="company-section" aria-labelledby="business-essence"><p class="section-kicker">WHAT THE BUSINESS IS</p><h2 id="business-essence">生意本质</h2><p class="section-lead">把全球 4.5 万家餐厅的流水，转成向加盟商收取的地租与品牌抽成。</p><h3 class="block-heading">收入结构（FY2025）</h3><div class="table-wrap"><table><thead><tr><th>分部</th><th>收入（百万 USD）</th><th>占比（%）</th><th>来源</th></tr></thead><tbody><tr><td>特许经营收入（租金+特许权使用费+初期费）</td><td>16.548B</td><td>61.55%</td><td><a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="SEC 10-K FY2025 MD&amp;A 经营结果表">来源</a></td></tr><tr><td>自营餐厅销售</td><td>9.690B</td><td>36.04%</td><td><a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="SEC 10-K FY2025 MD&amp;A 经营结果表">来源</a></td></tr><tr><td>其他收入（技术/数字平台分摊费、品牌授权）</td><td>647M</td><td>2.41%</td><td><a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="SEC 10-K FY2025 MD&amp;A 经营结果表">来源</a></td></tr><tr><td>其中：美国分部收入</td><td>10.825B</td><td>40.26%</td><td><a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="SEC 10-K FY2025 分部附注">来源</a></td></tr><tr><td>其中：国际直营市场（IOM）收入</td><td>13.633B</td><td>50.71%</td><td><a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="SEC 10-K FY2025 分部附注">来源</a></td></tr><tr><td>其中：国际发展许可市场及总部收入</td><td>2.427B</td><td>9.03%</td><td><a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="SEC 10-K FY2025 分部附注">来源</a></td></tr></tbody></table></div><h3 class="block-heading">5 年盈利能力趋势</h3><div class="table-wrap"><table><thead><tr><th>财年</th><th>毛利率</th><th>经营利润率</th><th>净利率</th><th>来源</th></tr></thead><tbody><tr><td>FY2021</td><td>54.17%</td><td>44.59%</td><td>32.49%</td><td><a class="source-pill" href="https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json" rel="noreferrer" title="SEC XBRL companyfacts（营业利润/净利）+ stockanalysis（标准化毛利）">来源</a></td></tr><tr><td>FY2022</td><td>56.97%</td><td>40.42%</td><td>26.64%</td><td><a class="source-pill" href="https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json" rel="noreferrer" title="SEC XBRL companyfacts + stockanalysis">来源</a></td></tr><tr><td>FY2023</td><td>57.12%</td><td>45.69%</td><td>33.22%</td><td><a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="SEC 10-K FY2025 经营结果表 + stockanalysis 标准化毛利">来源</a></td></tr><tr><td>FY2024</td><td>56.75%</td><td>45.19%</td><td>31.72%</td><td><a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="SEC 10-K FY2025 经营结果表 + stockanalysis 标准化毛利">来源</a></td></tr><tr><td>FY2025</td><td>57.41%</td><td>46.10%</td><td>31.85%</td><td><a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="SEC 10-K FY2025 经营结果表 + stockanalysis 标准化毛利">来源</a></td></tr></tbody></table></div><h3 class="block-heading">商业模式与粘性</h3><dl class="kv-list"><div><dt>商业模式</dt><dd>销售模式 混合 · 产品形态 服务</dd></div><div><dt>粘性 / 锁定 · 中</dt><dd><span class="prose-point">① 消费端转换成本近零，但会员体系在制造行政粘性：70 个市场、约 2.2 亿 90 天活跃会员，公司称会员到访频次为非会员约 2.5 倍。</span><span class="prose-point">② 加盟端锁定极强：20 年加盟协议，且公司握有约 56% 土地与 80% 建筑产权，加盟商迁移等于放弃门店资产。</span><span class="prose-point">③ 品牌资产不可替代：17 个十亿美元级单品，加盟商离开体系即失去该品牌使用权。</span></dd></div><div><dt>毛利率 vs 同行 · 57.41%</dt><dd><span class="prose-point">① 加盟模式把成本转出去：95% 门店的租金以外的运营成本由加盟商承担，公司毛利只减餐厅占用费与自营成本。</span><span class="prose-point">② 自持地产是毛利被低估的部分：租金收入计入特许经营收入，对应的地产折旧不在餐厅成本里。</span><span class="prose-point">③ 差距的绝对值说明问题：57.4% vs 星巴克 22.3%，同一条街上卖咖啡与汉堡，差别不在产品而在谁承担租金与人工。</span></dd></div><div><dt>经营杠杆</dt><dd><span class="prose-point">① 收入五年 CAGR 3.73%，净利 CAGR 3.21%，两者几乎同步——没有出现经营杠杆放大。</span><span class="prose-point">② 资本开支 CAGR 13.33%，远快于收入，自由现金流五年 CAGR 仅 0.29%。</span><span class="prose-point">③ 结论：过去五年是「费用受控、增长靠提价与开店，但再投资回报未放大」的组合。</span></dd></div></dl><details class="fold"><summary>本节证据 9 条</summary><ul><li>90 天活跃会员数：近 2.2 亿（70 个市场）（2026-06-30） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000067/exhibit991-6302026.htm" rel="noreferrer" title="SEC 8-K EX-99.1 2026Q2 业绩新闻稿">来源</a></li><li>会员全系统销售额（TTM）：超 400 亿美元（同比 +20% 以上）（2026-06-30） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000067/exhibit991-6302026.htm" rel="noreferrer" title="SEC 8-K EX-99.1 2026Q2 业绩新闻稿">来源</a></li><li>加盟门店占比：全球约 95%（美国 95%、IOM 89%、IDL 99%）（2025-12-31） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="SEC 10-K FY2025 BUSINESS SUMMARY 与分部附注">来源</a></li><li>自持地产比例：约 56% 土地、约 80% 建筑物（2025-12-31） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="SEC 10-K FY2025 RESTAURANT DEVELOPMENT AND CAPITAL EXPENDITURES">来源</a></li><li>收入 CAGR（2021→2025）：3.73%（FY2021–FY2025） <a class="source-pill" href="docs/research/tools/financial_rigor.py" rel="noreferrer" title="financial_rigor.py calc（(26,885/23,223)^(1/4)−1）">来源</a></li><li>资本开支 CAGR（2021→2025）：13.33%（2.040B→3.365B）（FY2021–FY2025） <a class="source-pill" href="https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json" rel="noreferrer" title="SEC XBRL companyfacts PaymentsToAcquirePropertyPlantAndEquipment">来源</a></li><li>自由现金流 CAGR（2021→2025）：0.29%（7.102B→7.186B）（FY2021–FY2025） <a class="source-pill" href="docs/research/tools/financial_rigor.py" rel="noreferrer" title="financial_rigor.py calc（(7,186/7,102)^(1/4)−1）">来源</a></li><li>税后 ROIC（公司口径）：25.2%（2023）→21.8%（2024）→20.3%（2025）（2023-12-31 至 2025-12-31） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="SEC 10-K FY2025 MD&amp;A">来源</a></li><li>SG&amp;A 占全系统销售额：2.18%（FY2025），2026 年指引约 2.2%（FY2025） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="SEC 10-K FY2025 OUTLOOK">来源</a></li></ul></details><aside class="inquiry-block"><p class="q">追问 · 这门生意好在哪？如果只能用一句话描述，是什么？</p><p class="a"><span class="prose-point">好在「不承担餐厅风险，却分享餐厅流水」，这是一门把运营资本负担外包、把现金收进来的收费权生意。</span><span class="prose-point">① 特许经营收入 16.548B 只对应 2.618B 占用费用，分部毛利率 84.18%。</span><span class="prose-point">② 自营部分承担租金人工，1.422B 利润换 9.690B 收入，毛利率仅 14.67%。</span><span class="prose-point">③ 结算方式是现金：全系统销售额 139.4B、公司确认 26.885B，缺口是加盟商流水但比例抽成照收。</span><span class="prose-point">④ 代价是租期与地产：自持约 56% 土地，重资产在表外由加盟商投资承担。</span></p></aside><details class="fold"><summary>数据缺口 2 项</summary><ul><li>businessEssence.analysis.grossMarginVsPeers.companyPct——公司财报不设毛利科目，57.41% 是 stockanalysis 标准化口径（收入−特许经营占用费−自营餐厅费用−其他餐厅费用），与同行比较前已注明；同行数据同源于该平台，口径内部一致但非公司披露值</li><li>businessEssence.analysis.stickiness.evidence[0..1]——会员数据为公司自报口径（90 天活跃、不公开留存率与复购频次），无第三方独立验证；「会员到访频次为非会员 2.5 倍」为公司在投资者日的表述，未在 10-K 中复现</li></ul></details></section><section class="company-section" aria-labelledby="moat"><p class="section-kicker">WHAT PROTECTS IT</p><h2 id="moat">护城河评估</h2><p class="section-lead">规模与地产产权构成的护城河仍然最宽，但定价权的边际正在变窄。</p><div class="table-wrap"><table class="analysis-table"><thead><tr><th>类型</th><th>验证方法</th><th>判定</th><th>证据</th></tr></thead><tbody><tr><td>品牌/定价权</td><td>是否能在不损失销量的情况下提价？</td><td>待验证</td><td><details class="fold"><summary>证据 3 条</summary><ul><li>全球可比销售增速（提价驱动）：2025Q4 +5.7% → 2026Q1 +3.8% → 2026Q2 +1.3%（2025Q4–2026Q2） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000067/exhibit991-6302026.htm" rel="noreferrer" title="SEC 8-K EX-99.1 各期业绩新闻稿">来源</a></li><li>美国可比销售与客流方向：2026Q2 美国可比销售 +0.8%，公司表述为客单价增长被客流下滑抵消（2026-06-30） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000067/exhibit991-6302026.htm" rel="noreferrer" title="SEC 8-K EX-99.1 2026Q2 业绩新闻稿">来源</a></li><li>十亿美元级单品数：17 个（2026-09-23） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000076/exhibit991-investorupdate2.htm" rel="noreferrer" title="SEC 8-K EX-99.1 投资者日">来源</a></li></ul></details></td></tr><tr><td>转换成本</td><td>客户迁移到竞品的成本有多高？</td><td>不存在（消费端）/ 存在（加盟端）</td><td><details class="fold"><summary>证据 2 条</summary><ul><li>消费端转换成本：近零：一顿饭的选择，无合约、无数据锁定（2026-10-09） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="商业模式属性判断，依据 10-K 收入结构（无订阅/无合约收入）">来源</a></li><li>加盟端转换成本：20 年加盟协议 + 公司自持约 56% 土地、80% 建筑，加盟商退出即失去门店资产（2025-12-31） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="SEC 10-K FY2025 BUSINESS SUMMARY 与地产披露">来源</a></li></ul></details></td></tr><tr><td>网络效应</td><td>用户越多产品越好吗？</td><td>不存在</td><td><details class="fold"><summary>证据 1 条</summary><ul><li>顾客间互相增强的机制：无。门店密度提升外送效率与品牌可见度，属规模效应子类而非网络效应（2026-10-09） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="依据 10-K 业务描述（无平台型双边市场结构）">来源</a></li></ul></details></td></tr><tr><td>规模效应</td><td>规模带来的成本优势有多大？</td><td>存在</td><td><details class="fold"><summary>证据 4 条</summary><ul><li>系统规模：45,356 家门店 / 100+ 国家 / 全系统销售额 139.4B（2025-12-31） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="SEC 10-K FY2025">来源</a></li><li>SG&amp;A 摊薄程度：占全系统销售额 2.18%，2026 年目标约 2.2%（FY2025） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="SEC 10-K FY2025 OUTLOOK">来源</a></li><li>营业利润率对比：MCD 45.72% vs QSR 26.97% / YUM 32.47% / CMG 15.27% / SBUX 10.37%（TTM）（2026Q2 TTM） <a class="source-pill" href="https://stockanalysis.com/stocks/mcd/statistics/" rel="noreferrer" title="stockanalysis.com 各公司 statistics">来源</a></li><li>单店系统销售额：约 307 万美元/店（139.4B ÷ 45,356）（FY2025） <a class="source-pill" href="docs/research/tools/financial_rigor.py" rel="noreferrer" title="financial_rigor.py calc（139400/45356×1000）">来源</a></li></ul></details></td></tr><tr><td>技术/专利壁垒</td><td>技术领先几年？能否被复制？</td><td>待验证</td><td><details class="fold"><summary>证据 3 条</summary><ul><li>数字基础设施规模：跨 46,000+ 门店的通用技术平台与单一企业数据底座；约 2.2 亿 90 天活跃会员（2026-09-23） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000076/exhibit991-investorupdate2.htm" rel="noreferrer" title="SEC 8-K EX-99.1 投资者日">来源</a></li><li>AI 运营系统目标收益：ArchIQ 目标约 250bps 餐厅层面效率，约合美国单店年均 10 万美元现金流（2026-09-23） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000076/exhibit991-investorupdate2.htm" rel="noreferrer" title="SEC 8-K EX-99.1 投资者日">来源</a></li><li>可复制性：无专利保护：产品配方与技术资产可被同业复制，优势在执行规模而非知识产权（2026-10-09） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="依据 10-K 无 R&amp;D 科目、无专利收入披露（研发费用字段 unavailable）">来源</a></li></ul></details></td></tr></tbody></table></div><dl class="kv-list"><div><dt>过去 5 年 · 变宽</dt><dd><span class="prose-point">① 门店从 41,822（2023）增至 45,356（2025），规模优势继续扩大。</span><span class="prose-point">② 营业利润率 45.19%（2024）→46.10%（2025）。</span><span class="prose-point">③ 会员从零做到 70 个市场、约 2.2 亿活跃用户。</span><span class="prose-point">④ 但 ROIC 从 25.2% 降到 20.3%，说明同一护城河上新增资本的回报在下降。</span></dd></div><div><dt>未来 5 年 · 稳定</dt><dd><span class="prose-point">① 变宽的来源：密度与数字化（会员、ArchIQ、外送覆盖约 41,000 家门店）。</span><span class="prose-point">② 变窄的来源：美国可比销售从 +6.8% 降到 +0.8%、客流为负，提价空间在低端客群见顶；资本开支五年翻倍而 FCF 零增长。</span><span class="prose-point">③ 净判断为稳定，前提是 NEXT 的 250bps 餐厅效率能真实落地并能转成流量。</span></dd></div></dl><aside class="inquiry-block"><p class="q">追问 · 10年后这条护城河还在吗？什么能摧毁它？</p><p class="a"><span class="prose-point">10 年后仍然在，因为最硬的那一段是地产产权与 20 年加盟合约，两者都不随消费趋势变化；但「能提价」这一段是脆的。</span><span class="prose-point">① 地产是护城河的物理层：自持约 56% 土地、80% 建筑，使公司即使品牌老化也能靠租金收钱。</span><span class="prose-point">② 摧毁路径第一条是加盟商经济性：NEXT 承诺 2036 年前约 85 亿美元支持，本身就是加盟商再投资能力不足的信号。</span><span class="prose-point">③ 第二条是客流长期流失：若可比销售连续两年靠提价维持而客流为负，品牌抽成的分母会缓慢萎缩。</span><span class="prose-point">④ 第三条是监管对定价算法的干预（AI 定价集体诉讼），直接打击最有效的提价工具。</span></p></aside><details class="fold"><summary>数据缺口 2 项</summary><ul><li>moat.analysis.types[2].evidence——网络效应不存在为商业模式属性判断，非量化证据（无第三方数据可引用），来源栏引用的是 10-K 业务描述作为否定依据</li><li>moat.analysis.types[4].evidence[2]——「无专利保护」依据的是公司不披露研发费用与专利收入（采集文件 technology.rdExpense 为 unavailable），属间接推断而非直接披露；若要确证需查专利数据库，超出采集清单范围</li></ul></details></section><section class="company-section" aria-labelledby="inversion"><p class="section-kicker">HOW IT COULD FAIL</p><h2 id="inversion">逆向思考与风险清单</h2><p class="section-lead">最大的失败路径不是「没人吃麦当劳」，而是提价到顶而加盟商不再投钱。</p><div class="table-wrap"><table class="analysis-table"><thead><tr><th>失败路径</th><th>概率</th><th>影响</th><th>证据</th></tr></thead><tbody><tr><td>客流持续流失、增长全靠提价，直至价格弹性耗尽</td><td>中</td><td>高</td><td><details class="fold"><summary>证据 2 条</summary><ul><li>美国可比销售轨迹：2025Q4 +6.8% → 2026Q1 +3.9% → 2026Q2 +0.8%，且 2026Q2 客流为负（2025Q4–2026Q2） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000067/exhibit991-6302026.htm" rel="noreferrer" title="SEC 8-K EX-99.1 各期业绩新闻稿">来源</a></li><li>CFO 对三季度的指引：美国可比销售全季「略为负」（2026Q3）（2026-09 媒体转述） <a class="source-pill" href="https://stocktwits.com/news-articles/markets/equity/mcd-stock-worst-month-pandemic-cfo-warns-september-us-sales-rebound-may-not-save-q3/cZM7oLdRBBN" rel="noreferrer" title="Stocktwits 对 CFO 发言的报道（媒体转述，非公司公告原文）">来源</a></li></ul></details></td></tr><tr><td>加盟商现金回报低于门槛，开店与门店现代化同步失速</td><td>中</td><td>高</td><td><details class="fold"><summary>证据 2 条</summary><ul><li>NEXT 加盟商支持承诺：2036 年前约 85 亿美元（2030 年前约 50 亿），含租金减免与资本支持；约四年回本期、约 10 万美元/店年均现金流收益（2026-09-23） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000076/exhibit991-investorupdate2.htm" rel="noreferrer" title="SEC 8-K EX-99.1 投资者日">来源</a></li><li>扩张目标：2026 年开约 2,600 家、净增约 2,100 家，2027 年底目标 50,000 家门店（FY2025 10-K OUTLOOK） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="SEC 10-K FY2025 OUTLOOK">来源</a></li></ul></details></td></tr><tr><td>再投资回报率持续下滑，资本开支吞噬自由现金流</td><td>高</td><td>中</td><td><details class="fold"><summary>证据 3 条</summary><ul><li>资本开支与 FCF：资本开支 2.040B（2021）→3.365B（2025），同期 FCF 7.102B→7.186B（CAGR 0.29%）（FY2021–FY2025） <a class="source-pill" href="https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json" rel="noreferrer" title="SEC XBRL companyfacts + financial_rigor.py calc">来源</a></li><li>税后 ROIC：25.2%（2023）→21.8%（2024）→20.3%（2025）（2023–2025） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="SEC 10-K FY2025 MD&amp;A">来源</a></li><li>未来资本强度：2027–2030 年每年约 30 亿美元基线资本开支 + 累计 15~20 亿美元资本合作支持（2026-09-23） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000076/exhibit991-investorupdate2.htm" rel="noreferrer" title="SEC 8-K EX-99.1 投资者日">来源</a></li></ul></details></td></tr><tr><td>AI 定价的集体诉讼改变定价与数据合规边界</td><td>低</td><td>中</td><td><details class="fold"><summary>证据 1 条</summary><ul><li>诉讼状态：全国性集体诉讼，指控 AI 定价系统在自营与加盟店之间共享非公开数据协调菜单价格；尚未获集体认证，公司 2026Q2 10-Q 未计提（2026-10-02 至 10-07 报道） <a class="source-pill" href="https://apnews.com/article/mcdonalds-ai-pricing-lawsuit-competition-franchisees-bb78e854b11b54b394603effa7550bbe" rel="noreferrer" title="媒体报道汇总（Reuters / AP / LA Times / The Guardian；公司披露尚未覆盖）">来源</a></li></ul></details></td></tr><tr><td>资产负债表无缓冲垫，利率与再融资成本上升直接压缩股东回报</td><td>中</td><td>中</td><td><details class="fold"><summary>证据 3 条</summary><ul><li>资本结构：股东权益 −1.023B（2026-06-30）；现金 822M；有息负债 40.698B；含租赁广义负债 54.6B（2026-06-30） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000073/mcd-20260630.htm" rel="noreferrer" title="SEC 10-Q 2026Q2 资产负债表">来源</a></li><li>利息费用指引：2026 年同比上升 4%~6%（2025 年已达 1.582B）（FY2025 10-K OUTLOOK） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="SEC 10-K FY2025 OUTLOOK">来源</a></li><li>利息保障倍数：7.79x（stockanalysis TTM 口径）（2026Q2 TTM） <a class="source-pill" href="https://stockanalysis.com/stocks/mcd/statistics/" rel="noreferrer" title="stockanalysis.com MCD statistics">来源</a></li></ul></details></td></tr><tr><td>食品安全或品牌系统性事件同时击穿 4.5 万家门店</td><td>低</td><td>高</td><td><details class="fold"><summary>证据 1 条</summary><ul><li>公司自认风险：10-K 将 Food safety concerns 与品牌价值/相关性单列为独立风险因子（FY2025） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="SEC 10-K FY2025 RISK FACTORS">来源</a></li></ul></details></td></tr></tbody></table></div><h3 class="block-heading">历史类比</h3><ul class="signal-list"><li><strong class="signal-name">可口可乐（1980s–2010s 的成熟期路径）</strong><p class="signal-desc">同为全球品牌+特许/装瓶外包模式，增长从量转到价，靠提价与新兴市场维持中个位数增长；结局：长期稳住了现金流与分红，但估值中枢从 30x 以上的成长股水平下移到 20x 上下——「从成长股变成债券替代品」的估值重估是这条路径的真实代价 <a class="source-pill" href="https://stockanalysis.com/stocks/mcd/statistics/" rel="noreferrer" title="模式类比，基于两家公司披露的商业模式结构与麦当劳当前 19.07x PE 位置">来源</a></p></li><li><strong class="signal-name">星巴克（2018–2024）</strong><p class="signal-desc">同为全球连锁餐饮，同样出现「提价保增长、客流走弱、门店体验下降」，随后换帅并推动复兴计划；结局：客流与同店修复缓慢，估值先杀后修；2026 年 PE 仍高达 53.5x，说明市场对「修复叙事」给的估值远高于对「成熟收租」给的估值 <a class="source-pill" href="https://stockanalysis.com/stocks/sbux/statistics/" rel="noreferrer" title="stockanalysis.com SBUX statistics（TTM PE 53.54）">来源</a></p></li><li><strong class="signal-name">西尔斯（Sears，1990s–2010s）</strong><p class="signal-desc">反面对照：同样以地产+品牌为核心资产，但在客流流失时用回购与资产变现维持报表，最终耗尽资产；结局：破产。差异在麦当劳的现金流来自加盟商合约（经常性、20 年期），西尔斯来自门店零售（可流失），且麦当劳的资本开支仍在投向门店而非变现地产 <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="对照判断，基于麦当劳 FY2025 FCF 7.186B 覆盖分红+回购 99% 而非资产处置（10-K 现金流表）">来源</a></p></li></ul><h3 class="block-heading">空方论点</h3><ul class="signal-list"><li><strong class="signal-name">增长全靠涨价、客流在流失，价格弹性已经在低端客群见顶</strong><p class="signal-desc">持有者：卖方分析师（Bernstein 评价「利润率目标有说服力但销售改善路径未被证实」）与财经媒体（Forbes、Business Insider）</p><details class="fold"><summary>证据 1 条</summary><ul><li>2026Q2 美国可比销售：+0.8%（2025Q2 为 +2.5%），客流为负（2026-06-30） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000067/exhibit991-6302026.htm" rel="noreferrer" title="SEC 8-K EX-99.1 2026Q2 业绩新闻稿">来源</a></li></ul></details></li><li><strong class="signal-name">NEXT 是重资本赌注，市场拒绝为未证实的销售改善预先付钱</strong><p class="signal-desc">持有者：投资者日当天的市场定价与多家券商</p><details class="fold"><summary>证据 1 条</summary><ul><li>投资者日股价反应：当日下跌约 5%，盘中最低 234.03 美元（2022 年以来最低）；Morgan Stanley 目标价降至 297、Melius 降至 230、Bernstein 降至 250（2026-09-23） <a class="source-pill" href="https://www.businessinsider.com/mcdonalds-next-restaurant-makeover-investors-skeptical-stock-four-year-low-2026-9" rel="noreferrer" title="Business Insider 与 Stocktwits 对投资者日及券商动作的报道">来源</a></li></ul></details></li><li><strong class="signal-name">五年跑输同业，相对优势可能在变化</strong><p class="signal-desc">持有者：财经媒体</p><details class="fold"><summary>证据 1 条</summary><ul><li>五年股价表现：MCD −3% vs Restaurant Brands +14%、Yum Brands +13%（2026-09） <a class="source-pill" href="https://www.businessinsider.com/mcdonalds-next-restaurant-makeover-investors-skeptical-stock-four-year-low-2026-9" rel="noreferrer" title="Business Insider（引述区间表现）">来源</a></li></ul></details></li></ul><details class="fold"><summary>跨学科检验 4 项 · 偏误自查 4 项</summary><ul><li><strong>竞争博弈</strong>：快餐是「价格可观察、产品可复制」的市场，均衡倾向价格战。麦当劳用地产租金（不随竞品价格波动）作为利润底盘，等于把一部分利润从价格博弈里摘出来——这是它比同业更能扛价格战的结构原因，也是 2026Q2 美国只 +0.8% 却仍有 46% 营业利润率的原因。</li><li><strong>技术采纳曲线</strong>：数字点单与会员处于「早期多数」向「晚期多数」过渡阶段：70 个市场、2.2 亿活跃会员已过临界点，但公司自身设定的 2027 年目标 2.5 亿会员意味着增量将主要来自低活跃度人群，边际价值递减。</li><li><strong>复利与再投资回报（ROIC-WACC 差）</strong>：公司口径税后 ROIC 20.3%（2025）仍显著高于 stockanalysis 估算的 WACC 5.63%，即每 1 美元再投资仍在创造价值；但 ROIC 从 25.2% 降到 20.3% 的斜率说明「差值」在收窄，再投资的边际回报已进入下降通道。</li><li><strong>期权定价视角（不对称性）</strong>：NEXT 的资本承诺（年 30 亿资本开支 + 200 亿级加盟商支持）是到期日 2030 年的看涨期权：上行是利润率进入50%+区间，下行是 FCF 被持续占用而销售未改善。市场已用 −20% 的股价与 −5% 的投资者日单日跌幅为这个期权定价。</li><li><strong>叙事偏差</strong>：「股息王+全球品牌」的熟悉感容易让人把稳定当成安全。反制证据：2026Q2 美国可比销售仅 +0.8%、客流为负，增速的下滑是当期的而非叙事的。</li><li><strong>锚定效应</strong>：52 周高点 341.75 美元是强锚点。反制做法：估值判断只用三情景工具的绝对值（中性 293.2 美元），不用「距高点还差多少」做参照。</li><li><strong>幸存者偏差</strong>：拿麦当劳对比星巴克、Chipotle 的「成功翻盘」会高估修复概率。反制做法：失败路径里保留了「加盟商失速」这条 4.5 万门店同时受影响的路径，并把它列为高影响项。</li><li><strong>近因偏差</strong>：2026 年 9 月投资者日后的股价下跌是最近最强信号，容易把一次事件当成趋势。反制做法：把「资本开支五年翻倍而 FCF 零增长」这条五年期数据作为独立证据，它早于本次事件存在。</li></ul></details><aside class="inquiry-block"><p class="q">追问 · 我最可能在哪里犯错？聪明人为什么会不买/做空这家公司？</p><p class="a"><span class="prose-point">最可能犯错在「把稳定的现金流结构误当成稳定的增长」，而市场不买的原因恰恰是增长在减速。</span><span class="prose-point">① 五年事实：资本开支 CAGR 13.33%、FCF CAGR 0.29%、ROIC 从 25.2% 降到 20.3%——再投资的边际回报在下降。</span><span class="prose-point">② 当期事实：美国可比销售从 +6.8% 掉到 +0.8% 且客流为负，CFO 指引三季度略为负。</span><span class="prose-point">③ 做空理由不需要公司变差，只需要「它变成 20x 的低速税收型资产」，那就意味着估值中枢继续下移。</span><span class="prose-point">④ 反向风险也不能忽视：若 NEXT 的 250bps 效率真实落地，20x PE 的定价会立刻显得便宜。</span></p></aside><details class="fold"><summary>数据缺口 3 项</summary><ul><li>inversion.analysis.failurePaths[0].evidence[1]——CFO 关于 2026Q3 美国可比销售「略为负」的指引来自媒体转述，未见公司在 8-K 或 10-Q 中原文披露；已在来源栏标注为媒体转述</li><li>inversion.analysis.historicalAnalogies——三条历史类比为结构性对照，无独立的可比研究来源；结局描述参考各公司公开历史与当前估值（SBUX PE 见 stockanalysis），已注明依据</li><li>inversion.analysis.failurePaths[0].evidence[0]——「客流为负」为公司对可比销售构成的定性表述，公司未披露具体客流变动百分比</li></ul></details></section><section class="company-section" aria-labelledby="management"><p class="section-kicker">WHO RUNS IT</p><h2 id="management">管理层评估</h2><p class="section-lead">资本配置纪律清晰且股东回报慷慨，但组织连续三年「非经常性」重组是隐患。</p><h3 class="block-heading">关键决策复盘</h3><div class="table-wrap"><table class="analysis-table"><thead><tr><th>时间</th><th>决策</th><th>结果</th><th>评分</th></tr></thead><tbody><tr><td>2019–2025</td><td>全面推进 Accelerating the Arches（核心菜单、营销最大化、4D：数字/外送/得来速/开店）</td><td>全系统销售额升至 139.4B、营业利润率 2025 年 46.1%、会员从零到 2.2 亿；但可比销售在 2026 年明显减速 <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="SEC 10-K FY2025 与 2026Q2 8-K EX-99.1">来源</a></td><td>★★★★</td></tr><tr><td>2023–2027</td><td>Accelerating the Organization：精简组织 + 建 Global Business Services 共享服务中心</td><td>三年累计计提 697M 重组费用（2025 年 226M、预计 2026 年再约 250M）；SG&amp;A 降至全系统销售额 2.18% <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="SEC 10-K FY2025 重组费用附注与 OUTLOOK">来源</a></td><td>★★★</td></tr><tr><td>2024</td><td>出售韩国业务、收购以色列业务；董事长与 CEO 合并，另设首席独立董事</td><td>当年计提约 70M 交易相关费用（$0.08/股）；治理结构在 2025 年股东大会后经复核维持 <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000119312526145548/mcd-20260407.htm" rel="noreferrer" title="SEC 10-K FY2025 与 2026 DEF 14A">来源</a></td><td>★★★</td></tr><tr><td>2026-08-04</td><td>在美国可比销售仅 +0.8% 的同一份公告中更换麦当劳美国总裁（Skye Anderson 接替 Joe Erlinger）</td><td>待观察，尚无可评估结果 <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000067/exhibit991-6302026.htm" rel="noreferrer" title="SEC 8-K EX-99.1 2026Q2 业绩新闻稿">来源</a></td><td>★★★</td></tr><tr><td>2026-09-23</td><td>投资者日发布 McDonald&#x27;s &gt; NEXT：2030 年营业利润率 low-to-mid 50%、G&amp;A 降至约 1.9%、约 250bps 餐厅效率、FCF 转化率 mid-to-high 80%；承诺 2036 年前约 85 亿美元加盟商支持</td><td>当日股价跌约 5%，盘中触及 2022 年以来最低；多家券商下调目标价但多数维持看多 <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000076/exhibit991-investorupdate2.htm" rel="noreferrer" title="SEC 8-K EX-99.1 投资者日与市场反应报道">来源</a></td><td>★★★</td></tr></tbody></table></div><dl class="kv-list"><div><dt>研发回报</dt><dd>未取得：公司不披露研发费用（利润表无 R&amp;D 科目，10-K 无 R&amp;D 段落），无法计算研发回报率；技术投入并入 SG&amp;A（FY2025 共 3.039B）。替代观察：ArchIQ 目标约 250bps 餐厅效率（约 10 万美元/店年均现金流），但尚无落地数据</dd></div><div><dt>并购记录</dt><dd><span class="prose-point">① 2024 年收购以色列业务、出售韩国业务，当年净费用约 70M（$0.08/股）。</span><span class="prose-point">② 权益法持仓：中国 Grand Foods Holding 48%（账面 2.048B）、日本 McDonald&#x27;s Japan 35%（账面 0.657B、公允价值 1.915B），2025 年确认权益法收益 146M。</span><span class="prose-point">③ 结论：交易以「市场所有权结构微调」为主，规模小、无大额减值记录，不构成价值创造或毁灭的主要来源。</span></dd></div><div><dt>回购时机</dt><dd><span class="prose-point">① FY2025 回购 2.056B（前一年 2.824B），对应约 670 万股。</span><span class="prose-point">② 五年 PE 区间 19.07–31.25x，2021–2025 各年末 PE 均在 25x 以上，2025 年末 25.42x——历史上回购发生在偏高估值区间，不是便宜时的加速回购。</span><span class="prose-point">③ 但回购规模只占 FCF 28.6%，大部分现金用于分红（占 FCF 71.2%），因此「在贵时大举回购」的风险敞口有限。</span></dd></div><div><dt>管理层持股</dt><dd><span class="prose-point">① CEO Kempczinski 持 869,034 股（含可行权期权），占总股本 0.123%。</span><span class="prose-point">② 全体董事与高管 23 人合计 1,838,732 股，占 0.26%（委托书原文「less than 1%」）。</span><span class="prose-point">③ 单一类别普通股，经济权益=投票权，无 AB 股；机构持股 75.68%（Vanguard 10.03%、BlackRock 7.30%、State Street 5.10%）。</span></dd></div><div><dt>薪酬结构</dt><dd><span class="prose-point">① CEO 2025 年总薪酬 20,574,525 美元，「实际支付」口径 17,916,531 美元（2023 年该口径曾达 36.85M，随股价回落收缩）。</span><span class="prose-point">② 长期激励以 PRSU 为主，考核三年平均 EPS 增速（75% 权重）+ 三年 ROIC 不低于 16%（25% 权重），另设相对 TSR 修正 ±25pp，上限 200%、绝对 TSR 为负时封顶 100%。</span><span class="prose-point">③ CEO 须持股 6 倍年薪、其他 NEO 4 倍，委托书披露全体合规。</span></dd></div><div><dt>减持记录</dt><dd>未逐笔核验 Form 4（见 dataGaps）。可观察替代证据：委托书 Section 16(a) 披露 2025 年仅 3 起迟报（Baroni 迟报 Form 3、Elting 与 Rice 的行政性迟报），无违规交易记录；另设有反质押与反对冲政策。</dd></div><div><dt>团队稳定性</dt><dd><span class="prose-point">① CEO 自 2019 年任职、董事长自 2024 年，任职期内无意外离职。</span><span class="prose-point">② 但 2026 年 8 月更换美国总裁（Joe Erlinger → Skye Anderson），发生在最大市场业绩走弱的同一份公告中。</span><span class="prose-point">③ 「Accelerating the Organization」自 2023 年起连续三年计提重组费用，意味着组织层面持续有岗位调整。</span></dd></div><div><dt>关键人风险</dt><dd><span class="prose-point">① 中等偏低：无创始人依赖，品牌与加盟合约不绑定个人；CEO 兼任董事长使个人影响力大于典型美国上市公司。</span><span class="prose-point">② 真正的关键人不是 CEO 而是「加盟商群体」——4.5 万家门店的投资决策由数千个独立业主做出，公司无法像直营体系那样下达资本指令。</span></dd></div><div><dt>企业文化</dt><dd><span class="prose-point">① 以加盟商为中心的系统文化：10-K 原文强调「the business relationship between the Company and its independent franchisees ... is of fundamental importance to overall performance and to protecting the McDonald&#x27;s brand」。</span><span class="prose-point">② 长期主义的股东回报取向：51 年连续增息，资本配置优先级明示为「先投资增长、再保分红、余下回购」。</span><span class="prose-point">③ 成本纪律驱动的组织文化：连续推进 Accelerating the Organization 与 Global Business Services，三年重组费用 697M。</span><span class="prose-point">④ 品牌与标准导向：Global Brand Standards、Food Safety Advisory Council、数字化食安监测平台。</span><span class="prose-point">⑤ 局限：上述全部来自公司自身披露（Level 3 单源），无法用外部证据交叉验证文化真实性。</span></dd></div></dl><details class="fold"><summary>本节证据 6 条</summary><ul><li>分红与回购占 FCF 比例：分红 5.115B（71.18%）+ 回购 2.056B（28.61%）≈ 99%（FY2025） <a class="source-pill" href="https://stockanalysis.com/stocks/mcd/financials/cash-flow-statement/" rel="noreferrer" title="SEC 10-K FY2025 与 stockanalysis 现金流表；financial_rigor.py calc">来源</a></li><li>五年年末 PE：26.55 / 31.25 / 25.40 / 25.26 / 25.42（FY2021–FY2025）（各财年末） <a class="source-pill" href="https://stockanalysis.com/stocks/mcd/financials/ratios/" rel="noreferrer" title="stockanalysis.com MCD ratios">来源</a></li><li>股本变化：707.64M 股（2026-06-30），近一年 −0.73%，近一季 −0.34%（2026-06-30） <a class="source-pill" href="https://stockanalysis.com/stocks/mcd/statistics/" rel="noreferrer" title="stockanalysis.com MCD statistics">来源</a></li><li>CEO 持股：869,034 股（占总股本 0.123%）（2026-03-01） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000119312526145548/mcd-20260407.htm" rel="noreferrer" title="2026 DEF 14A Security Ownership of Management">来源</a></li><li>PRSU 考核条件：三年平均年化 EPS 增速（75%）+ 三年 ROIC ≥16%（25%），相对 TSR 修正 ±25pp（2025 年授予） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000119312526145548/mcd-20260407.htm" rel="noreferrer" title="2026 DEF 14A 高管薪酬节">来源</a></li><li>股权激励与股价联动：CEO「实际支付」薪酬 2023 年 36.85M → 2025 年 17.92M（FY2021–FY2025） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000119312526145548/mcd-20260407.htm" rel="noreferrer" title="2026 DEF 14A Pay Versus Performance 表">来源</a></li></ul></details><aside class="inquiry-block"><p class="q">追问 · 如果CEO退休，这家公司还能保持竞争力吗？</p><p class="a"><span class="prose-point">能，但会失去过去七年那种「战略连续推进」的节奏。</span><span class="prose-point">① 护城河不绑定个人：地产产权、20 年加盟合约、45,356 家门店与 17 个十亿美元单品都不会随 CEO 变动。</span><span class="prose-point">② 制度化的战略语言（Accelerating the Arches → NEXT）与三年 EPS/ROIC 挂钩的 PRSU 已把管理层激励固定在同一套指标上。</span><span class="prose-point">③ 风险在换帅的执行真空期：2026 年 8 月刚换美国总裁，若同时换 CEO，最大市场的修复会被推迟。</span><span class="prose-point">④ 真正不可替代的不是 CEO，而是数千个加盟商的再投资意愿。</span></p></aside><details class="fold"><summary>数据缺口 4 项</summary><ul><li>management.analysis.alignment.insiderSelling——未逐笔核验 2025–2026 年 Form 4 减持记录，仅核验了 Section 16(a) 合规披露；10b5-1 计划下的常规减持无法从委托书判断规模</li><li>management.analysis.capitalAllocation.rdReturn——公司不披露研发费用，研发回报率无法计算（采集文件 technology.rdExpense 为 unavailable）</li><li>management.analysis.organization.teamStability——未取到高管离职率的结构化数据（如 NEO 平均任期、关键岗位流动率）；仅能从委托书披露的 NEO 名单与 8-K 人事任免间接观察</li><li>management.analysis.culture——企业文化全部为公司自述（Level 3 单源），无外部独立证据（如员工满意度调查、离职率、加盟商满意度调查）可交叉验证；这一限制会直接压低第 3 步企业文化维度的信心度</li></ul></details></section><section class="company-section" aria-labelledby="industry-trend"><p class="section-kicker">WHERE THE WORLD IS GOING</p><h2 id="industry-trend">行业与长期趋势</h2><p class="section-lead">连锁快餐不是范式转移的受益者也不是受害者，它是被数字渠道重塑的成熟现金牛。</p><dl class="kv-list"><div><dt>范式转移</dt><dd>部分</dd></div><div><dt>历史类比</dt><dd>最贴切的类比不是蒸汽机或互联网，而是 20 世纪的「全国性消费品分销网络」：宝洁、可口可乐靠规模化的品牌+渠道网络获得长期定价权，其估值中枢随增长成熟而下移。麦当劳的位置是这条路径的餐饮版本——它的核心竞争力在「全球地产+加盟合约构成的实体网络」，AI 与数字化是提高这张网络周转率的工具，而不是新网络本身。</dd></div><div><dt>TAM</dt><dd>3.36T USD；阶段：成熟期：行业增速区间 3.02%（IMARC）至 11.89%（Mordor Intelligence），中位约 5.6%；麦当劳自身 FY2021–FY2025 收入 CAGR 3.73%，低于行业中位，属于「成熟行业里的成熟龙头」</dd></div><div><dt>价值链位置</dt><dd><span class="prose-point">① 位置：麦当劳处在「品牌+地产+供应链标准」的上游中枢，向下是数千个独立加盟商，向上是食品与包装供应商。</span><span class="prose-point">② 议价权方向对它有利：加盟商是长期锁定、只能接受品牌标准与选址的买方；供应商面对 4.5 万家门店的统一采购量。</span><span class="prose-point">③ 唯一的反向压力来自消费者一侧——价格弹性已经体现在 2026 年美国的客流为负上。</span></dd></div><div><dt>技术路线风险</dt><dd><span class="prose-point">① 低：餐饮产品的技术路线替代风险几乎不存在，不存在「押错技术标准」的问题。</span><span class="prose-point">② 真正的技术风险是「数字化投入未产生预期的流量与效率」，公司在 10-K 中把它列为独立风险因子。</span><span class="prose-point">③ 新增风险是监管对定价算法的干预（AI 定价集体诉讼），属于商业模式边界风险而非技术路线风险。</span></dd></div><div><dt>客户集中度</dt><dd>无客户集中度风险：收入来自数千个加盟商与数亿消费者，单一客户占比极小（公司未披露客户集中度，FY2025 10-K 无客户集中度披露段落）</dd></div><div><dt>供应商集中度</dt><dd>高度分散但非零风险：公司依赖全球供应链，10-K 将 Supply chain interruptions 与 Changes in commodity and other operating costs 列为独立风险因子；公司同时以食品与包装的标准制定者身份掌握供应链主导权</dd></div></dl><details class="fold"><summary>范式转移正反方证据与 TAM 天花板检验</summary><p><span class="prose-point">① 行业本身没有文明级技术跃迁：卖汉堡的技术与 1950 年代无本质差别。</span><span class="prose-point">② 但分发方式在被数字渠道重塑：数字点单、外送、会员体系与 AI 运营（ArchIQ）改变了订单获取与门店效率，麦当劳 70 个市场的会员体系与约 41,000 家外送门店是这一变化的直接体现。</span><span class="prose-point">③ 因此判断为「部分」，属于渠道范式转移的受益方，而非技术范式转移的主导者。</span></p><p><span class="prose-point">天花板不由市场规模决定，而由「麦当劳能渗透的门店密度」决定：</span><span class="prose-point">① 全球门店 45,356 家（2025），公司目标 2027 年底 50,000 家，即两年新增约 4,600 家。</span><span class="prose-point">② 若按公司披露口径的全球餐饮服务市场 3.36 万亿与麦当劳全系统销售额 139.4B 相比，占比约 4.15%（口径不同，仅作量级参照）——行业极度分散，规模不是约束。</span><span class="prose-point">③ 真正的边界是加盟商资本与单店回报，不是市场需求。</span></p></details><details class="fold"><summary>本节证据 2 条</summary><ul><li>客户集中度披露：未披露（无单一客户或加盟商达到披露阈值），反向印证客户极度分散（FY2025） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="SEC 10-K FY2025（无客户集中度段落）">来源</a></li><li>供应链风险因子：10-K RISK FACTORS 含 Supply chain interruptions 与 commodity costs 两条独立条目（FY2025） <a class="source-pill" href="https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm" rel="noreferrer" title="SEC 10-K FY2025 RISK FACTORS">来源</a></li></ul></details><aside class="inquiry-block"><p class="q">追问 · 站在20年后回看，这家公司是「这个时代的标准石油」还是「昙花一现的3Com」？</p><p class="a"><span class="prose-point">更接近标准石油那一侧，但会是「估值已充分定价的标准石油」，而不是「还有垄断红利的早期标准石油」。</span><span class="prose-point">① 结构相似性：同样掌握不可复制的物理网络（4.5 万门店+自持约 56% 土地），同样是收费权生意。</span><span class="prose-point">② 差异在增长：标准石油面对的是渗透率从零到高的增量市场，麦当劳面对的是渗透率已高、增长靠提价与开店的市场，FY2021–2025 收入 CAGR 仅 3.73%。</span><span class="prose-point">③ 3Com 式的失败需要同时出现「产品被替代+网络无价值」，而餐饮的地产与合约不会因为某个产品消失而失效——这正是它不会归零的原因。</span><span class="prose-point">④ 结论：20 年后大概率仍是行业龙头，但年化回报更可能来自分红+回购+低速增长（中性情景 3 年 +24.9%），而非估值重估。</span></p></aside><details class="fold"><summary>数据缺口 3 项</summary><ul><li>industryTrend.analysis.tam.current——行业报告的 TAM 与增速口径分歧极大（同一次检索中 2025 年规模从 3.19 万亿到 4.34 万亿、CAGR 从 3.02% 到 11.89%），本文件采用 IMARC（最保守且口径描述最完整）。这是一个「任选一个都能写、无法交叉验证」的字段，数值本身不应作为精确判断依据</li><li>industryTrend.analysis.concentration.customers——公司不披露客户集中度，因此「无集中度风险」是从「无披露」反推的结论，属推断而非直接证据</li><li>industryTrend.analysis.tam.ceiling——以全球餐饮服务 TAM 与麦当劳全系统销售额相除得到的 4.15% 存在分母口径不一致（TAM 含非商业餐饮、麦当劳只做 IEO），仅作量级参考，不能当市场份额</li></ul></details></section><section class="company-section" aria-labelledby="valuation"><p class="section-kicker">WHAT THE PRICE IMPLIES</p><h2 id="valuation">估值分析</h2><p class="section-lead">20x 以下买 46% 营业利润率的现金牛，价格已从「贵」回到「合理偏便宜」。</p><h3 class="block-heading">三情景（3 年，工具精确计算）</h3><div class="action-zones"><div><strong>382.6</strong><span>乐观</span><p>隐含回报 +63.0%</p></div><div><strong>293.2</strong><span>中性</span><p>隐含回报 +24.9%</p></div><div><strong>193.1</strong><span>悲观</span><p>隐含回报 -17.7%</p></div></div><details class="fold"><summary>三情景假设依据与工具输出</summary><p><span class="prose-point">① 乐观 9%：对应 NEXT 目标落地——2030 年营业利润率进入 low-to-mid 50% 区间（从 46.1% 起算），配合约 5% 收入增长与约 1%/年股本缩减，EPS 年化约 8%~9%（工具内部复核：1.05^5×26.885×0.52÷12.393 的五年复合约 7.56%，加回购后约 8.5%~9%）。目标 PE 24x，对应回到 2023–2025 年 25x 中枢的下沿，仍低于历史均值。</span><span class="prose-point">② 中性 6%：分析师一致预期 EPS 三年增速 5.88%（stockanalysis），取 6%；目标 PE 20x，接近当前 19.07x 略上修。</span><span class="prose-point">③ 悲观 2%：提价空间耗尽、客流继续下滑、NEXT 支出前置而销售未改善，增速降到 2%；目标 PE 15x，对应「低速税收型资产」的定价。</span></p><p class="tool-output">============================================================
+三情景估值模型 (Three-Scenario Valuation)
+============================================================
+  当前股价: 234.73 USD
+  当前EPS:  12.31
+  预测期:   3年
+
+  情景                年增速     目标PE      目标EPS       目标股价      涨跌幅
+  ------------ -------- -------- ---------- ---------- --------
+  乐观 (Bull)          9%      24x      15.94     382.6   +63.0%
+  中性 (Base)          6%      20x      14.66     293.2   +24.9%
+  悲观 (Bear)          2%      15x      12.87     193.1   -17.7%
+
+  ✅ 所有计算使用精确十进制, 结果可审计复现</p></details><h3 class="block-heading">当前倍数</h3><div class="table-wrap"><table class="analysis-table"><thead><tr><th>指标</th><th>数值</th><th>来源</th></tr></thead><tbody><tr><td>marketCap</td><td>166.10B USD</td><td><a class="source-pill" href="https://stockanalysis.com/stocks/mcd/" rel="noreferrer" title="stockanalysis.com MCD 与 financial_rigor.py verify-market-cap">来源</a></td></tr><tr><td>pe</td><td>19.07x（TTM，EPS 12.31）</td><td><a class="source-pill" href="docs/research/tools/financial_rigor.py" rel="noreferrer" title="financial_rigor.py verify-valuation（234.73 / 12.31）">来源</a></td></tr><tr><td>ps</td><td>6.00x（TTM 收入 27.702B）</td><td><a class="source-pill" href="docs/research/tools/financial_rigor.py" rel="noreferrer" title="financial_rigor.py calc（166.10B / 27.702B）">来源</a></td></tr><tr><td>pb</td><td>不适用：股东权益为负（2026-06-30 为 −1.023B），每股账面价值 −1.45 美元，PB 无经济意义；替代锚点 EV/EBITDA 14.83x</td><td></td></tr><tr><td>dividendYieldPct</td><td>3.29%（年化股息 7.72）</td><td><a class="source-pill" href="docs/research/tools/financial_rigor.py" rel="noreferrer" title="financial_rigor.py verify-valuation（7.72 / 234.73）">来源</a></td></tr><tr><td>peg</td><td>2.66x（仅单源）</td><td><a class="source-pill" href="https://stockanalysis.com/stocks/mcd/statistics/" rel="noreferrer" title="stockanalysis.com MCD statistics（分母为分析师一致预期增速）">来源</a></td></tr><tr><td>evToRevenue</td><td>7.93x（TTM，EV 219.81B）</td><td><a class="source-pill" href="docs/research/tools/financial_rigor.py" rel="noreferrer" title="financial_rigor.py calc（219.81B / 27.702B）">来源</a></td></tr></tbody></table></div><dl class="kv-list"><div><dt>反向 DCF</dt><dd>约 3.18%（在 8% 贴现率下）、约 2.22%（在 7% 贴现率下）的永续自由现金流增速</dd></div><div><dt>vs 自身历史 · PE（各财年末收盘价 / 当年 EPS） 当前 19.07x（TTM，2026-10-09）</dt><dd>FY2021–FY2025 各年末：26.55x / 31.25x / 25.40x / 25.26x / 25.42x；区间 25.26–31.25x，中位 25.42x。当前 19.07x 低于五年区间下沿约 24%，处于五年最低水平</dd></div><div><dt>或有稀释</dt><dd><span class="prose-point">净向为缩减而非稀释：</span><span class="prose-point">① 总股本 707.64M 股（2026-06-30），近一年 −0.73%、近一季 −0.34%，2025 年回购 670 万股已在注销。</span><span class="prose-point">② 反方向的潜在增量：2026 委托书披露高管期权中约 33.6 万份行权价在 $253–$308 区间（均高于现价 $234.73，短期难成稀释），PRSU 以三年 EPS 增速与 ROIC 为条件、上限 200%。</span><span class="prose-point">③ 净效果取决于回购能否继续覆盖股权激励归属；若回购被削减，每年约 1% 的激励稀释会转为净增股本。</span></dd></div></dl><h3 class="block-heading">同行对比</h3><div class="table-wrap"><table><thead><tr><th>公司</th><th>PE（TTM / Fwd）</th><th>PS</th><th>来源</th></tr></thead><tbody><tr><td>McDonald&#x27;s (MCD)</td><td>19.07x / 17.94x</td><td>6.00x</td><td><a class="source-pill" href="https://stockanalysis.com/stocks/mcd/statistics/" rel="noreferrer" title="financial_rigor.py verify-valuation 与 stockanalysis.com statistics（Fwd PE 17.94）">来源</a></td></tr><tr><td>Restaurant Brands (QSR)</td><td>19.14x / 16.71x</td><td>3.32x</td><td><a class="source-pill" href="https://stockanalysis.com/stocks/qsr/statistics/" rel="noreferrer" title="stockanalysis.com QSR statistics">来源</a></td></tr><tr><td>Yum! Brands (YUM)</td><td>18.01x / 22.40x</td><td>4.53x</td><td><a class="source-pill" href="https://stockanalysis.com/stocks/yum/statistics/" rel="noreferrer" title="stockanalysis.com YUM statistics">来源</a></td></tr><tr><td>Chipotle (CMG)</td><td>30.29x / 25.77x</td><td>3.22x</td><td><a class="source-pill" href="https://stockanalysis.com/stocks/cmg/statistics/" rel="noreferrer" title="stockanalysis.com CMG statistics">来源</a></td></tr><tr><td>Starbucks (SBUX)</td><td>53.54x / 31.77x</td><td>2.73x</td><td><a class="source-pill" href="https://stockanalysis.com/stocks/sbux/statistics/" rel="noreferrer" title="stockanalysis.com SBUX statistics">来源</a></td></tr></tbody></table></div><aside class="inquiry-block"><p class="q">追问 · 如果股市明天关闭5年，你愿意以这个价格持有吗？</p><p class="a"><span class="prose-point">愿意，因为回报的绝大部分来自现金而非估值重估，5 年不看盘不影响拿到它。</span><span class="prose-point">① 现金回报可测：股息率 3.29%（派息率 62.71%）+ 回购收益率 0.73%，合计股东收益率 3.99%，且分红已连续增长 51 年。</span><span class="prose-point">② 生意本身不会因无人报价而改变：45,356 家门店的租金与抽成照收，FY2025 经营现金流 10.551B 覆盖资本开支 3.365B 与分红 5.115B。</span><span class="prose-point">③ 反向 DCF 显示市场只隐含 2%~3% 的永续 FCF 增长，而公司过去五年收入 CAGR 就有 3.73%，这个价格不要求乐观假设。</span><span class="prose-point">④ 需要接受的代价：资产负债表无缓冲垫（股东权益 −1.023B、现金 822M），若经营现金流出现两位数下滑，分红与回购会被迫二选一。</span></p></aside><details class="fold"><summary>数据缺口 4 项</summary><ul><li>valuation.analysis.currentMultiples.peg——PEG 仅单源（stockanalysis），分母为分析师一致预期增速（3 年收入 +1.83%、EPS +5.88%），预期本身不可交叉验证；且 PEG 对本类低速稳定公司参考价值有限</li><li>valuation.analysis.reverseDcf——反向 DCF 中的贴现率（7%/8%）取自 stockanalysis 估算的 WACC 5.63% 上浮，不是公司披露值；终值模型假设永续增长，对贴现率极敏感（7% 与 8% 之间隐含增速差 1 个百分点）</li><li>valuation.analysis.threeScenario.inputs.growth——三组增速均为主会话基于采集文件数据构造，其中乐观情景的增长来自公司 2030 目标的自算推演（非公司披露的 EPS 增速指引），需在后续跟踪中用实际季度数据验证</li><li>valuation.analysis.vsPeers——同行 PE/PS/EV-EBITDA 均取自 stockanalysis 单一平台（Level 2 字段允许单源），且各家公司 TTM 窗口切分可能不同。另：分析模板定义的同比字段是 pe，而渲染层 page.tsx 读的是 peTtm / peForward，两边不一致会导致页面「PE（TTM / Fwd）」列渲染成「— / —」；本文件同时写了 pe（模板口径）与 peTtm/peForward（渲染层口径）以保证页面可读，该不一致已在第 7 步作为渲染层缺陷登记</li></ul></details></section><section class="company-section" aria-labelledby="provenance"><p class="section-kicker">PROVENANCE</p><h2 id="provenance">数据与免责声明</h2><p class="company-note">本页由三份经完整性校验（阈值 7 分）的结构化文件合并渲染： 采集 research/companies/us-mcd-mcdonalds/financials-collection.json、分析 research/companies/us-mcd-mcdonalds/financials-analysis.json、总结 research/companies/us-mcd-mcdonalds/financials-summary.json。 生成于 <time>2026-10-10T09:35:01+08:00</time>，数据截止 2026-10-09（Asia/Shanghai）。</p><p class="company-note">本总结基于公开信息与数据截止时点的分析生成，仅供研究参考，不构成个性化投资建议。</p></section></main></body></html>
