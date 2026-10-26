@@ -9,91 +9,110 @@
   "meta": {
     "companyId": "sh-600392-shenghe-resources",
     "companyName": "盛和资源控股股份有限公司",
-    "summarizedAt": "2026-08-08",
-    "dataCutoff": "2026-08-08",
+    "summarizedAt": "2026-10-25",
+    "dataCutoff": "2026-10-25（Asia/Shanghai）",
     "basedOnCollection": "research/companies/sh-600392-shenghe-resources/financials-collection.json",
-    "basedOnAnalysis": "research/companies/sh-600392-shenghe-resources/financials-analysis.json"
+    "basedOnAnalysis": "research/companies/sh-600392-shenghe-resources/financials-analysis.json",
+    "updateNote": "本轮为 2026-08-08 首轮研究后的更新。上轮缺失的第七维度「企业文化」本轮补上（上轮只写了六个维度，属第 3 步的格式缺陷）。"
   },
   "dimensionSummary": [
     {
       "dimensionId": "businessQuality",
       "title": "生意质量",
       "mapsTo": "dimensions.businessEssence",
-      "conclusion": "全球化稀土冶炼分离贸易商，正向经营杠杆显著，但历史毛利率随价格周期宽幅波动（4.3%~18.7%），生意质量中等偏周期性。",
-      "confidence": 5.5,
-      "scoreBasis": "①analysis.operatingLeverage显示FY2025净利润+304.94%远超营收+31.83%，正向经营杠杆强；②profitabilityTrend5y毛利率5年在4.3%-18.7%间大幅波动，非稳定盈利能力；③stickiness.level=\"弱\"，仅5N超纯镝细分具技术锁定，前五大客户占比36.39%集中度中等；④中国稀土集团毛利率对比缺失（dataGaps），评分未过度乐观。"
+      "conclusion": "收入弹性很大但利润不由自己定：2026H1 收入 +41.75%、净利 +135%，可 2026Q3 单季就转负，且利润没有转成现金。",
+      "confidence": 5.0,
+      "scoreBasis": "① 费用端极薄是真实优势：期间费用仅占收入 2.68%，12.64% 的毛利率能留下 10.37% 的净利率（businessEssence.analysis.operatingLeverage）。② 但利润波动完全来自价差：五年净利 2.07~15.94 亿元（7.7 倍），毛利率 4.35%~18.70%。③ 本轮新增的扣分证据是现金流：2026H1 经营现金流 -6.38 亿元（去年同期 +1.16 亿元），存货从 45.2 亿元增至 62.4 亿元（financialMetrics.latestInterim）——利润是账面存货升值，不是现金。④ 较上轮 5.5 下调 0.5，下调依据是新增的现金流与 Q3 单季转负两项事实，不是情绪。"
     },
     {
       "dimensionId": "moat",
       "title": "护城河",
       "mapsTo": "dimensions.moat",
-      "conclusion": "转换成本/网络效应弱，规模/牌照/技术专利中等，过去5年变宽，未来5年预期仅\"稳定\"，依赖政策与海外资源不确定性。",
-      "confidence": 5,
-      "scoreBasis": "①analysis.types中转换成本、网络效应均\"不存在\"，规模效应与技术专利\"存在\"但强度中等；②trendPast5y\"变宽\"（产能扩至6万吨/年+并购5N镝技术），trendNext5y仅\"稳定\"，上行动能减弱；③dataGaps两项（单位成本、加工费率同业对比）均未取得，规模/定价权护城河缺量化证据，评分向中性收敛。"
+      "conclusion": "护城河只在供给侧（6 万吨产能与分离工艺），需求侧几乎没有，且正在被配额制度挤窄。",
+      "confidence": 4.5,
+      "scoreBasis": "① 五类护城河里三项判为「不存在」：定价权、转换成本、网络效应（moat.analysis.types）。② 「规模效应」与「技术壁垒」成立但都不在利润表上兑现：产能 6 万吨国内前三、5N 超纯镝全球唯一，可毛利率仍低于北方稀土 2.4 个百分点。③ 趋势由上轮的「变宽/稳定」改判为「变窄」：2026Q3 资源方 +161% 而公司单季 -17%~-48%，是利润分配恶化的直接量化证据。④ 下调 0.5 的依据是全部分部与同业对比数据，不含推断。"
     },
     {
       "dimensionId": "management",
       "title": "管理层",
       "mapsTo": "dimensions.management",
-      "conclusion": "技术并购能力突出（MP Materials/江阴加华评分5/4星），但海外矿权布局两度失利（Greenland/Peak评分均2星），二股东减持是治理瑕疵。",
-      "confidence": 5.5,
-      "scoreBasis": "①keyDecisions五项评分2/5/4/2/3，均值约3.2/5，两次海外矿权决策(Greenland、Peak/Ngualla)仅2分，抵消MP Materials(5分)、江阴加华(4分)亮点；②alignment.insiderSelling显示二股东王全根2026年3月起多次减持，套现信号与治理不完全一致；③organization.keyPersonRisk已澄清黄平兼职赣州晨光系内部子公司非外部风险；④capitalAllocation.rdReturn因研发口径冲突（620万vs5.5亿）无法量化回报率，回购数据unavailable，证据缺口限制评分上探。"
+      "conclusion": "海外找矿这条线做得对，但二股东在股价高点减持近 1%，资本配置与内部人行为都拿不到加分。",
+      "confidence": 5.0,
+      "scoreBasis": "① 加分：MP Materials 参股（2017）与废料回收布局是长期正确的事；不搞回购做市值管理；连续现金分红、派息率约 45%（management.analysis.capitalAllocation）。② 减分：Peak 收购 9.2 亿元买下未投产矿，2025Q4 起并表即亏损；格陵兰合作 2026-02 被对方单方终止。③ 内部人行为：王全根 2026-03~06 在 22.72~34.59 元减持 0.9858%、套现 4.65 亿元，随后股价腰斩。④ 从上轮 5.5 下调 0.5，依据是减持已落地与 Peak 亏损已知这两条新增事实。"
     },
     {
       "dimensionId": "keyRisk",
       "title": "最大风险",
       "mapsTo": "dimensions.inversion",
-      "conclusion": "体系外身份、海外资源毁约、价格周期反转三重失败路径叠加，其中两项概率\"中/高\"、影响\"高/中\"，致命性较高且难对冲，估值已隐含乐观预期。",
-      "confidence": 3.5,
-      "scoreBasis": "①failurePaths中\"政策指标向国家队集中\"(概率中/影响高)、\"海外资源链式毁约\"(概率高/影响中)、\"价格周期反转\"(概率中/影响高)三项均高致命性且非公司自身经营可化解；②海外毁约风险已部分兑现（ETM终止格陵兰合作、Ngualla未决税务纠纷），非纯假设；③biasSelfCheck指出估值端已price in乐观预期(PB处35分位)，风险缓冲空间被压缩；④一手公告链接与历史案例结局两项dataGaps未解决，证据链不完整，未进一步下调至更极端区间。"
+      "conclusion": "最大风险是价格周期回落叠加加工价差被上游吃掉的「双杀」，两个方向都不可控。",
+      "confidence": 4.0,
+      "scoreBasis": "① 风险清单 5 条里两条判为「高概率高影响」：价格重心下移、价差被压缩（inversion.analysis.failurePaths）。② 这两条已在 2026Q3 同时出现：镨钕 88.75 万→71.5 万元/吨，公司单季利润转负而北方稀土翻倍。③ 不可控性高：公司没有配额矿，成本曲线位置由上游决定，投资者无法对冲。④ 较上轮 3.5 上调 0.5 的理由只有一条：上轮评分中「估值已隐含乐观预期」这部分风险已随股价 -32% 释放，风险本身没变。"
     },
     {
       "dimensionId": "civilizationTrend",
       "title": "文明趋势",
       "mapsTo": "dimensions.industryTrend",
-      "conclusion": "AI/机器人需求驱动磁材占比预计2025年12%升至2030年35%，行业趋势总体有利，但公司资源自给率低、政策指标向国家队集中削弱其分享趋势红利的能力。",
-      "confidence": 6,
-      "scoreBasis": "①paradigmShift.verdict=\"部分\"，需求端趋势有利(growthCurve新兴曲线)，但valueChainPosition显示公司不掌握开采配额，只是趋势受益环节而非主导者；②concentration.customers/suppliers集中度均\"中等\"(36.39%/19.42%)，供应链风险主要来自MP Materials等海外渠道地缘脆弱性而非集中度本身；③techRouteRisk(替代技术冲击)量化评估缺失，dataGaps标注未解决，趋势有利程度的持续性存在证据限制。"
+      "conclusion": "稀土需求增长是真的，但公司处在最容易拿不到增量的那一环。",
+      "confidence": 6.0,
+      "scoreBasis": "① 需求侧成立：AI 服务器、机器人、新能源车对钕铁硼的用量长期上升（industryTrend.analysis.paradigmShift）。② 供给侧是政策而不是技术：2026 年开采指标 28.5 万吨、同比约 +5%，约 98% 集中于六大集团。③ 公司分享不到增量：无新增开采指标，原料靠外购与包销。④ 维持 6 分不变——趋势对行业有利，对公司中性偏弱，两头抵消。"
     },
     {
       "dimensionId": "valuation",
       "title": "估值",
       "mapsTo": "dimensions.valuation",
-      "conclusion": "PE-TTM42倍处一年16%分位不算贵，但PB处35分位，三情景中性(15.1元/-37%)与悲观(3.7元/-84.6%)显著跑输，仅乐观(32.7元/+36.7%)需稀土价格持续高位兑现。",
-      "confidence": 3,
-      "scoreBasis": "①threeScenario三档中两档(中性、悲观)跑输现价23.94元，下行空间(-37%~-84.6%)远大于上行空间(+36.7%)，胜率结构不对称；②vsOwnHistory显示PB(35分位)/PS(33分位)均高于PE(16分位)，非全面低估；③reverseDcf判断42倍隐含类成长股预期，超出永磁材料市场CAGR10.5%(单源转载)可支撑的常规溢价，assumptions标注为定性判断未做精确DCF建模；④vsPeers三家同业PE/PS均unavailable，无法同业横向验证。"
+      "conclusion": "21 倍 TTM、2.2 倍 PB 是周期中段的合理价，比同业便宜但便宜得有理由。",
+      "confidence": 6.0,
+      "scoreBasis": "① 绝对倍数：PE-TTM 21.27x、PB 2.20x、EV/EBITDA 15.12x、股息率 2.14%，四项均为四家稀土上市公司里最低或最高（valuation.analysis.vsPeers）。② 但盈利位置不低：净利率 10.37% 高于五年均值 5.79%，毛利率 12.64% 高于均值 11.0%——「便宜」的是价格，不是盈利水平。③ 三情景中性 16.0 元与现价 16.37 元几乎重合，含义是市场已按中性定价（valuation.analysis.threeScenario）。④ 从上轮 3 分上调到 6 分：估值的风险溢价已释放，但不足以给到 7 分以上，因为 TTM 利润里包含 Q2 的周期高点。"
+    },
+    {
+      "dimensionId": "corporateCulture",
+      "title": "企业文化",
+      "mapsTo": "dimensions.management.analysis.culture",
+      "conclusion": "已落盘证据显示三点：市场化职业经理人经营、国资相对控股、长期投入海外矿权；同时二股东高位减持对「长期信心」打了折。",
+      "confidence": 5.0,
+      "scoreBasis": "① 治理结构：第一大股东为自然资源部系统事业法人 14.06%，经营层为职业经理人，黄平任副董事长兼总经理并持股 5.49%（management.analysis.alignment）。② 长期主义有可观察证据：2017 年起布局海外矿权，接受十年不投产的亏损。③ 股东回报取向明确：连续现金分红、2026 年中期即派现 0.05 元，派息率约 45%。④ 减分项全部来自可观察行为：二股东在 22.72~34.59 元区间减持 0.9858%；公司未设股权激励，管理层与股东的利益绑定弱于同业。⑤ 证据限制：上述全部为公司披露与公告（Level 3 单源），无员工满意度、离职率等外部验证，故向中性收敛到 5 分。本轮上轮缺失该维度，属新补。"
     }
   ],
   "strategies": {
     "noPosition": {
       "title": "空仓者",
-      "advice": "①现价23.94元已隐含较乐观预期，三情景中性/悲观均跑输，不建议现价追高；②等价格回落到更安全边际后再分批介入；③海外矿权风险实质缓解前不做左侧重仓布局。",
+      "advice": "① 现价 16.37 元几乎等于三情景中性目标 16.0 元，不是「便宜到必须买」的位置。② 等两个答案：10-31 三季报的真实单季数，以及镨钕价格能否在 70 万元/吨上方止跌。③ 真要建仓，只在明显低于中性目标的价位分批，且首笔不超过目标仓位三分之一。",
       "triggers": [
         {
-          "condition": "股价回落至15元附近或以下",
-          "action": "可分批小仓位试探性建仓，安全边际改善",
-          "basis": "①valuation.analysis.threeScenario.neutral.targetPrice=15.1元；②vsOwnHistory当前PB分位35%显示尚非低位"
+          "condition": "股价回落至 13 元以下（约当 17x TTM PE）",
+          "action": "建立目标仓位 1/3 的初始头寸",
+          "basis": "① 13 元相当于中性目标 16.0 元下方约 19%，PE 约 17 倍（dimensions.valuation.analysis.threeScenario）。② 该价位对应股息率约 2.7%，接近五年估值中枢下沿而非泡沫期。"
         },
         {
-          "condition": "坦桑尼亚Ngualla矿未决税务纠纷解决且顺利投产，且无新增海外资源毁约公告",
-          "action": "可视为海外资源风险阶段性解除信号，重新评估建仓，但需两个以上独立信源同时确认投产进展",
-          "basis": "①inversion.failurePaths\"海外资源合作链式毁约\"(概率高/影响中)；②management.keyDecisions中Peak/Ngualla决策评分仅2星"
+          "condition": "10-31 三季报单季归母不低于 3.4 亿元（预告上限）",
+          "action": "若同时股价仍在 15 元下方，可补至半仓",
+          "basis": "① 预告 9 个月 11.00~12.30 亿元，减去 H1 8.87 亿元得到 Q3 单季 2.13~3.43 亿元（revenueStructure.recentQuarters）。② 落在上限说明 Q2 的盈利水平基本延续，动能不能算断。"
+        },
+        {
+          "condition": "镨钕氧化物价格连续两个月站稳 80 万元/吨以上",
+          "action": "重新评估，可提高目标仓位至满仓",
+          "basis": "① 2026 年两次上探 80 万元/吨未破，是市场公认的阻力位（industryOutlook.priceCycle2026）。② 站稳意味着供给侧收紧有效，加工价差有修复空间。"
         }
       ]
     },
     "holding": {
       "title": "持仓者",
-      "advice": "①现价23.94元已高于中性情景目标价15.1元，浮盈下行风险大于上行；②建议逢高分批减仓兑现收益，不做无条件长期持有；③毛利率若连续走弱应加快减仓节奏。",
+      "advice": "① 不要在 16 元附近恐慌卖出，估值已经从 42 倍压到 21 倍，风险释放了大半。② 也不要在现价补仓摊薄——盈利位置在周期偏上，成本线以下的补仓会放大周期风险。③ 把「三季报实际数」当作下一个决策点，而不是股价本身。",
       "triggers": [
         {
-          "condition": "股价上探至32.7元附近",
-          "action": "建议逢高分批止盈，兑现乐观情景兑现后的收益",
-          "basis": "valuation.analysis.threeScenario.optimistic.targetPrice=32.7元，涨幅+36.7%"
+          "condition": "三季报单季归母低于 2.13 亿元（预告下限）",
+          "action": "减至半仓，等四季度价格与订单数据再定",
+          "basis": "① 2.13 亿元是公司自己给出的区间下限（revenueStructure.recentQuarters）。② 跌破自述下限意味着 Q3 的价差压缩比公司预期更严重。"
         },
         {
-          "condition": "公司毛利率连续两个季度环比下滑，重现FY2023/FY2024约4.3%-5.2%的周期底部特征",
-          "action": "应加快减仓，避免重演FY2022至FY2024净利润从15.94亿降至2.07亿的腰斩式下行",
-          "basis": "①businessEssence.analysis.profitabilityTrend5y历史毛利率波动数据；②threeScenario悲观assumptionBasis参考同一段净利润腰斩历史"
+          "condition": "股价升破 25 元而 Q4 单季利润未改善",
+          "action": "减仓兑现，保留底仓",
+          "basis": "① 25 元对应约 32 倍 TTM PE，已接近本轮下跌前的估值区间（dimensions.valuation.analysis.currentMultiples）。② 无盈利改善支撑的估值抬升不可持续。"
+        },
+        {
+          "condition": "经营现金流连续两个季度为负且存货继续上升",
+          "action": "重新评估仓位，视同价差恶化确认",
+          "basis": "① 2026H1 经营现金流 -6.38 亿元、存货 +17.2 亿元（financialMetrics.latestInterim）。② 连续两季意味着不是季节性备货，而是卖不动或被迫囤货。"
         }
       ]
     },
@@ -101,19 +120,29 @@
       "title": "卖出信号",
       "signals": [
         {
-          "signal": "Ngualla矿未决税务纠纷进一步恶化，或再度出现海外资源毁约、停牌类事件",
-          "observable": "关注交易所公告中Ngualla矿税务纠纷进展及是否新增海外资源毁约或诉讼公告",
-          "basis": "①inversion.failurePaths\"海外资源合作链式毁约\"(概率高/影响中)；②management.keyDecisions中Peak决策评分2星"
+          "signal": "镨钕氧化物价格跌破 60 万元/吨",
+          "observable": "生意社或 SMM 日评的镨钕氧化物含税均价连续两周低于 60 万元/吨",
+          "basis": "① 60.75 万元/吨是 2026 年初的起点，也是本轮上涨的起点（industryOutlook.priceCycle2026）。② 跌破起点意味着涨价逻辑完全逆转，三情景悲观路径（EPS -25%/年）启动。"
         },
         {
-          "signal": "国家总量指标管理进一步收紧，公司被要求并入国家队集团或配额空间被实质压缩",
-          "observable": "关注主管部门下一轮稀土开采冶炼总量指标分配公告是否提及盛和资源被整合",
-          "basis": "①inversion.failurePaths\"政策仅向国家队下达指标\"(概率中/影响高)；②moat.trendNext5y\"稳定\"判断即基于此政策风险"
+          "signal": "出现大额存货跌价或资产减值计提",
+          "observable": "季报或业绩预告中出现存货跌价准备/资产减值科目，单季影响超过 1 亿元",
+          "basis": "① 2025Q4 曾因此使单季归母只剩 0.51 亿元（inversion.analysis.failurePaths[2]）。② 62.4 亿元存货在价格下行期是最大的减值敞口。"
         },
         {
-          "signal": "二股东王全根继续大比例减持，或管理层黄平出现减持、离任信号",
-          "observable": "关注交易所减持公告披露的王全根、黄平持股比例变化",
-          "basis": "management.analysis.alignment.insiderSelling二股东2026年3月起多次减持计划"
+          "signal": "Ngualla 稀土技术出口许可被否或再度延期超过 12 个月",
+          "observable": "公司公告或投资者关系记录中项目进度表述推迟，或出现「未获许可」字样",
+          "basis": "① 投产是唯一能改善资源自给率的变量（moat.analysis.trendNext5y）。② 延期意味着前期亏损持续并表，且无对冲手段。"
+        },
+        {
+          "signal": "被要求并入国家队或新增指标分配明确排除公司",
+          "observable": "工信部/自然资源部指标分配公告或公司公告出现整合安排",
+          "basis": "① 约 98% 指标已集中于六大集团（industryOutlook.tam）。② 若制度性排除，公司的规模优势将被抹平。"
+        },
+        {
+          "signal": "公司启动再融资或大额并购",
+          "observable": "定增、可转债或重大资产购买公告",
+          "basis": "① 当前净负债仅约 3.6 亿元，没有融资必要（financialMetrics.latestInterim）。② 在股价 52 周低位启动股权融资，等于把周期风险转给新股东。"
         }
       ]
     },
@@ -121,14 +150,24 @@
       "title": "加仓信号",
       "signals": [
         {
-          "signal": "稀土价格延续上行，且Peak/Ngualla矿按计划2026年投产、未决税务纠纷解决",
-          "observable": "跟踪公司公告与至少两个独立信源（如交易所公告+行业协会数据）同时确认投产进度及稀土价格趋势",
-          "basis": "①valuation.analysis.threeScenario.assumptionBasis乐观情景依赖产能扩张兑现；②industryTrend.tam.growthCurve新兴需求曲线为单源转载，需多源确认"
+          "signal": "股价跌破 13 元且三季报实际数不低于预告中值",
+          "observable": "收盘价连续 5 个交易日低于 13 元，且 10-31 三季报单季归母 ≥ 2.8 亿元",
+          "basis": "① 13 元对应约 17 倍 TTM PE、1.75 倍 PB（dimensions.valuation.analysis.threeScenario）。② 价格已反映悲观预期而基本面未恶化，是加仓的标准组合。"
         },
         {
-          "signal": "股价回落至15.1元附近或以下，且期间未出现新的重大负面事件",
-          "observable": "跟踪股价是否触及15元附近区域，并核对同期是否有新增诉讼、减持或毁约公告",
-          "basis": "valuation.analysis.threeScenario.neutral.targetPrice=15.1元"
+          "signal": "经营现金流转正且存货下降",
+          "observable": "单季经营现金流为正，存货环比下降",
+          "basis": "① 这是「利润转成现金」的直接确认（financialMetrics.latestInterim 的反面）。② 也是价差改善的领先指标，比利润更早。"
+        },
+        {
+          "signal": "Ngualla 取得技术出口许可并开工建设",
+          "observable": "公司公告确认许可获批，且披露开工时间表",
+          "basis": "① 资源自给率是护城河唯一可能的修复路径（moat.analysis.trendNext5y）。② 一旦落地，三情景乐观路径（20% 增速）的第一个条件成立。"
+        },
+        {
+          "signal": "5N 超纯镝等高端牌号收入占比单独披露且显著提升",
+          "observable": "半年报或年报中高端产品收入占比首次单独列示",
+          "basis": "① 这是唯一不依赖配额的差异化能力（moat.analysis.types[4]）。② 目前收入占比太小、未单独披露，一旦能量化就改变了估值框架。"
         }
       ]
     }
