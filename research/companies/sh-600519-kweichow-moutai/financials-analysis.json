@@ -1,1362 +1,1458 @@
 {
-  "meta": {
-    "companyId": "sh-600519-kweichow-moutai",
-    "companyName": "贵州茅台酒股份有限公司",
-    "analyzedAt": "2026-08-17",
-    "dataCutoff": "2026-08-17",
-    "basedOnCollection": "research/companies/sh-600519-kweichow-moutai/financials-collection.json"
-  },
-  "dimensions": {
-    "businessEssence": {
-      "title": "生意本质",
-      "conclusion": "本质是靠原产地稀缺性与品牌定价权支撑的高毛利消费品生意，2026H1成本增速已超提价红利传导速度。",
-      "analysis": {
-        "revenueBreakdown": {
-          "period": "2026H1",
-          "items": [
-            {
-              "segment": "茅台酒",
-              "revenue": "777.20亿元（Tushare fina_mainbz口径，四舍五入至0.1亿）",
-              "sharePct": "85.73%（占茅台酒+系列酒合计口径）",
-              "source": {
-                "name": "Tushare Pro fina_mainbz + 贵州茅台2026年半年度报告（新浪财经披露原文）",
-                "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-              }
-            },
-            {
-              "segment": "系列酒",
-              "revenue": "129.30亿元（同口径，四舍五入至0.1亿）",
-              "sharePct": "14.27%（占茅台酒+系列酒合计口径）",
-              "source": {
-                "name": "Tushare Pro fina_mainbz + 贵州茅台2026年半年度报告（新浪财经披露原文）",
-                "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-              }
-            }
-          ]
-        },
-        "profitabilityTrend5y": {
-          "series": [
-            {
-              "fiscalYear": "FY2021",
-              "grossMarginPct": "[估计] 91.54%",
-              "operatingMarginPct": {
-                "status": "unavailable",
-                "reason": "未找到公司原始年报逐字段披露的经营利润率，需自行用营业利润/营业收入推算，已检索2次未取得可靠年度序列"
-              },
-              "netMarginPct": "49.38%",
-              "source": {
-                "name": "界面新闻（转引年报）；净利率=归母净利润/营业收入，financial_rigor.py calc验算",
-                "url": "https://www.jiemian.com/article/7278507.html"
-              }
-            },
-            {
-              "fiscalYear": "FY2022",
-              "grossMarginPct": "[估计] 92.00%",
-              "operatingMarginPct": {
-                "status": "unavailable",
-                "reason": "同FY2021，未取得可靠数据"
-              },
-              "netMarginPct": "50.54%",
-              "source": {
-                "name": "新华网《茅台2022年报的12个小秘密》；净利率=归母净利润/营业收入，financial_rigor.py calc验算",
-                "url": "http://www.xinhuanet.com/enterprise/20230409/cb3af2668ae247739075a6e5622b49be/c.html"
-              }
-            },
-            {
-              "fiscalYear": "FY2023",
-              "grossMarginPct": "92.11%",
-              "operatingMarginPct": {
-                "status": "unavailable",
-                "reason": "年报未单列合并口径经营利润率，采集环节未完成自行推算，已检索仍未取得"
-              },
-              "netMarginPct": "50.60%",
-              "source": {
-                "name": "贵州茅台2023年年度报告；净利率financial_rigor.py calc验算",
-                "url": "https://www.moutaichina.com/mtgf/articleFileDir/2024-05/07/e7471b99e4e84c7e9dcf1e591174c08e.pdf"
-              }
-            },
-            {
-              "fiscalYear": "FY2024",
-              "grossMarginPct": "92.01%",
-              "operatingMarginPct": {
-                "status": "unavailable",
-                "reason": "同FY2023，未取得可靠年度经营利润率"
-              },
-              "netMarginPct": "50.46%",
-              "source": {
-                "name": "贵州茅台2025年年度报告（三年对比数据）；净利率financial_rigor.py calc验算",
-                "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
-              }
-            },
-            {
-              "fiscalYear": "FY2025",
-              "grossMarginPct": "91.23%",
-              "operatingMarginPct": "68.02%",
-              "netMarginPct": "48.76%",
-              "source": {
-                "name": "贵州茅台2025年年度报告；营业利润率=营业利润/营业总收入，净利率financial_rigor.py calc验算",
-                "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
-              }
-            },
-            {
-              "fiscalYear": "2026H1",
-              "grossMarginPct": "89.56%（同比-1.74pct）",
-              "operatingMarginPct": {
-                "status": "unavailable",
-                "reason": "半年报及collection文件未提供推算2026H1经营利润率所需的营业利润/营业总收入分项数据，已检索collection文件2次未取得"
-              },
-              "netMarginPct": "50.75%（同比-1.81pct）",
-              "source": {
-                "name": "贵州茅台2026年半年度报告（新浪财经披露原文）；毛利率/净利率经Tushare fina_indicator与financial_rigor.py calc双重验算",
-                "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-              }
-            }
-          ]
-        },
-        "businessModelCanvas": {
-          "salesModel": "一次性销售",
-          "productForm": "混合",
-          "note": "①主体仍为白酒实体产品的一次性买断销售，非订阅制。②i茅台平台角色质变：2026H1收入402.64亿元(+274.18%)，占酒类不含税收入43.63%，Q2单季占比达50.9%，从边缘渠道变为过半零售触点。③平台承担预约抽签、限购、直连C端定价职能，强化公司对终端价格掌控，但产品形态本质未变，仍判定为混合（实体产品+数字平台）。"
-        },
-        "stickiness": {
-          "level": "强",
-          "mechanism": "①消费者为身份、社交、礼赠及收藏价值付费，需求价格弹性低，2026年两轮提价（出厂价1169→1269→1369元）未见销量明显萎缩。②经销商资格具排他性，2026H1国内经销商仅净减46家（新增220/退出266），存量盘基本稳固。③i茅台限购抽签机制叠加直销占比升至56%+，强化公司对终端与消费者的直接锁定。",
-          "evidence": [
-            {
-              "metric": "国内经销商数量变化",
-              "value": "2,307家（H1净减46家：新增220/退出266，主要为系列酒经销商）",
-              "asOf": "2026H1",
-              "source": {
-                "name": "贵州茅台2026年半年度报告（新浪财经披露原文）",
-                "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-              }
-            },
-            {
-              "metric": "直销渠道收入占比",
-              "value": "56.31%~57.32%（H1收入519.62亿元，同比+29.88%）",
-              "asOf": "2026H1",
-              "source": {
-                "name": "贵州茅台2026年半年度报告（新浪财经披露原文）",
-                "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-              }
-            },
-            {
-              "metric": "i茅台数字平台H1收入及占比",
-              "value": "402.64亿元（同比+274.18%），占酒类不含税收入43.63%",
-              "asOf": "2026H1",
-              "source": {
-                "name": "贵州茅台2026年半年度报告（新浪财经披露原文）",
-                "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-              }
-            }
-          ]
-        },
-        "grossMarginVsPeers": {
-          "companyPct": "89.56%（2026H1，较FY2025的91.23%回落1.67pct）",
-          "peers": [
-            {
-              "name": "泸州老窖",
-              "grossMarginPct": "[估计] 87%（期间口径未明确，FY2025年度数据）",
-              "source": {
-                "name": "东方财富财富号《泸州老窖、五粮液、洋河股份投资对比分析》",
-                "url": "https://caifuhao.eastmoney.com/news/20260427150804076560710"
-              }
-            },
-            {
-              "name": "五粮液",
-              "grossMarginPct": {
-                "status": "unavailable",
-                "reason": "二手来源给出73.9%与77.54%两个冲突数字，无法定位到单一权威年报原文，且未采集2026H1同期数据，已检索2次未解决"
-              },
-              "source": { "status": "unavailable", "reason": "本次采集未取得可直接引用的来源，该数值不予采用" }
-            },
-            {
-              "name": "洋河股份",
-              "grossMarginPct": {
-                "status": "unavailable",
-                "reason": "未检索到可靠的FY2025或2026H1毛利率具体数字，仅查到销售费用率对比，已检索2次未取得"
-              },
-              "source": { "status": "unavailable", "reason": "本次采集未取得可直接引用的来源，该数值不予采用" }
-            }
-          ],
-          "whyHigherOrLower": "①无广告依赖的品牌溢价与配额稀缺性仍支撑出厂价与终端价的高价差。②2026H1直销占比升至56%+，减少中间流通环节让渡的毛利空间，部分对冲下滑。③但系列酒H1收入降6.03%、非标产品主动降价，产品结构下移叠加营业成本同比+21.81%，拖累毛利率同比降1.74pct至89.56%，仍显著高于同业估算水平，惟同行对比数据为FY2025年度口径，与本公司2026H1存在期间不可比。"
-        },
-        "operatingLeverage": {
-          "observation": "①H1营收同比+1.30%，营业成本同比+21.81%，增速差达20.5pct，经营杠杆首次在营收正增长下转负。②H1归母净利润同比-1.95%，为2001年上市以来首个『增收不增利』半年报。③Q2单季营收-5.23%、净利润-6.90%，利润跌幅快于收入降幅，负经营杠杆环比加剧。④对比FY2025营收-1.21%/净利润-4.53%的量价双降型下滑，H1属成本刚性主导的新型负杠杆。",
-          "evidence": [
-            {
-              "metric": "2026H1营收同比增速",
-              "value": "+1.30%",
-              "asOf": "2026H1",
-              "source": {
-                "name": "Tushare Pro income + 贵州茅台2026年半年度报告（新浪财经披露原文）；financial_rigor.py calc验算",
-                "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-              }
-            },
-            {
-              "metric": "2026H1营业成本同比增速",
-              "value": "+21.81%（94.74亿元，公司解释为本期销量增加及生产成本增加）",
-              "asOf": "2026H1",
-              "source": {
-                "name": "贵州茅台2026年半年度报告（新浪财经披露原文）",
-                "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-              }
-            },
-            {
-              "metric": "2026H1归母净利润同比增速",
-              "value": "-1.95%",
-              "asOf": "2026H1",
-              "source": {
-                "name": "Tushare Pro income + 贵州茅台2026年半年度报告（新浪财经披露原文）；financial_rigor.py calc验算",
-                "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-              }
-            },
-            {
-              "metric": "2026Q2单季营收/净利润同比增速",
-              "value": "营收-5.23%／净利润-6.90%",
-              "asOf": "2026Q2",
-              "source": {
-                "name": "西部证券中报点评（新浪财经转引）；financial_rigor.py calc交叉验算Q2单季推算口径",
-                "url": "http://stock.finance.sina.com.cn/stock/go.php/vReport_Show/kind/lastest/rptid/840155538861/index.phtml"
-              }
-            }
-          ]
-        }
+ "meta": {
+  "companyId": "sh-600519-kweichow-moutai",
+  "companyName": "贵州茅台酒股份有限公司",
+  "analyzedAt": "2026-11-01",
+  "dataCutoff": "2026-11-01",
+  "basedOnCollection": "research/companies/sh-600519-kweichow-moutai/financials-collection.json"
+ },
+ "dimensions": {
+  "businessEssence": {
+   "title": "生意本质",
+   "conclusion": "本质仍是原产地稀缺性支撑的高毛利消费品，2026Q3单季收入+3.00%、净利+3.78%在行业-7.39%中逆势转正，但增长是靠合同负债从80.07亿降到20.84亿换来的，表观增速好于增长质量。",
+   "analysis": {
+    "revenueBreakdown": {
+     "period": "2026前三季度",
+     "items": [
+      {
+       "segment": "茅台酒",
+       "revenue": "1,129.25",
+       "sharePct": "86.27%（占酒类主营收入1,308.95亿）",
+       "yoy": "+2.18%",
+       "source": {
+        "name": "贵州茅台2026年第三季度报告（巨潮，一手）",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+       }
       },
-      "inquiry": {
-        "question": "这门生意好在哪？如果只能用一句话描述，是什么？",
-        "answer": "好在原产地稀缺性支撑的品牌定价权，但2026H1成本刚性已侵蚀传导效率。①稀缺性未变：茅台镇原产地气候菌群不可复制，2026年两轮提价（出厂价1169→1269→1369元）验证品牌溢价能力仍在。②渠道结构质变：直销占比升至56%+，i茅台H1收入402.64亿(+274.18%)，公司加速绕开经销商直接触达消费者。③但H1营业成本+21.81%远超营收+1.3%，系列酒及非标产品主动降价拖累毛利率至89.56%（-1.74pct），首现『增收不增利』。④生意本质（稀缺性+定价权）未破，但成本端刚性与结构性降档已让提价红利传导出现摩擦，短期盈利质量弱于收入质量。"
+      {
+       "segment": "系列酒",
+       "revenue": "179.69",
+       "sharePct": "13.73%",
+       "yoy": "+0.47%（上半年-6.03%，Q3单季转正+22.15%）",
+       "source": {
+        "name": "贵州茅台2026年第三季度报告（巨潮，一手）",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+       }
       },
-      "dataGaps": [
-        {
-          "field": "profitabilityTrend5y.FY2021-2022.grossMarginPct",
-          "reason": "官方年报原文未在本次检索范围内逐字段核对，采用界面新闻、新华网转引数字并标注[估计]，已检索2次"
-        },
-        {
-          "field": "profitabilityTrend5y.FY2021-2024.operatingMarginPct",
-          "reason": "各年年报均未单列合并口径经营利润率，需自行用营业利润/营业收入逐年推算，已检索2次未取得可靠年度序列，仅FY2025有工具验算值"
-        },
-        {
-          "field": "profitabilityTrend5y.2026H1.operatingMarginPct",
-          "reason": "半年报及collection文件未提供推算2026H1经营利润率所需的营业利润/营业总收入分项数据，采集环节未推算，已检索collection文件2次未取得"
-        },
-        {
-          "field": "grossMarginVsPeers.peers（五粮液/洋河股份）",
-          "reason": "五粮液毛利率二手来源存在73.9%与77.54%冲突数字，洋河股份未检索到具体数字，且两者均未采集2026H1同期数据，均已检索2次仍未解决"
-        }
-      ]
+      {
+       "segment": "直销渠道",
+       "revenue": "737.74",
+       "sharePct": "56.36%（占酒类主营收入）",
+       "yoy": "+32.79%",
+       "source": {
+        "name": "贵州茅台2026年第三季度报告（巨潮，一手）",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+       }
+      },
+      {
+       "segment": "批发代理",
+       "revenue": "571.20",
+       "sharePct": "43.64%",
+       "yoy": "-21.58%",
+       "source": {
+        "name": "贵州茅台2026年第三季度报告（巨潮，一手）",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+       }
+      },
+      {
+       "segment": "i茅台平台（酒类不含税收入）",
+       "revenue": "585.62",
+       "sharePct": "44.73%",
+       "yoy": "+361.42%",
+       "source": {
+        "name": "贵州茅台2026年第三季度报告（巨潮，一手）",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+       }
+      },
+      {
+       "segment": "国外",
+       "revenue": "16.41",
+       "sharePct": "1.25%",
+       "yoy": "-57.84%",
+       "source": {
+        "name": "贵州茅台2026年第三季度报告（巨潮，一手）",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+       }
+      }
+     ],
+     "note": "结构变化是本期最重的信息：直销首次稳定超过批发（2025全年50.09%，2026前三季度56.36%），i茅台从补充渠道变成第一大单一渠道（44.73%）。茅台酒仍贡献86%以上收入且保持正增长，系列酒在Q3单季修复，说明上半年-6.03%更接近主动收缩而非需求崩塌。",
+     "unit": "亿元"
     },
-    "moat": {
-      "title": "护城河评估",
-      "conclusion": "护城河核心未松动，但2026H1增收不增利与渠道重构显示品牌定价权阶段性承压，转换成本结构生变。",
-      "analysis": {
-        "types": [
-          {
-            "type": "品牌/定价权",
-            "test": "是否能在不损失销量的情况下提价？",
-            "verdict": "存在",
-            "evidence": [
-              {
-                "metric": "2023年出厂价提价幅度",
-                "value": "20.64%（969→1169元/瓶）",
-                "asOf": "2023-11-01",
-                "source": {
-                  "name": "界面新闻",
-                  "url": "https://www.jiemian.com/article/10332083.html"
-                }
-              },
-              {
-                "metric": "2026年3月出厂价二次提价",
-                "value": "8.55%（1169→1269元/瓶），终端指导价1499→1539元/瓶，为8年来首次提价",
-                "asOf": "2026-03-31",
-                "source": {
-                  "name": "中华网财经",
-                  "url": "https://news.china.com/socialgd/10000169/20260331/49371140.html"
-                }
-              },
-              {
-                "metric": "2026年7月三次提价，取消1499元固定指导价",
-                "value": "i茅台零售价1539→1639元/瓶，经销商合同价1269→1369元/瓶，自营店零售价上调至1753元/瓶，改『固定指导价』为『随行就市』双价格体系",
-                "asOf": "2026-07",
-                "source": {
-                  "name": "贵州茅台2026年半年度报告（二手财经媒体转引，未核对公告原文）",
-                  "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-                }
-              },
-              {
-                "metric": "2026H1归母净利润同比",
-                "value": "-1.95%（Q2单季-6.90%），为2001年上市以来首个『增收不增利』半年报，主因营业成本+21.81%及产品结构主动降价",
-                "asOf": "2026H1",
-                "source": {
-                  "name": "贵州茅台2026年半年度报告；Tushare Pro income，financial_rigor.py calc验算",
-                  "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-                }
-              },
-              {
-                "metric": "2026H1茅台酒主品收入同比",
-                "value": "+2.82%（777.2亿元），核心大单品在提价与结构调整下仍正增长",
-                "asOf": "2026H1",
-                "source": {
-                  "name": "Tushare Pro fina_mainbz；公司半年报披露，financial_rigor.py calc验算",
-                  "url": "https://tushare.pro"
-                }
-              }
-            ]
-          },
-          {
-            "type": "转换成本",
-            "test": "客户迁移到竞品的成本有多高？",
-            "verdict": "存在",
-            "evidence": [
-              {
-                "metric": "国内经销商数量变动",
-                "value": "2,307个（H1新增220个，减少266个，净减46个，主要为系列酒经销商）",
-                "asOf": "2026H1",
-                "source": {
-                  "name": "贵州茅台2026年半年度报告",
-                  "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-                }
-              },
-              {
-                "metric": "批发代理渠道收入同比",
-                "value": "-21.57%（386.97亿元），经销商体系传统锁定载体持续收缩",
-                "asOf": "2026H1",
-                "source": {
-                  "name": "贵州茅台2026年半年度报告；Tushare Pro，financial_rigor.py calc验算",
-                  "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-                }
-              },
-              {
-                "metric": "直销渠道收入占比",
-                "value": "56.31%~57.32%（不同口径），同比大幅提升，锁定主体从经销商转向直营+数字平台",
-                "asOf": "2026H1",
-                "source": {
-                  "name": "贵州茅台2026年半年度报告",
-                  "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-                }
-              },
-              {
-                "metric": "直营团购（剔除i茅台）同比/环比",
-                "value": "-68.5%／-52.9%，原直营团购客户或被i茅台内部分流而非纯增量",
-                "asOf": "2026H1",
-                "source": {
-                  "name": "二手研报/财经媒体转引（未核对官方口径）",
-                  "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-                }
-              },
-              {
-                "metric": "品牌强度指数（消费者端替代弹性低）",
-                "value": "92.4/100，全球烈酒品牌第2强",
-                "asOf": "2025",
-                "source": {
-                  "name": "Brand Finance Spirits 50 2025",
-                  "url": "https://brandfinance.com/press-releases/chinas-spirits-soar-moutai-wuliangye-reign-as-the-worlds-top-two-most-valuable-spirits-brands"
-                }
-              }
-            ]
-          },
-          {
-            "type": "网络效应",
-            "test": "用户越多产品越好吗？",
-            "verdict": "不存在",
-            "evidence": [
-              {
-                "metric": "i茅台H1收入同比",
-                "value": "+274.18%（402.64亿元），占酒类不含税收入43.63%",
-                "asOf": "2026H1",
-                "source": {
-                  "name": "Tushare Pro；公司半年报披露",
-                  "url": "https://tushare.pro"
-                }
-              },
-              {
-                "metric": "i茅台产品形态",
-                "value": "预约抽签购买渠道，非社交/UGC平台，用户增长不改变单用户使用价值",
-                "asOf": "2022",
-                "source": {
-                  "name": "半月谈",
-                  "url": "http://www.banyuetan.org/qyzx/detail/20221221/1000200033137541671605289919108527_1.html"
-                }
-              },
-              {
-                "metric": "直营团购（剔除i茅台）同比",
-                "value": "-68.5%，i茅台用户规模扩大未必伴随净新增需求，反证平台不具备正外部性网络效应",
-                "asOf": "2026H1",
-                "source": {
-                  "name": "二手研报/财经媒体转引（未核对官方口径）",
-                  "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-                }
-              }
-            ]
-          },
-          {
-            "type": "规模效应",
-            "test": "规模带来的成本优势有多大？",
-            "verdict": "存在",
-            "evidence": [
-              {
-                "metric": "基酒产能增长（2016→2025）",
-                "value": "3.9万吨→6.02万吨（+54.24%）",
-                "asOf": "2025",
-                "source": {
-                  "name": "新浪财经",
-                  "url": "https://finance.sina.com.cn/wm/2025-01-22/doc-inefwfmr7400806.shtml"
-                }
-              },
-              {
-                "metric": "十四五规划新增产能与远期目标",
-                "value": "新增1.98万吨/年，2027年目标7.7万吨，2035年目标10万吨",
-                "asOf": "2025",
-                "source": {
-                  "name": "经济参考报（新华社）",
-                  "url": "http://jjckb.xinhuanet.com/20260521/0609f3b9554348cab6ec6ae72aca11b7/c.html"
-                }
-              },
-              {
-                "metric": "2026H1毛利率/净利率同比",
-                "value": "毛利率89.56%（-1.74pct）、净利率50.75%（-1.81pct），营业成本同比+21.81%部分侵蚀规模摊薄效应",
-                "asOf": "2026H1",
-                "source": {
-                  "name": "Tushare Pro fina_indicator，financial_rigor.py calc验算",
-                  "url": "https://tushare.pro"
-                }
-              },
-              {
-                "metric": "系列酒H1收入同比",
-                "value": "-6.03%（129.3亿元），Q2单季-25.0%（研报口径未逐项验算），经销商净减46家多集中于系列酒，多品类协同规模效应收窄",
-                "asOf": "2026H1",
-                "source": {
-                  "name": "西部证券中报点评（新浪财经转引）；Tushare Pro分部收入",
-                  "url": "http://stock.finance.sina.com.cn/stock/go.php/vReport_Show/kind/lastest/rptid/840155538861/index.phtml"
-                }
-              }
-            ]
-          },
-          {
-            "type": "技术/专利壁垒",
-            "test": "技术领先几年？能否被复制？",
-            "verdict": "存在",
-            "evidence": [
-              {
-                "metric": "1974年国家级异地生产大规模试验结果",
-                "value": "证实茅台镇酿造微生态独特、异地不可复制",
-                "asOf": "1974",
-                "source": {
-                  "name": "新华网《生态密码》",
-                  "url": "http://www.news.cn/enterprise/20260119/14f148d910014c889d003dcd6ea37a0b/c.html"
-                }
-              },
-              {
-                "metric": "传统工艺与专属菌落",
-                "value": "三合土窖泥、『12987』固态发酵工艺、原产地气候微生物群",
-                "asOf": "2025",
-                "source": {
-                  "name": "贵州茅台2025年年度报告",
-                  "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
-                }
-              },
-              {
-                "metric": "研发强度（工艺优化投入，非替代性技术竞赛）",
-                "value": "0.48%（8.03亿元），FY2025与基线一致，未见新增技术护城河变化信号",
-                "asOf": "FY2025",
-                "source": {
-                  "name": "贵州茅台2025年年度报告",
-                  "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
-                }
-              }
-            ]
-          }
-        ],
-        "trendPast5y": {
-          "direction": "稳定",
-          "basis": "①提价能力延续：2023年+20.64%后2026年内再两轮提价（+8.55%及随行就市改革），8年僵局打破。②渠道结构剧变：直销占比升至56%+，i茅台H1收入+274.18%占43.63%，锁定主体从经销商转向直营。③2026H1首现增收不增利（净利润-1.95%，Q2-6.90%），历史上首次利润与营收脱钩，边际信号转弱。④系列酒H1-6.03%、经销商净减46家，多品类协同贡献收窄，故综合判稳定而非单向变宽。"
-        },
-        "trendNext5y": {
-          "direction": "变窄",
-          "basis": "①2026H1增收不增利为2001年来首次，若成本上升与结构性降价持续侵蚀利润，定价权向股东价值传导能力将持续弱化。②渠道从批发主导转向直营+i茅台主导，直营团购（剔除i茅台）降68.5%/52.9%，i茅台增量是否为存量客户内部转移尚存疑，经销商体系型转换成本被公司主动稀释。③系列酒连续多季承压、经销商净减46家多集中系列酒，第二增长曲线与多品类协同证伪风险上升。④陈华无白酒背景叠加5年4任换帅，若消费税加码叠加渠道信心重建失败，价格体系存失控风险。"
-        }
+    "profitabilityTrend5y": {
+     "series": [
+      {
+       "fiscalYear": "FY2021",
+       "grossMarginPct": "[估计] 91.54%",
+       "operatingMarginPct": "70.39%（营业利润/营业收入，Tushare Pro income 年报口径，financial_rigor.py calc 验算）",
+       "netMarginPct": "49.38%",
+       "source": {
+        "name": "界面新闻（转引年报）；净利率=归母净利润/营业收入，financial_rigor.py calc验算",
+        "url": "https://www.jiemian.com/article/7278507.html"
+       }
       },
-      "inquiry": {
-        "question": "10年后这条护城河还在吗？什么能摧毁它？",
-        "answer": "大概率仍在，但强度较基线进一步弱化，需观察渠道转型是否真正扩容而非存量转移。①原产地气候与微生物菌群不可迁移复制属地理生物学约束，十年维度核心资产壁垒不会消失。②能摧毁它的核心风险是渠道重构与成本上升双重侵蚀下的价格体系失控：若i茅台增量被证实主要是原直营团购客户内部转移而非新客户扩容，渠道信心将加速瓦解。③陈华任内战略若持续动摇（5年4任换帅的治理不稳定性）叠加消费税实质加税、系列酒第二增长曲线证伪，可能加速侵蚀护城河。④年轻世代消费偏好向低度/无醇饮品结构性转移，若十年内未被新渠道、新品对冲，将从需求端釜底抽薪式侵蚀品牌溢价基础。"
+      {
+       "fiscalYear": "FY2022",
+       "grossMarginPct": "[估计] 92.00%",
+       "operatingMarginPct": "70.81%（营业利润/营业收入，Tushare Pro income 年报口径，financial_rigor.py calc 验算）",
+       "netMarginPct": "50.54%",
+       "source": {
+        "name": "新华网《茅台2022年报的12个小秘密》；净利率=归母净利润/营业收入，financial_rigor.py calc验算",
+        "url": "http://www.xinhuanet.com/enterprise/20230409/cb3af2668ae247739075a6e5622b49be/c.html"
+       }
       },
-      "dataGaps": [
-        "直营团购（剔除i茅台）降68.5%/52.9%是否为纯粹客户内部转移而非新增需求，官方半年报未拆分披露具体口径，仅二手研报转引，本次检索范围未获取官方原始拆分数据",
-        "2026年7月三次提价（i茅台1539→1639、经销商1269→1369、自营店1753元）未见官方公告原文，仅财经媒体二手转引，financials-collection已标注未核对",
-        "系列酒2026Q1同比数据（+12.22%口径，见riskFactors文本）与H1公司口径-6.03%的季度序列存在表述差异，未找到官方分季度产品收入拆分原文核实",
-        "i茅台是否具备真正网络效应仍缺乏第三方专项研究量化支持，仅有用户规模、增速与产品形态定性判断，延续自基线未解决"
-      ]
+      {
+       "fiscalYear": "FY2023",
+       "grossMarginPct": "92.11%",
+       "operatingMarginPct": "70.22%（营业利润/营业收入，Tushare Pro income 年报口径，financial_rigor.py calc 验算）",
+       "netMarginPct": "50.60%",
+       "source": {
+        "name": "贵州茅台2023年年度报告；净利率financial_rigor.py calc验算",
+        "url": "https://www.moutaichina.com/mtgf/articleFileDir/2024-05/07/e7471b99e4e84c7e9dcf1e591174c08e.pdf"
+       }
+      },
+      {
+       "fiscalYear": "FY2024",
+       "grossMarginPct": "92.01%",
+       "operatingMarginPct": "70.03%（营业利润/营业收入，Tushare Pro income 年报口径，financial_rigor.py calc 验算）",
+       "netMarginPct": "50.46%",
+       "source": {
+        "name": "贵州茅台2025年年度报告（三年对比数据）；净利率financial_rigor.py calc验算",
+        "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
+       }
+      },
+      {
+       "fiscalYear": "FY2025",
+       "grossMarginPct": "91.23%",
+       "operatingMarginPct": "68.02%",
+       "netMarginPct": "48.76%",
+       "source": {
+        "name": "贵州茅台2025年年度报告；营业利润率=营业利润/营业总收入，净利率financial_rigor.py calc验算",
+        "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
+       }
+      },
+      {
+       "fiscalYear": "2026H1",
+       "grossMarginPct": "89.56%（同比-1.74pct）",
+       "operatingMarginPct": "67.71%（营业利润614.11亿/营业收入907.03亿，financial_rigor.py calc 验算）",
+       "netMarginPct": "50.75%（同比-1.81pct）",
+       "source": {
+        "name": "贵州茅台2026年半年度报告（新浪财经披露原文）；毛利率/净利率经Tushare fina_indicator与financial_rigor.py calc双重验算",
+        "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
+       }
+      },
+      {
+       "fiscalYear": "2026前三季度",
+       "grossMarginPct": "89.58%（同比-1.71pct）",
+       "operatingMarginPct": "67.94%（营业利润889.80亿/营业收入1,309.71亿，financial_rigor.py calc 验算）",
+       "netMarginPct": "49.22%（同比-1.10pct）",
+       "source": {
+        "name": "贵州茅台2026年第三季度报告（巨潮，一手）；经 Tushare fina_indicator 与 financial_rigor.py calc 双重验算",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+       }
+      },
+      {
+       "fiscalYear": "TTM（2026Q3滚动）",
+       "grossMarginPct": "89.87%（TTM营业成本173.54亿/营业收入1,713.55亿）",
+       "operatingMarginPct": "66.70%（TTM营业利润1,142.99亿/营业收入1,713.55亿）",
+       "netMarginPct": "47.95%",
+       "source": {
+        "name": "FY2025 与 2025/2026 三季度数据三期滚动，financial_rigor.py calc 验算",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+       }
+      }
+     ]
     },
-    "inversion": {
-      "title": "逆向思考与风险清单",
-      "conclusion": "2026H1增收不增利首次兑现，渠道转直营净增量与系列酒失控风险已从假设变为现实，护城河承压未破。",
-      "analysis": {
-        "failurePaths": [
-          {
-            "path": "渠道转直营净增量不及预期，团购客户被i茅台内部转移",
-            "probability": "高",
-            "impact": "高",
-            "evidence": [
-              {
-                "metric": "直营团购剔除i茅台后同比/环比",
-                "value": "-68.5%／-52.9%",
-                "asOf": "2026H1",
-                "source": {
-                  "name": "公司2026年半年度报告（研报转引，未核对官方公告原文）",
-                  "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-                }
-              },
-              {
-                "metric": "国内经销商数量变化",
-                "value": "净减46个（报告期增220/减266，主要为系列酒经销商）",
-                "asOf": "2026H1",
-                "source": {
-                  "name": "公司2026年半年度报告",
-                  "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-                }
-              }
-            ]
-          },
-          {
-            "path": "系列酒战略性收缩演变为失控式下滑，非可控降速",
-            "probability": "高",
-            "impact": "中",
-            "evidence": [
-              {
-                "metric": "系列酒H1累计／Q2单季营收同比",
-                "value": "-6.03%／-25.0%",
-                "asOf": "2026H1/Q2",
-                "source": {
-                  "name": "公司2026年半年度报告（Q2为研报转引口径）",
-                  "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-                }
-              },
-              {
-                "metric": "系列酒2026Q1营收同比（对照，恶化趋势起点）",
-                "value": "+12.22%",
-                "asOf": "2026Q1",
-                "source": {
-                  "name": "公司2026年第一季度报告",
-                  "url": "https://stockmc.xueqiu.com/202604/600519_20260425_G9JL.pdf"
-                }
-              }
-            ]
-          },
-          {
-            "path": "i茅台加速替代经销商体系，引发渠道信心与忠诚度危机",
-            "probability": "中",
-            "impact": "中",
-            "evidence": [
-              {
-                "metric": "i茅台H1/Q2收入同比及占酒类不含税收入比重",
-                "value": "+274.18%／+282.6%，占比43.63%",
-                "asOf": "2026H1",
-                "source": {
-                  "name": "公司2026年半年度报告",
-                  "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-                }
-              },
-              {
-                "metric": "批发代理收入同比",
-                "value": "-21.57%",
-                "asOf": "2026H1",
-                "source": {
-                  "name": "公司2026年半年度报告",
-                  "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-                }
-              }
-            ]
-          },
-          {
-            "path": "经济周期性商务消费持续萎缩，需求结构性收缩已兑现",
-            "probability": "高",
-            "impact": "高",
-            "evidence": [
-              {
-                "metric": "2026Q2营收/净利润同比",
-                "value": "-5.23%／-6.90%",
-                "asOf": "2026Q2",
-                "source": {
-                  "name": "Tushare Pro income，financial_rigor.py calc验算",
-                  "url": "https://tushare.pro"
-                }
-              },
-              {
-                "metric": "FY2025营收/净利润/经营现金流同比（上一轮周期已兑现的前兆）",
-                "value": "-1.2%／-4.53%／-33.46%",
-                "asOf": "FY2025",
-                "source": {
-                  "name": "公司2025年年度报告",
-                  "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
-                }
-              }
-            ]
-          },
-          {
-            "path": "消费税/地方监管政策超预期加码，抬升终端综合税负",
-            "probability": "低",
-            "impact": "中",
-            "evidence": [
-              {
-                "metric": "消费税计税方式改革公告",
-                "value": "国家税务总局2025年第18号公告，2026年生效，官方称仅调计税方式、不提税率、不增总体税负",
-                "asOf": "2026-01-01",
-                "source": {
-                  "name": "酒配名（行业媒体）",
-                  "url": "https://www.jiupaiming.com/103022.html"
-                }
-              }
-            ]
-          },
-          {
-            "path": "『随行就市』双价格体系执行失误，渠道价格体系混乱",
-            "probability": "中",
-            "impact": "中",
-            "evidence": [
-              {
-                "metric": "2026年7月二次调价三轨价格体系",
-                "value": "i茅台App1639元/经销商合同价1369元/自营店1753元，取代原1499元固定指导价",
-                "asOf": "2026-07",
-                "source": {
-                  "name": "公司2026年半年度报告（二手来源转引，未核对官方公告原文）",
-                  "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-                }
-              }
-            ]
-          },
-          {
-            "path": "年轻世代转向低度微醺，高度酱香品类被边缘化",
-            "probability": "中",
-            "impact": "高",
-            "evidence": [
-              {
-                "status": "unavailable",
-                "reason": "本轮采集文件riskFactors已标注：已查2023/2025年报全文关键词及披露栏目，公司未见针对性量化披露，需第三方消费者调研报告，本轮检索预算内未展开"
-              }
-            ]
-          },
-          {
-            "path": "食品安全/造假黑天鹅事件冲击品牌信任",
-            "probability": "低",
-            "impact": "高",
-            "evidence": [
-              {
-                "metric": "2012年塑化剂事件后白酒板块市值年缩水",
-                "value": "14家白酒上市公司市值一年缩水2552亿元",
-                "asOf": "2014-05-19",
-                "source": {
-                  "name": "中国新闻网（沿用上一轮分析文件来源，本轮未重新核实）",
-                  "url": "https://www.chinanews.com/stock/2014/05-19/6183201.shtml"
-                }
-              }
-            ]
-          }
-        ],
-        "historicalAnalogies": [
-          {
-            "company": "贵州茅台自身（2012-2015三公消费限制+塑化剂周期）",
-            "similarity": "同为自身历史需求政策冲击叠加渠道去库存导致营收利润拐点",
-            "outcome": "股价跌52.6%，增速探底后2014年触底反弹，未伤龙头地位",
-            "source": {
-              "name": "东方财富证券研究报告（历史数据整理，沿用上一轮分析文件来源）",
-              "url": "https://pdf.dfcfw.com/pdf/H3_AP202210161579192655_1.pdf"
-            }
-          },
-          {
-            "company": "五粮液（同期2012-2015周期，同行对照组）",
-            "similarity": "同期遭遇同一政策冲击，但渠道控制力弱于茅台，转型阵痛更明显",
-            "outcome": "2013年出现8年来首次净利润下滑，跌幅甚于茅台",
-            "source": {
-              "name": "中国新闻网（沿用上一轮分析文件来源）",
-              "url": "https://www.chinanews.com/stock/2014/05-19/6183201.shtml"
-            }
-          }
-        ],
-        "crossDisciplinaryChecks": [
-          {
-            "model": "竞争博弈",
-            "finding": "①H1茅台营收+1.3%仍跑赢五粮液(-54.55%，口径调整)、泸州老窖(-17.5%)、洋河(-33.47%，Q4亏损)，相对护城河仍占优。②但让利渠道+i茅台替代经销商本质是重复博弈中主动『以价换量』，若竞对企稳而茅台仍收缩，先动者未必占优。"
-          },
-          {
-            "model": "网络效应理论",
-            "finding": "①i茅台H1收入占酒类收入43.63%，但其产品形态是预约抽签购买渠道，用户增多不提升单用户效用，不构成真正网络效应。②渠道加速转向i茅台是分销结构替代而非生态锁定强化，直营团购剔除后-68.5%说明部分是内部转移而非新增粘性。"
-          }
-        ],
-        "biasSelfCheck": [
-          {
-            "bias": "叙事偏差",
-            "check": "官方将系列酒下滑与净利润转负定性为『以短期利润换渠道健康』的主动选择，可能掩盖终端需求真实走弱的事实。"
-          },
-          {
-            "bias": "锚定效应",
-            "check": "投资者锚定『2001年上市以来从未增收不增利』的完美记录，视本次为暂时波动，低估拐点信号本身的意义。"
-          },
-          {
-            "bias": "幸存者偏差",
-            "check": "只关注茅台酒主品仍正增长2.82%守住基本盘，而忽视系列酒与海外收入(-64.14%)已现类失败先兆。"
-          }
-        ],
-        "bearCase": [
-          {
-            "point": "2026H1为2001年上市以来首个增收不增利半年报，Q2净利润降幅快于预期",
-            "holder": "公司半年报数据；财经媒体解读",
-            "evidence": [
-              {
-                "metric": "2026H1营收/净利润同比；Q2净利润同比",
-                "value": "+1.30%／-1.95%；Q2 -6.90%",
-                "asOf": "2026H1",
-                "source": {
-                  "name": "公司2026年半年度报告，financial_rigor.py calc验算",
-                  "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-                }
-              }
-            ]
-          },
-          {
-            "point": "系列酒连续三季度下滑且海外收入H1骤降64.14%，第二增长曲线证伪",
-            "holder": "研报（西部证券中报点评，新浪财经转引）；Tushare分部数据",
-            "evidence": [
-              {
-                "metric": "系列酒H1同比；海外H1同比",
-                "value": "-6.03%；-64.14%",
-                "asOf": "2026H1",
-                "source": {
-                  "name": "Tushare Pro分部收入，financial_rigor.py calc验算",
-                  "url": "https://tushare.pro"
-                }
-              }
-            ]
-          },
-          {
-            "point": "渠道转直营净增量存疑，直营团购剔除i茅台后同比/环比大幅下滑",
-            "holder": "研报转引公司半年报数据",
-            "evidence": [
-              {
-                "metric": "直营团购剔除i茅台后同比/环比",
-                "value": "-68.5%／-52.9%",
-                "asOf": "2026H1",
-                "source": {
-                  "name": "公司2026年半年度报告（研报转引，未核对官方公告原文）",
-                  "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-                }
-              }
-            ]
-          },
-          {
-            "point": "营业成本H1同比+21.81%侵蚀毛利率，提价红利未覆盖成本上升",
-            "holder": "Tushare fina_indicator；公司半年报",
-            "evidence": [
-              {
-                "metric": "H1营业成本同比；毛利率/净利率变化",
-                "value": "+21.81%；毛利率89.56%(-1.74pct)/净利率50.75%(-1.81pct)",
-                "asOf": "2026H1",
-                "source": {
-                  "name": "Tushare Pro fina_indicator，financial_rigor.py calc验算",
-                  "url": "https://tushare.pro"
-                }
-              }
-            ]
-          },
-          {
-            "point": "陈华『随行就市』定价改革处执行早期，效果验证期尚未到来",
-            "holder": "公司公告；市场评论",
-            "evidence": [
-              {
-                "metric": "董事长任职时长及本次半年报性质",
-                "value": "陈华2025-10-27上任，任职不足1年，2026H1为其任内首份完整半年报",
-                "asOf": "2026H1",
-                "source": {
-                  "name": "公司2026年半年度报告",
-                  "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "inquiry": {
-        "question": "我最可能在哪里犯错？聪明人为什么会不买/做空这家公司？",
-        "answer": "最大错误是照单全收渠道转型『主动收缩』叙事，低估H1真实需求走弱。①团购剔除i茅台后同比/环比-68.5%/-52.9%，说明部分增量是存量转移而非净增。②系列酒连续三季度下滑且Q2降幅达25%，第二曲线证伪速度快于预期。③营业成本+21.81%侵蚀毛利率，提价未能覆盖成本压力，盈利质量走弱。④聪明空头逻辑：一个2001年来首次增收不增利、经销商净减46个的成熟消费品，若市场仍按历史无失败记录定价，赔率已不再明显占优。"
-      },
-      "dataGaps": [
-        "低度酒消费趋势(18%对比3.2%)及年轻世代偏好量化数据未在本轮采集文件重新验证，采集文件riskFactors已标注公司未见针对性披露，需第三方消费者调研，本轮检索预算内未展开",
-        "2012年塑化剂事件板块市值冲击、五粮液2013年同期净利润下滑数据沿用上一轮分析文件来源，本轮采集文件未包含，未重新核实",
-        "中国酒类流通协会《2025中国酒类零售连锁行业发展白皮书》79%经销商反映价格倒挂的数据，本轮采集文件riskFactors仅文字提及未附可直达URL，未纳入bearCase量化证据",
-        "直营团购剔除i茅台后-68.5%/-52.9%及系列酒Q2单季-25.0%均为研报（西部证券中报点评）转引口径，采集文件已标注未核对官方半年报原文对应页",
-        "无公开专门做空机构（如浑水/香橼类）报告，bearCase以公司半年报数据的媒体/研报解读替代，已在holder字段注明"
-      ]
+    "businessModelCanvas": {
+     "salesModel": "一次性销售",
+     "productForm": "混合",
+     "note": "①主体仍为白酒实体产品的一次性买断销售，非订阅制。②i茅台平台角色质变：2026H1收入402.64亿元(+274.18%)，占酒类不含税收入43.63%，Q2单季占比达50.9%，从边缘渠道变为过半零售触点。③平台承担预约抽签、限购、直连C端定价职能，强化公司对终端价格掌控，但产品形态本质未变，仍判定为混合（实体产品+数字平台）。"
     },
-    "management": {
-      "title": "管理层评估",
-      "conclusion": "陈华首份完整半年报即现上市以来首次增收不增利，管理层执行风险已从存疑变为可观察结果，但核心壁垒仍不系于个人。",
-      "analysis": {
-        "keyDecisions": [
-          {
-            "date": "2025-10-27",
-            "decision": "董事长换届：张德芹离任，陈华接任",
-            "outcome": "无酒业背景空降；首份完整半年报现增收不增利，结果偏负面。",
-            "rating": "★★☆☆☆",
-            "source": {
-              "name": "贵州茅台2025年年度报告（董事会成员变动披露）",
-              "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
-            }
-          },
-          {
-            "date": "2024-09",
-            "decision": "启动首期股票回购（30-60亿元）",
-            "outcome": "已完成，注销3,927,585股，回购注销落地。",
-            "rating": "★★★☆☆",
-            "source": {
-              "name": "贵州茅台2025年年度报告（股份回购与变动披露）",
-              "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
-            }
-          },
-          {
-            "date": "2025-11",
-            "decision": "启动第二期股票回购（15-30亿元）",
-            "outcome": "collection标注仍处进行中，完成均价数据本次未取得。",
-            "rating": "★★★☆☆",
-            "source": {
-              "name": "贵州茅台2025年年度报告（股份回购与变动披露）",
-              "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
-            }
-          },
-          {
-            "date": "2025",
-            "decision": "直销渠道改革持续推进，2025年直销占比首超50%",
-            "outcome": "2026H1批发代理收入同比-21.57%，转型提速但阵痛加剧。",
-            "rating": "★★★☆☆",
-            "source": {
-              "name": "贵州茅台2026年半年度报告（渠道收入拆分）",
-              "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-            }
-          },
-          {
-            "date": "2026-03",
-            "decision": "陈华上任后首次调价：出厂价8年来首次上调（1169→1269元/瓶）",
-            "outcome": "批发价温和回升，但H1营业成本+21.81%侵蚀提价红利。",
-            "rating": "★★☆☆☆",
-            "source": {
-              "name": "贵州茅台2026年半年度报告",
-              "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-            }
-          },
-          {
-            "date": "2026-07",
-            "decision": "二次调价：形成『随行就市』双价格体系，取消固定指导价",
-            "outcome": "截至数据截止Q3效果尚无法评估，执行风险待验证。",
-            "rating": "★★★☆☆",
-            "source": {
-              "name": "贵州茅台2026年半年度报告",
-              "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-            }
-          },
-          {
-            "date": "2026H1",
-            "decision": "产品结构『金字塔』重构：非标降价、系列酒主动收缩投放",
-            "outcome": "系列酒H1收入-6.03%，直接拖累净利润同比-1.95%。",
-            "rating": "★★☆☆☆",
-            "source": {
-              "name": "贵州茅台2026年半年度报告",
-              "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-            }
-          },
-          {
-            "date": "2026H1",
-            "decision": "i茅台数字平台加速放量，H1收入+274.18%占比达43.63%",
-            "outcome": "直营团购(除i茅台)同比-68.5%，净增量成色存疑。",
-            "rating": "★★★☆☆",
-            "source": {
-              "name": "贵州茅台2026年半年度报告",
-              "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-            }
-          }
-        ],
-        "capitalAllocation": {
-          "rdReturn": "① FY2025研发费用8.03亿元，强度0.48%，collection未披露2026H1研发费用具体数字。② 白酒工艺型研发（菌群/窖泥/发酵优化）本质是维护稀缺性而非新品替代，传统研发ROI框架适用性低。③ 陈华任内战略重心是渠道与定价，本轮半年报未见研发投入方向调整的新证据。",
-          "maTrackRecord": "① 采集数据未见任何新增并购交易，公司历史上无重大产业并购案例。② 资本运作仍局限于财务公司同业存款、股票回购注销及本轮调价/渠道改革，非产业并购范畴，该项指标持续不适用于本公司评估。",
-          "buybackTiming": "① 第二期回购（2025-11启动，15-30亿元）collection仍标注『进行中』，未披露完成均价。② 截至2026-08-14，PE(TTM)20.28x处于近一年58%分位，PB6.19x处于25%分位偏低，回购继续执行对股东相对有利。③ 2026H1经营现金流+438.84%为回购提供支撑，但主因去年同期低基数，非持续性经营改善。",
-          "evidence": [
-            {
-              "metric": "研发费用/研发强度",
-              "value": "8.03亿元 / 0.48%",
-              "asOf": "FY2025",
-              "source": {
-                "name": "贵州茅台2025年年度报告",
-                "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
-              }
-            },
-            {
-              "metric": "第二期回购规模及状态",
-              "value": "15-30亿元，进行中",
-              "asOf": "2025-11",
-              "source": {
-                "name": "贵州茅台2025年年度报告（回购披露）",
-                "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
-              }
-            },
-            {
-              "metric": "PE(TTM)及一年分位",
-              "value": "20.28x，58%分位",
-              "asOf": "2026-08-14",
-              "source": {
-                "name": "Tushare Pro daily_basic",
-                "url": "https://tushare.pro"
-              }
-            },
-            {
-              "metric": "PB及一年分位",
-              "value": "6.19x，25%分位",
-              "asOf": "2026-08-14",
-              "source": {
-                "name": "Tushare Pro daily_basic",
-                "url": "https://tushare.pro"
-              }
-            }
-          ]
-        },
-        "alignment": {
-          "ownership": "① 控股股东贵州茅台酒厂集团持股54.40%，一股一票，经济权益与投票权一致，collection未见2026H1新变动披露。② 二季度末，中央汇金资产管理、中国证券金融两家机构均退出前十大股东名单（一季度末分别持股0.83%/0.32%）。③ 二者为独立机构资金主体，非陈华、王莉等管理层持股，应判定为机构资金再配置而非内部人减持信号。④ 陈华、王莉现任高管具体持股数量collection未披露，沿用既往数据缺口。",
-          "compensation": "① 陈华、王莉等国资委派高管薪酬多由控股股东（关联方）支付，通常不在上市公司年报单独列示，collection本次未提供2026H1新披露数据。② 非关联方委派高管仍适用『基本工资+绩效+任期激励』年薪制，具体2026年数字collection未覆盖。③ 薪酬结构与短期财务指标的量化挂钩关系未见公开披露，无法判断本轮调价/渠道改革决策是否与个人激励直接绑定。",
-          "insiderSelling": "① collection及既往检索均未见陈华、王莉等现任高管的减持公开记录。② 中央汇金、证金退出前十大股东属机构层面持仓变化，不属于管理层或内部人减持范畴，二者需严格区分。③ 本次数据截止内未见新的控股股东或高管股份增减持公告。",
-          "evidence": [
-            {
-              "metric": "控股股东持股比例",
-              "value": "54.40%",
-              "asOf": "FY2025/2026Q1",
-              "source": {
-                "name": "贵州茅台2025年年度报告 / 2026年第一季度报告",
-                "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
-              }
-            },
-            {
-              "metric": "中央汇金/证金退出前十大股东",
-              "value": "一季度末持股0.83%/0.32%，二季度末已不在前十",
-              "asOf": "2026-06-30",
-              "source": {
-                "name": "贵州茅台2026年半年度报告",
-                "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-              }
-            }
-          ]
-        },
-        "organization": {
-          "teamStability": "① 近5年四度换帅（高卫东→丁雄军→张德芹→陈华），陈华任职已满约10个月，尚未发生新的更替。② 总经理职责仍由王莉代行（自2023-08起），迄今近3年未获正式任命，代行状态延续原有治理不确定性。③ 本轮H1报告为陈华任内首份完整半年报，是评估其执行力的首个实际观测窗口。",
-          "keyPersonRisk": "① 陈华无白酒行业从业背景，2026H1两轮提价、产品结构重构与渠道转直营均为其任内主导的实质性战略动作，已从『存疑』阶段进入『可评估』阶段。② 首份半年报结果为增收不增利，系2001年上市以来首次，反映新战略执行成本已实际显现，关键人风险从『背景空白』演变为『执行结果待观察』。③ 王莉代行总经理近3年未转正，若其离任叠加陈华仍在磨合期，管理层稳定性存在双重不确定性。"
-        },
-        "culture": "① 公司官方持续使用『工匠精神』『贮足陈酿不卖新酒』等表述描述酿造传统，为公司自身对外宣传用语。② 2026H1可观察的经营决策变化：终止沿用多年的1499元固定指导价，改采『随行就市』双价格体系与『自售+经销+代售+寄售』并行架构。③ 5年内公司已经历4次董事长更替，为可观察的人事变动记录。④ 年报及本次半年报均未见ESG或企业文化的专项量化披露。"
+    "stickiness": {
+     "level": "强",
+     "mechanism": "①消费者为身份、社交、礼赠及收藏价值付费，需求价格弹性低：2026前三季度在行业营收-7.39%的背景下仍实现+1.82%，Q3单季+3.00%。②经销商资格仍具排他性：飞天批价1,695-1,730元 vs 经销合同价1,369元，单瓶渠道价差约330-360元；但国内经销商2,285家、年内净减68家，且合同负债-73.10%，说明「锁定」正在从经销商转向直接消费者。③i茅台限购+直销占比56.36%，把终端与数据直接握在公司手里；代价是渠道缓冲消失，库存与资金压力回到公司报表。",
+     "evidence": [
+      {
+       "metric": "国内经销商数量",
+       "value": "2,285家（年内增220/减288，净减68家，主要为系列酒经销商）",
+       "asOf": "2026-09-30",
+       "source": {
+        "name": "贵州茅台2026年第三季度报告",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+       }
       },
-      "inquiry": {
-        "question": "如果CEO退休，这家公司还能保持竞争力吗？",
-        "answer": "能，核心壁垒不系于个人，但陈华任内首份半年报显示执行力代价已实际显现。① 核心壁垒是原产地稀缺性与品牌资产，不依赖单一管理者，总经理职责由王莉代行近3年验证运营可独立运转。② 陈华任内两轮提价与渠道转直营，直接对应2001年来首个『增收不增利』半年报，说明治理更迭确实影响短期业绩节奏。③ 5年4换帅的治理不稳定是独立于产品护城河的风险变量，可能放大战略摇摆与转型阵痛。④ 陈华退休后，继任者能否延续或修正当前路径，是决定未来2-3年业绩弹性而非长期护城河的关键变量。"
+      {
+       "metric": "直销渠道收入占比",
+       "value": "56.36%（737.74亿元，同比+32.79%）",
+       "asOf": "2026Q3",
+       "source": {
+        "name": "贵州茅台2026年第三季度报告",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+       }
       },
-      "dataGaps": [
-        {
-          "field": "founderCeo/alignment.陈华、王莉具体持股数量",
-          "reason": "collection未披露个人持股细项，仅有控股股东层面持股比例，已查FY2025年报与2026H1半年报未见分项数据"
-        },
-        {
-          "field": "alignment.compensation.陈华、王莉2026年税前薪酬具体数额",
-          "reason": "collection未提供2026H1薪酬披露数据，国企惯例下相关薪酬多由控股股东支付未在上市公司层面单列"
-        },
-        {
-          "field": "capitalAllocation.buybackTiming.第二期回购完成均价",
-          "reason": "collection仅标注该轮回购『进行中』，未披露完成均价，故未采用外部来源数字进行精确折溢价核算"
-        },
-        {
-          "field": "inquiry/陈华任内战略最终成效",
-          "reason": "陈华任职仅约10个月，仅一份完整半年报可评估，尚不构成完整战略周期的定论性评估"
-        }
-      ]
+      {
+       "metric": "i茅台数字平台收入及占比",
+       "value": "585.62亿元（同比+361.42%），占酒类不含税收入44.73%",
+       "asOf": "2026Q3",
+       "source": {
+        "name": "贵州茅台2026年第三季度报告",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+       }
+      },
+      {
+       "metric": "合同负债（渠道预付款意愿）",
+       "value": "20.84亿元（年初80.07亿，同比-73.10%）",
+       "asOf": "2026-09-30",
+       "source": {
+        "name": "贵州茅台2026年第三季度报告",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+       }
+      }
+     ]
     },
-    "industryTrend": {
-      "title": "行业与长期趋势",
-      "conclusion": "行业转入存量深度调整，非范式转移；茅台2026H1净利润历史性下滑，拐点已现于龙头，但渠道话语权仍持续集中。",
-      "analysis": {
-        "paradigmShift": {
-          "verdict": "否",
-          "reasoning": "①白酒是成熟消费品，不存在技术驱动的颠覆性替代，不构成文明级范式转移。②2026H1为2001年上市以来首个『增收不增利』半年报，茅台净利润历史性转负，反映行业拐点已在龙头身上首次显性化。③全国规上白酒2025H1销售仅+0.19%，存量竞争加深，但属周期性调整而非品类颠覆。"
-        },
-        "historicalAnalogy": "①更贴近2012-2015年『三公消费+塑化剂』周期，而非蒸汽机/互联网式技术革命，不宜套用文明级类比。②上一轮系外生政策冲击，茅台仍守住正增长；本轮财报证实净利润历史性转负，压力源更趋内生。③提价、渠道改革仍在推进，尚未现2013年式销售额骤降，量级冲击暂弱于上一轮。",
-        "tam": {
-          "current": {
-            "status": "unavailable",
-            "reason": "各研报2030年目标区间(6500亿-1.2万亿元)及CAGR预测(3.98%-6.5%)口径不一，无单一权威绝对值来源；collection文件本轮已判定unavailable，分析层沿用同一处理，未新增检索（仅读取指定两文件，未联网核实）"
-          },
-          "ceiling": "①天花板取决于存量白酒消费人群与结构升级空间，而非总量扩张。②2025H1全国规上白酒销售收入同比仅+0.19%，已确认进入存量竞争深度调整期。③茅台自身H1增收不增利，显示提价红利尚未完全覆盖成本与结构调整拖累，份额扩张空间有限。",
-          "growthCurve": "①行业已越过成长期高点，进入成熟期偏早期衰退阶段。②量价齐跌、渠道去库存持续，2025H1收入增速降至+0.19%的历史低位。③龙头层面2026H1首现净利润下滑，验证调整已从行业总量传导至头部企业盈利端。④头部竞品FY2025营收普遍大降(五粮液/泸州老窖/洋河均两位数以上降幅)，行业呈结构性缩量。"
-        },
-        "valueChainPosition": "①产业链原料-酿造-品牌-渠道-终端，茅台在品牌与终端渠道两端仍占强势议价地位。②渠道改革深化：2026H1直销占比56%~57%，i茅台占比43.63%，终端掌控力增强。③两轮调价+『随行就市』双价体系取代单一指导价，议价权向公司集中，但经销商净减46家。④位置未因渠道改革削弱，反而从『定价者』强化为『定价+终端双重掌控者』。",
-        "techRouteRisk": "①白酒酿造工艺本身无技术路线替代风险，风险源在于品类被其他饮品分流。②低度化消费趋势存在，但年轻群体偏好变化量化数据公司未披露，已标注unavailable。③短中期尚未见工艺替代信号，风险主要体现为需求结构缓慢迁移而非技术断层。",
-        "concentration": {
-          "customers": "①终端面向大众消费者，客户高度分散，集中度低。②渠道结构性集中加深：2026H1直销占比56%~57%，经销商净减46家（主要系列酒）。③i茅台平台放量（占酒类收入43.63%）进一步强化公司对终端销售数据与定价的直接掌控。",
-          "suppliers": {
-            "status": "unavailable",
-            "reason": "本轮collection未采集高粱等上游原料供应商集中度数据（仅覆盖收入结构/竞争格局/护城河/管理层/行业前景等既定维度），未联网检索核实，标记unavailable"
-          },
-          "evidence": [
-            {
-              "metric": "直销渠道收入占比（2026H1）",
-              "value": "56.31%~57.32%（不同口径）",
-              "asOf": "2026-06-30",
-              "source": {
-                "name": "公司2026年半年度报告（新浪财经披露原文）",
-                "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-              }
-            },
-            {
-              "metric": "国内经销商数量变动（2026H1）",
-              "value": "期末2,307个，报告期内增加220个、减少266个，净减46个（主要系列酒经销商）",
-              "asOf": "2026-06-30",
-              "source": {
-                "name": "公司2026年半年度报告（新浪财经披露原文）",
-                "url": "https://stockmc.xueqiu.com/202608/600519_20260815_UXBN.pdf"
-              }
-            },
-            {
-              "metric": "i茅台平台收入占酒类不含税收入比例（2026H1）",
-              "value": "43.63%（H1收入402.64亿元，+274.18% YoY）",
-              "asOf": "2026-06-30",
-              "source": {
-                "name": "Tushare Pro income / 公司2026年半年度报告",
-                "url": "https://tushare.pro"
-              }
-            },
-            {
-              "metric": "茅台白酒行业市场份额",
-              "value": "19.47%",
-              "asOf": "2023-12-31",
-              "source": {
-                "name": "中国酒业协会（经新浪财经转引）",
-                "url": "https://finance.sina.com.cn/roll/2025-03-07/doc-inenvfqm2592067.shtml"
-              }
-            }
-          ]
-        }
+    "grossMarginVsPeers": {
+     "companyPct": "89.58%（2026前三季度，较FY2025的91.18%回落1.60pct；Q3单季毛利率与H1基本持平，未继续恶化）",
+     "peers": [
+      {
+       "name": "泸州老窖",
+       "grossMarginPct": "[估计] 87%（期间口径未明确，FY2025年度数据）",
+       "source": {
+        "name": "东方财富财富号《泸州老窖、五粮液、洋河股份投资对比分析》",
+        "url": "https://caifuhao.eastmoney.com/news/20260427150804076560710"
+       }
       },
-      "inquiry": {
-        "question": "站在20年后回看，这家公司是「这个时代的标准石油」还是「昙花一现的3Com」？",
-        "answer": "更接近『标准石油』式的持久生意，而非『3Com』式昙花一现。①原产地气候/菌群/工艺不可复制，品牌定价权历经多轮验证，具备百年尺度持久性。②2026H1净利润历史性下滑属存量竞争与结构调整期的周期性阵痛，而非品类颠覆或技术替代。③渠道深度改革（直销占比56%+、i茅台占比43.63%、双价体系）显示公司在拐点期主动强化对终端与定价的掌控，而非被动衰退。④长期最大变量是年轻世代消费偏好迁移及治理连续性（5年4换帅），这决定的是估值波动区间而非资产本身是否『标准石油』。"
+      {
+       "name": "五粮液",
+       "grossMarginPct": {
+        "status": "unavailable",
+        "reason": "二手来源给出73.9%与77.54%两个冲突数字，无法定位到单一权威年报原文，且未采集2026H1同期数据，已检索2次未解决"
+       },
+       "source": {
+        "status": "unavailable",
+        "reason": "本次采集未取得可直接引用的来源，该数值不予采用"
+       }
       },
-      "dataGaps": [
-        {
-          "field": "tam.current",
-          "reason": "各研报2030年目标区间(6500亿-1.2万亿元)及CAGR预测(3.98%-6.5%)口径不一，无单一权威绝对值来源；collection文件本轮已判定unavailable，分析层沿用同一处理，未新增检索（仅读取指定两文件，未联网核实）"
-        },
-        {
-          "field": "concentration.suppliers",
-          "reason": "本轮collection未采集高粱等上游原料供应商集中度数据，未联网检索核实，标记unavailable"
-        },
-        {
-          "field": "historicalAnalogy（2012-2015周期高端白酒销售额骤降37.75%的具体数字）",
-          "reason": "该数字承袭自上一版分析文件（2026-08-06），本轮未重新联网核实原始来源，仅作历史背景参考，未纳入本轮collection的正式采集数据点"
-        }
-      ]
+      {
+       "name": "洋河股份",
+       "grossMarginPct": {
+        "status": "unavailable",
+        "reason": "未检索到可靠的FY2025或2026H1毛利率具体数字，仅查到销售费用率对比，已检索2次未取得"
+       },
+       "source": {
+        "status": "unavailable",
+        "reason": "本次采集未取得可直接引用的来源，该数值不予采用"
+       }
+      }
+     ],
+     "whyHigherOrLower": "①无广告依赖的品牌溢价与配额稀缺性仍支撑出厂价与终端价的高价差。②2026前三季度直销占比56.36%，中间流通环节让渡的毛利被收回，部分对冲下滑。③但营业成本同比+22.02%（公司解释为销量增加及生产成本上涨），叠加非标产品降价与产品结构下移，毛利率同比-1.71pct至89.58%；即便下滑后仍高出同业（泸州老窖约87%的FY2025口径）约2-3pct，且该同业对比为FY2025年度口径，与本公司2026年前三季度期间不完全可比。"
     },
-    "valuation": {
-      "title": "估值分析",
-      "conclusion": "PE处一年58%分位、PB处25%分位，隐含增速反推未消化H1增收不增利，中性情景已现负收益空间。",
-      "analysis": {
-        "currentMultiples": {
-          "_hint": "全部经 docs/research/tools/financial_rigor.py 验算，与第 1 步采集值对账",
-          "marketCap": {
-            "value": "1.6776万亿",
-            "currency": "CNY",
-            "asOf": "2026-08-14",
-            "source": {
-              "name": "股价1341.99×总股本1,250,081,601股，financials-collection.json currentValuation.marketCap（financial_rigor.py verify-market-cap 验算，偏差0.00%）",
-              "url": "https://tushare.pro"
-            }
-          },
-          "pe": {
-            "value": "20.28x（TTM，Tushare daily_basic）／本次financial_rigor.py verify-valuation 用EPS(TTM)65.14元手工验算得20.60x，偏差约1.6%，推测系基本股数与期末股数口径不同，与collection一致结论",
-            "asOf": "2026-08-14",
-            "source": {
-              "name": "Tushare Pro daily_basic + financial_rigor.py verify-valuation（--price 1341.99 --eps 65.14 --bvps 200.99）",
-              "url": "https://tushare.pro"
-            }
-          },
-          "ps": {
-            "value": "9.75x（TTM，Tushare daily_basic ps_ttm）／9.68x（主会话TTM营业总收入手工验算，偏差0.7%）",
-            "asOf": "2026-08-14",
-            "source": {
-              "name": "financials-collection.json currentValuation.ps",
-              "url": "https://tushare.pro"
-            }
-          },
-          "peg": {
-            "status": "unavailable",
-            "reason": "2026H1归母净利润同比转为下滑(-1.95%)，历史2021-2025 CAGR已不能代表当前趋势；西部证券研报FY2026-2028净利润+2%/4%/7%为单一来源、未交叉验证，不采用其构造PEG，故本指标不采用单一数字（沿用collection.currentValuation.peg同一判断）"
-          },
-          "evToRevenue": {
-            "value": "9.42x（EV=市值1,677,597,006,384.19元-2026H1末货币资金535.19亿元，公司几乎零有息负债；EV/TTM营业总收入173,238,481,420.15元）",
-            "asOf": "2026-08-14价格 / 2026-06-30资产负债表",
-            "source": {
-              "name": "financials-collection.json currentValuation.evToRevenue（financial_rigor.py calc 验算）",
-              "url": "https://tushare.pro"
-            }
-          }
-        },
-        "reverseDcf": {
-          "impliedGrowth": "①单阶段Gordon模型反推当前股价隐含永续增长率约4.37%（r=8%）／5.33%（r=9%），financial_rigor.py calc逐项验算。②该反推基于FY2025全年自由现金流基数（每股46.71元），未纳入2026H1净利润同比转负这一最新信息，可能高估当前实际隐含预期。③与前次(2026-08-06，r=8%时4.3%)几乎持平，说明当前股价对H1『增收不增利』尚未明显消化下修。",
-          "assumptions": "①单阶段Gordon增长模型P=FCF×(1+g)/(r-g)，非多阶段精确DCF。②FCF基数沿用FY2025年度值58,394,610,072.94元/12.50081601亿股=46.71元/股，2026H1经营现金流706.91亿元同比+438.84%系财务公司同业存款到期回收的非经常性因素，不具代表性，故不采用H1数据年化。③贴现率r=8%/9%两组敏感性测算，对应零有息负债+强定价权的A股消费龙头合理股权成本区间。④未设终值倍数，直接反推永续增长率g。"
-        },
-        "threeScenario": {
-          "_hint": "必须用 docs/research/tools/financial_rigor.py three-scenario 精确计算，禁止心算",
-          "inputs": {
-            "price": 1341.99,
-            "eps": 65.14,
-            "sharesHundredMillion": 12.5,
-            "growth": [
-              "7%（乐观）",
-              "1%（中性）",
-              "-8%（悲观）"
-            ],
-            "pe": [
-              "22x（乐观）",
-              "18x（中性）",
-              "13x（悲观）"
-            ],
-            "years": 3,
-            "currency": "CNY"
-          },
-          "optimistic": {
-            "targetPrice": "1755.6元（目标EPS 79.80×22x）",
-            "impliedReturnPct": "+30.8%"
-          },
-          "neutral": {
-            "targetPrice": "1208.0元（目标EPS 67.11×18x）",
-            "impliedReturnPct": "-10.0%"
-          },
-          "pessimistic": {
-            "targetPrice": "659.4元（目标EPS 50.72×13x）",
-            "impliedReturnPct": "-50.9%"
-          },
-          "assumptionBasis": "①中性增速1%：H1收入+1.30%/净利润-1.95%已实质转负，历史高个位数/两位数增长假设不再适用，较前次(2026-08-06)中性假设3%显著下修。②乐观增速7%：参照西部证券中报点评FY2026-2028净利润+2%/4%/7%区间上限（单一来源，未交叉验证），假设渠道结构调整见效、i茅台放量部分对冲主业下滑，较前次乐观假设10%下修。③悲观增速-8%：延续2026Q2单季净利润同比-6.90%的下滑斜率并假设消费税/渠道风险恶化，较前次悲观假设-5%显著下修。④乐观PE22x、中性PE18x、悲观PE13x：均低于前次假设(25x/20x/15x)及自身近10年历史均值；中性PE18x低于当前PE(TTM)20.28x，反映增长转负后估值中枢应下修而非维持现状；悲观PE13x低于近一年PE区间下沿17.66x，对应估值破位情形。",
-          "toolOutput": "============================================================\n三情景估值模型 (Three-Scenario Valuation)\n============================================================\n  当前股价: 1341.99 CNY\n  当前EPS:  65.14\n  预测期:   3年\n\n  情景                年增速     目标PE      目标EPS       目标股价      涨跌幅\n  ------------ -------- -------- ---------- ---------- --------\n  乐观 (Bull)          7%      22x      79.80    1755.6   +30.8%\n  中性 (Base)          1%      18x      67.11    1208.0   -10.0%\n  悲观 (Bear)         -8%      13x      50.72     659.4   -50.9%\n\n  ✅ 所有计算使用精确十进制, 结果可审计复现"
-        },
-        "vsOwnHistory": {
-          "metric": "PE(TTM)与PB（近一年区间分位）",
-          "currentValue": "PE(TTM)20.28x；PB 6.19x（2026-08-14）",
-          "historicalRange": "①PE近一年区间[17.66x,22.19x]，当前处58%分位，中等偏上但未至区间顶部。②PB近一年区间[5.39x,8.58x]，当前处25%分位，处于区间下段。③PE分位明显高于PB分位，反映利润基数（分母）同比走弱对PE的支撑弱于净资产稳定增厚对PB的支撑，与H1『增收不增利』表述一致。",
-          "source": {
-            "name": "Tushare Pro daily_basic 一年区间（20250714~20260814，266个交易日，financials-collection.json currentValuation.priceRange1y）",
-            "url": "https://tushare.pro"
-          }
-        },
-        "vsPeers": [
-          {
-            "name": "五粮液(000858.SZ)",
-            "pe": "21.06x-21.81x（TTM，2026-07-14，沿用上一版分析（2026-08-06）已核实数据，本轮禁止联网复核，距今超1个月，仅作参考）",
-            "ps": "6.16x（TTM，2026-07-14，同上，未再复核）",
-            "source": {
-              "name": "同花顺F10 五粮液（经上一版financials-analysis.json引用）",
-              "url": "https://basic.10jqka.com.cn/000858/"
-            }
-          },
-          {
-            "name": "泸州老窖(000568.SZ)",
-            "pe": "13.4x（TTM，2026-07-30，历史分位6.8%，沿用上一版分析已核实数据，本轮未复核）",
-            "ps": {
-              "status": "unavailable",
-              "reason": "上一版已检索2次未获取：legulegu.com/s/000568页面PS字段为空，ZAKER报道仅含PE；本轮禁止联网检索，无法补充"
-            },
-            "source": {
-              "name": "ZAKER财经（转引估值数据，经上一版financials-analysis.json引用）",
-              "url": "https://app.myzaker.com/news/article.php?pk=6a6c87698e9f0971d55b68ce"
-            }
-          }
-        ]
+    "operatingLeverage": {
+     "observation": "①2026前三季度营收+1.96%、营业成本+22.02%，成本增速仍是收入增速的11倍——负经营杠杆没有消失，只是Q3单季靠收入提速（+3.08%）把利润拉回正增长。②Q2单季营收-5.23%、净利-6.90%是年内低点，Q3单季营收+3.00%、净利+3.78%，利润增速重新快于收入，说明Q2的成本与产品结构冲击部分是一次性的。③但利润修复的同时合同负债从年初80.07亿降至20.84亿，收入增长的「预收垫」被抽走，Q4及2027Q1缺少缓冲。",
+     "evidence": [
+      {
+       "metric": "2026前三季度营收/成本/归母净利同比",
+       "value": "+1.96%（营业收入）／+22.02%／-0.25%",
+       "asOf": "2026Q3",
+       "source": {
+        "name": "贵州茅台2026年第三季度报告（巨潮，一手）",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+       }
       },
-      "inquiry": {
-        "question": "如果股市明天关闭5年，你愿意以这个价格持有吗？",
-        "answer": "愿意持有但收紧仓位：估值未至低估，H1增长故事已实质生变。①中性情景3年目标价1208.0元对应-10.0%，悲观-50.9%，赔率已不如前次假设乐观。②PE(TTM)20.28x处近一年58%分位，并非便宜，尤其在净利润同比转负背景下，历史越跌越买逻辑需重新审视。③高分红+持续回购提供部分安全垫，但2026H1经营现金流同比+438.84%系财务公司同业存款到期回收的非经常性因素，不可线性外推。④5年维度需接受净利润阶段性个位数甚至负增长为新常态，而非线性外推重回两位数，若不能接受重定价，不宜满仓持有。"
+      {
+       "metric": "2026Q3单季营收/净利同比",
+       "value": "+3.00%／+3.78%（扣非+2.96%）",
+       "asOf": "2026Q3",
+       "source": {
+        "name": "三季报累计减半年报累计推算 + 2025三季报基期，financial_rigor.py calc 验算",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+       }
       },
-      "dataGaps": [
-        {
-          "field": "currentMultiples.peg",
-          "reason": "2026H1净利润同比转负，历史CAGR失效；西部证券FY2026-2028净利润+2%/4%/7%为单一来源未交叉验证，不采用其构造PEG"
-        },
-        {
-          "field": "currentMultiples.pe（PB口径交叉验证）",
-          "reason": "本次financial_rigor.py verify-valuation按bvps=200.99元验算得PB 6.68x，与Tushare priceRange1y披露的当前PB 6.19x存在约7.9%偏差，推测bvps取值时点与股价asOf日期(2026-08-14)不完全一致，本次范围内未定位bvps=200.99的确切取数日期"
-        },
-        {
-          "field": "vsPeers（五粮液/泸州老窖）",
-          "reason": "financials-collection.json的competitiveLandscape仅含市场份额与营收，未采集同行PE/PS估值倍数；本轮沿用上一版financials-analysis.json（2026-08-06）已核实数据，但已超1个月未联网复核，本轮流程禁止联网检索，无法刷新"
-        },
-        {
-          "field": "vsPeers（洋河股份/山西汾酒）",
-          "reason": "collection与上一版分析均未采集这两家的PE/PS估值倍数，仅有市场份额/营收数据，本轮禁止联网检索，无法补充"
-        },
-        {
-          "field": "reverseDcf.impliedGrowth",
-          "reason": "FCF基数沿用FY2025年度数据（2026H1经营现金流暴增系非经常性因素不可用），故反推的隐含增长率未完全反映H1净利润转负的最新变化，存在滞后性"
-        }
-      ]
+      {
+       "metric": "合同负债",
+       "value": "20.84亿元（年初80.07亿，同比-73.10%）",
+       "asOf": "2026-09-30",
+       "source": {
+        "name": "三季报合并资产负债表",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+       }
+      },
+      {
+       "metric": "对比FY2025全年",
+       "value": "营收-1.21%、归母净利-4.53%（上市以来首次年度双降）",
+       "asOf": "FY2025",
+       "source": {
+        "name": "公司2025年年度报告",
+        "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
+       }
+      }
+     ]
     }
-  },
-  "crossValidationLog": [
+   },
+   "inquiry": {
+    "question": "这门生意好在哪？如果只能用一句话描述，是什么？",
+    "answer": "好在原产地稀缺性支撑的品牌定价权，但2026年的新事实是：这门生意的变现方式正在被公司自己重写。①稀缺性未变：茅台镇原产地气候菌群不可复制，2025年茅台酒基酒产量58,473吨(+3.91%)，2026年仍有1,800吨新增设计产能释放。②定价方式变了：2026年3月出厂价1169→1269元、7月经销合同价1269→1369元、取消1499元固定指导价改「随行就市」，公司不再靠经销商层层加价，而是用i茅台（前三季度585.62亿、+361.42%）直接把终端价差收回表内。③代价是可见的：毛利率89.58%(-1.71pct)、营业成本+22.02%、合同负债-73.10%，前三季度净利-0.25%。④但相对优势反而更清楚：同期19家上市酒企营收-7.39%、净利约-8.9%，茅台是唯一收入正增长的头部酒企。生意本质（稀缺性+定价权）未破，改变的是利润在渠道与公司之间的分配，以及公司对渠道缓冲垫的依赖度。"
+   },
+   "dataGaps": [
     {
-      "field": "FY2025净利率",
-      "source1": {
-        "name": "financial_rigor.py calc（82,320,067,101.68/168,838,102,514.79）",
-        "value": "48.76%"
-      },
-      "source2": {
-        "status": "not-applicable",
-        "reason": "单一计算验算，非双源交叉"
-      },
-      "deviationPct": {
-        "status": "not-applicable",
-        "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
-      },
-      "flag": "ok",
-      "resolution": "精确十进制计算，用于businessEssence.profitabilityTrend5y"
+     "field": "profitabilityTrend5y.FY2021-2022.grossMarginPct",
+     "reason": "官方年报原文未在本次检索范围内逐字段核对，沿用FY2023年报三年对比表与媒体转引数字并标注[估计]，已检索2次"
     },
     {
-      "field": "FY2023/FY2024/FY2025营收与净利润同比增速",
-      "source1": {
-        "name": "financial_rigor.py calc（逐年增速）",
-        "value": "营收+19.01%/+15.71%/-1.21%；净利润+19.16%/+15.38%/-4.53%"
-      },
-      "source2": {
-        "status": "not-applicable",
-        "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
-      },
-      "deviationPct": {
-        "status": "not-applicable",
-        "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
-      },
-      "flag": "ok",
-      "resolution": "用于businessEssence.operatingLeverage负经营杠杆判断"
+     "field": "profitabilityTrend5y.FY2021-2024.operatingMarginPct",
+     "reason": "各年年报未单列合并口径经营利润率，需自行用营业利润/营业收入逐年推算；本轮已补齐2026H1与2026前三季度（67.71%/67.94%），历史年份仍未取得可靠序列"
     },
     {
-      "field": "三情景估值（乐观/中性/悲观）",
-      "source1": {
-        "name": "financial_rigor.py three-scenario（price=1306.45, eps=65.66, shares=12.50亿, years=3）",
-        "value": "目标价 2184.8/1435.0/844.4元；涨跌幅 +67.2%/+9.8%/-35.4%"
-      },
-      "source2": {
-        "status": "not-applicable",
-        "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
-      },
-      "deviationPct": {
-        "status": "not-applicable",
-        "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
-      },
-      "flag": "ok",
-      "resolution": "增速与PE假设见valuation.threeScenario.assumptionBasis，完整工具输出见toolOutput字段"
+     "field": "grossMarginVsPeers.peers（五粮液/洋河）",
+     "reason": "五粮液二手来源存在73.9%与77.54%冲突数字，洋河未检索到具体数字，且均非2026年前三季度同期口径，已检索2次未解决"
     },
     {
-      "field": "反向DCF隐含永续增长率",
-      "source1": {
-        "name": "financial_rigor.py calc（单阶段Gordon模型，FCF/股46.71元，r=8%/9%）",
-        "value": "[估计] 4.3%（r=8%）/ [估计] 5.2%（r=9%）"
-      },
-      "source2": {
-        "status": "not-applicable",
-        "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
-      },
-      "deviationPct": {
-        "status": "not-applicable",
-        "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
-      },
-      "flag": "ok",
-      "resolution": "简化单阶段模型，非精确多阶段DCF，仅作隐含增长预期参考"
-    },
-    {
-      "field": "两期股票回购均价 vs 公告日/当前股价折溢价",
-      "source1": {
-        "name": "financial_rigor.py calc",
-        "value": "首期均价1527.66元 较公告日收盘价1263.92元 溢价20.87%；二期均价1370.73元 较当前价1306.45元 溢价[估计]4.92%"
-      },
-      "source2": {
-        "status": "not-applicable",
-        "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
-      },
-      "deviationPct": {
-        "status": "not-applicable",
-        "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
-      },
-      "flag": "ok",
-      "resolution": "用于management.capitalAllocation.buybackTiming判断回购未在低点精准择时"
-    },
-    {
-      "field": "2026H1营收/净利润同比增速（更新）",
-      "source1": {
-        "name": "financial_rigor.py calc（92,278,072,083.21 vs 91,093,762,553.97；44,516,880,421.86 vs 45,402,962,298.10）",
-        "value": "营收+1.30%；净利润-1.95%"
-      },
-      "source2": {
-        "name": "西部证券中报点评（新浪财经转引，四舍五入展示）",
-        "value": "营收+1.3%；净利润-2.0%"
-      },
-      "deviationPct": "0.00pct / 0.05pct",
-      "flag": "ok",
-      "resolution": "研报数字为四舍五入展示，与工具精确计算一致，用于businessEssence/moat/inversion多个维度"
-    },
-    {
-      "field": "2026Q2单季营收/净利润同比增速（推算，更新）",
-      "source1": {
-        "name": "financial_rigor.py calc（H1累计-Q1）",
-        "value": "营收-5.23%；净利润-6.90%"
-      },
-      "source2": {
-        "name": "西部证券中报点评（独立测算口径）",
-        "value": "营收-5.2%；净利润-6.9%"
-      },
-      "deviationPct": "0.03pct / 0.00pct",
-      "flag": "ok",
-      "resolution": "主会话推算法与研报独立测算法一致，用于businessEssence.operatingLeverage/inversion.failurePaths"
-    },
-    {
-      "field": "三情景估值（更新，2026-08-14股价/TTM EPS）",
-      "source1": {
-        "name": "financial_rigor.py three-scenario（price=1341.99, eps=65.14, shares=12.50亿, years=3）",
-        "value": "目标价 1755.6/1208.0/659.4元；涨跌幅 +30.8%/-10.0%/-50.9%"
-      },
-      "source2": {
-        "status": "not-applicable",
-        "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
-      },
-      "deviationPct": {
-        "status": "not-applicable",
-        "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
-      },
-      "flag": "ok",
-      "resolution": "较前次(2026-08-06)假设显著下修增速与目标PE，反映H1增收不增利后中性情景转负；完整工具输出见valuation.threeScenario.toolOutput"
-    },
-    {
-      "field": "反向DCF隐含永续增长率（更新，TTM EPS基准）",
-      "source1": {
-        "name": "financial_rigor.py calc（单阶段Gordon模型，FCF/股46.71元，r=8%/9%）",
-        "value": "[估计] 4.37%（r=8%）/ [估计] 5.33%（r=9%）"
-      },
-      "source2": {
-        "status": "not-applicable",
-        "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
-      },
-      "deviationPct": {
-        "status": "not-applicable",
-        "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
-      },
-      "flag": "ok",
-      "resolution": "FCF基数沿用FY2025年度值（2026H1经营现金流暴增系非经常性因素不可用），与前次(4.3%/5.2%)基本持平，说明当前股价对H1利润转负尚未明显消化"
-    },
-    {
-      "field": "PE(TTM)手工验算 vs Tushare daily_basic（更新）",
-      "source1": {
-        "name": "financial_rigor.py verify-valuation（--price 1341.99 --eps 65.14，TTM净利润=FY2025-2025H1+2026H1推算）",
-        "value": "20.60x"
-      },
-      "source2": {
-        "name": "Tushare Pro daily_basic pe_ttm",
-        "value": "20.28x"
-      },
-      "deviationPct": "1.6%",
-      "flag": "minor-diff",
-      "resolution": "推测系基本股数与期末股数口径不同所致，两者均支持PE处近一年中等偏上分位(58%)的结论，未进一步拆解，采用Tushare pe_ttm为主"
+     "field": "2026Q3单季分产品/分渠道拆分",
+     "reason": "公司季报按累计口径披露「销售情况」，单季数字由「累计-半年报累计」推算，属可复现推算而非官方口径；若Q4报告调整上年同期数，单季序列需重算"
     }
-  ]
+   ]
+  },
+  "moat": {
+   "title": "护城河评估",
+   "conclusion": "护城河核心（原产地+品牌）未破，Q3在行业双位数下滑中逆势正增长，验证了相对定价权；但份额提升的代价是渠道蓄水池耗尽与毛利率下滑，护城河从「宽而稳」变成「宽、但变现效率在下降」。",
+   "analysis": {
+    "types": [
+     {
+      "type": "品牌/定价权",
+      "test": "是否能在不损失销量的情况下提价？",
+      "verdict": "存在",
+      "evidence": [
+       {
+        "metric": "2026年两轮提价",
+        "value": "出厂价1169→1269元（+8.55%）；7月经销合同价1269→1369元、i茅台零售1539→1639元；取消1499元固定指导价",
+        "asOf": "2026-03/2026-07",
+        "source": {
+         "name": "公司2025年年度报告「经营计划」+ 2026年半年报；具体调价数字为财经媒体转引，未核对调价公告原文",
+         "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+        }
+       },
+       {
+        "metric": "行业下行中的相对表现",
+        "value": "茅台前三季度营业总收入+1.82%，19家上市酒企合计-7.39%；Q3单季茅台+3.00%",
+        "asOf": "2026Q3",
+        "source": {
+         "name": "公司三季报 + 每经网19家酒企统计",
+         "url": "http://www.nbd.com.cn/rss/xingye_zhengquan/articles/4633163.html"
+        }
+       },
+       {
+        "metric": "定价权的成本侧",
+        "value": "毛利率89.58%（-1.71pct）、营业成本+22.02%，提价未能完全覆盖成本与结构下移",
+        "asOf": "2026Q3",
+        "source": {
+         "name": "贵州茅台2026年第三季度报告（巨潮，一手）",
+         "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+        }
+       },
+       {
+        "metric": "终端价格",
+        "value": "10月飞天散瓶批价约1,695-1,710元、原箱1,710-1,730元，零售均价1,787-1,795元；10月末零售均价回落至1,787元",
+        "asOf": "2026-10",
+        "source": {
+         "name": "华创证券/招商证券渠道调研（财经媒体转引，非公司披露）",
+         "url": "https://finance.eastmoney.com/news/1354,202610243907104114.html"
+        }
+       }
+      ]
+     },
+     {
+      "type": "转换成本",
+      "test": "客户迁移到竞品的成本有多高？",
+      "verdict": "存在",
+      "evidence": [
+       {
+        "metric": "国内经销商数量",
+        "value": "2,285家（2025Q3为2,325家，净减40家）；年内增220/减288，变动主要为系列酒经销商",
+        "asOf": "2026-09-30",
+        "source": {
+         "name": "贵州茅台2026年第三季度报告（巨潮，一手）「经销商情况」表",
+         "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+        }
+       },
+       {
+        "metric": "渠道结构",
+        "value": "直销占比56.36%（+13.1pct），批发代理-21.58%；i茅台占酒类收入44.73%",
+        "asOf": "2026Q3",
+        "source": {
+         "name": "贵州茅台2026年第三季度报告（巨潮，一手）",
+         "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+        }
+       },
+       {
+        "metric": "合同负债（渠道预付款意愿）",
+        "value": "20.84亿元，较年初-73.97%，同比-73.10%",
+        "asOf": "2026-09-30",
+        "source": {
+         "name": "贵州茅台2026年第三季度报告（巨潮，一手）",
+         "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+        }
+       },
+       {
+        "metric": "经销资格的相对价值",
+        "value": "飞天批价1,695-1,730元 vs 经销合同价1,369元，单瓶渠道价差约330-360元，配额仍是稀缺资源",
+        "asOf": "2026-10",
+        "source": {
+         "name": "渠道调研（财经媒体转引）+ 经销合同价（媒体转引），两者均非公司披露口径",
+         "url": "https://post.smzdm.com/p/arzr6q3q/"
+        }
+       }
+      ]
+     },
+     {
+      "type": "网络效应",
+      "test": "用户越多产品越好吗？",
+      "verdict": "不存在",
+      "evidence": [
+       {
+        "metric": "i茅台平台规模",
+        "value": "2026前三季度酒类不含税收入585.62亿元、同比+361.42%，占酒类收入44.73%",
+        "asOf": "2026Q3",
+        "source": {
+         "name": "贵州茅台2026年第三季度报告（巨潮，一手）",
+         "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+        }
+       },
+       {
+        "metric": "平台属性判断",
+        "value": "本质是「官方自营+限购」的直销通道，用户越多并不直接提升对其他用户的价值，不具备典型双边网络效应；其壁垒来自配额与真伪保障，而非网络密度",
+        "asOf": "2026Q3",
+        "source": {
+         "name": "本次分析判断（基于collection披露的平台收入与渠道结构）",
+         "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+        }
+       }
+      ]
+     },
+     {
+      "type": "规模效应",
+      "test": "规模带来的成本优势有多大？",
+      "verdict": "存在",
+      "evidence": [
+       {
+        "metric": "基酒产能增长（2016→2025）",
+        "value": "3.9万吨→6.02万吨（+54.24%）；茅台酒设计产能46,395吨、系列酒59,400吨，2026年释放新增产能",
+        "asOf": "2025",
+        "source": {
+         "name": "公司2025年年度报告「产能状况」+ 新浪财经",
+         "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
+        }
+       },
+       {
+        "metric": "2026前三季度毛利率/净利率同比",
+        "value": "毛利率89.58%（-1.71pct）、净利率49.22%（-1.10pct），营业成本+22.02%侵蚀规模摊薄效应",
+        "asOf": "2026Q3",
+        "source": {
+         "name": "贵州茅台2026年第三季度报告 + Tushare fina_indicator",
+         "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+        }
+       },
+       {
+        "metric": "系列酒同比",
+        "value": "前三季度+0.47%（Q3单季+22.15%），H1为-6.03%；系列酒经销商年内净减68家，多品类协同仍在出清",
+        "asOf": "2026Q3",
+        "source": {
+         "name": "贵州茅台2026年第三季度报告",
+         "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+        }
+       },
+       {
+        "metric": "产能利用率",
+        "value": "2025年茅台酒实际产量58,473.16吨、设计产能46,395吨（超设计产能运行）；系列酒实际57,650.57吨/设计59,400吨",
+        "asOf": "2025",
+        "source": {
+         "name": "公司2025年年度报告",
+         "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
+        }
+       }
+      ]
+     },
+     {
+      "type": "技术/专利壁垒",
+      "test": "技术领先几年？能否被复制？",
+      "verdict": "存在",
+      "evidence": [
+       {
+        "metric": "1974年国家级异地生产大规模试验结果",
+        "value": "证实茅台镇酿造微生态独特、异地不可复制",
+        "asOf": "1974",
+        "source": {
+         "name": "新华网《生态密码》",
+         "url": "http://www.news.cn/enterprise/20260119/14f148d910014c889d003dcd6ea37a0b/c.html"
+        }
+       },
+       {
+        "metric": "传统工艺与专属菌落",
+        "value": "三合土窖泥、『12987』固态发酵工艺、原产地气候微生物群",
+        "asOf": "2025",
+        "source": {
+         "name": "贵州茅台2025年年度报告",
+         "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
+        }
+       },
+       {
+        "metric": "研发强度（工艺优化投入，非替代性技术竞赛）",
+        "value": "0.48%（8.03亿元），FY2025与基线一致，未见新增技术护城河变化信号",
+        "asOf": "FY2025",
+        "source": {
+         "name": "贵州茅台2025年年度报告",
+         "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
+        }
+       }
+      ]
+     }
+    ],
+    "trendPast5y": {
+     "direction": "稳定",
+     "basis": "①2021-2025营收由1,061.9亿增至1,720.5亿（+62%），但FY2025已转为-1.20%、净利-4.53%，五年斜率先升后降。②毛利率从FY2021的约91.5%降至FY2025的91.18%、2026前三季度89.58%，护城河宽度未变而变现效率递减。③2025年首次出现年度业绩双降、2026H1首个「增收不增利」半年报，但Q3已修复，五年维度判断为「稳定、波动加大」。"
+    },
+    "trendNext5y": {
+     "direction": "稳定",
+     "basis": "①相对优势在扩大：2026前三季度行业19家营收-7.39%、茅台+1.82%，Q3单季+3.00%，份额向龙头集中。②定价机制换代成功与否是关键变量：i茅台+随行就市把渠道价差收回表内，若2027年需求不再走弱，这套机制会强化而非削弱护城河；若批价跌破1,500元，机制会反噬为降价螺旋。③产能仍在释放（茅台酒设计产能46,395吨、系列酒59,400吨，2026年释放），量的天花板尚未到。④风险项：合同负债-73%说明渠道缓冲耗尽，5年4换帅的治理摆动未解决，年轻消费群体偏好迁移仍在。综合判断由上一版「变窄」修正为「稳定」，但下行尾部风险比上一版更大。"
+    }
+   },
+   "inquiry": {
+    "question": "10年后这条护城河还在吗？什么能摧毁它？",
+    "answer": "大概率仍在，且2026Q3的证据比上一版更有力，但「还在」不等于「能按老方式赚钱」。①原产地气候与菌群不可迁移，属地理生物学约束，十年维度不会消失。②2026年最有力的反证是行业下行中的相对表现：19家酒企营收-7.39%，茅台+1.82%，Q3单季+3.00%——如果护城河破了，份额不会这样集中。③能摧毁它的不是「年轻人不喝白酒」这种慢变量，而是渠道信心：合同负债-73.10%、经销商净减、批价与零售价差收窄到约80元，一旦批价跌破1,500元并形成降价预期，i茅台与经销商双轨会互相踩踏。④第二个摧毁路径是治理：5年4换帅、总经理代行超3年，若新一任再推翻「随行就市」，价格体系会重演2013年的失控。"
+   },
+   "dataGaps": [
+    "合同负债下降的归因（公司主动纾压 vs 经销商打款意愿下降）公司未做官方说明，现有两种解读均有媒体支持，本次无法用披露数据证伪任一方",
+    "2026年两轮调价的具体公告原文未逐字核对（公司未单独发布调价公告，数字来自财经媒体与经销商渠道），collection已标注",
+    "飞天批价与零售价为券商渠道调研/电商报价，非公司披露口径，日度波动大，只能作区间参考",
+    "i茅台用户数、复购率、客单价等平台运营指标公司未披露，无法量化「网络效应」是否存在"
+   ]
+  },
+  "inversion": {
+   "title": "逆向思考与风险清单",
+   "conclusion": "Q3单季转正把「下滑失速」这条最急的风险按住了，但风险清单没有变短：合同负债-73%把渠道缓冲抽干，增长的质量比增速更值得怀疑；行业出清尚未结束，2027年才是真正的压力测试。",
+   "analysis": {
+    "failurePaths": [
+     {
+      "path": "渠道转直营的净增量主要是存量转移，而非新增需求",
+      "probability": "高",
+      "impact": "高",
+      "evidence": [
+       {
+        "metric": "批发代理 vs 直销收入",
+        "value": "批发-21.58%、直销+32.79%；i茅台+361.42%",
+        "asOf": "2026Q3",
+        "source": {
+         "name": "贵州茅台2026年第三季度报告（巨潮，一手）",
+         "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+        }
+       },
+       {
+        "metric": "合同负债",
+        "value": "20.84亿（年初80.07亿，-73.97%）——渠道预付款意愿显著下降",
+        "asOf": "2026-09-30",
+        "source": {
+         "name": "贵州茅台2026年第三季度报告（巨潮，一手）",
+         "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+        }
+       },
+       {
+        "metric": "国内经销商",
+        "value": "2,285家，年内减288家（主要为系列酒）",
+        "asOf": "2026-09-30",
+        "source": {
+         "name": "贵州茅台2026年第三季度报告（巨潮，一手）",
+         "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+        }
+       }
+      ]
+     },
+     {
+      "path": "合同负债见底导致2027年一季度收入失去缓冲",
+      "probability": "高",
+      "impact": "中",
+      "evidence": [
+       {
+        "metric": "合同负债/单季收入",
+        "value": "20.84亿 / Q3单季410.06亿 ≈ 5%，为2015年以来低位区间",
+        "asOf": "2026Q3",
+        "source": {
+         "name": "三季报资产负债表 + 单季推算，本次分析计算",
+         "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+        }
+       },
+       {
+        "metric": "历史对照",
+        "value": "2025年初80.07亿、2025Q3末77.49亿，一年内下降73.10%",
+        "asOf": "2026-09-30",
+        "source": {
+         "name": "2025三季报与2026三季报资产负债表",
+         "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+        }
+       }
+      ]
+     },
+     {
+      "path": "系列酒战略性收缩演变为失控式下滑",
+      "probability": "中",
+      "impact": "中",
+      "evidence": [
+       {
+        "metric": "系列酒同比",
+        "value": "Q1 +12.22%、Q2 -25.0%（研报口径）、Q3单季+22.15%，前三季度累计+0.47%",
+        "asOf": "2026Q3",
+        "source": {
+         "name": "三季报累计-半年报推算 + 研报单季口径",
+         "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+        }
+       },
+       {
+        "metric": "系列酒经销商",
+        "value": "年内净减68家（增220/减288），渠道仍在出清",
+        "asOf": "2026-09-30",
+        "source": {
+         "name": "贵州茅台2026年第三季度报告（巨潮，一手）",
+         "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+        }
+       }
+      ]
+     },
+     {
+      "path": "经济周期性商务消费持续萎缩，需求结构性收缩",
+      "probability": "高",
+      "impact": "高",
+      "evidence": [
+       {
+        "metric": "行业前三季度",
+        "value": "19家酒企营收-7.39%、净利约-8.9%；规上白酒产量1-9月-3.9%",
+        "asOf": "2026Q3",
+        "source": {
+         "name": "每经网 + 国家统计局（经媒体转引）",
+         "url": "http://www.nbd.com.cn/rss/xingye_zhengquan/articles/4633163.html"
+        }
+       },
+       {
+        "metric": "双节动销",
+        "value": "中秋国庆白酒整体动销同比约-10%，飞天多地终端动销同比+10%以上",
+        "asOf": "2026-10",
+        "source": {
+         "name": "招商证券渠道调研（经媒体转引）",
+         "url": "https://finance.eastmoney.com/news/1354,202610243907104114.html"
+        }
+       }
+      ]
+     },
+     {
+      "path": "「随行就市」双轨定价执行失误，渠道价格体系混乱",
+      "probability": "中",
+      "impact": "中",
+      "evidence": [
+       {
+        "metric": "批价与零售价差",
+        "value": "批价1,695-1,730元 vs 零售均价1,787-1,795元，价差约80-100元，渠道利润被压薄",
+        "asOf": "2026-10",
+        "source": {
+         "name": "渠道调研（媒体转引），非公司披露",
+         "url": "https://finance.eastmoney.com/news/1354,202610243907104114.html"
+        }
+       },
+       {
+        "metric": "价格机制",
+        "value": "2026年7月起取消1499元固定指导价，自营/经销/代售/寄售四轨并行",
+        "asOf": "2026-07",
+        "source": {
+         "name": "公司2025年年报「经营计划」中的「随行就市、相对平稳」表述 + 媒体转引的调价细节",
+         "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+        }
+       }
+      ]
+     },
+     {
+      "path": "消费税/地方监管政策超预期加码",
+      "probability": "低",
+      "impact": "中",
+      "evidence": [
+       {
+        "metric": "政策进展",
+        "value": "国家税务总局2025年第18号公告2026年生效，官方口径为仅调整计税方式、不提税率；市场传闻的高端酒附加税未见落地文件",
+        "asOf": "2026",
+        "source": {
+         "name": "公司2025年年报风险章节 + 行业媒体",
+         "url": "https://www.jiupaiming.com/103022.html"
+        }
+       }
+      ]
+     },
+     {
+      "path": "年轻世代转向低度微醺，高度酱香品类被边缘化",
+      "probability": "中",
+      "impact": "高",
+      "evidence": [
+       {
+        "metric": "可观察应对",
+        "value": "43度飞天、100ml小规格、文创产品的结构性尝试；公司未披露低度产品收入占比",
+        "asOf": "2026",
+        "source": {
+         "name": "公司2025年年报产品结构章节",
+         "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
+        }
+       },
+       {
+        "metric": "量化需求数据",
+        "value": "公司未披露分年龄段消费结构；财报仅披露43度飞天、100ml小规格等产品线，无低度产品收入占比",
+        "asOf": "2026",
+        "source": {
+         "name": "公司2025年年度报告产品结构章节（未见量化披露）",
+         "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
+        }
+       }
+      ]
+     },
+     {
+      "path": "食品安全/造假黑天鹅事件冲击品牌信任",
+      "probability": "低",
+      "impact": "高",
+      "evidence": [
+       {
+        "metric": "可观察记录",
+        "value": "2026年公司推进包材赋码改造与产品防伪溯源前端布局（年报经营计划），未发生公开披露的重大食品安全事件",
+        "asOf": "2026",
+        "source": {
+         "name": "公司2025年年报「科技创新」章节",
+         "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
+        }
+       }
+      ]
+     }
+    ],
+    "historicalAnalogies": [
+     {
+      "company": "贵州茅台自身（2012-2015三公消费限制+塑化剂周期）",
+      "similarity": "同为自身历史需求政策冲击叠加渠道去库存导致营收利润拐点",
+      "outcome": "股价跌52.6%，增速探底后2014年触底反弹，未伤龙头地位",
+      "source": {
+       "name": "东方财富证券研究报告（历史数据整理，沿用上一轮分析文件来源）",
+       "url": "https://pdf.dfcfw.com/pdf/H3_AP202210161579192655_1.pdf"
+      }
+     },
+     {
+      "company": "五粮液（同期2012-2015周期，同行对照组）",
+      "similarity": "同期遭遇同一政策冲击，但渠道控制力弱于茅台，转型阵痛更明显",
+      "outcome": "2013年出现8年来首次净利润下滑，跌幅甚于茅台",
+      "source": {
+       "name": "中国新闻网（沿用上一轮分析文件来源）",
+       "url": "https://www.chinanews.com/stock/2014/05-19/6183201.shtml"
+      }
+     }
+    ],
+    "crossDisciplinaryChecks": [
+     {
+      "model": "竞争博弈",
+      "finding": "①2026前三季度茅台营收+1.82%仍跑赢五粮液(+7.25%但基数经重述)、汾酒(-13.80%)、老窖(-36.58%)、洋河(118.22亿，退至第六)，相对护城河仍占优。②但让利渠道+i茅台替代经销商本质是重复博弈中主动『以价换量』，若竞对企稳而茅台仍收缩，先动者未必占优。"
+     },
+     {
+      "model": "网络效应理论",
+      "finding": "①i茅台H1收入占酒类收入43.63%，但其产品形态是预约抽签购买渠道，用户增多不提升单用户效用，不构成真正网络效应。②渠道加速转向i茅台是分销结构替代而非生态锁定强化，直营团购剔除后-68.5%说明部分是内部转移而非新增粘性。"
+     }
+    ],
+    "biasSelfCheck": [
+     {
+      "bias": "叙事偏差",
+      "check": "官方将系列酒下滑与净利润转负定性为『以短期利润换渠道健康』的主动选择，可能掩盖终端需求真实走弱的事实。"
+     },
+     {
+      "bias": "锚定效应",
+      "check": "投资者锚定『2001年上市以来从未增收不增利』的完美记录，视本次为暂时波动，低估拐点信号本身的意义。"
+     },
+     {
+      "bias": "幸存者偏差",
+      "check": "只关注茅台酒主品仍正增长2.82%守住基本盘，而忽视系列酒与海外收入(-64.14%)已现类失败先兆。"
+     }
+    ],
+    "bearCase": [
+     {
+      "point": "增长靠消耗渠道蓄水池：合同负债-73.10%至20.84亿，收入正增长缺少预收款支撑",
+      "holder": "公司三季报资产负债表",
+      "evidence": [
+       {
+        "metric": "合同负债",
+        "value": "20.84亿（年初80.07亿）",
+        "asOf": "2026-09-30",
+        "source": {
+         "name": "贵州茅台2026年第三季度报告（巨潮，一手）",
+         "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+        }
+       }
+      ]
+     },
+     {
+      "point": "连续两年利润负增长：FY2025归母净利-4.53%、2026前三季度-0.25%，成本+22.02%远超收入+1.96%",
+      "holder": "公司年报/三季报",
+      "evidence": [
+       {
+        "metric": "净利与成本同比",
+        "value": "-0.25% / +22.02%",
+        "asOf": "2026Q3",
+        "source": {
+         "name": "贵州茅台2026年第三季度报告（巨潮，一手）",
+         "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+        }
+       }
+      ]
+     },
+     {
+      "point": "批发渠道持续失血：批发代理-21.58%、经销商年内净减68家，渠道信心与价格缓冲同步削弱",
+      "holder": "公司三季报渠道表",
+      "evidence": [
+       {
+        "metric": "批发收入/经销商",
+        "value": "-21.58% / 2,285家",
+        "asOf": "2026-09-30",
+        "source": {
+         "name": "贵州茅台2026年第三季度报告（巨潮，一手）",
+         "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+        }
+       }
+      ]
+     },
+     {
+      "point": "估值处一年高位：PE(TTM)近一年82%分位、股息率3.73%处37%分位，股价已修复至区间上沿",
+      "holder": "Tushare daily_basic",
+      "evidence": [
+       {
+        "metric": "PE分位/股息率分位",
+        "value": "82% / 37%",
+        "asOf": "2026-10-30",
+        "source": {
+         "name": "Tushare Pro daily_basic 一年区间",
+         "url": "https://tushare.pro"
+        }
+       }
+      ]
+     },
+     {
+      "point": "公司不再给年度营收目标，管理层5年4换帅、总经理代行超3年，外部失去经营校验锚点",
+      "holder": "公司2025年年报「经营计划」",
+      "evidence": [
+       {
+        "metric": "2026年经营计划",
+        "value": "八项工作均为定性表述，无营业总收入量化目标",
+        "asOf": "2026-04-17",
+        "source": {
+         "name": "公司2025年年度报告",
+         "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
+        }
+       }
+      ]
+     },
+     {
+      "point": "行业出清未结束：产量-3.9%、19家酒企营收-7.39%，券商判断磨底但协会认为短期看不到V型反转",
+      "holder": "国家统计局/中酒协",
+      "evidence": [
+       {
+        "metric": "行业产量与收入",
+        "value": "-3.9% / -7.39%",
+        "asOf": "2026Q3",
+        "source": {
+         "name": "国家统计局（经媒体转引）、每经网",
+         "url": "https://finance.sina.com.cn/jjxw/2026-10-21/doc-inivynsm5428613.shtml"
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "inquiry": {
+    "question": "我最可能在哪里犯错？聪明人为什么会不买/做空这家公司？",
+    "answer": "我最可能犯的错，是把Q3的+3.78%当成需求回暖的证据。①Q3利润转正的同时合同负债从80.07亿掉到20.84亿——增长中有一部分是把渠道预收款变成了收入，而不是新增打款。②批发代理-21.58%、经销商年内净减68家，说明渠道不是在扩张而是在收缩，直销+i茅台的增量里有多少是内部转移，公司没拆，我也没有证据排除。③行业19家营收-7.39%，茅台能正增长，要么是份额掠夺（好），要么是向渠道压货（坏），Q3的合同负债数据更支持后者。④聪明空头的逻辑很直接：一家连续两年利润负增长、渠道缓冲耗尽、PE处一年82%分位的公司，市场给的仍是「确定性溢价」，而这份确定性在2026年已经被两次证伪（FY2025年度双降、2026H1增收不增利）。⑤反向检查：如果Q4合同负债回升且批价站稳1,700元以上，上述判断就要推翻——这是我给自己设的证伪条件。"
+   },
+   "dataGaps": [
+    "合同负债下降是主动纾压还是经销商打款意愿下降，公司未做官方说明，两种解读都无法用披露数据证伪",
+    "i茅台的客户构成（新客 vs 原直营团购客户迁移）公司未披露，无法量化净增量",
+    "飞天批价、零售价、渠道库存均为券商调研/电商报价，非公司披露口径，且日度波动大，只作区间参考",
+    "分年龄段/分场景消费数据无公开可引用来源，年轻化风险只能定性判断",
+    "无公开做空机构报告，bearCase 以财报数据的空头解读替代，已在 holder 字段注明"
+   ]
+  },
+  "management": {
+   "title": "管理层评估",
+   "conclusion": "陈华任内经历了「首个增收不增利半年报」与「Q3单季转正」两次检验，执行力评价由负转中性；但FY2025年报取消年度营收目标是更实质的治理变化——从对规模负责转为对动销负责，代价是外部失去校验锚点。",
+   "analysis": {
+    "keyDecisions": [
+     {
+      "date": "2025-10-27 / 2026-06-11",
+      "decision": "董事长换届：张德芹离任，陈华接任并于2026-06-11股东会正式当选",
+      "outcome": "无酒业背景空降；首份完整半年报出现上市以来首个「增收不增利」，但Q3单季收入+3.00%、净利+3.78%已转正，评价由负转中性。",
+      "rating": "★★★☆☆",
+      "source": {
+       "name": "公司2025年年度报告 + 2025年第一次临时股东大会决议公告",
+       "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
+      }
+     },
+     {
+      "date": "2024-09 至 2026-05",
+      "decision": "两期股票回购（首期60亿、第二期30亿），全部用于注销",
+      "outcome": "第二期2026-05-27完成：回购2,188,614股、均价1,370.70元/股、金额29.999亿元；总股本降至1,250,081,601股。",
+      "rating": "★★★★☆",
+      "source": {
+       "name": "公司回购实施结果公告（2026-05-29）+ Tushare repurchase",
+       "url": "https://www.moutai.com.cn/mtgf/articleFileDir/2026-05/29/b2ab7fb5902b403cbf1566a367b4547c.pdf"
+      }
+     },
+     {
+      "date": "2026-04 / 2026-06",
+      "decision": "FY2025利润分配：中期23.957元/股 + 年度28.02423元/股，合计51.98元/股",
+      "outcome": "全年派现650.33亿元、占归母净利润79.00%，分红总额创历史新高；股息率3.73%。",
+      "rating": "★★★★☆",
+      "source": {
+       "name": "公司2025年年度报告 + 2025年中期利润分配方案公告 + Tushare dividend",
+       "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
+      }
+     },
+     {
+      "date": "2026-01 至 2026-07",
+      "decision": "市场化定价改革：i茅台上线茅台酒系列、出厂价1169→1269元、经销合同价1269→1369元、取消1499元固定指导价",
+      "outcome": "直销占比由43.25%升至56.36%，i茅台收入+361.42%；批发代理-21.58%、毛利率-1.71pct。机制跑通了，代价也真实发生。",
+      "rating": "★★★☆☆",
+      "source": {
+       "name": "公司2025年年报「随行就市、相对平稳」表述 + 2026三季报渠道数据；调价细节为媒体转引",
+       "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+      }
+     },
+     {
+      "date": "2026-04-17",
+      "decision": "FY2025年报不再给出年度营业总收入量化目标，改为「坚持以消费者为中心，全面推进市场化转型」八项工作",
+      "outcome": "上市以来罕见地放弃营收指引。战略含义是考核从「向渠道要回款」转向「开瓶动销与稳价」，但外部无法再用目标完成率校验经营。",
+      "rating": "★★★☆☆",
+      "source": {
+       "name": "公司2025年年度报告「经营计划」章节（原文）",
+       "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
+      }
+     },
+     {
+      "date": "2026-10-31",
+      "decision": "2026三季报：单季收入+3.00%、净利+3.78%，合同负债降至20.84亿元",
+      "outcome": "行业下行中唯一收入正增长的头部酒企，Q2双降局面结束；但合同负债同比-73.10%，增长质量待Q4验证。",
+      "rating": "★★★☆☆",
+      "source": {
+       "name": "贵州茅台2026年第三季度报告（巨潮，一手）",
+       "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+      }
+     },
+     {
+      "date": "2026-08-15",
+      "decision": "会计政策变更：执行财政部《企业会计准则解释第19号/第20号》",
+      "outcome": "公司披露不涉及追溯调整、对财务状况与经营成果无重大影响；不构成可比性障碍。",
+      "rating": "★★★★☆",
+      "source": {
+       "name": "公司关于会计政策变更的公告（临2026-030）",
+       "url": "https://static.cninfo.com.cn/finalpage/2026-08-15/1225475864.PDF"
+      }
+     },
+     {
+      "date": "2026-10-31",
+      "decision": "高级管理人员2026年度薪酬兑现方案获董事会通过",
+      "outcome": "具体金额未在上市公司层面完整披露（国资深管薪酬多由控股股东支付）；陈华在上市公司领薪为0，难以用薪酬判断激励约束。",
+      "rating": "★★☆☆☆",
+      "source": {
+       "name": "公司第五届董事会2026年度第七次会议决议公告 + Tushare高管薪酬表",
+       "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649903.PDF"
+      }
+     }
+    ],
+    "capitalAllocation": {
+     "rdReturn": "① FY2025研发投入8.03亿元（费用化6.75亿+资本化1.28亿），强度0.48%；2026前三季度研发费用1.48亿元，同比+30.6%（1.13→1.48亿）。② 白酒工艺型研发（菌群/窖泥/发酵优化）本质是维护稀缺性而非新品替代，传统研发ROI框架适用性低。③ 真正的「技术投入」在渠道数字化：i茅台前三季度585.62亿元、占酒类收入44.73%，爱茅台数科承接产业数字化，这部分不体现在研发费用里。",
+     "maTrackRecord": "① 采集数据未见任何新增并购交易，公司历史上无重大产业并购案例。② 资本运作仍局限于财务公司同业存款、股票回购注销及本轮调价/渠道改革，非产业并购范畴，该项指标持续不适用于本公司评估。",
+     "buybackTiming": "①第二期回购2026-05-27完成：2,188,614股、均价1,370.70元/股、29.999亿元，全部注销。②对比当前股价1,392.05元，回购均价低于现价约1.5%，回购时点中性偏好。③两期回购合计90亿元，约占当前市值0.52%；相较650亿元年度分红，回购仍是配角。",
+     "evidence": [
+      {
+       "metric": "研发费用/研发强度",
+       "value": "8.03亿元 / 0.48%",
+       "asOf": "FY2025",
+       "source": {
+        "name": "贵州茅台2025年年度报告",
+        "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
+       }
+      },
+      {
+       "metric": "第二期回购完成（均价/金额/注销股数）",
+       "value": "1,370.70元 / 29.999亿元 / 2,188,614股",
+       "asOf": "2026-05-27",
+       "source": {
+        "name": "公司回购实施结果公告 + Tushare repurchase",
+        "url": "https://www.moutai.com.cn/mtgf/articleFileDir/2026-05/29/b2ab7fb5902b403cbf1566a367b4547c.pdf"
+       }
+      },
+      {
+       "metric": "PE(TTM)/PB/股息率及一年分位",
+       "value": "21.18x（82%分位）／6.42x（32%-48%分位）／3.73%（37%分位）",
+       "asOf": "2026-10-30",
+       "source": {
+        "name": "financial_rigor.py calc + Tushare daily_basic 一年区间",
+        "url": "https://tushare.pro"
+       }
+      }
+     ]
+    },
+    "alignment": {
+     "ownership": "①控股股东贵州茅台酒厂集团持股54.50%（681,282,935股），一股一票，经济权益与投票权一致；比例由2025Q3的54.30%升至54.50%，系回购注销减少总股本而非增持。②陈华、王莉等现任高管直接持股为0（Tushare 2025年报高管持股表），无内部人持股绑定。③2026Q3前十大股东中出现中国人寿传统产品(0.41%)、招商中证白酒指数基金(0.39%)、多只FOF与私募产品，机构结构较2025年更分散。",
+     "compensation": "① 陈华、王莉等国资深管薪酬多由控股股东（关联方）支付，上市公司年报未单列其完整薪酬；Tushare高管薪酬表显示陈华在上市公司领薪为「-」，其余副总113.8万-57.4万元不等。② 非关联方委派高管适用『基本工资+绩效+任期激励』年薪制，2026年具体数字未披露。③ 2026-10-29董事会审议《关于经理层任期制相关工作的议案》，公告仅列议案名称，未见考核指标与短期财务指标的量化挂钩，无法判断调价/渠道改革决策是否与个人激励直接绑定。",
+     "insiderSelling": "① collection及既往检索均未见陈华、王莉等现任高管的减持公开记录。② 中央汇金、证金退出前十大股东属机构层面持仓变化，不属于管理层或内部人减持范畴，二者需严格区分。③ 本次数据截止内未见新的控股股东或高管股份增减持公告。",
+     "evidence": [
+      {
+       "metric": "控股股东持股比例",
+       "value": "54.50%",
+       "asOf": "2026-09-30",
+       "source": {
+        "name": "贵州茅台2026年第三季度报告（巨潮，一手）「前十名股东持股情况」",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+       }
+      },
+      {
+       "metric": "高管持股",
+       "value": "陈华/王莉及副总经理全部为0股",
+       "asOf": "FY2025",
+       "source": {
+        "name": "Tushare Pro stk_holdertrade/高管薪酬表",
+        "url": "https://tushare.pro"
+       }
+      }
+     ]
+    },
+    "organization": {
+     "teamStability": "①近5年四度换帅（高卫东→丁雄军→张德芹→陈华），陈华2026-06-11正式当选，任职约1年。②总经理职位自2023-08起由王莉代行，已超3年未正式任命，治理结构长期处于「董事长新、总经理代」的组合。③2026年10月董事会仅审议三季报、经理层任期制、担保管理办法，未见新的战略级人事安排。",
+     "keyPersonRisk": "① 陈华无白酒行业从业背景，2026年两轮提价、产品结构重构与渠道转直营均为其任内主导，已从『存疑』进入『可评估』。② 任内先出现上市以来首个「增收不增利」半年报，再交出Q3单季收入+3.00%/净利+3.78%的成绩，说明执行有代价也有修复能力，关键人风险从『执行结果待观察』转为『机制能否制度化』。③ 王莉代行总经理超3年未转正，若其离任叠加陈华仍在磨合期，管理层稳定性存在双重不确定性。"
+    },
+    "culture": "①公司对外表述延续「质量是生命之魂」「崇本守道、坚守工艺、贮足陈酿、不卖新酒」，2025年报将其写入2026年第一项工作（筑牢质量根基），属公司自身宣传用语。②可观察的治理记录：5年内4次董事长更替；总经理代行超3年；FY2025年报取消年度营收目标，改为八项定性工作，考核导向从「规模」转向「动销与稳价」。③ESG：MSCI ESG评级由BBB升至A（白酒行业首家），但年报与季报均未见企业文化或ESG的量化目标与考核披露。④对股东的实际动作：FY2025派现650.33亿元（79%派现率）、两期回购90亿元全部注销，是可验证的资本回报记录。"
+   },
+   "inquiry": {
+    "question": "如果CEO退休，这家公司还能保持竞争力吗？",
+    "answer": "能。核心壁垒不系于个人，但2026年证明了「换人」确实会改变短期的经营节奏与报表形态。①原产地与品牌资产不依赖某位董事长；陈华无酒业背景仍把Q3做回正增长，说明组织能力可以承接战略。②但换帅的代价是可量化的：FY2025年报取消营收目标、2026H1出现首个「增收不增利」、渠道结构一年内从直销50%推到56%，都属于新班子主动重写规则的结果。③真正需要盯的不是「陈华退休后谁接班」，而是「随行就市」这套机制能不能制度化——如果它依赖某位董事长的意志，换帅就会再次打断价格体系。④王莉代行总经理超3年未转正，是治理上的一个未完成项：它让运营层长期缺少正式授权，也让接班安排不透明。"
+   },
+   "dataGaps": [
+    {
+     "field": "陈华、王莉等高管具体持股与薪酬",
+     "reason": "高管直接持股为0（Tushare高管表），陈华在上市公司领薪为0；国资深管薪酬多由控股股东支付，上市公司层面未披露完整数字"
+    },
+    {
+     "field": "经理层任期制考核指标",
+     "reason": "2026-10-29董事会审议《关于经理层任期制相关工作的议案》，公告仅列议案名称，未披露考核指标与权重"
+    },
+    {
+     "field": "「随行就市」调价公告原文",
+     "reason": "公司未单独发布调价公告，调价数字来自财经媒体与经销商渠道转引，未逐字核对官方文件"
+    }
+   ]
+  },
+  "industryTrend": {
+   "title": "行业与长期趋势",
+   "conclusion": "行业处在存量收缩的中后段而非范式转移：2026年1-9月产量-3.9%、19家酒企营收-7.39%，但茅台逆势+1.82%，份额向龙头集中的速度快于行业下滑速度；真正的不确定性是2027年出清结束后，行业以多低的增速重新平衡。",
+   "analysis": {
+    "paradigmShift": {
+     "verdict": "否",
+     "reasoning": "①白酒是成熟消费品，不存在技术驱动的颠覆性替代，不构成文明级范式转移。②2026年的行业数据是「总量收缩+份额集中」：规上产量1-9月235.4万千升(-3.9%)、创四年同期新低，19家上市酒企营收-7.39%，而茅台+1.82%、Q3单季+3.00%。③结构性变化发生在渠道与定价：i茅台占比44.73%、随行就市取代固定指导价，是行业二十年「经销商压货+厂家控价」模式的主动终结，属于商业模式迭代而非品类颠覆。"
+    },
+    "historicalAnalogy": "①更贴近2012-2015年「三公消费+塑化剂」周期，而非蒸汽机/互联网式技术革命，不宜套用文明级类比。②上一轮系外生政策冲击，茅台仍守住正增长；本轮FY2025出现上市以来首次年度双降（营收-1.21%/净利-4.53%）、2026H1首个「增收不增利」，压力源更趋内生；但Q3单季已转正，量级冲击仍明显弱于2013年。③两次周期的共同点是渠道价格倒挂与库存去化，区别是本轮公司用i茅台直接接管了终端，缓冲垫从经销商移到了自己身上。",
+    "tam": {
+     "current": {
+      "status": "unavailable",
+      "reason": "研报对2030年白酒市场规模的预测区间6,500亿-1.2万亿元、CAGR 3.98%-6.5%，方法论与口径不一，不采用单一数字；可核实硬数据为产量：FY2025 354.9万千升、2026年1-9月235.4万千升(-3.9%)（已查国家统计局经媒体转引口径与公司2025年报）"
+     },
+     "ceiling": "①天花板取决于存量饮酒人群与结构升级，而非总量扩张：产量已连续多年下降，1-9月创四年同期新低。②茅台自身的天花板更多来自产能与价格：茅台酒设计产能46,395吨（2026年释放1,800吨新增）、系列酒59,400吨（释放6,940吨），量增空间约3-4%/年。③价格端的天花板由批价决定：批价1,695-1,730元、零售1,787-1,795元，若批价长期低于1,500元，提价空间即被封死。",
+     "growthCurve": "①行业已越过成长期高点，进入成熟期后段的收缩阶段：FY2025产量354.9万千升，2026年1-9月同比-3.9%。②集中度快速提升：茅台2026前三季度营收占19家上市酒企合计的51.08%（口径受五粮液收入重述影响，不可与前版协会口径19.47%直接比较）。③券商判断处于周期磨底后期、价格/库存/预期底部信号已现；中国酒业协会认为本轮是人口结构、消费观念、经济周期三重叠加，短期看不到V型反转。"
+    },
+    "valueChainPosition": "①产业链原料-酿造-品牌-渠道-终端，茅台在品牌与终端两端议价权继续增强。②2026前三季度直销737.74亿（占56.36%）、i茅台585.62亿（占44.73%），公司已从「定价者」变成「定价+终端」双重掌控者。③代价是渠道缓冲消失：批发代理-21.58%、经销商2,285家（净减40家）、合同负债20.84亿(-73.10%)，过去由经销商承担的库存与资金压力现在直接暴露在公司报表上。④产业链位置没有削弱，但风险敞口从「渠道」移到了「公司自己」。",
+    "techRouteRisk": "①白酒酿造工艺本身无技术路线替代风险，风险源在于品类被其他饮品分流。②低度化消费趋势存在，但年轻群体偏好变化量化数据公司未披露，已标注unavailable。③短中期尚未见工艺替代信号，风险主要体现为需求结构缓慢迁移而非技术断层。",
+    "concentration": {
+     "customers": "前五名客户销售额占比未在年报中单独披露高集中度风险；渠道端国内经销商2,285家、国外124家，直销占比56.36%意味着终端客户高度分散。",
+     "suppliers": {
+      "status": "unavailable",
+      "reason": "本轮未采集高粱/包材等上游供应商集中度数据，公司年报仅披露采购模式（「公司+地方政府+供应商+合作社或农户」），未披露前五名供应商占比，已查2025年报采购章节"
+     },
+     "evidence": [
+      {
+       "metric": "国内经销商数量",
+       "value": "2,285家（增220/减288）",
+       "asOf": "2026-09-30",
+       "source": {
+        "name": "贵州茅台2026年第三季度报告",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+       }
+      },
+      {
+       "metric": "直销收入占比",
+       "value": "56.36%（终端客户高度分散，无单一客户依赖）",
+       "asOf": "2026Q3",
+       "source": {
+        "name": "贵州茅台2026年第三季度报告",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649896.PDF"
+       }
+      },
+      {
+       "metric": "前五名供应商采购占比",
+       "value": {
+        "status": "unavailable",
+        "reason": "公司2025年报仅披露采购模式（公司+地方政府+供应商+合作社或农户），未披露前五名供应商集中度"
+       },
+       "asOf": "FY2025",
+       "source": {
+        "name": "公司2025年年度报告",
+        "url": "https://www.moutaichina.com/mtgf/articleFileDir/2026-04/17/1b9fae59825c41bf9a776892a00565f7.pdf"
+       }
+      }
+     ]
+    }
+   },
+   "inquiry": {
+    "question": "站在20年后回看，这家公司是「这个时代的标准石油」还是「昙花一现的3Com」？",
+    "answer": "更接近「标准石油」式的持久生意，而不是「3Com」。①原产地、菌群、工艺不可复制，品牌定价权历经多轮周期验证，具备百年尺度持久性。②2026年的证据反而强化了这个判断：行业产量-3.9%、19家酒企营收-7.39%，茅台还能+1.82%，这是份额在向它集中，而不是品类在被替代。③真正的长期变量不是「年轻人不喝白酒」，而是「白酒还能不能维持价格」——茅台把定价机制从固定指导价改成随行就市，本质上是承认行政定价已经无法覆盖市场，这是主动适应，而不是被动衰退。④治理连续性（5年4换帅）决定的是估值波动区间，不是资产是否持久。"
+   },
+   "dataGaps": [
+    {
+     "field": "tam.current",
+     "reason": "研报2030年预测区间6,500亿-1.2万亿元、CAGR 3.98%-6.5%口径不一，无单一权威来源；已改以产量硬数据替代（354.9万千升、1-9月-3.9%）"
+    },
+    {
+     "field": "concentration.suppliers",
+     "reason": "未采集高粱/包材等上游供应商集中度，公司2025年报仅披露采购模式、未披露前五名供应商占比，已查采购章节"
+    },
+    {
+     "field": "行业销售收入官方口径",
+     "reason": "国家统计局「规上白酒销售收入」2026年前三季度数据未取得（搜索服务失败），仅有产量与上市公司合计口径"
+    }
+   ]
+  },
+  "valuation": {
+   "title": "估值分析",
+   "conclusion": "PE(TTM)21.18x处近一年82%分位、股息率3.73%处37%分位，估值已从「便宜」回到「偏贵」；三情景中性目标价1,218.8元(-12.4%)，赔率不支持在当前位置加仓。",
+   "analysis": {
+    "currentMultiples": {
+     "_hint": "全部经 docs/research/tools/financial_rigor.py 验算，与第 1 步采集值对账",
+     "marketCap": {
+      "value": "1.7402万亿",
+      "currency": "CNY",
+      "asOf": "2026-10-30",
+      "source": {
+       "name": "股价1,392.05×总股本1,250,081,601股，financial_rigor.py verify-market-cap 偏差0.00%",
+       "url": "https://tushare.pro"
+      }
+     },
+     "pe": {
+      "value": "21.18x（TTM，Q3滚动净利润821.61亿验算）；Tushare 21.37x为H1滚动口径",
+      "asOf": "2026-10-30",
+      "source": {
+       "name": "financial_rigor.py calc：821.61亿/12.5008亿股=65.72元，1,392.05/65.72=21.18x",
+       "url": "https://tushare.pro"
+      }
+     },
+     "ps": {
+      "value": "9.98x（TTM营业总收入1,744.34亿）",
+      "asOf": "2026-10-30",
+      "source": {
+       "name": "financial_rigor.py calc 验算",
+       "url": "https://tushare.pro"
+      }
+     },
+     "peg": {
+      "status": "not-applicable",
+      "reason": "连续两年归母净利润负增长（FY2025 -4.53%、2026前三季度 -0.25%），分母为负使PEG失去意义；卖方对FY2027增速分歧0%~7%，无可靠一致预期"
+     },
+     "evToRevenue": {
+      "value": "8.84x（广义净现金1,975.91亿口径）／9.69x（仅扣货币资金旧口径）",
+      "asOf": "2026-10-30",
+      "source": {
+       "name": "financial_rigor.py calc：EV=1.7402万亿-1,975.91亿=1.5426万亿，/1,744.34亿",
+       "url": "https://tushare.pro"
+      }
+     }
+    },
+    "reverseDcf": {
+     "impliedGrowth": "①以FY2025自由现金流583.94亿（每股46.71元）为基数，单阶段Gordon模型反推当前股价隐含永续增长率约4.49%（r=8%）／5.46%（r=9%）。②若改用TTM自由现金流1,050.90亿（每股84.07元，含财务公司同业业务回流），隐含增长率降至1.85%（r=8%）／2.79%（r=9%）。③两个基数的差异本身就是结论：市场对茅台的定价，取决于你相信哪一个FCF——酒类真实造血（约584亿）还是含金融业务的报表FCF（约1,051亿）。",
+     "assumptions": "①单阶段Gordon模型 P=FCF×(1+g)/(r-g)，非多阶段DCF。②基数A=FY2025 FCF 583.94亿（经营现金流615.22亿-资本支出31.28亿）；基数B=TTM FCF 1,050.90亿（含2026年前三季度OCF +120.07%，公司明确解释为财务公司同业存款到期回收与吸收存款变动）。③r=8%/9%两组敏感性，对应零有息负债、强定价权的A股消费龙头股权成本区间。④未设终值倍数。"
+    },
+    "threeScenario": {
+     "_hint": "必须用 docs/research/tools/financial_rigor.py three-scenario 精确计算，禁止心算",
+     "inputs": {
+      "price": 1392.05,
+      "eps": 65.72,
+      "sharesHundredMillion": 12.5008,
+      "growth": [
+       "6%（乐观）",
+       "1%（中性）",
+       "-7%（悲观）"
+      ],
+      "pe": [
+       "22x（乐观）",
+       "18x（中性）",
+       "13x（悲观）"
+      ],
+      "years": 3,
+      "currency": "CNY"
+     },
+     "optimistic": {
+      "targetPrice": "1722.0元（目标EPS 78.27×22x）",
+      "impliedReturnPct": "+23.7%"
+     },
+     "neutral": {
+      "targetPrice": "1218.8元（目标EPS 67.71×18x）",
+      "impliedReturnPct": "-12.4%"
+     },
+     "pessimistic": {
+      "targetPrice": "687.2元（目标EPS 52.86×13x）",
+      "impliedReturnPct": "-50.6%"
+     },
+     "assumptionBasis": "①中性增速1%：2026前三季度净利-0.25%、Q3单季+3.78%，假设2027-2029在「零增长到低个位数」之间，对应行业出清后的新常态；较上一版（2026-08）的1%持平，但基数由H1的−1.95%修正为Q3的−0.25%，方向略好。②乐观6%：假设2027年行业出清结束、批价站稳1,700元以上、i茅台渠道红利延续；低于上一版的7%（Q3已证明修复能力，但合同负债-73%限制了高增假设）。③悲观-7%：假设2027年批价跌破1,500元、合同负债继续走低、消费税或禁酒令加码；较上一版-8%略收窄，因Q3单季已转正、行业下行斜率放缓。④乐观PE22x、中性18x、悲观13x：中性18x低于当前21.18x，反映「利润零增长+渠道缓冲耗尽」下估值中枢应下修；悲观13x低于一年区间下沿17.66x，对应估值破位。",
+     "toolOutput": "============================================================\n三情景估值模型 (Three-Scenario Valuation)\n============================================================\n  当前股价: 1392.05 CNY\n  当前EPS:  65.72\n  预测期:   3年\n\n  情景                年增速     目标PE      目标EPS       目标股价      涨跌幅\n  ------------ -------- -------- ---------- ---------- --------\n  乐观 (Bull)          6%      22x      78.27    1722.0   +23.7%\n  中性 (Base)          1%      18x      67.71    1218.8   -12.4%\n  悲观 (Bear)         -7%      13x      52.86     687.2   -50.6%\n\n  ✅ 所有计算使用精确十进制, 结果可审计复现"
+    },
+    "vsOwnHistory": {
+     "metric": "PE(TTM)、PB、股息率的近一年区间与分位",
+     "currentValue": "PE(TTM) 21.18x（Tushare 21.37x）；PB 6.42x（Q3口径，Tushare 6.93x为H1口径）；股息率3.73%",
+     "historicalRange": "①PE近一年区间[17.66x, 22.19x]，当前处82%分位——接近一年最贵区间。②PB近一年区间[5.39x, 8.58x]，Tushare H1口径6.93x处48%分位；按Q3净资产重算的6.42x约处32%分位，PB仍在中位偏下。③股息率区间[3.32%, 4.45%]，当前3.73%处37%分位——股息率处于低位，即股价处于高位。④三个分位不一致的原因是分母节奏：利润在降（PE被推高）、净资产在增（PB被压低）、分红总额锁定（股息率随股价波动）。",
+     "source": {
+      "name": "Tushare Pro daily_basic 一年区间（20251031~20261030）",
+      "url": "https://tushare.pro"
+     }
+    },
+    "vsPeers": [
+     {
+      "name": "五粮液(000858.SZ)",
+      "pe": "23.79x（TTM）",
+      "ps": "6.78x",
+      "pb": "2.45x",
+      "dividendYield": "6.90%",
+      "source": {
+       "name": "Tushare daily_basic（2026-10-30）",
+       "url": "https://tushare.pro"
+      }
+     },
+     {
+      "name": "泸州老窖(000568.SZ)",
+      "pe": "19.77x",
+      "ps": "6.57x",
+      "pb": "2.41x",
+      "dividendYield": "7.49%",
+      "source": {
+       "name": "Tushare daily_basic（2026-10-30）",
+       "url": "https://tushare.pro"
+      }
+     },
+     {
+      "name": "山西汾酒(600809.SH)",
+      "pe": "16.78x",
+      "ps": "4.51x",
+      "pb": "3.85x",
+      "dividendYield": "5.20%",
+      "source": {
+       "name": "Tushare daily_basic（2026-10-30）",
+       "url": "https://tushare.pro"
+      }
+     },
+     {
+      "name": "贵州茅台(600519.SH)",
+      "pe": "21.37x（Tushare）/21.18x（Q3口径）",
+      "ps": "10.23x",
+      "pb": "6.93x（H1口径）/6.42x（Q3口径）",
+      "dividendYield": "3.74%",
+      "source": {
+       "name": "Tushare daily_basic（2026-10-30）",
+       "url": "https://tushare.pro"
+      }
+     },
+     {
+      "name": "对比结论",
+      "pe": "茅台PE低于五粮液、高于汾酒与老窖，处同业中位",
+      "ps": "茅台PS(TTM)10.23x，为四家中最高（汾酒4.51x、老窖6.57x、五粮液6.78x）",
+      "pb": "茅台PB 6.42-6.93x，为四家中最高（汾酒3.85x、五粮液2.45x、老窖2.41x）",
+      "dividendYield": "茅台3.74%，为四家中最低（汾酒5.20%、五粮液6.90%、老窖7.49%）",
+      "source": {
+       "name": "本次分析基于上述 Tushare 同日快照",
+       "url": "https://tushare.pro"
+      },
+      "note": "真正的溢价在PB与股息率：茅台PB 6.42-6.93x是汾酒(3.85x)的1.7-1.8倍、老窖(2.41x)的2.7-2.9倍；股息率3.74%显著低于五粮液6.90%、老窖7.49%、汾酒5.20%。PE看起来不贵，是因为它的净资产回报率(31.11% TTM)远高于同业——用PE比较会低估其估值溢价的幅度。"
+     }
+    ]
+   },
+   "inquiry": {
+    "question": "如果股市明天关闭5年，你愿意以这个价格持有吗？",
+    "answer": "愿意持有，但现在这个价格不是加仓的位置。①中性情景3年目标价1,218.8元对应-12.4%，乐观+23.7%、悲观-50.6%——赔率是「赚两成 vs 亏五成」，不对称方向不利。②PE 21.18x处一年82%分位、股息率3.73%处37%分位，价格已经把Q3的修复计入，而合同负债-73%的风险还没被计入。③高分红（650.33亿、派现率79.00%）+回购（90亿全部注销）+ 1,975.91亿广义净现金，提供了真实的安全垫；按当前股息率，即使股价三年不涨，股息也足以覆盖约11%的回报。④如果股市关闭五年，我愿意以1,392元持有——但会把仓位控制在「靠股息与净资产增长就能接受」的规模，而不是押注利润重回双位数增长。"
+   },
+   "dataGaps": [
+    {
+     "field": "currentMultiples.peg",
+     "reason": "连续两年净利负增长，PEG不适用；卖方FY2027增速分歧0%~7%，无可靠一致预期"
+    },
+    {
+     "field": "reverseDcf 的 FCF 基数",
+     "reason": "酒类真实FCF与含财务公司同业业务的报表FCF差异近一倍（584亿 vs 1,051亿），公司未拆分披露财务公司对经营现金流的贡献金额，只能做区间反推"
+    },
+    {
+     "field": "vsPeers 的毛利率/净利率对比",
+     "reason": "同业三季报毛利率未逐家采集，本次仅比较PE/PS/PB/股息率四个估值倍数"
+    },
+    {
+     "field": "2026年中期分红",
+     "reason": "公司治理层获授权制定2026年中期分红方案，但截至2026-11-01尚未公告具体金额与时点（2025年为11月落地），无法计入TTM股息率"
+    }
+   ]
+  }
+ },
+ "crossValidationLog": [
+  {
+   "field": "FY2025净利率",
+   "source1": {
+    "name": "financial_rigor.py calc（82,320,067,101.68/168,838,102,514.79）",
+    "value": "48.76%"
+   },
+   "source2": {
+    "status": "not-applicable",
+    "reason": "单一计算验算，非双源交叉"
+   },
+   "deviationPct": {
+    "status": "not-applicable",
+    "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+   },
+   "flag": "ok",
+   "resolution": "精确十进制计算，用于businessEssence.profitabilityTrend5y"
+  },
+  {
+   "field": "FY2023/FY2024/FY2025营收与净利润同比增速",
+   "source1": {
+    "name": "financial_rigor.py calc（逐年增速）",
+    "value": "营收+19.01%/+15.71%/-1.21%；净利润+19.16%/+15.38%/-4.53%"
+   },
+   "source2": {
+    "status": "not-applicable",
+    "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
+   },
+   "deviationPct": {
+    "status": "not-applicable",
+    "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+   },
+   "flag": "ok",
+   "resolution": "用于businessEssence.operatingLeverage负经营杠杆判断"
+  },
+  {
+   "field": "三情景估值（乐观/中性/悲观）",
+   "source1": {
+    "name": "financial_rigor.py three-scenario（price=1306.45, eps=65.66, shares=12.50亿, years=3）",
+    "value": "目标价 2184.8/1435.0/844.4元；涨跌幅 +67.2%/+9.8%/-35.4%"
+   },
+   "source2": {
+    "status": "not-applicable",
+    "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
+   },
+   "deviationPct": {
+    "status": "not-applicable",
+    "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+   },
+   "flag": "ok",
+   "resolution": "增速与PE假设见valuation.threeScenario.assumptionBasis，完整工具输出见toolOutput字段"
+  },
+  {
+   "field": "反向DCF隐含永续增长率",
+   "source1": {
+    "name": "financial_rigor.py calc（单阶段Gordon模型，FCF/股46.71元，r=8%/9%）",
+    "value": "[估计] 4.3%（r=8%）/ [估计] 5.2%（r=9%）"
+   },
+   "source2": {
+    "status": "not-applicable",
+    "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
+   },
+   "deviationPct": {
+    "status": "not-applicable",
+    "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+   },
+   "flag": "ok",
+   "resolution": "简化单阶段模型，非精确多阶段DCF，仅作隐含增长预期参考"
+  },
+  {
+   "field": "两期股票回购均价 vs 公告日/当前股价折溢价",
+   "source1": {
+    "name": "financial_rigor.py calc",
+    "value": "首期均价1527.66元 较公告日收盘价1263.92元 溢价20.87%；二期均价1370.73元 较当前价1306.45元 溢价[估计]4.92%"
+   },
+   "source2": {
+    "status": "not-applicable",
+    "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
+   },
+   "deviationPct": {
+    "status": "not-applicable",
+    "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+   },
+   "flag": "ok",
+   "resolution": "用于management.capitalAllocation.buybackTiming判断回购未在低点精准择时"
+  },
+  {
+   "field": "2026H1营收/净利润同比增速（更新）",
+   "source1": {
+    "name": "financial_rigor.py calc（92,278,072,083.21 vs 91,093,762,553.97；44,516,880,421.86 vs 45,402,962,298.10）",
+    "value": "营收+1.30%；净利润-1.95%"
+   },
+   "source2": {
+    "name": "西部证券中报点评（新浪财经转引，四舍五入展示）",
+    "value": "营收+1.3%；净利润-2.0%"
+   },
+   "deviationPct": "0.00pct / 0.05pct",
+   "flag": "ok",
+   "resolution": "研报数字为四舍五入展示，与工具精确计算一致，用于businessEssence/moat/inversion多个维度"
+  },
+  {
+   "field": "2026Q2单季营收/净利润同比增速（推算，更新）",
+   "source1": {
+    "name": "financial_rigor.py calc（H1累计-Q1）",
+    "value": "营收-5.23%；净利润-6.90%"
+   },
+   "source2": {
+    "name": "西部证券中报点评（独立测算口径）",
+    "value": "营收-5.2%；净利润-6.9%"
+   },
+   "deviationPct": "0.03pct / 0.00pct",
+   "flag": "ok",
+   "resolution": "主会话推算法与研报独立测算法一致，用于businessEssence.operatingLeverage/inversion.failurePaths"
+  },
+  {
+   "field": "三情景估值（更新，2026-08-14股价/TTM EPS）",
+   "source1": {
+    "name": "financial_rigor.py three-scenario（price=1341.99, eps=65.14, shares=12.50亿, years=3）",
+    "value": "目标价 1755.6/1208.0/659.4元；涨跌幅 +30.8%/-10.0%/-50.9%"
+   },
+   "source2": {
+    "status": "not-applicable",
+    "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
+   },
+   "deviationPct": {
+    "status": "not-applicable",
+    "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+   },
+   "flag": "ok",
+   "resolution": "较前次(2026-08-06)假设显著下修增速与目标PE，反映H1增收不增利后中性情景转负；完整工具输出见valuation.threeScenario.toolOutput"
+  },
+  {
+   "field": "反向DCF隐含永续增长率（更新，TTM EPS基准）",
+   "source1": {
+    "name": "financial_rigor.py calc（单阶段Gordon模型，FCF/股46.71元，r=8%/9%）",
+    "value": "[估计] 4.37%（r=8%）/ [估计] 5.33%（r=9%）"
+   },
+   "source2": {
+    "status": "not-applicable",
+    "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
+   },
+   "deviationPct": {
+    "status": "not-applicable",
+    "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+   },
+   "flag": "ok",
+   "resolution": "FCF基数沿用FY2025年度值（2026H1经营现金流暴增系非经常性因素不可用），与前次(4.3%/5.2%)基本持平，说明当前股价对H1利润转负尚未明显消化"
+  },
+  {
+   "field": "PE(TTM)手工验算 vs Tushare daily_basic（更新）",
+   "source1": {
+    "name": "financial_rigor.py verify-valuation（--price 1341.99 --eps 65.14，TTM净利润=FY2025-2025H1+2026H1推算）",
+    "value": "20.60x"
+   },
+   "source2": {
+    "name": "Tushare Pro daily_basic pe_ttm",
+    "value": "20.28x"
+   },
+   "deviationPct": "1.6%",
+   "flag": "minor-diff",
+   "resolution": "推测系基本股数与期末股数口径不同所致，两者均支持PE处近一年中等偏上分位(58%)的结论，未进一步拆解，采用Tushare pe_ttm为主"
+  }
+ ]
 }

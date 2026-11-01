@@ -1,138 +1,148 @@
 {
-  "meta": {
-    "companyId": "sh-600519-kweichow-moutai",
-    "companyName": "贵州茅台酒股份有限公司",
-    "summarizedAt": "2026-08-17",
-    "dataCutoff": "2026-08-17",
-    "basedOnCollection": "research/companies/sh-600519-kweichow-moutai/financials-collection.json",
-    "basedOnAnalysis": "research/companies/sh-600519-kweichow-moutai/financials-analysis.json"
+ "meta": {
+  "companyId": "sh-600519-kweichow-moutai",
+  "companyName": "贵州茅台酒股份有限公司",
+  "summarizedAt": "2026-11-01",
+  "dataCutoff": "2026-11-01",
+  "basedOnCollection": "research/companies/sh-600519-kweichow-moutai/financials-collection.json",
+  "basedOnAnalysis": "research/companies/sh-600519-kweichow-moutai/financials-analysis.json"
+ },
+ "dimensionSummary": [
+  {
+   "dimensionId": "businessQuality",
+   "title": "生意质量",
+   "mapsTo": "dimensions.businessEssence",
+   "conclusion": "原产地稀缺性支撑的高毛利生意未变，Q3单季收入+3.00%/净利+3.78%在行业-7.39%中逆势转正；但营业成本仍+22.02%、合同负债从80.07亿降至20.84亿，增长质量弱于增速本身。",
+   "confidence": 6.5,
+   "scoreBasis": "①businessEssence.analysis.revenueBreakdown：前三季度茅台酒1,129.25亿(+2.18%)、系列酒179.69亿(+0.47%)、直销737.74亿(+32.79%)、i茅台585.62亿(+361.42%)。②businessEssence.analysis.operatingLeverage：营收+1.96% vs 营业成本+22.02%，Q3单季利润增速(+3.78%)重新快于收入(+3.00%)，但合同负债-73.10%。③businessEssence.analysis.profitabilityTrend5y：毛利率89.58%(-1.71pct)、净利率49.22%(-1.10pct)，TTM毛利率89.87%。正负两面互抵，评分维持6.5。"
   },
-  "dimensionSummary": [
-    {
-      "dimensionId": "businessQuality",
-      "title": "生意质量",
-      "mapsTo": "dimensions.businessEssence",
-      "conclusion": "生意本质仍是原产地稀缺性支撑的高毛利消费品，但2026H1营业成本+21.81%远超营收+1.30%，出现2001年上市以来首个增收不增利半年报，盈利质量弱于收入质量。",
-      "confidence": 6.5,
-      "scoreBasis": "①businessEssence.analysis.profitabilityTrend5y：2026H1毛利率89.56%(-1.74pct)、净利率50.75%(-1.81pct)，仍处高位但同比走弱。②businessEssence.analysis.operatingLeverage：H1营收+1.30%、营业成本+21.81%，经营杠杆首次在营收正增长下转负，净利润-1.95%为2001年来首个增收不增利半年报。③businessEssence.dataGaps：FY2021-2022毛利率为估计值、2026H1经营利润率unavailable，证据不足向中性收敛。"
-    },
-    {
-      "dimensionId": "moat",
-      "title": "护城河",
-      "mapsTo": "dimensions.moat",
-      "conclusion": "护城河核心（原产地稀缺与品牌定价权）未破，但H1增收不增利与渠道转直营净增量存疑首次显现阶段性承压，未来5年趋势判断转为变窄。",
-      "confidence": 6.5,
-      "scoreBasis": "①moat.analysis.types：品牌定价权verdict仍为存在，2026年两轮提价(+8.55%及随行就市改革)延续8年来首次调价能力。②moat.analysis.trendNext5y：判断由稳定转为变窄，因渠道转直营净增量存疑及系列酒失控式下滑风险概率均上调为高。③moat.dataGaps：直营团购剔除i茅台后-68.5%/-52.9%是否为存量转移未经官方口径拆分，证据强度打折。"
-    },
-    {
-      "dimensionId": "management",
-      "title": "管理层",
-      "mapsTo": "dimensions.management",
-      "conclusion": "陈华任内首份完整半年报即现历史性增收不增利，5年4换帅的治理不稳定性叠加关键人风险从存疑变为可观察负面结果，管理层评估承压下修。",
-      "confidence": 4,
-      "scoreBasis": "①management.analysis.keyDecisions：董事长换届评级★★☆☆☆，两轮调价与产品结构重构评级均未超★★★☆☆，首份完整半年报结果偏负面。②management.analysis.organization.teamStability：近5年四度换帅，总经理王莉代行近3年未转正，治理不确定性延续。③management.analysis.alignment：控股股东持股54.40%未变，中央汇金/证金退出前十大股东属机构持仓调整非管理层减持。"
-    },
-    {
-      "dimensionId": "keyRisk",
-      "title": "最大风险",
-      "mapsTo": "dimensions.inversion",
-      "conclusion": "最大风险是经济周期性商务消费萎缩与渠道转直营净增量存疑，2026Q2营收-5.23%/净利润-6.90%已兑现下滑趋势，多条高概率高影响风险路径同时显现。",
-      "confidence": 3.5,
-      "scoreBasis": "①inversion.analysis.failurePaths：渠道转直营净增量不及预期(高/高)、系列酒失控式下滑(高/中)、经济周期性商务消费萎缩(高/高)三条路径概率均为高，且经济周期路径已在2026Q2营收-5.23%/净利润-6.90%兑现。②inversion.analysis.historicalAnalogies：2012-2015周期茅台股价跌52.6%后触底反弹未伤龙头地位，风险具历史可控先例。③inversion.dataGaps：直营团购与系列酒Q2数据均为研报转引未核对官方原文，证据强度打折。"
-    },
-    {
-      "dimensionId": "civilizationTrend",
-      "title": "文明趋势",
-      "mapsTo": "dimensions.industryTrend",
-      "conclusion": "行业处存量深度调整而非范式转移，龙头茅台首现净利润历史性下滑标志拐点已传导至头部企业，但渠道话语权仍持续向公司集中。",
-      "confidence": 6.5,
-      "scoreBasis": "①industryTrend.analysis.paradigmShift：verdict为否，非范式转移，但2026H1为2001年来首个增收不增利半年报，行业拐点已传导至龙头。②industryTrend.analysis.valueChainPosition：直销占比升至56%~57%、i茅台占比43.63%，公司议价权持续集中强化。③industryTrend.analysis.tam.current：2030年目标区间与CAGR预测口径不一致，标记unavailable，证据不足向中性收敛。"
-    },
-    {
-      "dimensionId": "valuation",
-      "title": "估值",
-      "mapsTo": "dimensions.valuation",
-      "conclusion": "PE处近一年58%分位、PB处25%分位，尚未至低估区间；三情景中性已由上次+9.8%转为-10.0%，赔率较上一版明显恶化。",
-      "confidence": 4.5,
-      "scoreBasis": "①valuation.analysis.threeScenario：中性目标价1208.0元(-10.0%，较上一版+9.8%显著转负)，乐观1755.6元(+30.8%)，悲观659.4元(-50.9%)。②valuation.analysis.vsOwnHistory：PE(TTM)20.28x处近一年58%分位、PB6.19x处25%分位，未至历史低估区间。③valuation.analysis.reverseDcf：隐含永续增长率[估计]4.37%-5.33%沿用FY2025现金流基数，未充分反映H1净利润转负，可能高估当前预期。"
-    },
-    {
-      "dimensionId": "corporateCulture",
-      "title": "企业文化",
-      "mapsTo": "dimensions.management.analysis.culture",
-      "conclusion": "公司持续使用工匠精神等长期主义宣传语，但5年内4次董事长更替及未见ESG专项披露为可观察治理记录，2026H1终止固定指导价改行随行就市体系。",
-      "confidence": 5,
-      "scoreBasis": "①dimensions.management.analysis.culture：公司持续使用『工匠精神』『贮足陈酿不卖新酒』表述，为公司自身对外宣传用语，非独立第三方验证。②dimensions.management.analysis.culture：5年内4次董事长更替为可观察治理记录，年报及半年报均未见ESG或企业文化专项量化披露。③dimensions.management.analysis.culture：2026H1终止1499元固定指导价改采随行就市双价格体系及自售+经销+代售+寄售并行架构，为可观察经营决策变化。"
-    }
-  ],
-  "strategies": {
-    "noPosition": {
-      "title": "空仓者",
-      "advice": "①中性情景已转负(-10.0%)，当前非低估阶段，不宜追高建仓。②H1增收不增利叠加渠道净增量存疑等高概率风险路径待验证，建议观察至少一个季度确认是否企稳。③若布局，宜等价格回落或渠道数据验证后再分批介入。",
-      "triggers": [
-        {
-          "condition": "股价回落至659元附近（对应悲观情景目标价659.4元）",
-          "action": "可视为风险已充分计价，开始分批建仓",
-          "basis": "①valuation.analysis.threeScenario：悲观情景目标价659.4元(-50.9%)。②moat.analysis.trendPast5y：判断稳定，核心壁垒未破。"
-        },
-        {
-          "condition": "直营团购剔除i茅台后同比连续两季度企稳回升（当前-68.5%）",
-          "action": "视为渠道净增量真实性得到验证，可开始建仓",
-          "basis": "①inversion.analysis.failurePaths：渠道转直营净增量不及预期probability=高、impact=高。②moat.analysis.types：转换成本verdict存在，渠道锁定机制未变。"
-        }
-      ]
-    },
-    "holding": {
-      "title": "持仓者",
-      "advice": "①净利润历史性首次转负但护城河核心未破，无需恐慌性清仓核心仓位。②高分红与回购提供部分安全垫，但中性情景已转负，不宜等反弹后加仓摊薄成本。③密切跟踪系列酒及直营团购净增量能否验证真实性，若持续恶化应考虑减仓。",
-      "triggers": [
-        {
-          "condition": "股价上探1755元附近（对应乐观情景目标价1755.6元）",
-          "action": "可考虑逐步兑现部分收益锁定涨幅",
-          "basis": "①valuation.analysis.threeScenario：乐观情景目标价1755.6元(+30.8%)对应PE22x。②valuation.analysis.vsOwnHistory：当前PE20.28x处58%分位，乐观情景对应估值中枢已抬升。"
-        },
-        {
-          "condition": "系列酒单季营收同比连续两季度企稳（当前Q2-25.0%持续恶化）",
-          "action": "视为高概率风险路径缓解，继续持有不减仓",
-          "basis": "①inversion.analysis.failurePaths：系列酒失控式下滑probability=高、impact=中。②businessEssence.analysis.operatingLeverage：成本刚性拖累需系列酒企稳对冲。"
-        }
-      ]
-    },
-    "sellSignals": {
-      "title": "卖出信号",
-      "signals": [
-        {
-          "signal": "渠道转直营净增量被证实主要是存量客户内部转移而非新增需求",
-          "observable": "直营团购剔除i茅台后同比/环比连续两季度以上恶化（当前-68.5%/-52.9%）",
-          "basis": "①inversion.analysis.failurePaths：渠道转直营净增量不及预期probability=高、impact=高。②moat.analysis.trendNext5y：判断变窄的核心依据。"
-        },
-        {
-          "signal": "系列酒下滑从主动收缩演变为失控式下滑并拖累整体净利润连续恶化",
-          "observable": "系列酒单季营收同比降幅持续扩大超过Q2的-25.0%且经销商净减加速",
-          "basis": "①inversion.analysis.failurePaths：系列酒失控式下滑probability=高、impact=中。②moat.analysis.types：规模效应verdict存在但系列酒收缩正侵蚀协同。"
-        },
-        {
-          "signal": "管理层再度非正常换帅或随行就市定价体系执行失控引发价格混乱",
-          "observable": "公司公告陈华非正常离任，或i茅台/经销商/自营店三轨价格出现大范围倒挂失序",
-          "basis": "①management.analysis.organization.teamStability：5年4换帅治理不稳定。②inversion.analysis.failurePaths：随行就市执行失误probability=中、impact=中。"
-        }
-      ]
-    },
-    "addSignals": {
-      "title": "加仓信号",
-      "signals": [
-        {
-          "signal": "股价跌至659元附近且护城河未见结构性破坏",
-          "observable": "股价触及或跌破659.4元，品牌定价权与转换成本未见瓦解",
-          "basis": "①valuation.analysis.threeScenario：悲观情景目标价659.4元(-50.9%)。②moat.analysis.trendPast5y：判断稳定。"
-        },
-        {
-          "signal": "直营团购净增量与系列酒下滑同时出现企稳验证信号",
-          "observable": "直营团购剔除i茅台同比连续两季度回升，系列酒单季营收同比转正",
-          "basis": "①inversion.analysis.failurePaths：两条高概率路径同时缓解。②businessEssence.analysis.operatingLeverage：负经营杠杆改善的先行指标。"
-        }
-      ]
-    }
+  {
+   "dimensionId": "moat",
+   "title": "护城河",
+   "mapsTo": "dimensions.moat",
+   "conclusion": "护城河核心（原产地+品牌定价权）未破，Q3在行业双位数下滑中逆势正增长验证相对优势；未来5年判断由「变窄」修正为「稳定」，但渠道缓冲耗尽使下行尾部风险更大。",
+   "confidence": 6.8,
+   "scoreBasis": "①moat.analysis.types「品牌/定价权」verdict=存在：2026年两轮提价落地，行业19家营收-7.39%而茅台+1.82%。②moat.analysis.trendNext5y：direction由变窄修正为稳定，依据是份额集中、产能2026年释放（茅台酒46,395吨/系列酒59,400吨）、i茅台渠道机制跑通。③moat.analysis.types「转换成本」：经销商2,285家、批价与合同价价差约330-360元，配额仍稀缺，但合同负债-73.10%显示渠道蓄水意愿下降。"
   },
-  "disclaimer": "本总结基于公开信息与数据截止时点的分析生成，仅供研究参考，不构成个性化投资建议。"
+  {
+   "dimensionId": "management",
+   "title": "管理层",
+   "mapsTo": "dimensions.management",
+   "conclusion": "陈华任内先经历「首个增收不增利半年报」、再交出「Q3单季转正」，执行力评价由负转中性；FY2025年报取消年度营收目标是更实质的治理变化，机制跑通但外部失去校验锚点。",
+   "confidence": 4.5,
+   "scoreBasis": "①management.analysis.keyDecisions：定价改革★★★☆☆（渠道结构一年内直销50%→56%）、回购★★★★☆（30亿均价1,370.70元全部注销）、分红★★★★☆（650.33亿、派现率79.00%）、取消营收目标★★★☆☆。②management.analysis.organization.teamStability：5年4换帅、王莉代行总经理超3年未转正。③management.analysis.alignment：控股股东54.50%，高管直接持股为0，无内部人持股绑定。执行结果改善但治理结构未改善，评分由4.0上调至4.5。"
+  },
+  {
+   "dimensionId": "keyRisk",
+   "title": "最大风险",
+   "mapsTo": "dimensions.inversion",
+   "conclusion": "最急的「下滑失速」风险已被Q3转正按住，但渠道蓄水池见底（合同负债-73.10%）成为新的首要风险：增长中相当部分来自消耗预收款，2027Q1才是真正的压力测试。",
+   "confidence": 3.5,
+   "scoreBasis": "①inversion.analysis.failurePaths：合同负债见底(高/中)、渠道净增量存疑(高/高)、经济周期需求收缩(高/高)三条路径概率均为高；Q3已证伪「失速」但未证伪「质量」。②inversion.analysis.bearCase：连续两年利润负增长、批发代理-21.58%、经销商净减68家。③inversion.analysis.historicalAnalogies：2012-2015周期茅台股价跌52.6%后未伤龙头地位，风险有历史可控先例。风险性质由「下滑」转为「增长质量」，评分维持3.5。"
+  },
+  {
+   "dimensionId": "civilizationTrend",
+   "title": "文明趋势",
+   "mapsTo": "dimensions.industryTrend",
+   "conclusion": "行业处存量收缩中后段而非范式转移：产量-3.9%、19家酒企营收-7.39%，但茅台+1.82%、份额加速集中；真正的变化是「经销商压货+厂家控价」旧模式被公司自己终结。",
+   "confidence": 6.5,
+   "scoreBasis": "①industryTrend.analysis.paradigmShift：verdict=否；行业从总量扩张转入存量收缩，但无技术替代。②industryTrend.analysis.valueChainPosition：直销56.36%、i茅台44.73%，公司从「定价者」变为「定价+终端」双重掌控者，同时把渠道库存压力移到自己报表上。③industryTrend.analysis.tam：产量硬数据替代TAM（FY2025 354.9万千升、2026年1-9月235.4万千升），券商判断磨底、协会认为无V型反转。"
+  },
+  {
+   "dimensionId": "valuation",
+   "title": "估值",
+   "mapsTo": "dimensions.valuation",
+   "conclusion": "PE(TTM)21.18x处近一年82%分位、股息率3.73%处37%分位，价格已把Q3修复计入；三情景中性目标价1,218.8元(-12.4%)、悲观687.2元(-50.6%)，赔率不支持当前位置加仓。",
+   "confidence": 3.5,
+   "scoreBasis": "①valuation.analysis.threeScenario：中性1,218.8元(-12.4%)、乐观1,722.0元(+23.7%)、悲观687.2元(-50.6%)，较上一版（1,208.0/-10.0%）赔率进一步恶化（股价上涨+利润基数下修）。②valuation.analysis.vsOwnHistory：PE 82%分位（上一版58%）、股息率37%分位、PB 32%-48%分位。③valuation.analysis.vsPeers：PB 6.42x是老窖2.41x的2.7倍，股息率3.74%低于老窖7.49%、五粮液6.90%。评分由4.5下调至3.5。"
+  },
+  {
+   "dimensionId": "corporateCulture",
+   "title": "企业文化",
+   "mapsTo": "dimensions.management.analysis.culture",
+   "conclusion": "公司持续以「质量是生命之魂」「崇本守道、贮足陈酿、不卖新酒」表述自身文化，2026年可观察的治理记录是5年4换帅、总经理代行超3年、年报取消营收目标；ESG评级BBB→A但无量化文化目标披露。",
+   "confidence": 5,
+   "scoreBasis": "①dimensions.management.analysis.culture：质量表述写入2025年报2026年第一项工作，为公司自身宣传用语，非独立第三方验证。②dimensions.management.analysis.culture：5年内4次董事长更替、王莉代行总经理超3年，为可观察治理记录。③dimensions.management.analysis.culture：FY2025取消年度营收目标、改八项定性工作；MSCI ESG由BBB升至A；均未见企业文化量化披露。以上为客观陈述，不作评价。"
+  }
+ ],
+ "strategies": {
+  "noPosition": {
+   "title": "空仓者",
+   "advice": "①Q3转正是真的，但价格已经反映：PE处一年82%分位、中性情景-12.4%，此刻追高等于为修复付溢价。②合同负债-73.10%意味着2027Q1前还有一个未被定价的验证点，等这个点落地比现在买更划算。③若一定要建仓，用股息率而不是股价做锚：股息率回到4.0%以上（对应约1,300元）再分批。",
+   "triggers": [
+    {
+     "condition": "股价回落至1,219元附近（对应中性情景目标价1,218.8元）或股息率回到4.0%以上（对应约1,300元）",
+     "action": "开始分批建仓，首笔不超过计划仓位三分之一",
+     "basis": "①valuation.analysis.threeScenario：中性情景目标价1,218.8元(-12.4%)。②valuation.analysis.vsOwnHistory：股息率3.73%处37%分位，4.0%对应价格约1,300元。"
+    },
+    {
+     "condition": "2026年报或2027一季报合同负债回升至40亿元以上（当前20.84亿），同时批价站稳1,700元",
+     "action": "视为渠道信心恢复，可提高到半仓",
+     "basis": "①inversion.analysis.failurePaths：合同负债见底probability=高、impact=中。②moat.analysis.trendNext5y：渠道机制跑通是护城河稳定的前提。"
+    }
+   ]
+  },
+  "holding": {
+   "title": "持仓者",
+   "advice": "①核心仓位可以拿：生意质量与相对份额都在改善，股息率3.73%加派现率79%提供真实现金回报。②不要在1,392元附近加仓摊薄成本——这是近一年82%分位的价格。③把「合同负债」当作持仓的第一观察指标：若2026年报继续下滑，减仓；若回升到40亿以上，可继续持有。",
+   "triggers": [
+    {
+     "condition": "股价上探1,700元附近（对应乐观情景目标价1,722.0元）",
+     "action": "逐步兑现三分之一到一半仓位，锁定涨幅",
+     "basis": "①valuation.analysis.threeScenario：乐观情景1,722.0元(+23.7%)对应PE 22x。②valuation.analysis.vsOwnHistory：PE区间上沿22.19x。"
+    },
+    {
+     "condition": "合同负债在2026年报回升至40亿元以上且批价站稳1,700元",
+     "action": "维持甚至加仓，视为渠道信心修复",
+     "basis": "①inversion.analysis.failurePaths：合同负债见底是首要风险。②businessEssence.analysis.operatingLeverage：预收款回升意味着增长不靠消耗存量。"
+    }
+   ]
+  },
+  "sellSignals": {
+   "title": "卖出信号",
+   "signals": [
+    {
+     "signal": "渠道蓄水池继续见底，增长被证实主要靠消耗预收款",
+     "observable": "2026年报合同负债低于20.84亿元（当前水平）或同比继续下滑超50%，且Q4单季收入同比转负",
+     "basis": "①inversion.analysis.failurePaths：合同负债见底probability=高、impact=中。②businessEssence.analysis.operatingLeverage：前三季度收入正增长缺少预收款支撑。"
+    },
+    {
+     "signal": "批价跌破关键心理位，「随行就市」机制反噬为降价螺旋",
+     "observable": "飞天散瓶批价连续两周低于1,500元，或批价与零售价差倒挂（渠道亏钱出货）",
+     "basis": "①inversion.analysis.failurePaths：「随行就市」执行失误probability=中、impact=中。②industryTrend.analysis.tam.ceiling：批价是提价空间的天花板。"
+    },
+    {
+     "signal": "批发渠道失血从「主动收缩」变为「被动流失」",
+     "observable": "批发代理收入连续两个季度同比降幅超过25%，且国内经销商年度净减超过100家",
+     "basis": "①moat.analysis.types「转换成本」：合同负债与经销商数量同步下降。②inversion.analysis.bearCase：批发代理-21.58%、经销商年内净减68家。"
+    },
+    {
+     "signal": "管理层再度非正常换帅或推翻随行就市机制",
+     "observable": "公司公告陈华非正常离任，或恢复固定指导价、i茅台/经销/自营三轨价格出现大范围倒挂",
+     "basis": "①management.analysis.organization.teamStability：5年4换帅。②management.analysis.keyDecisions：定价改革是当前战略核心。"
+    }
+   ]
+  },
+  "addSignals": {
+   "title": "加仓信号",
+   "signals": [
+    {
+     "signal": "价格回到有安全边际的位置，且基本面未恶化",
+     "observable": "股价≤1,219元（中性情景目标价）或PE(TTM)≤18x（对应约1,183元），同时合同负债不再下滑",
+     "basis": "①valuation.analysis.threeScenario：中性情景1,218.8元(-12.4%)。②valuation.analysis.currentMultiples：当前PE(TTM)21.18x，18x对应1,183元。"
+    },
+    {
+     "signal": "增长质量得到验证：预收款回升 + 批价稳 + 系列酒转正",
+     "observable": "合同负债回升至40亿元以上、飞天批价连续一个月高于1,700元、系列酒单季营收同比连续两季正增长（Q3已+22.15%）",
+     "basis": "①inversion.analysis.failurePaths：渠道净增量存疑与系列酒下滑两条路径同时缓解。②moat.analysis.trendNext5y：渠道机制与产能释放共同支撑。"
+    },
+    {
+     "signal": "行业出清结束的确认信号",
+     "observable": "规上白酒产量单季同比转正，或19家上市酒企合计营收同比降幅收窄至-3%以内",
+     "basis": "①industryTrend.analysis.growthCurve：当前行业仍在下行（产量-3.9%、酒企营收-7.39%）。②industryTrend.analysis.paradigmShift：判断为周期性收缩而非品类替代。"
+    }
+   ]
+  }
+ },
+ "disclaimer": "本总结基于公开信息与数据截止（2026-11-01）时点的分析生成，仅供研究参考，不构成个性化投资建议。"
 }
