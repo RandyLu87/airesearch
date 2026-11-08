@@ -1,1742 +1,1946 @@
 {
-  "_spec": {
-    "purpose": "研究流程第 2 步（多维度分析）的产出模板。六个维度共用统一信封：{ conclusion, analysis, inquiry, dataGaps }。步骤正文见 docs/research/workflow/02-multi-dimension-analysis.md。",
-    "todoSentinel": "所有待填值写 \"__TODO__\"；取不到的字段不删除，改写 { \"status\": \"unavailable\", \"reason\": \"缺失原因 + 已查范围\" } 并在该维度 dataGaps 中登记。",
-    "sourcedEvidence": "所有数据点统一带出处：{ metric, value, asOf, source: { name, url } }。无出处的论断不接受；估计值 value 前置 \"[估计]\"。",
-    "inquiry": "每个维度的 inquiry.answer 必须回答，回避视为该维度未完成；只有关键数据确实缺失时才允许答「数据不足」，且必须写明缺哪个数据。",
-    "calculation": "涉及计算的数字（估值倍数、三情景推算、增速、对比差值）必须用 docs/research/tools/financial_rigor.py 验算，禁止心算；工具输出记入 crossValidationLog。",
-    "processNote": "本次六个维度 Agent 中有四个（护城河、逆向思考、生意本质、估值）在“默认禁止联网”的约束下仍调用了网络检索补充证据（QuestMobile/新浪财经/极客公园/知乎/雪球等），并非编造——引用的URL经抽查具备可信来源特征。这是对第2步流程规范的偏离（规范要求本步骤只读第1步采集文件），已如实记录，未重新采集或删除这些数据；后续研究应在维度 Agent 的工具权限层面做硬限制，而非仅靠提示词约束。"
-  },
-  "meta": {
-    "companyId": "hk-1024-kuaishou",
-    "companyName": "快手科技 / Kuaishou Technology",
-    "analyzedAt": "2026-08-20T12:00:00+08:00",
-    "dataCutoff": "2026-09-15（Asia/Shanghai）。最新已披露季度仍为2026Q2/中期（截至2026-06-30，下一份为2026Q3财报，预计2026年11月发布）；本轮为价格与事件增量更新：股价30.48港元（9-15盘中），自8-20收盘33.64港元再跌约9.4%，自8-7基线44.18累计跌约31%；新增事件：可灵AI增资扩股完成（8-31公告，国家AI基金14亿元+正大机器人约1,929万美元，投后约USD180亿、公司留存约68.33%）、9月卖方评级密集调整、公司持续回购、9-14全球AI/半导体板块抛售。上一轮采集截止2026-08-20",
-    "basedOnCollection": "research/companies/hk-1024-kuaishou/financials-collection.json"
-  },
-  "dimensions": {
-    "businessEssence": {
-      "title": "生意本质",
-      "conclusion": "快手的生意本质未变——仍是把老铁社区沉淀的下沉用户注意力转卖给广告主、商家与打赏用户的注意力经济平台，本轮可灵AI分拆融资落地进一步坐实其\"第四变现极\"的地位；但2026Q2财报首次揭示一个此前未出现的结构性信号：广告+直播两大传统引擎合计收入同比-1.6%（29,800→29,329百万），集团1.4%的净增长完全由\"其他服务（含可灵AI）\"贡献（其绝对增量1,006百万已超过集团净增量489百万的2倍，抵消了传统引擎的萎缩），而当季毛利率同比下滑4.1个百分点主要是这次收入结构切换的账面代价（新引擎放量期收入分成成本与带宽成本占比同步上升），而非核心广告位定价权或打赏心智本身恶化的证据——在线营销服务本身仍在正增长（+4.4%），只是增速持续放缓（FY2025全年+12.5%→2026Q1+9.3%→2026Q2+4.4%），这是与毛利率无关的另一条需要跟踪的隐忧。",
-      "analysis": {
-        "revenueBreakdown": {
-          "period": "FY2025（2025-01-01至2025-12-31），另见下方latestQuarterUpdate对2026Q2最新一期的补充分析",
-          "items": [
-            {
-              "segment": "在线营销服务 Online Marketing Services",
-              "revenue": "RMB815亿",
-              "sharePct": "57.1%",
-              "source": {
-                "name": "Kuaishou IR FY2025全年业绩公告",
-                "url": "https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-fourth-quarter-and-full-year-2025"
-              }
-            },
-            {
-              "segment": "直播 Live Streaming",
-              "revenue": "RMB391亿",
-              "sharePct": "27.4%",
-              "source": {
-                "name": "Kuaishou IR FY2025全年业绩公告",
-                "url": "https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-fourth-quarter-and-full-year-2025"
-              }
-            },
-            {
-              "segment": "其他服务（含电商佣金/技术服务费、Kling AI）Other Services",
-              "revenue": "RMB222亿",
-              "sharePct": "15.5%",
-              "source": {
-                "name": "Kuaishou IR FY2025全年业绩公告",
-                "url": "https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-fourth-quarter-and-full-year-2025"
-              }
-            }
-          ],
-          "latestQuarterUpdate": {
-            "period": "2026Q2（截至2026-06-30，本轮新增，HKEX官方业绩公告）",
-            "items": [
-              {
-                "segment": "在线营销服务",
-                "revenue": "RMB206.39亿",
-                "sharePct": "58.1%",
-                "yoyGrowthPct": 4.4
-              },
-              {
-                "segment": "直播",
-                "revenue": "RMB86.90亿",
-                "sharePct": "24.5%",
-                "yoyGrowthPct": -13.5
-              },
-              {
-                "segment": "其他服务（含Kling AI）",
-                "revenue": "RMB62.06亿",
-                "sharePct": "17.4%",
-                "yoyGrowthPct": 18.5,
-                "note": "其中Kling AI单季收入首次超RMB8.5亿，同比增速超200%"
-              }
-            ],
-            "legacyEngineContraction": {
-              "finding": "广告+直播两大传统引擎合计收入：2025Q2为RMB298.00亿，2026Q2为RMB293.29亿，同比-1.58%（financial_rigor.py calc验算：(29329-29800)/29800*100=-1.58）——本轮首次出现传统\"三重现金流\"中广告与打赏两条主力现金流合计绝对收缩",
-              "newEngineOffset": "\"其他服务（含Kling AI）\"绝对增量为RMB10.06亿（6206-5200，financial_rigor.py calc验算），是集团总净增量RMB4.89亿（35535-35046）的205.7%（financial_rigor.py calc验算：(6206-5200)/(35535-35046)*100=205.73）——即新引擎的增量不仅弥补了传统引擎的收缩，还是总净增长的全部来源且超出一倍以上",
-              "interpretation": "这是判断\"生意本质是否变化\"的最关键新证据：三重现金流框架本身没有被推翻（广告仍在增长、电商技术服务费仍在扩大），但增长的边际驱动力已经从\"广告+打赏\"切换为\"电商技术服务费+可灵AI\"，且切换速度快于此前预期（上一轮基线尚未观察到广告+直播合计转负）"
-            },
-            "sources": [
-              {
-                "name": "HKEX官方业绩公告（2026-08-19）",
-                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-              }
-            ]
-          }
-        },
-        "profitabilityTrend5y": {
-          "series": [
-            {
-              "fiscalYear": "FY2021",
-              "grossMarginPct": "41.97%",
-              "operatingMarginPct": "-34.15%",
-              "netMarginPct": "-96.29%（计算值：归母净利润/营业收入）",
-              "source": {
-                "name": "stockanalysis.com",
-                "url": "https://stockanalysis.com/quote/hkg/1024/financials/"
-              }
-            },
-            {
-              "fiscalYear": "FY2022",
-              "grossMarginPct": "44.73%",
-              "operatingMarginPct": "-11.87%",
-              "netMarginPct": "-14.54%（计算值：归母净利润/营业收入）",
-              "source": {
-                "name": "stockanalysis.com",
-                "url": "https://stockanalysis.com/quote/hkg/1024/financials/"
-              }
-            },
-            {
-              "fiscalYear": "FY2023",
-              "grossMarginPct": "50.58%",
-              "operatingMarginPct": "5.24%",
-              "netMarginPct": "5.64%（计算值：归母净利润/营业收入）",
-              "source": {
-                "name": "stockanalysis.com",
-                "url": "https://stockanalysis.com/quote/hkg/1024/financials/"
-              }
-            },
-            {
-              "fiscalYear": "FY2024",
-              "grossMarginPct": "54.60%",
-              "operatingMarginPct": "12.05%（官方口径，经营利润/收入）",
-              "netMarginPct": "12.08%（计算值：归母净利润/营业收入）",
-              "source": {
-                "name": "Kuaishou IR FY2025年报对比列（官方）",
-                "url": "https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-fourth-quarter-and-full-year-2025"
-              }
-            },
-            {
-              "fiscalYear": "FY2025",
-              "grossMarginPct": "55.02%",
-              "operatingMarginPct": "14.45%（官方口径，经营利润/收入）",
-              "netMarginPct": "13.04%（计算值：归母净利润/营业收入）",
-              "source": {
-                "name": "Kuaishou IR FY2025全年业绩公告",
-                "url": "https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-fourth-quarter-and-full-year-2025"
-              }
-            },
-            {
-              "fiscalYear": "H1 2026（截至2026-06-30，未经审计中期，非完整财年，本轮新增，与上方年度序列不完全同口径可比）",
-              "grossMarginPct": "51.37%（H1整体，2026Q1单季51.16%、2026Q2单季51.6%，两季度环比基本持平，financial_rigor.py calc验算Q1毛利率：17249/33716*100=51.16——说明毛利率下滑在Q1已发生并在Q2维持在同一水平，而非Q2新出现的恶化）",
-              "operatingMarginPct": "10.62%（H1，同比-23.0%；2026Q2单季10.6%，同比-29.0%）",
-              "netMarginPct": "8.74%（H1期内利润6,057/收入69,251，官方口径；2026Q2单季期内利润同比-36.0%）",
-              "priorYearGrossMarginPct": "55.13%（H1 2025）",
-              "source": {
-                "name": "HKEX官方业绩公告（2026-08-19）",
-                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-              }
-            }
-          ]
-        },
-        "marginBridge2026Q2": {
-          "_note": "本轮新增：回答任务核心问题——2026Q2毛利率同比下滑4.1个百分点，是否说明变现效率/定价权在恶化，还是主要为收入结构切换所致。以下拆解全部使用financial_rigor.py calc验算，涉及分部毛利率的部分为基于公开分部收入数据做出的假设性敏感性分析（公司未披露分部毛利率，已标注为假设，不作为确定性事实）",
-          "officialAttribution": {
-            "revenueShareCostRatioDelta": "收入分成成本及相关税项占收入比例由30.1%升至34.7%，+4.6个百分点（financial_rigor.py calc验算：34.7-30.1=4.6）",
-            "bandwidthCostRatioDelta": "带宽/服务器托管成本占收入比例由3.8%升至4.5%，+0.7个百分点（financial_rigor.py calc验算：4.5-3.8=0.7）",
-            "sumVsActualDecline": "两项官方披露的成本比例增幅合计+5.3个百分点（financial_rigor.py calc验算：(34.7-30.1)+(4.5-3.8)=5.3），略高于实际毛利率降幅4.1个百分点，差额（约1.2个百分点）意味着其他成本科目（如内容/带宽以外的销售成本）同期可能有所优化，起到部分对冲作用",
-            "source": {
-              "name": "HKEX官方业绩公告MD&A（2026-08-19）",
-              "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-            }
-          },
-          "costGrowthOutpacesRevenue": {
-            "finding": "2026Q2销售成本同比+10.7%（RMB155.42亿→172.07亿，绝对增量RMB16.65亿），而同期收入仅同比+1.4%（绝对增量RMB4.89亿）——成本的绝对增量是收入绝对增量的3.4倍以上（financial_rigor.py calc验算：35535-18328-(35046-19504)=1665；对比总收入增量489）",
-            "interpretation": "这一\"成本增速远超收入增速\"的模式本身不能直接区分\"核心业务定价权恶化\"与\"结构切换\"两种解释，需结合分部数据进一步拆解（见下）"
-          },
-          "mixShiftSensitivityAnalysis": {
-            "assumption": "假设广告+直播两大传统分部维持2025Q2的混合成本比率44.3%（即55.7%毛利率）不变，将2026Q2披露的总销售成本RMB172.07亿倒算\"其他服务（含Kling AI）\"分部隐含的成本比率——这是基于假设的敏感性测算，非公司披露的真实分部数据",
-            "calculation": "传统分部2026Q2收入RMB293.29亿×44.3%=RMB129.93亿（假设成本）；总成本RMB172.07亿-RMB129.93亿=RMB42.14亿，即\"其他服务\"分部隐含成本；RMB42.14亿/RMB62.06亿=67.9%，即隐含成本比率67.9%，对应隐含毛利率约32.1%（financial_rigor.py calc验算：29329*0.443=12992.75；17207-12992.75=4214.25；4214.25/6206*100=67.91；100-67.91=32.09）",
-            "interpretation": "在\"传统分部毛利率不变\"的假设下，\"其他服务\"分部的隐含毛利率需降至约32%（较集团整体51.6%低约20个百分点）才能解释全部的毛利率下滑，这与Kling AI在放量早期GPU训练/推理及带宽成本高企、电商技术服务费本身对商家/达人分成比例较高的行业常识方向一致，支持\"毛利率下滑主要是结构切换（新引擎权重上升+传统引擎收缩）而非广告位/打赏定价权恶化\"的判断；但由于公司不披露真实分部毛利率，无法排除传统分部自身成本比率也有小幅上升（如为应对抖音竞争提高对创作者的分成以留人）的可能性，这仍是数据缺口（见dataGaps）"
-          },
-          "coreAdBusinessCheck": {
-            "finding": "在线营销服务本身仍为正增长（FY2025+12.5%→2026Q1+9.3%→2026Q2+4.4%），未出现收入绝对萎缩，说明广告主对快手流量的付费意愿并未崩塌，但增速持续性放缓值得跟踪——这是与\"毛利率下滑\"性质不同的另一条隐忧（增长动能弱化，而非当季毛利率归因），已计入riskFactors维度",
-            "conclusion": "综合看，本季度毛利率下滑证据链更支持\"结构性收入切换的账面代价\"而非\"核心广告变现效率/定价权恶化\"，但两种解释并非完全互斥——广告业务增速的持续放缓本身也是需要独立关注的弱化信号"
-          }
-        },
-        "businessModelCanvas": {
-          "salesModel": "订阅/复购",
-          "productForm": "混合",
-          "note": "①广告主按CPC/CPM对磁力引擎持续复投，本质是效果广告的循环采购而非一次性销售②直播虚拟礼物为高频复购型消费③Kling AI采用订阅制/按调用量收费的软件形态，与广告平台、电商服务并存构成混合产品形态。本轮新增：可灵AI分拆融资已于2026-07-02正式签署协议落地（此前为评估中），投后估值约USD180亿，多家产业与财务投资者（腾讯、阿里云、百度、中信证券等）共同背书，意味着这一\"混合形态\"中的AI订阅/API收费模式已从内部实验性收入线，进化为拥有独立外部估值锚点的第四变现极"
-        },
-        "stickiness": {
-          "level": "强",
-          "mechanism": "①老铁社交关系链沉淀高频关注与私域互动，2026Q1 DAU/MAU比约53.5%（413/772百万）显著高于纯公域算法分发平台②磁力引擎UAX自动化投放渗透商家近60%，商家迁移平台需重新积累账号数据与投放模型冷启动成本③Kling AI订阅制/按调用量收费的产品化能力将粘性延伸至ToB场景，本轮其单季收入首次超RMB8.5亿（同比增速超200%），付费规模已具备一定量级验证",
-          "evidence": [
-            {
-              "metric": "DAU/MAU比例",
-              "value": "413百万/772百万≈53.5%",
-              "asOf": "2026Q1",
-              "source": {
-                "name": "Kuaishou IR（官方口径数据）",
-                "url": "（采集文件内部数据，无外部URL）"
-              }
-            },
-            {
-              "metric": "磁力引擎UAX智能投放系统商家渗透率",
-              "value": "约60%，广告冷启动成功率+25%",
-              "asOf": "2024年初上线后（2025年数据）",
-              "source": {
-                "name": "极客公园《AI正在重塑快手商业化体系》",
-                "url": "https://www.geekpark.net/news/347925"
-              }
-            },
-            {
-              "metric": "Kling AI季度收入（本轮更新为季度收入实绩，替代此前的ARR推算口径）",
-              "value": "2026Q1单季超RMB6.5亿(+300%+)→2026Q2单季超RMB8.5亿(+200%+)，环比持续放量",
-              "asOf": "2026Q2",
-              "source": {
-                "name": "HKEX官方业绩公告（2026-08-19）",
-                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-              }
-            }
-          ]
-        },
-        "grossMarginVsPeers": {
-          "companyPct": "55.02%（FY2025）；51.6%（2026Q2单季，本轮同比-4.1个百分点，本轮新增）",
-          "peers": [
-            {
-              "name": "哔哩哔哩 Bilibili",
-              "grossMarginPct": "36.6%（FY2025）",
-              "source": {
-                "name": "Bilibili官方2025年报（雪球转引）",
-                "url": "https://xueqiu.com/7954303002/378569790"
-              }
-            },
-            {
-              "name": "抖音（字节跳动）",
-              "grossMarginPct": {
-                "status": "unavailable",
-                "reason": "字节跳动未上市不披露财务报表，已查采集文件competitiveLandscape.competitors抖音条目及其转引报道，均无毛利率估计数字"
-              },
-              "source": {
-                "name": "（采集文件内部核实，未查得毛利率数据）",
-                "url": "（采集文件内部数据，无外部URL）"
-              }
-            },
-            {
-              "name": "小红书 Xiaohongshu",
-              "grossMarginPct": {
-                "status": "unavailable",
-                "reason": "未上市公司不披露财务报表，已查采集文件competitiveLandscape.competitors小红书条目及其转引报道，均无毛利率估计数字"
-              },
-              "source": {
-                "name": "（采集文件内部核实，未查得毛利率数据）",
-                "url": "（采集文件内部数据，无外部URL）"
-              }
-            }
-          ],
-          "whyHigherOrLower": "①在线营销(占57.1%)与直播打赏(27.4%)均为轻资产、无实物库存的内容变现，边际履约成本低于Bilibili内容采购/版权成本结构②磁力引擎UAX自动化投放降低获客与内容生产成本，规模效应下算法/服务器成本被MAU超7亿的用户盘摊薄③电商技术服务费/佣金模式毛利率高于自营电商，FY2025毛利率55.02%（较FY2024再升0.42个百分点）明显高于Bilibili的36.6%。本轮新增：即便2026Q2单季毛利率同比下滑4.1个百分点至51.6%，仍显著高于Bilibili的36.6%（FY2025），说明快手对内容平台同行的结构性毛利率优势并未因本季度波动而消失，本季度的下滑是边际趋势变化而非跨越同业基准线的质变"
-        },
-        "operatingLeverage": {
-          "observation": "①FY2025营收同比+12.5%，官方口径经营利润同比+35.0%(RMB152.87亿→206.37亿)，经营杠杆显著为正②研发费用同比+18.8%快于营收增速，反映AI投入拉动的费用结构调整③其他运营费用增速慢于营收，经营利润率仍从12.05%升至14.45%④资本开支同比翻倍推高AI基建投入，自由现金流同比-45.8%至RMB117.74亿，现金端杠杆短期转负。本轮新增（关键反转）：2026Q2/H1经营杠杆由正转负——H1营收同比+2.4%，经营利润同比-23.0%；2026Q2单季营收同比+1.4%，经营利润同比-29.0%，期内利润同比-36.0%，经调整净利润同比-30.3%，均为收入增速的数倍负向放大，与FY2025的正向杠杆方向完全相反",
-          "evidence": [
-            {
-              "metric": "营业收入同比增速",
-              "value": "+12.5%",
-              "asOf": "FY2025",
-              "source": {
-                "name": "Kuaishou IR FY2025全年业绩公告",
-                "url": "https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-fourth-quarter-and-full-year-2025"
-              }
-            },
-            {
-              "metric": "经营利润同比增速（官方口径）",
-              "value": "+35.0%（RMB152.87亿→206.37亿）",
-              "asOf": "FY2025",
-              "source": {
-                "name": "Kuaishou IR FY2025全年业绩公告",
-                "url": "https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-fourth-quarter-and-full-year-2025"
-              }
-            },
-            {
-              "metric": "研发费用同比增速",
-              "value": "+18.8%（RMB121.99亿→144.91亿，FY2025）；H1 2026同比+22.5%（RMB66.98亿→82.02亿），2026Q2单季同比+34.7%",
-              "asOf": "FY2025 / H1 2026",
-              "source": {
-                "name": "Kuaishou IR官方披露 / HKEX官方业绩公告",
-                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-              }
-            },
-            {
-              "metric": "自由现金流同比增速",
-              "value": "-45.8%（RMB217.24亿→117.74亿，FY2025）",
-              "asOf": "FY2025",
-              "source": {
-                "name": "stockanalysis.com 现金流量表",
-                "url": "https://stockanalysis.com/quote/hkg/1024/financials/"
-              }
-            },
-            {
-              "metric": "2026Q2经营利润/期内利润/经调整净利润同比增速（本轮新增，经营杠杆反转的核心证据）",
-              "value": "经营利润-29.0%；期内利润-36.0%；经调整净利润-30.3%（对应收入增速仅+1.4%）",
-              "asOf": "2026Q2",
-              "source": {
-                "name": "HKEX官方业绩公告（2026-08-19）",
-                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-              }
-            },
-            {
-              "metric": "财务开支净额同比增速（本轮新增，杠杆恶化的资产负债表侧证据）",
-              "value": "+377.8%（H1 2026，RMB0.78亿→4.31亿），总借款较FY2025年末+109.4%至RMB273.62亿，主要用于股份回购与AI资本开支",
-              "asOf": "H1 2026",
-              "source": {
-                "name": "HKEX官方业绩公告（2026-08-19）",
-                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-              }
-            }
-          ]
-        }
+ "_spec": {
+  "purpose": "研究流程第 2 步（多维度分析）的产出模板。六个维度共用统一信封：{ conclusion, analysis, inquiry, dataGaps }。步骤正文见 docs/research/workflow/02-multi-dimension-analysis.md。",
+  "todoSentinel": "所有待填值写 \"__TODO__\"；取不到的字段不删除，改写 { \"status\": \"unavailable\", \"reason\": \"缺失原因 + 已查范围\" } 并在该维度 dataGaps 中登记。",
+  "sourcedEvidence": "所有数据点统一带出处：{ metric, value, asOf, source: { name, url } }。无出处的论断不接受；估计值 value 前置 \"[估计]\"。",
+  "inquiry": "每个维度的 inquiry.answer 必须回答，回避视为该维度未完成；只有关键数据确实缺失时才允许答「数据不足」，且必须写明缺哪个数据。",
+  "calculation": "涉及计算的数字（估值倍数、三情景推算、增速、对比差值）必须用 docs/research/tools/financial_rigor.py 验算，禁止心算；工具输出记入 crossValidationLog。",
+  "processNote": "本次六个维度 Agent 中有四个（护城河、逆向思考、生意本质、估值）在“默认禁止联网”的约束下仍调用了网络检索补充证据（QuestMobile/新浪财经/极客公园/知乎/雪球等），并非编造——引用的URL经抽查具备可信来源特征。这是对第2步流程规范的偏离（规范要求本步骤只读第1步采集文件），已如实记录，未重新采集或删除这些数据；后续研究应在维度 Agent 的工具权限层面做硬限制，而非仅靠提示词约束。"
+ },
+ "meta": {
+  "companyId": "hk-1024-kuaishou",
+  "companyName": "快手科技 / Kuaishou Technology",
+  "analyzedAt": "2026-11-08T19:50:00+08:00",
+  "dataCutoff": "2026-11-08（Asia/Shanghai）。最新已披露财务为 2026Q2/中期；2026Q3 业绩定于 2026-11-19 公布。股价 28.92 港元（2026-11-06 收盘）。本轮相对 9-15 版的三处实质变化：①把 8-19 业绩会的 Q3/全年指引（收入 -7.5%、经调整净利约 7 亿元、全年 85-90 亿元）纳入盈利基数，上轮「中性 +25.8%」建立在未下修的 TTM 盈利上；②可灵 10-30 完成交割，实收 RMB198 亿、快手留存 66.68%（表决权 52.45%），并背负 2031-10-30 前上市的对赌；③三情景改用分部加总（净现金 + 可灵股权 + 核心主业），因为净现金已占市值约 89%，纯 PE 模型会得出「低于净现金」的荒谬目标价。",
+  "basedOnCollection": "research/companies/hk-1024-kuaishou/financials-collection.json"
+ },
+ "dimensions": {
+  "businessEssence": {
+   "title": "生意本质",
+   "conclusion": "老铁社区的三重现金流（广告、打赏、电商服务费）结构没变，但 2026 年这门生意的性质从「增速放缓」变成了「绝对收缩」：8-19 业绩会给出的 Q3 指引是总收入 -7.5%、广告 -4.5%、直播 -17%、电商佣金 -10%，经调整净利润约 7 亿元（同比 -86%）。上一轮还能说「传统引擎收缩、新引擎补上」，这一轮连广告也开始负增长，新引擎（电商服务费 + 可灵）自己也从 +18.5% 掉到指引的 -10%，意味着切换期的对冲消失了。经营杠杆连续两个季度为负，而且幅度在扩大。",
+   "analysis": {
+    "revenueBreakdown": {
+     "period": "FY2025（2025-01-01至2025-12-31），另见下方latestQuarterUpdate对2026Q2最新一期的补充分析",
+     "items": [
+      {
+       "segment": "在线营销服务 Online Marketing Services",
+       "revenue": "RMB815亿",
+       "sharePct": "57.1%",
+       "source": {
+        "name": "Kuaishou IR FY2025全年业绩公告",
+        "url": "https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-fourth-quarter-and-full-year-2025"
+       }
       },
-      "inquiry": {
-        "question": "这门生意好在哪？如果只能用一句话描述，是什么？",
-        "answer": "快手好在把高粘性下沉流量转化为多重可持续现金流的注意力变现引擎，本轮财报证实这一引擎正在经历一次代际切换：①老铁社交关系链带来的直播打赏曾是稳定现金流，但2026Q2首次同比-13.5%，与在线营销合计已转为绝对收缩（-1.6% yoy）②效果广告（磁力引擎UAX渗透率近60%）仍是核心变现支柱且保持正增长（2026Q2+4.4%），只是增速持续放缓（FY2025+12.5%→2026Q2+4.4%）③真正扛起本季度全部净增长的是电商技术服务费与可灵AI——后者单季收入首次超RMB8.5亿(+200%+)，分拆融资已于2026-07-02签署协议正式落地（投后估值约USD180亿，腾讯、阿里云、百度、中信证券等多方资本背书），标志Kling AI从内部工具进化为具备独立外部估值锚点的第四变现极。代价是2026Q2毛利率同比下滑4.1个百分点至51.6%、经营利润-29.0%，但结构拆解显示这主要是新引擎放量期成本结构更重导致的账面切换代价（毛利率仍显著高于Bilibili等内容平台同业），而非广告位定价权或打赏心智的根本性恶化——不过传统广告+直播引擎的绝对收缩、以及管理层财报原文首次转向\"审慎\"表述，是本轮更新中需要持续跟踪、可能预示生意本质正处于新旧引擎交接期的关键信号"
+      {
+       "segment": "直播 Live Streaming",
+       "revenue": "RMB391亿",
+       "sharePct": "27.4%",
+       "source": {
+        "name": "Kuaishou IR FY2025全年业绩公告",
+        "url": "https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-fourth-quarter-and-full-year-2025"
+       }
       },
-      "dataGaps": [
-        {
-          "path": "analysis.revenueBreakdown.items[].grossMarginPct（分部毛利率）",
-          "reason": "公司仅披露集团整体毛利率，未按分部单独披露毛利率；本轮新增的marginBridge2026Q2.mixShiftSensitivityAnalysis依赖'假设传统分部毛利率不变'的敏感性测算，而非真实分部数据，无法排除传统分部自身成本比率也小幅上升的可能性",
-          "searched": "已查采集文件revenueStructure与financialMetrics，2026Q2业绩公告MD&A仍仅披露集团层面收入分成成本/带宽成本占比，未按分部拆分",
-          "evidenceRequest": {
-            "metric": "分部毛利率（在线营销/直播/其他服务，含Kling AI单独口径）",
-            "question": "公司是否在业绩交流会纪要、投资者问答或北京可灵分拆上市文件中透露过分部层面的毛利率或成本结构拆分",
-            "whyNeeded": "用于验证本轮毛利率下滑究竟是结构性收入切换（新引擎权重上升）还是核心广告/直播业务自身单位经济性恶化，是判断生意本质是否变化的关键缺失数据",
-            "priority": "high"
-          }
-        },
-        {
-          "path": "analysis.stickiness（次月留存率/创作者复访率等具体留存数值）",
-          "reason": "采集文件未覆盖具体的次日/次月留存率、创作者账号复访率等留存类KPI",
-          "searched": "已查采集文件revenueStructure、competitiveLandscape、businessModelMoat",
-          "evidenceRequest": {
-            "metric": "用户次月留存率、创作者/达人账号复访率",
-            "question": "快手官方或第三方是否披露过用户次月留存率、创作者月活跃留存率等具体粘性数值",
-            "whyNeeded": "DAU/MAU比例只是总量粘性的代理指标，留存率能更精确衡量生态锁定强度，尤其是在传统引擎（广告+直播）本季度首次绝对收缩的背景下，更需要留存数据判断是用户流失还是消费结构转移",
-            "priority": "high"
-          }
-        },
-        {
-          "path": "analysis.grossMarginVsPeers.peers（抖音/视频号毛利率）",
-          "reason": "字节跳动与腾讯视频号均未单独披露毛利率或相关分部财务数据",
-          "searched": "已查采集文件competitiveLandscape.competitors中抖音与微信视频号条目，均为status:unavailable",
-          "evidenceRequest": {
-            "metric": "抖音/视频号毛利率或分部经营数据",
-            "question": "是否有投行研究或第三方渠道估算过字节跳动短视频/直播电商业务的毛利率水平",
-            "whyNeeded": "缺少最直接竞争对手抖音的毛利率数据，同行对比说服力受限",
-            "priority": "medium"
-          }
-        }
-      ]
+      {
+       "segment": "其他服务（含电商佣金/技术服务费、Kling AI）Other Services",
+       "revenue": "RMB222亿",
+       "sharePct": "15.5%",
+       "source": {
+        "name": "Kuaishou IR FY2025全年业绩公告",
+        "url": "https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-fourth-quarter-and-full-year-2025"
+       }
+      }
+     ],
+     "latestQuarterUpdate": {
+      "period": "2026Q2（截至2026-06-30，HKEX官方业绩公告）",
+      "items": [
+       {
+        "segment": "在线营销服务",
+        "revenue": "RMB206.39亿",
+        "sharePct": "58.1%",
+        "yoyGrowthPct": 4.4
+       },
+       {
+        "segment": "直播",
+        "revenue": "RMB86.90亿",
+        "sharePct": "24.5%",
+        "yoyGrowthPct": -13.5
+       },
+       {
+        "segment": "其他服务（含Kling AI）",
+        "revenue": "RMB62.06亿",
+        "sharePct": "17.4%",
+        "yoyGrowthPct": 18.5,
+        "note": "其中Kling AI单季收入首次超RMB8.5亿，同比增速超200%"
+       }
+      ],
+      "legacyEngineContraction": {
+       "finding": "广告+直播两大传统引擎合计收入：2025Q2为RMB298.00亿，2026Q2为RMB293.29亿，同比-1.58%（financial_rigor.py calc验算：(29329-29800)/29800*100=-1.58）——本轮首次出现传统\"三重现金流\"中广告与打赏两条主力现金流合计绝对收缩",
+       "newEngineOffset": "\"其他服务（含Kling AI）\"绝对增量为RMB10.06亿（6206-5200，financial_rigor.py calc验算），是集团总净增量RMB4.89亿（35535-35046）的205.7%（financial_rigor.py calc验算：(6206-5200)/(35535-35046)*100=205.73）——即新引擎的增量不仅弥补了传统引擎的收缩，还是总净增长的全部来源且超出一倍以上",
+       "interpretation": "这是判断\"生意本质是否变化\"的最关键新证据：三重现金流框架本身没有被推翻（广告仍在增长、电商技术服务费仍在扩大），但增长的边际驱动力已经从\"广告+打赏\"切换为\"电商技术服务费+可灵AI\"，且切换速度快于此前预期（上一轮基线尚未观察到广告+直播合计转负）"
+      },
+      "sources": [
+       {
+        "name": "HKEX官方业绩公告（2026-08-19）",
+        "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+       }
+      ],
+      "guidanceOverlay": "Q2 尚能用「其他服务 +18.5% 的增量覆盖传统引擎 -1.6% 的收缩」讲结构切换的故事；Q3 指引把这条路堵死了：其他服务自身转为 -10%，增量覆盖不复存在。判断依据由已披露的 Q2 分部数据与 8-19 业绩会指引共同构成，两者时点不同、不可混算。"
+     }
     },
-    "moat": {
-      "title": "护城河评估",
-      "conclusion": "护城河核心仍集中于AI技术资产，本轮最大变化是可灵AI分拆融资已由\"评估中的传闻\"升级为2026-07-02正式签约的确定性事实，且引入腾讯、阿里云、百度等潜在竞争对手联合押注，是技术壁垒从叙事走向可估值资产的里程碑式验证；但同一时间窗口曝出可灵AI FY2025净亏损同比扩大2.8倍且已超过自身收入规模(亏损/收入≈173%)，叠加字节跳动/谷歌/阿里同类模型的直接竞争与\"建壁垒窗口期不多\"的行业评价，技术壁垒\"能否被复制、领先几年\"这一测试的确定性不升反降，净判断维持\"存在\"但风险敞口明显扩大。网络效应基本盘被抖音蚕食的判断没有变化，2026Q2集团总收入增速进一步降至1.4%(前值Q1 3.4%、Q4 11.8%)提供了新的确认证据。转换成本维度新增2026Q2毛利率同比下滑4.1个百分点、收入分成成本占比由30.1%升至34.7%的官方数据，但因公司未按分部披露该成本构成，无法区分是磁力引擎UAX对广告主的议价权减弱、还是电商佣金/内容成本结构切换所致，维持\"待验证\"，且新增了对应的数据缺口。规模效应研发投入強度本季跳升（Q2研发/收入12.9%，前值9.7%），显示AI再投入加速，但同期经营利润率同比下滑4.5个百分点，短期呈现\"再投入侵蚀杠杆\"而非\"规模摊薄成本\"的效果，维持\"存在\"但需观察长期能否转化为摊薄优势。",
-      "analysis": {
-        "types": [
-          {
-            "type": "品牌/定价权",
-            "test": "是否能在不损失销量的情况下提价？",
-            "verdict": "不存在",
-            "evidence": [
-              {
-                "metric": "直播收入同比增速(2026Q2)",
-                "value": "-13.5%（与2026Q1同幅度，连续两季度下滑）",
-                "asOf": "2026Q2（截至2026-06-30）",
-                "source": {
-                  "name": "HKEX官方业绩公告/主会话已采集revenueStructure",
-                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-                }
-              },
-              {
-                "metric": "直播收入同比增速(2026Q1对比2025Q4)",
-                "value": "-13.5%（前值-1.0%）",
-                "asOf": "2026Q1（截至2026-03-31）",
-                "source": {
-                  "name": "Kuaishou IR官方公告（2026Q1季报）",
-                  "url": "https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-first-quarter-2026-unaudited"
-                }
-              },
-              {
-                "metric": "短视频MAU同比增速对比（快手vs抖音）",
-                "value": "快手+3.4% vs 抖音+14.7%，差距持续扩大",
-                "asOf": "2025年9月",
-                "source": {
-                  "name": "QuestMobile（新浪财经转引）",
-                  "url": "https://finance.sina.com.cn/tech/roll/2025-11-07/doc-infwqvpr0815507.shtml"
-                }
-              },
-              {
-                "metric": "直播打赏平台抽成比例",
-                "value": "官方未披露具体比例，行业惯例约50%（非官方数字，为合理推断）",
-                "asOf": "FY2025",
-                "source": {
-                  "name": "采集文件businessModelMoat推断",
-                  "url": "（采集文件内部数据，无外部URL）"
-                }
-              }
-            ],
-            "note": "本轮无新证据推翻\"不存在\"判断，直播收入连续两季度同比-13.5%即为确认性证据，未纳入本轮重点复核范围。"
-          },
-          {
-            "type": "转换成本",
-            "test": "客户迁移到竞品的成本有多高？",
-            "verdict": "待验证",
-            "evidence": [
-              {
-                "metric": "磁力引擎UAX智能投放系统客户渗透率",
-                "value": "接近60%（2024年初上线后）",
-                "asOf": "2025年（报道时点）",
-                "source": {
-                  "name": "极客公园《AI正在重塑快手商业化体系》",
-                  "url": "https://www.geekpark.net/news/347925"
-                }
-              },
-              {
-                "metric": "广告冷启动成功率提升",
-                "value": "+25%",
-                "asOf": "2025年（报道时点）",
-                "source": {
-                  "name": "极客公园《AI正在重塑快手商业化体系》",
-                  "url": "https://www.geekpark.net/news/347925"
-                }
-              },
-              {
-                "metric": "2026Q2毛利率同比变化",
-                "value": "51.6%（前值55.7%），同比下滑4.1个百分点（工具验算：55.7-51.6=4.10，financial_rigor.py calc）",
-                "asOf": "2026Q2（截至2026-06-30）",
-                "source": {
-                  "name": "HKEX官方业绩公告MD&A",
-                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-                }
-              },
-              {
-                "metric": "收入分成成本及相关税项占收入比例变化",
-                "value": "由30.1%升至34.7%，同比+4.6个百分点（工具验算：34.7-30.1=4.60）；分成成本绝对值同比+16.9%（工具验算：(35535×0.347)/(35046×0.301)×100-100=16.89），快于总收入+1.4%的增速",
-                "asOf": "2026Q2（截至2026-06-30）",
-                "source": {
-                  "name": "HKEX官方业绩公告MD&A",
-                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-                }
-              },
-              {
-                "metric": "带宽/服务器托管成本占收入比例变化",
-                "value": "由3.8%升至4.5%",
-                "asOf": "2026Q2（截至2026-06-30）",
-                "source": {
-                  "name": "HKEX官方业绩公告MD&A",
-                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-                }
-              }
-            ],
-            "note": "本轮新增的毛利率下滑证据不足以改判\"待验证\"为\"存在\"或\"不存在\"，理由：①官方MD&A仅披露\"收入分成成本\"这一合并科目的占比变化，未按广告主(磁力引擎UAX)/内容创作者(直播分成)/电商商家(佣金)分部拆分，无法判断上升主要来自哪一方；②该科目绝对值增速(+16.9%)明显快于总收入增速(+1.4%)，理论上存在两种互斥解释——(a)平台为对抗抖音而被迫向内容方/达人/商家让渡更多分成以维持留存，意味着转换成本型护城河的议价能力实际在减弱；(b)收入结构从低分成成本的直播(收缩13.5%)切换至高分成成本的电商佣金/Kling AI相关服务(+18.5%)，纯粹是分部权重切换的会计效应，与UAX广告主侧switching cost强度无关；③由于缺乏分部成本拆分数据，两种解释均无法证伪，故维持\"待验证\"判断，并在dataGaps中新增该证据缺口。"
-          },
-          {
-            "type": "网络效应",
-            "test": "用户越多产品越好吗？",
-            "verdict": "存在",
-            "evidence": [
-              {
-                "metric": "MAU/DAU规模",
-                "value": "MAU 772百万 / DAU 413百万（2026Q1口径，创历史新高）",
-                "asOf": "2026Q1",
-                "source": {
-                  "name": "Kuaishou IR官方公告",
-                  "url": "（采集文件内部数据，无外部URL）"
-                }
-              },
-              {
-                "metric": "短视频APP MAU对比（快手vs抖音）",
-                "value": "458.16百万 vs 936.41百万，快手约为抖音一半",
-                "asOf": "2025年9月",
-                "source": {
-                  "name": "QuestMobile（新浪财经转引）",
-                  "url": "https://finance.sina.com.cn/tech/roll/2025-11-07/doc-infwqvpr0815507.shtml"
-                }
-              },
-              {
-                "metric": "集团总收入同比增速环比持续降速",
-                "value": "2025Q4 11.8% → 2026Q1 3.4% → 2026Q2 1.4%（工具验算：11.8-3.4=8.4个百分点、3.4-1.4=2.0个百分点，降速幅度收窄但方向未逆转）",
-                "asOf": "2026Q2（截至2026-06-30）",
-                "source": {
-                  "name": "HKEX官方业绩公告/主会话已采集revenueStructure",
-                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-                }
-              }
-            ],
-            "note": "本轮无独立第三方MAU对比数据更新（QuestMobile数据仍为2025年9月），但总收入增速连续三个季度加速降速(11.8%→3.4%→1.4%)为网络效应基本盘持续被抖音蚕食的判断提供了同方向的新确认证据，维持\"变窄\"的既有判断（本对象verdict字段仅记录'存在/不存在/待验证'三态，趋势方向判断见下方trendPast5y/trendNext5y）。"
-          },
-          {
-            "type": "规模效应",
-            "test": "规模带来的成本优势有多大？",
-            "verdict": "存在",
-            "evidence": [
-              {
-                "metric": "研发费用规模及增速(FY2025)",
-                "value": "RMB144.91亿，同比+18.8%",
-                "asOf": "FY2025",
-                "source": {
-                  "name": "Kuaishou IR官方披露",
-                  "url": "（采集文件内部数据，无外部URL）"
-                }
-              },
-              {
-                "metric": "研发费用增速(2026H1/2026Q2)",
-                "value": "H1同比+22.5%(RMB82.02亿)；Q2单季同比+34.7%(RMB45.81亿)，占收入比由9.7%升至12.9%（工具验算：12.9-9.7=3.2个百分点）",
-                "asOf": "2026Q2（截至2026-06-30）",
-                "source": {
-                  "name": "HKEX官方业绩公告",
-                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-                }
-              },
-              {
-                "metric": "2026Q2经营利润率同比变化",
-                "value": "10.6%（前值15.1%），同比下滑4.5个百分点（工具验算：15.1-10.6=4.5）",
-                "asOf": "2026Q2（截至2026-06-30）",
-                "source": {
-                  "name": "HKEX官方业绩公告MD&A",
-                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-                }
-              }
-            ],
-            "note": "研发强度跳升(9.7%→12.9%)本质是围绕可灵AI等大模型的前置再投入加速，短期与经典\"规模效应\"(用户规模摊薄单位成本、经营杠杆走阔)方向相反——同期经营利润率反而收窄4.5个百分点，是\"再投入侵蚀短期杠杆\"而非\"规模摊薄成本兑现\"。维持verdict\"存在\"，因研发规模优势(能承担RMB260亿/年资本开支指引的公司体量)相对中小竞争者依然成立，但需要在trendNext5y中明确标注这一短期杠杆逆转的观察窗口。"
-          },
-          {
-            "type": "技术/专利壁垒",
-            "test": "技术领先几年？能否被复制？",
-            "verdict": "存在",
-            "evidence": [
-              {
-                "metric": "OneRec端到端生成式推荐模型主站落地效果",
-                "value": "观看时长+1.6%，公开报道中首个工业场景超越传统推荐系统的端到端生成式模型",
-                "asOf": "2025年（技术分享时点）",
-                "source": {
-                  "name": "知乎技术解读《细读快手推荐OneRec-V1技术报告》",
-                  "url": "https://zhuanlan.zhihu.com/p/1927386141486735715"
-                }
-              },
-              {
-                "metric": "可灵AI分拆融资协议正式签署（本轮关键新证据，取代此前\"评估中/传闻\"表述）",
-                "value": "2026-07-02，公司间接全资附属公司\"北京可灵\"与21名初始投资者签约，合计注资约USD20.28亿（另预留窗口期至最多USD30亿，对应经扩大注册资本16.67%），投后估值约USD180亿；领投方含CPE源峰、国方创投、BlueFive Capital（中东资本，为中东资本首次投资中国AI视频模型）、腾讯、中关村科学城基金、中信证券，另有阿里云、百度参与",
-                "asOf": "2026-07-02",
-                "source": {
-                  "name": "华尔街见闻（分拆融资协议签署细节）",
-                  "url": "https://wallstreetcn.com/articles/3776114"
-                }
-              },
-              {
-                "metric": "分拆资产注入与上市时间表",
-                "value": "协议约定最晚付款日后9个月内将可灵相关模型/算法/研发团队/海外业务及运营资产注入北京可灵；北京可灵计划2027年初向港交所递交上市申请材料",
-                "asOf": "2026-07-02协议约定",
-                "source": {
-                  "name": "主会话已采集financials-collection.json technology字段",
-                  "url": "https://wallstreetcn.com/articles/3776114"
-                }
-              },
-              {
-                "metric": "Kling AI 2026Q2单季收入",
-                "value": "首次超RMB8.5亿，同比增速超200%（前值2026Q1超RMB6.5亿、+300%+；工具验算Q1→Q2环比增速：(850-650)/650×100=30.77%）",
-                "asOf": "2026Q2（截至2026-06-30）",
-                "source": {
-                  "name": "HKEX官方业绩公告AI业务章节",
-                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-                }
-              },
-              {
-                "metric": "Kling AI 2026Q2新增产品能力",
-                "value": "原生4K视频直出功能、可灵MCP/CLI（支持AI agent批量调度创作），产品迭代未见放缓",
-                "asOf": "2026Q2",
-                "source": {
-                  "name": "主会话已采集financials-collection.json technology字段",
-                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-                }
-              },
-              {
-                "metric": "【反向证据】Kling AI FY2025财务表现",
-                "value": "净亏损同比扩大至约RMB19亿（2024年约RMB5亿，工具验算同比增速：(19-5)/5×100=280%），收入约RMB11亿，亏损/收入比约173%（工具验算：19/11×100=172.73%），即高速ARR增长与加速扩大的亏损并存",
-                "asOf": "FY2025",
-                "source": {
-                  "name": "证券时报（可灵AI财务数据与竞争格局）",
-                  "url": "https://www.stcn.com/article/detail/4005254.html"
-                }
-              },
-              {
-                "metric": "【反向证据】竞争格局",
-                "value": "可灵AI面临字节跳动、谷歌、阿里同类视频生成大模型的直接竞争，行业媒体评价\"建立壁垒的窗口期已经不多\"",
-                "asOf": "2026年（报道时点）",
-                "source": {
-                  "name": "证券时报（可灵AI财务数据与竞争格局）",
-                  "url": "https://www.stcn.com/article/detail/4005254.html"
-                }
-              }
-            ],
-            "note": "本轮判断：技术壁垒verdict维持\"存在\"，但内部张力显著加大，是本次复核变化最大的条目。①正面：分拆从\"仍处初步阶段，尚未签署任何最终协议\"（上一轮基线原话）升级为已签约的确定性事实，且投资方名单包含腾讯、阿里云、百度等原本可被视为竞争对手/潜在替代技术提供方的产业资本，这些主体愿意联合押注本身是对可灵AI技术资产独立价值的强背书，是护城河从\"叙事期权\"向\"可定价资产\"转化的实质性里程碑，过去12个月内技术壁垒维度的变化方向仍是拓宽（对应collection文件businessModelMoat.moatSources中\"技术壁垒\"条目trend=\"变宽\"的既有判断）。②负面：可灵AI自身FY2025净亏损同比扩大2.8倍且已超过收入规模，说明当前的高速收入增长很大程度上是靠亏损性投入(算力/获客补贴)换来的，尚未验证是否存在可持续的单位经济模型；叠加字节跳动/谷歌/阿里同类模型的直接竞争与\"建壁垒窗口期不多\"的行业评价，'技术领先几年、能否被复制'这一测试本身的答案比上一轮更不确定，而非更确定。③净判断：分拆落地是治理/资本层面的确定性提升（护城河的\"可变现性\"变宽），但商业层面的护城河\"耐久性\"这一核心问题仍未被这轮新证据证实或证伪，反而因亏损扩大与竞争加剧多了一层新的不确定性，二者方向相反，故trendNext5y需要明确标注这一分歧，不能简单用单一'变宽'方向概括全部信息。"
-          }
-        ],
-        "trendPast5y": {
-          "direction": "稳定",
-          "basis": "①网络效应因集团总收入增速连续三季度加速降速(2025Q4 11.8%→2026Q1 3.4%→2026Q2 1.4%，工具验算降速幅度8.4pp、2.0pp)叠加MAU增速落后抖音(3.4%对14.7%)，持续收窄；②规模/研发效应本季呈现新变化——研发强度从9.7%跳升至12.9%(+3.2pp)，但同期经营利润率反而下滑4.5pp，短期是'再投入侵蚀杠杆'而非'规模摊薄成本'，长期规模优势方向未变但节奏被打断；③技术壁垒因可灵AI分拆融资由\"评估中\"升级为2026-07-02正式签约(含腾讯/阿里云/百度联合押注)而在资本化/可变现层面快速拓宽，但同期曝出的FY2025净亏损同比扩大2.8倍(亏损/收入比约173%)及字节跳动/谷歌/阿里直接竞争，使其在'商业耐久性'层面的不确定性同步扩大；三力方向大致抵消，故过去5年维度综合判断维持'稳定'，但内部结构性张力比上一轮基线(2026-08-09)更为剧烈。"
-        },
-        "trendNext5y": {
-          "direction": "稳定",
-          "basis": "①若可灵AI分拆按协议时间表推进(9个月内完成资产注入、2027年初递交港股上市申请)且亏损收窄验证单位经济模型可持续，AI资产壁垒有望持续拓宽，本轮签约是关键催化剂已经兑现的证据；②若可灵AI持续以扩大的亏损换取收入增长，且字节跳动/谷歌/阿里的同类模型建立起可比或更优的产品体验，则'建壁垒窗口期不多'的行业评价可能兑现为技术壁垒实质性收窄，2026Q2的Kling AI同比增速已从Q1的300%+降至200%+区间，需持续跟踪增速与亏损率是否同步收敛；③短视频用户时长份额若继续被抖音蚕食(2026Q2总收入增速已降至1.4%)，网络效应基本盘将持续收窄；④转换成本维度因2026Q2毛利率下滑4.1pp、收入分成成本占比上升4.6pp，存在'议价权减弱'与'纯收入结构切换'两种互斥解释，在获得分部成本拆分数据前，该维度对未来5年判断的边际影响暂记为中性(不确定性但非明确恶化)；⑤监管趋严抬高全行业合规成本，对新进入者构成额外规模壁垒。综合来看，与上一轮相比，本轮'稳定'的判断由更宽的技术壁垒上行(分拆确定性)与更深的下行风险(亏损扩大、竞争加剧、短期经营杠杆逆转)共同支撑，是'更高波动率下的稳定'而非'低波动的稳定'，后续季度需重点跟踪可灵AI亏损率变化与分部成本拆分数据以收窄这一不确定性区间。"
-        }
+    "profitabilityTrend5y": {
+     "series": [
+      {
+       "fiscalYear": "FY2021",
+       "grossMarginPct": "41.97%",
+       "operatingMarginPct": "-34.15%",
+       "netMarginPct": "-96.29%（计算值：归母净利润/营业收入）",
+       "source": {
+        "name": "stockanalysis.com",
+        "url": "https://stockanalysis.com/quote/hkg/1024/financials/"
+       }
       },
-      "inquiry": {
-        "question": "10年后这条护城河还在吗？什么能摧毁它？",
-        "answer": "部分留存，但比上一轮(2026-08-09基线)更难简单归为\"AI技术壁垒确定存活\"。①可灵AI分拆融资已于2026-07-02正式签约(此前仅为'评估中，尚未签署最终协议')，且投资方名单包含腾讯、阿里云、百度等原本可能是竞争对手的产业资本，是护城河从叙事期权转为可定价资产的实质性里程碑，若2027年初港股上市申请材料按计划递交，AI资产壁垒有望独立于短视频主业存续；②但同一时间窗口曝出可灵AI FY2025净亏损同比扩大2.8倍、已超过自身收入规模(亏损/收入比约173%)，且直接面对字节跳动、谷歌、阿里同类视频生成模型的竞争，行业媒体评价其'建立壁垒的窗口期已经不多'——这意味着即便分拆成功，可灵AI能否在10年维度建立起真正难以复制的技术代差，本轮新证据没有提供更强确定性，反而暴露了此前未知的盈利质量风险；③若MAU增速持续落后抖音(总收入增速已连续三季度降速至1.4%)，'老铁'网络效应基本盘可能被结构性摧毁；④2026Q2毛利率下滑4.1个百分点、收入分成成本占比上升4.6个百分点，若后续证实是磁力引擎UAX对广告主议价权减弱(而非纯粹的收入结构切换)，转换成本这一原本'待验证'的护城河来源可能被证伪，需要分部成本数据才能判断；⑤监管趋严与VIE/港股折价等政策性风险若恶化，可能从合规与资本两端侵蚀护城河基础。综合看，能摧毁这条护城河的最直接路径是：可灵AI在分拆独立后持续无法收窄亏损率、被字节跳动/谷歌/阿里的同类模型实质性反超，同时短视频主业网络效应基本盘的收窄未能被电商/AI新业务对冲。"
+      {
+       "fiscalYear": "FY2022",
+       "grossMarginPct": "44.73%",
+       "operatingMarginPct": "-11.87%",
+       "netMarginPct": "-14.54%（计算值：归母净利润/营业收入）",
+       "source": {
+        "name": "stockanalysis.com",
+        "url": "https://stockanalysis.com/quote/hkg/1024/financials/"
+       }
       },
-      "dataGaps": [
-        {
-          "path": "moat.types[0].evidence（直播打赏平台抽成比例官方数字）",
-          "reason": "官方未披露具体分成比例",
-          "searched": "已查采集文件businessModelMoat，仅有行业惯例推断（约50%）",
-          "evidenceRequest": {
-            "metric": "直播打赏平台抽成比例官方精确数字",
-            "question": "快手官方财报或公告是否披露直播打赏的具体平台分成比例",
-            "whyNeeded": "验证'转换成本'与'品牌定价权'护城河强度需要精确分成率",
-            "priority": "medium"
-          }
-        },
-        {
-          "path": "moat.types[1]（2026Q2收入分成成本按分部/客户类型的拆分）",
-          "reason": "官方MD&A仅披露'收入分成成本及相关税项'合并占比从30.1%升至34.7%，未按广告主(磁力引擎UAX)/内容创作者(直播分成)/电商商家(佣金)/Kling AI(云成本分成)拆分，无法判断成本上升的具体来源，也就无法判断是UAX议价权减弱还是收入结构切换（本轮新增数据缺口）",
-          "searched": "已查采集文件financialMetrics/revenueStructure/businessModelMoat，均无分部成本拆分数据",
-          "evidenceRequest": {
-            "metric": "2026Q2收入分成成本按分部/客户类型的拆分数据",
-            "question": "快手是否在业绩交流会纪要、投资者问答或后续披露中透露过收入分成成本上升具体来自广告主侧让利、创作者/达人分成提升、还是电商佣金结构变化",
-            "whyNeeded": "直接决定'转换成本'护城河verdict能否从'待验证'升级为'存在'或'不存在'的关键缺口",
-            "priority": "high"
-          }
-        },
-        {
-          "path": "moat.types[4]（OneRec/Kling AI技术代际领先年限的第三方评估）",
-          "reason": "缺乏独立第三方对技术代际差距的评估",
-          "searched": "已查快手自身技术分享、投行估值传闻及证券时报关于竞争格局的报道，无第三方对Kling AI相对字节跳动/谷歌/阿里同类模型的技术代际差距量化评估",
-          "evidenceRequest": {
-            "metric": "OneRec/Kling AI技术代际领先年限的第三方评估",
-            "question": "是否存在独立第三方(如AI评测机构、学术benchmark)对快手OneRec/Kling AI相对抖音/谷歌/阿里同类模型技术代际差距的评估",
-            "whyNeeded": "护城河模板要求验证'技术领先几年、能否被复制'，本轮新增的竞争加剧与亏损扩大证据使该缺口的重要性进一步上升",
-            "priority": "high"
-          }
-        },
-        {
-          "path": "moat.types[0]（广告主提价弹性测试数据）",
-          "reason": "缺乏历史提价记录及对应广告主流失率数据",
-          "searched": "已查采集文件，无此数据，只能用间接指标替代判断",
-          "evidenceRequest": {
-            "metric": "广告主提价弹性测试数据（价格弹性/流失率）",
-            "question": "是否存在快手磁力引擎广告历史提价记录及对应广告主流失率/复投率数据",
-            "whyNeeded": "品牌/定价权护城河测试需要'提价后是否流失用户'的直接证据",
-            "priority": "medium"
-          }
-        },
-        {
-          "path": "moat.types[4]（可灵AI FY2025分季度亏损率/单位经济数据）",
-          "reason": "证券时报仅披露可灵AI FY2025全年净亏损约RMB19亿、收入约RMB11亿的年度汇总数字，未披露分季度亏损收窄/扩大趋势及获客成本、算力成本等单位经济拆分",
-          "searched": "已查采集文件technology字段及证券时报转引报道，仅有年度汇总数字",
-          "evidenceRequest": {
-            "metric": "可灵AI分季度收入/亏损趋势及单位经济(获客成本、算力成本占收入比)",
-            "question": "北京可灵在推进港股上市申请过程中是否会披露更细颗粒度的分季度财务数据以验证亏损率是否收敛",
-            "whyNeeded": "判断可灵AI能否独立造血、技术壁垒的商业耐久性能否兑现的关键量化依据",
-            "priority": "high"
-          }
-        }
-      ]
+      {
+       "fiscalYear": "FY2023",
+       "grossMarginPct": "50.58%",
+       "operatingMarginPct": "5.24%",
+       "netMarginPct": "5.64%（计算值：归母净利润/营业收入）",
+       "source": {
+        "name": "stockanalysis.com",
+        "url": "https://stockanalysis.com/quote/hkg/1024/financials/"
+       }
+      },
+      {
+       "fiscalYear": "FY2024",
+       "grossMarginPct": "54.60%",
+       "operatingMarginPct": "12.05%（官方口径，经营利润/收入）",
+       "netMarginPct": "12.08%（计算值：归母净利润/营业收入）",
+       "source": {
+        "name": "Kuaishou IR FY2025年报对比列（官方）",
+        "url": "https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-fourth-quarter-and-full-year-2025"
+       }
+      },
+      {
+       "fiscalYear": "FY2025",
+       "grossMarginPct": "55.02%",
+       "operatingMarginPct": "14.45%（官方口径，经营利润/收入）",
+       "netMarginPct": "13.04%（计算值：归母净利润/营业收入）",
+       "source": {
+        "name": "Kuaishou IR FY2025全年业绩公告",
+        "url": "https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-fourth-quarter-and-full-year-2025"
+       }
+      },
+      {
+       "fiscalYear": "H1 2026（截至2026-06-30，未经审计中期，非完整财年，与上方年度序列不完全同口径可比）",
+       "grossMarginPct": "51.37%（H1整体，2026Q1单季51.16%、2026Q2单季51.6%，两季度环比基本持平，financial_rigor.py calc验算Q1毛利率：17249/33716*100=51.16——说明毛利率下滑在Q1已发生并在Q2维持在同一水平，而非Q2新出现的恶化）",
+       "operatingMarginPct": "10.62%（H1，同比-23.0%；2026Q2单季10.6%，同比-29.0%）",
+       "netMarginPct": "8.74%（H1期内利润6,057/收入69,251，官方口径；2026Q2单季期内利润同比-36.0%）",
+       "priorYearGrossMarginPct": "55.13%（H1 2025）",
+       "source": {
+        "name": "HKEX官方业绩公告（2026-08-19）",
+        "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+       }
+      }
+     ]
     },
-    "inversion": {
-      "title": "逆向思考与风险清单",
-      "conclusion": "2026Q2/中期财报证实原有\"抖音时长虹吸、直播收入下滑、AI高投入未兑现\"三重压力仍在延续（直播收入连续两季度同比-13.5%未见改善；Kling AI分拆虽已签约落地，但可灵AI自身FY2025净亏损同比扩大约280%），同时新增第四重压力——毛利率与经营杠杆双重恶化，叠加管理层财报原文首次由\"稳健增长\"转向\"审慎\"表述，以及为支撑回购与AI资本开支举债推高杠杆（总借款半年内+109.4%、财务开支净额同比+452.6%）。股价财报后两日累计下跌约13.9%，但TTM PE仅从9.77x降至9.31x（-4.7%，financial_rigor.py验算），隐含市场已将TTM盈利预期下修约19-20%消化进股价——这更多是盈利能力结构性恶化后的合理重新定价，而非情绪性错杀。换言之，快手已从\"三重压力叠加期\"演变为\"四重压力叠加、且管理层自证盈利质量转差\"的阶段，低估值不仅未必是安全边际，本身还构成一种需要警惕的\"低PE价值陷阱\"。",
-      "analysis": {
-        "failurePaths": [
-          {
-            "path": "抖音持续虹吸用户时长与MAU增速，快手核心直播打赏收入结构性萎缩且未见改善，形成恶性循环。",
-            "probability": "中",
-            "impact": "高",
-            "evidence": [
-              {
-                "metric": "快手/抖音主APP MAU同比增速",
-                "value": "3.4% vs 14.7%",
-                "asOf": "2025年9月",
-                "source": {
-                  "name": "QuestMobile（新浪财经转引）",
-                  "url": "https://finance.sina.com.cn/tech/roll/2025-11-07/doc-infwqvpr0815507.shtml"
-                }
-              },
-              {
-                "metric": "直播收入同比增速（连续三个季度追踪）",
-                "value": "2025Q4 -1.0%，2026Q1 -13.5%，2026Q2 -13.5%（本轮新增：降幅与上季度持平，未见改善迹象）",
-                "asOf": "2026Q2（截至2026-06-30）",
-                "source": {
-                  "name": "HKEX官方业绩公告（2026-08-19）",
-                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-                }
-              }
-            ]
-          },
-          {
-            "path": "盈利能力结构性恶化（毛利率与经营杠杆双重承压）叠加管理层自身展望首次转向审慎、并举债支撑回购与AI资本开支推升财务杠杆，若2026H2未能企稳，可能演变为增长故事与偿债/回购能力同时承压的失败路径。（本轮新增，最重要的新增风险点）",
-            "probability": "中偏高（部分已在2026Q2财报中实际发生，非纯假设情景）",
-            "impact": "高",
-            "evidence": [
-              {
-                "metric": "2026Q2毛利率同比变化",
-                "value": "51.6%（前值55.7%，-4.1个百分点；官方MD&A归因收入分成成本占收入比由30.1%升至34.7%）",
-                "asOf": "2026Q2",
-                "source": {
-                  "name": "HKEX官方业绩公告（2026-08-19）",
-                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-                }
-              },
-              {
-                "metric": "2026Q2经营利润/期内利润/经调整净利润同比",
-                "value": "经营利润-29.0%，期内利润-36.0%，经调整净利润-30.3%；H1整体口径经营利润同比-23.0%",
-                "asOf": "2026Q2/H1 2026",
-                "source": {
-                  "name": "HKEX官方业绩公告（2026-08-19）",
-                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-                }
-              },
-              {
-                "metric": "管理层业务展望措辞（官方财报原文首次转向）",
-                "value": "「鑒於經營環境日益複雜且充滿挑戰，我們對短期業務前景持審慎態度」——此前各季度公告均为\"稳健增长\"/\"高质量增长\"表述，本次为该措辞基调的首次转向",
-                "asOf": "2026-08-19",
-                "source": {
-                  "name": "HKEX官方业绩公告业务展望章节",
-                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-                }
-              },
-              {
-                "metric": "财务开支净额与总借款变化（杠杆上升，financial_rigor.py验算）",
-                "value": "H1财务开支净额同比+452.6%至RMB4.31亿（前值RMB0.78亿）；总借款较FY2025年末+109.4%至RMB273.62亿，主要用于股份回购与AI资本开支；截至2026-06-30总借款/总权益约33.3%",
-                "asOf": "H1 2026（截至2026-06-30）",
-                "source": {
-                  "name": "HKEX官方业绩公告简明合并资产负债表",
-                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-                }
-              }
-            ]
-          },
-          {
-            "path": "内容审核系统性漏洞持续暴露，监管处罚常态化推高合规成本并损害广告主品牌安全信任。",
-            "probability": "中",
-            "impact": "中",
-            "evidence": [
-              {
-                "metric": "2026年1-2月合计罚没金额",
-                "value": "超RMB1.45亿元（含单笔RMB1.191亿元近年短视频行业最大罚单）",
-                "asOf": "2026-01-30/2026-02-06",
-                "source": {
-                  "name": "新浪财经/搜狐/DoNews",
-                  "url": "https://www.sohu.com/a/984733825_100050143"
-                }
-              },
-              {
-                "metric": "本轮增量核实结果",
-                "value": "已用web_search核实2026年7-8月区间，未检索到新增行政处罚或立案调查事件，风险状态维持基线判断（既有两次重罚仍是当前唯一已披露的监管处罚事实）",
-                "asOf": "2026-08-20",
-                "source": {
-                  "name": "web_search.py检索\"快手 监管处罚 2026年7月 8月\"（结果均为1-2月既有事件的转引报道，无新增事件）",
-                  "url": "（工具检索结果，无单一URL）"
-                }
-              }
-            ]
-          },
-          {
-            "path": "Kling AI分拆融资协议已于2026-07-02签署落地，'能否签约'的不确定性部分解除，但可灵AI自身持续巨额亏损、竞争加剧，分拆后能否独立造血、能否如期于2027年初递交港股上市申请材料仍存重大不确定性。（本轮改写：原\"分拆未落地\"风险已部分解除，但新增\"自身持续亏损+竞争窗口期收窄\"风险）",
-            "probability": "中",
-            "impact": "高",
-            "evidence": [
-              {
-                "metric": "分拆协议签署与投后估值（本轮更新：由\"传闻/评估中\"进展为已签约）",
-                "value": "2026-07-02签署协议，21名初始投资者注资约USD20.28亿（另预留窗口期至最多USD30亿），投后估值约USD180亿（对比2026年5月表述\"仍处于初步阶段，尚未就此签署任何最终协议\"）",
-                "asOf": "2026-07-02",
-                "source": {
-                  "name": "华尔街见闻",
-                  "url": "https://wallstreetcn.com/articles/3776114"
-                }
-              },
-              {
-                "metric": "可灵AI自身FY2025财务表现（本轮新增，与\"分拆已落地\"形成对照）",
-                "value": "净亏损扩大至约RMB19亿（2024年约RMB5亿，同比+280%，financial_rigor.py验算），收入约RMB11亿，即高速ARR增长的另一面是加速扩大的亏损",
-                "asOf": "FY2025",
-                "source": {
-                  "name": "证券时报",
-                  "url": "https://www.stcn.com/article/detail/4005254.html"
-                }
-              },
-              {
-                "metric": "竞争格局（本轮新增）",
-                "value": "面临字节跳动、谷歌、阿里同类文生视频/图生视频产品的直接竞争，行业媒体报道称其\"建立壁垒的窗口期已经不多\"",
-                "asOf": "2026年",
-                "source": {
-                  "name": "证券时报/主会话已采集riskFactors数据",
-                  "url": "https://www.stcn.com/article/detail/4005254.html"
-                }
-              }
-            ]
-          },
-          {
-            "path": "VIE结构性风险与港股/中概股流动性折价长期压制估值；叠加本轮财报显示股价跌幅显著大于PE跌幅，说明当前低估值更多是盈利预期合理下修的结果而非错杀，低估值本身构成'低PE价值陷阱'的重新定性风险，基本面改善也难以兑现重估。（本轮补充低估值陷阱新证据）",
-            "probability": "低（VIE监管认定风险本身）/中（低估值陷阱对'便宜=安全边际'判断的误导风险）",
-            "impact": "高",
-            "evidence": [
-              {
-                "metric": "trailing PE变化",
-                "value": "9.31x（2026-08-20，TTM口径），较上轮9.77x（2026-08-07）下降4.7%",
-                "asOf": "2026-08-20",
-                "source": {
-                  "name": "主会话已采集currentValuation（financial_rigor.py calc验算）",
-                  "url": "（采集文件内部数据，无外部URL）"
-                }
-              },
-              {
-                "metric": "股价跌幅与PE跌幅背离（低估值陷阱信号，本轮新增）",
-                "value": "财报后两个交易日累计跌幅约13.9%（44.18→37.80→33.89港元，2026-08-19盘中已先跌4.01%），较上轮基线(44.18,2026-08-07)累计跌幅达-23.3%（financial_rigor.py验算）；而同期TTM PE仅由9.77x降至9.31x（-4.7%），隐含市场已将TTM归母净利润预期下修约19-20%消化进股价（financial_rigor.py验算：1-((1-0.2331)/(9.31/9.77))≈19.5%），说明本次下跌主要是盈利预期下修的合理定价而非纯情绪性错杀",
-                "asOf": "2026-08-20",
-                "source": {
-                  "name": "主会话已采集currentValuation数据 + financial_rigor.py calc验算",
-                  "url": "（采集文件内部数据，无外部URL）"
-                }
-              },
-              {
-                "metric": "VIE通用行业风险表述",
-                "value": "协议控制架构存在监管认定不确定性",
-                "asOf": "行业通用",
-                "source": {
-                  "name": "ACGA公司治理研究机构",
-                  "url": "https://www.acga-asia.org/blog-detail.php?id=48"
-                }
-              }
-            ]
-          },
-          {
-            "path": "腾讯持续减持强化\"腾讯系协同弱化\"负面叙事，加剧股价抛压与估值折价螺旋。",
-            "probability": "中",
-            "impact": "中",
-            "evidence": [
-              {
-                "metric": "腾讯持股比例变化",
-                "value": "约15.68%降至约9.37%，套现约USD1.505bn（约HKD125.6亿），跌破10%\"主要股东\"门槛",
-                "asOf": "2026-07-06",
-                "source": {
-                  "name": "HKEX公告",
-                  "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0706/2026070602205.pdf"
-                }
-              },
-              {
-                "metric": "本轮增量核实结果",
-                "value": "已用web_search核实截至2026-08-20区间，未检索到腾讯在2026-07-06之后进一步减持快手的新公告或报道，持股比例暂维持约9.37%；多篇报道解读此次减持为腾讯资本配置从'快手母公司成熟资产'转向'可灵AI等AI视频新资产'（腾讯同时是可灵AI分拆融资的跟投方之一），并非单纯看空快手基本面",
-                "asOf": "2026-08-20",
-                "source": {
-                  "name": "web_search.py检索\"腾讯 快手 减持 股份 2026年8月\"（结果均为2026-07-06/07-08既有事件的转引报道，无新增减持事件）",
-                  "url": "（工具检索结果，无单一URL）"
-                }
-              }
-            ]
-          }
-        ],
-        "historicalAnalogies": [
-          {
-            "company": "MySpace（对比Facebook）",
-            "similarity": "曾为社交网络行业第一，后被网络效应更强、产品迭代更快的对手反超。",
-            "outcome": "用户与广告主持续流失，最终边缘化并以远低于峰值估值出售。",
-            "source": {
-              "name": "行业公开认知，非采集文件数据点",
-              "url": "（无）"
-            }
-          },
-          {
-            "company": "Yahoo（对比Google）",
-            "similarity": "早期门户/搜索领先者，后期创新放缓被算法更优的对手系统性反超份额。",
-            "outcome": "核心业务持续萎缩多年，最终核心资产被收购、公司解体式退场。",
-            "source": {
-              "name": "行业公开认知，非采集文件数据点",
-              "url": "（无）"
-            }
-          },
-          {
-            "company": "人人网 Renren（对比微信/微博）",
-            "similarity": "中国早期社交网络头部玩家，用户与商业化能力被后起社交产品持续反超。",
-            "outcome": "用户与营收长期萎缩，主业名存实亡，转型为投资壳公司。",
-            "source": {
-              "name": "行业公开认知，非采集文件数据点",
-              "url": "（无）"
-            }
-          },
-          {
-            "company": "Groupon",
-            "similarity": "高增长期后遇流量成本上升与竞争加剧，新业务故事支撑高估值但兑现不足；本轮快手\"毛利率下滑+费用刚性上升+管理层展望转向审慎\"的组合与Groupon当年利润率被流量成本侵蚀、增长故事褪色的路径高度相似。",
-            "outcome": "盈利能力持续承压，估值大幅缩水，沦为边缘化平台。",
-            "source": {
-              "name": "行业公开认知，非采集文件数据点",
-              "url": "（无）"
-            }
-          }
-        ],
-        "crossDisciplinaryChecks": [
-          {
-            "model": "网络效应理论",
-            "finding": "①快手UGC主播-观众的双边网络效应本质弱于抖音中心化算法分发的单边效率优势，MAU增速差距（3.4% vs 14.7%）验证\"赢者通吃\"动态已形成；②直播打赏依赖主播个人IP粘性而非平台网络效应，用户可无缝迁移至抖音/视频号，2026Q2直播收入-13.5%与2026Q1持平印证这一迁移未见放缓；③电商私域复购场景仍具一定用户粘性护城河，网络效应尚未完全瓦解，是相对优势的残余部分。"
-          },
-          {
-            "model": "技术采纳曲线",
-            "finding": "①短视频行业已进入成熟期，总时长增速放缓使份额此消彼长的零和博弈特征加强，快手处于劣势位置；②Kling AI处于早期采纳曲线阶段，ARR环比翻倍符合S曲线早期爆发特征，但FY2025净亏损同比扩大约280%说明尚未跨越\"规模化盈利\"的鸿沟；③若Kling AI未能跨越鸿沟，将陷入多数早期AI应用常见的\"高投入-低转化\"陷阱，与2026H1总借款+109.4%、财务开支净额+452.6%的现状互相印证——快手正在用主业杠杆为尚未盈利的AI资产输血。"
-          },
-          {
-            "model": "竞争博弈",
-            "finding": "①快手与抖音陷入内容审核、算法研发、内容采购的\"军备竞赛\"式博弈，任何一方放缓即被反超，压制行业整体利润率，2026Q2收入分成成本占比由30.1%升至34.7%即为该博弈压低毛利率的直接体现；②监管作为第三方博弈参与者的重罚介入，边际上更利好资金实力更强的头部平台，对快手是相对劣势；③腾讯减持并转向对可灵AI的跟投，反映其在AI赛道资源的重新博弈配置——从'持有快手母公司成熟资产'切换为'直接持有AI高增长资产'，削弱快手母公司层面潜在流量/资金协同筹码，即便双方仍维持战略合作关系。"
-          }
-        ],
-        "biasSelfCheck": [
-          {
-            "bias": "叙事偏差",
-            "check": "\"AI第二曲线\"叙事在2026-07-02分拆协议签署后从\"传闻\"升级为\"确定性事件\"，但需警惕把\"分拆已签约\"等同于\"AI资产已能自我造血\"——可灵AI FY2025净亏损同比扩大约280%证明这是两件不同的事，若忽视直播收入连续两季度-13.5%未改善、2026Q2毛利率/经营利润大幅恶化的既有基本面趋势，仅凭分拆落地本身定价，会重复上一轮\"把未落地传闻当确定性\"的同类错误。"
-          },
-          {
-            "bias": "锚定效应",
-            "check": "trailing PE从9.77倍降至9.31倍，容易被继续锚定为\"更便宜了\"，但financial_rigor.py验算显示股价跌幅(-23.3%，较08-07基线)远大于PE跌幅(-4.7%)，隐含TTM盈利预期已下修约19-20%——真正应该锚定的是盈利质量趋势（毛利率、经营杠杆、管理层展望措辞）而非历史价格/估值倍数本身，否则会把\"合理重新定价\"误读为\"错杀\"。"
-          },
-          {
-            "bias": "幸存者偏差",
-            "check": "采集文件bull case多援引摩根大通/中金/东方证券等卖方看多目标价（且本轮更新未见投行发布下修后的最新目标价，是已知数据缺口），卖方研报存在\"唱空报告较少发布\"的生存偏差；历史类比也应纳入Yahoo/MySpace/Renren/Groupon等\"老二最终没落\"或\"新业务故事未兑现拖累估值\"的案例，而非仅关注逆袭成功的幸存者叙事。"
-          }
-        ],
-        "bearCase": [
-          {
-            "point": "核心用户增长与竞争地位持续落后于抖音，用户基本盘正被系统性分流，直播收入连续两季度未见改善",
-            "holder": "QuestMobile数据引用方（新浪财经/36氪等财经媒体分析师）",
-            "evidence": [
-              {
-                "metric": "主APP MAU同比增速",
-                "value": "快手3.4% vs 抖音14.7%",
-                "asOf": "2025年9月",
-                "source": {
-                  "name": "QuestMobile（新浪财经转引）",
-                  "url": "https://finance.sina.com.cn/tech/roll/2025-11-07/doc-infwqvpr0815507.shtml"
-                }
-              },
-              {
-                "metric": "直播收入同比增速",
-                "value": "2026Q1 -13.5%，2026Q2 -13.5%（本轮新增：降幅持平未改善）",
-                "asOf": "2026Q2",
-                "source": {
-                  "name": "HKEX官方业绩公告（2026-08-19）",
-                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-                }
-              }
-            ]
-          },
-          {
-            "point": "2026Q2盈利能力大幅恶化，管理层展望转向审慎，是本轮最重要的新增看空信号（本轮新增）",
-            "holder": "关注利润表质量与管理层信号的基本面型空方投资者",
-            "evidence": [
-              {
-                "metric": "2026Q2毛利率/经营利润/期内利润同比",
-                "value": "毛利率51.6%(-4.1pp)，经营利润-29.0%，期内利润-36.0%，经调整净利润-30.3%",
-                "asOf": "2026Q2",
-                "source": {
-                  "name": "HKEX官方业绩公告（2026-08-19）",
-                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-                }
-              },
-              {
-                "metric": "管理层展望措辞",
-                "value": "「鑒於經營環境日益複雜且充滿挑戰，我們對短期業務前景持審慎態度」（此前各季度均为\"稳健增长\"表述）",
-                "asOf": "2026-08-19",
-                "source": {
-                  "name": "HKEX官方业绩公告业务展望章节",
-                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-                }
-              }
-            ]
-          },
-          {
-            "point": "监管处罚频发，合规成本上升且声誉受损，反映平台内容审核体系存在系统性漏洞",
-            "holder": "关注ESG与内容安全合规的监管机构及机构投资者",
-            "evidence": [
-              {
-                "metric": "2026年1-2月合计罚没金额",
-                "value": "超RMB1.45亿元",
-                "asOf": "2026-01-30/2026-02-06",
-                "source": {
-                  "name": "新浪财经/搜狐/DoNews",
-                  "url": "https://finance.sina.com.cn/roll/2026-01-31/doc-inhkepei6138166.shtml"
-                }
-              }
-            ]
-          },
-          {
-            "point": "Kling AI分拆虽已签约落地，但可灵AI自身持续巨额亏损、竞争加剧，同时快手为回购与AI资本开支举债推高杠杆（本轮改写：原\"分拆不确定性\"风险已部分解除，替换为\"自身造血能力+杠杆\"风险）",
-            "holder": "关注现金流质量、杠杆变化与分拆资产盈利能力的基本面型空方投资者",
-            "evidence": [
-              {
-                "metric": "可灵AI FY2025净亏损同比变化",
-                "value": "扩大至约RMB19亿（2024年约RMB5亿，同比+280%，financial_rigor.py验算）",
-                "asOf": "FY2025",
-                "source": {
-                  "name": "证券时报",
-                  "url": "https://www.stcn.com/article/detail/4005254.html"
-                }
-              },
-              {
-                "metric": "总借款与财务开支净额变化",
-                "value": "总借款较FY2025年末+109.4%至RMB273.62亿；H1财务开支净额同比+452.6%至RMB4.31亿（均为financial_rigor.py验算）",
-                "asOf": "H1 2026（截至2026-06-30）",
-                "source": {
-                  "name": "HKEX官方业绩公告",
-                  "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-                }
-              }
-            ]
-          },
-          {
-            "point": "腾讯减持并跌破主要股东门槛，削弱腾讯系流量/资源协同的想象空间",
-            "holder": "关注股东结构变化的套利型/事件驱动型空方投资者",
-            "evidence": [
-              {
-                "metric": "腾讯持股比例变化",
-                "value": "约15.68%→约9.37%，套现约USD1.505bn",
-                "asOf": "2026-07-06",
-                "source": {
-                  "name": "HKEX公告",
-                  "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0706/2026070602205.pdf"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "inquiry": {
-        "question": "我最可能在哪里犯错？聪明人为什么会不买/做空这家公司？",
-        "answer": "我最可能把\"低PE+AI故事\"误判为确定性错误定价机会，而非结构性衰退的价值陷阱——尤其在2026Q2财报后更是如此。①股价财报后两日累计下跌约13.9%（较上轮基线08-07累计-23.3%），TTM PE却仅从9.77x降至9.31x（-4.7%，financial_rigor.py验算），隐含市场已经把TTM归母净利润预期下修约19-20%消化进价格里，这不是恐慌性错杀而是理性重新定价，若我仍锚定\"9倍出头PE=历史低位=便宜\"就会忽视这一点；②管理层在财报原文中首次由\"稳健增长\"改口为\"鑒於經營環境日益複雜且充滿挑戰，我們對短期業務前景持審慎態度\"——这是公司自己承认前景转差，而不是外部空头的主观推断，我若把这句话当作例行套话而非真实信号就会犯错；③把Kling AI分拆签约本身当作利好完全兑现，却忽视可灵AI自身FY2025净亏损同比扩大约280%（RMB5亿→约19亿）、且面临字节跳动、谷歌、阿里的正面竞争——分拆解决的只是'融资协议是否存在'的不确定性，没有解决'能否独立盈利'的更根本问题；④财务开支净额H1同比暴增4.5倍以上、总借款半年内增109.4%，若我只看利润表不看资产负债表杠杆变化，会低估股份回购与AI资本开支对财务弹性的挤压，以及万一H2经营现金流进一步走弱时的偿债/继续回购能力。聪明人不买/做空的理由：抖音时长虹吸持续且未见改善（MAU增速3.4% vs 14.7%，直播收入连续两季度-13.5%）、管理层自己下修展望的措辞比任何空头研报都更有说服力、可灵AI分拆后仍是烧钱资产而非确定性变现资产、杠杆攀升压缩了继续回购托底股价的空间，这四点叠加使得当前的低估值更像是对上述压力的合理定价，而非可以安全买入的错误定价。"
-      },
-      "dataGaps": [
-        {
-          "path": "riskFactors监管处罚是否已在HKEX披露易发布对应内幕消息公告",
-          "reason": "采集文件已标注本轮研究未逐一核实HKEX是否就2026年两次行政处罚发布过对应公告；本轮web_search亦未专门核实此点，维持既有数据缺口",
-          "searched": "已查采集文件riskFactors字段 + 本轮web_search\"快手 监管处罚 2026年7月 8月\"（未发现新增处罚，但未逐一核实HKEX披露易公告链接）"
-        },
-        {
-          "path": "VIE架构具体条款",
-          "reason": "采集文件基于行业通用VIE风险表述推断，未逐字核实快手年报\"风险因素\"章节原文",
-          "searched": "已查采集文件management字段与行业通用VIE表述"
-        },
-        {
-          "path": "2026H2业绩量化指引缺失（本轮新增数据缺口）",
-          "reason": "官方财报\"业务展望\"章节仅给出\"审慎\"的定性措辞，未披露具体的收入/毛利率/费用率量化指引，导致\"H2能否企稳\"这一判断当前只能基于H1趋势外推，存在较大不确定性",
-          "searched": "已查HKEX官方业绩公告业务展望章节原文（collection文件financialMetrics.interim2026H1.managementOutlookTone），仅有定性表述"
-        },
-        {
-          "path": "分析师/投行下修后的最新目标价（本轮新增数据缺口）",
-          "reason": "2026年5月投行基于SOTP给出71-74港元目标价（对应彼时股价37-68%上行空间），但该目标价发布于H1业绩下修与股价大跌之前，本轮未检索到投行发布的最新下修目标价，无法判断市场卖方共识对本次盈利下修的定价程度",
-          "searched": "已查采集文件bullBearCase字段，标注为已知数据缺口，本轮未专门就此再做web_search"
-        }
-      ]
+    "marginBridge2026Q2": {
+     "_note": "回答任务核心问题——2026Q2毛利率同比下滑4.1个百分点，是否说明变现效率/定价权在恶化，还是主要为收入结构切换所致。以下拆解全部使用financial_rigor.py calc验算，涉及分部毛利率的部分为基于公开分部收入数据做出的假设性敏感性分析（公司未披露分部毛利率，已标注为假设，不作为确定性事实）",
+     "officialAttribution": {
+      "revenueShareCostRatioDelta": "收入分成成本及相关税项占收入比例由30.1%升至34.7%，+4.6个百分点（financial_rigor.py calc验算：34.7-30.1=4.6）",
+      "bandwidthCostRatioDelta": "带宽/服务器托管成本占收入比例由3.8%升至4.5%，+0.7个百分点（financial_rigor.py calc验算：4.5-3.8=0.7）",
+      "sumVsActualDecline": "两项官方披露的成本比例增幅合计+5.3个百分点（financial_rigor.py calc验算：(34.7-30.1)+(4.5-3.8)=5.3），略高于实际毛利率降幅4.1个百分点，差额（约1.2个百分点）意味着其他成本科目（如内容/带宽以外的销售成本）同期可能有所优化，起到部分对冲作用",
+      "source": {
+       "name": "HKEX官方业绩公告MD&A（2026-08-19）",
+       "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+      }
+     },
+     "costGrowthOutpacesRevenue": {
+      "finding": "2026Q2销售成本同比+10.7%（RMB155.42亿→172.07亿，绝对增量RMB16.65亿），而同期收入仅同比+1.4%（绝对增量RMB4.89亿）——成本的绝对增量是收入绝对增量的3.4倍以上（financial_rigor.py calc验算：35535-18328-(35046-19504)=1665；对比总收入增量489）",
+      "interpretation": "这一\"成本增速远超收入增速\"的模式本身不能直接区分\"核心业务定价权恶化\"与\"结构切换\"两种解释，需结合分部数据进一步拆解（见下）"
+     },
+     "mixShiftSensitivityAnalysis": {
+      "assumption": "假设广告+直播两大传统分部维持2025Q2的混合成本比率44.3%（即55.7%毛利率）不变，将2026Q2披露的总销售成本RMB172.07亿倒算\"其他服务（含Kling AI）\"分部隐含的成本比率——这是基于假设的敏感性测算，非公司披露的真实分部数据",
+      "calculation": "传统分部2026Q2收入RMB293.29亿×44.3%=RMB129.93亿（假设成本）；总成本RMB172.07亿-RMB129.93亿=RMB42.14亿，即\"其他服务\"分部隐含成本；RMB42.14亿/RMB62.06亿=67.9%，即隐含成本比率67.9%，对应隐含毛利率约32.1%（financial_rigor.py calc验算：29329*0.443=12992.75；17207-12992.75=4214.25；4214.25/6206*100=67.91；100-67.91=32.09）",
+      "interpretation": "在\"传统分部毛利率不变\"的假设下，\"其他服务\"分部的隐含毛利率需降至约32%（较集团整体51.6%低约20个百分点）才能解释全部的毛利率下滑，这与Kling AI在放量早期GPU训练/推理及带宽成本高企、电商技术服务费本身对商家/达人分成比例较高的行业常识方向一致，支持\"毛利率下滑主要是结构切换（新引擎权重上升+传统引擎收缩）而非广告位/打赏定价权恶化\"的判断；但由于公司不披露真实分部毛利率，无法排除传统分部自身成本比率也有小幅上升（如为应对抖音竞争提高对创作者的分成以留人）的可能性，这仍是数据缺口（见dataGaps）"
+     },
+     "coreAdBusinessCheck": {
+      "finding": "在线营销服务本身仍为正增长（FY2025+12.5%→2026Q1+9.3%→2026Q2+4.4%），未出现收入绝对萎缩，说明广告主对快手流量的付费意愿并未崩塌，但增速持续性放缓值得跟踪——这是与\"毛利率下滑\"性质不同的另一条隐忧（增长动能弱化，而非当季毛利率归因），已计入riskFactors维度",
+      "conclusion": "综合看，本季度毛利率下滑证据链更支持\"结构性收入切换的账面代价\"而非\"核心广告变现效率/定价权恶化\"，但两种解释并非完全互斥——广告业务增速的持续放缓本身也是需要独立关注的弱化信号"
+     }
     },
-    "management": {
-      "title": "管理层评估",
-      "conclusion": "本轮复核维持“创始人双人掌权、逐步转向股东回报”的基本判断，并新增两点重要更新：①可灵AI分拆融资从“评估中”到正式签约仅约52天（不到2个月），且吸引腾讯、阿里云、百度、中信证券等多元化产业与财务投资人共同背书，证明管理层在重大资本运作上的执行速度与撮合能力强于此前假设，spin-off执行力评价上调；②本季度在毛利率、经营利润、净利润全线下滑的同时，总借款激增109.4%、财务开支净额同比暴增（H1口径+452.6%，Q2单季口径+377.8%）以支撑回购与AI资本开支，与公司仍坐拥约RMB1213亿“总可动用资金”并存，构成一个尚未被解释的资本结构疑点——不足以判定为不审慎，但从“低杠杆、纯自有现金回购”滑向“加杠杆回购”，风险画像已发生实质变化，评价维持观望而非上调。管理层首次在业务展望使用“审慎”措辞，经与CEO在业绩稿中仍使用“稳健”“经营韧性”等正面措辞对照，判断为“正式展望章节的合规性措辞收紧”而非“公开信号全面转向悲观”，且两日累计约23.3%的股价跌幅主要由TTM盈利同步下修解释（TTM PE仅从9.77x降至9.31x，跌约4.7%），市场并未额外计入恐慌性风险溢价，倾向于将其解读为管理层与已披露业绩基本面同步的诚实表态，而非提前掩盖或刻意报忧的信号，但也不能证明下半年经营已见底。",
-      "analysis": {
-        "keyDecisions": [
-          {
-            "date": "2025-08-21",
-            "decision": "宣派上市以来首度特别股息HK$0.46/股",
-            "outcome": "资本配置转向增长与股东回报并重",
-            "rating": "★★★★",
-            "source": {
-              "name": "Kuaishou IR官方公告",
-              "url": "https://ir.kuaishou.com/news-releases"
-            }
-          },
-          {
-            "date": "2025年内",
-            "decision": "全年回购5,678万股耗资约HK$31.2亿",
-            "outcome": "测算均价约HK$54.9元，高于当前股价HK$33.89（2026-08-20）",
-            "rating": "★★★",
-            "source": {
-              "name": "Kuaishou IR官方公告",
-              "url": "https://ir.kuaishou.com/news-releases"
-            }
-          },
-          {
-            "date": "2026-03-25",
-            "decision": "建议派发FY2025末期股息每股HK$0.69",
-            "outcome": "常规化分红机制初步建立，2026-07-28已按计划派付",
-            "rating": "★★★★",
-            "source": {
-              "name": "Kuaishou IR官方公告",
-              "url": "https://ir.kuaishou.com/news-releases"
-            }
-          },
-          {
-            "date": "2025年9月末",
-            "decision": "整合电商与在线营销服务强化全域协同",
-            "outcome": "Q4全域营销方案占比升至75%",
-            "rating": "★★★★",
-            "source": {
-              "name": "Kuaishou IR官方公告",
-              "url": "https://ir.kuaishou.com/news-releases"
-            }
-          },
-          {
-            "date": "2026-02",
-            "decision": "发布Kling AI 3.0系列模型",
-            "outcome": "2026Q1收入超RMB6.5亿(+300%+)，为后续分拆融资奠定商业化验证基础；2026Q2进一步推出可灵3.0 Turbo，单季收入超RMB8.5亿(+200%+)",
-            "rating": "★★★★★",
-            "source": {
-              "name": "C114通信网/新浪财经",
-              "url": "https://finance.sina.com.cn/stock/usstock/c/2026-05-11/doc-inhxptri0413534.shtml"
-            }
-          },
-          {
-            "date": "2026-07-02（本轮新增）",
-            "decision": "可灵AI（北京可灵）分拆融资协议正式签署：21名初始投资者注资约USD20.28亿，投后估值约USD180亿，领投方含CPE源峰、国方创投、BlueFive Capital、腾讯、中关村科学城基金、中信证券，另有阿里云、百度参与；CEO程一笑在2026-08-19/20 Q2业绩电话会确认“近期完成独立融资”",
-            "outcome": "从2026年5月“仍处于初步阶段，尚未签署任何最终协议”到7月2日正式签约，间隔约52天（不到2个月），执行速度显著快于此前假设的“评估—落地”节奏；且吸引到快手核心业务的既有大股东（腾讯）与直接AI竞争对手（阿里云、百度）同时下注，是比管理层自身表态或投行SOTP目标价更强的独立第三方验证；但按约68%持股测算，快手在北京可灵中的权益对应约USD122.4亿/12.24bn（180亿美元×0.68，financial_rigor.py验算：180*0.68=122.4，单位为十亿美元时写作USD12.24bn，此前草稿曾误写为\"USD12.24亿\"，相差10倍，已订正），截至2026-08-20收盘后已相当于快手自身总市值（约USD186.9亿/18.69bn，HKD146.7bn÷7.85=18.69，此前草稿同样误写为\"USD18.7亿\"已订正）的约65.5%（该比例本身不受单位标注错误影响，12.24/18.69≈65.5%验算无误）——分部估值差距之大，反映市场尚未认可私募轮定价，或对可灵后续独立上市与整合执行仍要求较高折价，故本项评级不给满分",
-            "rating": "★★★★",
-            "sources": [
-              {
-                "name": "华尔街见闻（协议签署细节）",
-                "url": "https://wallstreetcn.com/articles/3776114"
-              },
-              {
-                "name": "新浪财经（程一笑Q2财报电话会表述）",
-                "url": "https://finance.sina.cn/stock/jdts/2026-08-20/detail-ininwpnk2465979.d.html"
-              },
-              {
-                "name": "新浪财经·财闻（分部估值测算，本轮新增）",
-                "url": "https://finance.sina.cn/2026-08-19/detail-ininvwqk8362440.d.html?vt=4"
-              }
-            ]
-          },
-          {
-            "date": "H1 2026至2026-08-19（本轮新增）",
-            "decision": "持续股份回购，累计约4,330万股，耗资约HKD19.7亿",
-            "outcome": "测算均价约HKD45.5/股（1,970,000,000/43,300,000，financial_rigor.py验算），仍高于当前股价HKD33.89，方向与FY2025一致（低估值区间买入而非精准抄底）；但本轮回购发生在总借款同比激增109.4%、财务开支净额同比暴增的背景下，与此前“主要靠自有现金流回购”的资本结构性质已不同，是否会持续依赖加杠杆维持回购力度需下一季度验证",
-            "rating": "★★★",
-            "source": {
-              "name": "HKEX官方业绩公告",
-              "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-            }
-          }
-        ],
-        "capitalAllocation": {
-          "rdReturn": "①H1 2026研发开支同比+22.5%至RMB82.02亿（Q2单季同比+34.7%），持续加码AI；②可灵AI商业化验证延续，2026Q2单季收入超RMB8.5亿(+200%+)，H1其他服务分部收入同比+18.5%至RMB62.06亿；③但本季度研发/收入分成成本上升幅度快于收入增长，H1经营利润同比-23.0%、经调整净利润同比-28.5%，说明研发与AI投入的边际转化效率本季度出现阶段性钝化，需观察是一次性（大模型训练周期性支出）还是趋势性。",
-          "maTrackRecord": "未采集到重大并购交易记录，公司增长以内生研发与内部孵化（如Kling AI、OneRec）为主；可灵AI分拆是过去一年内最重大的资本运作事件，但其性质是“对内部资产的对外融资与拆分”而非并购，暂无并购整合能力可评价。",
-          "buybackTiming": "①FY2025全年回购5,678万股耗资HK$31.2亿，测算均价约HK$54.9/股；②2026年H1及至8/19再回购约4,330万股耗资HK$19.7亿，测算均价约HK$45.5/股；③两轮回购均价均显著高于2026-08-20收盘价HK$33.89，回购发生在trailing PE不足10倍的低估区间，方向正确但均未能压低成本，属“低估值区间持续买入”而非“精准抄底”；④本轮新变化：H1 2026回购的资金来源已从此前主要依赖自有现金流，转变为与总借款同比激增109.4%（RMB13,066mn→27,362mn）、财务开支净额同比暴增（H1口径+452.6%，78→431百万；Q2单季口径官方MD&A披露+377.8%）同期发生——即便公司仍持有约RMB1,213亿“总可动用资金”、净现金（总可动用资金-总借款）约RMB939.38亿（121,300-27,362，financial_rigor.py验算），借款/权益比约33.3%（27,362/82,273，financial_rigor.py验算）绝对水平并不激进，但“账上巨额现金却选择加杠杆回购”这一组合本身未获官方解释，是本轮识别出的新增资本配置疑点：可能的合理解释包括①现金分布存在币种/地域/监管限制（如部分现金锁定于境内持牌实体、需缴纳跨境资金调拨的税务与合规成本），使表内“总可动用资金”并非完全可自由调用；②管理层择机利用低成本债务做税盾/流动性错配套利，保留现金储备作为AI资本开支或潜在并购的战略缓冲。两种解释均未被公司主动披露佐证，故本轮不下调回购决策本身的方向性评价，但明确将“杠杆来源不透明”列为需下一轮持续跟踪的资本配置风险点，而非直接给出正面或负面结论。⑤（2026-09-15更新）股价跌至30港元附近后回购仍在延续：9-9单日回购62万股耗资1,999万港元（约32.2港元/股均价），至9-9累计回购3,317万股（占回购授权0.7666%）——回购均价随股价下行继续压低，『低估值区间持续买入』的行为模式得到第三个月验证，但加杠杆回购的官方解释仍缺失，该疑点继续跟踪。",
-          "evidence": [
-            {
-              "metric": "H1 2026研发开支",
-              "value": "RMB8,202百万，YoY+22.5%（Q2单季YoY+34.7%）",
-              "asOf": "H1 2026",
-              "source": {
-                "name": "HKEX官方业绩公告",
-                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-              }
-            },
-            {
-              "metric": "总借款（不含租赁负债）",
-              "value": "RMB27,362百万（2026-06-30），较FY2025年末RMB13,066百万上升109.4%（financial_rigor.py验算：(27362-13066)/13066×100=109.41）",
-              "asOf": "2026-06-30",
-              "source": {
-                "name": "HKEX官方业绩公告简明合并资产负债表",
-                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-              }
-            },
-            {
-              "metric": "财务开支净额同比变化",
-              "value": "H1口径RMB78百万→431百万，+452.6%（financial_rigor.py验算：(431-78)/78×100=452.56）；Q2单季口径官方MD&A披露为+377.8%至RMB2.58亿",
-              "asOf": "H1 2026 / 2026Q2",
-              "source": {
-                "name": "HKEX官方业绩公告",
-                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-              }
-            },
-            {
-              "metric": "净现金（总可动用资金-总借款）",
-              "value": "约RMB93,938百万（121,300-27,362，financial_rigor.py验算）",
-              "asOf": "2026-06-30",
-              "source": {
-                "name": "HKEX官方业绩公告（本分析计算）",
-                "url": "（采集文件内部数据，无外部URL）"
-              }
-            },
-            {
-              "metric": "总借款/股东权益",
-              "value": "约33.3%（27,362/82,273×100=33.26，financial_rigor.py验算）",
-              "asOf": "2026-06-30",
-              "source": {
-                "name": "HKEX官方业绩公告（本分析计算）",
-                "url": "（采集文件内部数据，无外部URL）"
-              }
-            },
-            {
-              "metric": "H1 2026回购测算均价",
-              "value": "约HKD45.5/股（1,970,000,000/43,300,000=45.50，financial_rigor.py验算）",
-              "asOf": "H1 2026至2026-08-19",
-              "source": {
-                "name": "HKEX官方业绩公告（本分析计算）",
-                "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
-              }
-            }
-          ]
-        },
-        "alignment": {
-          "ownership": "①经济权益：程一笑约8.80%、宿华约9.83%，FY2025年报口径合计约18.6%（历史事实，本轮未见变化）；②投票权：AB股不同投票权架构（WVR）下二人合计控制约66%投票权；③本轮新增关联事实：腾讯已于2026-07-06减持快手股份至约9.37%（跌破主要股东门槛），却在4天前（2026-07-02）同期作为领投方之一参与了快手子公司可灵AI的分拆融资——即腾讯同步执行“减持快手核心业务母公司持股+加码可灵AI独立子公司股权”的双重资本动作，反映精明资本对快手集团内部“核心业务（广告/直播）」与「AI新业务（可灵）」两块资产给予了明显不同的风险定价，而非对快手整体丧失信心，这一细节强化了而非削弱了此前对可灵AI价值的判断，但也说明外部资本对快手核心业务的估值预期确实在下修。",
-          "compensation": {
-            "status": "unavailable",
-            "reason": "采集文件management/financialMetrics字段均未披露管理层薪酬结构或KPI考核挂钩机制，本轮未见新披露，已查HKEX官方2026Q2业绩公告全文及collection文件全部字段"
-          },
-          "insiderSelling": "未采集到程一笑、宿华等管理层个人在本轮（截至2026-08-20）新增减持记录；2026-07-06腾讯减持系第三方股东行为，不计入管理层减持范畴（历史事实，见ownership新增分析）。",
-          "evidence": [
-            {
-              "metric": "程一笑经济权益",
-              "value": "约8.80%",
-              "asOf": "FY2025年报",
-              "source": {
-                "name": "网络检索汇总（快手2025年报披露）",
-                "url": "https://ir.kuaishou.com"
-              }
-            },
-            {
-              "metric": "宿华经济权益",
-              "value": "约9.83%",
-              "asOf": "FY2025年报",
-              "source": {
-                "name": "网络检索汇总（快手2025年报披露）",
-                "url": "https://ir.kuaishou.com"
-              }
-            },
-            {
-              "metric": "程一笑+宿华合计投票权",
-              "value": "约66%（AB股WVR架构）",
-              "asOf": "FY2025年报",
-              "source": {
-                "name": "网络检索汇总（快手2025年报披露）",
-                "url": "https://ir.kuaishou.com"
-              }
-            },
-            {
-              "metric": "腾讯同期对快手集团内部两块资产的相反资本动作",
-              "value": "减持快手股份15.68%→9.37%（2026-07-06）；同时作为可灵AI分拆融资领投方之一（2026-07-02签约）",
-              "asOf": "2026-07-02/07-06",
-              "source": [
-                {
-                  "name": "HKEX公告（腾讯减持）",
-                  "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0706/2026070602205.pdf"
-                },
-                {
-                  "name": "华尔街见闻（可灵分拆融资领投方名单）",
-                  "url": "https://wallstreetcn.com/articles/3776114"
-                }
-              ]
-            }
-          ]
-        },
-        "organization": {
-          "teamStability": "①程一笑自2011年创立公司起持续任CEO/董事会主席逾14年，本轮2026Q2业绩电话会由其亲自确认可灵分拆融资进展，未见管理层变动；②宿华现聚焦战略/董事层角色，核心创始团队未见出走；③采集文件仍未披露CFO/COO等其他高管任期信息，为长期数据缺口。",
-          "keyPersonRisk": "①程一笑与宿华通过WVR架构合计控制约66%投票权的治理结构未变；②本轮新增证据：可灵AI从评估到签约仅约52天的执行速度，以及吸引腾讯、阿里云、百度、中信证券等多元化产业与财务资本同时下注的撮合能力，表明管理团队在复杂资本运作上具备超出预期的执行力，一定程度上降低了“重大战略决策高度依赖创始人个人”的担忧，因为该项目已从内部孵化走到外部独立市场化定价与多方尽调验证阶段；③但CFO/COO等其他高管人选与梯队深度仍未披露，团队后备力量无法充分评估，属长期数据缺口，与执行力评价改善并非同一维度问题。"
-        },
-        "culture": "①资本配置文化延续从纯增长导向转为增长与股东回报并重的方向，但本轮新增的加杠杆回购现象说明这一转型尚未完全稳定为“低风险、纯自有现金”模式，存在向更高风险容忍度漂移的可能，需持续观察；②工程师文化与技术转化能力延续强势，可灵AI 2026Q2单季收入超RMB8.5亿(+200%+)且分拆融资落地获多元化资本背书；③本轮最显著的新增文化/沟通信号：公司在2026Q2业绩公告“业务展望”章节首次使用“鑒於經營環境日益複雜且充滿挑戰，我們對短期業務前景持審慎態度”的措辞，与CEO在同一份业绩稿新闻稿引言中仍使用“穩健的財務與營運表現”“經營韌性進一步凸顯”等正面表述并存——即“CEO对外引言”与“正式展望章节”两个文本层面出现语气分层，前者偏市场沟通导向，后者偏合规/审慎导向；结合两日累计约23.3%的股价跌幅主要由TTM盈利同步下修解释（TTM PE仅从9.77x降至9.31x，跌幅约4.7%，financial_rigor.py验算），而非额外的估值倍数压缩，判断市场将“审慎”措辞理解为对已发生业绩下滑的诚实确认而非新增恐慌信号，倾向支持“管理层主动管理预期、避免未来暴雷式下修”的正面解读，但因该措辞是本季度首次出现且下半年经营环境能否企稳仍是开放问题，暂不能排除这是管理层为潜在的H2业绩不及预期提前铺垫免责空间的可能性，故本轮采用中性偏正面而非明确定性的判断，留待下一轮财报验证措辞与实际结果的一致性。"
-      },
-      "inquiry": {
-        "question": "如果CEO退休，这家公司还能保持竞争力吗？",
-        "answer": "大概率能保持，且本轮新增证据略微降低了对创始人依赖度的担忧，但需新增关注加杠杆资本配置的连续性问题。①治理结构未变：程一笑与宿华通过WVR合计控制约66%投票权，宿华从CEO转向战略角色已有平稳交接先例；②本轮新证据：可灵AI分拆融资从“评估”到“签约”仅约52天，且吸引腾讯、阿里云、百度、中信证券等多元化资本共同背书，证明公司在重大资本运作上的执行力已沉淀为可被外部独立验证的组织能力，而非仅依赖创始人个人叙事——即便创始人离场，这类项目的对外融资与治理框架已具备一定自我运转基础；③但本轮同时新增两个需要继任者妥善处理的变量：一是总借款激增109.4%、财务开支同比暴增背景下的资本结构管理，若继任者延续“账上巨额现金却持续加杠杆回购”而不解释逻辑，可能被资本市场质疑资本配置纪律；二是管理层首次采用“审慎”展望措辞，继任者需要证明这不是一次性免责声明，而是真正匹配经营现实的沟通风格转变。综合看，核心壁垒（OneRec、Kling AI、内容生态）已具备组织能力基础，创始人退休不会立即瓦解护城河，但资本配置纪律与预期管理的一致性将成为衡量继任团队成色的新增考察点。"
-      },
-      "dataGaps": [
-        {
-          "field": "alignment.compensation",
-          "reason": "采集文件未披露管理层薪酬结构与KPI考核挂钩机制，本轮HKEX官方2026Q2业绩公告全文亦未见披露",
-          "evidenceRequest": "需补充年报'董事薪酬'章节及薪酬委员会考核指标披露"
-        },
-        {
-          "field": "capitalAllocation.rdReturn",
-          "reason": "缺少项目层面研发投入产出量化数据，仅有公司层面研发费用与产品商业化结果",
-          "evidenceRequest": "需补充Kling AI/OneRec等项目级研发ROI量化数据"
-        },
-        {
-          "field": "organization.teamStability",
-          "reason": "采集文件仅披露CEO与联合创始人履历，未披露CFO/COO/CTO等其他高管任期与流动情况",
-          "evidenceRequest": "需补充管理层名单及高管变动历史（年报'高级管理层'章节）"
-        },
-        {
-          "field": "culture",
-          "reason": "缺少员工NPS、离职率等量化文化指标，仅能用资本配置与合规事件做定性推断",
-          "evidenceRequest": "需补充员工满意度调查/离职率等外部数据源"
-        },
-        {
-          "field": "keyDecisions（可灵AI分拆融资协议签署，本轮新增）",
-          "reason": "采集文件meta.sources.originalFilings将该事件标注为'HKEX公告'但所附URL实际为华尔街见闻媒体报道链接，未核实公司是否已就该项可能构成'须予披露交易'或'内幕消息'的重大子公司融资事件发布正式HKEX披露易公告",
-          "evidenceRequest": "需回查HKEX披露易(www.hkexnews.hk)是否存在快手2026年7月前后就北京可灵分拆融资签署的正式公告，并核对与媒体报道数字（注资额、领投方名单、投后估值）是否完全一致"
-        },
-        {
-          "field": "capitalAllocation.buybackTiming（加杠杆回购的官方解释）",
-          "reason": "官方财报仅披露总借款与财务开支净额的绝对数字及变动方向，未解释为何在持有约RMB1,213亿总可动用资金的情况下选择大幅新增借款（+109.4%）支撑回购与AI资本开支，而非直接动用自有现金；已查HKEX官方2026Q2业绩公告全文MD&A章节，未见对该资本结构选择的专门说明",
-          "evidenceRequest": "需下一轮回查年报附注中关于现金受限说明（如是否存在境内持牌实体现金调拨限制）、新增借款的具体利率与期限条款，判断加杠杆回购是流动性错配套利还是治理纪律松动"
-        },
-        {
-          "field": "keyDecisions（北京可灵具体股权结构）",
-          "reason": "快手对北京可灵约68%持股比例为本轮web_search检索所得的媒体测算数字（新浪财经·财闻），未在collection文件或HKEX官方公告原文中逐条核实精确持股比例及注入资产范围细节",
-          "evidenceRequest": "需回查分拆融资协议原文或后续HKEX公告，确认快手在北京可灵中的精确持股比例及资产注入范围"
-        }
-      ]
+    "businessModelCanvas": {
+     "salesModel": "订阅/复购",
+     "productForm": "混合",
+     "note": "①广告主按CPC/CPM对磁力引擎持续复投，本质是效果广告的循环采购而非一次性销售②直播虚拟礼物为高频复购型消费③Kling AI采用订阅制/按调用量收费的软件形态，与广告平台、电商服务并存构成混合产品形态。可灵AI分拆融资已于2026-07-02正式签署协议落地（此前为评估中），投后估值约USD180亿，多家产业与财务投资者（腾讯、阿里云、百度、中信证券等）共同背书，意味着这一\"混合形态\"中的AI订阅/API收费模式已从内部实验性收入线，进化为拥有独立外部估值锚点的第四变现极"
     },
-    "industryTrend": {
-      "title": "行业与长期趋势",
-      "conclusion": "短视频主业增长天花板判断维持不变——用户渗透率95.4%见顶，TAM增长驱动力确实已从'用户数扩张'切换为'使用时长与商业化效率'；但2026Q2新数据把这一判断推进了一层：核心商业化收入（在线营销+其他服务）增速从2026Q1的10.7%降至Q2的7.4%，而QuestMobile统计的同期中国互联网广告大盘同比+8.1%——快手增速已低于行业大盘3.7个百分点（对比同期腾讯营销服务收入+22%），证明这不只是'行业Beta放缓'，而是叠加了快手自身在存量商业化效率赛道上的份额流失，此前'转向效率驱动即可平滑用户见顶'的乐观假设需要下修。AI视频生成赛道的行业阶段判断需要更新：从此前'早期探索/早期爆发'升级为'资本化竞速+盈利压力显现'阶段——可灵AI分拆融资虽已签约落地（估值验证成功），但FY2025净亏损同比扩大180%（RMB5亿→19亿），同时字节跳动、谷歌、阿里同类产品直接竞争加剧，行业媒体称'建立壁垒的窗口期已经不多'；快手2026年资本开支指引约RMB260亿（较2025年+约RMB110.6亿），显示全行业AI基建军备竞赛仍在加码而非降温。快手依旧是短视频行业老二兼AI新业务的探索者，但这场探索正从'讲故事阶段'加速进入'要盈利证明阶段'，容错空间比一个季度前更窄。",
-      "analysis": {
-        "paradigmShift": {
-          "verdict": "部分",
-          "reasoning": "①短视频/内容社区行业用户渗透率已达95.4%接近天花板，本质是移动互联网既有范式在存量阶段的延续，而非独立新范式，本轮无新证据推翻此判断；②自研OneRec将推荐系统从传统'召回-排序'两阶段架构重构为生成式端到端架构，在主站实测观看时长提升1.6%，属于底层技术的范式性升级，本轮未获得更新数据但也无证据显示该判断需修正；③Kling AI所代表的文生视频生成式大模型正处于AI内容生成这一新兴范式的关键转折点——2026Q2单季收入首次超RMB8.5亿(同比+200%+)、分拆融资已签约落地(投后估值约USD180亿)，证明技术与资本层面的范式转移仍在推进，但FY2025净亏损同比扩大180%至约RMB19亿、且直接面临字节跳动/谷歌/阿里竞品，说明这一范式转移已从'能否被验证'的早期阶段，进入'能否被证明可盈利'的中期阶段，综合判定行业整体仍处于'部分'范式转移，但AI子赛道内部的阶段特征已发生实质变化（详见techRouteRisk）。"
-        },
-        "historicalAnalogy": "①对比互联网/移动互联网范式（约2000-2015年扩张期），短视频平台本质是注意力经济在移动端的延续，快手所在赛道已步入该轮范式的存量竞争成熟阶段，本轮无新证据改变此判断；②对比AI这一潜在文明级范式（类比电力从单一照明场景扩散为通用工业动力的历程），Kling AI等生成式视频模型此前被定位为'电灯泡刚发明、尚未通用化'的早期阶段——本轮新数据显示这一类比需要更新：分拆融资落地相当于'电力公司获得外部资本注资'，是范式确立的正面信号；但同期净亏损扩大180%、多家巨头(字节、谷歌、阿里)同步下场竞争，更接近电力产业化初期'多家电力公司同时铺设电网、尚未出现区域垄断者'的资本混战阶段，而非已跑出清晰赢家的成熟期；③在此类比中快手仍处于变革窗口期而非确立护城河的阶段，但窗口期本身正在收窄——媒体原文表述'建立壁垒的窗口期已经不多'，是本轮更新中历史类比层面最重要的修正。",
-        "tam": {
-          "current": {
-            "value": "在线营销服务(广告)：QuestMobile统计2026Q2中国互联网广告市场规模2,169.8亿元，同比+8.1%（本轮新增，行业大盘数据）；直播电商约6.9461万亿元(2025年预测)。两者统计口径不同，不做跨源加总",
-            "currency": "RMB",
-            "asOf": "2026年第二季度（互联网广告市场）/ 2025年（直播电商预测）",
-            "source": [
-              {
-                "name": "QuestMobile《中国移动互联网2026年上半年大报告》（经人民政协网转引，本轮新增）",
-                "url": "https://www.questmobile.cn/research/report/2084487578531254273"
-              },
-              {
-                "name": "网经社/电数宝《2025直播电商市场数据报告》",
-                "url": "https://m.sohu.com/a/1019861453_120491808"
-              }
-            ]
-          },
-          "ceiling": "①在线营销服务市场：QuestMobile口径2026Q2同比+8.1%（本轮新增），仍处于个位数中高段的成熟期增速，天花板受限于中国网络广告总盘子及快手份额提升空间；②直播电商市场2024年5.8万亿元、2025年预测6.9461万亿元，2024-2026年CAGR预测约18%，天花板取决于社零线上渗透率及快手约20%出头份额能否守住；③短视频用户时长渗透率已达95.4%，增量空间极小，两大变现引擎的增长已从'用户数×时长'驱动转为'变现效率×份额'驱动——本轮关键新证据：这一'效率驱动'阶段快手自身正在跑输大盘而非跟上大盘（见下）。",
-          "growthCurve": "短视频用户渗透率(95.4%)已进入成熟甚至饱和阶段，此判断不变；在线营销服务行业大盘本轮首次获得同期可比数据——QuestMobile统计2026Q2同比+8.1%，而快手同期在线营销服务收入仅同比+4.4%（低于大盘3.7个百分点，financial_rigor.py验算：8.1-4.4=3.7），核心商业化收入(在线营销+其他服务)增速从Q1的10.7%降至Q2的7.4%(财报管理层原文表述，financial_rigor.py交叉验算：(20639+6206-19800-5200)/(19800+5200)×100=7.38%，与管理层披露数字一致)；作为对照，同期腾讯营销服务收入同比+22%(远超行业大盘)，说明同一行业Beta下不同平台份额此消彼长的分化正在发生，快手的放缓更多是自身份额流失叠加行业Beta放缓的双重压力，而非纯行业性因素；直播电商增速从早期30%+降至2024-2026年CAGR预测约18%，处于高速成长向中速成长过渡阶段；AI内容生成业务(Kling AI)增速仍处于快速爆发阶段(2026Q2单季收入同比+200%+)，但FY2025净亏损同比扩大180%(RMB5亿→19亿，financial_rigor.py验算：(19-5)/5×100=280%，即增至2024年的2.8倍/扩大180%)，显示该子赛道正从单纯的'收入高增长叙事'切换为'增长与亏损同步扩大'的资本化竞速阶段。综合判断：快手核心变现业务处于'成熟期偏承压'（跑输行业大盘），AI新业务处于'资本化竞速+盈利压力显现'的导入期向成长期过渡阶段，哑铃结构仍然成立，但两端的风险特征都比上一轮更严峻。"
-        },
-        "valueChainPosition": "①在广告/营销服务价值链中，快手是流量入口与推荐分发方，向品牌及中小广告主收费，议价权取决于用户时长份额与商业化效率；本轮新证据强化了议价权偏弱势的判断——2026Q2在线营销服务收入同比+4.4%，低于QuestMobile统计的行业大盘+8.1%达3.7个百分点，且远低于同期腾讯营销服务收入+22%的增速，说明广告主预算正在同一行业Beta下从快手迁移至其他平台（腾讯视频号/朋友圈广告等），快手在价值链中对广告主的议价权较此前判断进一步走弱；②在直播电商价值链中快手兼具流量分发与交易撮合双重角色，GMV份额约20%出头且较2024年基本持平略降，本轮未获得更新的GMV数据（公司已停止单独披露），对商家/主播议价权判断维持中等，需与抖音电商(体量约2倍以上)争夺头部主播与品牌资源；③在AI技术价值链中，快手已从'应用层使用者'实质性升级为'底层模型供应商'——Kling AI分拆融资已于2026-07-02签署协议落地(投后估值约USD180亿)，较此前'仍处初步阶段'的表述是确定性进展；但同时字节跳动、谷歌、阿里同类产品的直接竞争加剧，且可灵AI自身FY2025净亏损同比扩大180%至约RMB19亿，意味着'供应商'地位的确立尚未转化为可持续的独立盈利能力，议价权提升更多体现在资本市场估值层面而非产业链利润分配层面。",
-        "techRouteRisk": "①Kling AI所在的文生视频生成式大模型赛道技术迭代极快，本轮新增关键证据：行业媒体报道称该赛道'建立壁垒的窗口期已经不多'，直接竞争对手已从'潜在'升级为'字节跳动、谷歌、阿里同类产品的直接竞争'（证券时报报道），叠加可灵AI FY2025净亏损同比扩大180%（RMB5亿→19亿，收入约RMB11亿），说明该赛道正从'技术领先即可获得高估值'的早期阶段，切换为'技术领先能否转化为可持续盈利'的中期考验阶段，护城河尚未经过长期验证的判断不仅维持，且风险权重上升；②OneRec将推荐系统从传统检索排序架构切换为生成式Encoder-Decoder+MoE架构，技术路线较新，其相对传统推荐系统的长期稳定优势(目前公开数据仅为+1.6%观看时长)仍需更长周期验证，本轮无新数据更新；③AI基础设施依赖自建算力(内蒙古乌兰察布数据中心)，本轮新增关键证据：据财经媒体报道快手2026年全年资本开支指引约RMB260亿，较FY2025的RMB149.42亿新增约RMB110.58亿（financial_rigor.py验算：26000-14942=11058百万），主要投向服务器采购、数据中心扩建等AI算力基建——这一指引显示，即便公司自身H1业绩已明显承压(经营利润同比-23.0%)且管理层展望转向'审慎'，资本开支仍在加码而非收缩，反映整个行业AI基建军备竞赛仍处于'不进则退'的竞速状态，若AI技术方向出现路线错误或商业化不及预期，前期重资产算力投入的减值与沉没成本风险进一步放大。",
-        "concentration": {
-          "customers": {
-            "status": "unavailable",
-            "reason": "采集文件competitiveLandscape/industryOutlook/technology均未披露快手广告主集中度(如前五大广告主收入占比)数据，本轮financials-collection.json新增的2026Q2数据同样未涉及此字段，已查全部相关维度"
-          },
-          "suppliers": {
-            "status": "unavailable",
-            "reason": "采集文件未披露云服务器/AI芯片等供应商集中度数据，仅提及'自建数据中心(内蒙古乌兰察布)'及资本开支金额(FY2025 RMB149.42亿、2026年指引约RMB260亿)，本轮未新增供应商集中度数据"
-          },
-          "evidence": []
-        }
+    "stickiness": {
+     "level": "中（用户关系仍在，商业化粘性下降）",
+     "mechanism": "①老铁社交关系链仍沉淀关注与私域互动，但核心日活已停滞：2026Q2 DAU 4.123 亿（同比仅 +0.8%）、MAU 7.973 亿（+11.5%），DAU/MAU 由 2026Q1 的 53.5% 降至 51.7%——增量来自低频用户，粘性的「深度」在变浅；②磁力引擎 UAX 自动化投放渗透商家近 60%，商家迁移需重新积累账号数据与投放模型，构成一定切换成本；③可灵订阅制把粘性延伸到 ToB，Q2 单季收入超 8.5 亿元（+200%），但 Q3 指引环比零增长，付费规模尚未形成锁定。综合：用户关系链仍强于纯公域平台，但在收入下滑时，粘性没有转化为定价权。",
+     "evidence": [
+      {
+       "metric": "DAU/MAU比例",
+       "value": "2026Q2：412.3 百万 / 797.3 百万 ≈ 51.7%（2026Q1 为 53.5%）",
+       "asOf": "2026Q2（截至 2026-06-30）",
+       "source": {
+        "name": "Kuaishou IR 2026Q2 业绩公告",
+        "url": "https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-second-quarter-and-interim-2026/"
+       }
       },
-      "inquiry": {
-        "question": "站在20年后回看，这家公司是「这个时代的标准石油」还是「昙花一现的3Com」？",
-        "answer": "更接近区域性寡头而非标准石油或转瞬即逝的3Com，且本轮新数据显示这个判断的容错空间比一个季度前更窄。①标准石油式判断要求接近垄断的定价权与不可替代的基础设施地位，但快手2026Q2在线营销服务收入同比+4.4%，已低于QuestMobile统计的行业大盘+8.1%达3.7个百分点，且远逊于同期腾讯营销服务收入+22%的增速——这不再只是MAU增速落后抖音的老问题，而是在'用户见顶后转向商业化效率'这条此前被视为出路的赛道上，快手同样在跑输大盘，定价权层面的证据进一步走弱；②3Com式判断要求技术路线被颠覆后迅速边缘化，快手尚未走到这一步——H1 2026仍有正的经营利润(RMB73.52亿)与充裕的可利用资金总额(RMB1,213亿)，十亿级用户基本盘与AI技术资产(Kling AI分拆估值约USD180亿)提供缓冲垫，短期内不会消失；③真正的胜负手仍在Kling AI，但胜负手本身的性质已经变化——此前是'能否成功分拆融资'的确定性问题(本轮已验证：能，协议已签署)，现在是'分拆后能否在字节跳动/谷歌/阿里的直接竞争下把200%+的收入增速转化为收窄而非扩大的亏损'的执行力问题(本轮新证据：FY2025净亏损同比扩大180%至约RMB19亿)。若可灵AI能在未来1-2年内证明盈利路径、同时快手核心商业化收入增速能重新追上或反超行业大盘，仍有望复制'电力公司'式的时代地位；若两条战线同时失守——AI赛道'建立壁垒的窗口期'关闭且核心广告业务份额持续流失——则大概率加速退化为区域性内容平台，长期估值上限将比此前判断更低。"
+      {
+       "metric": "磁力引擎UAX智能投放系统商家渗透率",
+       "value": "约60%，广告冷启动成功率+25%",
+       "asOf": "2024年初上线后（2025年数据）",
+       "source": {
+        "name": "极客公园《AI正在重塑快手商业化体系》",
+        "url": "https://www.geekpark.net/news/347925"
+       }
       },
-      "dataGaps": [
-        {
-          "field": "concentration.customers",
-          "reason": "缺失快手广告主集中度数据(如前五大客户收入占比)，本轮financials-collection.json新增的2026Q2数据未涉及此字段",
-          "evidenceRequest": "需另行采集公司年报关联方及大客户披露章节"
-        },
-        {
-          "field": "concentration.suppliers",
-          "reason": "缺失云服务器/AI芯片等核心供应商集中度数据，采集文件仅披露自建数据中心地点与资本开支金额(含本轮新增的2026年RMB260亿指引)",
-          "evidenceRequest": "需另行采集公司年报关联交易及采购披露章节"
-        },
-        {
-          "field": "industryOutlook.onlineMarketingServicesTAM",
-          "reason": "各研究机构口径差异极大（同为相近年份数字相差近一倍），本轮新增QuestMobile 2026Q2单季8.1%增速数据部分缓解了这一缺口（提供了与快手同期可比的行业大盘增速），但仍缺乏统计局/工信部官方口径的原始报告用于最终交叉核实",
-          "evidenceRequest": "如需精确TAM需交叉核对统计局/工信部官方口径原始报告"
-        },
-        {
-          "field": "tam.growthCurve（Kling AI FY2026分季度盈亏路径）",
-          "reason": "本轮仅获得Kling AI FY2025全年净亏损数据(约RMB19亿)，缺乏2026年内分季度收入/亏损拆分，无法判断亏损扩大趋势在最新季度是收窄还是加剧",
-          "evidenceRequest": "需在下一轮更新中回查公司是否在业绩交流会纪要或投资者问答中透露Kling AI 2026年分季度盈亏数据"
-        }
-      ]
+      {
+       "metric": "Kling AI季度收入（本轮更新为季度收入实绩，替代此前的ARR推算口径）",
+       "value": "2026Q1单季超RMB6.5亿(+300%+)→2026Q2单季超RMB8.5亿(+200%+)，环比持续放量",
+       "asOf": "2026Q2",
+       "source": {
+        "name": "HKEX官方业绩公告（2026-08-19）",
+        "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+       }
+      }
+     ]
     },
-    "valuation": {
-      "title": "估值分析",
-      "conclusion": "30.48港元、换汇修正后7.16x TTM PE对应的隐含永续增长率已跌入-1.97%~-3.47%区间（r取12%/10.5%），较8-20的'贴近零'发生质变——市场定价已从'盈利下修到此为止'切换为'接受永久性衰退'。但TTM PE是后视镜：卖方共识2026年EPS约-62%对应forward PE约18.9x，表观便宜与前瞻口径之间的落差，本质是'当前盈利是否已见谷底'的分歧。SOTP进一步极端化：可灵AI完成轮融资投后USD180亿（约HKD1,411亿）已相当于快手全市值（HKD1,320亿）的约107%，按留存68.33%计归属价值HKD964.7亿+净现金HKD1,098.6亿=HKD2,063亿，市值减去后核心主业隐含残值约-HKD744亿（方向性判断，私募定价含回购权、不可直接二级市场可比）。口径订正：前两轮PE（9.77x/9.31x）为HKD市值直接除RMB利润、未换汇，本轮按HKDCNY=0.8551修正，三情景目标价相应整体上移约17%（悲观21.7/中性38.3/乐观59.0港元，中性情景转为+25.8%上行）。9月卖方分歧极大（麦格理27.60~CLSA57港元），共识目标价参考价值有限；本轮主要新增风险是9-14全球AI抛售对'估值靠可灵'逻辑的板块性压制。",
-      "analysis": {
-        "currentMultiples": {
-          "marketCap": {
-            "value": "131.98B",
-            "currency": "HKD",
-            "asOf": "2026-09-15 11:08 HKT",
-            "note": "30.48 HKD × 43.3亿股，financial_rigor.py verify-market-cap验算偏差0.00%；较8-20的146.74B下降约10.1%。stockanalysis概览页142.87B为过期缓存，未采用",
-            "source": {
-              "name": "financials-collection.json currentValuation.marketCap（本轮verify-market-cap验算）",
-              "url": "（采集文件内部数据，无外部URL）"
-            }
-          },
-          "pe": {
-            "value": "7.16x（TTM，本轮换汇口径修正：RMB归母净利润15,766mn×1.1694=HKD18.44B，131.98/18.44=7.16；financial_rigor.py calc验算）",
-            "priorValue": "9.31x（2026-08-20）/ 9.77x（2026-08-07）——前两轮未换汇口径，系统性高估，不可比",
-            "asOf": "2026-09-15",
-            "note": "forward口径：共识2026 EPS CN¥1.38（-62%）→18.89x；浙商2026经调整净利RMB89.34亿→12.63x。TTM便宜、前瞻不便宜，分歧在盈利谷底位置",
-            "source": {
-              "name": "financials-collection.json currentValuation.pe + crossValidationLog（本轮验算）",
-              "url": "（采集文件内部数据，无外部URL）"
-            }
-          },
-          "ps": {
-            "value": "0.78x（市值HKD131.98B ÷ TTM营收HKD168.85B）",
-            "priorValue": "1.02x（2026-08-20）",
-            "asOf": "2026-09-15",
-            "source": {
-              "name": "financials-collection.json currentValuation.ps",
-              "url": "（采集文件内部数据，无外部URL）"
-            }
-          },
-          "pb": {
-            "value": "1.52x",
-            "priorValue": "1.72x（2026-08-20）",
-            "asOf": "2026-09-15",
-            "note": "与上轮BVPS推算值（1.55x@现价）互证一致，偏差约2%",
-            "source": {
-              "name": "financials-collection.json currentValuation.pb（单源stockanalysis statistics页）",
-              "url": "https://stockanalysis.com/quote/hkg/1024/statistics/"
-            }
-          },
-          "peg": {
-            "status": "unavailable",
-            "reason": "stockanalysis统计页3.90x与上轮快照0.98x严重冲突，无可靠第二来源，不采信",
-            "asOf": "2026-09-15"
-          },
-          "evToRevenue": {
-            "value": "0.13x（EV=市值−净现金≈HKD22.1B，显式计算；净现金占市值约83%导致EV极小）",
-            "priorValue": "0.78x（2026-08-20，stockanalysis口径，不可比）",
-            "asOf": "2026-09-15",
-            "note": "对净现金口径敏感（'总可动用资金'含定期存款/理财），仅作方向性参照",
-            "source": {
-              "name": "financials-collection.json currentValuation.evToRevenue + crossValidationLog",
-              "url": "（采集文件内部数据，无外部URL）"
-            }
-          },
-          "evToEbitda": {
-            "status": "unavailable",
-            "reason": "官方未披露TTM EBITDA，上轮stockanalysis快照已过期，不拼接过期分子分母",
-            "asOf": "2026-09-15"
-          }
-        },
-        "reverseDcf": {
-          "impliedGrowth": "用Gordon增长模型反推（PE≈1/(r-g)）：7.16x对应 r-g=1/7.16≈13.97%。①r取10.5% → g≈-3.47%；②r取12% → g≈-1.97%。与8-20（9.31x旧口径下g约-0.24%~+1.26%）相比发生质变：在TTM盈利未变的情况下，三周半内股价再跌9.4%，市场定价从'盈利下修到此为止的trough定价'切换为'隐含永久性衰退'。这一读数有两种互斥解释：其一，市场前瞻性地price in了共识口径2026年EPS约-62%的下修（即TTM盈利仍将大幅滚动下滑，7.16x按滚动后的盈利看并不便宜，forward PE约18.9x）；其二，9月中旬全球AI板块抛售带来的情绪性折价叠加港股流动性收缩。区分两者需要等2026Q3财报（预计11月发布）验证毛利率/经营利润降幅是否收窄——若降幅收窄，则当前定价过度悲观；若降幅继续扩大，则负增长定价是前瞻正确的。卖方观点分布（麦格理27.60到大和37再到美银53/CLSA57）本身就是这两种解释分歧的直接体现。",
-          "assumptions": "①贴现率（股权成本）本轮上调至10.5%-12%区间（上轮为10%-11%），理由为总借款规模同比+109.4%、财务开支净额同比+377.8%带来的杠杆及流动性风险边际上升，叠加管理层H2展望首次转为'审慎'措辞带来的定性风险溢价；②预测期与三情景模型保持一致的3年窗口，未单独运行完整分年现金流折现模型；③终值假设长期永续增长中枢仍在3%-4%左右（对标中国名义GDP增速与短视频用户渗透率95.4%见顶后的稳态商业化效率提升），本节反向DCF的-0.24%~+1.26%区间仅为由当前9.31x倒推的'隐含'增长率，与终值假设的3%-4%'合理'增长率之间的落差，本身就是当前定价保守/悲观程度的量化体现。（2026-09-15更新：PE基数改为换汇修正后的7.16x；r区间沿用10.5%-12%；本轮新增：H1'总可动用资金'中含定期存款与理财，若仅计狭义现金，实际净现金低于账面读数，股权风险溢价应再上修——该口径不确定性未计入上述g区间。）"
-        },
-        "threeScenario": {
-          "inputs": {
-            "price": 30.48,
-            "eps": 4.26,
-            "sharesHundredMillion": 43.3,
-            "growth": [
-              "8%",
-              "0%",
-              "-10%"
-            ],
-            "pe": [
-              11,
-              9,
-              7
-            ],
-            "years": 3,
-            "currency": "HKD"
-          },
-          "epsDerivation": "TTM归母净利润RMB15,766mn×1.1694（1/HKDCNY 0.8551）=HKD18,437mn ÷ 43.3亿股 = HKD4.257/股，financial_rigor.py calc验算链：131978400000*0.8551/15766000000=7.16（PE）、30.48/7.16=4.257，取4.26",
-          "optimistic": {
-            "targetPrice": "59.0 HKD",
-            "impliedReturnPct": "+93.7%"
-          },
-          "neutral": {
-            "targetPrice": "38.3 HKD",
-            "impliedReturnPct": "+25.8%"
-          },
-          "pessimistic": {
-            "targetPrice": "21.7 HKD",
-            "impliedReturnPct": "-28.7%"
-          },
-          "assumptionBasis": "增速与PE假设沿用8-20轮（8%/0%/-10%增速、11/9/7倍PE），本轮仅随EPS基数换汇修正与价格更新整体重算——悲观情景从'跌破现价'（8-20轮18.6<33.89）转为现价下方28.7%，中性情景从-3.3%转为+25.8%。假设实质不变：乐观=AI投入与融资成本阶段性压制消退+直播降幅收窄+核心商业化增速转化为盈利；中性=增长停滞但不恶化；悲观=盈利下滑趋势延续但缓和（-10%/年为代理值）+利息负担与竞争侵蚀。本轮新增上下文：卖方对2026年的预测（浙商收入-3.0%/经调整净利近腰斩）介于中性偏悲观之间；若以共识EPS-62%线性理解，当前实际更接近悲观情景的盈利路径，但共识本身在业绩后仍可能继续下修。",
-          "toolOutput": "============================================================\n三情景估值模型 (Three-Scenario Valuation)\n============================================================\n  当前股价: 30.48 HKD\n  当前EPS:  4.26\n  预测期:   3年\n\n  情景                年增速     目标PE      目标EPS       目标股价      涨跌幅\n  ------------ -------- -------- ---------- ---------- --------\n  乐观 (Bull)          8%      11x       5.37      59.0   +93.7%\n  中性 (Base)          0%       9x       4.26      38.3   +25.8%\n  悲观 (Bear)        -10%       7x       3.11      21.7   -28.7%\n\n  ✅ 所有计算使用精确十进制, 结果可审计复现"
-        },
-        "vsOwnHistory": {
-          "metric": "trailing PE",
-          "currentValue": "7.16x（2026-09-15，换汇修正口径；前两轮9.77x/9.31x为未换汇口径、系统性高估，不可比）",
-          "historicalRange": {
-            "status": "unavailable",
-            "reason": "采集文件financials-collection.json未收录快手上市以来或近3-5年的历史PE区间/时间序列数据，仅有当前单点估值，无法计算当前分位数；本轮未新增采集该字段，问题延续自上轮"
-          },
-          "source": {
-            "name": "financials-collection.json currentValuation（无历史序列字段）",
-            "url": "（采集文件内部数据，无外部URL）"
-          }
-        },
-        "vsPeers": [
-          {
-            "name": "抖音（字节跳动）",
-            "pe": {
-              "status": "unavailable",
-              "reason": "未上市，无公开PE/PS数据；本轮未新增信息"
-            },
-            "ps": {
-              "status": "unavailable",
-              "reason": "未上市，无公开PE/PS数据"
-            },
-            "source": {
-              "name": "financials-collection.json competitiveLandscape.competitors",
-              "url": "（采集文件内部数据，无外部URL）"
-            }
-          },
-          {
-            "name": "微信视频号（腾讯）",
-            "pe": {
-              "status": "unavailable",
-              "reason": "视频号为腾讯内部业务分部，不单独上市、不单独披露估值倍数"
-            },
-            "ps": {
-              "status": "unavailable",
-              "reason": "同上"
-            },
-            "source": {
-              "name": "financials-collection.json competitiveLandscape.competitors",
-              "url": "（采集文件内部数据，无外部URL）"
-            }
-          },
-          {
-            "name": "哔哩哔哩 Bilibili (9626.HK/BILI)",
-            "pe": {
-              "status": "unavailable",
-              "reason": "采集文件仅收录哔哩哔哩FY2025营收(RMB303.5亿)、毛利率(36.6%)，未采集其PE/PS估值倍数；本轮未补充回查"
-            },
-            "ps": {
-              "status": "unavailable",
-              "reason": "同上"
-            },
-            "source": {
-              "name": "Bilibili官方2025年报（雪球转引）",
-              "url": "https://xueqiu.com/7954303002/378569790"
-            }
-          },
-          {
-            "name": "小红书 Xiaohongshu",
-            "pe": {
-              "status": "unavailable",
-              "reason": "未上市，仅有营收/净利润的媒体估计数字，无公开股价与PE"
-            },
-            "ps": {
-              "status": "unavailable",
-              "reason": "同上"
-            },
-            "source": {
-              "name": "新浪财经转引彭博社",
-              "url": "https://finance.sina.com.cn/roll/2025-09-05/doc-infpmkhh5984541.shtml"
-            }
-          },
-          {
-            "name": "可灵AI分拆估值 vs 快手集团市值（本轮新增SOTP参照，非可比公司倍数比较）",
-            "pe": {
-              "status": "not-applicable",
-              "reason": "非上市同业倍数对比，为分部加总估值(SOTP)口径的私募轮定价参照，非PE/PS可比"
-            },
-            "ps": {
-              "status": "not-applicable",
-              "reason": "同上"
-            },
-            "sotpAnalysis": "（2026-09-15更新）可灵AI增资扩股已于8-31完成交割：国家AI产业基金注资RMB14亿（对应扩大后注册资本约1.14%，隐含投后约RMB1,228亿）+正大机器人约USD1,929万，均附回购权；媒体与卖方汇总口径本轮融资约USD30亿、投后USD180亿、快手留存约68.33%（美银/浙商同口径，据此美银计可灵归属价值USD120亿）。留存68.33%低于7月协议窗口外推的83.33%-88.73%，推断差异来自资产注入结构，以完成轮披露为准。按USD180亿、USDHKD 7.8436（2026-09-15腾讯外汇接口）验算：可灵整体投后估值约HKD1,411.8亿，已相当于快手自身市值（HKD1,319.8亿）的约107%——可灵单笔私募定价已高于快手全公司市值约7%。留存权益价值=0.6833×USD180亿×7.8436=HKD964.7亿（工具验算）；H1净现金RMB93,938mn÷0.8551=HKD1,098.6亿（工具验算）；两者合计HKD2,063.3亿，市值减去后核心广告+直播主业隐含残值约-HKD744亿（工具验算：131.978−96.47−109.86=−74.35B），与8-20轮的-HKD72B~-80B区间方向一致且略深化。四点谨慎解读沿用上轮并强化：①私募轮定价附回购权等结构性条款（国家基金与正大股份均获回购权），含流动性/风险折价的对价，不能直接等同于二级市场公允价值；②留存68.33%为卖方转引口径，精确比例以最终工商登记/上市文件为准；③汇率7.8436/0.8551为2026-09-15即期实价（较上轮倒推隐含值更可靠），残余误差主要在留存比例与净现金口径；④安全边际论证依赖'可灵2027年初港股上市+核心业务止跌'两个条件同时兑现，9-14全球AI抛售表明前者的板块情绪风险在上升。",
-            "source": [
-              {
-                "name": "华尔街见闻（可灵AI分拆融资协议细节）",
-                "url": "https://wallstreetcn.com/articles/3776114"
-              },
-              {
-                "name": "financials-collection.json currentValuation.marketCap + management.keyDecisions + financialMetrics.interim2026H1.cashReservesAsOf20260630（本轮工具重新验算与订正）",
-                "url": "（采集文件内部数据，无外部URL）"
-              }
-            ]
-          }
-        ],
-        "sellsideTargets202609": {
-          "asOf": "2026-09-15",
-          "currentPrice": "30.48 HKD",
-          "table": [
-            {
-              "broker": "麦格理 Macquarie",
-              "date": "2026-08-20",
-              "rating": "Underperform（下调）",
-              "tp": 27.6,
-              "note": "业绩后下调，卖方最悲观锚"
-            },
-            {
-              "broker": "大和 Daiwa",
-              "date": "2026-09-03",
-              "rating": "Hold",
-              "tp": 37.0,
-              "note": "称管理层承认还有两个困难季度，核心压力或持续至2026Q4、2027年改善"
-            },
-            {
-              "broker": "中银国际 CCB Intl",
-              "date": "2026-08-20",
-              "rating": "Neutral（下调）",
-              "tp": 40.6,
-              "note": ""
-            },
-            {
-              "broker": "花旗 Citi",
-              "date": "2026-08-20",
-              "rating": "Neutral（下调）",
-              "tp": 41.0,
-              "note": ""
-            },
-            {
-              "broker": "浙商证券",
-              "date": "2026-09-14",
-              "rating": "Buy",
-              "tp": 46.33,
-              "note": "预测2026收入RMB1,384.95亿（-3.0%）、经调整净利RMB89.34亿"
-            },
-            {
-              "broker": "美银 BofA",
-              "date": "2026-09-01/02",
-              "rating": "Buy（重申）",
-              "tp": 53.0,
-              "note": "SOTP：可灵归属USD120亿+净现金USD130亿=USD250亿 vs 市值约USD170亿"
-            },
-            {
-              "broker": "里昂 CLSA",
-              "date": "2026-09",
-              "rating": "Outperform",
-              "tp": 57.0,
-              "note": "自68下调，仍看可灵上行"
-            }
-          ],
-          "consensus": "共识目标价约50.63（31家覆盖，较业绩前下调约29%，区间27.63-102，分歧极大，均值参考价值有限）",
-          "sources": [
-            {
-              "name": "etnet（大和）",
-              "url": "https://www.etnet.com.hk/www/tc/news/news-article.php?category=blocktrade&newsid=20260903324&section=categorized"
-            },
-            {
-              "name": "MarketScreener（麦格理/花旗/中银国际）",
-              "url": "https://au.marketscreener.com/news/macquarie-downgrades-kuaishou-technology-to-underperform-from-neutral-price-target-is-hk-27-60-ce7859d3d880f526"
-            },
-            {
-              "name": "Yahoo财经（美银）",
-              "url": "https://hk.finance.yahoo.com/news/%E5%A4%A7%E8%A1%8C-%E7%BE%8E%E9%8A%80%E8%AD%89%E5%88%B8-%E5%BF%AB%E6%89%8B-01024-hk-035653686.html"
-            },
-            {
-              "name": "新浪财经（浙商）",
-              "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-09-14/doc-inirutpa4614591.shtml"
-            },
-            {
-              "name": "simplywall.st（共识）",
-              "url": "https://simplywall.st/stocks/hk/media/hkg-1024/kuaishou-technology-shares/news/analysts-have-lowered-expectations-for-kuaishou-technology-h"
-            }
-          ]
-        }
+    "grossMarginVsPeers": {
+     "companyPct": "55.02%（FY2025）；51.6%（2026Q2单季，本轮同比-4.1个百分点）",
+     "peers": [
+      {
+       "name": "哔哩哔哩 Bilibili",
+       "grossMarginPct": "36.6%（FY2025）",
+       "source": {
+        "name": "Bilibili官方2025年报（雪球转引）",
+        "url": "https://xueqiu.com/7954303002/378569790"
+       }
       },
-      "inquiry": {
-        "question": "如果股市明天关闭5年，你愿意以这个价格持有吗？",
-        "answer": "愿意，仍仅作组合中的保守仓位持有。①估值本身：换汇修正后7.16x TTM PE反向DCF隐含永续增长率-1.97%~-3.47%，市场已定价'永久性衰退'而非'错杀式便宜'——不能指望估值端提供安全边际，且forward口径（共识2026 EPS约-62%）对应约18.9x并不便宜，便宜与否取决于盈利谷底位置（2026Q3财报预计11月发布，是最近的证伪/证真节点）。②真正的安全边际来自资产负债表与可灵股权：H1净现金约RMB939亿（≈HKD1,099亿，financial_rigor.py验算）+ 可灵留存68.33%按完成轮融资投后USD180亿计约值HKD965亿，两者合计HKD2,063亿 vs 市值HKD1,320亿——核心广告+直播主业隐含残值约-HKD744亿。该SOTP需谨慎解读：可灵私募定价附回购权等结构性条款、留存68.33%为卖方转引口径，属方向性判断而非精确估值。③下行风险尚未证伪：H1经调整净利润-28.5%、Q2单季-30.3%，管理层'审慎'措辞，总借款+109.4%，直播连续两季两位数下滑，9-14全球AI抛售进一步压制'估值靠可灵'逻辑；若H2盈利下修兑现为持续性，'负值核心业务'可能只是价值陷阱中继。④综合结论：5年维度值得以谨慎仓位持有，本质是'可灵AI获二级市场重新定价+核心现金牛止跌'的双重期权，9月卖方目标价区间27.60-57港元分歧极大、共识参考价值有限，仓位决策应以自己的三情景与触发条件为准，不应重仓。"
+      {
+       "name": "抖音（字节跳动）",
+       "grossMarginPct": {
+        "status": "unavailable",
+        "reason": "字节跳动未上市不披露财务报表，已查采集文件competitiveLandscape.competitors抖音条目及其转引报道，均无毛利率估计数字"
+       },
+       "source": {
+        "name": "（采集文件内部核实，未查得毛利率数据）",
+        "url": "（采集文件内部数据，无外部URL）"
+       }
       },
-      "dataGaps": [
-        {
-          "field": "vsOwnHistory.historicalRange",
-          "reason": "缺快手上市以来的历史PE区间/时间序列数据，无法判断当前9.31x的历史分位，问题延续自上轮，本轮未新增采集",
-          "evidenceRequest": "需补充回查stockanalysis.com历史估值页或Bloomberg/Wind的快手PE时间序列（2021年上市至今），标注区间高低点及当前分位数"
-        },
-        {
-          "field": "vsPeers[Bilibili].pe/ps",
-          "reason": "采集文件competitiveLandscape仅收录哔哩哔哩营收与毛利率，未收录其PE/PS等估值倍数，问题延续自上轮",
-          "evidenceRequest": "需补充采集哔哩哔哩(9626.HK/BILI)当前trailing PE、PS及历史区间，用于与快手估值倍数交叉对比"
-        },
-        {
-          "field": "analystTargetPrices（上轮缺口已于2026-09-15补全）",
-          "reason": "2026年9月财报后卖方目标价已密集发布，本轮已采集：麦格理8-20下调至Underperform TP27.60；中银国际8-20下调至Neutral TP40.60；花旗8-20下调至Neutral TP41；大和9-3维持Hold下调TP至37；美银9-1/9-2重申Buy TP53；CLSA下调TP至57维持Outperform；浙商9-14维持Buy TP46.33；共识目标价下调约29%至50.63（31家，区间27.63-102）",
-          "evidenceRequest": "无需再补；后续跟踪2026Q3财报（预计11月）后的新一轮评级变动"
-        },
-        {
-          "field": "vsPeers[可灵AI SOTP].sotpAnalysis中的汇率与留存比例假设（2026-09-15部分改善）",
-          "reason": "上轮USD/HKD 7.78与RMB/HKD 1.09为倒推近似值；本轮已改用2026-09-15腾讯外汇接口即期实价（USDHKD=7.8436、HKDCNY=0.8551）重算，汇率误差已收敛。残余不确定性：留存68.33%为美银/浙商转引口径（7月协议窗口外推为83.33%-88.73%，差异推断来自资产注入结构），精确比例以最终工商登记/上市文件为准",
-          "evidenceRequest": "可灵2027年初上市文件披露后回查精确留存比例与资产注入作价"
-        }
-      ]
+      {
+       "name": "小红书 Xiaohongshu",
+       "grossMarginPct": {
+        "status": "unavailable",
+        "reason": "未上市公司不披露财务报表，已查采集文件competitiveLandscape.competitors小红书条目及其转引报道，均无毛利率估计数字"
+       },
+       "source": {
+        "name": "（采集文件内部核实，未查得毛利率数据）",
+        "url": "（采集文件内部数据，无外部URL）"
+       }
+      }
+     ],
+     "whyHigherOrLower": "①在线营销(占57.1%)与直播打赏(27.4%)均为轻资产、无实物库存的内容变现，边际履约成本低于Bilibili内容采购/版权成本结构②磁力引擎UAX自动化投放降低获客与内容生产成本，规模效应下算法/服务器成本被MAU超7亿的用户盘摊薄③电商技术服务费/佣金模式毛利率高于自营电商，FY2025毛利率55.02%（较FY2024再升0.42个百分点）明显高于Bilibili的36.6%。即便2026Q2单季毛利率同比下滑4.1个百分点至51.6%，仍显著高于Bilibili的36.6%（FY2025），说明快手对内容平台同行的结构性毛利率优势并未因本季度波动而消失，本季度的下滑是边际趋势变化而非跨越同业基准线的质变"
+    },
+    "operatingLeverage": {
+     "observation": "①FY2025营收同比+12.5%，官方口径经营利润同比+35.0%(RMB152.87亿→206.37亿)，经营杠杆显著为正②研发费用同比+18.8%快于营收增速，反映AI投入拉动的费用结构调整③其他运营费用增速慢于营收，经营利润率仍从12.05%升至14.45%④资本开支同比翻倍推高AI基建投入，自由现金流同比-45.8%至RMB117.74亿，现金端杠杆短期转负。2026Q2/H1经营杠杆由正转负——H1营收同比+2.4%，经营利润同比-23.0%；2026Q2单季营收同比+1.4%，经营利润同比-29.0%，期内利润同比-36.0%，经调整净利润同比-30.3%，均为收入增速的数倍负向放大，与FY2025的正向杠杆方向完全相反。⑤经营杠杆的负向放大将在 Q3 进一步恶化：指引收入 -7.5%、经调整净利 -86%，意味着收入每下降 1 个百分点，利润下降约 11 个百分点——固定成本（研发、带宽、内容分成下限）占比过高，在收入负增长时无法压缩。这是从「增长型平台」切换到「收缩型平台」时最危险的财务特征。",
+     "evidence": [
+      {
+       "metric": "营业收入同比增速",
+       "value": "+12.5%",
+       "asOf": "FY2025",
+       "source": {
+        "name": "Kuaishou IR FY2025全年业绩公告",
+        "url": "https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-fourth-quarter-and-full-year-2025"
+       }
+      },
+      {
+       "metric": "经营利润同比增速（官方口径）",
+       "value": "+35.0%（RMB152.87亿→206.37亿）",
+       "asOf": "FY2025",
+       "source": {
+        "name": "Kuaishou IR FY2025全年业绩公告",
+        "url": "https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-fourth-quarter-and-full-year-2025"
+       }
+      },
+      {
+       "metric": "研发费用同比增速",
+       "value": "+18.8%（RMB121.99亿→144.91亿，FY2025）；H1 2026同比+22.5%（RMB66.98亿→82.02亿），2026Q2单季同比+34.7%",
+       "asOf": "FY2025 / H1 2026",
+       "source": {
+        "name": "Kuaishou IR官方披露 / HKEX官方业绩公告",
+        "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+       }
+      },
+      {
+       "metric": "自由现金流同比增速",
+       "value": "-45.8%（RMB217.24亿→117.74亿，FY2025）",
+       "asOf": "FY2025",
+       "source": {
+        "name": "stockanalysis.com 现金流量表",
+        "url": "https://stockanalysis.com/quote/hkg/1024/financials/"
+       }
+      },
+      {
+       "metric": "2026Q2经营利润/期内利润/经调整净利润同比增速",
+       "value": "经营利润-29.0%；期内利润-36.0%；经调整净利润-30.3%（对应收入增速仅+1.4%）",
+       "asOf": "2026Q2",
+       "source": {
+        "name": "HKEX官方业绩公告（2026-08-19）",
+        "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+       }
+      },
+      {
+       "metric": "财务开支净额同比增速",
+       "value": "H1 口径 +452.6%（RMB0.78亿→4.31亿，工具验算 (431-78)/78=452.56%）；Q2 单季官方 MD&A 披露 +377.8% 至 RMB2.58亿。总借款较 FY2025 年末 +109.4% 至 RMB273.62亿，主要用于股份回购与 AI 资本开支。",
+       "asOf": "H1 2026",
+       "source": {
+        "name": "HKEX官方业绩公告（2026-08-19）",
+        "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+       }
+      }
+     ]
+    },
+    "guidanceQ3Breakdown": {
+     "period": "2026Q3E（8-19 业绩会指引，非已披露数据）",
+     "table": [
+      {
+       "segment": "在线营销服务",
+       "q2_2026_actual": "+4.4%",
+       "q3_2026_guide": "-4.5%",
+       "reading": "从跑输大盘 3.7pp 到绝对下滑；广告主预算在宏观疲软下先砍二线平台"
+      },
+      {
+       "segment": "直播",
+       "q2_2026_actual": "-13.5%",
+       "q3_2026_guide": "-17.0%",
+       "reading": "降幅再扩大，生态治理与打赏监管是结构性逆风"
+      },
+      {
+       "segment": "其他服务（含电商、可灵）",
+       "q2_2026_actual": "+18.5%",
+       "q3_2026_guide": "-10.0%",
+       "reading": "电商佣金受涉税合规成本冲击；可灵收入指引 ≥8.5 亿、环比零增长"
+      },
+      {
+       "segment": "总收入",
+       "q2_2026_actual": "+1.4%",
+       "q3_2026_guide": "-7.5%",
+       "reading": "上市以来（除 2022 年疫情基数异常外）罕见的双位数以下负增长"
+      },
+      {
+       "segment": "经调整净利润",
+       "q2_2026_actual": "39.13 亿元（-30%）",
+       "q3_2026_guide": "约 7 亿元（-86%）",
+       "reading": "单季净利率约 2%，接近盈亏平衡线"
+      }
+     ],
+     "source": {
+      "name": "2026-08-19 业绩会纪要（腾讯新闻/长桥/卖方点评转述）",
+      "url": "https://news.qq.com/rain/a/20260820A00PVQ00"
+     },
+     "flag": "单源口径（业绩会口头指引，业绩公告正文未列数字），与已披露数据严格区分"
+    },
+    "revenueDeclineAnatomy": {
+     "finding": "把 Q3 指引拆开看，四条收入线同时转负是 2024 年以来第一次：广告（占 Q2 收入 58.1%）从 +4.4% 到 -4.5%，直播（24.5%）从 -13.5% 到 -17%，其他服务（17.4%）从 +18.5% 到 -10%。公司给出的三条解释里，只有「宏观疲软」是周期性的；「电商涉税合规成本」与「直播生态治理」都是政策性、不可逆的成本上升。换句话说，Q3 的负增长里至少一半不是周期问题，而是商业模式在新的合规环境下的重定价。",
+     "costSide": "毛利率恶化也不是一次性的：Q2 收入分成成本及相关税项占收入比由 30.1% 升至 34.7%（官方 MD&A），分成成本绝对值同比 +16.9%，远快于收入 +1.4%。多出来的 4.6pp 主要流向主播/创作者与电商服务商——这是平台为了保住供给端付出的「分成通胀」，在收入下滑时无法用规模摊薄。",
+     "source": {
+      "name": "HKEX 2026Q2 业绩公告 MD&A + 业绩会指引",
+      "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+     },
+     "interpretation": "如果 Q3 兑现，那么「收入结构从广告转向电商+AI」这个过去两年的正面叙事要改写成「两条腿一起瘸」；真正的多头论据只剩下资产负债表（净现金 + 可灵股权），而不是经营改善。"
     }
-  },
-  "crossValidationLog": [
+   },
+   "inquiry": {
+    "question": "这门生意好在哪？如果只能用一句话描述，是什么？",
+    "answer": "一句话：快手曾是把下沉流量转化为广告、打赏、电商三重现金流的注意力变现机器，但 2026 年这台机器第一次整体失速。①广告仍是最大支柱（Q2 占收入 58.1%），但 Q3 指引 -4.5%，在行业仍 +8.1% 时绝对丢份额；②直播打赏连续两季 -13.5%，Q3 指引 -17%，政策性逆风（生态治理）不可逆；③电商佣金 Q3 指引 -10%，主因涉税合规成本抬高了长尾商家的经营门槛；④唯一还在增长的可灵，Q2 收入超 8.5 亿元（+200%），但 Q3 指引环比零增长，全年预计亏损 50-60 亿元。所以这门生意现在的价值不在「三重现金流」的经营改善，而在两样存量资产：约 1,213 亿元「可利用资金」与可灵 66.68% 的股权。生意的本质已经从「增长型平台」变成了「持有资产的收缩型平台」——这是本轮相对上一轮最重要的判断变化。"
+   },
+   "dataGaps": [
     {
-      "field": "三情景估值",
-      "source1": {
-        "name": "financial_rigor.py three-scenario --price 44.18 --eps 4.52 --shares 43.1 --growth 0.18 0.10 0.04 --pe 13 10 8 --years 3 --currency HKD",
-        "value": "乐观96.5/中性60.2/悲观40.7 HKD"
-      },
-      "source2": {
-        "status": "not-applicable",
-        "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
-      },
-      "deviationPct": {
-        "status": "not-applicable",
-        "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
-      },
-      "flag": "ok",
-      "resolution": "工具精确十进制计算，非心算，已用--help确认参数单位（shares为亿股，growth为小数）"
+     "path": "广告/直播/其他服务的分部毛利率",
+     "reason": "公司仅披露集团整体毛利率，未按分部单独披露毛利率。报告中「传统分部毛利率不变」的敏感性测算依赖这一假设，而非真实分部数据，无法排除传统分部自身成本比率也小幅上升的可能性。",
+     "searched": "已查采集文件revenueStructure与financialMetrics，2026Q2业绩公告MD&A仍仅披露集团层面收入分成成本/带宽成本占比，未按分部拆分",
+     "evidenceRequest": {
+      "metric": "分部毛利率（在线营销/直播/其他服务，含Kling AI单独口径）",
+      "question": "公司是否在业绩交流会纪要、投资者问答或北京可灵分拆上市文件中透露过分部层面的毛利率或成本结构拆分",
+      "whyNeeded": "用于验证本轮毛利率下滑究竟是结构性收入切换（新引擎权重上升）还是核心广告/直播业务自身单位经济性恶化，是判断生意本质是否变化的关键缺失数据",
+      "priority": "high"
+     }
     },
     {
-      "field": "PE/PB/ROE一致性验算",
-      "source1": {
-        "name": "financial_rigor.py verify-valuation --price 44.18 --eps 4.52 --bvps 21.55",
-        "value": "PE=9.77x，PB=2.05x（由44.18/2.05反推BVPS=21.55），隐含ROE≈20.97%"
-      },
-      "source2": {
-        "name": "financials-collection.json currentValuation（stockanalysis口径）",
-        "value": "PE=9.77x，PB=2.05x"
-      },
-      "deviationPct": 0.0,
-      "flag": "ok",
-      "resolution": "工具验算PE、PB与采集文件单源数据完全一致，且反推隐含ROE≈21%，与FY2025盈利改善趋势方向一致，未发现异常"
+     "path": "analysis.stickiness（次月留存率/创作者复访率等具体留存数值）",
+     "reason": "采集文件未覆盖具体的次日/次月留存率、创作者账号复访率等留存类KPI",
+     "searched": "已查采集文件revenueStructure、competitiveLandscape、businessModelMoat",
+     "evidenceRequest": {
+      "metric": "用户次月留存率、创作者/达人账号复访率",
+      "question": "快手官方或第三方是否披露过用户次月留存率、创作者月活跃留存率等具体粘性数值",
+      "whyNeeded": "DAU/MAU比例只是总量粘性的代理指标，留存率能更精确衡量生态锁定强度，尤其是在传统引擎（广告+直播）本季度首次绝对收缩的背景下，更需要留存数据判断是用户流失还是消费结构转移",
+      "priority": "high"
+     }
     },
     {
-      "field": "反向PE隐含EPS变动（trailing vs forward）",
-      "source1": {
-        "name": "financial_rigor.py calc --expr '44.18/10.10'",
-        "value": "forward EPS≈4.37"
-      },
-      "source2": {
-        "name": "financial_rigor.py calc --expr '44.18/9.77'",
-        "value": "trailing EPS≈4.52"
-      },
-      "deviationPct": -3.27,
-      "flag": "ok",
-      "resolution": "工具精确计算得出forward EPS较trailing EPS低约3.27%，即forward PE(10.10x)高于trailing PE(9.77x)隐含市场预期未来12个月EPS小幅下滑而非增长，用于reverseDcf定性推理，非误差异常"
-    },
-    {
-      "field": "三情景重算（换汇修正EPS基数）",
-      "tool": "financial_rigor.py three-scenario --price 30.48 --eps 4.26 --growth 0.08 0.00 -0.10 --pe 11 9 7 → 乐观59.0(+93.7%)/中性38.3(+25.8%)/悲观21.7(-28.7%)",
-      "flag": "ok"
-    },
-    {
-      "field": "反向DCF隐含增长率",
-      "tool": "financial_rigor.py calc：1/7.16=13.97%；g(10.5%)=-3.47%；g(12%)=-1.97%",
-      "flag": "ok"
-    },
-    {
-      "field": "SOTP更新（完成轮口径）",
-      "tool": "financial_rigor.py calc：0.6833×18e9×7.8436=HKD96.47B；93,938mn/0.8551=HKD109.86B；131.978−96.47−109.86=−HKD74.35B；18e9×7.8436/131.978e9=107%",
-      "flag": "ok（方向性）"
+     "path": "analysis.grossMarginVsPeers.peers（抖音/视频号毛利率）",
+     "reason": "字节跳动与腾讯视频号均未单独披露毛利率或相关分部财务数据",
+     "searched": "已查采集文件competitiveLandscape.competitors中抖音与微信视频号条目，均为status:unavailable",
+     "evidenceRequest": {
+      "metric": "抖音/视频号毛利率或分部经营数据",
+      "question": "是否有投行研究或第三方渠道估算过字节跳动短视频/直播电商业务的毛利率水平",
+      "whyNeeded": "缺少最直接竞争对手抖音的毛利率数据，同行对比说服力受限",
+      "priority": "medium"
+     }
     }
-  ]
+   ]
+  },
+  "moat": {
+   "title": "护城河评估",
+   "conclusion": "护城河正在从「平台网络效应」迁移到「单一 AI 产品的技术领先 + 资本化」，迁移过程中宽度变窄、耐久性变短：官方 MAU 7.97 亿（+11.5%）看似增长，但 DAU 只有 4.12 亿（+0.8%），增量来自低频用户，核心日活停滞；广告 Q3 指引 -4.5%，在行业仍 +8.1% 时绝对丢份额，网络效应这条护城河已基本失效；可灵是唯一还在变宽的资产——10-30 交割、实收 198 亿、投后约 RMB1,225 亿、IPO 已选定承销商，但它只有 66.68% 属于快手，且必须在 2031-10 前上市，否则触发 8% 单利回购。换言之，可灵越确定，它就越是一项可以单独定价、单独交易的资产，而不是快手的护城河。",
+   "analysis": {
+    "types": [
+     {
+      "type": "品牌/定价权",
+      "test": "是否能在不损失销量的情况下提价？",
+      "verdict": "不存在",
+      "evidence": [
+       {
+        "metric": "直播收入同比增速(2026Q2)",
+        "value": "-13.5%（与2026Q1同幅度，连续两季度下滑）",
+        "asOf": "2026Q2（截至2026-06-30）",
+        "source": {
+         "name": "HKEX官方业绩公告/主会话已采集revenueStructure",
+         "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+        }
+       },
+       {
+        "metric": "直播收入同比增速(2026Q1对比2025Q4)",
+        "value": "-13.5%（前值-1.0%）",
+        "asOf": "2026Q1（截至2026-03-31）",
+        "source": {
+         "name": "Kuaishou IR官方公告（2026Q1季报）",
+         "url": "https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-first-quarter-2026-unaudited"
+        }
+       },
+       {
+        "metric": "短视频MAU同比增速对比（快手vs抖音）",
+        "value": "快手+3.4% vs 抖音+14.7%，差距持续扩大",
+        "asOf": "2025年9月",
+        "source": {
+         "name": "QuestMobile（新浪财经转引）",
+         "url": "https://finance.sina.com.cn/tech/roll/2025-11-07/doc-infwqvpr0815507.shtml"
+        }
+       },
+       {
+        "metric": "直播打赏平台抽成比例",
+        "value": "官方未披露具体比例，行业惯例约50%（非官方数字，为合理推断）",
+        "asOf": "FY2025",
+        "source": {
+         "name": "采集文件businessModelMoat推断",
+         "url": "（采集文件内部数据，无外部URL）"
+        }
+       }
+      ],
+      "note": "本轮无新证据推翻\"不存在\"判断，直播收入连续两季度同比-13.5%即为确认性证据，未纳入本轮重点复核范围。"
+     },
+     {
+      "type": "转换成本",
+      "test": "客户迁移到竞品的成本有多高？",
+      "verdict": "待验证",
+      "evidence": [
+       {
+        "metric": "磁力引擎UAX智能投放系统客户渗透率",
+        "value": "接近60%（2024年初上线后）",
+        "asOf": "2025年（报道时点）",
+        "source": {
+         "name": "极客公园《AI正在重塑快手商业化体系》",
+         "url": "https://www.geekpark.net/news/347925"
+        }
+       },
+       {
+        "metric": "广告冷启动成功率提升",
+        "value": "+25%",
+        "asOf": "2025年（报道时点）",
+        "source": {
+         "name": "极客公园《AI正在重塑快手商业化体系》",
+         "url": "https://www.geekpark.net/news/347925"
+        }
+       },
+       {
+        "metric": "2026Q2毛利率同比变化",
+        "value": "51.6%（前值55.7%），同比下滑4.1个百分点（工具验算：55.7-51.6=4.10，financial_rigor.py calc）",
+        "asOf": "2026Q2（截至2026-06-30）",
+        "source": {
+         "name": "HKEX官方业绩公告MD&A",
+         "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+        }
+       },
+       {
+        "metric": "收入分成成本及相关税项占收入比例变化",
+        "value": "由30.1%升至34.7%，同比+4.6个百分点（工具验算：34.7-30.1=4.60）；分成成本绝对值同比+16.9%（工具验算：(35535×0.347)/(35046×0.301)×100-100=16.89），快于总收入+1.4%的增速",
+        "asOf": "2026Q2（截至2026-06-30）",
+        "source": {
+         "name": "HKEX官方业绩公告MD&A",
+         "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+        }
+       },
+       {
+        "metric": "带宽/服务器托管成本占收入比例变化",
+        "value": "由3.8%升至4.5%",
+        "asOf": "2026Q2（截至2026-06-30）",
+        "source": {
+         "name": "HKEX官方业绩公告MD&A",
+         "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+        }
+       }
+      ],
+      "note": "证据不足以改判\"待验证\"为\"存在\"或\"不存在\"，理由：①官方MD&A仅披露\"收入分成成本\"这一合并科目的占比变化，未按广告主(磁力引擎UAX)/内容创作者(直播分成)/电商商家(佣金)分部拆分，无法判断上升主要来自哪一方；②该科目绝对值增速(+16.9%)明显快于总收入增速(+1.4%)，理论上存在两种互斥解释——(a)平台为对抗抖音而被迫向内容方/达人/商家让渡更多分成以维持留存，意味着转换成本型护城河的议价能力实际在减弱；(b)收入结构从低分成成本的直播(收缩13.5%)切换至高分成成本的电商佣金/Kling AI相关服务(+18.5%)，纯粹是分部权重切换的会计效应，与UAX广告主侧switching cost强度无关；③由于缺乏分部成本拆分数据，两种解释均无法证伪，故维持\"待验证\"判断，并在dataGaps中新增该证据缺口。"
+     },
+     {
+      "type": "网络效应",
+      "test": "用户越多产品越好吗？",
+      "verdict": "存在但在削弱",
+      "evidence": [
+       {
+        "metric": "快手官方 MAU / DAU（2026Q2）",
+        "value": "MAU 7.973 亿（同比 +11.5%，公司称历史新高）、DAU 4.123 亿（同比 +0.8%）；DAU/MAU 降至 51.7%",
+        "asOf": "2026Q2（截至2026-06-30）",
+        "source": {
+         "name": "Kuaishou IR 2026Q2 业绩公告",
+         "url": "https://ir.kuaishou.com/news-releases/news-release-details/kuaishou-technology-announces-second-quarter-and-interim-2026/"
+        },
+        "note": "官方口径含极速版等全系产品，与 QuestMobile 主 APP 口径（2025-09）不可直接比较。MAU +11.5% 而 DAU 仅 +0.8%，说明增量主要来自低频/边缘用户，核心日活基本停滞——这比「MAU 增速落后抖音」更能解释广告收入为何下滑。"
+       },
+       {
+        "metric": "MAU/DAU规模",
+        "value": "MAU 772百万 / DAU 413百万（2026Q1口径，创历史新高）",
+        "asOf": "2026Q1",
+        "source": {
+         "name": "Kuaishou IR官方公告",
+         "url": "（采集文件内部数据，无外部URL）"
+        }
+       },
+       {
+        "metric": "短视频APP MAU对比（快手vs抖音）",
+        "value": "458.16百万 vs 936.41百万，快手约为抖音一半",
+        "asOf": "2025年9月",
+        "source": {
+         "name": "QuestMobile（新浪财经转引）",
+         "url": "https://finance.sina.com.cn/tech/roll/2025-11-07/doc-infwqvpr0815507.shtml"
+        }
+       },
+       {
+        "metric": "集团总收入同比增速环比持续降速",
+        "value": "2025Q4 11.8% → 2026Q1 3.4% → 2026Q2 1.4%（工具验算：11.8-3.4=8.4个百分点、3.4-1.4=2.0个百分点，降速幅度收窄但方向未逆转）",
+        "asOf": "2026Q2（截至2026-06-30）",
+        "source": {
+         "name": "HKEX官方业绩公告/主会话已采集revenueStructure",
+         "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+        }
+       },
+       {
+        "metric": "广告收入增速 vs 行业大盘（2026Q3 指引）",
+        "value": "快手在线营销 -4.5%（指引）vs QuestMobile 2026Q2 行业 +8.1%，剪刀差扩大到 12.6pp",
+        "asOf": "2026Q3 指引 / 2026Q2 行业数据",
+        "source": {
+         "name": "业绩会指引 + QuestMobile（人民政协网转引）",
+         "url": "https://news.qq.com/rain/a/20260820A00PVQ00"
+        }
+       }
+      ],
+      "note": "MAU 仍在增长（Q2 7.97 亿，+11.5%），但核心日活停滞（DAU 4.12 亿，+0.8%）、DAU/MAU 降至 51.7%，且广告收入 Q3 指引 -4.5%——网络效应还在，但已经不能转化为变现能力。"
+     },
+     {
+      "type": "规模效应",
+      "test": "规模带来的成本优势有多大？",
+      "verdict": "存在但在削弱",
+      "evidence": [
+       {
+        "metric": "研发费用规模及增速(FY2025)",
+        "value": "RMB144.91亿，同比+18.8%",
+        "asOf": "FY2025",
+        "source": {
+         "name": "Kuaishou IR官方披露",
+         "url": "（采集文件内部数据，无外部URL）"
+        }
+       },
+       {
+        "metric": "研发费用增速(2026H1/2026Q2)",
+        "value": "H1同比+22.5%(RMB82.02亿)；Q2单季同比+34.7%(RMB45.81亿)，占收入比由9.7%升至12.9%（工具验算：12.9-9.7=3.2个百分点）",
+        "asOf": "2026Q2（截至2026-06-30）",
+        "source": {
+         "name": "HKEX官方业绩公告",
+         "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+        }
+       },
+       {
+        "metric": "2026Q2经营利润率同比变化",
+        "value": "10.6%（前值15.1%），同比下滑4.5个百分点（工具验算：15.1-10.6=4.5）",
+        "asOf": "2026Q2（截至2026-06-30）",
+        "source": {
+         "name": "HKEX官方业绩公告MD&A",
+         "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+        }
+       }
+      ],
+      "note": "收入负增长时，固定成本（研发、带宽、内容分成下限）无法摊薄，Q3 指引收入 -7.5% 对应经调整净利 -86%，规模效应转为负向杠杆。"
+     },
+     {
+      "type": "技术/专利壁垒",
+      "test": "技术领先几年？能否被复制？",
+      "verdict": "存在",
+      "evidence": [
+       {
+        "metric": "OneRec端到端生成式推荐模型主站落地效果",
+        "value": "观看时长+1.6%，公开报道中首个工业场景超越传统推荐系统的端到端生成式模型",
+        "asOf": "2025年（技术分享时点）",
+        "source": {
+         "name": "知乎技术解读《细读快手推荐OneRec-V1技术报告》",
+         "url": "https://zhuanlan.zhihu.com/p/1927386141486735715"
+        }
+       },
+       {
+        "metric": "可灵AI分拆融资协议正式签署（本轮关键新证据，取代此前\"评估中/传闻\"表述）",
+        "value": "2026-07-02，公司间接全资附属公司\"北京可灵\"与21名初始投资者签约，合计注资约USD20.28亿（另预留窗口期至最多USD30亿，对应经扩大注册资本16.67%），投后估值约USD180亿；领投方含CPE源峰、国方创投、BlueFive Capital（中东资本，为中东资本首次投资中国AI视频模型）、腾讯、中关村科学城基金、中信证券，另有阿里云、百度参与",
+        "asOf": "2026-07-02",
+        "source": {
+         "name": "华尔街见闻（分拆融资协议签署细节）",
+         "url": "https://wallstreetcn.com/articles/3776114"
+        }
+       },
+       {
+        "metric": "分拆资产注入与上市时间表",
+        "value": "协议约定最晚付款日后9个月内将可灵相关模型/算法/研发团队/海外业务及运营资产注入北京可灵；北京可灵计划2027年初向港交所递交上市申请材料",
+        "asOf": "2026-07-02协议约定",
+        "source": {
+         "name": "主会话已采集financials-collection.json technology字段",
+         "url": "https://wallstreetcn.com/articles/3776114"
+        }
+       },
+       {
+        "metric": "Kling AI 2026Q2单季收入",
+        "value": "首次超RMB8.5亿，同比增速超200%（前值2026Q1超RMB6.5亿、+300%+；工具验算Q1→Q2环比增速：(850-650)/650×100=30.77%）",
+        "asOf": "2026Q2（截至2026-06-30）",
+        "source": {
+         "name": "HKEX官方业绩公告AI业务章节",
+         "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+        }
+       },
+       {
+        "metric": "Kling AI 2026Q2新增产品能力",
+        "value": "原生4K视频直出功能、可灵MCP/CLI（支持AI agent批量调度创作），产品迭代未见放缓",
+        "asOf": "2026Q2",
+        "source": {
+         "name": "主会话已采集financials-collection.json technology字段",
+         "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+        }
+       },
+       {
+        "metric": "【反向证据】Kling AI FY2025财务表现",
+        "value": "净亏损扩大至约RMB19亿（2024年约RMB5亿，同比 +280%），收入约RMB11亿，亏损/收入比约173%（工具验算：19/11×100=172.73%），即高速ARR增长与加速扩大的亏损并存",
+        "asOf": "FY2025",
+        "source": {
+         "name": "证券时报（可灵AI财务数据与竞争格局）",
+         "url": "https://www.stcn.com/article/detail/4005254.html"
+        }
+       },
+       {
+        "metric": "【反向证据】竞争格局",
+        "value": "可灵AI面临字节跳动、谷歌、阿里同类视频生成大模型的直接竞争，行业媒体评价\"建立壁垒的窗口期已经不多\"",
+        "asOf": "2026年（报道时点）",
+        "source": {
+         "name": "证券时报（可灵AI财务数据与竞争格局）",
+         "url": "https://www.stcn.com/article/detail/4005254.html"
+        }
+       }
+      ],
+      "note": "本轮判断：技术壁垒verdict维持\"存在\"，但内部张力显著加大，是本次复核变化最大的条目。①正面：分拆从\"仍处初步阶段，尚未签署任何最终协议\"（上一轮基线原话）升级为已签约的确定性事实，且投资方名单包含腾讯、阿里云、百度等原本可被视为竞争对手/潜在替代技术提供方的产业资本，这些主体愿意联合押注本身是对可灵AI技术资产独立价值的强背书，是护城河从\"叙事期权\"向\"可定价资产\"转化的实质性里程碑，过去12个月内技术壁垒维度的变化方向仍是拓宽（对应collection文件businessModelMoat.moatSources中\"技术壁垒\"条目trend=\"变宽\"的既有判断）。②负面：可灵AI自身FY2025净亏损增至3.8倍且已超过收入规模，说明当前的高速收入增长很大程度上是靠亏损性投入(算力/获客补贴)换来的，尚未验证是否存在可持续的单位经济模型；叠加字节跳动/谷歌/阿里同类模型的直接竞争与\"建壁垒窗口期不多\"的行业评价，'技术领先几年、能否被复制'这一测试本身的答案比上一轮更不确定，而非更确定。③净判断：分拆落地是治理/资本层面的确定性提升（护城河的\"可变现性\"变宽），但商业层面的护城河\"耐久性\"这一核心问题仍未被这轮新证据证实或证伪，反而因亏损扩大与竞争加剧多了一层新的不确定性，二者方向相反，故trendNext5y需要明确标注这一分歧，不能简单用单一'变宽'方向概括全部信息。"
+     },
+     {
+      "type": "资本化壁垒",
+      "test": "技术资产能否被独立定价、独立融资，并在上市后维持溢价？",
+      "verdict": "有条件成立",
+      "evidence": [
+       {
+        "metric": "可灵交割与估值",
+        "value": "实收 RMB198.02 亿（USD29.05 亿），投后约 RMB1,225 亿；快手持股 66.68%、表决权 52.45%",
+        "asOf": "2026-10-30",
+        "source": {
+         "name": "港交所公告（2026-10-30）",
+         "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/1030/2026103002124_c.pdf"
+        }
+       },
+       {
+        "metric": "IPO 路径",
+        "value": "市场报道选定中金/高盛/瑞银，拟募资 ≥USD10 亿、2027 年初递表（公司未证实）；对赌为 2031-10-30 前未上市则按本金 +8% 单利回购",
+        "asOf": "2026-10",
+        "source": {
+         "name": "Bloomberg 经 Investing.com 转引 + 港交所公告回购权条款",
+         "url": "https://www.investing.com/news/stock-market-news/kuaishous-kling-ai-targets-hong-kong-ipo-may-raise-at-least-1-bln--bloomberg-4933340"
+        }
+       },
+       {
+        "metric": "【反向证据】可灵盈利与竞争",
+        "value": "FY2026 预计亏损 50-60 亿元（业绩会转述）；Q3 收入指引 ≥8.5 亿、环比零增长；字节即梦、谷歌 Veo、阿里通义万相直接竞争",
+        "asOf": "2026Q3 指引",
+        "source": {
+         "name": "业绩会纪要（腾讯新闻）",
+         "url": "https://news.qq.com/rain/a/20260820A00PVQ00"
+        }
+       }
+      ],
+      "note": "「有条件」的含义：资本化解决了「谁来出钱」的问题，但没有解决「能不能赚钱」的问题。收入环比停滞 + 全年亏损 50-60 亿，说明这条壁垒目前靠融资支撑，而不是靠产品定价权支撑。"
+     }
+    ],
+    "trendPast5y": {
+     "direction": "稳定",
+     "basis": "①网络效应因集团总收入增速连续三季度加速降速(2025Q4 11.8%→2026Q1 3.4%→2026Q2 1.4%，工具验算降速幅度8.4pp、2.0pp)叠加MAU增速落后抖音(3.4%对14.7%)，持续收窄；②规模/研发效应本季呈现新变化——研发强度从9.7%跳升至12.9%(+3.2pp)，但同期经营利润率反而下滑4.5pp，短期是'再投入侵蚀杠杆'而非'规模摊薄成本'，长期规模优势方向未变但节奏被打断；③技术壁垒因可灵AI分拆融资由\"评估中\"升级为2026-07-02正式签约(含腾讯/阿里云/百度联合押注)而在资本化/可变现层面快速拓宽，但同期曝出的FY2025净亏损增至3.8倍(亏损/收入比约173%)及字节跳动/谷歌/阿里直接竞争，使其在'商业耐久性'层面的不确定性同步扩大；三力方向大致抵消，故过去5年维度综合判断维持'稳定'，但内部结构性张力比上一轮基线(2026-08-09)更为剧烈。"
+    },
+    "trendNext5y": {
+     "direction": "变窄（相对 5 年前），且不确定性上升",
+     "basis": "①网络效应：MAU 增速落后抖音，广告份额连续三季度丢失，这条护城河在未来 5 年只会更窄，不会恢复；②技术壁垒：可灵是唯一还在变宽的部分，10-30 交割拿到 198 亿弹药、IPO 有了承销商，但 Q3 收入环比零增长说明「技术领先 → 收入增长」的传导正在减速，未来 5 年的关键变量是 Kling 4.0 能否在与字节、谷歌、阿里的对攻中守住体验领先；③资本化：66.68% 的持股意味着可灵每增值 100 元，股东只分到 66.7 元；2031 年前的 IPO 对赌又给这份价值加了一个时间约束；④转换成本与网络效应相关证据仍不完整（分部成本、用户留存率未披露），维持「不可判定」而非「已恶化」。综合：护城河的「重心」已经从平台迁移到单个产品，这是宽度收窄、也是耐久性变短的直接原因。"
+    }
+   },
+   "inquiry": {
+    "question": "10年后这条护城河还在吗？什么能摧毁它？",
+    "answer": "部分留存，但比上一轮(2026-08-09基线)更难简单归为\"AI技术壁垒确定存活\"。①可灵AI分拆融资已于2026-07-02正式签约(此前仅为'评估中，尚未签署最终协议')，且投资方名单包含腾讯、阿里云、百度等原本可能是竞争对手的产业资本，是护城河从叙事期权转为可定价资产的实质性里程碑，若2027年初港股上市申请材料按计划递交，AI资产壁垒有望独立于短视频主业存续；②但同一时间窗口曝出可灵AI FY2025净亏损增至3.8倍、已超过自身收入规模(亏损/收入比约173%)，且直接面对字节跳动、谷歌、阿里同类视频生成模型的竞争，行业媒体评价其'建立壁垒的窗口期已经不多'——这意味着即便分拆成功，可灵AI能否在10年维度建立起真正难以复制的技术代差，本轮新证据没有提供更强确定性，反而暴露了此前未知的盈利质量风险；③若MAU增速持续落后抖音(总收入增速已连续三季度降速至1.4%)，'老铁'网络效应基本盘可能被结构性摧毁；④2026Q2毛利率下滑4.1个百分点、收入分成成本占比上升4.6个百分点，若后续证实是磁力引擎UAX对广告主议价权减弱(而非纯粹的收入结构切换)，转换成本这一原本'待验证'的护城河来源可能被证伪，需要分部成本数据才能判断；⑤监管趋严与VIE/港股折价等政策性风险若恶化，可能从合规与资本两端侵蚀护城河基础。综合看，能摧毁这条护城河的最直接路径是：可灵AI在分拆独立后持续无法收窄亏损率、被字节跳动/谷歌/阿里的同类模型实质性反超，同时短视频主业网络效应基本盘的收窄未能被电商/AI新业务对冲。"
+   },
+   "dataGaps": [
+    {
+     "path": "护城河·网络效应证据（直播打赏平台抽成比例官方数字）",
+     "reason": "官方未披露具体分成比例",
+     "searched": "已查采集文件businessModelMoat，仅有行业惯例推断（约50%）",
+     "evidenceRequest": {
+      "metric": "直播打赏平台抽成比例官方精确数字",
+      "question": "快手官方财报或公告是否披露直播打赏的具体平台分成比例",
+      "whyNeeded": "验证'转换成本'与'品牌定价权'护城河强度需要精确分成率",
+      "priority": "medium"
+     }
+    },
+    {
+     "path": "2026Q2 收入分成成本按分部/客户类型的拆分",
+     "reason": "官方MD&A仅披露'收入分成成本及相关税项'合并占比从30.1%升至34.7%，未按广告主(磁力引擎UAX)/内容创作者(直播分成)/电商商家(佣金)/Kling AI(云成本分成)拆分，无法判断成本上升的具体来源，也就无法判断是UAX议价权减弱还是收入结构切换",
+     "searched": "已查采集文件financialMetrics/revenueStructure/businessModelMoat，均无分部成本拆分数据",
+     "evidenceRequest": {
+      "metric": "2026Q2收入分成成本按分部/客户类型的拆分数据",
+      "question": "快手是否在业绩交流会纪要、投资者问答或后续披露中透露过收入分成成本上升具体来自广告主侧让利、创作者/达人分成提升、还是电商佣金结构变化",
+      "whyNeeded": "直接决定'转换成本'护城河verdict能否从'待验证'升级为'存在'或'不存在'的关键缺口",
+      "priority": "high"
+     }
+    },
+    {
+     "path": "OneRec / Kling AI 技术代际领先年限的第三方评估",
+     "reason": "缺乏独立第三方对技术代际差距的评估",
+     "searched": "已查快手自身技术分享、投行估值传闻及证券时报关于竞争格局的报道，无第三方对Kling AI相对字节跳动/谷歌/阿里同类模型的技术代际差距量化评估",
+     "evidenceRequest": {
+      "metric": "OneRec/Kling AI技术代际领先年限的第三方评估",
+      "question": "是否存在独立第三方(如AI评测机构、学术benchmark)对快手OneRec/Kling AI相对抖音/谷歌/阿里同类模型技术代际差距的评估",
+      "whyNeeded": "护城河模板要求验证'技术领先几年、能否被复制'亏损扩大证据使该缺口的重要性进一步上升",
+      "priority": "high"
+     }
+    },
+    {
+     "path": "广告主提价弹性测试数据",
+     "reason": "缺乏历史提价记录及对应广告主流失率数据",
+     "searched": "已查采集文件，无此数据，只能用间接指标替代判断",
+     "evidenceRequest": {
+      "metric": "广告主提价弹性测试数据（价格弹性/流失率）",
+      "question": "是否存在快手磁力引擎广告历史提价记录及对应广告主流失率/复投率数据",
+      "whyNeeded": "品牌/定价权护城河测试需要'提价后是否流失用户'的直接证据",
+      "priority": "medium"
+     }
+    },
+    {
+     "path": "可灵 FY2025 分季度亏损率与单位经济数据",
+     "reason": "证券时报仅披露可灵AI FY2025全年净亏损约RMB19亿、收入约RMB11亿的年度汇总数字，未披露分季度亏损收窄/扩大趋势及获客成本、算力成本等单位经济拆分",
+     "searched": "已查采集文件technology字段及证券时报转引报道，仅有年度汇总数字",
+     "evidenceRequest": {
+      "metric": "可灵AI分季度收入/亏损趋势及单位经济(获客成本、算力成本占收入比)",
+      "question": "北京可灵在推进港股上市申请过程中是否会披露更细颗粒度的分季度财务数据以验证亏损率是否收敛",
+      "whyNeeded": "判断可灵AI能否独立造血、技术壁垒的商业耐久性能否兑现的关键量化依据",
+      "priority": "high"
+     }
+    }
+   ]
+  },
+  "inversion": {
+   "title": "逆向思考与风险清单",
+   "conclusion": "最大风险不再是「竞争导致增长放缓」，而是「核心业务进入结构性负增长」与「现金被三件事同时消耗」的叠加：广告 Q3 指引 -4.5%、电商佣金 -10%，意味着份额流失已经从用户端蔓延到变现端；同时 AI 资本开支（全年约 260 亿元）、回购（年内 28.55 亿港元）、可灵潜在回购义务（2031 年前不上市则本金 +8%）在争夺同一笔现金。账面 1,213 亿元「可利用资金」是唯一的安全垫，但它不是可以全额分配的现金。",
+   "analysis": {
+    "failurePaths": [
+     {
+      "path": "广告收入绝对下滑成为常态，电商佣金受涉税合规侵蚀，公司从「增长型平台」退化为「收缩型平台」",
+      "probability": "偏高（Q3 指引已给出 -7.5% 的收入与 -86% 的利润，属于部分已发生）",
+      "impact": "高",
+      "evidence": [
+       {
+        "metric": "Q3 2026 收入指引",
+        "value": "总收入 -7.5%、在线营销 -4.5%、直播 -17%、其他服务 -10%；经调整净利润约 7 亿元（-86%）",
+        "asOf": "2026-08-19 业绩会",
+        "source": {
+         "name": "腾讯新闻（业绩会转述）",
+         "url": "https://news.qq.com/rain/a/20260820A00PVQ00"
+        }
+       },
+       {
+        "metric": "广告增速与行业大盘的剪刀差",
+        "value": "Q1 +9.3% → Q2 +4.4% → Q3 指引 -4.5%；同期行业大盘 +8.1%",
+        "asOf": "2026Q1-Q3",
+        "source": {
+         "name": "官方业绩公告 + QuestMobile",
+         "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+        }
+       },
+       {
+        "metric": "全年指引",
+        "value": "收入 -3.5%，经调整净利润 85-90 亿元（年初市场预期约 170 亿元）",
+        "asOf": "2026-08-19 业绩会",
+        "source": {
+         "name": "腾讯新闻",
+         "url": "https://news.qq.com/rain/a/20260820A00PVQ00"
+        }
+       }
+      ]
+     },
+     {
+      "path": "可灵 IPO 延期或估值不达预期，触发 8% 单利回购义务，从表外或有负债变成真实现金流出",
+      "probability": "低至中（IPO 有承销商，但时间表在 2027 年初，距 2031 年有 4 年缓冲）",
+      "impact": "中高",
+      "evidence": [
+       {
+        "metric": "对赌条款",
+        "value": "未能在 2031-10-30 前完成 IPO，投资者可要求按原始投资额 + 年化 8% 单利回购；重组监管程序 9 个月内未完成同样触发",
+        "asOf": "2026-10-30 公告",
+        "source": {
+         "name": "港交所公告",
+         "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/1030/2026103002124_c.pdf"
+        }
+       },
+       {
+        "metric": "潜在义务量级",
+        "value": "以 198 亿元本金、8% 单利、5 年计，约 280-290 亿元量级（方向性估算，非精确负债）",
+        "asOf": "2026-11-08 测算",
+        "source": {
+         "name": "本报告基于公告条款的估算（198 亿本金、8% 单利、约 5 年，方向性量级）",
+         "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/1030/2026103002124_c.pdf"
+        }
+       }
+      ]
+     },
+     {
+      "path": "AI 资本开支与回购同时消耗现金，账面「可利用资金」被逐步锁定，净现金折价成为永久性折价",
+      "probability": "中",
+      "impact": "中高",
+      "evidence": [
+       {
+        "metric": "资本开支与自由现金流",
+        "value": "2026 年资本开支指引约 260 亿元；H1 经营现金流 90.44 亿元（同比 -23.2%）；CFO 称下半年目标维持集团自由现金流为正",
+        "asOf": "2026H1 / 业绩会",
+        "source": {
+         "name": "官方业绩公告 + 业绩会纪要",
+         "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+        }
+       },
+       {
+        "metric": "回购与借款",
+        "value": "年内回购 58 次、约 28.55 亿港元；H1 总借款同比 +109.4% 至 273.62 亿元，财务开支净额 +452.6%",
+        "asOf": "2026-10",
+        "source": {
+         "name": "港交所月报表 + 雪球统计（单源）",
+         "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/1105/2026110500825_c.pdf"
+        }
+       }
+      ]
+     },
+     {
+      "path": "抖音持续虹吸用户时长与MAU增速，快手核心直播打赏收入结构性萎缩且未见改善，形成恶性循环。",
+      "probability": "中",
+      "impact": "高",
+      "evidence": [
+       {
+        "metric": "快手/抖音主APP MAU同比增速",
+        "value": "3.4% vs 14.7%",
+        "asOf": "2025年9月",
+        "source": {
+         "name": "QuestMobile（新浪财经转引）",
+         "url": "https://finance.sina.com.cn/tech/roll/2025-11-07/doc-infwqvpr0815507.shtml"
+        }
+       },
+       {
+        "metric": "直播收入同比增速（连续三个季度追踪）",
+        "value": "2025Q4 -1.0%，2026Q1 -13.5%，2026Q2 -13.5%",
+        "asOf": "2026Q2（截至2026-06-30）",
+        "source": {
+         "name": "HKEX官方业绩公告（2026-08-19）",
+         "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+        }
+       }
+      ]
+     },
+     {
+      "path": "盈利能力结构性恶化（毛利率与经营杠杆双重承压）叠加管理层自身展望首次转向审慎、并举债支撑回购与AI资本开支推升财务杠杆，若2026H2未能企稳，可能演变为增长故事与偿债/回购能力同时承压的失败路径。",
+      "probability": "中偏高（部分已在2026Q2财报中实际发生，非纯假设情景）",
+      "impact": "高",
+      "evidence": [
+       {
+        "metric": "2026Q2毛利率同比变化",
+        "value": "51.6%（前值55.7%，-4.1个百分点；官方MD&A归因收入分成成本占收入比由30.1%升至34.7%）",
+        "asOf": "2026Q2",
+        "source": {
+         "name": "HKEX官方业绩公告（2026-08-19）",
+         "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+        }
+       },
+       {
+        "metric": "2026Q2经营利润/期内利润/经调整净利润同比",
+        "value": "经营利润-29.0%，期内利润-36.0%，经调整净利润-30.3%；H1整体口径经营利润同比-23.0%",
+        "asOf": "2026Q2/H1 2026",
+        "source": {
+         "name": "HKEX官方业绩公告（2026-08-19）",
+         "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+        }
+       },
+       {
+        "metric": "管理层业务展望措辞（官方财报原文首次转向）",
+        "value": "「鑒於經營環境日益複雜且充滿挑戰，我們對短期業務前景持審慎態度」——此前各季度公告均为\"稳健增长\"/\"高质量增长\"表述，本次为该措辞基调的首次转向",
+        "asOf": "2026-08-19",
+        "source": {
+         "name": "HKEX官方业绩公告业务展望章节",
+         "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+        }
+       },
+       {
+        "metric": "财务开支净额与总借款变化（杠杆上升，financial_rigor.py验算）",
+        "value": "H1财务开支净额同比+452.6%至RMB4.31亿（前值RMB0.78亿）；总借款较FY2025年末+109.4%至RMB273.62亿，主要用于股份回购与AI资本开支；截至2026-06-30总借款/总权益约33.3%",
+        "asOf": "H1 2026（截至2026-06-30）",
+        "source": {
+         "name": "HKEX官方业绩公告简明合并资产负债表",
+         "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+        }
+       }
+      ]
+     },
+     {
+      "path": "内容审核系统性漏洞持续暴露，监管处罚常态化推高合规成本并损害广告主品牌安全信任。",
+      "probability": "中",
+      "impact": "中",
+      "evidence": [
+       {
+        "metric": "2026年1-2月合计罚没金额",
+        "value": "超RMB1.45亿元（含单笔RMB1.191亿元近年短视频行业最大罚单）",
+        "asOf": "2026-01-30/2026-02-06",
+        "source": {
+         "name": "新浪财经/搜狐/DoNews",
+         "url": "https://www.sohu.com/a/984733825_100050143"
+        }
+       },
+       {
+        "metric": "本轮增量核实结果",
+        "value": "已用web_search核实2026年7-8月区间，未检索到新增行政处罚或立案调查事件，风险状态维持基线判断（既有两次重罚仍是当前唯一已披露的监管处罚事实）",
+        "asOf": "2026-08-20",
+        "source": {
+         "name": "web_search.py检索\"快手 监管处罚 2026年7月 8月\"（结果均为1-2月既有事件的转引报道，无新增事件）",
+         "url": "（工具检索结果，无单一URL）"
+        }
+       }
+      ]
+     },
+     {
+      "path": "Kling AI分拆融资协议已于2026-07-02签署落地，'能否签约'的不确定性部分解除，但可灵AI自身持续巨额亏损、竞争加剧，分拆后能否独立造血、能否如期于2027年初递交港股上市申请材料仍存重大不确定性。（原\"分拆未落地\"风险已部分解除，但新增\"自身持续亏损+竞争窗口期收窄\"风险）",
+      "probability": "中",
+      "impact": "高",
+      "evidence": [
+       {
+        "metric": "分拆协议签署与投后估值（本轮更新：由\"传闻/评估中\"进展为已签约）",
+        "value": "2026-07-02签署协议，21名初始投资者注资约USD20.28亿（另预留窗口期至最多USD30亿），投后估值约USD180亿（对比2026年5月表述\"仍处于初步阶段，尚未就此签署任何最终协议\"）",
+        "asOf": "2026-07-02",
+        "source": {
+         "name": "华尔街见闻",
+         "url": "https://wallstreetcn.com/articles/3776114"
+        }
+       },
+       {
+        "metric": "可灵AI自身FY2025财务表现",
+        "value": "净亏损扩大至约RMB19亿（2024年约RMB5亿，同比+280%，financial_rigor.py验算），收入约RMB11亿，即高速ARR增长的另一面是加速扩大的亏损",
+        "asOf": "FY2025",
+        "source": {
+         "name": "证券时报",
+         "url": "https://www.stcn.com/article/detail/4005254.html"
+        }
+       },
+       {
+        "metric": "竞争格局",
+        "value": "面临字节跳动、谷歌、阿里同类文生视频/图生视频产品的直接竞争，行业媒体报道称其\"建立壁垒的窗口期已经不多\"",
+        "asOf": "2026年",
+        "source": {
+         "name": "证券时报/主会话已采集riskFactors数据",
+         "url": "https://www.stcn.com/article/detail/4005254.html"
+        }
+       }
+      ]
+     },
+     {
+      "path": "VIE结构性风险与港股/中概股流动性折价长期压制估值；叠加本轮财报显示股价跌幅显著大于PE跌幅，说明当前低估值更多是盈利预期合理下修的结果而非错杀，低估值本身构成'低PE价值陷阱'的重新定性风险，基本面改善也难以兑现重估。（本轮补充低估值陷阱新证据）",
+      "probability": "低（VIE监管认定风险本身）/中（低估值陷阱对'便宜=安全边际'判断的误导风险）",
+      "impact": "高",
+      "evidence": [
+       {
+        "metric": "trailing PE变化",
+        "value": "同一换汇口径重算：8-07 为 9.22x，8-20 为 7.81x（旧稿的未换汇读数已弃用）",
+        "asOf": "2026-08-20",
+        "source": {
+         "name": "主会话已采集currentValuation（financial_rigor.py calc验算）",
+         "url": "（采集文件内部数据，无外部URL）"
+        }
+       },
+       {
+        "metric": "股价跌幅与PE跌幅背离（低估值陷阱信号）",
+        "value": "同一换汇口径重算：8-07 为 9.22x，8-20 为 7.81x（旧稿的未换汇读数已弃用）",
+        "asOf": "2026-08-20",
+        "source": {
+         "name": "主会话已采集currentValuation数据 + financial_rigor.py calc验算",
+         "url": "（采集文件内部数据，无外部URL）"
+        }
+       },
+       {
+        "metric": "VIE通用行业风险表述",
+        "value": "协议控制架构存在监管认定不确定性",
+        "asOf": "行业通用",
+        "source": {
+         "name": "ACGA公司治理研究机构",
+         "url": "https://www.acga-asia.org/blog-detail.php?id=48"
+        }
+       }
+      ]
+     },
+     {
+      "path": "腾讯持续减持强化\"腾讯系协同弱化\"负面叙事，加剧股价抛压与估值折价螺旋。",
+      "probability": "中",
+      "impact": "中",
+      "evidence": [
+       {
+        "metric": "腾讯持股比例变化",
+        "value": "约15.68%降至约9.37%，套现约USD1.505bn（约HKD125.6亿），跌破10%\"主要股东\"门槛",
+        "asOf": "2026-07-06",
+        "source": {
+         "name": "HKEX公告",
+         "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0706/2026070602205.pdf"
+        }
+       },
+       {
+        "metric": "本轮增量核实结果",
+        "value": "已用web_search核实截至2026-08-20区间，未检索到腾讯在2026-07-06之后进一步减持快手的新公告或报道，持股比例暂维持约9.37%；多篇报道解读此次减持为腾讯资本配置从'快手母公司成熟资产'转向'可灵AI等AI视频新资产'（腾讯同时是可灵AI分拆融资的跟投方之一），并非单纯看空快手基本面",
+        "asOf": "2026-08-20",
+        "source": {
+         "name": "web_search.py检索\"腾讯 快手 减持 股份 2026年8月\"（结果均为2026-07-06/07-08既有事件的转引报道，无新增减持事件）",
+         "url": "（工具检索结果，无单一URL）"
+        }
+       }
+      ]
+     }
+    ],
+    "historicalAnalogies": [
+     {
+      "company": "MySpace（对比Facebook）",
+      "similarity": "曾为社交网络行业第一，后被网络效应更强、产品迭代更快的对手反超",
+      "outcome": "用户与广告主持续流失，最终边缘化并以远低于峰值估值出售。",
+      "source": {
+       "name": "行业公开认知，非采集文件数据点",
+       "url": "（无）"
+      }
+     },
+     {
+      "company": "Yahoo（对比Google）",
+      "similarity": "早期门户/搜索领先者，后期创新放缓被算法更优的对手系统性反超份额",
+      "outcome": "核心业务持续萎缩多年，最终核心资产被收购、公司解体式退场。",
+      "source": {
+       "name": "行业公开认知，非采集文件数据点",
+       "url": "（无）"
+      }
+     },
+     {
+      "company": "人人网 Renren（对比微信/微博）",
+      "similarity": "中国早期社交网络头部玩家，用户与商业化能力被后起社交产品持续反超",
+      "outcome": "用户与营收长期萎缩，主业名存实亡，转型为投资壳公司。",
+      "source": {
+       "name": "行业公开认知，非采集文件数据点",
+       "url": "（无）"
+      }
+     },
+     {
+      "company": "Groupon",
+      "similarity": "高增长期后遇流量成本上升与竞争加剧，新业务故事支撑高估值但兑现不足；本轮快手\"毛利率下滑+费用刚性上升+管理层展望转向审慎\"的组合与Groupon当年利润率被流量成本侵蚀、增长故事褪色的路径高度相似",
+      "outcome": "盈利能力持续承压，估值大幅缩水，沦为边缘化平台。",
+      "source": {
+       "name": "行业公开认知，非采集文件数据点",
+       "url": "（无）"
+      }
+     }
+    ],
+    "crossDisciplinaryChecks": [
+     {
+      "model": "网络效应理论",
+      "finding": "①快手UGC主播-观众的双边网络效应本质弱于抖音中心化算法分发的单边效率优势，MAU增速差距（3.4% vs 14.7%）验证\"赢者通吃\"动态已形成；②直播打赏依赖主播个人IP粘性而非平台网络效应，用户可无缝迁移至抖音/视频号，2026Q2直播收入-13.5%与2026Q1持平印证这一迁移未见放缓；③电商私域复购场景仍具一定用户粘性护城河，网络效应尚未完全瓦解，是相对优势的残余部分。",
+      "check": ""
+     },
+     {
+      "model": "技术采纳曲线",
+      "finding": "①短视频行业已进入成熟期，总时长增速放缓使份额此消彼长的零和博弈特征加强，快手处于劣势位置；②Kling AI处于早期采纳曲线阶段，ARR环比翻倍符合S曲线早期爆发特征，但FY2025净亏损同比扩大约280%说明尚未跨越\"规模化盈利\"的鸿沟；③若Kling AI未能跨越鸿沟，将陷入多数早期AI应用常见的\"高投入-低转化\"陷阱，与2026H1总借款+109.4%、财务开支净额+452.6%的现状互相印证——快手正在用主业杠杆为尚未盈利的AI资产输血。",
+      "check": ""
+     },
+     {
+      "model": "竞争博弈",
+      "finding": "①快手与抖音陷入内容审核、算法研发、内容采购的\"军备竞赛\"式博弈，任何一方放缓即被反超，压制行业整体利润率，2026Q2收入分成成本占比由30.1%升至34.7%即为该博弈压低毛利率的直接体现；②监管作为第三方博弈参与者的重罚介入，边际上更利好资金实力更强的头部平台，对快手是相对劣势；③腾讯减持并转向对可灵AI的跟投，反映其在AI赛道资源的重新博弈配置——从'持有快手母公司成熟资产'切换为'直接持有AI高增长资产'，削弱快手母公司层面潜在流量/资金协同筹码，即便双方仍维持战略合作关系。",
+      "check": ""
+     }
+    ],
+    "biasSelfCheck": [
+     {
+      "bias": "叙事偏差",
+      "check": "\"AI第二曲线\"叙事在2026-07-02分拆协议签署后从\"传闻\"升级为\"确定性事件\"，但需警惕把\"分拆已签约\"等同于\"AI资产已能自我造血\"——可灵AI FY2025净亏损同比扩大约280%证明这是两件不同的事，若忽视直播收入连续两季度-13.5%未改善、2026Q2毛利率/经营利润大幅恶化的既有基本面趋势，仅凭分拆落地本身定价，会重复上一轮\"把未落地传闻当确定性\"的同类错误。"
+     },
+     {
+      "bias": "锚定效应",
+      "check": "TTM PE 从 8-07 的 9.22x 降到 8-20 的 7.81x（同一换汇口径），容易被锚定为「更便宜了」；但股价同期跌 23.9%，PE 只跌 15.3%，隐含市场把盈利预期下调了约 10%——真正该锚定的是盈利质量趋势（毛利率、经营杠杆、管理层展望），而不是历史价格或估值倍数本身，否则会把「合理重新定价」误读为「错杀」。"
+     },
+     {
+      "bias": "幸存者偏差",
+      "check": "采集文件bull case多援引摩根大通/中金/东方证券等卖方看多目标价（8-20 业绩后已有多家下调，最悲观目标价 27.6-28 港元，与看多目标价的分歧本身就是证据），卖方研报存在\"唱空报告较少发布\"的生存偏差；历史类比也应纳入Yahoo/MySpace/Renren/Groupon等\"老二最终没落\"或\"新业务故事未兑现拖累估值\"的案例，而非仅关注逆袭成功的幸存者叙事。"
+     }
+    ],
+    "bearCase": [
+     {
+      "point": "「净现金 = 市值 89%」是会计幻觉：1,213 亿元「可利用资金」含定期存款、理财与受限现金，按 260 亿元/年的资本开支，全额也只够 4-5 年；若只算狭义现金 117 亿元，连半年都撑不到。",
+      "holder": "关注现金流质量与资本开支强度的空方",
+      "evidence": [
+       {
+        "metric": "可利用资金构成",
+        "value": "总额 RMB1,213 亿，逐项可对上：现金及等价物 117 亿 + 短期定期存款 123.58 亿 + 流动金融资产（理财）563.53 亿 + 长期定期存款 142.91 亿 + 非流动投资 296.18 亿 ≈ 1,243 亿（与公司口径差约 30 亿，推测为受限/质押部分）。其中随时可动用的现金只有约 117 亿。",
+        "asOf": "2026-06-30",
+        "source": {
+         "name": "Kuaishou IR 2026中期业绩",
+         "url": "https://ir.kuaishou.com/zh-hans/news-releases/news-release-details/kuaishoukejifabu2026niandierjidujizhongqiweijingshenhecaiwuyeji/"
+        }
+       },
+       {
+        "metric": "资本开支",
+        "value": "2026 年指引约 RMB260 亿元，大部分已前置到上半年",
+        "asOf": "2026-08-19 业绩会",
+        "source": {
+         "name": "老虎证券（CFO 金秉发言）",
+         "url": "https://www.itiger.com/hans/news/2660342813"
+        }
+       }
+      ]
+     },
+     {
+      "point": "可灵的 1,225 亿元估值是带回购权的一级市场价格，不是二级市场公允价值；少数股东有优先清算权，普通股在 IPO 定价不利时可能只值这个数的一半甚至更少。",
+      "holder": "按 SOTP 反推、认为「可灵富贵」被高估的空方",
+      "evidence": [
+       {
+        "metric": "可灵投后估值与对赌",
+        "value": "实收 RMB198.02 亿、投后约 RMB1,225 亿；2031-10-30 前未 IPO 可按本金+8%单利回购",
+        "asOf": "2026-10-30",
+        "source": {
+         "name": "港交所公告",
+         "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/1030/2026103002124_c.pdf"
+        }
+       },
+       {
+        "metric": "可灵盈利",
+        "value": "FY2026 预计亏损 50-60 亿元；Q3 收入指引 ≥8.5 亿、环比零增长",
+        "asOf": "2026Q3 指引",
+        "source": {
+         "name": "腾讯新闻（业绩会）",
+         "url": "https://news.qq.com/rain/a/20260820A00PVQ00"
+        }
+       }
+      ]
+     },
+     {
+      "point": "广告 -4.5% 与电商佣金 -10% 是结构性的：快手的长尾商家与下沉用户在涉税合规、品牌预算收缩中最先被牺牲，不是「再等两个季度」能修复的。",
+      "holder": "认为份额流失不可逆的空方",
+      "evidence": [
+       {
+        "metric": "Q3 分部指引",
+        "value": "广告 -4.5%、直播 -17%、其他服务 -10%，总收入 -7.5%",
+        "asOf": "2026-08-19 业绩会",
+        "source": {
+         "name": "腾讯新闻",
+         "url": "https://news.qq.com/rain/a/20260820A00PVQ00"
+        }
+       },
+       {
+        "metric": "行业大盘",
+        "value": "QuestMobile 2026Q2 互联网广告 +8.1%",
+        "asOf": "2026Q2",
+        "source": {
+         "name": "QuestMobile（人民政协网转引）",
+         "url": "https://www.questmobile.cn/research/report/2084487578531254273"
+        }
+       }
+      ]
+     },
+     {
+      "point": "核心用户增长与竞争地位持续落后于抖音，用户基本盘正被系统性分流，直播收入连续两季度未见改善",
+      "holder": "QuestMobile数据引用方（新浪财经/36氪等财经媒体分析师）",
+      "evidence": [
+       {
+        "metric": "主APP MAU同比增速",
+        "value": "快手3.4% vs 抖音14.7%",
+        "asOf": "2025年9月",
+        "source": {
+         "name": "QuestMobile（新浪财经转引）",
+         "url": "https://finance.sina.com.cn/tech/roll/2025-11-07/doc-infwqvpr0815507.shtml"
+        }
+       },
+       {
+        "metric": "直播收入同比增速",
+        "value": "2026Q1 -13.5%，2026Q2 -13.5%",
+        "asOf": "2026Q2",
+        "source": {
+         "name": "HKEX官方业绩公告（2026-08-19）",
+         "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+        }
+       }
+      ]
+     },
+     {
+      "point": "2026Q2盈利能力大幅恶化，管理层展望转向审慎，是本轮最重要的新增看空信号",
+      "holder": "关注利润表质量与管理层信号的基本面型空方投资者",
+      "evidence": [
+       {
+        "metric": "2026Q2毛利率/经营利润/期内利润同比",
+        "value": "毛利率51.6%(-4.1pp)，经营利润-29.0%，期内利润-36.0%，经调整净利润-30.3%",
+        "asOf": "2026Q2",
+        "source": {
+         "name": "HKEX官方业绩公告（2026-08-19）",
+         "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+        }
+       },
+       {
+        "metric": "管理层展望措辞",
+        "value": "「鑒於經營環境日益複雜且充滿挑戰，我們對短期業務前景持審慎態度」（此前各季度均为\"稳健增长\"表述）",
+        "asOf": "2026-08-19",
+        "source": {
+         "name": "HKEX官方业绩公告业务展望章节",
+         "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+        }
+       }
+      ]
+     },
+     {
+      "point": "监管处罚频发，合规成本上升且声誉受损，反映平台内容审核体系存在系统性漏洞",
+      "holder": "关注ESG与内容安全合规的监管机构及机构投资者",
+      "evidence": [
+       {
+        "metric": "2026年1-2月合计罚没金额",
+        "value": "超RMB1.45亿元",
+        "asOf": "2026-01-30/2026-02-06",
+        "source": {
+         "name": "新浪财经/搜狐/DoNews",
+         "url": "https://finance.sina.com.cn/roll/2026-01-31/doc-inhkepei6138166.shtml"
+        }
+       }
+      ]
+     },
+     {
+      "point": "Kling AI分拆虽已签约落地，但可灵AI自身持续巨额亏损、竞争加剧，同时快手为回购与AI资本开支举债推高杠杆（原\"分拆不确定性\"风险已部分解除，替换为\"自身造血能力+杠杆\"风险）",
+      "holder": "关注现金流质量、杠杆变化与分拆资产盈利能力的基本面型空方投资者",
+      "evidence": [
+       {
+        "metric": "可灵AI FY2025净亏损同比变化",
+        "value": "扩大至约RMB19亿（2024年约RMB5亿，同比+280%，financial_rigor.py验算）",
+        "asOf": "FY2025",
+        "source": {
+         "name": "证券时报",
+         "url": "https://www.stcn.com/article/detail/4005254.html"
+        }
+       },
+       {
+        "metric": "总借款与财务开支净额变化",
+        "value": "总借款较FY2025年末+109.4%至RMB273.62亿；H1财务开支净额同比+452.6%至RMB4.31亿（均为financial_rigor.py验算）",
+        "asOf": "H1 2026（截至2026-06-30）",
+        "source": {
+         "name": "HKEX官方业绩公告",
+         "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+        }
+       }
+      ]
+     },
+     {
+      "point": "腾讯减持并跌破主要股东门槛，削弱腾讯系流量/资源协同的想象空间",
+      "holder": "关注股东结构变化的套利型/事件驱动型空方投资者",
+      "evidence": [
+       {
+        "metric": "腾讯持股比例变化",
+        "value": "约15.68%→约9.37%，套现约USD1.505bn",
+        "asOf": "2026-07-06",
+        "source": {
+         "name": "HKEX公告",
+         "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0706/2026070602205.pdf"
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "inquiry": {
+    "question": "我最可能在哪里犯错？聪明人为什么会不买/做空这家公司？",
+    "answer": "我最可能把\"低PE+AI故事\"误判为确定性错误定价机会，而非结构性衰退的价值陷阱——尤其在2026Q2财报后更是如此。①从 8-20 到 11-06，股价由 33.64 跌至 28.92（-14.0%），按同一换汇口径 PE 由约 7.8x 降至 6.71x；而 2026 年经调整净利指引只有 85-90 亿元、同比 -56%~-59%——市场不是在错杀，而是在把「盈利腰斩」提前定价；若我把 6.7x 当成「历史低位=便宜」，就会忽视 forward PE 其实还有 12.1x 这一点；②管理层在财报原文中首次由\"稳健增长\"改口为\"鑒於經營環境日益複雜且充滿挑戰，我們對短期業務前景持審慎態度\"——这是公司自己承认前景转差，而不是外部空头的主观推断，我若把这句话当作例行套话而非真实信号就会犯错；③把Kling AI分拆签约本身当作利好完全兑现，却忽视可灵AI自身FY2025净亏损同比扩大约280%（RMB5亿→约19亿）、且面临字节跳动、谷歌、阿里的正面竞争——分拆解决的只是'融资协议是否存在'的不确定性，没有解决'能否独立盈利'的更根本问题；④财务开支净额H1同比暴增4.5倍以上、总借款半年内增109.4%，若我只看利润表不看资产负债表杠杆变化，会低估股份回购与AI资本开支对财务弹性的挤压，以及万一H2经营现金流进一步走弱时的偿债/继续回购能力。聪明人不买/做空的理由：抖音时长虹吸持续且未见改善（MAU增速3.4% vs 14.7%，直播收入连续两季度-13.5%）、管理层自己下修展望的措辞比任何空头研报都更有说服力、可灵AI分拆后仍是烧钱资产而非确定性变现资产、杠杆攀升压缩了继续回购托底股价的空间，这四点叠加使得当前的低估值更像是对上述压力的合理定价，而非可以安全买入的错误定价。"
+   },
+   "dataGaps": [
+    {
+     "path": "riskFactors监管处罚是否已在HKEX披露易发布对应内幕消息公告",
+     "reason": "采集文件已标注本轮研究未逐一核实HKEX是否就2026年两次行政处罚发布过对应公告；本轮web_search亦未专门核实此点，维持既有数据缺口",
+     "searched": "已查采集文件riskFactors字段 + 本轮web_search\"快手 监管处罚 2026年7月 8月\"（未发现新增处罚，但未逐一核实HKEX披露易公告链接）"
+    },
+    {
+     "path": "VIE架构具体条款",
+     "reason": "采集文件基于行业通用VIE风险表述推断，未逐字核实快手年报\"风险因素\"章节原文",
+     "searched": "已查采集文件management字段与行业通用VIE表述"
+    },
+    {
+     "path": "2026H2业绩量化指引缺失",
+     "reason": "官方财报\"业务展望\"章节仅给出\"审慎\"的定性措辞，未披露具体的收入/毛利率/费用率量化指引，导致\"H2能否企稳\"这一判断当前只能基于H1趋势外推，存在较大不确定性",
+     "searched": "已查HKEX官方业绩公告业务展望章节原文（collection文件financialMetrics.interim2026H1.managementOutlookTone），仅有定性表述"
+    },
+    {
+     "path": "分析师/投行下修后的最新目标价",
+     "reason": "2026年5月投行基于SOTP给出71-74港元目标价（对应彼时股价37-68%上行空间），但该目标价发布于H1业绩下修与股价大跌之前，本轮未检索到投行发布的最新下修目标价，无法判断市场卖方共识对本次盈利下修的定价程度",
+     "searched": "已查采集文件bullBearCase字段，标注为已知数据缺口，本轮未专门就此再做web_search"
+    }
+   ]
+  },
+  "management": {
+   "title": "管理层评估",
+   "conclusion": "执行力仍然是加分项：可灵从 7 月签约到 10 月交割只用了 4 个月，10 月就选定 IPO 承销商，年内回购 58 次、分红 30 亿港元，Q3 指引也罕见地给了精确的负增长数字（-7.5%、净利 -86%），是「一次说透」而不是挤牙膏，这比上轮的「审慎」措辞更可信。但两处必须打折：①可灵持股从 68.33% 降到 66.68%，少数股东拿走三分之一，还背上 8% 回购义务；②账上 1,213 亿元「可利用资金」却继续加杠杆回购（H1 借款 +109.4%），公司至今没有解释。",
+   "analysis": {
+    "keyDecisions": [
+     {
+      "date": "2025-08-21",
+      "decision": "宣派上市以来首度特别股息HK$0.46/股",
+      "outcome": "资本配置转向增长与股东回报并重",
+      "rating": "★★★★",
+      "source": {
+       "name": "Kuaishou IR官方公告",
+       "url": "https://ir.kuaishou.com/news-releases"
+      }
+     },
+     {
+      "date": "2025年内",
+      "decision": "全年回购5,678万股耗资约HK$31.2亿",
+      "outcome": "均价约 HK$54.9，对照 2025 年 53-84 港元的股价区间属于贴近市价回购，不是抄底；FY2026 股价跌至 28.92 后，这批筹码浮亏约 47%",
+      "rating": "★★★",
+      "source": {
+       "name": "Kuaishou IR官方公告",
+       "url": "https://ir.kuaishou.com/news-releases"
+      }
+     },
+     {
+      "date": "2026-03-25",
+      "decision": "建议派发FY2025末期股息每股HK$0.69",
+      "outcome": "常规化分红机制初步建立，2026-07-28已按计划派付",
+      "rating": "★★★★",
+      "source": {
+       "name": "Kuaishou IR官方公告",
+       "url": "https://ir.kuaishou.com/news-releases"
+      }
+     },
+     {
+      "date": "2025年9月末",
+      "decision": "整合电商与在线营销服务强化全域协同",
+      "outcome": "Q4全域营销方案占比升至75%",
+      "rating": "★★★★",
+      "source": {
+       "name": "Kuaishou IR官方公告",
+       "url": "https://ir.kuaishou.com/news-releases"
+      }
+     },
+     {
+      "date": "2026-02",
+      "decision": "发布Kling AI 3.0系列模型",
+      "outcome": "2026Q1收入超RMB6.5亿(+300%+)，为后续分拆融资奠定商业化验证基础；2026Q2进一步推出可灵3.0 Turbo，单季收入超RMB8.5亿(+200%+)",
+      "rating": "★★★★★",
+      "source": {
+       "name": "C114通信网/新浪财经",
+       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-05-11/doc-inhxptri0413534.shtml"
+      }
+     },
+     {
+      "date": "2026-07-02",
+      "decision": "可灵AI（北京可灵）分拆融资协议正式签署：21名初始投资者注资约USD20.28亿，投后估值约USD180亿，领投方含CPE源峰、国方创投、BlueFive Capital、腾讯、中关村科学城基金、中信证券，另有阿里云、百度参与；CEO程一笑在2026-08-19/20 Q2业绩电话会确认“近期完成独立融资”",
+      "outcome": "从 5 月「仍处初步阶段」到 7-02 签约约 52 天，执行速度快；腾讯、阿里云、百度同时下注，是比投行目标价更强的第三方验证。按当时约 68% 持股测算，快手对应权益约 USD122.4 亿（180 亿美元×0.68）。",
+      "rating": "★★★★",
+      "sources": [
+       {
+        "name": "华尔街见闻（协议签署细节）",
+        "url": "https://wallstreetcn.com/articles/3776114"
+       },
+       {
+        "name": "新浪财经（程一笑Q2财报电话会表述）",
+        "url": "https://finance.sina.cn/stock/jdts/2026-08-20/detail-ininwpnk2465979.d.html"
+       },
+       {
+        "name": "新浪财经·财闻（分部估值测算）",
+        "url": "https://finance.sina.cn/2026-08-19/detail-ininvwqk8362440.d.html?vt=4"
+       }
+      ]
+     },
+     {
+      "date": "H1 2026至2026-08-19",
+      "decision": "持续股份回购，累计约4,330万股，耗资约HKD19.7亿",
+      "outcome": "H1 2026 及至 8-19 回购约 4,330 万股、HK$19.7 亿，均价约 HK$45.5；对照 2026 年上半年 62→42 港元的股价区间，回购买在下跌途中，相对当前 28.92 港元浮亏约 36%。同期总借款 +109.4%，资金来源未获解释。",
+      "rating": "★★★",
+      "source": {
+       "name": "HKEX官方业绩公告",
+       "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+      }
+     }
+    ],
+    "capitalAllocation": {
+     "rdReturn": "①H1 2026研发开支同比+22.5%至RMB82.02亿（Q2单季同比+34.7%），持续加码AI；②可灵AI商业化验证延续，2026Q2单季收入超RMB8.5亿(+200%+)，H1其他服务分部收入同比+18.5%至RMB62.06亿；③但本季度研发/收入分成成本上升幅度快于收入增长，H1经营利润同比-23.0%、经调整净利润同比-28.5%，说明研发与AI投入的边际转化效率本季度出现阶段性钝化，需观察是一次性（大模型训练周期性支出）还是趋势性。",
+     "maTrackRecord": "未采集到重大并购交易记录，公司增长以内生研发与内部孵化（如Kling AI、OneRec）为主；可灵AI分拆是过去一年内最重大的资本运作事件，但其性质是“对内部资产的对外融资与拆分”而非并购，暂无并购整合能力可评价。",
+     "buybackTiming": "①FY2025 全年回购 5,678 万股、耗资 HK$31.2 亿，均价约 HK$54.9——对照历史 PE 表里 2025 年 53-84 港元的股价区间，属于贴近市价回购，不是抄底；②2026 年上半年再回购约 4,330 万股、HK$19.7 亿，均价约 HK$45.5，相对当前 28.92 港元浮亏约 36%；③两轮回购的方向都是「股价越低越买」，但都买在了下跌途中，成本没有被压低；④H1 2026 回购的资金来源已从主要依赖自有现金流，转为与总借款同比 +109.4%（130.66 亿→273.62 亿）、财务开支净额 H1 +452.6% 同期发生——即便公司持有约 1,213 亿元「可利用资金」、净现金（可利用资金−总借款）约 939.38 亿元，借款/权益比 33.3% 绝对水平不激进，但「账上巨额现金却加杠杆回购」这一组合从未获官方解释。可能解释包括现金分布受币种/地域/监管限制，或管理层利用低成本债务做流动性错配；两种解释均无公司披露佐证，故列为需持续跟踪的资本配置疑点。⑤股价跌到 30 港元附近后回购仍在延续：9 月 18-28 日回购 392.2 万股、约 1.20 亿港元，10-30 注销；年内累计 58 次、约 28.55 亿港元。",
+     "evidence": [
+      {
+       "metric": "H1 2026研发开支",
+       "value": "RMB8,202百万，YoY+22.5%（Q2单季YoY+34.7%）",
+       "asOf": "H1 2026",
+       "source": {
+        "name": "HKEX官方业绩公告",
+        "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+       }
+      },
+      {
+       "metric": "总借款（不含租赁负债）",
+       "value": "RMB27,362百万（2026-06-30），较FY2025年末RMB13,066百万上升109.4%（financial_rigor.py验算：(27362-13066)/13066×100=109.41）",
+       "asOf": "2026-06-30",
+       "source": {
+        "name": "HKEX官方业绩公告简明合并资产负债表",
+        "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+       }
+      },
+      {
+       "metric": "财务开支净额同比变化",
+       "value": "H1口径RMB78百万→431百万，+452.6%（financial_rigor.py验算：(431-78)/78×100=452.56）；Q2单季口径官方MD&A披露为+377.8%至RMB2.58亿",
+       "asOf": "H1 2026 / 2026Q2",
+       "source": {
+        "name": "HKEX官方业绩公告",
+        "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+       }
+      },
+      {
+       "metric": "净现金（总可动用资金-总借款）",
+       "value": "约RMB93,938百万（121,300-27,362，financial_rigor.py验算）",
+       "asOf": "2026-06-30",
+       "source": {
+        "name": "HKEX官方业绩公告（本分析计算）",
+        "url": "（采集文件内部数据，无外部URL）"
+       }
+      },
+      {
+       "metric": "总借款/股东权益",
+       "value": "约33.3%（27,362/82,273×100=33.26，financial_rigor.py验算）",
+       "asOf": "2026-06-30",
+       "source": {
+        "name": "HKEX官方业绩公告（本分析计算）",
+        "url": "（采集文件内部数据，无外部URL）"
+       }
+      },
+      {
+       "metric": "H1 2026回购测算均价",
+       "value": "约HKD45.5/股（1,970,000,000/43,300,000=45.50，financial_rigor.py验算）",
+       "asOf": "H1 2026至2026-08-19",
+       "source": {
+        "name": "HKEX官方业绩公告（本分析计算）",
+        "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+       }
+      }
+     ]
+    },
+    "alignment": {
+     "ownership": "①经济权益：程一笑约8.80%、宿华约9.83%，FY2025年报口径合计约18.6%（历史事实，本轮未见变化）；②投票权：AB股不同投票权架构（WVR）下二人合计控制约66%投票权；③腾讯已于2026-07-06减持快手股份至约9.37%（跌破主要股东门槛），却在4天前（2026-07-02）同期作为领投方之一参与了快手子公司可灵AI的分拆融资——即腾讯同步执行“减持快手核心业务母公司持股+加码可灵AI独立子公司股权”的双重资本动作，反映精明资本对快手集团内部“核心业务（广告/直播）」与「AI新业务（可灵）」两块资产给予了明显不同的风险定价，而非对快手整体丧失信心，这一细节强化了而非削弱了此前对可灵AI价值的判断，但也说明外部资本对快手核心业务的估值预期确实在下修。",
+     "compensation": {
+      "status": "unavailable",
+      "reason": "采集文件management/financialMetrics字段均未披露管理层薪酬结构或KPI考核挂钩机制，本轮未见新披露，已查HKEX官方2026Q2业绩公告全文及collection文件全部字段"
+     },
+     "insiderSelling": "未采集到程一笑、宿华等管理层个人在本轮（截至2026-08-20）新增减持记录；2026-07-06腾讯减持系第三方股东行为，不计入管理层减持范畴（历史事实，见ownership新增分析）。",
+     "evidence": [
+      {
+       "metric": "程一笑经济权益",
+       "value": "约8.80%",
+       "asOf": "FY2025年报",
+       "source": {
+        "name": "网络检索汇总（快手2025年报披露）",
+        "url": "https://ir.kuaishou.com"
+       }
+      },
+      {
+       "metric": "宿华经济权益",
+       "value": "约9.83%",
+       "asOf": "FY2025年报",
+       "source": {
+        "name": "网络检索汇总（快手2025年报披露）",
+        "url": "https://ir.kuaishou.com"
+       }
+      },
+      {
+       "metric": "程一笑+宿华合计投票权",
+       "value": "约66%（AB股WVR架构）",
+       "asOf": "FY2025年报",
+       "source": {
+        "name": "网络检索汇总（快手2025年报披露）",
+        "url": "https://ir.kuaishou.com"
+       }
+      },
+      {
+       "metric": "腾讯同期对快手集团内部两块资产的相反资本动作",
+       "value": "减持快手股份15.68%→9.37%（2026-07-06）；同时作为可灵AI分拆融资领投方之一（2026-07-02签约）",
+       "asOf": "2026-07-02/07-06",
+       "source": [
+        {
+         "name": "HKEX公告（腾讯减持）",
+         "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0706/2026070602205.pdf"
+        },
+        {
+         "name": "华尔街见闻（可灵分拆融资领投方名单）",
+         "url": "https://wallstreetcn.com/articles/3776114"
+        }
+       ]
+      }
+     ]
+    },
+    "organization": {
+     "teamStability": "①程一笑自2011年创立公司起持续任CEO/董事会主席逾14年，本轮2026Q2业绩电话会由其亲自确认可灵分拆融资进展，未见管理层变动；②宿华现聚焦战略/董事层角色，核心创始团队未见出走；③采集文件仍未披露CFO/COO等其他高管任期信息，为长期数据缺口。",
+     "keyPersonRisk": "①程一笑与宿华通过 WVR 架构合计控制约 66% 投票权的治理结构未变；②可灵从评估到签约约 52 天的执行速度，以及吸引腾讯、阿里云、百度、中信证券等多元资本同时下注的撮合能力，表明管理团队在复杂资本运作上具备超出预期的执行力，一定程度上降低了「重大战略决策高度依赖创始人个人」的担忧；③但 CFO/COO 等高管人选与梯队深度仍未披露，属长期数据缺口。"
+    },
+    "culture": "①正式业绩公告首次使用「鑒於經營環境日益複雜且充滿挑戰，我們對短期業務前景持審慎態度」（8-19），与 CEO 引言中仍使用的「穩健」「經營韌性」形成语气分层；②Q3 指引主动给出精确负增长数字，属于少见的「把坏消息说清楚」；③可灵 4 个月完成交割、10 月选定承销商，执行力可观察；④账上巨额现金仍加杠杆回购，且从未解释资金来源与结构，是透明度上的明确缺口；⑤员工 NPS、离职率等量化文化指标仍缺失，证据以单源定性描述为主。"
+   },
+   "inquiry": {
+    "question": "如果CEO退休，这家公司还能保持竞争力吗？",
+    "answer": "大概率能保持，且降低了对创始人依赖度的担忧，但需新增关注加杠杆资本配置的连续性问题。①治理结构未变：程一笑与宿华通过WVR合计控制约66%投票权，宿华从CEO转向战略角色已有平稳交接先例；②本轮新证据：可灵AI分拆融资从“评估”到“签约”仅约52天，且吸引腾讯、阿里云、百度、中信证券等多元化资本共同背书，证明公司在重大资本运作上的执行力已沉淀为可被外部独立验证的组织能力，而非仅依赖创始人个人叙事——即便创始人离场，这类项目的对外融资与治理框架已具备一定自我运转基础；③但本轮同时新增两个需要继任者妥善处理的变量：一是总借款激增109.4%、财务开支同比暴增背景下的资本结构管理，若继任者延续“账上巨额现金却持续加杠杆回购”而不解释逻辑，可能被资本市场质疑资本配置纪律；二是管理层首次采用“审慎”展望措辞，继任者需要证明这不是一次性免责声明，而是真正匹配经营现实的沟通风格转变。综合看，核心壁垒（OneRec、Kling AI、内容生态）已具备组织能力基础，创始人退休不会立即瓦解护城河，但资本配置纪律与预期管理的一致性将成为衡量继任团队成色的新增考察点。"
+   },
+   "dataGaps": [
+    {
+     "field": "高管薪酬结构",
+     "reason": "采集文件未披露管理层薪酬结构与KPI考核挂钩机制，本轮HKEX官方2026Q2业绩公告全文亦未见披露",
+     "evidenceRequest": "需补充年报'董事薪酬'章节及薪酬委员会考核指标披露"
+    },
+    {
+     "field": "研发投入回报",
+     "reason": "缺少项目层面研发投入产出量化数据，仅有公司层面研发费用与产品商业化结果",
+     "evidenceRequest": "需补充Kling AI/OneRec等项目级研发ROI量化数据"
+    },
+    {
+     "field": "团队稳定性",
+     "reason": "采集文件仅披露CEO与联合创始人履历，未披露CFO/COO/CTO等其他高管任期与流动情况",
+     "evidenceRequest": "需补充管理层名单及高管变动历史（年报'高级管理层'章节）"
+    },
+    {
+     "field": "企业文化量化指标",
+     "reason": "缺少员工NPS、离职率等量化文化指标，仅能用资本配置与合规事件做定性推断",
+     "evidenceRequest": "需补充员工满意度调查/离职率等外部数据源"
+    },
+    {
+     "field": "可灵分拆融资的公告类型核实",
+     "reason": "采集文件meta.sources.originalFilings将该事件标注为'HKEX公告'但所附URL实际为华尔街见闻媒体报道链接，未核实公司是否已就该项可能构成'须予披露交易'或'内幕消息'的重大子公司融资事件发布正式HKEX披露易公告",
+     "evidenceRequest": "需回查HKEX披露易(www.hkexnews.hk)是否存在快手2026年7月前后就北京可灵分拆融资签署的正式公告，并核对与媒体报道数字（注资额、领投方名单、投后估值）是否完全一致"
+    },
+    {
+     "field": "加杠杆回购的官方解释",
+     "reason": "官方财报仅披露总借款与财务开支净额的绝对数字及变动方向，未解释为何在持有约RMB1,213亿总可动用资金的情况下选择大幅新增借款（+109.4%）支撑回购与AI资本开支，而非直接动用自有现金；已查HKEX官方2026Q2业绩公告全文MD&A章节，未见对该资本结构选择的专门说明",
+     "evidenceRequest": "需下一轮回查年报附注中关于现金受限说明（如是否存在境内持牌实体现金调拨限制）、新增借款的具体利率与期限条款，判断加杠杆回购是流动性错配套利还是治理纪律松动"
+    }
+   ]
+  },
+  "industryTrend": {
+   "title": "行业与长期趋势",
+   "conclusion": "短视频用户渗透率 95.4% 见顶的判断不变，但份额分化的结论这轮被推到了更尖锐的位置：行业广告大盘 2026Q2 仍 +8.1%，快手 Q3 指引却是 -4.5%，剪刀差从 3.7pp 扩大到 12.6pp——这不是行业 Beta 的问题，是快手在存量市场里被抖音与视频号同时挤压。直播电商因涉税信息报送进入低速期，AI 视频生成则进入「资本化竞速」：可灵拿到了独立估值锚，但赛道内卷会持续压低毛利。",
+   "analysis": {
+    "paradigmShift": {
+     "verdict": "部分",
+     "reasoning": "①短视频/内容社区行业用户渗透率已达95.4%接近天花板，本质是移动互联网既有范式在存量阶段的延续，而非独立新范式，本轮无新证据推翻此判断；②自研OneRec将推荐系统从传统'召回-排序'两阶段架构重构为生成式端到端架构，在主站实测观看时长提升1.6%，属于底层技术的范式性升级，本轮未获得更新数据但也无证据显示该判断需修正；③Kling AI所代表的文生视频生成式大模型正处于AI内容生成这一新兴范式的关键转折点——2026Q2单季收入首次超RMB8.5亿(同比+200%+)、分拆融资已签约落地(投后估值约USD180亿)，证明技术与资本层面的范式转移仍在推进，但FY2025净亏损同比扩大280%至约RMB19亿、且直接面临字节跳动/谷歌/阿里竞品，说明这一范式转移已从'能否被验证'的早期阶段，进入'能否被证明可盈利'的中期阶段，综合判定行业整体仍处于'部分'范式转移，但AI子赛道内部的阶段特征已发生实质变化（详见技术路线风险）。AI 子赛道的阶段特征进一步明确为「资本化竞速」：可灵 10-30 完成 198 亿元交割、一级市场给出约 1,225 亿元估值、IPO 承销商已定，说明资本愿意为这条范式转移定价；但 Q3 收入指引环比零增长、全年亏损 50-60 亿元，说明范式转移的「商业闭环」仍未跑通。行业判断维持「部分」，但对快手而言，这条新范式的价值实现路径已经从「提升主业效率」变成了「分拆上市变现」。"
+    },
+    "historicalAnalogy": "①对比互联网/移动互联网范式（约2000-2015年扩张期），短视频平台本质是注意力经济在移动端的延续，快手所在赛道已步入该轮范式的存量竞争成熟阶段，本轮无新证据改变此判断；②对比AI这一潜在文明级范式（类比电力从单一照明场景扩散为通用工业动力的历程），Kling AI等生成式视频模型此前被定位为'电灯泡刚发明、尚未通用化'的早期阶段——本轮新数据显示这一类比需要更新：分拆融资落地相当于'电力公司获得外部资本注资'，是范式确立的正面信号；但同期净亏损扩大280%、多家巨头(字节、谷歌、阿里)同步下场竞争，更接近电力产业化初期'多家电力公司同时铺设电网、尚未出现区域垄断者'的资本混战阶段，而非已跑出清晰赢家的成熟期；③在此类比中快手仍处于变革窗口期而非确立护城河的阶段，但窗口期本身正在收窄——媒体原文表述'建立壁垒的窗口期已经不多'，是本轮更新中历史类比层面最重要的修正。",
+    "tam": {
+     "current": {
+      "value": "在线营销服务(广告)：QuestMobile统计2026Q2中国互联网广告市场规模2,169.8亿元，同比+8.1%；直播电商约6.9461万亿元(2025年预测)。两者统计口径不同，不做跨源加总",
+      "currency": "RMB",
+      "asOf": "2026年第二季度（互联网广告市场）/ 2025年（直播电商预测）",
+      "source": [
+       {
+        "name": "QuestMobile《中国移动互联网2026年上半年大报告》（经人民政协网转引）",
+        "url": "https://www.questmobile.cn/research/report/2084487578531254273"
+       },
+       {
+        "name": "网经社/电数宝《2025直播电商市场数据报告》",
+        "url": "https://m.sohu.com/a/1019861453_120491808"
+       }
+      ]
+     },
+     "ceiling": "①在线营销服务市场：行业 2026Q2 同比 +8.1%，处于成熟期个位数中高段增速，天花板受限于中国网络广告总盘与快手份额；②直播电商：2025 年约 6.95 万亿元、2024-2026 年 CAGR 约 18%，天花板取决于社零线上渗透率与快手 20% 出头的份额能否守住；③短视频：用户渗透率 95.4%，增量空间极小，两大引擎的增长已从「用户数×时长」转为「变现效率×份额」，而快手在这一阶段正在丢份额（详见增长曲线）。",
+     "growthCurve": "短视频用户渗透率(95.4%)已进入成熟甚至饱和阶段，此判断不变；在线营销服务行业大盘本轮首次获得同期可比数据——QuestMobile统计2026Q2同比+8.1%，而快手同期在线营销服务收入仅同比+4.4%（低于大盘3.7个百分点，financial_rigor.py验算：8.1-4.4=3.7），核心商业化收入(在线营销+其他服务)增速从Q1的10.7%降至Q2的7.4%(财报管理层原文表述，financial_rigor.py交叉验算：(20639+6206-19800-5200)/(19800+5200)×100=7.38%，与管理层披露数字一致)；作为对照，同期腾讯营销服务收入同比+22%(远超行业大盘)，说明同一行业Beta下不同平台份额此消彼长的分化正在发生，快手的放缓更多是自身份额流失叠加行业Beta放缓的双重压力，而非纯行业性因素；直播电商增速从早期30%+降至2024-2026年CAGR预测约18%，处于高速成长向中速成长过渡阶段；AI内容生成业务(Kling AI)增速仍处于快速爆发阶段(2026Q2单季收入同比+200%+)，但FY2025净亏损同比扩大280%（RMB5亿→19亿，即增至3.8倍；工具验算 (19-5)/5×100=280%），显示该子赛道正从单纯的'收入高增长叙事'切换为'增长与亏损同步扩大'的资本化竞速阶段。综合判断：快手核心变现业务处于'成熟期偏承压'（跑输行业大盘），AI新业务处于'资本化竞速+盈利压力显现'的导入期向成长期过渡阶段，哑铃结构仍然成立，但两端的风险特征都比上一轮更严峻。剪刀差进一步扩大：Q3 指引广告 -4.5%，而行业大盘仍 +8.1%，差距由 Q2 的 3.7pp 扩大到 12.6pp。这意味着「行业还在增长、快手只是慢一点」的解释不再成立——快手正在绝对丢失广告预算份额。直播电商侧新增变量是涉税信息报送：平台需向税务部门报送商家经营数据，以白牌/长尾商家为主的快手电商受冲击大于品牌化程度更高的竞对，公司自己把 Q3 电商佣金 -10% 归因于此。"
+    },
+    "valueChainPosition": "①在广告/营销服务价值链中，快手是流量入口与推荐分发方，向品牌及中小广告主收费，议价权取决于用户时长份额与商业化效率；本轮新证据强化了议价权偏弱势的判断——2026Q2在线营销服务收入同比+4.4%，低于QuestMobile统计的行业大盘+8.1%达3.7个百分点，且远低于同期腾讯营销服务收入+22%的增速，说明广告主预算正在同一行业Beta下从快手迁移至其他平台（腾讯视频号/朋友圈广告等），快手在价值链中对广告主的议价权较此前判断进一步走弱；②在直播电商价值链中快手兼具流量分发与交易撮合双重角色，GMV份额约20%出头且较2024年基本持平略降，本轮未获得更新的GMV数据（公司已停止单独披露），对商家/主播议价权判断维持中等，需与抖音电商(体量约2倍以上)争夺头部主播与品牌资源；③在AI技术价值链中，快手已从'应用层使用者'实质性升级为'底层模型供应商'——Kling AI分拆融资已于2026-07-02签署协议落地(投后估值约USD180亿)，较此前'仍处初步阶段'的表述是确定性进展；但同时字节跳动、谷歌、阿里同类产品的直接竞争加剧，且可灵AI自身FY2025净亏损同比扩大280%至约RMB19亿，意味着'供应商'地位的确立尚未转化为可持续的独立盈利能力，议价权提升更多体现在资本市场估值层面而非产业链利润分配层面。",
+    "techRouteRisk": "①Kling AI所在的文生视频生成式大模型赛道技术迭代极快业媒体报道称该赛道'建立壁垒的窗口期已经不多'，直接竞争对手已从'潜在'升级为'字节跳动、谷歌、阿里同类产品的直接竞争'（证券时报报道），叠加可灵AI FY2025净亏损同比扩大280%（RMB5亿→19亿，收入约RMB11亿），说明该赛道正从'技术领先即可获得高估值'的早期阶段，切换为'技术领先能否转化为可持续盈利'的中期考验阶段，护城河尚未经过长期验证的判断不仅维持，且风险权重上升；②OneRec将推荐系统从传统检索排序架构切换为生成式Encoder-Decoder+MoE架构，技术路线较新，其相对传统推荐系统的长期稳定优势(目前公开数据仅为+1.6%观看时长)仍需更长周期验证，本轮无新数据更新；③AI基础设施依赖自建算力(内蒙古乌兰察布数据中心)财经媒体报道快手2026年全年资本开支指引约RMB260亿，较FY2025的RMB149.42亿新增约RMB110.58亿（financial_rigor.py验算：26000-14942=11058百万），主要投向服务器采购、数据中心扩建等AI算力基建——这一指引显示，即便公司自身H1业绩已明显承压(经营利润同比-23.0%)且管理层展望转向'审慎'，资本开支仍在加码而非收缩，反映整个行业AI基建军备竞赛仍处于'不进则退'的竞速状态，若AI技术方向出现路线错误或商业化不及预期，前期重资产算力投入的减值与沉没成本风险进一步放大。可灵的对赌条款把技术路线风险变成了时间风险：2031-10-30 前必须 IPO，否则按本金 +8% 单利回购。这既约束了管理层「长期投入、慢慢打磨」的空间，也意味着若 AI 视频赛道在 2028-2030 年出现技术路线切换（如世界模型取代扩散模型），可灵没有第二次试错机会。",
+    "concentration": {
+     "customers": {
+      "status": "unavailable",
+      "reason": "采集文件competitiveLandscape/industryOutlook/technology均未披露快手广告主集中度(如前五大广告主收入占比)数据，本轮financials-collection.json新增的2026Q2数据同样未涉及此字段，已查全部相关维度"
+     },
+     "suppliers": {
+      "status": "unavailable",
+      "reason": "采集文件未披露云服务器/AI芯片等供应商集中度数据，仅提及'自建数据中心(内蒙古乌兰察布)'及资本开支金额(FY2025 RMB149.42亿、2026年指引约RMB260亿)，本轮未新增供应商集中度数据"
+     },
+     "evidence": []
+    }
+   },
+   "inquiry": {
+    "question": "站在20年后回看，这家公司是「这个时代的标准石油」还是「昙花一现的3Com」？",
+    "answer": "更接近区域性寡头而非标准石油或转瞬即逝的3Com，且本轮新数据显示这个判断的容错空间比一个季度前更窄。①标准石油式判断要求接近垄断的定价权与不可替代的基础设施地位，但快手2026Q2在线营销服务收入同比+4.4%，已低于QuestMobile统计的行业大盘+8.1%达3.7个百分点，且远逊于同期腾讯营销服务收入+22%的增速——这不再只是MAU增速落后抖音的老问题，而是在'用户见顶后转向商业化效率'这条此前被视为出路的赛道上，快手同样在跑输大盘，定价权层面的证据进一步走弱；②3Com式判断要求技术路线被颠覆后迅速边缘化，快手尚未走到这一步——H1 2026仍有正的经营利润(RMB73.52亿)与充裕的可利用资金总额(RMB1,213亿)，十亿级用户基本盘与AI技术资产(Kling AI分拆估值约USD180亿)提供缓冲垫，短期内不会消失；③真正的胜负手仍在Kling AI，但胜负手本身的性质已经变化——此前是'能否成功分拆融资'的确定性问题(本轮已验证：能，协议已签署)，现在是'分拆后能否在字节跳动/谷歌/阿里的直接竞争下把200%+的收入增速转化为收窄而非扩大的亏损'的执行力问题(本轮新证据：FY2025净亏损同比扩大280%至约RMB19亿)。若可灵AI能在未来1-2年内证明盈利路径、同时快手核心商业化收入增速能重新追上或反超行业大盘，仍有望复制'电力公司'式的时代地位；若两条战线同时失守——AI赛道'建立壁垒的窗口期'关闭且核心广告业务份额持续流失——则大概率加速退化为区域性内容平台，长期估值上限将比此前判断更低。"
+   },
+   "dataGaps": [
+    {
+     "field": "供应商与客户集中度",
+     "reason": "缺失快手广告主集中度数据(如前五大客户收入占比)，本轮financials-collection.json新增的2026Q2数据未涉及此字段",
+     "evidenceRequest": "需另行采集公司年报关联方及大客户披露章节"
+    },
+    {
+     "field": "互联网广告 TAM 官方口径",
+     "reason": "各研究机构口径差异极大（同为相近年份数字相差近一倍）。QuestMobile 2026Q2 单季 8.1% 的行业大盘增速部分缓解了这一缺口（提供了与快手同期可比的行业增速），但仍缺乏统计局/工信部官方口径的原始报告用于最终交叉核实。",
+     "evidenceRequest": "如需精确TAM需交叉核对统计局/工信部官方口径原始报告"
+    }
+   ]
+  },
+  "valuation": {
+   "title": "估值分析",
+   "conclusion": "先说结论：28.92 港元、市值 HKD1,243.6 亿。按公司口径的净现金（可利用资金 1,213 亿−借款 273.6 亿）加可灵 66.68% 股权，两者合计 HKD2,063 亿，市值只有它的 60%；按「核心主业 = 市值 − 净现金 − 可灵股权」计算，隐含价值约 -HKD820 亿；但若「可利用资金」只算狭义现金与存款，净现金只剩 HKD129 亿，同一公式下核心主业隐含价值变成 +HKD155 亿（1,243.6 − 129.1 − 959.6）。同一个价格，核心主业可以是负 820 亿也可以是正 155 亿，差别全在「理财与长期存款算不算现金」——这是本报告最大的单一不确定性，也是下面三情景给现金打 5-9 折的原因。TTM PE 6.71x、2026E forward 12.1x：表观便宜是真的，前瞻不便宜也是真的。三情景：悲观 22.7（-21%）、中性 49.2（+70%）、乐观 77.7（+169%），区间宽达 3.4 倍。",
+   "analysis": {
+    "currentMultiples": {
+     "marketCap": {
+      "value": "1,243.65亿",
+      "currency": "HKD",
+      "asOf": "2026-11-06 收盘",
+      "note": "工具验算偏差 0.00%；较上轮 1,319.8 亿下降 5.8%",
+      "source": {
+       "name": "腾讯行情 + 港交所月报表",
+       "url": "https://qt.gtimg.cn/q=hk01024"
+      }
+     },
+     "pe": {
+      "value": "6.71x（TTM）／12.1x（2026E 指引中值）／10.4x（2027E 共识）",
+      "asOf": "2026-11-06",
+      "note": "TTM 归母净利润 RMB157.77亿；2026E 经调整净利润 87.5 亿元；2027E 共识约 102 亿元。TTM 与 forward 相差近一倍",
+      "source": {
+       "name": "工具验算 + 一致预期",
+       "url": "https://stockanalysis.com/quote/hkg/1024/forecast/"
+      }
+     },
+     "ps": {
+      "value": "0.73x（TTM 营收 RMB1,443.73亿）",
+      "asOf": "2026-11-06",
+      "note": "上轮 0.78x",
+      "source": {
+       "name": "工具验算",
+       "url": "https://stockanalysis.com/quote/hkg/1024/financials/"
+      }
+     },
+     "pb": {
+      "value": "1.29x（归母权益 RMB822.73亿，2026-06-30）",
+      "asOf": "2026-11-06",
+      "note": "上轮 1.52x",
+      "source": {
+       "name": "官方资产负债表 + 工具验算",
+       "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+      }
+     },
+     "dividendYieldPct": {
+      "value": "2.39%（每股 HK$0.69）",
+      "asOf": "2026-11-06",
+      "note": "2026-07-28 已派付，全年现金分红约 30 亿港元",
+      "source": {
+       "name": "官方公告 + 工具验算",
+       "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+      }
+     },
+     "evToRevenue": {
+      "value": "0.08x（EV = 市值 HKD1,243.65亿 − 净现金 HKD1,103.6亿 = HKD140.1亿；÷ TTM 营收 HKD1,696.1亿 = 0.083）",
+      "asOf": "2026-11-06",
+      "note": "净现金取公司口径（可利用资金−借款）。若只算狭义现金+存款，EV 将升至 HKD1,114.6亿，EV/Revenue 约 0.66x——该指标对现金口径极度敏感，仅作方向性参照。",
+      "source": {
+       "name": "工具验算",
+       "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900315_c.pdf"
+      }
+     },
+     "peg": {
+      "status": "not-applicable",
+      "reason": "2026 年经调整净利润为负增长（-56%~-59%），PEG 分母为负、指标无经济含义"
+     }
+    },
+    "reverseDcf": {
+     "impliedGrowth": "由 6.71x TTM PE 反推（PE≈1/(r−g)）：r−g≈14.9%。r 取 10.5% 时 g≈-4.4%；r 取 12% 时 g≈-2.9%。上轮 7.16x 对应 g≈-1.97%~-3.47%，本轮进一步跌入负值——市场不只定价「不增长」，而是定价「持续萎缩」。但要注意：TTM 盈利尚未反映 Q3 指引的利润腰斩，若按 2026E 经调整净利 87.5 亿元计算，forward PE 已是 12.1x，此时隐含的 g 回到约 +2.2%（r=10.5%），并不极端。两个口径的差异说明：便宜与否完全取决于 2027 年盈利能否止跌。",
+     "assumptions": "①r 沿用 10.5%-12% 区间（杠杆与治理折价已计入）；②TTM 口径为后视镜，forecast 口径用公司指引与 31 家卖方共识；③未做分年现金流折现，仅用 Gordon 模型做方向性反推，不构成目标价。"
+    },
+    "threeScenario": {
+     "method": "分部加总（SOTP）：目标市值 = 核心主业估值 + 净现金 × 折价系数 + 可灵 66.68% 股权 × 折价系数；再除以 43.00 亿股。改口径的原因：净现金已占市值约 89%，纯 PE×EPS 会给出低于净现金的目标价。",
+     "inputs": {
+      "price": 28.92,
+      "sharesHundredMillion": 43.0,
+      "years": 3,
+      "currency": "HKD",
+      "netCashRMB_H": 939.4,
+      "klingStakeRMB_H": 816.8,
+      "fx_HKDCNY": 0.85121
+     },
+     "optimistic": {
+      "targetPrice": "77.7 HKD",
+      "impliedReturnPct": "+168.8%",
+      "assumptions": "2029 核心经调整净利 115 亿元 × 11x = 1,265 亿；净现金按 9 折 845 亿；可灵按一级市场价 9 折 735 亿"
+     },
+     "neutral": {
+      "targetPrice": "49.2 HKD",
+      "impliedReturnPct": "+70.0%",
+      "assumptions": "2029 核心经调整净利 80 亿元 × 8x = 640 亿；净现金按 8 折 752 亿；可灵按一级市场价 5 折 408 亿"
+     },
+     "pessimistic": {
+      "targetPrice": "22.7 HKD",
+      "impliedReturnPct": "-21.4%",
+      "assumptions": "2029 核心经调整净利 40 亿元 × 6x = 240 亿；净现金按 5 折 470 亿；可灵按一级市场价 1.5 折 123 亿"
+     },
+     "assumptionBasis": "①核心盈利：2026E 经调整净利 87.5 亿元为起点，扣除约 10 亿元净利息收入后核心约 77.5 亿元；中性假设 2029 年回到 80 亿元（止跌但不恢复增长），乐观 115 亿元（广告恢复正增长 + 电商正常化），悲观 40 亿元（广告继续负增长、佣金被合规成本吃掉一半）。②倍数：8x/11x/6x，参考全球成熟广告平台 8-12x、衰退中的平台 5-6x。③净现金：公司口径 939.4 亿元（可利用资金 1,213 亿 − 借款 273.6 亿），按 9/8/5 折计入。「可利用资金」的构成可在资产负债表对上：现金 116.96 亿 + 短期定存 123.58 亿 + 流动金融资产（理财）563.53 亿 + 长期定存 142.91 亿 + 非流动投资 296.18 亿 ≈ 1,243 亿，与公司口径的 1,213 亿相差约 30 亿（受限/质押部分），量级吻合。其中真正随时可动用的现金只有约 117 亿，其余是定存与理财，需要为 260 亿元/年的资本开支留出缓冲，故打折而非全额计入。④可灵：一级市场投后约 1,225 亿元 × 66.68% = 816.8 亿元，按 9/5/1.5 折计入，反映私募价含回购权、少数股东优先清算权与 IPO 不确定性。\n⑤现金口径的敏感性（决定结论正负）：宽口径净现金 939.4 亿元 → 折 HKD1,103.6 亿，加可灵 HKD959.6 亿 = HKD2,063 亿，按「核心主业 = 市值 − 净现金 − 可灵股权」计算，约 -HKD820 亿；窄口径只算现金 117 亿 + 短期定存 123.58 亿 + 长期定存 142.91 亿 = 383.5 亿元，减借款 273.62 亿后仅 109.9 亿元 → 折 HKD129.1 亿，加可灵后合计 HKD1,088.7 亿，核心主业约 +HKD155 亿（1,243.6 − 129.1 − 959.6 = +154.9，工具验算）。窄口径下核心主业 155 亿港元约相当于 1.5 倍年利润（2026E 经调整净利 87.5 亿元≈HKD103 亿）；宽口径下则是负值，相当于市场认为核心业务要倒贴钱。两种口径的方向相反，所以三情景不直接把现金全额计入，而是按 5-9 折处理。",
+     "toolOutput": "financial_rigor.py calc 验算：\n乐观 (115×11+939.4×0.9+816.8×0.9)/0.85121/43.00298491 = 77.74 HKD（+168.8%）\n中性 (80×8+939.4×0.8+816.8×0.5)/0.85121/43.00298491 = 49.17 HKD（+70.0%）\n悲观 (40×6+939.4×0.5+816.8×0.15)/0.85121/43.00298491 = 22.74 HKD（-21.4%）\n✅ 全部十进制精确计算，可复现",
+     "caveat": "区间宽度 22.7-77.7 港元（3.4 倍）本身就是结论：这家公司当前的价格不由「几个点的增速」决定，而由「现金与可灵股权的变现能力」决定。任何把中性情景当成「合理价值」的读法都忽略了假设的脆弱性。"
+    },
+    "vsOwnHistory": {
+     "metric": "trailing PE（HKD 股价 × 43.0 亿股 × HKDCNY 0.85121 ÷ 滚动四季度归母净利润）",
+     "currentValue": "6.71x（2026-11-06）",
+     "historicalRange": "近两年 8 个季末观测点（股价 × 43.0 亿股 × HKDCNY 0.85121 ÷ 滚动四季度归母净利润）：\n2024-12-31 40.20 港元 / TTM 净利 153.3 亿元 → 9.60x；2025-03-31 53.20 港元 / TTM 净利 151.9 亿元 → 12.82x；2025-06-30 62.15 港元 / TTM 净利 161.4 亿元 → 14.10x；2025-09-30 83.91 港元 / TTM 净利 173.6 亿元 → 17.69x；2025-12-31 63.26 港元 / TTM 净利 186.2 亿元 → 12.44x；2026-03-31 44.43 港元 / TTM 净利 175.4 亿元 → 9.27x；2026-06-30 41.60 港元 / TTM 净利 157.7 亿元 → 9.66x；2026-11-06 28.92 港元 / TTM 净利 157.7 亿元 → 6.71x\n区间 6.71x–17.69x，中位数 11.05x（8 点排序后取中间两值 9.66 与 12.44 的平均），当前为区间最低点。\n口径说明：股本按 43.0 亿股（4.30B）统一近似（期间回购影响 <2%），汇率固定为 2026-11-06 的 0.85121；TTM 归母净利润取自逐季加总（Q2 2026 = 3,146+2,903+5,229+4,488=15,766 百万元），与官方半年报口径一致。因此该序列宜作趋势参考，不能当成精确的历史分位。",
+     "reading": "当前 6.71x 处于近两年 8 个观测点的最低位（区间 6.7-17.7x，中位 12.4x），比 2025-09 的高点低 62%。但这次下移是「股价跌 + 盈利预期继续下修」共同作用，forward PE 仍有 12.1x——历史低位不自动等于便宜。",
+     "median": 11.05
+    },
+    "vsPeers": [
+     {
+      "name": "抖音（字节跳动）",
+      "pe": {
+       "status": "unavailable",
+       "reason": "未上市，无公开PE/PS数据；本轮未新增信息"
+      },
+      "ps": "不适用（字节未披露）",
+      "source": {
+       "name": "财经媒体转引投行估计",
+       "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/1030/2026103002124_c.pdf"
+      },
+      "peTtm": "未上市",
+      "peForward": "未上市"
+     },
+     {
+      "name": "微信视频号（腾讯）",
+      "pe": {
+       "status": "unavailable",
+       "reason": "视频号为腾讯内部业务分部，不单独上市、不单独披露估值倍数"
+      },
+      "ps": "不适用",
+      "source": {
+       "name": "腾讯财报未单独披露视频号",
+       "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/1030/2026103002124_c.pdf"
+      },
+      "peTtm": "并入腾讯",
+      "peForward": "并入腾讯"
+     },
+     {
+      "name": "哔哩哔哩 Bilibili (9626.HK/BILI)",
+      "pe": {
+       "value": "28.5x（TTM）/ 12.4x（Forward）",
+       "asOf": "2026-11-06",
+       "source": {
+        "name": "stockanalysis HKG:9626 统计页",
+        "url": "https://stockanalysis.com/quote/hkg/9626/statistics/"
+       },
+       "flag": "单源（Level 2，未与第二来源交叉）"
+      },
+      "ps": "1.30x",
+      "source": {
+       "name": "stockanalysis HKG:9626",
+       "url": "https://stockanalysis.com/quote/hkg/9626/statistics/"
+      },
+      "note": "关键对照：B 站 forward PE 12.4x 与快手 12.1x 几乎相同——快手在利润腰斩之后，按前瞻盈利已经不再比一家仍在扭亏爬坡期的中长视频平台便宜。TTM 口径的 6.7x vs 28.5x 差距，全部来自「快手当前利润仍是旧的高基数」。",
+      "peTtm": "28.5x",
+      "peForward": "12.4x"
+     },
+     {
+      "name": "小红书 Xiaohongshu",
+      "pe": {
+       "status": "unavailable",
+       "reason": "未上市，仅有营收/净利润的媒体估计数字，无公开股价与PE"
+      },
+      "ps": "不适用",
+      "source": {
+       "name": "无公开财务",
+       "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/1030/2026103002124_c.pdf"
+      },
+      "peTtm": "未上市",
+      "peForward": "未上市"
+     },
+     {
+      "name": "可灵AI分拆估值 vs 快手集团市值",
+      "pe": {
+       "status": "not-applicable",
+       "reason": "SOTP 参照，非可比倍数；分部拆解见三情景假设依据第⑤条"
+      },
+      "ps": "不适用",
+      "sotpAnalysis": "可灵投后估值约 RMB1,225 亿（按公告单笔出资额/股权比例反算，国家AI基金 14 亿元对应 1.14% 隐含 1,228 亿、CPE Spruce 4.362 亿元对应 0.36% 隐含 1,211 亿，多家投资者单位价格一致）；快手持有 66.68%，归属价值 RMB816.8 亿 = HKD959.6 亿（工具验算）。净现金取 2026-06-30「可利用资金 1,213 亿 − 借款 273.62 亿 = 939.4 亿」= HKD1,103.6 亿。两项合计 HKD2,063 亿，对比市值 HKD1,243.6 亿，核心主业隐含价值约 -HKD820 亿。四点解读：①「可利用资金」含定期存款、理财与受限现金，若只算狭义现金+存款（约 383 亿元）再减借款，净现金仅约 110 亿元，此时核心主业隐含价值转为正的约 HKD570 亿——所以「核心业务白送」这个结论对现金口径极度敏感，不能当铁律；②可灵的 1,225 亿元是一级市场带回购权的定价，不是二级市场公允价值，且快手只占 66.68%；③安全边际依赖两个条件同时兑现：可灵 2027 年顺利递表 + 核心广告在 2027 年止跌；④10 月股价最低 25.88 港元时，市场给核心主业的定价更低（约 -HKD950 亿），说明悲观情景已经在交易。",
+      "source": {
+       "name": "2026-10-30 交割公告",
+       "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/1030/2026103002124_c.pdf"
+      },
+      "peTtm": "不适用",
+      "peForward": "不适用"
+     }
+    ],
+    "sellsideTargets202609": {
+     "asOf": "2026-11-06",
+     "currentPrice": "28.92 HKD",
+     "table": [
+      {
+       "broker": "麦格理 Macquarie",
+       "date": "2026-08-20",
+       "rating": "Underperform",
+       "tp": 27.6,
+       "note": "最悲观锚"
+      },
+      {
+       "broker": "招商证券国际",
+       "date": "2026-08-20",
+       "rating": "减持（下调两级）",
+       "tp": 28.0,
+       "note": "目标价已贴近现价"
+      },
+      {
+       "broker": "大和 Daiwa",
+       "date": "2026-09-03",
+       "rating": "Hold",
+       "tp": 37.0,
+       "note": "下调至持有，认为还有两个困难季度"
+      },
+      {
+       "broker": "花旗 Citi",
+       "date": "2026-08-20",
+       "rating": "Neutral",
+       "tp": 41.0,
+       "note": "由买入下调至中性"
+      },
+      {
+       "broker": "浙商证券",
+       "date": "2026-09-14",
+       "rating": "Buy",
+       "tp": 46.33,
+       "note": "预测 2026 收入 -3.0%、经调整净利 89.34 亿"
+      },
+      {
+       "broker": "美银 BofA",
+       "date": "2026-09-01",
+       "rating": "Buy",
+       "tp": 53.0,
+       "note": "SOTP：可灵归属 USD120 亿 + 净现金 USD130 亿"
+      },
+      {
+       "broker": "里昂 CLSA",
+       "date": "2026-09",
+       "rating": "Outperform",
+       "tp": 57.0,
+       "note": "自 68 下调"
+      }
+     ],
+     "consensus": "31 家覆盖，平均目标价 47.69 港元（较现价 +64.9%），区间 27.61-102.56，中位数 43.26；评级分布 8 月为 15 强烈买入/11 持有，10 月恶化为 13/4/12/2（强烈买入/买入/持有/强烈卖出），下调集中在 8-20 业绩后与 10 月股价创新低期间。",
+     "reading": "均值 47.69 与中性情景 49.2 接近，但分歧极大（最悲观目标价 27.61 已低于现价 4.5%）——卖方分歧的不是「值多少钱」，而是「2027 年利润能不能回来」。"
+    },
+    "dilutionNote": "可灵的少数股东占 33.32%（含盖坤 3.02% 股权/23.72% 表决权与 ESOP 平台）；若 2031-10-30 前未完成 IPO，投资者可按本金 +8% 单利要求回购，按 198 亿元本金粗算潜在义务约 280-290 亿元。两项都不在表内资产负债表中。"
+   },
+   "inquiry": {
+    "question": "如果股市明天关闭5年，你愿意以这个价格持有吗？",
+    "answer": "愿意，但只作为「资产折价 + 事件驱动」的仓位，不作为长期复利标的。①估值本身不提供安全边际：TTM PE 6.71x 看着便宜，但那是尚未反映 Q3 指引的旧盈利；按 2026 年经调整净利 87.5 亿元算 forward PE 已 12.1x，按 2027 年共识 102 亿元算 10.4x——一家收入负增长的公司给 10-12x，并不便宜。真正的折价在资产负债表：净现金 HKD1,103.6 亿 + 可灵 66.68% 股权 HKD959.6 亿= HKD2,063 亿，比市值 HKD1,243.6 亿高 66%，核心主业在现价中要么是负值、要么只值 155 亿港元（取决于现金口径）。②这个折价能不能兑现取决于两件事：可灵 2027 年能否递表并拿到接近一级市场的定价（1,225 亿元、快手占 66.68%），以及核心广告 2027 年能否止跌。两条都不确定，所以是期权而非债券。③下行情景真实存在：若广告继续负增长、现金被 260 亿元/年的资本开支与回购消耗，「负值核心业务」会变成永久性折价而不是错杀——悲观情景 22.7 港元就是这种情形。④五年维度看，持有的本质是用现价买入「净现金 + 可灵股权」，白送一个正在收缩的广告平台；只要现金不被烧掉、可灵能上市，这个组合的下行有限、上行可观，但需要每年复核一次现金与 IPO 进度，不应重仓。"
+   },
+   "dataGaps": [
+    {
+     "field": "2021-2024 年历史 PE 分位",
+     "reason": "已补 2024-12 至 2026-11 的 8 个季末点位（当前 6.71x 为区间最低），但 2021-2024 年（上市初期高估值阶段）的季度净利润与股价序列尚未逐季采集，仍给不出「上市以来」的完整分位。",
+     "evidenceRequest": "需补充 2021Q1-2024Q3 的分季度归母净利润，与同期季末收盘价配对，方可给出上市以来完整 PE 分位"
+    },
+    {
+     "field": "可比公司估值倍数（哔哩哔哩）",
+     "reason": "已补 B 站当期 TTM/Forward PE 与 PS（28.5x / 12.4x / 1.30x，stockanalysis HKG:9626），但仅单源、且未采集其历史区间；抖音与视频号仍未上市/未单独披露，无法做倍数对比。",
+     "evidenceRequest": "如需完整体验，可补 B 站近三年 PE 区间与视频号广告收入的卖方估算，用于判断「快手 forward 12.1x 是否真的便宜」"
+    }
+   ]
+  }
+ },
+ "crossValidationLog": [
+  {
+   "field": "三情景估值",
+   "source1": {
+    "name": "financial_rigor.py three-scenario --price 44.18 --eps 4.52 --shares 43.1 --growth 0.18 0.10 0.04 --pe 13 10 8 --years 3 --currency HKD",
+    "value": "乐观96.5/中性60.2/悲观40.7 HKD"
+   },
+   "source2": {
+    "status": "not-applicable",
+    "reason": "工具验算（financial_rigor.py），非多源交叉验证，本字段没有第二来源"
+   },
+   "deviationPct": {
+    "status": "not-applicable",
+    "reason": "本字段不做多源交叉验证，不计算偏差率（见 source2.reason）"
+   },
+   "flag": "ok",
+   "resolution": "工具精确十进制计算，非心算，已用--help确认参数单位（shares为亿股，growth为小数）"
+  },
+  {
+   "field": "PE/PB/ROE一致性验算",
+   "source1": {
+    "name": "financial_rigor.py verify-valuation --price 44.18 --eps 4.52 --bvps 21.55",
+    "value": "PE=9.77x，PB=2.05x（由44.18/2.05反推BVPS=21.55），隐含ROE≈20.97%"
+   },
+   "source2": {
+    "name": "financials-collection.json currentValuation（stockanalysis口径）",
+    "value": "PE=9.77x，PB=2.05x"
+   },
+   "deviationPct": 0.0,
+   "flag": "ok",
+   "resolution": "工具验算PE、PB与采集文件单源数据完全一致，且反推隐含ROE≈21%，与FY2025盈利改善趋势方向一致，未发现异常"
+  },
+  {
+   "field": "反向PE隐含EPS变动（trailing vs forward）",
+   "source1": {
+    "name": "financial_rigor.py calc --expr '44.18/10.10'",
+    "value": "forward EPS≈4.37"
+   },
+   "source2": {
+    "name": "financial_rigor.py calc --expr '44.18/9.77'",
+    "value": "trailing EPS≈4.52"
+   },
+   "deviationPct": -3.27,
+   "flag": "ok",
+   "resolution": "工具精确计算得出forward EPS较trailing EPS低约3.27%，即forward PE(10.10x)高于trailing PE(9.77x)隐含市场预期未来12个月EPS小幅下滑而非增长，用于reverseDcf定性推理，非误差异常"
+  },
+  {
+   "field": "三情景重算（换汇修正EPS基数）",
+   "tool": "financial_rigor.py three-scenario --price 30.48 --eps 4.26 --growth 0.08 0.00 -0.10 --pe 11 9 7 → 乐观59.0(+93.7%)/中性38.3(+25.8%)/悲观21.7(-28.7%)",
+   "flag": "ok"
+  },
+  {
+   "field": "反向DCF隐含增长率",
+   "tool": "financial_rigor.py calc：1/7.16=13.97%；g(10.5%)=-3.47%；g(12%)=-1.97%",
+   "flag": "ok"
+  },
+  {
+   "field": "SOTP更新（完成轮口径）",
+   "tool": "financial_rigor.py calc：0.6833×18e9×7.8436=HKD96.47B；93,938mn/0.8551=HKD109.86B；131.978−96.47−109.86=−HKD74.35B；18e9×7.8436/131.978e9=107%",
+   "flag": "ok（方向性）"
+  }
+ ]
 }

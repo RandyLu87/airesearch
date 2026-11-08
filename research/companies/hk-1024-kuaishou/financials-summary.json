@@ -1,171 +1,171 @@
 {
-  "_spec": {
-    "purpose": "研究流程第 3 步（分析总结）的产出模板。由评估 Agent 基于第 1 步采集与第 2 步分析的落盘文件生成，不重新采集。步骤正文见 docs/research/workflow/03-analysis-summary.md。",
-    "todoSentinel": "所有待填值写 \"__TODO__\"；无法给出的字段不删除，改写 { \"status\": \"unavailable\", \"reason\": \"缺失原因\" }。",
-    "confidence": "信心度总分 10 分（0–10，整数或 0.5 步长）：价值投资视角下对该维度的看多程度，分数越高越看多。梯度：9–10 教科书级优秀（宽护城河/卓越管理层/显著低估）；7–8 明显有利有小瑕疵；5–6 中性或好坏参半；3–4 明显不利；0–2 严重不利。最大风险维度按风险可控程度打分（越致命越低），估值维度按价格吸引力打分（越透支越低），企业文化维度按文化对长期股东的有利程度打分（诚信披露、长期主义、股东导向为正；粉饰、短期激进、高管动荡为负）。证据不足向中性收敛并在 scoreBasis 说明，不把数据缺口误报为看空理由。",
-    "corporateCulture": "企业文化维度的 conclusion 是客观陈述，不是印象分：只转述第 2 步 dimensions.management.analysis.culture 及管理层维度其他字段（keyDecisions、alignment、organization）已落盘的可观察证据，不引入前两步文件之外的公司口碑、媒体印象或行业刻板印象，严禁编造。该字段缺失、unavailable 或证据以单源/[估计] 为主时，结论如实写明证据限制，信心度向中性（5–6）收敛。",
-    "traceability": "每个结论、评分、建议的 basis 字段必须写明引用的前两步文件字段路径（如 dimensions.valuation.analysis.threeScenario）与关键数据，不接受凭空判断。",
-    "strategies": "每条策略建议必须绑定可观察触发条件（价格区间 / 指标阈值 / 具体事件），价格类引用第 2 步 threeScenario 结果，基本面类引用 failurePaths、护城河 breaker 或驱动指标。"
+ "_spec": {
+  "purpose": "研究流程第 3 步（分析总结）的产出模板。由评估 Agent 基于第 1 步采集与第 2 步分析的落盘文件生成，不重新采集。步骤正文见 docs/research/workflow/03-analysis-summary.md。",
+  "todoSentinel": "所有待填值写 \"__TODO__\"；无法给出的字段不删除，改写 { \"status\": \"unavailable\", \"reason\": \"缺失原因\" }。",
+  "confidence": "信心度总分 10 分（0–10，整数或 0.5 步长）：价值投资视角下对该维度的看多程度，分数越高越看多。梯度：9–10 教科书级优秀（宽护城河/卓越管理层/显著低估）；7–8 明显有利有小瑕疵；5–6 中性或好坏参半；3–4 明显不利；0–2 严重不利。最大风险维度按风险可控程度打分（越致命越低），估值维度按价格吸引力打分（越透支越低），企业文化维度按文化对长期股东的有利程度打分（诚信披露、长期主义、股东导向为正；粉饰、短期激进、高管动荡为负）。证据不足向中性收敛并在 scoreBasis 说明，不把数据缺口误报为看空理由。",
+  "corporateCulture": "企业文化维度的 conclusion 是客观陈述，不是印象分：只转述第 2 步 dimensions.management.analysis.culture 及管理层维度其他字段（keyDecisions、alignment、organization）已落盘的可观察证据，不引入前两步文件之外的公司口碑、媒体印象或行业刻板印象，严禁编造。该字段缺失、unavailable 或证据以单源/[估计] 为主时，结论如实写明证据限制，信心度向中性（5–6）收敛。",
+  "traceability": "每个结论、评分、建议的 basis 字段必须写明引用的前两步文件字段路径（如 dimensions.valuation.analysis.threeScenario）与关键数据，不接受凭空判断。",
+  "strategies": "每条策略建议必须绑定可观察触发条件（价格区间 / 指标阈值 / 具体事件），价格类引用第 2 步 threeScenario 结果，基本面类引用 failurePaths、护城河 breaker 或驱动指标。"
+ },
+ "meta": {
+  "companyId": "hk-1024-kuaishou",
+  "companyName": "快手科技 / Kuaishou Technology",
+  "summarizedAt": "2026-11-08T20:05:00+08:00",
+  "dataCutoff": "2026-11-08（Asia/Shanghai）。财务数据截至 2026Q2/中期；2026Q3 业绩 11-19 公布。股价 28.92 港元（11-06 收盘）。本次相对 9-15 版的变化：把 8-19 业绩会的 Q3/全年指引（收入 -7.5%、经调整净利约 7 亿、全年 85-90 亿）纳入基数；可灵 10-30 完成交割（实收 198 亿、留存 66.68%、2031 年前上市对赌）；三情景改用分部加总，得 22.7/49.2/77.7 港元。",
+  "basedOnCollection": "research/companies/hk-1024-kuaishou/financials-collection.json",
+  "basedOnAnalysis": "research/companies/hk-1024-kuaishou/financials-analysis.json"
+ },
+ "dimensionSummary": [
+  {
+   "dimensionId": "businessQuality",
+   "title": "生意质量",
+   "mapsTo": "dimensions.businessEssence",
+   "conclusion": "生意性质在 2026 年发生了实质变化：从「增速放缓」进入「收入绝对收缩」。Q3 指引总收入 -7.5%、广告 -4.5%、直播 -17%、电商佣金 -10%，四条收入线同时转负；经调整净利润约 7 亿元（-86%），经营杠杆负向放大。过去两年「新引擎补老引擎」的结构切换故事，在 Q3 不成立了。",
+   "confidence": 4.5,
+   "scoreBasis": "①Q3 指引为总收入 -7.5%、经调整净利约 7 亿元（-86%），收入与利润同时转负（分析·生意本质·Q3 指引拆解，2026-08-19 业绩会）；②四条收入线同步转负：广告 +4.4%→-4.5%、直播 -13.5%→-17%、其他服务 +18.5%→-10%（同上）；③毛利率下滑的成因是结构性的：收入分成成本占收入比由 30.1% 升至 34.7%，分成绝对值 +16.9% 远快于收入 +1.4%（2026Q2 官方 MD&A）；④分部毛利率、用户留存率仍缺失，无法判断广告定价权是否受损（数据缺口）。评分由 5.5 下调至 4.5：上轮「结构切换而非核心恶化」的判断被 Q3 指引推翻。"
   },
-  "meta": {
-    "companyId": "hk-1024-kuaishou",
-    "companyName": "快手科技 / Kuaishou Technology",
-    "summarizedAt": "2026-09-15T12:10:00+08:00",
-    "dataCutoff": "2026-09-15（Asia/Shanghai）。最新已披露季度仍为2026Q2/中期（截至2026-06-30，下一份为2026Q3财报，预计2026年11月发布）；本轮为价格与事件增量更新：股价30.48港元（9-15盘中），自8-20收盘33.64港元再跌约9.4%，自8-7基线44.18累计跌约31%；新增事件：可灵AI增资扩股完成（8-31公告，国家AI基金14亿元+正大机器人约1,929万美元，投后约USD180亿、公司留存约68.33%）、9月卖方评级密集调整、公司持续回购、9-14全球AI/半导体板块抛售。上一轮采集截止2026-08-20",
-    "basedOnCollection": "research/companies/hk-1024-kuaishou/financials-collection.json",
-    "basedOnAnalysis": "research/companies/hk-1024-kuaishou/financials-analysis.json"
+  {
+   "dimensionId": "moat",
+   "title": "护城河",
+   "mapsTo": "dimensions.moat",
+   "conclusion": "护城河重心从「平台网络效应」迁移到「单一 AI 产品」：官方 MAU 7.97 亿（+11.5%）但 DAU 仅 4.12 亿（+0.8%），核心日活停滞；广告 Q3 指引 -4.5% 而行业 +8.1%，网络效应这条护城河已基本失效。可灵是唯一还在变宽的资产（198 亿交割、投后约 1,225 亿、IPO 已定承销商），但只有 66.68% 属于快手，且必须在 2031-10 前上市。可灵越值钱，它就越是一项独立资产，而不是快手的护城河。",
+   "confidence": 4.5,
+   "scoreBasis": "①网络效应：官方 MAU 7.97 亿(+11.5%) 但 DAU 4.12 亿(+0.8%)，DAU/MAU 降至 51.7%（2026Q2 业绩公告）；②广告 Q3 指引 -4.5% vs 行业 +8.1%，剪刀差 12.6pp（业绩会 + QuestMobile）；③技术壁垒：可灵 10-30 交割、实收 198 亿元、投后约 1,225 亿元、快手留存 66.68%/表决权 52.45%（港交所 10-30 公告）；④反向证据：可灵 Q3 收入指引环比零增长、FY2026 预计亏损 50-60 亿元（业绩会转述）；⑤转换成本因分部成本与留存数据缺失仍不可判定（数据缺口）。评分由 5.0 降至 4.5：护城河变窄、耐久性变短，且 33% 的价值不属于股东。"
   },
-  "dimensionSummary": [
+  {
+   "dimensionId": "management",
+   "title": "管理层",
+   "mapsTo": "dimensions.management",
+   "conclusion": "执行力仍是加分项：可灵 4 个月完成签约到交割、10 月选定 IPO 承销商，年内回购 58 次约 28.55 亿港元 + 分红约 30 亿港元，Q3 指引罕见地给出精确的负增长数字（一次说透而非挤牙膏）。但两处打折：可灵持股从 68.33% 稀释到 66.68% 且背 8% 回购义务；账上 1,213 亿元「可利用资金」却继续加杠杆回购，公司始终未解释。",
+   "confidence": 6.5,
+   "scoreBasis": "①可灵从 7-02 签约到 10-30 交割约 4 个月，10 月市场报道已选定中金/高盛/瑞银（港交所公告 + Bloomberg 转引）；②股东回报：年内回购 58 次约 28.55 亿港元，7-28 派付股息约 30 亿港元（港交所月报表 + 雪球统计，单源）；③治理疑点：H1 总借款 +109.4%、财务开支 +452.6% 与巨额「可利用资金」并存，官方无解释（2026Q2 公告）；④薪酬结构、高管梯队仍缺失（数据缺口）。评分由 6.0 上调至 6.5：负增长指引的坦诚与可灵交割的执行力是可观察的加分项，但杠杆疑点压制了上调幅度。"
+  },
+  {
+   "dimensionId": "keyRisk",
+   "title": "最大风险",
+   "mapsTo": "dimensions.inversion",
+   "conclusion": "最大风险已从「盈利恶化」升级为「结构性负增长 + 现金三处消耗」：广告 Q3 指引 -4.5%、电商佣金 -10% 说明份额流失已到变现端；同时 AI 资本开支（约 260 亿元/年）、回购（28.55 亿港元）、可灵潜在 8% 回购义务在争同一笔现金。账面 1,213 亿元「可利用资金」是唯一安全垫，但它不是可全额分配的现金。",
+   "confidence": 2.5,
+   "scoreBasis": "①收入负增长已部分实现而非假设：Q3 指引 -7.5%、经调整净利 -86%（分析·逆向思考·失败路径一，业绩会）；②广告与行业大盘剪刀差扩大到 12.6pp（业绩会 + QuestMobile）；③可灵对赌：2031-10-30 前未上市可按本金 +8% 单利回购，按 198 亿元本金粗算潜在义务约 280-290 亿元（港交所公告）；④现金消耗：资本开支约 260 亿元/年、H1 经营现金流同比 -23.2%（业绩会 + 官方公告）。评分由 3.0 下调至 2.5：失败路径已从「可能」变成「正在发生」。"
+  },
+  {
+   "dimensionId": "civilizationTrend",
+   "title": "文明趋势",
+   "mapsTo": "dimensions.industryTrend",
+   "conclusion": "短视频渗透率 95.4% 见顶不变，但份额分化的结论更尖锐了：行业广告大盘 2026Q2 仍 +8.1%，快手 Q3 指引 -4.5%，剪刀差从 3.7pp 扩大到 12.6pp。直播电商因涉税信息报送进入低速期，AI 视频生成进入资本化竞速——可灵拿到了独立估值锚，但收入环比停滞说明商业闭环仍未跑通。",
+   "confidence": 4.0,
+   "scoreBasis": "①剪刀差：广告 Q3 指引 -4.5% vs QuestMobile 2026Q2 大盘 +8.1%（分析·行业趋势·增长曲线）；②电商：涉税合规成本被管理层列为 Q3 电商佣金 -10% 的主因（业绩会转述）；③AI：可灵投后约 1,225 亿元、IPO 承销商已定，但 Q3 收入环比零增长、全年亏损 50-60 亿元（港交所公告 + 业绩会）；④广告主/供应商集中度数据仍缺失（数据缺口）。评分由 4.5 降至 4.0：行业还在增长，快手在绝对丢份额，这不是 Beta 问题。"
+  },
+  {
+   "dimensionId": "valuation",
+   "title": "估值",
+   "mapsTo": "dimensions.valuation",
+   "conclusion": "28.92 港元、市值 HKD1,243.6 亿。宽口径净现金 HKD1,103.6 亿 + 可灵 66.68% 股权 HKD959.6 亿 = HKD2,063 亿，市值只有 60%；按「核心主业 = 市值 − 净现金 − 可灵股权」计算，隐含约 -HKD820 亿。若只算狭义现金+存款，净现金 HKD129 亿，同一公式下核心主业为 +HKD155 亿。TTM PE 6.71x、2026E forward 12.1x。三情景 22.7/49.2/77.7 港元，区间宽达 3.4 倍——价格不由增速决定，由现金口径与可灵变现决定。",
+   "confidence": 6.5,
+   "scoreBasis": "①市值 HKD1,243.6 亿 vs 宽口径净现金 HKD1,103.6 亿（可利用资金 1,213 亿−借款 273.62 亿，按 HKDCNY 0.85121 折算）；②可灵 66.68% 股权按投后约 1,225 亿元计，归属价值 HKD959.6 亿；两项合计超市值 HKD820 亿；③窄口径现金下核心主业为 +HKD155 亿（1,243.6−129.1−959.6，工具验算 154.95），正负只取决于「理财与长期存款算不算现金」，已写入三情景假设第⑤条；④三情景 22.7/49.2/77.7 港元均由工具验算；制约是可灵私募价含回购权、不能等同二级市场价。评分由 6.0 上调至 6.5：价格更低、折价更深，但盈利基数崩塌使安全边际的「质量」下降。"
+  },
+  {
+   "dimensionId": "corporateCulture",
+   "title": "企业文化",
+   "mapsTo": "dimensions.management.analysis.culture",
+   "conclusion": "可观察的行为有三组：①Q3 指引主动给出精确的负增长数字（收入 -7.5%、净利 -86%），属「把坏消息说清楚」；②股价下行期间回购节奏未变（年内 58 次/28.55 亿港元），但 10 月创新低时曾连续 8 个交易日暂停；③账上 1,213 亿元「可利用资金」仍加杠杆回购（H1 借款 +109.4%），公司从未解释——言行不一致在资本结构，不在产品。",
+   "confidence": 5.5,
+   "scoreBasis": "①正式公告首次使用「审慎」措辞，而 CEO 引言仍用「稳健」「经营韧性」，语气分层（2026Q2 公告业务展望章节）；②Q3 指引给出精确负增长数字（业绩会转述）；③回购与借款同步上升且无解释（2026Q2 公告 + 港交所月报表）；④员工 NPS、离职率缺失，证据以单源定性为主（数据缺口）。评分维持 5.5，向中性收敛。"
+  }
+ ],
+ "strategies": {
+  "noPosition": {
+   "title": "空仓者",
+   "advice": "①现价 28.92 港元已低于中性情景 49.2 港元约 41%，也低于「净现金 + 可灵股权」的加总，但 11-19 的 Q3 财报是一个二元事件（指引已经很难看，问题是有没有更差），不建议在财报前一次性建仓；②Q3 落地后若广告降幅不超指引（约 -4.5%）、经营现金流仍为正，可分两批建仓，首笔不超过计划仓位的一半；③若 Q3 广告降幅超过 -6.5% 或现金余额环比明显下降，说明「资产折价」逻辑也在失效，继续等待。",
+   "triggers": [
     {
-      "dimensionId": "businessQuality",
-      "title": "生意质量",
-      "mapsTo": "dimensions.businessEssence",
-      "conclusion": "老铁社区高粘性变现模式未变，但2026Q2首次出现传统引擎（广告+直播）收入绝对收缩-1.6%，经营杠杆由正转负（经营利润-29.0%），毛利率下滑主要为收入结构切换而非核心广告定价权恶化。",
-      "confidence": 5.5,
-      "scoreBasis": "①经营杠杆本季由正转负：2026Q2营收+1.4%但经营利润-29.0%、期内利润-36.0%（dimensions.businessEssence.analysis.operatingLeverage）；②传统引擎（广告+直播）合计收入同比-1.6%，全部净增长依赖电商服务费+可灵AI（dimensions.businessEssence.analysis.revenueBreakdown.latestQuarterUpdate.legacyEngineContraction）；③毛利率下滑4.1pp证据链更支持结构切换而非核心定价权恶化，在线营销服务仍+4.4%正增长但增速持续放缓（dimensions.businessEssence.analysis.marginBridge2026Q2）；④分部毛利率、用户留存率等关键数据仍缺失（dimensions.businessEssence.dataGaps）。"
+     "condition": "11-19 财报：在线营销收入同比降幅在 -4.5% 以内，且经营现金流为正",
+     "action": "首笔建仓（不超过计划仓位一半）",
+     "basis": "Q3 指引广告 -4.5%（2026-08-19 业绩会）；中性情景 49.2 港元由分部加总验算。不在财报前一次性建仓，是因为 Q3 是二元事件；受价格与基本面双重约束，止损改用基本面条件（见 advise 第③点），避免与下方加仓区间重叠"
     },
     {
-      "dimensionId": "moat",
-      "title": "护城河",
-      "mapsTo": "dimensions.moat",
-      "conclusion": "网络效应因MAU增速落后抖音持续变窄；技术壁垒因可灵AI分拆签约成为可定价资产，但其FY2025净亏损同比扩大约280%且竞争加剧，护城河商业耐久性的不确定性同步上升；转换成本仍待验证。",
-      "confidence": 5,
-      "scoreBasis": "①可灵AI分拆融资已于2026-07-02签约落地，投后估值约USD180亿，腾讯/阿里云/百度联合押注（dimensions.moat.analysis.types[4]）；②但可灵AI FY2025净亏损同比扩大约280%(RMB5亿→19亿)且面临字节/谷歌/阿里直接竞争，行业称\"建壁垒窗口期不多\"（同上note）；③集团总收入增速连续三季度加速降速(11.8%→3.4%→1.4%)，网络效应基本盘持续被抖音蚕食（dimensions.moat.analysis.types[2]）；④转换成本因分部成本拆分数据缺失维持\"待验证\"（dimensions.moat.dataGaps）。"
+     "condition": "股价回落至 22-25 港元区间（低于 10 月低点 25.88），且广告降幅未进一步扩大",
+     "action": "加至标准仓位，博弈「市场按悲观情景定价」的修复",
+     "basis": "悲观情景 22.7 港元（-21.4%），22-25 区间正好覆盖该目标价；只有当广告降幅不扩大时，「市场按悲观情景定价」的修复逻辑才成立"
     },
     {
-      "dimensionId": "management",
-      "title": "管理层",
-      "mapsTo": "dimensions.management",
-      "conclusion": "程一笑/宿华合计约66%投票权治理结构未变，可灵AI分拆52天内完成签约显示执行力强，但H1加杠杆(总借款+109.4%)支撑回购的资本结构逻辑未获官方解释，管理层薪酬考核信息仍缺失。",
-      "confidence": 6,
-      "scoreBasis": "①可灵AI分拆从评估到签约仅约52天，吸引腾讯/阿里云/百度多元资本背书，执行力评价上调（dimensions.management.analysis.keyDecisions中可灵AI分拆条目）；②H1总借款+109.4%、财务开支净额+452.6%支撑回购，与账上约RMB1,213亿可动用资金并存但未获官方解释（dimensions.management.analysis.capitalAllocation.buybackTiming）；③管理层展望首次转\"审慎\"但CEO对外引言仍偏正面，判断为诚实表态而非恐慌信号（dimensions.management.analysis.culture）；④薪酬结构、高管梯队信息仍unavailable（dimensions.management.dataGaps）。⑤（2026-09-15更新）股价30港元附近回购延续：9-9回购62万股/1,999万港元，累计3,317万股，回购均价继续压低，'低估值区间持续买入'行为模式第三个月得到验证（dimensions.management.analysis.capitalAllocation.buybackTiming）。"
-    },
-    {
-      "dimensionId": "keyRisk",
-      "title": "最大风险",
-      "mapsTo": "dimensions.inversion",
-      "conclusion": "最大风险从单一竞争劣势升级为\"盈利结构性恶化+审慎展望+加杠杆\"三重叠加：2026Q2经营利润-29.0%、期内利润-36.0%已部分实际兑现而非纯假设情景，且直播收入连续两季度-13.5%未见改善。",
-      "confidence": 3,
-      "scoreBasis": "①盈利结构性恶化失败路径被列为\"中偏高概率、高影响\"且部分已实际发生（dimensions.inversion.analysis.failurePaths[1]）；②直播收入连续两季度同比-13.5%、MAU增速3.4%对比抖音14.7%未见改善（同上failurePaths[0]）；③H1总借款+109.4%、财务开支净额+452.6%推升偿债/流动性风险（同上failurePaths[1]证据）；④可灵AI自身净亏损同比+280%，分拆落地未解决独立造血能力问题（同上failurePaths[3]）。"
-    },
-    {
-      "dimensionId": "civilizationTrend",
-      "title": "文明趋势",
-      "mapsTo": "dimensions.industryTrend",
-      "conclusion": "短视频用户渗透率95.4%见顶判断不变，但本轮新增关键证据：核心商业化收入增速(+4.4%)已跑输QuestMobile统计的行业大盘(+8.1%)达3.7个百分点，远逊于腾讯营销服务+22%，份额流失证据从用户端扩展到商业化效率端。",
-      "confidence": 4.5,
-      "scoreBasis": "①2026Q2在线营销服务收入+4.4%，低于QuestMobile统计行业大盘+8.1%达3.7个百分点，远逊腾讯营销服务+22%（dimensions.industryTrend.analysis.tam.growthCurve）；②可灵AI所在赛道从\"早期探索\"升级为\"资本化竞速+盈利压力显现\"阶段，媒体称\"建壁垒窗口期不多\"（同上paradigmShift）；③2026年资本开支指引约RMB260亿，AI军备竞赛不进则退（dimensions.industryTrend.analysis.techRouteRisk）；④广告主/供应商集中度数据仍缺失（dimensions.industryTrend.dataGaps）。"
-    },
-    {
-      "dimensionId": "valuation",
-      "title": "估值",
-      "mapsTo": "dimensions.valuation",
-      "conclusion": "换汇修正后7.16x TTM PE隐含永续增长率-1.97%~-3.47%，市场已从'trough定价'切换为'定价永久性衰退'；但forward口径（共识2026 EPS -62%）下约18.9x并不便宜，便宜与否取决于盈利谷底位置。SOTP更极端：可灵完成轮融资投后USD180亿≈HKD1,411亿，已相当于快手全市值约107%，核心主业隐含残值约-HKD744亿（方向性判断）。三情景21.7/38.3/59.0港元，中性转正（+25.8%），风险分布较8-20轮右偏幅度收窄。",
-      "confidence": 6.0,
-      "scoreBasis": "①三情景重算：悲观21.7(-28.7%)/中性38.3(+25.8%)/乐观59.0(+93.7%)，EPS基数换汇修正后中性情景转为正收益（dimensions.valuation.analysis.threeScenario）；②反向DCF隐含g跌入负值区间，说明市场已定价持续衰退，若Q3财报证明降幅收窄则存在预期差修复空间（dimensions.valuation.analysis.reverseDcf）；③SOTP：可灵归属HKD964.7亿+净现金HKD1,098.6亿=HKD2,063亿 vs 市值1,320亿，核心主业隐含残值-744亿，安全边际来源于'资产负债表+可灵股权'而非盈利（dimensions.valuation.analysis.vsPeers可灵SOTP条目）；④制约上调幅度：forward PE约18.9x（共识EPS-62%）、卖方目标价分歧极大（27.60-57）、9-14全球AI抛售压制'估值靠可灵'逻辑、加杠杆回购解释仍缺失。评分由5.5上调至6.0：价格再跌9.4%+口径修正后，下行保护改善，但盈利下修未见拐点，证据不足以上到7。"
-    },
-    {
-      "dimensionId": "corporateCulture",
-      "title": "企业文化",
-      "mapsTo": "dimensions.management.analysis.culture",
-      "conclusion": "2026Q2业绩公告首次出现\"审慎\"展望措辞，与CEO对外引言中仍使用的\"稳健\"\"经营韧性\"表述形成语气分层；可灵AI分拆52天内完成签约；H1回购资金来源与总借款+109.4%同步发生，公司未就此提供官方解释。",
-      "confidence": 5.5,
-      "scoreBasis": "①正式展望章节首次使用\"鑒於經營環境日益複雜且充滿挑戰，我們對短期業務前景持審慎態度\"，CEO引言仍用\"穩健的財務與營運表現\"等正面措辞，两文本语气分层（dimensions.management.analysis.culture）；②可灵AI分拆从评估到签约约52天，吸引腾讯/阿里云/百度等多元资本背书（dimensions.management.analysis.keyDecisions）；③H1回购(约HKD19.7亿)与总借款+109.4%、财务开支净额+452.6%同期发生，公司未解释为何持有巨额现金仍选择加杠杆（dimensions.management.analysis.capitalAllocation.buybackTiming）；④员工NPS/离职率等量化文化指标仍缺失，证据以单源定性描述为主（dimensions.management.dataGaps）。⑤（2026-09-15更新）股价继续下行期间公司未改变回购节奏（9-9仍回购62万股），与H1'审慎'展望措辞并存——行为与措辞的组合为'口头审慎、行动托底'，未见言行背离的证据（dimensions.management.analysis.capitalAllocation.buybackTiming）。"
+     "condition": "可灵正式递交港股上市申请（A1 表格）",
+     "action": "视为第二曲线估值锚落地，可提高仓位上限",
+     "basis": "可灵投后约 1,225 亿元、快手留存 66.68%（港交所 2026-10-30 公告）；IPO 承销商已定但公司未确认（Bloomberg 转引）"
     }
-  ],
-  "strategies": {
-    "noPosition": {
-      "title": "空仓者",
-      "advice": "①现价30.48港元已低于除麦格理（27.60）外全部9月卖方目标价，中性情景38.3港元隐含+25.8%，但盈利下修未见拐点（共识2026 EPS约-62%），不建议一次性满仓介入；②等待2026Q3财报（预计11月）验证毛利率/经营利润降幅是否收窄，确认审慎展望是阶段性还是结构性；③可灵AI亏损率若出现收敛迹象，AI第二曲线的确定性将实质提升。",
-      "triggers": [
-        {
-          "condition": "股价跌至21.7港元附近（悲观情景目标价）且在线营销服务收入增速未转负",
-          "action": "可少量试探性建仓，博弈核心业务被错杀的可能",
-          "basis": "①对应本轮三情景悲观目标价21.7港元，较现价-28.7%（dimensions.valuation.analysis.threeScenario.pessimistic）；②若在线营销服务(当前+4.4%)未同步转负，说明核心广告业务未同步恶化（dimensions.businessEssence.analysis.marginBridge2026Q2.coreAdBusinessCheck）"
-        },
-        {
-          "condition": "2026Q3财报毛利率/经营利润同比降幅较Q2收窄",
-          "action": "确认盈利下修是阶段性，可提升至标准仓位（2026Q3财报预计2026年11月发布）",
-          "basis": "①2026Q2毛利率-4.1pp、经营利润-29.0%被列为\"中偏高概率高影响\"失败路径（dimensions.inversion.analysis.failurePaths[1]）；②降幅收窄将验证管理层\"审慎\"措辞是短期现象而非结构性恶化（dimensions.management.analysis.culture）。"
-        },
-        {
-          "condition": "官方披露可灵AI分季度亏损率呈收敛趋势",
-          "action": "视为AI第二曲线兑现，可逐步加仓",
-          "basis": "①可灵AI FY2025净亏损同比+280%是本轮新增风险（dimensions.moat.analysis.types[4]）；②分季度亏损率数据目前缺失（dimensions.moat.dataGaps），收敛趋势将实质降低护城河耐久性的不确定性。"
-        }
-      ]
-    },
-    "holding": {
-      "title": "持仓者",
-      "advice": "①SOTP框架下净现金+可灵AI留存股权已接近甚至超过当前市值，核心主业隐含估值为负，核心仓位可继续持有；②传统引擎(广告+直播)绝对收缩、加杠杆回购是本轮新增风险点，需相应降低集中度；③股价冲高至乐观情景附近可逢高兑现部分收益。",
-      "triggers": [
-        {
-          "condition": "广告+直播合计收入连续两季度同比负增长且降幅继续扩大",
-          "action": "减持部分仓位，视为结构性而非切换性收缩",
-          "basis": "①2026Q2传统引擎合计收入同比-1.6%为本轮首次出现（dimensions.businessEssence.analysis.revenueBreakdown.latestQuarterUpdate.legacyEngineContraction）；②降幅扩大将推翻\"仅为结构切换代价\"的现有判断。"
-        },
-        {
-          "condition": "股价上探至59.0港元附近（乐观情景目标价）",
-          "action": "分批卖出兑现部分收益",
-          "basis": "①乐观情景59.0港元(+93.7%)换汇修正后重算，假设AI投入与融资成本阶段性压制消退、核心商业化增速转化为盈利增速（dimensions.valuation.analysis.threeScenario.optimistic）；②该情景尚未获新催化剂验证，宜逢高部分止盈"
-        },
-        {
-          "condition": "总借款继续攀升且公司仍未解释加杠杆回购逻辑",
-          "action": "视为治理纪律松动信号，考虑降低仓位",
-          "basis": "①H1总借款+109.4%、财务开支净额+452.6%与账上约RMB1,213亿可动用资金并存但无官方解释（dimensions.management.analysis.capitalAllocation.buybackTiming）；②该疑点已被列为需持续跟踪的资本配置风险点（dimensions.management.dataGaps）。"
-        }
-      ]
-    },
-    "sellSignals": {
-      "title": "卖出信号",
-      "signals": [
-        {
-          "signal": "审慎展望被证实为持续性而非阶段性盈利下修",
-          "observable": "2026Q3财报毛利率降幅或经营利润降幅未较Q2收窄",
-          "basis": "①盈利结构性恶化失败路径列为\"中偏高概率高影响\"（dimensions.inversion.analysis.failurePaths[1]）；②2026Q2经营利润-29.0%、期内利润-36.0%（同上证据）。"
-        },
-        {
-          "signal": "可灵AI分拆资产注入或港股上市计划被推迟或取消",
-          "observable": "官方公告确认9个月资产注入期限延期或撤回2027年初上市计划",
-          "basis": "①可灵AI FY2025净亏损同比+280%且竞争加剧（dimensions.moat.analysis.types[4]）；②分拆落地未解决独立造血能力问题（dimensions.inversion.analysis.failurePaths[3]）。"
-        },
-        {
-          "signal": "股价跌破21.7港元且核心广告收入增速同步转负",
-          "observable": "股价持续低于21.7港元且在线营销服务收入同比转负(当前+4.4%)",
-          "basis": "①悲观情景21.7港元(-28.7%)（dimensions.valuation.analysis.threeScenario.pessimistic）；②同步转负将推翻'核心广告业务未恶化'的判断（dimensions.businessEssence.analysis.marginBridge2026Q2.coreAdBusinessCheck）"
-        },
-        {
-          "signal": "杠杆继续快速攀升同时经营现金流同比降幅扩大",
-          "observable": "总借款环比继续大幅增长且经营现金流同比降幅超过H1的-23.2%",
-          "basis": "①H1总借款+109.4%、财务开支净额+452.6%（dimensions.management.analysis.capitalAllocation）；②经营现金流H1已同比-23.2%（financials-collection.json interim2026H1.operatingCashFlow）。"
-        }
-      ]
-    },
-    "addSignals": {
-      "title": "加仓信号",
-      "signals": [
-        {
-          "signal": "核心商业化收入增速回升至追平或反超行业大盘",
-          "observable": "在线营销服务收入同比增速回升至8%以上(当前+4.4%，行业大盘+8.1%)",
-          "basis": "①2026Q2在线营销服务+4.4%落后QuestMobile统计行业大盘+8.1%达3.7个百分点（dimensions.industryTrend.analysis.tam.growthCurve）；②追平大盘将修复\"份额流失\"判断。"
-        },
-        {
-          "signal": "可灵AI亏损率出现收敛证据",
-          "observable": "官方或分拆上市文件披露季度亏损/收入比环比下降",
-          "basis": "①可灵AI FY2025净亏损同比+280%（dimensions.moat.analysis.types[4]）；②分季度盈亏拆分数据目前缺失（dimensions.moat.dataGaps），收敛将实质提升护城河耐久性确定性。"
-        },
-        {
-          "signal": "股价回落至21.7港元附近但盈利降幅未进一步扩大",
-          "observable": "股价触及21-23港元区间且经调整净利润同比降幅未超过H1的-28.5%",
-          "basis": "①悲观情景21.7港元(-28.7%)（dimensions.valuation.analysis.threeScenario.pessimistic）；②H1经调整净利润同比-28.5%（financials-collection.json interim2026H1.adjustedNetProfit），未进一步恶化说明市场过度定价悲观情景"
-        },
-        {
-          "signal": "直播收入降幅收窄或转正并维持两个季度以上",
-          "observable": "直播收入同比增速由-13.5%收窄至个位数降幅或转正",
-          "basis": "①直播收入已连续两季度同比-13.5%未见改善（dimensions.businessEssence.analysis.revenueBreakdown.latestQuarterUpdate.legacyEngineContraction）；②企稳将直接反驳\"传统引擎绝对收缩\"的新增风险判断（dimensions.inversion.analysis.failurePaths[0]）。"
-        }
-      ]
-    }
+   ]
   },
-  "disclaimer": "本总结基于公开信息与数据截止时点的分析生成，仅供研究参考，不构成个性化投资建议。"
+  "holding": {
+   "title": "持仓者",
+   "advice": "①继续持有的理由不是「成长」而是「资产折价」：净现金约占市值 89%，可灵股权另计，核心主业在现价中接近零价值（宽口径现金下为负、窄口径下约 +HKD155 亿）；②但必须接受这是「等待变现」而非「等待增长」的持仓，变现路径只有两条——可灵 IPO、核心广告止跌；③若两条路径任一被证伪，减仓不要犹豫。",
+   "triggers": [
+    {
+     "condition": "Q3 或 Q4 广告收入连续两个季度同比降幅超过 -6.5%",
+     "action": "减仓一半，视为结构性而非周期性收缩",
+     "basis": "Q3 指引广告 -4.5%，若实际显著更差则说明份额流失加速（业绩会指引）；行业大盘仍 +8.1%，差距扩大意味着份额问题"
+    },
+    {
+     "condition": "股价上探至 49 港元附近（中性情景）",
+     "action": "分批卖出兑现已实现的折价修复，保留底仓等可灵 IPO",
+     "basis": "中性情景 49.2 港元（+70.0%），分部加总验算：核心 80 亿×8x + 净现金 8 折 + 可灵 5 折"
+    },
+    {
+     "condition": "公司再次大额借款回购，且未在业绩公告中解释资金来源",
+     "action": "视为治理纪律松动，降低仓位",
+     "basis": "H1 总借款 +109.4% 至 273.62 亿元、财务开支 +452.6%，与 1,213 亿元「可利用资金」并存且无官方解释（2026Q2 公告）"
+    }
+   ]
+  },
+  "sellSignals": {
+   "title": "卖出信号",
+   "signals": [
+    {
+     "signal": "负增长从指引变成常态",
+     "observable": "Q3 实际广告收入同比降幅 ≤ -6.5%，或 Q4 指引仍为负增长",
+     "basis": "Q3 指引广告 -4.5%、总收入 -7.5%（2026-08-19 业绩会）；若实际更差，说明公司对自身业务的判断仍偏乐观"
+    },
+    {
+     "signal": "现金安全垫被侵蚀",
+     "observable": "「可利用资金」环比下降超过 10%，或经营现金流转负",
+     "basis": "2026-06-30 可利用资金 1,213 亿元；H1 经营现金流 90.44 亿元（同比 -23.2%）；资本开支指引约 260 亿元（官方公告 + 业绩会）"
+    },
+    {
+     "signal": "可灵上市路径受阻",
+     "observable": "2027 年上半年未递交 A1，或公司公告推迟/取消分拆",
+     "basis": "对赌条款：2031-10-30 前未 IPO 需按本金 +8% 单利回购（港交所 2026-10-30 公告）；推迟会强化市场对 1,225 亿元估值的不信任"
+    },
+    {
+     "signal": "核心业务价值被证明为负",
+     "observable": "广告收入连续两季负增长且经调整净利跌破 5 亿元/季",
+     "basis": "Q3 指引经调整净利约 7 亿元；再下一个台阶意味着核心业务已无法覆盖固定成本与 AI 投入（业绩会）"
+    }
+   ]
+  },
+  "addSignals": {
+   "title": "加仓信号",
+   "signals": [
+    {
+     "signal": "广告增速回正",
+     "observable": "在线营销收入单季同比 ≥ 0%（当前 Q3 指引 -4.5%）",
+     "basis": "广告是最大收入项（Q2 占比 58.1%），回正意味着份额流失止住；行业大盘 +8.1% 提供了 beta 空间（业绩会 + QuestMobile）"
+    },
+    {
+     "signal": "可灵独立上市推进",
+     "observable": "港交所披露 A1 申请，或承销商安排获公司公告确认",
+     "basis": "可灵投后约 1,225 亿元、快手留存 66.68%（2026-10-30 公告）；上市是把私募估值变成可交易价值的关键一步"
+    },
+    {
+     "signal": "股东回报力度加码",
+     "observable": "新回购计划规模超过 30 亿港元，或首次派发中期股息",
+     "basis": "2026 年已回购 28.55 亿港元 + 分红约 30 亿港元（港交所月报表 + 雪球统计）；净现金占市值 89% 却只回报约 5%，提升空间大"
+    },
+    {
+     "signal": "Q4 经调整净利环比回升",
+     "observable": "Q4 经调整净利 > 15 亿元（Q3 指引约 7 亿元）",
+     "basis": "Q3 净利约 7 亿元已接近盈亏平衡，若 Q4 环比翻倍说明成本压缩见效（业绩会指引推导）"
+    }
+   ]
+  }
+ },
+ "disclaimer": "本总结基于公开信息与数据截止时点的分析生成，仅供研究参考，不构成个性化投资建议。"
 }
