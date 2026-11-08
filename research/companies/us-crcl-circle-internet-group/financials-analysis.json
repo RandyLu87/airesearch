@@ -1,0 +1,426 @@
+{
+  "meta": {
+    "companyId": "us-crcl-circle-internet-group",
+    "companyName": "Circle Internet Group, Inc.",
+    "analyzedAt": "2026-11-08",
+    "dataCutoff": "2026-11-08（Asia/Shanghai）；最新披露 2026Q3，股价 2026-11-06 收盘",
+    "basedOnCollection": "research/companies/us-crcl-circle-internet-group/financials-collection.json"
+  },
+  "dimensions": {
+    "businessEssence": {
+      "title": "生意本质",
+      "conclusion": "用无息浮存金买短债、再把利息大半分给渠道的通道生意，收入跟利率走，不跟客户价值走。",
+      "analysis": {
+        "revenueBreakdown": {
+          "period": "FY2025（截至 2025-12-31）",
+          "items": [
+            { "segment": "储备收入（USDC/EURC 储备资产的利息与分红）", "revenue": "2.64B", "sharePct": 96.0, "source": { "name": "Circle 10-K FY2025 Note 11", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000062/crcl-20251231.htm" } },
+            { "segment": "订阅与服务（集成、基金管理、许可）", "revenue": "84.8M", "sharePct": 3.1, "source": { "name": "Circle 10-K FY2025 Note 11", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000062/crcl-20251231.htm" } },
+            { "segment": "交易收入（赎回费、链上奖励）", "revenue": "24.3M", "sharePct": 0.9, "source": { "name": "Circle 10-K FY2025 Note 11", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000062/crcl-20251231.htm" } },
+            { "segment": "其他收入（一次性服务、已停售产品）", "revenue": "702K", "sharePct": 0.03, "source": { "name": "Circle 10-K FY2025 Note 11", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000062/crcl-20251231.htm" } }
+          ]
+        },
+        "profitabilityTrend5y": {
+          "series": [
+            { "fiscalYear": "FY2021", "grossMarginPct": { "status": "unavailable", "reason": "FY2021 分销成本未在本次取得的官方原文列示，已查 424B4 与 FY2025 10-K" }, "operatingMarginPct": { "status": "unavailable", "reason": "FY2021 利润表未取得，已查 424B4/S-1" }, "netMarginPct": -598.7, "source": { "name": "stockanalysis.com income statement", "url": "https://stockanalysis.com/stocks/crcl/financials/" } },
+            { "fiscalYear": "FY2022", "grossMarginPct": 59.9, "operatingMarginPct": -4.9, "netMarginPct": -99.6, "source": { "name": "Circle S-1 合并利润表", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000119312525070481/d737521ds1.htm" } },
+            { "fiscalYear": "FY2023", "grossMarginPct": 49.8, "operatingMarginPct": 18.6, "netMarginPct": 18.4, "source": { "name": "Circle 10-K FY2025（FY2023 列）", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000062/crcl-20251231.htm" } },
+            { "fiscalYear": "FY2024", "grossMarginPct": 39.3, "operatingMarginPct": 10.0, "netMarginPct": 9.3, "source": { "name": "Circle 10-K FY2025（FY2024 列）", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000062/crcl-20251231.htm" } },
+            { "fiscalYear": "FY2025", "grossMarginPct": 39.4, "operatingMarginPct": -3.5, "netMarginPct": -2.5, "source": { "name": "Circle 10-K FY2025", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000062/crcl-20251231.htm" } }
+          ]
+        },
+        "businessModelCanvas": {
+          "salesModel": "混合",
+          "productForm": "平台",
+          "note": "① 96% 收入是浮存金利息，按月随储备规模与短端利率自动滚动，不是销售行为。② 付费方是储备资产端（短债发行人），USDC 持有人不付利息，也不付账户费。③ 获客成本以分销分成形式支付：FY2025 分销及交易成本 16.6 亿美元，占收入 60.6%。"
+        },
+        "stickiness": {
+          "level": "中",
+          "mechanism": "① 持有人端几乎零转换成本，1:1 赎回、随时可换 USDT 或付息的代币化货币基金。② 开发者与支付机构端有中等成本：CCTP、清算对账、多链合约已嵌进产品流程。③ 真实粘性来自流动性深度——交易对手多、滑点小，做市与结算自然选它。",
+          "evidence": [
+            { "metric": "有意义的钱包数（持 USDC 超 10 美元）", "value": "7.3M", "asOf": "2026-09-30", "source": { "name": "Circle 2026Q3 业绩新闻稿", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000309/finalq3epr-110326.htm" } },
+            { "metric": "平台内 USDC（Circle 自有渠道）", "value": "13.9B", "asOf": "2026-09-30", "source": { "name": "Circle 2026Q3 业绩新闻稿", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000309/finalq3epr-110326.htm" } },
+            { "metric": "USDC 占稳定币链上交易量比重", "value": "约 79%", "asOf": "2026-09-30", "source": { "name": "Circle Q3 2026 业绩电话会与公司口径（调整后口径约 70%）", "url": "https://www.fool.com/earnings/call-transcripts/2026/11/04/circle-crcl-q3-2026-earnings-call-transcript/" } }
+          ]
+        },
+        "grossMarginVsPeers": {
+          "companyPct": 39.4,
+          "peers": [
+            { "name": "PayPal（PYPL，TTM 毛利/收入）", "grossMarginPct": 40.6, "source": { "name": "stockanalysis.com PYPL income statement", "url": "https://stockanalysis.com/stocks/pypl/financials/" } },
+            { "name": "Coinbase（COIN，TTM 毛利/收入）", "grossMarginPct": 85.3, "source": { "name": "stockanalysis.com COIN income statement", "url": "https://stockanalysis.com/stocks/coin/financials/" } },
+            { "name": "Tether（USDT）", "grossMarginPct": { "status": "unavailable", "reason": "未上市公司不披露毛利，仅披露利润与储备，已查 tether.io 鉴证公告" }, "source": { "name": "Tether 鉴证公告", "url": "https://tether.io/news/tether-attestation-reports-q1-q3-2025-profit-surpassing-10b-record-levels-in-us-treasuries-exposure-accelerating-usdt-supply-amidst-worlds-macroeconomic-uncertainty/" } }
+          ],
+          "whyHigherOrLower": "① 39.4% 是「收入－分销成本」的 RLDC 口径，不是 GAAP 毛利；分销成本本质是渠道佣金，与收入同比例增长。② 比 Coinbase 低得多，因为收入是低毛利的国债利息，而非高毛利的交易费。③ 与 PayPal 接近纯属巧合：一个是分给交易所，一个是分给发卡行与银行。"
+        },
+        "operatingLeverage": {
+          "observation": "成本端杠杆很强、利润端杠杆很弱。① 收入 FY2023→FY2025 从 14.5 亿增至 27.5 亿美元（+89%），调整后运营费用仅从约 3.95 亿增至约 5.0 亿（+15%）。② 但分销成本同期从 7.28 亿增至 16.6 亿（+129%），吃掉了全部增量。③ 结果是净利率从 18.4% 掉到 -2.5%，规模越大不代表利润越多。",
+          "evidence": [
+            { "metric": "调整后运营费用（非 GAAP）FY2025", "value": "约 501M", "asOf": "2025-12-31", "source": { "name": "Circle 10-K FY2025（调整后 EBITDA 582M 由 RLDC 1,083M 扣减反推）", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000062/crcl-20251231.htm" } },
+            { "metric": "分销及交易成本 FY2025", "value": "1.66B", "asOf": "2025-12-31", "source": { "name": "Circle 10-K FY2025 合并利润表", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000062/crcl-20251231.htm" } }
+          ]
+        }
+      },
+      "inquiry": {
+        "question": "这门生意好在哪？如果只能用一句话描述，是什么？",
+        "answer": "好在现金流极干净、边际成本近零；不好在它没有定价权，赚多少由美联储和分销商决定。① 收入是国债票息，没有存货、没有应收账期，TTM 经营现金流 7.72 亿美元高于净利润。② 每多 1 美元浮存，公司只留约 0.38 美元，其余按合同分给 Coinbase、Binance 等渠道。③ 2026Q3 储备收入同比 -7.5%，而同期链上交易量 +49%——用量增长换不来收入增长，这是生意的本质约束。"
+      },
+      "dataGaps": [
+        "公司不披露分部毛利率，产品级单位经济只能从 RLDC 汇总口径反推",
+        "Tether 的毛利与分销结构不可得，无法做单位经济的同业对标",
+        "储备资产久期与再投资时滞未披露，利率传导速度只能用季度数据近似"
+      ]
+    },
+    "moat": {
+      "title": "护城河评估",
+      "conclusion": "流量侧的护城河真实且在变宽，变现侧的护城河在变窄——网络效应与定价权首次出现方向背离。",
+      "analysis": {
+        "types": [
+          {
+            "type": "品牌/定价权",
+            "test": "是否能在不损失销量的情况下提价？",
+            "verdict": "不存在",
+            "evidence": [
+              { "metric": "净储备利润率（Net Reserve Margin）", "value": "37.8%（环比 -80bps）", "asOf": "2026-09-30", "source": { "name": "Circle Q3 2026 业绩电话会", "url": "https://www.fool.com/earnings/call-transcripts/2026/11/04/circle-crcl-q3-2026-earnings-call-transcript/" } },
+              { "metric": "分销及交易成本占收入", "value": "60.6%", "asOf": "2025-12-31", "source": { "name": "Circle 10-K FY2025", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000062/crcl-20251231.htm" } },
+              { "metric": "Hyperliquid 激励安排对净储备利润率的影响", "value": "-80bps（环比）", "asOf": "2026-09-30", "source": { "name": "Circle Q3 2026 业绩电话会", "url": "https://www.fool.com/earnings/call-transcripts/2026/11/04/circle-crcl-q3-2026-earnings-call-transcript/" } }
+            ]
+          },
+          {
+            "type": "转换成本",
+            "test": "客户迁移到竞品的成本有多高？",
+            "verdict": "不存在",
+            "evidence": [
+              { "metric": "USDC 铸造+赎回规模（自由进出）", "value": "208B（单季创纪录）", "asOf": "2026-09-30", "source": { "name": "Circle Q3 2026 业绩电话会", "url": "https://www.fool.com/earnings/call-transcripts/2026/11/04/circle-crcl-q3-2026-earnings-call-transcript/" } }
+            ]
+          },
+          {
+            "type": "网络效应",
+            "test": "用户越多产品越好吗？",
+            "verdict": "存在",
+            "evidence": [
+              { "metric": "USDC 交易量份额 vs 流通量份额", "value": "79% vs 27%", "asOf": "2026-09-30", "source": { "name": "Circle 2026Q3 业绩新闻稿", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000309/finalq3epr-110326.htm" } },
+              { "metric": "有意义的钱包数同比", "value": "+16% 至 7.3M", "asOf": "2026-09-30", "source": { "name": "Circle 2026Q3 业绩新闻稿", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000309/finalq3epr-110326.htm" } }
+            ]
+          },
+          {
+            "type": "规模效应",
+            "test": "规模带来的成本优势有多大？",
+            "verdict": "待验证",
+            "evidence": [
+              { "metric": "调整后运营费用占收入", "value": "16.1%（FY2025）", "asOf": "2025-12-31", "source": { "name": "Circle 10-K FY2025", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000062/crcl-20251231.htm" } },
+              { "metric": "净储备利润率（规模扩大后的实际分成后留存）", "value": "37–38%（三季未改善）", "asOf": "2026-09-30", "source": { "name": "Circle Q3 2026 业绩新闻稿季度表", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000309/finalq3epr-110326.htm" } }
+            ]
+          },
+          {
+            "type": "技术/专利壁垒",
+            "test": "技术领先几年？能否被复制？",
+            "verdict": "不存在",
+            "evidence": [
+              { "metric": "新进入者 USD1 一年内做到的流通量", "value": "3.45B", "asOf": "2026-11-08", "source": { "name": "DefiLlama 稳定币快照", "url": "https://defillama.com/stablecoins" } },
+              { "metric": "Arc 主网上线时间与生态规模", "value": "2026-09-16，100+ 机构首日", "asOf": "2026-09-16", "source": { "name": "Circle 2026Q3 业绩新闻稿", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000309/finalq3epr-110326.htm" } }
+            ]
+          }
+        ],
+        "trendPast5y": {
+          "direction": "变窄",
+          "basis": "① 流通量份额从 2022 年约 45% 降至 2024 年 24%、2025 年 28%、2026Q3 的 27%，五年维度是净下滑。② 变现能力同步走弱：RLDC 毛利率从 FY2023 的 49.8% 降到 FY2024-2025 的 39.3%-39.4%。③ 唯一变宽的是交易量份额（约 66%→79%），但它不直接产生收入。"
+        },
+        "trendNext5y": {
+          "direction": "变窄",
+          "basis": "① GENIUS Act 把发行变成持牌业务，但牌照会陆续发放，先发优势有时间窗口。② 付息的代币化货币基金与银行存款代币在机构端更自然，2026 年全行业供应零增长已是信号。③ 分销方议价权继续上升，Hyperliquid 式安排会从个案变常态。④ 反向变量：Arc/CPN 若能把结算流量变成收费网络，护城河可能重新变宽。"
+        }
+      },
+      "inquiry": {
+        "question": "10年后这条护城河还在吗？什么能摧毁它？",
+        "answer": "10 年后「USDC 是主要的合规美元稳定币之一」大概率仍成立，但「Circle 能从中赚到超额利润」不成立。① 能摧毁护城河的不是另一个稳定币，而是付息替代品：机构为何要持有零息的 USDC，而不是直接持有代币化国债？② 第二摧毁力量是分销方自建：Coinbase、Binance 已有能力发行自有稳定币，Circle 的分成条款会逐年被重谈。③ 若 Arc 把支付结算变成按笔收费的网络，护城河会从「浮存利差」换成「清算费」，这是唯一能重建定价权的路径。"
+      },
+      "dataGaps": [
+        "Coinbase/Binance 合同的具体到期与重谈条款未公开披露",
+        "USDC 持有人结构（机构 vs 散户、在岸 vs 离岸）无官方数据，无法判断 TMMF 替代弹性",
+        "Arc 与 CPN 的收费模式与货币化率尚未披露"
+      ]
+    },
+    "inversion": {
+      "title": "逆向思考与风险清单",
+      "conclusion": "最可能的失败路径不是脱锚，而是「量增价减」的慢性挤压：浮存不涨、收益率下行、分成上升同时发生。",
+      "analysis": {
+        "failurePaths": [
+          {
+            "path": "降息周期叠加流通量停滞，储备收入连续两年负增长",
+            "probability": "中",
+            "impact": "高",
+            "evidence": [
+              { "metric": "储备收入同比（近四季）", "value": "+69.3% → +17.0% → +5.4% → -7.5%", "asOf": "2026-09-30", "source": { "name": "本次按业绩新闻稿季度表计算（financial_rigor.py）", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000309/finalq3epr-110326.htm" } },
+              { "metric": "短端利率每降 100bps 对年化净收入的影响", "value": "约 -2.81 亿美元", "asOf": "2026-09-30", "source": { "name": "本次测算：74B × 1% × 38%（financial_rigor.py）", "url": "https://stockanalysis.com/stocks/crcl/statistics/" } }
+            ]
+          },
+          {
+            "path": "代币化货币基金与银行代币分流机构闲置资金，稳定币总量长期横盘",
+            "probability": "中",
+            "impact": "高",
+            "evidence": [
+              { "metric": "全市场稳定币流通量 2026 年初至今变化", "value": "+0.4%（至 293.7B）", "asOf": "2026-11-08", "source": { "name": "DefiLlama 稳定币快照（CoinDesk 2026-10 报道口径一致）", "url": "https://defillama.com/stablecoins" } },
+              { "metric": "Morgan Stanley 对 USDC 供应预测的下调幅度", "value": "2027 年 -33%、2028 年 -44%", "asOf": "2026-08-03", "source": { "name": "CoinDesk 报道 Morgan Stanley 下调至 Underweight", "url": "https://www.coindesk.com/markets/2026/08/03/circle-internet-slides-after-morgan-stanley-downgrade-cut-in-price-target" } }
+            ]
+          },
+          {
+            "path": "Coinbase 重谈分成或推出自有稳定币，分销成本率跳升",
+            "probability": "中",
+            "impact": "高",
+            "evidence": [
+              { "metric": "Coinbase 占 FY2025 分销及交易成本", "value": "84.2%（约 14 亿美元）", "asOf": "2025-12-31", "source": { "name": "Circle 10-K FY2025", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000062/crcl-20251231.htm" } }
+            ]
+          },
+          {
+            "path": "储备资产信用事件或兑付挤兑，USDC 再次脱锚并永久损伤信任",
+            "probability": "低",
+            "impact": "高",
+            "evidence": [
+              { "metric": "2023 年 SVB 事件中被困储备存款", "value": "约 33 亿美元（USDC 一度跌至约 0.87）", "asOf": "2023-03-10", "source": { "name": "Circle 424B4 招股书「我们面临的挑战」段", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000119312525135795/d737521d424b4.htm" } },
+              { "metric": "储备集中度（Circle Reserve Fund 占比）", "value": "约 88%", "asOf": "2025-12-31", "source": { "name": "Circle 10-K FY2025 风险因素", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000062/crcl-20251231.htm" } }
+            ]
+          },
+          {
+            "path": "Arc/ARC 代币被认定为证券或里程碑未达触发偿付义务",
+            "probability": "低",
+            "impact": "中",
+            "evidence": [
+              { "metric": "ARC 预售确认收入（一次性）", "value": "182M", "asOf": "2026-09-30", "source": { "name": "Circle 2026Q3 10-Q Note 11", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000311/crcl-20260930.htm" } }
+            ]
+          },
+          {
+            "path": "估值向「利率敏感型金融股」回归，PE 从 59x 压缩至 15-20x",
+            "probability": "高",
+            "impact": "高",
+            "evidence": [
+              { "metric": "2026 年一致预期 EPS 对应 PE", "value": "59.0x（工具验算）", "asOf": "2026-11-06", "source": { "name": "本次按 S&P Global 一致预期 EPS 1.15 与收盘价 67.88 计算", "url": "https://stockanalysis.com/stocks/crcl/forecast/" } },
+              { "metric": "空头持仓占流通股", "value": "10.81%（13.29% of float）", "asOf": "2026-11-06", "source": { "name": "stockanalysis.com Statistics", "url": "https://stockanalysis.com/stocks/crcl/statistics/" } }
+            ]
+          }
+        ],
+        "historicalAnalogies": [
+          {
+            "company": "PayPal（2015-2022）",
+            "similarity": "同属支付网络，收入靠存量账户与交易量抽成，增长见顶后估值从 60x 压到 12x",
+            "outcome": "业务仍在增长但增速降到个位数，估值中枢永久下移，股价五年横盘",
+            "source": { "name": "stockanalysis.com PYPL 历史财务", "url": "https://stockanalysis.com/stocks/pypl/financials/" }
+          },
+          {
+            "company": "Tether（同期竞争者）",
+            "similarity": "同样的浮存金生意，但份额 60%、不与交易所五五分成，单位经济更好",
+            "outcome": "2026Q3 单季营业利润 15 亿美元、前三季 45 亿美元，净利率远高于 Circle",
+            "source": { "name": "Tether Q3 2026 利润报道（二级来源）", "url": "https://coincodex.com/article/94734/tether-reports-15-billion-operating-profit-in-q3-as-excess-reserves-nearly-double/" }
+          },
+          {
+            "company": "美国货币市场基金行业（1970s-1980s）",
+            "similarity": "都是把短期利率转手给资金方的通道，产品同质、规模即壁垒、费率被持续压薄",
+            "outcome": "行业规模巨大但利润率被压到极薄，最终靠规模与渠道而非定价取胜",
+            "source": { "name": "行业史实（Level 3 定性类比，未做量化核对）", "url": "https://www.federalreserve.gov/" }
+          }
+        ],
+        "crossDisciplinaryChecks": [
+          { "model": "网络效应理论", "finding": "流动性带来流动性：交易量份额 79% 远高于流通量份额 27%，说明网络效应真实；但梅特卡夫式增长发生在「使用」而非「持有」上，而收入只对「持有」收费。" },
+          { "model": "技术采纳曲线", "finding": "稳定币支付处于早期采用者向早期多数过渡阶段：支付量 +45%，但仅占美国无现金支付的约 0.1%，渗透率低意味着空间大、也意味着短期收入仍靠存量浮存。" },
+          { "model": "竞争博弈", "finding": "双边市场里稀缺方拿利润：发行方供给充足（USD1 一年做到 3.45B），分销流量稀缺，所以 Coinbase 这类渠道拿走 84% 的分销蛋糕。" }
+        ],
+        "biasSelfCheck": [
+          { "bias": "叙事偏差", "check": "「稳定币重塑全球支付」是强叙事，容易把交易量增长当成收入增长；实际上 2026Q3 剔除 ARC 后收入同比约 -8%，叙事与报表背离。" },
+          { "bias": "锚定效应", "check": "IPO 发行价 31 美元、2025 年 6 月峰值约 299 美元，当前 67.88 美元容易被读成「跌了 77% 所以便宜」；但便宜与否取决于 59x 的核心 PE，不取决于跌幅。" },
+          { "bias": "幸存者偏差", "check": "只看到 USDC 成功，忽略了 Centre 联盟解散、SPAC 合并终止、以及大量未起量的稳定币；发行成功不等于这门生意能长期赚超额利润。" }
+        ],
+        "bearCase": [
+          {
+            "point": "「高利率套利 + 一次性代币收入」掩盖了核心业务收缩",
+            "holder": "Morgan Stanley（2026-08-03 下调至 Underweight，目标价 106→38 美元）、Mizuho（Sell，目标价 46 美元）",
+            "evidence": [
+              { "metric": "2026Q3 收入同比（含/不含 ARC 预售）", "value": "+16.9% / 约 -8%", "asOf": "2026-09-30", "source": { "name": "Circle 2026Q3 10-Q 与业绩新闻稿", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000311/crcl-20260930.htm" } }
+            ]
+          },
+          {
+            "point": "稳定币供应已停止增长，付息替代品正在赢得机构资金",
+            "holder": "Morgan Stanley、CoinDesk 行业分析",
+            "evidence": [
+              { "metric": "全市场流通量 2026 年初至今", "value": "+0.4%", "asOf": "2026-11-08", "source": { "name": "DefiLlama", "url": "https://defillama.com/stablecoins" } }
+            ]
+          },
+          {
+            "point": "分销方拿走大部分经济学，Circle 更像持牌通道而非网络所有者",
+            "holder": "卖方与行业评论（分销成本率持续上升）",
+            "evidence": [
+              { "metric": "分销及交易成本占收入", "value": "60.6%（FY2025）", "asOf": "2025-12-31", "source": { "name": "Circle 10-K FY2025", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000062/crcl-20251231.htm" } }
+            ]
+          },
+          {
+            "point": "估值透支：59x 核心 PE，需要连续三年 40%+ 复合增长才撑得住",
+            "holder": "空头持仓 10.81% of shares out（13.29% of float）",
+            "evidence": [
+              { "metric": "反推所需 EPS 增速", "value": "5 年 18.8%–24.2% 才能在 20–25x 退出时保本（工具验算）", "asOf": "2026-11-06", "source": { "name": "本次计算 financial_rigor.py", "url": "https://stockanalysis.com/stocks/crcl/statistics/" } }
+            ]
+          }
+        ]
+      },
+      "inquiry": {
+        "question": "我最可能在哪里犯错？聪明人为什么会不买/做空这家公司？",
+        "answer": "我最可能犯的错是把「USDC 的交易量增长」误当成「Circle 的变现能力增长」。① 交易量 +49% 与储备收入 -7.5% 同时发生，说明用量与收费已经脱钩。② 聪明人不买的原因是：这门生意的利润等于「浮存 × 利差 × 留存率」，三个变量里 Circle 只能影响第三个，而它在下降。③ 做空者的风险是时点：GENIUS Act 2027 年落地、Arc 与 CPN 货币化、40% 流通量指引任一兑现，都可能让空头在盈利前被迫平仓。"
+      },
+      "dataGaps": [
+        "USDC 的机构/散户持有人结构与久期无官方披露，替代弹性只能定性判断",
+        "Coinbase 合同的剩余期限与单边调整权未知",
+        "ARC 预售协议的里程碑条款与偿付金额未公开"
+      ]
+    },
+    "management": {
+      "title": "管理层评估",
+      "conclusion": "战略定力强、执行到位，但资本配置向股权激励与生态补贴倾斜，股东回报尚未成为约束条件。",
+      "analysis": {
+        "keyDecisions": [
+          { "date": "2018-09", "decision": "与 Coinbase 共建 Centre 联盟发行 USDC，把分发交给交易所", "outcome": "五年做成第二大稳定币，但分销成本长期由 Coinbase 主导", "rating": "★4", "source": { "name": "Circle 424B4 招股书公司沿革", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000119312525135795/d737521d424b4.htm" } },
+          { "date": "2023-03", "decision": "SVB 倒闭当日披露 33 亿美元储备存款被困，承诺以公司资金兜底", "outcome": "USDC 一度跌至约 0.87 美元，存款获全额承接后恢复，未发生兑付违约", "rating": "★4", "source": { "name": "Circle 424B4「我们面临的挑战」段", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000119312525135795/d737521d424b4.htm" } },
+          { "date": "2022-12", "decision": "终止与 Concord Acquisition 的 SPAC 合并", "outcome": "放弃原估值路径，2025-06 以 31 美元 IPO，募资净额 10.13 亿美元", "rating": "★5", "source": { "name": "Circle 10-K FY2025 现金流量表与股本说明", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000062/crcl-20251231.htm" } },
+          { "date": "2024-08", "decision": "解散 Centre，与 Coinbase 重签 Collaboration Agreement", "outcome": "毛利率从 49.8% 降至 39.3%，FY2025 向 Coinbase 支付约 14 亿美元", "rating": "★2", "source": { "name": "Circle 10-K FY2025 分销成本段", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000062/crcl-20251231.htm" } },
+          { "date": "2026-05", "decision": "向机构预售 ARC 代币（市场报道募资约 222M，Q3 确认收入 182M）", "outcome": "一次性抬高 Q3 收入与调整后 EBITDA，掩盖核心储备收入同比 -7.5%", "rating": "★2", "source": { "name": "Circle 2026Q3 10-Q ARC Token Presale 会计政策", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000311/crcl-20260930.htm" } },
+          { "date": "2026-09-16", "decision": "Arc 公链主网上线并完成 100 亿枚 ARC 创世铸造", "outcome": "成为首家为自建 L1 铸造网络代币的上市公司，首日 100+ 机构接入", "rating": "★3", "source": { "name": "Circle 2026Q3 业绩新闻稿", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000309/finalq3epr-110326.htm" } },
+          { "date": "2026-09-17", "decision": "向 Binance 定向增发 120 万股（80.84 美元/股，1 亿美元）换取合作续签与扩大", "outcome": "锁定两年限售，发行价高于当前股价，但进一步以股权换流量", "rating": "★3", "source": { "name": "Circle 2026Q3 10-Q 私募发行段", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000311/crcl-20260930.htm" } },
+          { "date": "2026-Q3", "decision": "裁员约 5% 并推进 Tazapay 收购（预计 2027 年交割）", "outcome": "调整后运营费用环比降 7.6M；Tazapay 带来年化 250 亿美元支付量", "rating": "★3", "source": { "name": "Circle 2026Q3 业绩新闻稿与 10-Q 重组费用附注", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000309/finalq3epr-110326.htm" } }
+        ],
+        "capitalAllocation": {
+          "rdReturn": "无法用研发回报率衡量：公司不披露研发费用行项目。可观察的是资本化软件支出 FY2025 56.2M、2026 前三季 57.5M，对应 D&A 同比接近翻倍，而同期收入增速回落到个位数——研发投入的回报尚未在收入端体现。",
+          "maTrackRecord": "① 2025-01 收购 Hashnote 获得 USYC，成为链上抵押品与付息产品的基础，方向正确但收入贡献仍小。② 2026 年推动 Tazapay（年化 250 亿美元支付量、100+ 市场清算通道），预计 2027 年交割，效果待验证。③ 历史上无大额并购，尚无成败样本。",
+          "buybackTiming": "没有回购：IPO 与 2025-08 的后续发行以存量股东减持为主，公司仅获净额 10.13 亿美元；2026 年前三季现金流出主要是 1.98 亿美元的 RSU 代扣税，而非回购。管理层选择把资本投向牌照、Arc 与并购。",
+          "evidence": [
+            { "metric": "FY2025 股权激励", "value": "566.2M（占收入 20.6%）", "asOf": "2025-12-31", "source": { "name": "Circle 10-K FY2025 现金流量表", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000062/crcl-20251231.htm" } },
+            { "metric": "2026 前三季 RSU 代扣税现金流出", "value": "198.0M", "asOf": "2026-09-30", "source": { "name": "Circle 2026Q3 10-Q 现金流量表", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000311/crcl-20260930.htm" } }
+          ]
+        },
+        "alignment": {
+          "ownership": "Allaire 以 7.2% 经济权益掌握 23.9% 投票权（B 类 5 票/股，合计上限为总投票权 30%）；董事与高管合计 10.8% 经济权益、31.4% 投票权。",
+          "compensation": "CEO 年薪 90 万美元，年度奖金目标为年薪 140%；奖金计划 70% 权重挂钩调整后 EBITDA、30% 挂钩非财务目标。问题在于调整后 EBITDA 剔除股权激励，与股东承担的稀释成本不同步。",
+          "insiderSelling": "存在持续的 10b5-1 计划减持：2026-09 申报拟减持至多 177,701 股（约 1,810 万美元），2026-10-05 已按计划卖出 62,264 股、均价 83.59 美元（约 520 万美元）；其他高管在 11 月初亦有 RSU 归属相关减持申报。",
+          "evidence": [
+            { "metric": "Allaire 经济权益 / 投票权", "value": "7.2% / 23.9%", "asOf": "2026-03-16", "source": { "name": "Circle DEF 14A 2026 持股表", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000112/crcl-20260401.htm" } },
+            { "metric": "CEO 年薪 / 奖金目标", "value": "900K / 140%", "asOf": "2025-12-31", "source": { "name": "Circle DEF 14A 2026 薪酬讨论", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000112/crcl-20260401.htm" } },
+            { "metric": "高管减持（10b5-1 计划）", "value": "2026-10-05 卖出 62,264 股 @83.59", "asOf": "2026-10-05", "source": { "name": "SEC Form 4/144 申报（二级来源汇总）", "url": "https://www.stocktitan.net/sec-filings/CRCL/144-circle-internet-group-inc-sec-filing-96239a25c896.html" } }
+          ]
+        },
+        "organization": {
+          "teamStability": "核心层稳定：CFO Jeremy Fox-Geen 自 2021-05 在任（此前 iStar/Safehold CFO、麦肯锡北美 CFO），CCO Kash Razzaghi 2025-09 由 CBO 晋升，CTO Nikhil Chandhok 在任；2026Q3 裁员约 5%（重组费用 9.1M），属上市后首次主动收缩。",
+          "keyPersonRisk": "高：Allaire 既是战略制定者也是对外叙事核心（GENIUS Act 游说的主要面孔），且以 23.9% 投票权实质控制股东大会结果；公司尚无明确接班安排披露。"
+        },
+        "culture": "① 监管优先：十年持续投入合规与游说，最终换来 GENIUS Act 的制度红利，是长期主义的可观察证据。② 披露透明：10-K 风险因素详尽列示脱锚、储备集中、分销集中等自身弱点，未做粉饰。③ 但在股东成本上偏宽松：FY2025 股权激励占收入 20.6%、IPO 后股本同比 +130.5%，同时 CEO 按 10b5-1 计划持续减持，显示「增长优先于每股价值」的取向。"
+      },
+      "inquiry": {
+        "question": "如果CEO退休，这家公司还能保持竞争力吗？",
+        "answer": "短期不能。① Allaire 是公司对监管机构、对机构客户的核心接口，GENIUS Act 落地期换人会直接影响牌照与政策节奏。② 战略主线（USDC→CPN→Arc→ARC）由他一人串起，组织内尚无第二个人被公开定位为共同设计者。③ 中期可过渡的前提是：Arc/CPN 已成为有独立团队与独立收入的产品线，且分销合同锁定期够长——目前这两条都未成立。"
+      },
+      "dataGaps": [
+        "CEO 与高管的完整薪酬总额（含 2025 年 IPO 相关股权授予）未在本次检索中提取",
+        "接班计划与关键人才保留机制未披露",
+        "10b5-1 计划的总规模与剩余可减持额度未汇总"
+      ]
+    },
+    "industryTrend": {
+      "title": "行业与长期趋势",
+      "conclusion": "稳定币确实在成为全球支付的底层协议，但 2026 年的现实是「用量爆发、存量停滞」，Circle 站在正确方向的不赚钱那一层。",
+      "analysis": {
+        "paradigmShift": {
+          "verdict": "是",
+          "reasoning": "① 监管层面：GENIUS Act 2025-07-18 签署、2027-01-18 生效，美国第一次给支付稳定币立法定位。② 需求层面：稳定币支付额 2026 前三季 4,820 亿美元、同比 +45%。③ 供给侧：Visa、Samsung Wallet、SAP 生态、ICE 等主流机构接入，属于基础设施级的采用而非投机需求。但范式转移的红利未必要由发行方拿走。"
+        },
+        "historicalAnalogy": "更接近 1970 年代的货币市场基金：都是把短期利率产品化、把原本属于银行的利差让给资金方；行业规模最终极大，但单一机构的利润率被竞争压到很薄。Circle 的处境类似「第一支货币基金的发起人」——开创者未必是最终的利润获得者。",
+        "tam": {
+          "current": { "value": "293.7B", "currency": "USD", "asOf": "2026-11-08", "source": { "name": "DefiLlama 全市场美元锚定稳定币流通量", "url": "https://defillama.com/stablecoins" } },
+          "ceiling": "① 若 2030 年发行量到 Citi 基准的 1.9 万亿美元、短端利率 3%、净储备利润率 38%，发行端的年净收入池约 217 亿美元（1,900B × 3% × 38%，工具验算）。② Circle 按 27% 份额对应约 59 亿美元，是当前净储备收入（约 10 亿美元）的约 5.8 倍（工具验算），不是数量级式的十倍空间。③ 天花板不在需求端，而在「稳定币能否守住付息替代品的竞争」与「发行方能否保住 38% 的留存率」。",
+          "growthCurve": "导入期向成长期过渡：支付渗透率仍不足美国无现金支付的 0.1%，但 2026 年全行业供应零增长说明「靠利差套利的存量资金」已接近饱和，下一阶段增长要靠真实支付场景而非持币套利。"
+        },
+        "valueChainPosition": "Circle 位于「短债市场 ↔ 稳定币 ↔ 分销渠道 ↔ 终端支付」的中间层。上游（美国国债）完全无议价空间，下游（Coinbase/Binance）议价权持续增强，因此价值捕获能力被两头夹住；Arc/CPN 是唯一向上游或下游延伸、争取独立收费权的尝试。",
+        "techRouteRisk": "① 付息型代币化货币基金（TMMF）在机构端更自然，是最大的路线替代。② 银行存款代币（JPM/Citi 等）可能在批发结算场景胜出。③ CBDC 在中国等地已落地，会压缩跨境美元稳定币的部分场景。④ 反向看，稳定币的可组合性与无许可接入是 TMMF 与银行存款代币短期无法复制的。",
+        "concentration": {
+          "customers": "极高：FY2025 Coinbase 一家占分销及交易成本 84.2%；分销渠道同时是最大客户与最大成本项。",
+          "suppliers": "高度集中：储备约 88% 放在单一 Circle Reserve Fund（BlackRock 管理、BNY 托管），依赖单一资产管理人与单一托管行。",
+          "evidence": [
+            { "metric": "Coinbase 占分销成本", "value": "84.2%", "asOf": "2025-12-31", "source": { "name": "Circle 10-K FY2025", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000062/crcl-20251231.htm" } },
+            { "metric": "储备放在 Circle Reserve Fund 的比例", "value": "约 88%", "asOf": "2025-12-31", "source": { "name": "Circle 10-K FY2025", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000062/crcl-20251231.htm" } }
+          ]
+        }
+      },
+      "inquiry": {
+        "question": "站在20年后回看，这家公司是「这个时代的标准石油」还是「昙花一现的3Com」？",
+        "answer": "都不是，更像「这个时代的 Visa 清算层」——不可或缺，但利润率被渠道与监管压平。① 标准石油的特征是控制稀缺资源并纵向整合定价权，Circle 的上游是国债、下游是交易所，两头都不由它定价。② 3Com 的特征是技术领先被标准化抹平，USDC 不会消失，但发行本身确实在被抹平（USD1 一年做到 3.45B）。③ 20 年后它更可能是稳定币清算的基础设施之一，市值取决于 Arc/CPN 能否把「按流量收费」变成真实收入，而不是取决于 USDC 流通量。"
+      },
+      "dataGaps": [
+        "稳定币在跨境 B2B 支付中的实际费率与替代成本没有权威统计",
+        "银行代币与 TMMF 的规模增速缺乏统一的第三方口径",
+        "GENIUS Act 最终规则对储备资产与分销分成的具体约束尚未落地"
+      ]
+    },
+    "valuation": {
+      "title": "估值分析",
+      "conclusion": "按 2026 年一致预期 EPS 计 59 倍，价格已把「流通量 40% 复合增长 + 利差稳住」同时兑现计入。",
+      "analysis": {
+        "currentMultiples": {
+          "marketCap": { "value": "17.41B", "currency": "USD", "asOf": "2026-11-06", "source": { "name": "stockanalysis.com Statistics（finance_rigor 验算偏差 0.03%）", "url": "https://stockanalysis.com/stocks/crcl/statistics/" } },
+          "pe": { "value": "38.22x（TTM GAAP）；59.0x（2026E non-GAAP，EPS 1.15）；64.01x 为 stockanalysis 的未来 12 个月口径（隐含 EPS 约 1.06）——两者窗口不同（FY2026 全年 vs NTM 偏 2027），不是数据冲突", "asOf": "2026-11-06", "source": { "name": "本次计算：67.88 / 1.15；TTM 口径见采集文件 currentValuation.pe", "url": "https://stockanalysis.com/stocks/crcl/forecast/" } },
+          "ps": { "value": "5.74x（TTM 收入 3.03B）", "asOf": "2026-11-06", "source": { "name": "本次计算 financial_rigor.py", "url": "https://stockanalysis.com/stocks/crcl/statistics/" } },
+          "peg": { "value": "不适用（2026 年 EPS 预期同比 -51.0%，负增速下 PEG 无解释力）", "asOf": "2026-11-06", "source": { "name": "S&P Global 一致预期（stockanalysis 汇总）", "url": "https://stockanalysis.com/stocks/crcl/forecast/" } },
+          "evToRevenue": { "value": "5.19x（EV 15.73B / TTM 收入 3.03B）", "asOf": "2026-11-06", "source": { "name": "本次计算与 stockanalysis 一致；若剔除自持稳定币隔离现金则 4.85x", "url": "https://stockanalysis.com/stocks/crcl/statistics/" } },
+          "pb": { "value": "4.51x（股价 67.88 / BVPS 15.06）", "asOf": "2026-11-06", "source": { "name": "本次计算：2026Q3 末归母权益 3.86B ÷ 256.55M 股；无永续债/优先股需剔除", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000311/crcl-20260930.htm" } },
+          "roe": { "value": "12.87%（TTM；剔除 ARC 一次性收入后约 8–9%）", "asOf": "2026-09-30", "source": { "name": "本次计算：TTM 归母净利润 462.91M / 平均归母权益 3,595.89M；仅单源工具验算", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000311/crcl-20260930.htm" } },
+          "roa": { "value": "0.59%（TTM，分母含稳定币隔离储备资产，天然失真）", "asOf": "2026-09-30", "source": { "name": "本次计算：TTM 净利润 462.91M / 平均总资产 78,219.57M", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000311/crcl-20260930.htm" } },
+          "dividendYieldPct": { "value": "不适用（从未派发现金股息，盈利全部留存于牌照、Arc 与并购投入）", "asOf": "2026-11-06", "source": { "name": "Circle 10-K FY2025（无股息政策）与 2026Q3 10-Q 现金流量表（无股息支付）", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000311/crcl-20260930.htm" } },
+          "debtRatioPct": { "value": "95.03%（负债主体是稳定币持有人存款 73.45B，等额储备现金在资产端）", "asOf": "2026-09-30", "source": { "name": "本次计算：73,862.05 / 77,725.94；计息债务仅 17.2M", "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000311/crcl-20260930.htm" } }
+        },
+        "dilutionNote": "① 摊薄股数 267.8M 高于流通股 256.55M（+4.4%，来自期权与 RSU）。② FY2025 股权激励 5.66 亿美元占收入 20.6%，规划每年按上年末股本 5% 上限自动增加可授予额度。③ 按近两季节奏，年化稀释约 2–3%，三情景的 EPS 增速未额外扣除此项。",
+        "reverseDcf": {
+          "impliedGrowth": "五年后若以 20x 退出，需要 EPS 达 3.39 美元、相对 2026 年 1.15 美元的年复合增速 24.2%；若以 25x 退出，需要 EPS 2.72 美元、复合增速 18.8%（均为 financial_rigor.py 精确计算）。",
+          "assumptions": "① 以 2026 年一致预期 non-GAAP EPS 1.15 美元为起点（S&P Global）。② 不假设分红与回购，5 年后按 20–25x 的成熟金融基础设施估值退出。③ 该反推不考虑期间股权激励带来的股本稀释，若按年均 2% 稀释，所需增速还要再高约 2pct。"
+        },
+        "threeScenario": {
+          "_hint": "已用 docs/research/tools/financial_rigor.py three-scenario 精确计算",
+          "inputs": {
+            "price": 67.88,
+            "eps": 1.15,
+            "sharesHundredMillion": 2.5655,
+            "growth": ["0.55（乐观）", "0.15（中性）", "-0.20（悲观）"],
+            "pe": ["30（乐观）", "22（中性）", "14（悲观）"],
+            "years": 3,
+            "currency": "USD"
+          },
+          "optimistic": { "targetPrice": 128.5, "impliedReturnPct": "+89.3%" },
+          "neutral": { "targetPrice": 38.5, "impliedReturnPct": "-43.3%" },
+          "pessimistic": { "targetPrice": 8.2, "impliedReturnPct": "-87.9%" },
+          "assumptionBasis": "① 起点 EPS 1.15 美元为 2026 年一致预期；本次自建的核心 EPS 区间为 0.98–1.31（剔除 ARC 一次性收入后），取中间偏保守的 1.15。② 乐观 55%：管理层 40% 流通量 CAGR 兑现 + 短端利率守在 3.25% + CPN/Arc 贡献增量 + 净储备利润率不再下滑，对应 2029 年 EPS 约 4.3 美元，给 30x（成长型基础设施）。③ 中性 15%：流通量年增约 15–20%、利率降至 3.0%、净储备利润率维持 37%，EPS 约 1.75 美元，给 22x。④ 悲观 -20%：流通量横盘、利率降至 2.5%、分销分成继续上升、ARC 无后续，EPS 约 0.59 美元，给 14x（利率敏感型金融股）。⑤ 三组假设均为本次基于已核实财报数据的自建情景，非公司或卖方预测。",
+          "toolOutput": "情景 年增速 目标PE 目标EPS 目标股价 涨跌幅｜乐观(Bull) 55% 30x 4.28 128.5 +89.3%｜中性(Base) 15% 22x 1.75 38.5 -43.3%｜悲观(Bear) -20% 14x 0.59 8.2 -87.9%（financial_rigor.py three-scenario 精确输出）"
+        },
+        "vsOwnHistory": {
+          "metric": "PE（TTM GAAP）",
+          "currentValue": "38.22x",
+          "historicalRange": { "status": "unavailable", "reason": "2025-06-05 IPO，上市不足 18 个月，且上市初期（2025 年 6 月）股价从 31 美元冲高至接近 300 美元再回落，样本内 PE 区间被极端值主导、无统计意义；可参考的事实是 52 周股价变动 -39.95%（stockanalysis），已查 stockanalysis 历史行情页与公司披露" },
+          "source": { "name": "stockanalysis.com Statistics（52 周涨跌幅）", "url": "https://stockanalysis.com/stocks/crcl/statistics/" }
+        },
+        "vsPeers": [
+          { "name": "Circle（CRCL）", "pe": "38.22x", "peTtm": "38.22x", "peForward": "64.01x（NTM）", "ps": "5.74x", "source": { "name": "stockanalysis.com CRCL statistics", "url": "https://stockanalysis.com/stocks/crcl/statistics/" } },
+          { "name": "Coinbase（COIN）", "pe": "不适用（TTM 亏损）", "peTtm": "不适用", "peForward": "92.78x", "ps": "6.56x", "source": { "name": "stockanalysis.com COIN statistics", "url": "https://stockanalysis.com/stocks/coin/statistics/" } },
+          { "name": "PayPal（PYPL）", "pe": "11.26x", "peTtm": "11.26x", "peForward": "10.08x", "ps": "1.43x", "source": { "name": "stockanalysis.com PYPL statistics", "url": "https://stockanalysis.com/stocks/pypl/statistics/" } },
+          { "name": "Robinhood（HOOD）", "pe": "37.27x", "peTtm": "37.27x", "peForward": "29.76x", "ps": "14.34x", "source": { "name": "stockanalysis.com HOOD statistics", "url": "https://stockanalysis.com/stocks/hood/statistics/" } },
+          { "name": "对比结论", "pe": "见本行结论", "peTtm": "见本行结论", "peForward": "① 没有干净的上市可比：Circle 是唯一以稳定币发行费为主营的上市公司，COIN/PYPL/HOOD 只能作支付与加密交易的估值参照。② 表中 Circle 的 64.01x Forward PE 用未来 12 个月口径（隐含 EPS 约 1.06），本报告正文的 59.0x 用 FY2026 一致预期 EPS 1.15，两个窗口差一个季度。", "ps": "③ 与重交易的 COIN（forward 92.78x）比，Circle 的 59x 核心 PE 更便宜；与成熟的 PYPL（forward 10.08x）比，则贵 6 倍。④ 结论是「既不便宜也不离谱」，定价取决于你相信 40% 流通量增长还是 15% 的现实增速；三情景全部基于 1.15，若改用 1.06 则中性目标价相应下移。", "source": { "name": "stockanalysis.com 各家 statistics 页", "url": "https://stockanalysis.com/stocks/crcl/statistics/" } }
+        ]
+      },
+      "inquiry": {
+        "question": "如果股市明天关闭5年，你愿意以这个价格持有吗？",
+        "answer": "不愿意。① 59x 的核心 PE 要求未来五年 EPS 复合增速 19–24% 才能在 20–25x 退出时保本，而这门生意的收入正被利率下行与分销分成同时压缩。② 五年不交易意味着无法在 GENIUS 规则落地、TMMF 替代、Coinbase 重谈这三件事明朗时调整，而它们正是决定终值的关键。③ 若价格回到 35–40 美元（对应 30–35x 核心 PE、中性情景不再亏损），同样的不确定性会变成可承受的赔率，那时才值得持仓。"
+      },
+      "dataGaps": [
+        "2027-2028 年卖方收入与 EPS 一致预期为付费数据（stockanalysis 标注 Pro），未能取得具体数值",
+        "USDC 流通量的季度一致预期缺失，只有管理层 40% 多年 CAGR 的定性指引",
+        "Arc/CPN 的收入贡献指引未量化，三情景中按自建假设处理"
+      ]
+    }
+  },
+  "crossValidationLog": [
+    { "field": "营业利润率与净利率（FY2021-FY2025）", "source1": { "name": "financial_rigor.py calc（各年净利润/收入）", "value": -2.53 }, "source2": { "name": "stockanalysis.com income statement 边际率", "value": -2.53 }, "deviationPct": 0.0, "flag": "ok", "resolution": "五年趋势的每一项均由工具逐项计算，与 stockanalysis 摘要一致（唯一差异：FY2021 毛利率/营业利润率因原始报表未取得而留 unavailable）" },
+    { "field": "毛利率同业对比（TTM 口径）", "source1": { "name": "calc：Circle RLDC 口径 1,338.2/3,030.6", "value": 44.16 }, "source2": { "name": "stockanalysis 毛利口径 805.41/3,030.6", "value": 26.6 }, "deviationPct": 39.8, "flag": "major-diff", "resolution": "口径不可比而非数据错误：stockanalysis 的「Gross Profit」把分销成本与部分运营成本一并扣除。本报告在正文统一采用 RLDC 口径（收入－分销、交易及其他成本）并在字段中注明，避免用不同定义做同业对比" },
+    { "field": "反推所需 EPS 增速（5 年）", "source1": { "name": "calc：((67.88/20)/1.15)^(1/5)-1", "value": 24.17 }, "source2": { "name": "calc：((67.88/25)/1.15)^(1/5)-1", "value": 18.75 }, "deviationPct": 0.0, "flag": "ok", "resolution": "两种退出 PE 假设下的区间 18.8%-24.2%，取区间而非单值写入结论" },
+    { "field": "TAM 2030 年净收入池与 Circle 对应份额", "source1": { "name": "calc：1,900B × 3% × 38% = 21.66B；再 × 27% = 5.85B", "value": 5.85 }, "source2": { "status": "not-applicable", "reason": "自建测算，无第二来源可交叉验证；分母 1.9T 来自 Citi 基准情景" }, "deviationPct": { "status": "not-applicable", "reason": "自建测算，不计算偏差率（见 source2.reason）" }, "flag": "ok", "resolution": "修正记录：初稿曾把 21.66B 写成 2,170 亿美元（错 10 倍）并将倍数写成「数十倍」；已改为 217 亿美元/59 亿美元/约 5.8 倍，并补入本验算日志" },
+    { "field": "三情景目标价", "source1": { "name": "financial_rigor.py three-scenario", "value": 38.5 }, "source2": { "status": "not-applicable", "reason": "自建情景模型，无第二来源可交叉验证" }, "deviationPct": { "status": "not-applicable", "reason": "自建情景模型，不计算偏差率（见 source2.reason）" }, "flag": "ok", "resolution": "目标价 128.5/38.5/8.2 美元，假设与依据见 threeScenario.assumptionBasis" }
+  ]
+}

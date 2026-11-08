@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "companyId": "us-crcl-circle-internet-group",
+    "companyName": "Circle Internet Group, Inc.",
+    "summarizedAt": "2026-11-08",
+    "dataCutoff": "2026-11-08（Asia/Shanghai）；最新披露 2026Q3，股价 2026-11-06 收盘",
+    "basedOnCollection": "research/companies/us-crcl-circle-internet-group/financials-collection.json",
+    "basedOnAnalysis": "research/companies/us-crcl-circle-internet-group/financials-analysis.json"
+  },
+  "dimensionSummary": [
+    {
+      "dimensionId": "businessQuality",
+      "title": "生意质量",
+      "mapsTo": "dimensions.businessEssence",
+      "conclusion": "现金转化极好、边际成本近零，但收入 96% 来自浮存利差，定价权在分销方与美联储手里；规模越大不等于利润越多。",
+      "confidence": 6,
+      "scoreBasis": "① 加分项：TTM 经营现金流 7.72 亿美元高于净利润，资本开支仅约 1.05 亿美元，自由现金流 6.67 亿美元（dimensions.businessEssence.analysis.operatingLeverage）。② 减分项：分销及交易成本占收入 60.6%，RLDC 毛利率从 FY2023 的 49.8% 降到 39.4%，收入增长被渠道分成吃掉。③ 2026Q3 储备收入同比 -7.5% 而链上交易量 +49%，用量与收入已脱钩。④ 分部毛利率与 Tether 单位经济不可得，证据强度打折，评分向中性收敛。"
+    },
+    {
+      "dimensionId": "moat",
+      "title": "护城河",
+      "mapsTo": "dimensions.moat",
+      "conclusion": "流动性网络效应真实且变宽（交易量份额 79%），但变现侧持续变窄：份额五年净下滑、留存率被合同锁死、发行本身可被复制。",
+      "confidence": 6,
+      "scoreBasis": "① 网络效应验证为「存在」：交易量份额 79% 远高于流通量份额 27%，钱包数同比 +16%（dimensions.moat.analysis.types）。② 定价权与转换成本均验证为「不存在」，净储备利润率环比 -80bps 是直接证据。③ 趋势判断为变窄：流通量份额五年从约 45% 降到 27%，RLDC 毛利率五年降 10pct。④ 正向期权是 Arc/CPN 能否把清算流量变成收费网络，目前无货币化数据，只能计入待验证。"
+    },
+    {
+      "dimensionId": "management",
+      "title": "管理层",
+      "mapsTo": "dimensions.management",
+      "conclusion": "战略定力与政策执行力突出（十年监管优先换来 GENIUS Act），但资本配置偏向股权激励与以股权换流量，每股价值尚未成为约束。",
+      "confidence": 6.5,
+      "scoreBasis": "① 加分：终止 SPAC 改走 IPO（★5）、SVB 事件兜底未违约（★4）、Arc 主网按期上线（dimensions.management.analysis.keyDecisions）。② 减分：2024 年重签 Coinbase 协议使毛利率降 10pct（★2）；ARC 预售一次性抬高报表（★2）。③ FY2025 股权激励 5.66 亿美元占收入 20.6%，股本同比 +130.5%，CEO 按 10b5-1 持续减持。④ 奖金 70% 挂钩剔除股权激励的调整后 EBITDA，与股东承担的稀释不同步。"
+    },
+    {
+      "dimensionId": "keyRisk",
+      "title": "最大风险",
+      "mapsTo": "dimensions.inversion",
+      "conclusion": "最大风险是「量增价减」的慢性挤压：利率下行、流通量停滞、分销分成上升三者叠加，公司几乎无法对冲其中任何一个。",
+      "confidence": 4,
+      "scoreBasis": "① 三条失败路径概率均为「中」、影响均为「高」，且都不由公司控制（dimensions.inversion.analysis.failurePaths）。② 利率敏感性可量化：短端每降 100bps 约减少年化净收入 2.81 亿美元，相当于 2026 年调整后 EBITDA 的近四成。③ 全行业流通量 2026 年至今仅 +0.4%，TMMF 替代已从推测变成数据。④ 脱锚概率评为「低」（储备全为短债、有 2023 年压力测试经验），故未给更低分。"
+    },
+    {
+      "dimensionId": "civilizationTrend",
+      "title": "文明趋势",
+      "mapsTo": "dimensions.industryTrend",
+      "conclusion": "稳定币成为全球支付底层协议是真实的范式转移（支付额 +45%、GENIUS Act 2027 落地），但红利更可能落在渠道与场景方，而非发行方。",
+      "confidence": 7.5,
+      "scoreBasis": "① 趋势验证充分：立法落地、Visa/Samsung/SAP 等机构接入、TAM 从 2,937 亿向 2030 年 1.9 万亿（Citi 基准）（dimensions.industryTrend.analysis.tam）。② 公司在价值链中的位置是中间层，上游国债无议价、下游渠道议价上升。③ 技术路线风险被明确列为 TMMF 与银行代币，不是空泛的「竞争加剧」。④ 扣分项：趋势对行业有利不等于对该公司有利，这一层已在结论中区分。"
+    },
+    {
+      "dimensionId": "valuation",
+      "title": "估值",
+      "mapsTo": "dimensions.valuation",
+      "conclusion": "按 2026 年一致预期 EPS 计 59 倍，三情景中性目标价 38.5 美元（-43%）；价格已把最乐观路径计入，安全边际为负。",
+      "confidence": 2.5,
+      "scoreBasis": "① 中性情景（EPS 年增 15%、退出 22x）目标价 38.5 美元，较 67.88 美元下跌 43.3%（dimensions.valuation.analysis.threeScenario）。② 反推需五年 EPS 复合增速 18.8%–24.2% 才能保本，而 2026 年一致预期 EPS 同比 -51%。③ 悲观情景目标价 8.2 美元，赔率明显不对称。④ 估值基准依赖第三方一致预期（EPS 1.15）与自建情景，无 2027-2028 卖方明细，故未给 0–2 分。"
+    },
+    {
+      "dimensionId": "corporateCulture",
+      "title": "企业文化",
+      "mapsTo": "dimensions.management.analysis.culture",
+      "conclusion": "可观察到的文化特征是「监管优先、披露透明、增长优先于每股价值」：风险因素如实列示自身弱点，但股权激励与减持安排对长期股东不够友好。",
+      "confidence": 6,
+      "scoreBasis": "① 客观证据一：十年持续投入合规与游说，直接对应 GENIUS Act 的制度红利（dimensions.management.analysis.culture）。② 客观证据二：10-K 风险因素逐条列示脱锚、储备集中、分销集中等自身弱点，未见粉饰。③ 客观证据三：FY2025 股权激励占收入 20.6%、CEO 按 10b5-1 计划减持（2026-10-05 卖出 62,264 股）。④ 文化证据多为 Level 3 单源事实、无第三方文化调研，按规则向中性收敛，不因「叙事感强」加分。"
+    }
+  ],
+  "strategies": {
+    "noPosition": {
+      "title": "空仓者",
+      "advice": "不追当前价格。公司质地可跟踪，但 59 倍核心 PE 已把 40% 流通量复合增长提前计入，空仓者此刻买入等于替乐观情景付钱。① 观察窗口放在 2027 年 GENIUS Act 生效后的两个季度，看流通量是否真的提速。② 价格触发点取中性情景附近的 35–40 美元，对应核心 PE 30–35 倍。③ 若价格未回落但 CPN/Arc 收入占比突破 10%，可另按成长股重估，不因「错过」而追高。",
+      "triggers": [
+        { "condition": "股价回落至 35–40 美元区间", "action": "用小仓位（不超过目标仓位的三分之一）建立观察仓", "basis": "dimensions.valuation.analysis.threeScenario 中性目标价 38.5 美元；对应 2026E EPS 1.15 的 30–35x" },
+        { "condition": "USDC 平均流通量连续两个季度同比 ≥20%", "action": "确认增长逻辑成立后上调目标仓位", "basis": "dimensions.industryTrend.analysis.tam 与管理层 40% 多年 CAGR 指引；当前 2026Q3 同比仅 +8%" },
+        { "condition": "非储备收入（剔除代币预售）占收入比重 ≥10%", "action": "按「基础设施 + 支付网络」而非「利率套利」重新估值", "basis": "dimensions.businessEssence.analysis.revenueBreakdown：FY2025 非储备收入仅 4.0%" }
+      ]
+    },
+    "holding": {
+      "title": "持仓者",
+      "advice": "把仓位降到「即使腰斩也不影响组合」的水平，不要用「长期叙事」为高估值找理由。① 核心持仓逻辑应改为「Arc/CPN 能否建立收费权」，而非 USDC 流通量。② 每次财报核对三个数：净储备利润率、分销成本率、剔除一次性收入后的收入增速。③ 不参与以股权换流量的增发（如 Binance 80.84 美元定增）所暗示的估值锚。",
+      "triggers": [
+        { "condition": "净储备利润率跌破 33%", "action": "减仓一半，因单位经济已低于 2023 年以来任何季度", "basis": "dimensions.moat.analysis.types 定价权证据：2026Q3 为 37.8%，已环比 -80bps" },
+        { "condition": "股价回升至 100 美元以上而流通量增速仍低于 10%", "action": "继续减仓，把估值溢价兑现", "basis": "dimensions.valuation.analysis.threeScenario 乐观目标价 128.5 美元需 55% 的 EPS 复合增速支撑" },
+        { "condition": "Arc/CPN 首次单独披露收入且年化 ≥2 亿美元", "action": "保留核心仓位，视其为第二增长曲线成立", "basis": "dimensions.industryTrend.analysis.valueChainPosition：向上游/下游延伸是唯一重建定价权的路径" }
+      ]
+    },
+    "sellSignals": {
+      "title": "卖出信号",
+      "signals": [
+        { "signal": "USDC 平均流通量连续两个季度同比下降", "observable": "季度业绩新闻稿「USDC in Circulation, average of period」同比转负；当前 2026Q3 为 +8%", "basis": "dimensions.inversion.analysis.failurePaths 第 1、2 条；dimensions.businessEssence.analysis.operatingLeverage" },
+        { "signal": "分销及交易成本占收入超过 65%", "observable": "季度利润表「Total distribution, transaction and other costs ÷ Total revenue」；FY2025 为 60.6%", "basis": "dimensions.moat.analysis.types 品牌/定价权证据；dimensions.inversion.analysis.failurePaths 第 3 条" },
+        { "signal": "Coinbase 宣布发行自有美元稳定币或重谈分成条款", "observable": "Coinbase 或 Circle 的 8-K/10-Q 披露、Coinbase 官方公告", "basis": "dimensions.industryTrend.analysis.concentration：Coinbase 占分销成本 84.2%" },
+        { "signal": "ARC 代币被 SEC 认定为证券，或 Arc 里程碑违约触发偿付", "observable": "SEC 执法公告、10-Q「ARC Token Presale」附注中递延收入转回", "basis": "dimensions.inversion.analysis.failurePaths 第 5 条" }
+      ]
+    },
+    "addSignals": {
+      "title": "加仓信号",
+      "signals": [
+        { "signal": "股价跌至 35 美元以下且基本面无新增恶化", "observable": "收盘价 <35 美元，同时最近一季净储备利润率 ≥35%", "basis": "dimensions.valuation.analysis.threeScenario 中性目标价 38.5 美元、悲观 8.2 美元；35 美元以下赔率转正" },
+        { "signal": "短端利率企稳（13 周美债收益率连续两季不再下行）且流通量同比 ≥20%", "observable": "美国财政部日度国债收益率曲线 + 季度 USDC 平均流通量", "basis": "dimensions.inversion.analysis.failurePaths 第 1 条；储备收益率现为 3.5%" },
+        { "signal": "CPN 年化 TPV 超过 1,500 亿美元并开始按笔收费", "observable": "季度业绩新闻稿 CPN 指标 + 首次披露的支付网络收入", "basis": "dimensions.industryTrend.analysis.valueChainPosition；2026Q3 CPN 年化 TPV 为 413 亿美元" }
+      ]
+    }
+  },
+  "disclaimer": "本总结基于公开信息与数据截止时点的分析生成，仅供研究参考，不构成个性化投资建议。"
+}
