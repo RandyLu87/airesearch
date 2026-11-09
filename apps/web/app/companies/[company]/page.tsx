@@ -24,6 +24,20 @@ export const dynamicParams = false;
  */
 const PLACEHOLDER_COMPANY = "__no-analysis__";
 
+/** 当前倍数表的指标名：键是契约字段，值是读者看得懂的中文标签。 */
+const MULTIPLE_LABELS: Record<string, string> = {
+  marketCap: "市值",
+  pe: "PE",
+  ps: "PS",
+  pb: "PB",
+  roe: "ROE",
+  roa: "ROA",
+  dividendYieldPct: "股息率",
+  debtRatioPct: "负债率",
+  peg: "PEG",
+  evToRevenue: "EV/Revenue",
+};
+
 export function generateStaticParams() {
   const companies = listFinalCompanies().map((company) => ({ company }));
   return companies.length > 0 ? companies : [{ company: PLACEHOLDER_COMPANY }];
@@ -576,7 +590,7 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
                   if (!cell) return null;
                   return (
                     <tr key={key}>
-                      <td>{key}</td>
+                      <td>{MULTIPLE_LABELS[key] ?? key}</td>
                       <td>{text(cell)}{flagMark(cell)}</td>
                       <td><SourceLink source={cell.source} /></td>
                     </tr>
@@ -600,7 +614,7 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
                     {peerRows.map((peer: Json, index: number) => (
                       <tr key={index}>
                         <td>{text(peer.name)}</td>
-                        <td>{text(peer.peTtm)} / {text(peer.peForward)}</td>
+                        <td>{text(peer.peTtm ?? peer.pe)} / {text(peer.peForward)}</td>
                         <td>{text(peer.ps)}</td>
                         <td><SourceLink source={peer.source} /></td>
                       </tr>
